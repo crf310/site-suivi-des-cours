@@ -3,6 +3,7 @@
 namespace Virgule\Bundle\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Virgule\Bundle\MainBundle\Entity\Formateurs
