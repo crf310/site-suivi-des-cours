@@ -1,0 +1,65 @@
+/* 
+    Document   : new
+    Created on : 30 déc. 2011, 06:42:10
+    Author     : guillaume
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+#nav{
+
+    box-shadow: 0px 0px 12px rgba(88, 83, 74, .7);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#5c5850', EndColorStr='#48473e');
+}
+nav a{
+    -moz-border-radius: 12px;
+    -webkit-border-radius: 12px;
+    border-radius: 12px;
+}
+nav a:hover{
+    background-color: #3a3e38;
+    background-color: rgba(47, 54, 48, .7);
+}
+nav a.active {
+    background-color: #070807;
+}
+
+/*-----Nav-----*/
+#nav {height: 36px; background-color: #48473f; margin-bottom: 15px;}
+#nav ul{ padding-top: 4px;}
+#nav a{color: #f0edda; font: bold 12px "proxima-nova-1","proxima-nova-2"; text-decoration: none; letter-spacing: .2em;	padding: 2px 10px;}
+#nav ul li{list-style: none; display: inline; margin-left: 0px; }
+#nav li:first-child{margin-left: 0px;}
+
+
+/* Screen */
+/* @override http://localhost:8888/css/screen.css */
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent;margin:0;padding:0;}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}
+nav ul{list-style:none;}
+a{font-size:100%;vertical-align:baseline;background:transparent;margin:0;padding:0;}
+
+/*-----Structure-----*/
+body{color: #514d46;  background: #e6e3d0; font: 16px/23px Georgia, "Times New Roman", Times, serif;}
+#header{margin-bottom: 0px;overflow:hidden; text-align: center;}
+#content { float: left;}
+
+
+/*-----Headings-----*/
+h1, h3  {font-family: "proxima-nova-1","proxima-nova-2";}
+h1{font-size: 35px;	text-transform: uppercase; letter-spacing: 3px; line-height: 1; color:#d34831;}
+h2 {color: #d34831; font: 57px/1 "tamarillo-1","tamarillo-2"; margin-right: 10px;}
+h3{color: #514d46; text-transform: uppercase; letter-spacing: 2px; line-height: 36px;font-size: 16px;}
+
+/*-----Links-----*/
+a{color: #d34831;}
+a:hover{color: #25617f;}
+
+/*-----Uni-form overriden----*/
+.uniForm .ctrlHolder.focused{ background: #D3D1BF; }
+.ctrlHolder .left{ float: left;}
+.ctrlHolder .right{ float: right;}
