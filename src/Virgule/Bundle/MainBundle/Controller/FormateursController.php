@@ -90,22 +90,20 @@ class FormateursController extends Controller
 
         $logger = $this->get('logger');
         if ($form->isValid()) {
-            $logger->info('New teacher created: valid');
+            $logger->info('Formateur ' . $entity->getPrenomFormateur() . ' ' . $entity->getNomFormateur() . ' created');
 
             $entity->setDateInscription(new \DateTime("now"));
 
             $mdpHash = md5($entity->getMotDePasse());
             $entity->setMotDePasse($mdpHash);
-            
+
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             $em->flush();
 
             return $this->redirect($this->generateUrl('formateurs_show', array('id' => $entity->getIdFormateur())));
         } else {
-
             $logger->info('New Formateur invalid');
-
         }
 
         return array(
