@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Seances" table="seances">
+    <change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+    <id name="idSeance" type="integer" column="id_seance">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="dateSeance" type="date" column="date_seance"/>
+    <field name="compteRendu" type="text" column="compte_rendu"/>
+    <field name="fkIdFormateurSeance" type="integer" column="fk_id_formateur_seance"/>
+    <field name="fkIdFormateurCompteRendu" type="integer" column="fk_id_formateur_compte_rendu"/>
+    <many-to-many field="fkApprenant" target-entity="Apprenants" mapped-by="fkSeance"/>
+    <many-to-one field="fkCours" target-entity="Cours" orphan-removal="">
+      <join-columns>
+        <join-column name="fk_id_cours" referenced-column-name="id_cours"/>
+      </join-columns>
+    </many-to-one>
+    <lifecycle-callbacks/>
+  </entity>
+</doctrine-mapping>

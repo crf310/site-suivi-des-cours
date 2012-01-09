@@ -1,0 +1,74 @@
+<?php
+
+namespace Virgule\Bundle\MainBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Virgule\Bundle\MainBundle\Entity\Seances
+ *
+ * @ORM\Table(name="seances")
+ * @ORM\Entity
+ */
+class Seances
+{
+    /**
+     * @var integer $idSeance
+     *
+     * @ORM\Column(name="id_seance", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idSeance;
+
+    /**
+     * @var date $dateSeance
+     *
+     * @ORM\Column(name="date_seance", type="date", nullable=false)
+     */
+    private $dateSeance;
+
+    /**
+     * @var text $compteRendu
+     *
+     * @ORM\Column(name="compte_rendu", type="text", nullable=true)
+     */
+    private $compteRendu;
+
+    /**
+     * @var integer $fkIdFormateurSeance
+     *
+     * @ORM\Column(name="fk_id_formateur_seance", type="integer", nullable=false)
+     */
+    private $fkIdFormateurSeance;
+
+    /**
+     * @var integer $fkIdFormateurCompteRendu
+     *
+     * @ORM\Column(name="fk_id_formateur_compte_rendu", type="integer", nullable=false)
+     */
+    private $fkIdFormateurCompteRendu;
+
+    /**
+     * @var Apprenants
+     *
+     * @ORM\ManyToMany(targetEntity="Apprenants", mappedBy="fkSeance")
+     */
+    private $fkApprenant;
+
+    /**
+     * @var Cours
+     *
+     * @ORM\ManyToOne(targetEntity="Cours")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="fk_id_cours", referencedColumnName="id_cours")
+     * })
+     */
+    private $fkCours;
+
+    public function __construct()
+    {
+        $this->fkApprenant = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+}

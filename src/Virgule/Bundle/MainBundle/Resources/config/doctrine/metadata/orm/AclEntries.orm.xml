@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AclEntries" table="acl_entries">
+    <change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="fieldName" type="string" column="field_name" length="50"/>
+    <field name="aceOrder" type="smallint" column="ace_order"/>
+    <field name="mask" type="integer" column="mask"/>
+    <field name="granting" type="boolean" column="granting"/>
+    <field name="grantingStrategy" type="string" column="granting_strategy" length="30"/>
+    <field name="auditSuccess" type="boolean" column="audit_success"/>
+    <field name="auditFailure" type="boolean" column="audit_failure"/>
+    <many-to-one field="securityentity" target-entity="AclSecurityIdentities" orphan-removal="">
+      <join-columns>
+        <join-column name="security_identity_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="objectentity" target-entity="AclObjectIdentities" orphan-removal="">
+      <join-columns>
+        <join-column name="object_identity_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="class" target-entity="AclClasses" orphan-removal="">
+      <join-columns>
+        <join-column name="class_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <lifecycle-callbacks/>
+  </entity>
+</doctrine-mapping>

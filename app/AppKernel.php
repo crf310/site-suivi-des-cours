@@ -17,7 +17,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-            new Virgule\Bundle\UserBundle\VirguleUserBundle(),
+            new Virgule\Bundle\MainBundle\VirguleMainBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

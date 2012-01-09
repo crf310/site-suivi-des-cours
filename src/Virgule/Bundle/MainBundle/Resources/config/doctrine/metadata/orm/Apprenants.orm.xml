@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Apprenants" table="apprenants">
+    <change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+    <id name="idApprenant" type="integer" column="id_apprenant">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="dateMiseAJour" type="datetime" column="date_mise_a_jour"/>
+    <field name="actifYn" type="boolean" column="actif_yn"/>
+    <field name="titre" type="string" column="titre" length="5"/>
+    <field name="nomApprenant" type="string" column="nom_apprenant" length="50"/>
+    <field name="prenomApprenant" type="string" column="prenom_apprenant" length="50"/>
+    <field name="dateDeNaissance" type="date" column="date_de_naissance"/>
+    <field name="telFixeApprenant" type="string" column="tel_fixe_apprenant" length="10"/>
+    <field name="telPortableApprenant" type="string" column="tel_portable_apprenant" length="10"/>
+    <field name="adresse" type="string" column="adresse" length="50"/>
+    <field name="codePostal" type="string" column="code_postal" length="10"/>
+    <field name="ville" type="string" column="ville" length="50"/>
+    <field name="sexe" type="string" column="sexe" length="1"/>
+    <field name="nationalite" type="string" column="nationalite" length="50"/>
+    <field name="situationFamiliale" type="string" column="situation_familiale" length="20"/>
+    <field name="commentaires" type="text" column="commentaires"/>
+    <field name="dateInscription" type="date" column="date_inscription"/>
+    <field name="cheminPhoto" type="string" column="chemin_photo" length="50"/>
+    <field name="communicationOrale" type="boolean" column="communication_orale"/>
+    <field name="dateArriveeEnFrance" type="date" column="date_arrivee_en_france"/>
+    <field name="scolariseYn" type="boolean" column="scolarise_yn"/>
+    <field name="profession" type="string" column="profession" length="45"/>
+    <field name="scolariseEnFranceYn" type="boolean" column="scolarise_en_france_yn"/>
+    <field name="scolariseEtrangerYn" type="boolean" column="scolarise_etranger_yn"/>
+    <field name="niveauScolarisation" type="boolean" column="niveau_scolarisation"/>
+    <field name="formationLinguistiqueYn" type="boolean" column="formation_linguistique_yn"/>
+    <field name="typeFormationLinguistique" type="text" column="type_formation_linguistique"/>
+    <field name="structureFormationLinguistique" type="string" column="structure_formation_linguistique" length="50"/>
+    <field name="nomContactUrgence" type="string" column="nom_contact_urgence" length="45"/>
+    <field name="prenomContactUrgence" type="string" column="prenom_contact_urgence" length="45"/>
+    <field name="telephoneContactUrgence" type="string" column="telephone_contact_urgence" length="45"/>
+    <field name="lienParenteContactUrgence" type="string" column="lien_parente_contact_urgence" length="45"/>
+    <many-to-many field="fkRaisonApprentissage" target-entity="RaisonsApprentissage" mapped-by="fkApprenant"/>
+    <many-to-many field="fkSeance" target-entity="Seances" inversed-by="fkApprenant">
+      <join-table name="a_participe_a">
+        <join-columns>
+          <join-column name="fk_id_apprenant" referenced-column-name="id_apprenant"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="fk_id_seance" referenced-column-name="id_seance"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+    <many-to-many field="fkCours" target-entity="Cours" inversed-by="fkApprenant">
+      <join-table name="est_inscrit_a">
+        <join-columns>
+          <join-column name="fk_id_apprenant" referenced-column-name="id_apprenant"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="fk_id_cours" referenced-column-name="id_cours"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+    <many-to-many field="fkLangue" target-entity="Langues" mapped-by="fkApprenant"/>
+    <many-to-one field="fkPaysNaissance" target-entity="Pays" orphan-removal="">
+      <join-columns>
+        <join-column name="fk_id_pays_naissance" referenced-column-name="id_pays"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="fkAccueilliParFormateur" target-entity="Formateurs" orphan-removal="">
+      <join-columns>
+        <join-column name="fk_accueilli_par_id_formateur" referenced-column-name="id_formateur"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="fkLangueScolarisation" target-entity="Langues" orphan-removal="">
+      <join-columns>
+        <join-column name="fk_id_langue_scolarisation" referenced-column-name="id_langue"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="fkLangueMaternelle" target-entity="Langues" orphan-removal="">
+      <join-columns>
+        <join-column name="fk_id_langue_maternelle" referenced-column-name="id_langue"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="fkNiveauPropose" target-entity="Niveaux" orphan-removal="">
+      <join-columns>
+        <join-column name="fk_id_niveau_propose" referenced-column-name="id_niveau"/>
+      </join-columns>
+    </many-to-one>
+    <lifecycle-callbacks/>
+  </entity>
+</doctrine-mapping>

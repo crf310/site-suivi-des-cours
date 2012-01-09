@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Pays" table="pays">
+    <change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+    <id name="idPays" type="integer" column="id_pays">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="libellePays" type="string" column="libelle_pays" length="50"/>
+    <field name="codeIso" type="string" column="code_iso" length="3"/>
+    <lifecycle-callbacks/>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,21 @@
+{% block field_row %}
+{% spaceless %}
+    <div class="ctrlHolder {{ class|default('left') }}">
+        {{ form_label(form, label|default(null)) }}<p class="formHint"> {{ hint|default('') }}</p>
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+    </div>
+{% endspaceless %}
+{% endblock field_row %}
+
+{% block field_widget %}
+{% spaceless %}
+    {% if macro is not defined %}
+            {% import ':Form:macro.html.twig' as macro %}
+    {% endif %}
+    {% set type = type|default('text') %}
+    {% set class = class|default('textInput medium') %}
+    <input class="{{ class }} {{macro.hasErrors(form)}}" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+{% endspaceless %}
+{% endblock field_widget %}
+

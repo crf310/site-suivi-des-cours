@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Langues" table="langues">
+    <change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+    <id name="idLangue" type="integer" column="id_langue">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="libelleLangue" type="string" column="libelle_langue" length="45"/>
+    <many-to-many field="fkApprenant" target-entity="Apprenants" inversed-by="fkLangue">
+      <join-table name="parle">
+        <join-columns>
+          <join-column name="fk_id_langue" referenced-column-name="id_langue"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="fk_id_apprenant" referenced-column-name="id_apprenant"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+    <lifecycle-callbacks/>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Formateurs" table="formateurs">
+    <change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+    <id name="idFormateur" type="integer" column="id_formateur">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="actifYn" type="boolean" column="actif_yn"/>
+    <field name="nomFormateur" type="string" column="nom_formateur" length="50"/>
+    <field name="prenomFormateur" type="string" column="prenom_formateur" length="50"/>
+    <field name="telFixe" type="string" column="tel_fixe" length="10"/>
+    <field name="telPortable" type="string" column="tel_portable" length="10"/>
+    <field name="adresseEmail" type="string" column="adresse_email" length="50"/>
+    <field name="login" type="string" column="login" length="50"/>
+    <field name="motDePasse" type="string" column="mot_de_passe" length="50"/>
+    <field name="dateInscription" type="datetime" column="date_inscription"/>
+    <field name="dateDerniereConnexion" type="datetime" column="date_derniere_connexion"/>
+    <many-to-many field="fkPermission" target-entity="Permissions" mapped-by="fkFormateur"/>
+    <lifecycle-callbacks/>
+  </entity>
+</doctrine-mapping>

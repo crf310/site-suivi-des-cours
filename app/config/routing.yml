@@ -1,7 +1,7 @@
-VirguleUserBundle:
-    resource: "@VirguleUserBundle/Controller/"
+VirguleMainBundle:
+    resource: "@VirguleMainBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /virgule
 
 # Internal routing configuration to handle ESI
 #_internal:

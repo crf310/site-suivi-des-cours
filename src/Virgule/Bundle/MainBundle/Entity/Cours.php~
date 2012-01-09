@@ -1,0 +1,87 @@
+<?php
+
+namespace Virgule\Bundle\MainBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Virgule\Bundle\MainBundle\Entity\Cours
+ *
+ * @ORM\Table(name="cours")
+ * @ORM\Entity
+ */
+class Cours
+{
+    /**
+     * @var integer $idCours
+     *
+     * @ORM\Column(name="id_cours", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idCours;
+
+    /**
+     * @var boolean $jour
+     *
+     * @ORM\Column(name="jour", type="boolean", nullable=false)
+     */
+    private $jour;
+
+    /**
+     * @var time $heureDebut
+     *
+     * @ORM\Column(name="heure_debut", type="time", nullable=false)
+     */
+    private $heureDebut;
+
+    /**
+     * @var time $heureFin
+     *
+     * @ORM\Column(name="heure_fin", type="time", nullable=false)
+     */
+    private $heureFin;
+
+    /**
+     * @var Apprenants
+     *
+     * @ORM\ManyToMany(targetEntity="Apprenants", mappedBy="fkCours")
+     */
+    private $fkApprenant;
+
+    /**
+     * @var Formateurs
+     *
+     * @ORM\ManyToOne(targetEntity="Formateurs")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="fk_id_formateur", referencedColumnName="id_formateur")
+     * })
+     */
+    private $fkFormateur;
+
+    /**
+     * @var Niveaux
+     *
+     * @ORM\ManyToOne(targetEntity="Niveaux")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="fk_id_niveau", referencedColumnName="id_niveau")
+     * })
+     */
+    private $fkNiveau;
+
+    /**
+     * @var Sessions
+     *
+     * @ORM\ManyToOne(targetEntity="Sessions")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="fk_id_session", referencedColumnName="id_session")
+     * })
+     */
+    private $fkSession;
+
+    public function __construct()
+    {
+        $this->fkApprenant = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+}

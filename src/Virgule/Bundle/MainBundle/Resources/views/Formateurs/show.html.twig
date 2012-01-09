@@ -1,0 +1,69 @@
+<h1>Formateurs</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.idFormateur }}</td>
+        </tr>
+        <tr>
+            <th>Actifyn</th>
+            <td>{{ entity.actifYn }}</td>
+        </tr>
+        <tr>
+            <th>Nomformateur</th>
+            <td>{{ entity.nomFormateur }}</td>
+        </tr>
+        <tr>
+            <th>Prenomformateur</th>
+            <td>{{ entity.prenomFormateur }}</td>
+        </tr>
+        <tr>
+            <th>Telfixe</th>
+            <td>{{ entity.telFixe }}</td>
+        </tr>
+        <tr>
+            <th>Telportable</th>
+            <td>{{ entity.telPortable }}</td>
+        </tr>
+        <tr>
+            <th>Adresseemail</th>
+            <td>{{ entity.adresseEmail }}</td>
+        </tr>
+        <tr>
+            <th>Login</th>
+            <td>{{ entity.login }}</td>
+        </tr>
+        <tr>
+            <th>Motdepasse</th>
+            <td>{{ entity.motDePasse }}</td>
+        </tr>
+        <tr>
+            <th>Dateinscription</th>
+            <td>{{ entity.dateInscription|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Datederniereconnexion</th>
+            <td>{{ entity.dateDerniereConnexion|date('Y-m-d H:i:s') }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('formateurs') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('formateurs_edit', { 'id': entity.idFormateur }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('formateurs_delete', { 'id': entity.idFormateur }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

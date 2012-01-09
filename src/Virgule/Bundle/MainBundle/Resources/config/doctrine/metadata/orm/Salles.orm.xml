@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Salles" table="salles">
+    <change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+    <id name="idSalle" type="boolean" column="id_salle">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="nomSalle" type="string" column="nom_salle" length="100"/>
+    <field name="adresse" type="string" column="adresse" length="250"/>
+    <lifecycle-callbacks/>
+  </entity>
+</doctrine-mapping>

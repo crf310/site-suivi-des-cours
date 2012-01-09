@@ -1,0 +1,106 @@
+<?php
+
+namespace Virgule\Bundle\MainBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Virgule\Bundle\MainBundle\Entity\Formateurs
+ *
+ * @ORM\Table(name="formateurs")
+ * @ORM\Entity
+ */
+class Formateurs
+{
+    /**
+     * @var integer $idFormateur
+     *
+     * @ORM\Column(name="id_formateur", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idFormateur;
+
+    /**
+     * @var boolean $actifYn
+     *
+     * @ORM\Column(name="actif_yn", type="boolean", nullable=false)
+     */
+    private $actifYn;
+
+    /**
+     * @var string $nomFormateur
+     *
+     * @ORM\Column(name="nom_formateur", type="string", length=50, nullable=false)
+     */
+    private $nomFormateur;
+
+    /**
+     * @var string $prenomFormateur
+     *
+     * @ORM\Column(name="prenom_formateur", type="string", length=50, nullable=false)
+     */
+    private $prenomFormateur;
+
+    /**
+     * @var string $telFixe
+     *
+     * @ORM\Column(name="tel_fixe", type="string", length=10, nullable=true)
+     */
+    private $telFixe;
+
+    /**
+     * @var string $telPortable
+     *
+     * @ORM\Column(name="tel_portable", type="string", length=10, nullable=true)
+     */
+    private $telPortable;
+
+    /**
+     * @var string $adresseEmail
+     *
+     * @ORM\Column(name="adresse_email", type="string", length=50, nullable=true)
+     */
+    private $adresseEmail;
+
+    /**
+     * @var string $login
+     *
+     * @ORM\Column(name="login", type="string", length=50, nullable=false)
+     */
+    private $login;
+
+    /**
+     * @var string $motDePasse
+     *
+     * @ORM\Column(name="mot_de_passe", type="string", length=50, nullable=false)
+     */
+    private $motDePasse;
+
+    /**
+     * @var datetime $dateInscription
+     *
+     * @ORM\Column(name="date_inscription", type="datetime", nullable=false)
+     */
+    private $dateInscription;
+
+    /**
+     * @var datetime $dateDerniereConnexion
+     *
+     * @ORM\Column(name="date_derniere_connexion", type="datetime", nullable=true)
+     */
+    private $dateDerniereConnexion;
+
+    /**
+     * @var Permissions
+     *
+     * @ORM\ManyToMany(targetEntity="Permissions", mappedBy="fkFormateur")
+     */
+    private $fkPermission;
+
+    public function __construct()
+    {
+        $this->fkPermission = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+}

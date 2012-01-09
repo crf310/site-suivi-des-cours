@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Permissions" table="permissions">
+    <change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+    <id name="idPermission" type="integer" column="id_permission">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="libellePermission" type="string" column="libelle_permission" length="30"/>
+    <field name="codePermission" type="string" column="code_permission" length="5"/>
+    <many-to-many field="fkFormateur" target-entity="Formateurs" inversed-by="fkPermission">
+      <join-table name="possede">
+        <join-columns>
+          <join-column name="fk_id_permission" referenced-column-name="id_permission"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="fk_id_formateur" referenced-column-name="id_formateur"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+    <lifecycle-callbacks/>
+  </entity>
+</doctrine-mapping>
