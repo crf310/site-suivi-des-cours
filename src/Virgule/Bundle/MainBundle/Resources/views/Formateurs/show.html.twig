@@ -1,34 +1,24 @@
-<h1>Formateurs</h1>
+{% extends '::base.html.twig' %}
+{% block body %}
+<h1>{{ entity.prenomFormateur }} {{ entity.nomFormateur }}</h1>
 
 <table class="record_properties">
     <tbody>
         <tr>
-            <th>Id</th>
-            <td>{{ entity.idFormateur }}</td>
-        </tr>
-        <tr>
-            <th>Actifyn</th>
+            <th>Actif</th>
             <td>{{ entity.actifYn }}</td>
         </tr>
         <tr>
-            <th>Nomformateur</th>
-            <td>{{ entity.nomFormateur }}</td>
-        </tr>
-        <tr>
-            <th>Prenomformateur</th>
-            <td>{{ entity.prenomFormateur }}</td>
-        </tr>
-        <tr>
-            <th>Telfixe</th>
+            <th>Téléphone fixe</th>
             <td>{{ entity.telFixe }}</td>
         </tr>
         <tr>
-            <th>Telportable</th>
+            <th>Téléphone portable</th>
             <td>{{ entity.telPortable }}</td>
         </tr>
         <tr>
-            <th>Adresseemail</th>
-            <td>{{ entity.adresseEmail }}</td>
+            <th>Adresse email</th>
+            <td><a href="mailto:{{ entity.adresseEmail }}"/>{{ entity.adresseEmail }}</a></td>
         </tr>
         <tr>
             <th>Login</th>
@@ -67,3 +57,4 @@
         </form>
     </li>
 </ul>
+{% endblock %}
