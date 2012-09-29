@@ -21,20 +21,8 @@
             <td><a href="mailto:{{ entity.adresseEmail }}"/>{{ entity.adresseEmail }}</a></td>
         </tr>
         <tr>
-            <th>Login</th>
-            <td>{{ entity.login }}</td>
-        </tr>
-        <tr>
-            <th>Motdepasse</th>
-            <td>{{ entity.motDePasse }}</td>
-        </tr>
-        <tr>
-            <th>Dateinscription</th>
-            <td>{{ entity.dateInscription|date('Y-m-d H:i:s') }}</td>
-        </tr>
-        <tr>
-            <th>Datederniereconnexion</th>
-            <td>{{ entity.dateDerniereConnexion|date('Y-m-d H:i:s') }}</td>
+            <th>Inscrit(e) le</th>
+            <td>{{ entity.dateInscription|date('d/m/Y') }}</td>
         </tr>
     </tbody>
 </table>
@@ -42,18 +30,18 @@
 <ul class="record_actions">
     <li>
         <a href="{{ path('formateurs') }}">
-            Back to the list
+            Retour à la liste des formateurs
         </a>
     </li>
     <li>
         <a href="{{ path('formateurs_edit', { 'id': entity.idFormateur }) }}">
-            Edit
+            Modifier la fiche
         </a>
     </li>
     <li>
         <form action="{{ path('formateurs_delete', { 'id': entity.idFormateur }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <button type="submit">Supprimer</button>
         </form>
     </li>
 </ul>
