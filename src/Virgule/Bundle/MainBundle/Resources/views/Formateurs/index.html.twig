@@ -6,7 +6,6 @@
     <thead>
         <tr>
             <th>Nom</th>
-            <th>Prénom</th>
             <th>Téléphone fixe</th>
             <th>Téléphone portable</th>
             <th>Adresse email</th>
@@ -16,9 +15,8 @@
     </thead>
     <tbody>
     {% for entity in entities %}
-        <tr>
-            <td>{{ entity.nomFormateur }}</td>
-            <td>{{ entity.prenomFormateur }}</td>
+        <tr{% if loop.index % 2 == 1 %} class="dark" {% endif %}>
+            <td>{{ entity.prenomFormateur }} {{ entity.nomFormateur }}</td>
             <td>{{ entity.telFixe }}</td>
             <td>{{ entity.telPortable }}</td>
             <td>{{ entity.adresseEmail }}</td>
