@@ -1,10 +1,21 @@
 <header id="header">
         <nav id="nav">
                 <ul>
-                        <li><a>Guillaume Lucazeau</a></li>
+                        <li><a>{{ app.user.prenomFormateur }} {{ app.user.nomFormateur }}</a></li>
                         <li><a>Délégation du 3e et 10e</a></li>
                         <li><a>Session du 01/01/2011 au 02/02/2012</a></li>
-                        <li><a>Déconnexion</a></li>
+                        <li><a>Aide</a></li>
+                        <li><a href="{{ path('logout') }}" title="Déconnexion">Déconnexion</a></li>
                 </ul>
         </nav>
+
+        <div id="top_menu">
+            <ul>
+                <li><a href="">Compte-rendus</a></li>
+                <li><a href="">Planning des cours</a></li>
+                <li><a href="">Apprenants</a></li>
+                <li><a href="">Formateurs</a></li>
+                <li><a href="">Profil utilisateur</a></li>
+                <li><a href="">Administration</a></li>
+            </ul></div>
 </header>
