@@ -1,7 +1,15 @@
+login:
+    pattern:   /virgule/login
+    defaults:  { _controller: VirguleSecurityBundle:Security:login }
+login_check:
+    pattern:   /virgule/login_check
+    
 VirguleMainBundle:
     resource: "@VirguleMainBundle/Controller/"
     type:     annotation
     prefix:   /virgule
+
+
 
 # Internal routing configuration to handle ESI
 #_internal:

@@ -4,6 +4,7 @@ namespace Virgule\Bundle\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Virgule\Bundle\MainBundle\Entity\Formateurs
@@ -12,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity
  * @UniqueEntity("login")
  */
-class Formateurs
+class Formateurs implements UserInterface
 {
     /**
      * @var integer $idFormateur
@@ -334,5 +335,30 @@ class Formateurs
     public function getFkPermission()
     {
         return $this->fkPermission;
+    }
+
+    public function equals(UserInterface $user) {
+        
+    }
+
+    public function eraseCredentials() {
+        
+    }
+
+    public function getPassword() {
+        return $this->motDePasse;
+    }
+
+    public function getRoles() {
+        // @TODO: get real roles
+        return Array('ROLE_ADMIN');
+    }
+
+    public function getSalt() {
+        
+    }
+
+    public function getUsername() {
+        return $this->login;
     }
 }

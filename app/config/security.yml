@@ -3,16 +3,17 @@ security:
         connection: default
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
+        Virgule\Bundle\MainBundle\Entity\Formateurs: plaintext
 
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
+        ROLE_USER:        ROLE_VIEWER
+        ROLE_SECRETARY:   ROLE_USER
+        ROLE_ADMIN:       ROLE_SECRETARY
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
-        in_memory:
-            users:
-                user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+        main:
+            entity: { class: Virgule\Bundle\MainBundle\Entity\Formateurs, property: login }
 
     firewalls:
         dev:
@@ -20,17 +21,19 @@ security:
             security: false
 
         login:
-            pattern:  ^/demo/secured/login$
+            pattern:  ^/virgule/login$
             security: false
+            anonymous: false
 
         secured_area:
-            pattern:    ^/demo/secured/
+            pattern:    ^/virgule
+            anonymous: false
             form_login:
-                check_path: /demo/secured/login_check
-                login_path: /demo/secured/login
+                login_path:  /virgule/login
+                check_path:  /virgule/login_check
             logout:
-                path:   /demo/secured/logout
-                target: /demo/
+                path:   /virgule/logout
+                target: /virgule/login
             #anonymous: ~
             #http_basic:
             #    realm: "Secured Demo Area"
