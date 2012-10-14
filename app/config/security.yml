@@ -3,7 +3,7 @@ security:
         connection: default
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
-        Virgule\Bundle\MainBundle\Entity\Formateurs: plaintext
+        Virgule\Bundle\MainBundle\Entity\Teacher: plaintext
 
     role_hierarchy:
         ROLE_USER:        ROLE_VIEWER
@@ -13,7 +13,7 @@ security:
 
     providers:
         main:
-            entity: { class: Virgule\Bundle\MainBundle\Entity\Formateurs, property: login }
+            entity: { class: Virgule\Bundle\MainBundle\Entity\Teacher, property: login }
 
     firewalls:
         dev:
