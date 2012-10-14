@@ -1,0 +1,52 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+<h1>Liste des formateurs</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Téléphone fixe</th>
+            <th>Téléphone portable</th>
+            <th>Adresse email</th>
+            <th>Dernière connexion</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr{% if loop.index % 2 == 1 %} class="dark" {% endif %}>
+            <td>{{ entity.prenomFormateur }} {{ entity.nomFormateur }}</td>
+            <td>{{ entity.telFixe }}</td>
+            <td>{{ entity.telPortable }}</td>
+            <td>{{ entity.adresseEmail }}</td>
+            <td>
+                {% if entity.dateDerniereConnexion %}
+                    {{ entity.dateDerniereConnexion|date('Y-m-d H:i:s') }}
+                {% else %}
+                    jamais
+                {% endif %}
+            </td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('formateurs_show', { 'id': entity.idFormateur }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('formateurs_edit', { 'id': entity.idFormateur }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('formateurs_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+{% endblock %}
