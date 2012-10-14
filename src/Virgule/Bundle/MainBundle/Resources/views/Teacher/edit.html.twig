@@ -1,6 +1,6 @@
 <h1>Formateurs edit</h1>
 
-<form action="{{ path('formateurs_update', { 'id': entity.idFormateur }) }}" method="post" {{ form_enctype(edit_form) }}>
+<form action="{{ path('teache_update', { 'id': entity.idFormateur }) }}" method="post" {{ form_enctype(edit_form) }}>
     {{ form_widget(edit_form) }}
     <p>
         <button type="submit">Edit</button>
@@ -9,12 +9,12 @@
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('formateurs') }}">
+        <a href="{{ path('teacher') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <form action="{{ path('formateurs_delete', { 'id': entity.idFormateur }) }}" method="post">
+        <form action="{{ path('teacher_delete', { 'id': entity.idFormateur }) }}" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>

@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 {% block body %}
-<h1>Liste des formateurs</h1>
+<h1>Liste des teacher</h1>
 
 <table class="records_list">
     <thead>
@@ -16,13 +16,13 @@
     <tbody>
     {% for entity in entities %}
         <tr{% if loop.index % 2 == 1 %} class="dark" {% endif %}>
-            <td>{{ entity.prenomFormateur }} {{ entity.nomFormateur }}</td>
-            <td>{{ entity.telFixe }}</td>
-            <td>{{ entity.telPortable }}</td>
-            <td>{{ entity.adresseEmail }}</td>
+            <td>{{ entity.lastName }} {{ entity.nomFormateur }}</td>
+            <td>{{ entity.phoneNumber }}</td>
+            <td>{{ entity.cellphoneNumber }}</td>
+            <td>{{ entity.emailAddress }}</td>
             <td>
-                {% if entity.dateDerniereConnexion %}
-                    {{ entity.dateDerniereConnexion|date('Y-m-d H:i:s') }}
+                {% if entity.lastConnectionDate %}
+                    {{ entity.lastConnectionDate|date('Y-m-d H:i:s') }}
                 {% else %}
                     jamais
                 {% endif %}
@@ -30,10 +30,10 @@
             <td>
                 <ul>
                     <li>
-                        <a href="{{ path('formateurs_show', { 'id': entity.idFormateur }) }}">show</a>
+                        <a href="{{ path('formateurs_show', { 'id': entity.id }) }}">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('formateurs_edit', { 'id': entity.idFormateur }) }}">edit</a>
+                        <a href="{{ path('formateurs_edit', { 'id': entity.id }) }}">edit</a>
                     </li>
                 </ul>
             </td>
@@ -44,7 +44,7 @@
 
 <ul>
     <li>
-        <a href="{{ path('formateurs_new') }}">
+        <a href="{{ path('teacher_new') }}">
             Create a new entry
         </a>
     </li>

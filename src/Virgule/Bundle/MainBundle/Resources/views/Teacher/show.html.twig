@@ -1,45 +1,45 @@
 {% extends '::base.html.twig' %}
 {% block body %}
-<h1>{{ entity.prenomFormateur }} {{ entity.nomFormateur }}</h1>
+<h1>{{ entity.firstName }} {{ entity.lastName }}</h1>
 
 <table class="record_properties">
     <tbody>
         <tr>
             <th>Actif</th>
-            <td>{{ entity.actifYn }}</td>
+            <td>{{ entity.isActive }}</td>
         </tr>
         <tr>
             <th>Téléphone fixe</th>
-            <td>{{ entity.telFixe }}</td>
+            <td>{{ entity.phoneNumber }}</td>
         </tr>
         <tr>
             <th>Téléphone portable</th>
-            <td>{{ entity.telPortable }}</td>
+            <td>{{ entity.cellphoneNumber }}</td>
         </tr>
         <tr>
             <th>Adresse email</th>
-            <td><a href="mailto:{{ entity.adresseEmail }}"/>{{ entity.adresseEmail }}</a></td>
+            <td><a href="mailto:{{ entity.emailAddress }}"/>{{ entity.emailAddress }}</a></td>
         </tr>
         <tr>
             <th>Inscrit(e) le</th>
-            <td>{{ entity.dateInscription|date('d/m/Y') }}</td>
+            <td>{{ entity.registrationDate|date('d/m/Y') }}</td>
         </tr>
     </tbody>
 </table>
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('formateurs') }}">
+        <a href="{{ path('teacher') }}">
             Retour à la liste des formateurs
         </a>
     </li>
     <li>
-        <a href="{{ path('formateurs_edit', { 'id': entity.idFormateur }) }}">
+        <a href="{{ path('teacher_edit', { 'id': entity.id }) }}">
             Modifier la fiche
         </a>
     </li>
     <li>
-        <form action="{{ path('formateurs_delete', { 'id': entity.idFormateur }) }}" method="post">
+        <form action="{{ path('teacher_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Supprimer</button>
         </form>
