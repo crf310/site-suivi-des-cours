@@ -6,7 +6,6 @@ framework:
     #esi:             ~
     #translator:      { fallback: %locale% }
     secret:          %secret%
-    charset:         UTF-8
     router:          { resource: "%kernel.root_dir%/config/routing.yml" }
     form:            true
     csrf_protection: true
@@ -45,7 +44,6 @@ doctrine:
         dbname:   %database_name%
         user:     %database_user%
         password: %database_password%
-        charset:  UTF8
 
     orm:
         auto_generate_proxy_classes: %kernel.debug%
