@@ -217,9 +217,9 @@ class Student
     private $fkWelcomedByTeacher;
 
     /**
-     * @var Languages
+     * @var Language
      *
-     * @ORM\ManyToOne(targetEntity="Languages")
+     * @ORM\ManyToOne(targetEntity="Language")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="fk_mother_tongue_id", referencedColumnName="id")
      * })
@@ -237,9 +237,9 @@ class Student
     private $fkScholarizationLanguage;
 
     /**
-     * @var Level
+     * @var ClassLevel
      *
-     * @ORM\ManyToOne(targetEntity="Level")
+     * @ORM\ManyToOne(targetEntity="ClassLevel")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="fk_proposed_level_id", referencedColumnName="id")
      * })
