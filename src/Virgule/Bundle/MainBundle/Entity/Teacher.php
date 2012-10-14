@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="teacher")
  * @ORM\Entity
  */
-class Teacher implements UserInterface
+class Teacher
 {
     /**
      * @var integer $id

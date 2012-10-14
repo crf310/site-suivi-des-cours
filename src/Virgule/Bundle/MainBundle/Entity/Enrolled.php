@@ -22,13 +22,13 @@ class Enrolled
     private $fkStudentId;
 
     /**
-     * @var integer $fkClassId
+     * @var integer $fkCourseId
      *
-     * @ORM\Column(name="fk_class_id", type="integer", nullable=false)
+     * @ORM\Column(name="fk_course_id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
-    private $fkClassId;
+    private $fkCourseId;
 
 
 }

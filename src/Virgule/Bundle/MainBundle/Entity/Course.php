@@ -5,12 +5,12 @@ namespace Virgule\Bundle\MainBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Virgule\Bundle\MainBundle\Entity\Class
+ * Virgule\Bundle\MainBundle\Entity\Course
  *
- * @ORM\Table(name="class")
+ * @ORM\Table(name="course")
  * @ORM\Entity
  */
-class Class
+class Course
 {
     /**
      * @var integer $id
