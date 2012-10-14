@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="ClassSession" table="class_session">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="date" type="date" column="date" nullable="false"/>
+    <field name="summary" type="text" column="summary" nullable="true"/>
+    <field name="fkClassId" type="integer" column="fk_class_id" nullable="false"/>
+    <field name="fkSessionTeacherId" type="integer" column="fk_session_teacher_id" nullable="false"/>
+    <field name="fkSummaryTeacherId" type="integer" column="fk_summary_teacher_id" nullable="false"/>
+  </entity>
+</doctrine-mapping>

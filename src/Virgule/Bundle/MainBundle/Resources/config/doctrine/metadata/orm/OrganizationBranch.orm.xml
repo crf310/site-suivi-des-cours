@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="OrganizationBranch" table="organization_branch">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="name" type="string" column="name" length="100" nullable="false"/>
+    <field name="address" type="string" column="address" length="250" nullable="true"/>
+    <field name="presidentName" type="string" column="president_name" length="100" nullable="false"/>
+    <field name="phoneNumber" type="string" column="phone_number" length="10" nullable="true"/>
+    <field name="faxNumber" type="string" column="fax_number" length="10" nullable="true"/>
+    <field name="emailAddress" type="string" column="email_address" length="45" nullable="true"/>
+  </entity>
+</doctrine-mapping>
