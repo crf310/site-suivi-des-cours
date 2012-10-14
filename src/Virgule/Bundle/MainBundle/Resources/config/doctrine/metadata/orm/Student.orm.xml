@@ -29,7 +29,7 @@
     <field name="emergencyContactFirstname" type="string" column="emergency_contact_firstname" length="45" nullable="true"/>
     <field name="emergencyContactPhoneNumber" type="string" column="emergency_contact_phone_number" length="45" nullable="true"/>
     <field name="emergencyContactConnectionType" type="string" column="emergency_contact_connection_type" length="45" nullable="true"/>
-    <many-to-one field="fkProposedLevel" target-entity="Level">
+    <many-to-one field="fkProposedLevel" target-entity="ClassLevel">
       <join-columns>
         <join-column name="fk_proposed_level_id" referenced-column-name="id"/>
       </join-columns>
@@ -37,6 +37,11 @@
     <many-to-one field="fkScholarizationLanguage" target-entity="Language">
       <join-columns>
         <join-column name="fk_scholarization_language_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="fkMotherTongue" target-entity="Language">
+      <join-columns>
+        <join-column name="fk_mother_tongue_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
     <many-to-one field="fkWelcomedByTeacher" target-entity="Teacher">
@@ -47,11 +52,6 @@
     <many-to-one field="fkNativeCountry" target-entity="Country">
       <join-columns>
         <join-column name="fk_native_country_id" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
-    <many-to-one field="fkMotherTongue" target-entity="Language">
-      <join-columns>
-        <join-column name="fk_mother_tongue_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
   </entity>
