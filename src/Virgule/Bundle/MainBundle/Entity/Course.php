@@ -78,4 +78,198 @@ class Course
     private $fkTeacherId;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set dayOfWeek
+     *
+     * @param boolean $dayOfWeek
+     * @return Course
+     */
+    public function setDayOfWeek($dayOfWeek)
+    {
+        $this->dayOfWeek = $dayOfWeek;
+    
+        return $this;
+    }
+
+    /**
+     * Get dayOfWeek
+     *
+     * @return boolean 
+     */
+    public function getDayOfWeek()
+    {
+        return $this->dayOfWeek;
+    }
+
+    /**
+     * Set startTime
+     *
+     * @param \DateTime $startTime
+     * @return Course
+     */
+    public function setStartTime($startTime)
+    {
+        $this->startTime = $startTime;
+    
+        return $this;
+    }
+
+    /**
+     * Get startTime
+     *
+     * @return \DateTime 
+     */
+    public function getStartTime()
+    {
+        return $this->startTime;
+    }
+
+    /**
+     * Set endTime
+     *
+     * @param \DateTime $endTime
+     * @return Course
+     */
+    public function setEndTime($endTime)
+    {
+        $this->endTime = $endTime;
+    
+        return $this;
+    }
+
+    /**
+     * Get endTime
+     *
+     * @return \DateTime 
+     */
+    public function getEndTime()
+    {
+        return $this->endTime;
+    }
+
+    /**
+     * Set alternateStartdate
+     *
+     * @param \DateTime $alternateStartdate
+     * @return Course
+     */
+    public function setAlternateStartdate($alternateStartdate)
+    {
+        $this->alternateStartdate = $alternateStartdate;
+    
+        return $this;
+    }
+
+    /**
+     * Get alternateStartdate
+     *
+     * @return \DateTime 
+     */
+    public function getAlternateStartdate()
+    {
+        return $this->alternateStartdate;
+    }
+
+    /**
+     * Set alternateEnddate
+     *
+     * @param \DateTime $alternateEnddate
+     * @return Course
+     */
+    public function setAlternateEnddate($alternateEnddate)
+    {
+        $this->alternateEnddate = $alternateEnddate;
+    
+        return $this;
+    }
+
+    /**
+     * Get alternateEnddate
+     *
+     * @return \DateTime 
+     */
+    public function getAlternateEnddate()
+    {
+        return $this->alternateEnddate;
+    }
+
+    /**
+     * Set fkLevelId
+     *
+     * @param integer $fkLevelId
+     * @return Course
+     */
+    public function setFkLevelId($fkLevelId)
+    {
+        $this->fkLevelId = $fkLevelId;
+    
+        return $this;
+    }
+
+    /**
+     * Get fkLevelId
+     *
+     * @return integer 
+     */
+    public function getFkLevelId()
+    {
+        return $this->fkLevelId;
+    }
+
+    /**
+     * Set fkSemesterId
+     *
+     * @param integer $fkSemesterId
+     * @return Course
+     */
+    public function setFkSemesterId($fkSemesterId)
+    {
+        $this->fkSemesterId = $fkSemesterId;
+    
+        return $this;
+    }
+
+    /**
+     * Get fkSemesterId
+     *
+     * @return integer 
+     */
+    public function getFkSemesterId()
+    {
+        return $this->fkSemesterId;
+    }
+
+    /**
+     * Set fkTeacherId
+     *
+     * @param integer $fkTeacherId
+     * @return Course
+     */
+    public function setFkTeacherId($fkTeacherId)
+    {
+        $this->fkTeacherId = $fkTeacherId;
+    
+        return $this;
+    }
+
+    /**
+     * Get fkTeacherId
+     *
+     * @return integer 
+     */
+    public function getFkTeacherId()
+    {
+        return $this->fkTeacherId;
+    }
 }

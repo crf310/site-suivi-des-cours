@@ -31,4 +31,50 @@ class Speaks
     private $fkStudentId;
 
 
+
+    /**
+     * Set fkLanguageId
+     *
+     * @param integer $fkLanguageId
+     * @return Speaks
+     */
+    public function setFkLanguageId($fkLanguageId)
+    {
+        $this->fkLanguageId = $fkLanguageId;
+    
+        return $this;
+    }
+
+    /**
+     * Get fkLanguageId
+     *
+     * @return integer 
+     */
+    public function getFkLanguageId()
+    {
+        return $this->fkLanguageId;
+    }
+
+    /**
+     * Set fkStudentId
+     *
+     * @param integer $fkStudentId
+     * @return Speaks
+     */
+    public function setFkStudentId($fkStudentId)
+    {
+        $this->fkStudentId = $fkStudentId;
+    
+        return $this;
+    }
+
+    /**
+     * Get fkStudentId
+     *
+     * @return integer 
+     */
+    public function getFkStudentId()
+    {
+        return $this->fkStudentId;
+    }
 }

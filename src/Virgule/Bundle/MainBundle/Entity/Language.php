@@ -36,4 +36,60 @@ class Language
     private $alternativeNames;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Language
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set alternativeNames
+     *
+     * @param string $alternativeNames
+     * @return Language
+     */
+    public function setAlternativeNames($alternativeNames)
+    {
+        $this->alternativeNames = $alternativeNames;
+    
+        return $this;
+    }
+
+    /**
+     * Get alternativeNames
+     *
+     * @return string 
+     */
+    public function getAlternativeNames()
+    {
+        return $this->alternativeNames;
+    }
 }

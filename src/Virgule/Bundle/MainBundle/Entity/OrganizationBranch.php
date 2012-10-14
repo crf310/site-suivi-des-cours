@@ -64,4 +64,152 @@ class OrganizationBranch
     private $emailAddress;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return OrganizationBranch
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     * @return OrganizationBranch
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string 
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set presidentName
+     *
+     * @param string $presidentName
+     * @return OrganizationBranch
+     */
+    public function setPresidentName($presidentName)
+    {
+        $this->presidentName = $presidentName;
+    
+        return $this;
+    }
+
+    /**
+     * Get presidentName
+     *
+     * @return string 
+     */
+    public function getPresidentName()
+    {
+        return $this->presidentName;
+    }
+
+    /**
+     * Set phoneNumber
+     *
+     * @param string $phoneNumber
+     * @return OrganizationBranch
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+    
+        return $this;
+    }
+
+    /**
+     * Get phoneNumber
+     *
+     * @return string 
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * Set faxNumber
+     *
+     * @param string $faxNumber
+     * @return OrganizationBranch
+     */
+    public function setFaxNumber($faxNumber)
+    {
+        $this->faxNumber = $faxNumber;
+    
+        return $this;
+    }
+
+    /**
+     * Get faxNumber
+     *
+     * @return string 
+     */
+    public function getFaxNumber()
+    {
+        return $this->faxNumber;
+    }
+
+    /**
+     * Set emailAddress
+     *
+     * @param string $emailAddress
+     * @return OrganizationBranch
+     */
+    public function setEmailAddress($emailAddress)
+    {
+        $this->emailAddress = $emailAddress;
+    
+        return $this;
+    }
+
+    /**
+     * Get emailAddress
+     *
+     * @return string 
+     */
+    public function getEmailAddress()
+    {
+        return $this->emailAddress;
+    }
 }

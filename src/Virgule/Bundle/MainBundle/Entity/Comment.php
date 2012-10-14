@@ -43,4 +43,83 @@ class Comment
     private $fkTeacherId;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set comment
+     *
+     * @param string $comment
+     * @return Comment
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+    
+        return $this;
+    }
+
+    /**
+     * Get comment
+     *
+     * @return string 
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return Comment
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime 
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set fkTeacherId
+     *
+     * @param integer $fkTeacherId
+     * @return Comment
+     */
+    public function setFkTeacherId($fkTeacherId)
+    {
+        $this->fkTeacherId = $fkTeacherId;
+    
+        return $this;
+    }
+
+    /**
+     * Get fkTeacherId
+     *
+     * @return integer 
+     */
+    public function getFkTeacherId()
+    {
+        return $this->fkTeacherId;
+    }
 }

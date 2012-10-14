@@ -31,4 +31,50 @@ class Commented
     private $fkTeacherId;
 
 
+
+    /**
+     * Set fkStudentId
+     *
+     * @param integer $fkStudentId
+     * @return Commented
+     */
+    public function setFkStudentId($fkStudentId)
+    {
+        $this->fkStudentId = $fkStudentId;
+    
+        return $this;
+    }
+
+    /**
+     * Get fkStudentId
+     *
+     * @return integer 
+     */
+    public function getFkStudentId()
+    {
+        return $this->fkStudentId;
+    }
+
+    /**
+     * Set fkTeacherId
+     *
+     * @param integer $fkTeacherId
+     * @return Commented
+     */
+    public function setFkTeacherId($fkTeacherId)
+    {
+        $this->fkTeacherId = $fkTeacherId;
+    
+        return $this;
+    }
+
+    /**
+     * Get fkTeacherId
+     *
+     * @return integer 
+     */
+    public function getFkTeacherId()
+    {
+        return $this->fkTeacherId;
+    }
 }

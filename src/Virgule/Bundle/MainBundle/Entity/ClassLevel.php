@@ -36,4 +36,60 @@ class ClassLevel
     private $htmlColorCode;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set label
+     *
+     * @param string $label
+     * @return ClassLevel
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+    
+        return $this;
+    }
+
+    /**
+     * Get label
+     *
+     * @return string 
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+    /**
+     * Set htmlColorCode
+     *
+     * @param string $htmlColorCode
+     * @return ClassLevel
+     */
+    public function setHtmlColorCode($htmlColorCode)
+    {
+        $this->htmlColorCode = $htmlColorCode;
+    
+        return $this;
+    }
+
+    /**
+     * Get htmlColorCode
+     *
+     * @return string 
+     */
+    public function getHtmlColorCode()
+    {
+        return $this->htmlColorCode;
+    }
 }

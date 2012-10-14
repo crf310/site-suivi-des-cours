@@ -31,4 +31,50 @@ class Attended
     private $fkSessionId;
 
 
+
+    /**
+     * Set fkStudentId
+     *
+     * @param integer $fkStudentId
+     * @return Attended
+     */
+    public function setFkStudentId($fkStudentId)
+    {
+        $this->fkStudentId = $fkStudentId;
+    
+        return $this;
+    }
+
+    /**
+     * Get fkStudentId
+     *
+     * @return integer 
+     */
+    public function getFkStudentId()
+    {
+        return $this->fkStudentId;
+    }
+
+    /**
+     * Set fkSessionId
+     *
+     * @param integer $fkSessionId
+     * @return Attended
+     */
+    public function setFkSessionId($fkSessionId)
+    {
+        $this->fkSessionId = $fkSessionId;
+    
+        return $this;
+    }
+
+    /**
+     * Get fkSessionId
+     *
+     * @return integer 
+     */
+    public function getFkSessionId()
+    {
+        return $this->fkSessionId;
+    }
 }

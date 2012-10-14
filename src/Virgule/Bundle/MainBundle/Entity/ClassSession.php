@@ -57,4 +57,129 @@ class ClassSession
     private $fkSummaryTeacherId;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return ClassSession
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime 
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set summary
+     *
+     * @param string $summary
+     * @return ClassSession
+     */
+    public function setSummary($summary)
+    {
+        $this->summary = $summary;
+    
+        return $this;
+    }
+
+    /**
+     * Get summary
+     *
+     * @return string 
+     */
+    public function getSummary()
+    {
+        return $this->summary;
+    }
+
+    /**
+     * Set fkClassId
+     *
+     * @param integer $fkClassId
+     * @return ClassSession
+     */
+    public function setFkClassId($fkClassId)
+    {
+        $this->fkClassId = $fkClassId;
+    
+        return $this;
+    }
+
+    /**
+     * Get fkClassId
+     *
+     * @return integer 
+     */
+    public function getFkClassId()
+    {
+        return $this->fkClassId;
+    }
+
+    /**
+     * Set fkSessionTeacherId
+     *
+     * @param integer $fkSessionTeacherId
+     * @return ClassSession
+     */
+    public function setFkSessionTeacherId($fkSessionTeacherId)
+    {
+        $this->fkSessionTeacherId = $fkSessionTeacherId;
+    
+        return $this;
+    }
+
+    /**
+     * Get fkSessionTeacherId
+     *
+     * @return integer 
+     */
+    public function getFkSessionTeacherId()
+    {
+        return $this->fkSessionTeacherId;
+    }
+
+    /**
+     * Set fkSummaryTeacherId
+     *
+     * @param integer $fkSummaryTeacherId
+     * @return ClassSession
+     */
+    public function setFkSummaryTeacherId($fkSummaryTeacherId)
+    {
+        $this->fkSummaryTeacherId = $fkSummaryTeacherId;
+    
+        return $this;
+    }
+
+    /**
+     * Get fkSummaryTeacherId
+     *
+     * @return integer 
+     */
+    public function getFkSummaryTeacherId()
+    {
+        return $this->fkSummaryTeacherId;
+    }
 }

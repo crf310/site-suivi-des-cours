@@ -31,4 +31,50 @@ class Enrolled
     private $fkCourseId;
 
 
+
+    /**
+     * Set fkStudentId
+     *
+     * @param integer $fkStudentId
+     * @return Enrolled
+     */
+    public function setFkStudentId($fkStudentId)
+    {
+        $this->fkStudentId = $fkStudentId;
+    
+        return $this;
+    }
+
+    /**
+     * Get fkStudentId
+     *
+     * @return integer 
+     */
+    public function getFkStudentId()
+    {
+        return $this->fkStudentId;
+    }
+
+    /**
+     * Set fkCourseId
+     *
+     * @param integer $fkCourseId
+     * @return Enrolled
+     */
+    public function setFkCourseId($fkCourseId)
+    {
+        $this->fkCourseId = $fkCourseId;
+    
+        return $this;
+    }
+
+    /**
+     * Get fkCourseId
+     *
+     * @return integer 
+     */
+    public function getFkCourseId()
+    {
+        return $this->fkCourseId;
+    }
 }

@@ -36,4 +36,60 @@ class Country
     private $isoCode;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set label
+     *
+     * @param string $label
+     * @return Country
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+    
+        return $this;
+    }
+
+    /**
+     * Get label
+     *
+     * @return string 
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+    /**
+     * Set isoCode
+     *
+     * @param string $isoCode
+     * @return Country
+     */
+    public function setIsoCode($isoCode)
+    {
+        $this->isoCode = $isoCode;
+    
+        return $this;
+    }
+
+    /**
+     * Get isoCode
+     *
+     * @return string 
+     */
+    public function getIsoCode()
+    {
+        return $this->isoCode;
+    }
 }
