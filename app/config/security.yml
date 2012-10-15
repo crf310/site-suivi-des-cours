@@ -13,7 +13,7 @@ security:
 
     providers:
         main:
-            entity: { class: Virgule\Bundle\MainBundle\Entity\Teacher, property: login }
+            entity: { class: Virgule\Bundle\MainBundle\Entity\Teacher, property: username }
 
     firewalls:
         dev:
