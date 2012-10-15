@@ -127,4 +127,237 @@ class Teacher implements UserInterface
     public function getUsername() {
         return $this->username;
     }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     * @return Teacher
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+    
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean 
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set lastName
+     *
+     * @param string $lastName
+     * @return Teacher
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    
+        return $this;
+    }
+
+    /**
+     * Get lastName
+     *
+     * @return string 
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * Set firstName
+     *
+     * @param string $firstName
+     * @return Teacher
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    
+        return $this;
+    }
+
+    /**
+     * Get firstName
+     *
+     * @return string 
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * Set phoneNumber
+     *
+     * @param string $phoneNumber
+     * @return Teacher
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+    
+        return $this;
+    }
+
+    /**
+     * Get phoneNumber
+     *
+     * @return string 
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * Set cellphoneNumber
+     *
+     * @param string $cellphoneNumber
+     * @return Teacher
+     */
+    public function setCellphoneNumber($cellphoneNumber)
+    {
+        $this->cellphoneNumber = $cellphoneNumber;
+    
+        return $this;
+    }
+
+    /**
+     * Get cellphoneNumber
+     *
+     * @return string 
+     */
+    public function getCellphoneNumber()
+    {
+        return $this->cellphoneNumber;
+    }
+
+    /**
+     * Set emailAddress
+     *
+     * @param string $emailAddress
+     * @return Teacher
+     */
+    public function setEmailAddress($emailAddress)
+    {
+        $this->emailAddress = $emailAddress;
+    
+        return $this;
+    }
+
+    /**
+     * Get emailAddress
+     *
+     * @return string 
+     */
+    public function getEmailAddress()
+    {
+        return $this->emailAddress;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return Teacher
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    
+        return $this;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return Teacher
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    
+        return $this;
+    }
+
+    /**
+     * Set registrationDate
+     *
+     * @param \DateTime $registrationDate
+     * @return Teacher
+     */
+    public function setRegistrationDate($registrationDate)
+    {
+        $this->registrationDate = $registrationDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get registrationDate
+     *
+     * @return \DateTime 
+     */
+    public function getRegistrationDate()
+    {
+        return $this->registrationDate;
+    }
+
+    /**
+     * Set lastConnectionDate
+     *
+     * @param \DateTime $lastConnectionDate
+     * @return Teacher
+     */
+    public function setLastConnectionDate($lastConnectionDate)
+    {
+        $this->lastConnectionDate = $lastConnectionDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get lastConnectionDate
+     *
+     * @return \DateTime 
+     */
+    public function getLastConnectionDate()
+    {
+        return $this->lastConnectionDate;
+    }
+
+    /**
+     * Set fkRoleId
+     *
+     * @param integer $fkRoleId
+     * @return Teacher
+     */
+    public function setFkRoleId($fkRoleId)
+    {
+        $this->fkRoleId = $fkRoleId;
+    
+        return $this;
+    }
+
+    /**
+     * Get fkRoleId
+     *
+     * @return integer 
+     */
+    public function getFkRoleId()
+    {
+        return $this->fkRoleId;
+    }
 }
