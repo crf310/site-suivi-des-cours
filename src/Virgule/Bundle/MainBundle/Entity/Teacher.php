@@ -118,11 +118,10 @@ class Teacher implements UserInterface
     }
 
     public function getRoles() {
-        
+        return Array('ROLE_USER');
     }
 
     public function getSalt() {
-        
     }
 
     public function getUsername() {
