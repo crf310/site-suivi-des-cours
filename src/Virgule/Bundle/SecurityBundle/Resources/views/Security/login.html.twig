@@ -1,15 +1,50 @@
-{% if error %}
-    <div>{{ error.message }}</div>
-{% endif %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <link rel="shortcut icon" href="/croixrouge/web/images/favicon.ico" />
+    <link href="{{ asset('css/uni-form.css') }}" media="screen" rel="stylesheet"/>
+    <link href="{{ asset('css/default.uni-form.css') }}" id="formStyle" title="Default Style" media="screen" rel="stylesheet"/>
+        <link href="{{ asset('css/login.css') }}" media="screen" rel="stylesheet"/>
+        <script type="text/javascript">
+            $(function(){
 
-<form action="{{ path('login_check') }}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+              // init Uni-Form
+              $('form.uniForm').uniform();
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="_password" />
-
-    <input type="hidden" name="_target_path" value="account" />
-
-    <input type="submit" name="login" />
-</form>
+              // specific for this page
+              $(".browse a").click(function(e) {
+                e.preventDefault();
+                $("#formStyle").attr("href",$(this).attr('rel'));
+                return false;
+              });
+            });
+         </script>
+    </head>
+    <body class="login">
+        <div id="global">
+            <img src="{{ asset('images/croixrouge.png') }}" alt="Croix-rouge française" />
+            <div id="pomme">
+                <img src="{{ asset('images/pomme.jpg') }}" alt="" />
+                Délégation locale de Paris III et X - Service d'alphabétisation
+            </div>
+            <div id="form_login">
+                <form id="form_login" action="{{ path('login_check') }}" method="post" class="uniForm">
+                    <fieldset class="inlineLabels">
+                        <div class="ctrlHolder">
+                            <label for="username">Nom d'utilisateur :</label>
+                            <input class="textInput" type="text" id="username" name="_username" value="{{ last_username }}" />
+                        </div>
+                        <div class="ctrlHolder">
+                            <label for="password">Mot de passe :</label>
+                            <input class="textInput" type="password" id="password" name="_password" />
+                        </div>
+                        <div class="buttonHolder">
+                            <input type="hidden" name="_target_path" value="account" />
+                            <input type="submit" name="login" />
+                      </div>
+                     </fieldset>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,23 @@
+/* Page de login */
+body.login {
+	background-color: #e6e3d0;
+	margin: 0px 0px;
+	font-size: 0.9em;
+	font-family: Verdana, Arial, serif;
+	color: #514d46;
+	margin-top: 50px;
+}
+
+#global {
+	margin: auto auto;
+	width: 550px;
+}
+
+#pomme {
+	text-align: right;
+}
+
+#pomme img {
+	border: 10px #CCCCCC solid;
+	margin-top: 5px;
+}
