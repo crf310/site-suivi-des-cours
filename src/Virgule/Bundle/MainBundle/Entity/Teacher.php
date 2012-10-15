@@ -114,7 +114,7 @@ class Teacher implements UserInterface
     }
 
     public function getPassword() {
-        
+        return $this->password;
     }
 
     public function getRoles() {
@@ -126,6 +126,6 @@ class Teacher implements UserInterface
     }
 
     public function getUsername() {
-        
+        return $this->username;
     }
 }
