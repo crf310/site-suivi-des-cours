@@ -35,7 +35,6 @@ body{color: #514d46;  background: #e6e3d0; font: Verdana, "Times New Roman", Tim
 #header{margin-bottom: 0px;overflow:hidden; text-align: center;}
 #content { float: left;}
 
-
 /*-----Headings-----*/
 h1, h3  {font-family: "proxima-nova-1","proxima-nova-2";}
 h1{font-size: 35px;	text-transform: uppercase; letter-spacing: 3px; line-height: 1; color:#d34831;}
@@ -44,7 +43,10 @@ h3{color: #514d46; text-transform: uppercase; letter-spacing: 2px; line-height: 
 
 /*-----Links-----*/
 a{color: #d34831;}
-a:hover{color: #25617f;}
+a:hover{color: #F45338;}
+
+/*-----Top menu-----*/
+#top_menu ul li{list-style: none; display: inline; margin-left: 0px; }
 
 /*-----Uni-form overriden----*/
 .uniForm .ctrlHolder.focused{ background: #D3D1BF; }
