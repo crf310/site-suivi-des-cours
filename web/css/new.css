@@ -96,3 +96,6 @@ a:hover{color: #F45338;}
 .records_list td.nav_next {
 	text-align: right;
 }
+.records_list td.entity_actions ul li{
+    list-style: none; display: inline; margin-left: 0px;
+}
