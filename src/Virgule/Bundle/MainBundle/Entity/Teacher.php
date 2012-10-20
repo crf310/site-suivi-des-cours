@@ -3,6 +3,7 @@
 namespace Virgule\Bundle\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -11,8 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="teacher")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\TeacherRepository")
  */
-class Teacher implements UserInterface
-{
+class Teacher implements UserInterface, EquatableInterface {
     /**
      * @var integer $id
      *
@@ -109,6 +109,11 @@ class Teacher implements UserInterface
         return $this->id;
     }
 
+    public function __construct() {
+        $this->isActive = true;
+        $this->salt = md5(uniqid(null, true));
+    }
+    
     public function eraseCredentials() {
         
     }
@@ -128,6 +133,9 @@ class Teacher implements UserInterface
         return $this->username;
     }
 
+    public function isEqualTo(UserInterface $user) {
+        return $this->username === $user->getUsername();
+    }
     /**
      * Set isActive
      *
