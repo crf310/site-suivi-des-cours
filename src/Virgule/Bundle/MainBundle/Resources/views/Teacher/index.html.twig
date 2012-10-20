@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 {% block body %}
-<h1>Liste des teacher</h1>
+<h1>Liste des formateurs</h1>
 
 <table class="records_list">
     <thead>
@@ -16,10 +16,10 @@
     <tbody>
     {% for entity in entities %}
         <tr{% if loop.index % 2 == 1 %} class="dark" {% endif %}>
-            <td>{{ entity.lastName }} {{ entity.nomFormateur }}</td>
+            <td>{{ entity.firstName }} {{ entity.lastName }}</td>
             <td>{{ entity.phoneNumber }}</td>
             <td>{{ entity.cellphoneNumber }}</td>
-            <td>{{ entity.emailAddress }}</td>
+            <td><a href="mailto:{{ entity.emailAddress }}">{{ entity.emailAddress }}</a></td>
             <td>
                 {% if entity.lastConnectionDate %}
                     {{ entity.lastConnectionDate|date('Y-m-d H:i:s') }}
@@ -30,16 +30,22 @@
             <td>
                 <ul>
                     <li>
-                        <a href="{{ path('formateurs_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('teacher_show', { 'id': entity.id }) }}">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('formateurs_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('teacher_edit', { 'id': entity.id }) }}">edit</a>
                     </li>
                 </ul>
             </td>
         </tr>
     {% endfor %}
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="nav_previous">First page Previous page</td>
+            <td colspan="3" class="nav_next">Next page Last page</td>
+        </tr>
+    </tfoot>
 </table>
 
 <ul>
