@@ -3,3 +3,14 @@
 virgule_accueil:
     pattern: /
     defaults: { _controller: VirguleMainBundle:Default:index }
+
+teacher_index:
+    pattern:   /teacher/
+    defaults:  { _controller: VirguleMainBundle:Teacher:index }
+teacher_update:
+    pattern:    /teacher/{id}/edit
+    defaults:  { _controller: VirguleMainBundle:Teacher:edit }
+teacher_show:
+    pattern:    /teacher/{id}/show
+    defaults:  { _controller: VirguleMainBundle:Teacher:show }
+    
