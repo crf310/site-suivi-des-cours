@@ -4,14 +4,14 @@ virgule_main_bundle_security:
     prefix:   /
 
 login:
-    pattern:   /virgule/login
+    pattern:   /login
     defaults:  { _controller: VirguleSecurityBundle:Security:login }
 login_check:
-    pattern:   /virgule/login_check
+    pattern:   /login_check
 logout:
     pattern:   /logout
 
 VirguleMainBundle:
     resource: "@VirguleMainBundle/Controller/"
     type:     annotation
-    prefix:   /virgule
+    prefix:   /
