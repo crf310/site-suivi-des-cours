@@ -1,9 +1,5 @@
 ## YAML Template.
 ---
-virgule_accueil:
-    pattern: /
-    defaults: { _controller: VirguleMainBundle:Default:index }
-
 teacher_index:
     pattern:   /teacher/
     defaults:  { _controller: VirguleMainBundle:Teacher:index }
