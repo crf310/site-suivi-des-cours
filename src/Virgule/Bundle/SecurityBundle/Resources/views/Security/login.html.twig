@@ -28,6 +28,14 @@
                 <form id="form_login" action="{{ path('login_check') }}" method="post" class="uniForm">
                     <fieldset class="inlineLabels">
                         <div class="ctrlHolder">
+                            <label for="delegation">Délégation :</label>
+                            <select name="organization_branch_id">
+                                {% for organization_branch in organization_branches %}
+                                <option value="{{ organization_branch.id }}">{{ organization_branch.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="ctrlHolder">
                             <label for="username">Nom d'utilisateur :</label>
                             <input class="textInput" type="text" id="username" name="_username" value="{{ last_username }}" />
                         </div>
