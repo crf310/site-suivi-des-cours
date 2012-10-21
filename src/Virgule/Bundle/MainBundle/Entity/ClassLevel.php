@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Virgule\Bundle\MainBundle\Entity\ClassLevel
  *
  * @ORM\Table(name="class_level")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\ClassLevel")
  */
 class ClassLevel
 {
