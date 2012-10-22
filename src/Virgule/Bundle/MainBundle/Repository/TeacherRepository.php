@@ -33,8 +33,8 @@ class TeacherRepository extends EntityRepository implements UserProviderInterfac
         } catch (NoResultException $e) {
             throw new UsernameNotFoundException(sprintf('Unable to find an active Teacher object identified by "%s".', $username), null, 0, $e);
         }
-
         return $user;
+        
     }
 
     public function refreshUser(UserInterface $user)
@@ -50,5 +50,20 @@ class TeacherRepository extends EntityRepository implements UserProviderInterfac
     public function supportsClass($class)
     {
         return $this->getEntityName() === $class || is_subclass_of($class, $this->getEntityName());
+    }
+    
+    public function getTeachersByStatus($isActive=true) {
+        $q = $this
+            ->createQueryBuilder('t')
+            ->where('t.isActive = :isActive')
+            ->setParameter('isActive', isActive)
+            ->getQuery()
+        ;
+        $teachers = $q->execute();
+        return $teachers;
+    }
+    
+    public function updateLastConnectionDate() {
+        
     }
 }

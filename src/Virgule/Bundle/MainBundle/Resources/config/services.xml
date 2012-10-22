@@ -17,4 +17,19 @@
         </service>
     </services>
     -->
+    <!-- Managers -->
+    <parameters>
+        <parameter key="virgule.teacher_manager.class">Virgule\Bundle\MainBundle\Manager\TeacherManager</parameter>       
+    </parameters>
+
+    <services>
+        <service id="virgule.teacher_manager" class="%virgule.teacher_manager.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+        <service id="my.login.listener" class="Virgule\Bundle\MainBundle\Event\LoginEventListener">
+            <tag name="kernel.event_listener" event="security.interactive_login" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+    </services>
+
 </container>
