@@ -22,6 +22,8 @@ class AppKernel extends Kernel
             
             new Virgule\Bundle\MainBundle\VirguleMainBundle(),
             new Virgule\Bundle\SecurityBundle\VirguleSecurityBundle(),
+            
+            new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
