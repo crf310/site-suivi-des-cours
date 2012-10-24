@@ -9,29 +9,44 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\Teacher;
 use Virgule\Bundle\MainBundle\Form\TeacherType;
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Exception\NotValidCurrentPageException;
 
 /**
  * Teacher controller.
  *
  * @Route("/teacher")
  */
-class TeacherController extends Controller
-{
+class TeacherController extends Controller {
+
+    private function getManager() {
+        return $this->get('virgule.teacher_manager');
+    }
+
     /**
      * Lists all Teacher entities.
      *
-     * @Route("/", name="teacher")
+     * @Route("/{page}/", name="teacher_index")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction($page=1) {
+        
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('VirguleMainBundle:Teacher')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+        $pagerfanta = new Pagerfanta(new ArrayAdapter($entities));
+        $pagerfanta->setMaxPerPage(1);
+
+        try {
+            $pagerfanta->setCurrentPage($page);
+        } catch (NotValidCurrentPageException $e) {
+            throw new NotFoundHttpException();
+        }
+
+        return ['entities' => $pagerfanta];
     }
 
     /**
@@ -40,8 +55,7 @@ class TeacherController extends Controller
      * @Route("/{id}/show", name="teacher_show")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:Teacher')->find($id);
@@ -53,7 +67,7 @@ class TeacherController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -64,14 +78,13 @@ class TeacherController extends Controller
      * @Route("/new", name="teacher_new")
      * @Template()
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new Teacher();
-        $form   = $this->createForm(new TeacherType(), $entity);
+        $form = $this->createForm(new TeacherType(), $entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -82,9 +95,8 @@ class TeacherController extends Controller
      * @Method("POST")
      * @Template("VirguleMainBundle:Teacher:new.html.twig")
      */
-    public function createAction(Request $request)
-    {
-        $entity  = new Teacher();
+    public function createAction(Request $request) {
+        $entity = new Teacher();
         $form = $this->createForm(new TeacherType(), $entity);
         $form->bind($request);
 
@@ -98,7 +110,7 @@ class TeacherController extends Controller
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -108,8 +120,7 @@ class TeacherController extends Controller
      * @Route("/{id}/edit", name="teacher_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:Teacher')->find($id);
@@ -122,8 +133,8 @@ class TeacherController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -135,8 +146,7 @@ class TeacherController extends Controller
      * @Method("POST")
      * @Template("VirguleMainBundle:Teacher:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:Teacher')->find($id);
@@ -157,8 +167,8 @@ class TeacherController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -169,8 +179,7 @@ class TeacherController extends Controller
      * @Route("/{id}/delete", name="teacher_delete")
      * @Method("POST")
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
 
@@ -189,11 +198,11 @@ class TeacherController extends Controller
         return $this->redirect($this->generateUrl('teacher'));
     }
 
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                        ->add('id', 'hidden')
+                        ->getForm()
         ;
     }
+
 }
