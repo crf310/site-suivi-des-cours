@@ -28,7 +28,8 @@ class TeacherController extends Controller {
     /**
      * Lists all Teacher entities.
      *
-     * @Route("/{page}/", name="teacher_index")
+     * @Route("/", name="teacher_index")
+     * @Route("/page/{page}", requirements={"page" = "\d+"}, defaults={"page" = "1"})
      * @Template()
      */
     public function indexAction($page=1) {
