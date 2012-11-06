@@ -12,12 +12,15 @@ class TableFooterView implements ViewInterface
     public function render(PagerfantaInterface $pagerfanta, $routeGenerator, array $options = array())
     {
         $options = array_merge(array(
-            'proximity'          => 2,
-            'previous_message'   => 'Previous',
-            'next_message'       => 'Next',
+            'proximity'          => 10,
+            'previous_message'   => 'Précédente',
+            'next_message'       => 'Suivante',
             'css_disabled_class' => 'disabled',
             'css_dots_class'     => 'dots',
             'css_current_class'  => 'current',
+            'colspan_left'       => 2,
+            'colspan_middle'       => 2,
+            'colspan_right'       => 2
         ), $options);
 
         $currentPage = $pagerfanta->getCurrentPage();
@@ -35,14 +38,16 @@ class TableFooterView implements ViewInterface
         }
 
         $pages = array();
-
+        $pages[] = sprintf('<td class="nav_left" colspan="%s">', $options['colspan_left']);
         // previous
         if ($pagerfanta->hasPreviousPage()) {
             $pages[] = array($pagerfanta->getPreviousPage(), $options['previous_message']);
         } else {
             $pages[] = sprintf('<span class="%s">%s</span>', $options['css_disabled_class'], $options['previous_message']);
         }
-
+        $pages[] = sprintf('</td>');
+        
+        $pages[] = sprintf('<td  class="nav_middle" colspan="%s">', $options['colspan_middle']);
         // first
         if ($startPage > 1) {
             $pages[] = array(1, 1);
@@ -74,14 +79,17 @@ class TableFooterView implements ViewInterface
 
             $pages[] = array($pagerfanta->getNbPages(), $pagerfanta->getNbPages());
         }
+        $pages[] = sprintf('</td>');
 
+        $pages[] = sprintf('<td  class="nav_right" colspan="%s">', $options['colspan_right']);
         // next
         if ($pagerfanta->hasNextPage()) {
             $pages[] = array($pagerfanta->getNextPage(), $options['next_message']);
         } else {
             $pages[] = sprintf('<span class="%s">%s</span>', $options['css_disabled_class'], $options['next_message']);
         }
-
+        $pages[] = sprintf('</td>');
+        
         // process
         $pagesHtml = '';
         foreach ($pages as $page) {
