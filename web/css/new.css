@@ -30,7 +30,7 @@ a{font-size:100%;vertical-align:baseline;background:transparent;margin:0;padding
 /*-----Structure-----*/
 body{color: #514d46;  background: #F0EDDA;}
 #header{margin-bottom: 0px;overflow:hidden; text-align: center;}
-#content { float: left; }
+#content { }
 
 /*-----Headings-----*/
 h1, h3  {font-family: "proxima-nova-1","proxima-nova-2";}
@@ -45,7 +45,7 @@ a:hover{color: #F45338;}
 /*-----Top menu-----*/
 #top_menu {
     background-color: #48473f;
-    width: 60%;
+    width: 70%;
     margin: 0 auto 0 auto;
     padding: 10px;
     -moz-border-radius: 0 0 12px 12px;
@@ -62,6 +62,31 @@ a:hover{color: #F45338;}
     margin-left: 15px;
 }
 
+#top_menu a.minutes {
+    background: url('../images/icons/script.png') no-repeat;
+    padding: 2px 0px 0px 20px;
+}
+#top_menu a.students {
+    background: url('../images/icons/group.png') no-repeat;
+    padding: 2px 0px 0px 20px;
+}
+#top_menu a.teachers {
+    background: url('../images/icons/user_suit.png') no-repeat;
+    padding: 2px 0px 0px 20px;
+}
+#top_menu a.schedule {
+    background: url('../images/icons/calendar.png') no-repeat;
+    padding: 2px 0px 0px 20px;
+}
+#top_menu a.user_profile {
+    background: url('../images/icons/telephone.png') no-repeat;
+    padding: 2px 0px 0px 20px;
+}
+#top_menu a.administration {
+    background: url('../images/icons/cog.png') no-repeat;
+    padding: 2px 0px 0px 20px;
+}
+
 #top_menu a {
     text-decoration: none;
     color: #f0edda;
@@ -73,10 +98,15 @@ a:hover{color: #F45338;}
 .ctrlHolder .right{ float: right;}
 
 /*----- Tables ----*/
+#results_table {
+    widht: 50%;
+    margin-left: auto; 
+    margin-right: auto; 
+}
+
 .records_list {
 	font: bold 12px "proxima-nova-1","proxima-nova-2"; 
 	font-size: 12px;
-	margin: 45px;
 	text-align: left;
 	border-collapse: collapse;
         border: 1px solid #48473f;
@@ -121,3 +151,4 @@ a:hover{color: #F45338;}
 .records_list td.entity_actions ul li{
     list-style: none; display: inline; margin-left: 0px;
 }
+
