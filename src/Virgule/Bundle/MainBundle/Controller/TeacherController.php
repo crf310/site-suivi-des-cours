@@ -47,7 +47,9 @@ class TeacherController extends Controller {
             throw new NotFoundHttpException();
         }
 
-        return ['entities' => $pagerfanta];
+        return array(
+		'entities' => $pagerfanta
+		);
     }
 
     /**
