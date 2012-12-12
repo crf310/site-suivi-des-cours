@@ -39,7 +39,7 @@ class TeacherController extends Controller {
         $entities = $em->getRepository('VirguleMainBundle:Teacher')->findAll();
 
         $pagerfanta = new Pagerfanta(new ArrayAdapter($entities));
-        $pagerfanta->setMaxPerPage(1);
+        $pagerfanta->setMaxPerPage(10);
 
         try {
             $pagerfanta->setCurrentPage($page);
