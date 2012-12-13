@@ -1,8 +1,9 @@
 <?php
 namespace Virgule\Bundle\MainBundle\DataFixtures\ORM\App;
 
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Virgule\Bundle\MainBundle\Entity\Teacher;
 
 /**
@@ -11,8 +12,7 @@ use Virgule\Bundle\MainBundle\Entity\Teacher;
  * @author Guillaume Lucazeau
  */
 
-class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
-{
+class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface {
     public function load(ObjectManager $manager)
     {
         $userAdmin = new Teacher();

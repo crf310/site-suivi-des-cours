@@ -1,8 +1,9 @@
 <?php
 namespace Virgule\Bundle\MainBundle\DataFixtures\ORM\App;
 
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Virgule\Bundle\MainBundle\Entity\Roles;
 
 /**
