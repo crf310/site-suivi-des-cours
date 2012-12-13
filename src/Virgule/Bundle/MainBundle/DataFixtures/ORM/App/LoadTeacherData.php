@@ -17,7 +17,10 @@ class LoadTeacherData implements FixtureInterface
     {
         $userAdmin = new Teacher();
         $userAdmin->setUsername('root');
-        $userAdmin->setPassword('root1234');
+        $userAdmin->setPassword('root1234');        
+        $userAdmin->setFirstName("Root");
+        $userAdmin->setLastName("User");
+        $userAdmin->setRegistrationDate(new \DateTime('now'));
         
         $manager->persist($userAdmin);
                 

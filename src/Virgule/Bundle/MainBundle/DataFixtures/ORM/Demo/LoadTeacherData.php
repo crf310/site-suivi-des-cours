@@ -19,6 +19,7 @@ class LoadTeacherData implements FixtureInterface {
         $prof1->setFirstName("Henry");
         $prof1->setLastName("Jones");
         $prof1->setEmailAddress("henry.jones@example.com");
+        $prof1->setRegistrationDate(new \DateTime('now'));
         
         $prof2 = new Teacher();
         $prof2->setUsername("prof2");
@@ -26,6 +27,7 @@ class LoadTeacherData implements FixtureInterface {
         $prof2->setFirstName("John");
         $prof2->setLastName("Keating");
         $prof2->setEmailAddress("john.keating@example.com");
+        $prof2->setRegistrationDate(new \DateTime('now'));
 
         $prof3 = new Teacher();
         $prof3->setUsername("prof3");
@@ -33,6 +35,7 @@ class LoadTeacherData implements FixtureInterface {
         $prof3->setFirstName("Walter");
         $prof3->setLastName("Lewin");
         $prof3->setEmailAddress("walter.lewin@example.com");
+        $prof3->setRegistrationDate(new \DateTime('now'));
         
         $manager->persist($prof1);
         $manager->persist($prof2);
