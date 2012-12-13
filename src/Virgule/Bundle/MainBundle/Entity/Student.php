@@ -157,7 +157,7 @@ class Student
     /**
      * @var boolean $scholarizedInAForeignCountry
      *
-     * @ORM\Column(name="scholarized_in_a foreign_country", type="boolean", nullable=true)
+     * @ORM\Column(name="scholarized_in_a_foreign_country", type="boolean", nullable=true)
      */
     private $scholarizedInAForeignCountry;
 

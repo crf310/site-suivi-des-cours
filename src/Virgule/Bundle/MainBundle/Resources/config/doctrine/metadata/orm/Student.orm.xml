@@ -23,7 +23,7 @@
     <field name="scholarized" type="boolean" column="scholarized" nullable="true"/>
     <field name="profession" type="string" column="profession" length="45" nullable="true"/>
     <field name="scholarizedInTheCountry" type="boolean" column="scholarized_in_the_country" nullable="true"/>
-    <field name="scholarizedInAForeignCountry" type="boolean" column="scholarized_in_a foreign_country" nullable="true"/>
+    <field name="scholarizedInAForeignCountry" type="boolean" column="scholarized_in_a_foreign_country" nullable="true"/>
     <field name="scholarizationLevel" type="boolean" column="scholarization_level" nullable="true"/>
     <field name="emergencyContactLastname" type="string" column="emergency_contact_lastname" length="45" nullable="true"/>
     <field name="emergencyContactFirstname" type="string" column="emergency_contact_firstname" length="45" nullable="true"/>
