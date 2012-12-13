@@ -11,7 +11,7 @@ use Virgule\Bundle\MainBundle\Entity\Roles;
  * @author Guillaume Lucazeau
  */
 
-class LoadTeacherData implements FixtureInterface
+class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager) {
         $roleViewer = new Roles();
@@ -44,8 +44,15 @@ class LoadTeacherData implements FixtureInterface
         $manager->persist($roleSuperSecretary);
         $manager->persist($roleAdmin);
         $manager->persist($roleSuperAdmin);
-                
+        
+        $this->addReference('user-role', $roleUser);
+        $this->addReference('admin-role', $roleSuperAdmin);
+        
         $manager->flush();
+    }
+    
+    public function getOrder() {
+        return 1;
     }
 }
 

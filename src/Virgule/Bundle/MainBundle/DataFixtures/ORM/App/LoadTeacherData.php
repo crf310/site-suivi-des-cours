@@ -11,7 +11,7 @@ use Virgule\Bundle\MainBundle\Entity\Teacher;
  * @author Guillaume Lucazeau
  */
 
-class LoadTeacherData implements FixtureInterface
+class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -21,10 +21,15 @@ class LoadTeacherData implements FixtureInterface
         $userAdmin->setFirstName("Root");
         $userAdmin->setLastName("User");
         $userAdmin->setRegistrationDate(new \DateTime('now'));
-        
+        $userAdmin->setFkRoleId($manager->merge($this->getReference('admin-role')));
+
         $manager->persist($userAdmin);
                 
         $manager->flush();
+    }
+    
+    public function getOrder() {
+        return 2;
     }
 }
 
