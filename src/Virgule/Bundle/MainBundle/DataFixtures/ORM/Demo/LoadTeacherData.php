@@ -1,5 +1,5 @@
 <?php
-namespace Virgule\Bundle\MainBundle\DataFixtures\ORM;
+namespace Virgule\Bundle\MainBundle\DataFixtures\ORM\Demo;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\FixtureInterface;
