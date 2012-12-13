@@ -12,7 +12,7 @@ use Virgule\Bundle\MainBundle\Entity\Roles;
  * @author Guillaume Lucazeau
  */
 
-class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
+class LoadRoleData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager) {
         $roleViewer = new Roles();
