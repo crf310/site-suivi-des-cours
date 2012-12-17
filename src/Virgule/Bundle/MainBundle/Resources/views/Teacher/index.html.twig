@@ -1,48 +1,6 @@
 {% extends '::base.html.twig' %}
 {% block body %}
-<h1>Liste des formateurs</h1>
-
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Téléphone fixe</th>
-            <th>Téléphone portable</th>
-            <th>Adresse email</th>
-            <th>Dernière connexion</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities.currentPageResults %}
-        <tr{% if loop.index % 2 == 1 %} class="dark" {% endif %}>
-            <td>{{ entity.firstName }} {{ entity.lastName }}</td>
-            <td>{{ entity.phoneNumber }}</td>
-            <td>{{ entity.cellphoneNumber }}</td>
-            <td><a href="mailto:{{ entity.emailAddress }}">{{ entity.emailAddress }}</a></td>
-            <td>
-                {% if entity.lastConnectionDate %}
-                    {{ entity.lastConnectionDate|date('Y-m-d H:i:s') }}
-                {% else %}
-                    jamais
-                {% endif %}
-            </td>
-            <td class="entity_actions">
-                <ul>
-                    <li>
-                        <a href="{{ path('teacher_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('teacher_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-    {% include '::pager_footer.html.twig' %}
-</table>
-
+<div id="nav_table">
 <ul>
     <li>
         <a href="{{ path('teacher_new') }}">
@@ -50,4 +8,48 @@
         </a>
     </li>
 </ul>
+</div>
+<div id="results_table">
+    <h1>Liste des formateurs</h1>
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Téléphone fixe</th>
+                <th>Téléphone portable</th>
+                <th>Adresse email</th>
+                <th>Dernière connexion</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities.currentPageResults %}
+            <tr{% if loop.index % 2 == 1 %} class="dark" {% endif %}>
+                <td>{{ entity.firstName }} {{ entity.lastName }}</td>
+                <td>{{ entity.phoneNumber }}</td>
+                <td>{{ entity.cellphoneNumber }}</td>
+                <td><a href="mailto:{{ entity.emailAddress }}">{{ entity.emailAddress }}</a></td>
+                <td>
+                    {% if entity.lastConnectionDate %}
+                        {{ entity.lastConnectionDate|date('Y-m-d H:i:s') }}
+                    {% else %}
+                        jamais
+                    {% endif %}
+                </td>
+                <td class="entity_actions">
+                    <ul>
+                        <li>
+                            <a href="{{ path('teacher_show', { 'id': entity.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('teacher_edit', { 'id': entity.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        {% include '::pager_footer.html.twig' %}
+    </table>
+</div>
 {% endblock %}
