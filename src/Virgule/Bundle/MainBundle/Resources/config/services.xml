@@ -30,6 +30,11 @@
             <tag name="kernel.event_listener" event="security.interactive_login" />
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
+        
+        <!-- Views -->
+        <service id="pagerfanta.view.tablefooter" class="Virgule\Bundle\MainBundle\View\TableFooterView" public="true">
+            <tag name="pagerfanta.view" alias="tablefooter" />
+        </service>
     </services>
 
 </container>
