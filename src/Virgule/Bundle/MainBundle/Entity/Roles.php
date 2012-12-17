@@ -3,14 +3,14 @@
 namespace Virgule\Bundle\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Security\Core\Role\RoleInterface;
 /**
  * Virgule\Bundle\MainBundle\Entity\Roles
  *
  * @ORM\Table(name="roles")
  * @ORM\Entity
  */
-class Roles
+class Roles implements RoleInterface
 {
     /**
      * @var integer $id
@@ -34,8 +34,6 @@ class Roles
      * @ORM\Column(name="code", type="string", length=30, nullable=true)
      */
     private $code;
-
-
 
     /**
      * Get id
@@ -91,5 +89,9 @@ class Roles
     public function getCode()
     {
         return $this->code;
+    }
+
+    public function getRole() {
+        
     }
 }

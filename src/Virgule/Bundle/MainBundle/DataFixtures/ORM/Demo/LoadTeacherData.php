@@ -21,7 +21,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $prof1->setLastName("Jones");
         $prof1->setEmailAddress("henry.jones@example.com");
         $prof1->setRegistrationDate(new \DateTime('now'));
-        $prof1->setFkRoleId($manager->merge($this->getReference('user-role')));
+        $prof1->setFkRoleId($this->getReference('user-role')->getId());
         
         $prof2 = new Teacher();
         $prof2->setUsername("prof2");
@@ -30,7 +30,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $prof2->setLastName("Keating");
         $prof2->setEmailAddress("john.keating@example.com");
         $prof2->setRegistrationDate(new \DateTime('now'));
-        $prof2->setFkRoleId($manager->merge($this->getReference('user-role')));
+        $prof2->setFkRoleId($this->getReference('user-role')->getId());
 
         $prof3 = new Teacher();
         $prof3->setUsername("prof3");
@@ -39,7 +39,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $prof3->setLastName("Lewin");
         $prof3->setEmailAddress("walter.lewin@example.com");
         $prof3->setRegistrationDate(new \DateTime('now'));
-        $prof3->setFkRoleId($manager->merge($this->getReference('user-role')));
+        $prof3->setFkRoleId($this->getReference('user-role')->getId());
         
         $manager->persist($prof1);
         $manager->persist($prof2);
