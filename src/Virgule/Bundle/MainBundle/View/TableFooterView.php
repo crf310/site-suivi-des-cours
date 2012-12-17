@@ -4,7 +4,7 @@ namespace Virgule\Bundle\MainBundle\View;
 use Pagerfanta\PagerfantaInterface;
 use Pagerfanta\View\ViewInterface;
 
-class TableFooterView implements ViewInterface
+class TableFooterView implements ViewInterface 
 {
     /**
      * {@inheritdoc}
@@ -57,7 +57,6 @@ class TableFooterView implements ViewInterface
                 $pages[] = sprintf('<span class="%s">...</span>', $options['css_dots_class']);
             }
         }
-
         // pages
         for ($page = $startPage; $page <= $endPage; $page++) {
             if ($page == $currentPage) {
@@ -78,6 +77,12 @@ class TableFooterView implements ViewInterface
             }
 
             $pages[] = array($pagerfanta->getNbPages(), $pagerfanta->getNbPages());
+        }
+        
+        if ($pagerfanta->getNbResults() > 1) {
+            $pages[] = '&nbsp;(' . $pagerfanta->getNbResults() . ' résultats)' ;
+        } else {
+            $pages[] = '&nbsp;(' .  $pagerfanta->getNbResults() . ' résultat)';
         }
         $pages[] = sprintf('</td>');
 
