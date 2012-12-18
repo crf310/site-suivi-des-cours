@@ -36,7 +36,7 @@ class TeacherController extends Controller {
         
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('VirguleMainBundle:Teacher')->findAll();
+        $entities = $em->getRepository('VirguleMainBundle:Teacher')->getTeachersByStatus(true);
 
         $pagerfanta = new Pagerfanta(new ArrayAdapter($entities));
         $pagerfanta->setMaxPerPage(10);
