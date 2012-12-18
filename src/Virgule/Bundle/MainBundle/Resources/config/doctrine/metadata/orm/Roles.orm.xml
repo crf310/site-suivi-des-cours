@@ -4,7 +4,7 @@
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="label" type="string" column="label" length="30" nullable="true"/>
-    <field name="code" type="string" column="code" length="30" nullable="true"/>
+    <field name="label" type="string" column="label" length="30" nullable="false"/>
+    <field name="code" type="string" column="code" length="30" nullable="false"/>
   </entity>
 </doctrine-mapping>
