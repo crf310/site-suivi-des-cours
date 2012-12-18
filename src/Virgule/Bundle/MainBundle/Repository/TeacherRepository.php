@@ -56,7 +56,9 @@ class TeacherRepository extends EntityRepository implements UserProviderInterfac
         $q = $this
             ->createQueryBuilder('t')
             ->where('t.isActive = :isActive')
-            ->setParameter('isActive', isActive)
+            ->andWhere('t.username <> :rootUsername')
+            ->setParameter('isActive', $isActive)
+            ->setParameter('rootUsername', "root")
             ->getQuery()
         ;
         $teachers = $q->execute();
