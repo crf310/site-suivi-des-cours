@@ -21,8 +21,13 @@ class TeacherType extends AbstractType
             ->add('password')
             ->add('registrationDate')
             ->add('lastConnectionDate')
-            ->add('role')
-        ;
+            ->add('role', 'entity', array(
+                'class' => 'VirguleMainBundle:Roles',
+                'expanded' => true,
+                'multiple'  => false,
+                'property' => 'label',
+                'property_path' => false,
+                ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
