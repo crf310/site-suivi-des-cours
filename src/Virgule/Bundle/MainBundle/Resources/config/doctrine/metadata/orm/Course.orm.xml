@@ -12,5 +12,10 @@
     <field name="fkLevelId" type="integer" column="fk_level_id" nullable="false"/>
     <field name="fkSemesterId" type="integer" column="fk_semester_id" nullable="false"/>
     <field name="fkTeacherId" type="integer" column="fk_teacher_id" nullable="false"/>
+    <many-to-one field="fkOrganizationBranch" target-entity="Virgule\Bundle\MainBundle\Entity\OrganizationBranch">
+      <join-columns>
+        <join-column name="fk_organization_branch" referenced-column-name="id" nullable="1"/>
+      </join-columns>
+    </many-to-one>
   </entity>
 </doctrine-mapping>

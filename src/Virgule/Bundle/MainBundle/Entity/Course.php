@@ -5,7 +5,7 @@ namespace Virgule\Bundle\MainBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Virgule\Bundle\MainBundle\Entity\Course
+ * Course
  *
  * @ORM\Table(name="course")
  * @ORM\Entity
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Course
 {
     /**
-     * @var integer $id
+     * @var integer
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -22,60 +22,70 @@ class Course
     private $id;
 
     /**
-     * @var boolean $dayOfWeek
+     * @var boolean
      *
      * @ORM\Column(name="day_of_week", type="boolean", nullable=false)
      */
     private $dayOfWeek;
 
     /**
-     * @var \DateTime $startTime
+     * @var \DateTime
      *
      * @ORM\Column(name="start_time", type="time", nullable=false)
      */
     private $startTime;
 
     /**
-     * @var \DateTime $endTime
+     * @var \DateTime
      *
      * @ORM\Column(name="end_time", type="time", nullable=false)
      */
     private $endTime;
 
     /**
-     * @var \DateTime $alternateStartdate
+     * @var \DateTime
      *
      * @ORM\Column(name="alternate_startdate", type="date", nullable=true)
      */
     private $alternateStartdate;
 
     /**
-     * @var \DateTime $alternateEnddate
+     * @var \DateTime
      *
      * @ORM\Column(name="alternate_enddate", type="date", nullable=true)
      */
     private $alternateEnddate;
 
     /**
-     * @var integer $fkLevelId
+     * @var integer
      *
      * @ORM\Column(name="fk_level_id", type="integer", nullable=false)
      */
     private $fkLevelId;
 
     /**
-     * @var integer $fkSemesterId
+     * @var integer
      *
      * @ORM\Column(name="fk_semester_id", type="integer", nullable=false)
      */
     private $fkSemesterId;
 
     /**
-     * @var integer $fkTeacherId
+     * @var integer
      *
      * @ORM\Column(name="fk_teacher_id", type="integer", nullable=false)
      */
     private $fkTeacherId;
+
+    /**
+     * @var \OrganizationBranch
+     *
+     * @ORM\ManyToOne(targetEntity="OrganizationBranch")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="fk_organization_branch", referencedColumnName="id")
+     * })
+     */
+    private $fkOrganizationBranch;
 
 
 
@@ -271,5 +281,28 @@ class Course
     public function getFkTeacherId()
     {
         return $this->fkTeacherId;
+    }
+
+    /**
+     * Set fkOrganizationBranch
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\OrganizationBranch $fkOrganizationBranch
+     * @return Course
+     */
+    public function setFkOrganizationBranch(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $fkOrganizationBranch = null)
+    {
+        $this->fkOrganizationBranch = $fkOrganizationBranch;
+    
+        return $this;
+    }
+
+    /**
+     * Get fkOrganizationBranch
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\OrganizationBranch 
+     */
+    public function getFkOrganizationBranch()
+    {
+        return $this->fkOrganizationBranch;
     }
 }
