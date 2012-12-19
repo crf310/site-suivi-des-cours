@@ -1,0 +1,51 @@
+<h1>Course list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Dayofweek</th>
+            <th>Starttime</th>
+            <th>Endtime</th>
+            <th>Alternatestartdate</th>
+            <th>Alternateenddate</th>
+            <th>Fklevelid</th>
+            <th>Fksemesterid</th>
+            <th>Fkteacherid</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('course_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.dayOfWeek }}</td>
+            <td>{{ entity.startTime }}</td>
+            <td>{{ entity.endTime }}</td>
+            <td>{% if entity.alternateStartdate %}{{ entity.alternateStartdate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if entity.alternateEnddate %}{{ entity.alternateEnddate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{{ entity.fkLevelId }}</td>
+            <td>{{ entity.fkSemesterId }}</td>
+            <td>{{ entity.fkTeacherId }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('course_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('course_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('course_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>

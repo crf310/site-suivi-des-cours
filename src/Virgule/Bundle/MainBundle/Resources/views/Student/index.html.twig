@@ -1,0 +1,85 @@
+<h1>Student list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Registrationdate</th>
+            <th>Lastname</th>
+            <th>Firstname</th>
+            <th>Birthdate</th>
+            <th>Phonenumber</th>
+            <th>Cellphonenumber</th>
+            <th>Address</th>
+            <th>Zipcode</th>
+            <th>City</th>
+            <th>Gender</th>
+            <th>Nationality</th>
+            <th>Maritalstatus</th>
+            <th>Commentaires</th>
+            <th>Registringdate</th>
+            <th>Picturepath</th>
+            <th>Arrivaldate</th>
+            <th>Scholarized</th>
+            <th>Profession</th>
+            <th>Scholarizedinthecountry</th>
+            <th>Scholarizedinaforeigncountry</th>
+            <th>Scholarizationlevel</th>
+            <th>Emergencycontactlastname</th>
+            <th>Emergencycontactfirstname</th>
+            <th>Emergencycontactphonenumber</th>
+            <th>Emergencycontactconnectiontype</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('student_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{% if entity.registrationDate %}{{ entity.registrationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{{ entity.lastname }}</td>
+            <td>{{ entity.firstname }}</td>
+            <td>{% if entity.birthdate %}{{ entity.birthdate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{{ entity.phoneNumber }}</td>
+            <td>{{ entity.cellphoneNumber }}</td>
+            <td>{{ entity.address }}</td>
+            <td>{{ entity.zipcode }}</td>
+            <td>{{ entity.city }}</td>
+            <td>{{ entity.gender }}</td>
+            <td>{{ entity.nationality }}</td>
+            <td>{{ entity.maritalStatus }}</td>
+            <td>{{ entity.commentaires }}</td>
+            <td>{% if entity.registringDate %}{{ entity.registringDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{{ entity.picturePath }}</td>
+            <td>{% if entity.arrivalDate %}{{ entity.arrivalDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{{ entity.scholarized }}</td>
+            <td>{{ entity.profession }}</td>
+            <td>{{ entity.scholarizedInTheCountry }}</td>
+            <td>{{ entity.scholarizedInAForeignCountry }}</td>
+            <td>{{ entity.scholarizationLevel }}</td>
+            <td>{{ entity.emergencyContactLastname }}</td>
+            <td>{{ entity.emergencyContactFirstname }}</td>
+            <td>{{ entity.emergencyContactPhoneNumber }}</td>
+            <td>{{ entity.emergencyContactConnectionType }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('student_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('student_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('student_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>

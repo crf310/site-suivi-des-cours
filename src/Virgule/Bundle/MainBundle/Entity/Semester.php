@@ -5,7 +5,7 @@ namespace Virgule\Bundle\MainBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Virgule\Bundle\MainBundle\Entity\Semester
+ * Semester
  *
  * @ORM\Table(name="semester")
  * @ORM\Entity
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Semester
 {
     /**
-     * @var integer $id
+     * @var integer
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -22,14 +22,14 @@ class Semester
     private $id;
 
     /**
-     * @var \DateTime $startDate
+     * @var \DateTime
      *
      * @ORM\Column(name="start_date", type="date", nullable=false)
      */
     private $startDate;
 
     /**
-     * @var \DateTime $endDate
+     * @var \DateTime
      *
      * @ORM\Column(name="end_date", type="date", nullable=false)
      */

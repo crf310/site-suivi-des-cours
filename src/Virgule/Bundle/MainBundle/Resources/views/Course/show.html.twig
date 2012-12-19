@@ -1,0 +1,61 @@
+<h1>Course</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Dayofweek</th>
+            <td>{{ entity.dayOfWeek }}</td>
+        </tr>
+        <tr>
+            <th>Starttime</th>
+            <td>{{ entity.startTime }}</td>
+        </tr>
+        <tr>
+            <th>Endtime</th>
+            <td>{{ entity.endTime }}</td>
+        </tr>
+        <tr>
+            <th>Alternatestartdate</th>
+            <td>{{ entity.alternateStartdate|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Alternateenddate</th>
+            <td>{{ entity.alternateEnddate|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Fklevelid</th>
+            <td>{{ entity.fkLevelId }}</td>
+        </tr>
+        <tr>
+            <th>Fksemesterid</th>
+            <td>{{ entity.fkSemesterId }}</td>
+        </tr>
+        <tr>
+            <th>Fkteacherid</th>
+            <td>{{ entity.fkTeacherId }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('course') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('course_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('course_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

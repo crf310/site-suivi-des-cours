@@ -5,15 +5,15 @@ namespace Virgule\Bundle\MainBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Virgule\Bundle\MainBundle\Entity\Classroom
+ * Classroom
  *
  * @ORM\Table(name="classroom")
  * @ORM\Entity
  */
-class Classroom
+class ClassRoom
 {
     /**
-     * @var boolean $id
+     * @var boolean
      *
      * @ORM\Column(name="id", type="boolean", nullable=false)
      * @ORM\Id
@@ -22,21 +22,21 @@ class Classroom
     private $id;
 
     /**
-     * @var string $name
+     * @var string
      *
      * @ORM\Column(name="name", type="string", length=100, nullable=false)
      */
     private $name;
 
     /**
-     * @var string $address
+     * @var string
      *
      * @ORM\Column(name="address", type="string", length=250, nullable=true)
      */
     private $address;
 
     /**
-     * @var string $comments
+     * @var string
      *
      * @ORM\Column(name="comments", type="string", length=250, nullable=true)
      */

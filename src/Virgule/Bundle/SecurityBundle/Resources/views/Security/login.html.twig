@@ -1,5 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
     <head>
         <link rel="shortcut icon" href="/croixrouge/web/images/favicon.ico" />
         <link href="{{ asset('css/uni-form.css') }}" media="screen" rel="stylesheet"/>
@@ -10,11 +12,11 @@
         <link href="{{ asset('css/login.css') }}" media="screen" rel="stylesheet"/>
         <script type="text/javascript">
            $(function()
-	$("button input").uniform();
-});
+            $("button input").uniform();
+           });
          </script>
     </head>
-    <body class="login">
+    <body class="login" onload="document.getElementById('username').focus();">
         <div id="global">
             <img src="{{ asset('images/croixrouge.png') }}" alt="Croix-rouge française" />
             <div id="pomme">
