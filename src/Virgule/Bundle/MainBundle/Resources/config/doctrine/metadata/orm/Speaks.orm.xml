@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Speaks" table="speaks">
-    <id name="fkLanguageId" type="integer" column="fk_language_id"/>
-    <id name="fkStudentId" type="integer" column="fk_student_id"/>
-  </entity>
-</doctrine-mapping>
