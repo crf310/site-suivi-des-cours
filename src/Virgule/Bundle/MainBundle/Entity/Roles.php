@@ -4,14 +4,15 @@ namespace Virgule\Bundle\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\Role\RoleInterface;
+
 /**
  * Virgule\Bundle\MainBundle\Entity\Roles
  *
  * @ORM\Table(name="roles")
  * @ORM\Entity
  */
-class Roles implements RoleInterface
-{
+class Roles implements RoleInterface {
+
     /**
      * @var integer $id
      *
@@ -36,12 +37,16 @@ class Roles implements RoleInterface
     private $code;
 
     /**
+     * @ORM\OneToMany(targetEntity="Teacher", mappedBy="role")
+     */
+    protected $teachers;
+
+    /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -51,10 +56,9 @@ class Roles implements RoleInterface
      * @param string $label
      * @return Roles
      */
-    public function setLabel($label)
-    {
+    public function setLabel($label) {
         $this->label = $label;
-    
+
         return $this;
     }
 
@@ -63,8 +67,7 @@ class Roles implements RoleInterface
      *
      * @return string 
      */
-    public function getLabel()
-    {
+    public function getLabel() {
         return $this->label;
     }
 
@@ -74,10 +77,9 @@ class Roles implements RoleInterface
      * @param string $code
      * @return Roles
      */
-    public function setCode($code)
-    {
+    public function setCode($code) {
         $this->code = $code;
-    
+
         return $this;
     }
 
@@ -86,12 +88,48 @@ class Roles implements RoleInterface
      *
      * @return string 
      */
-    public function getCode()
-    {
+    public function getCode() {
         return $this->code;
     }
 
     public function getRole() {
         
     }
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->teachers = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add teachers
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Teacher $teachers
+     * @return Roles
+     */
+    public function addTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $teachers) {
+        $this->teachers[] = $teachers;
+        return $this;
+    }
+
+    /**
+     * Remove teachers
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Teacher $teachers
+     */
+    public function removeTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $teachers) {
+        $this->teachers->removeElement($teachers);
+    }
+
+    /**
+     * Get teachers
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTeachers() {
+        return $this->teachers;
+    }
+
 }

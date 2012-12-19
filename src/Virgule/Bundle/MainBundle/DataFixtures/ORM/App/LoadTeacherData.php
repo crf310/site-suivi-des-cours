@@ -21,7 +21,8 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $userAdmin->setFirstName("Root");
         $userAdmin->setLastName("User");
         $userAdmin->setRegistrationDate(new \DateTime('now'));
-        $userAdmin->setFkRoleId($this->getReference('admin-role')->getId());
+        // $userAdmin->setFkRoleId($this->getReference('admin-role')->getId());
+        $userAdmin->setRole($this->getReference('admin-role'));
 
         $manager->persist($userAdmin);
                 

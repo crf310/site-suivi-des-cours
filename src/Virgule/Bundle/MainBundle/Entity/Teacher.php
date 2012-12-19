@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\TeacherRepository")
  */
 class Teacher implements UserInterface, EquatableInterface {
+
     /**
      * @var integer $id
      *
@@ -93,19 +94,17 @@ class Teacher implements UserInterface, EquatableInterface {
     private $lastConnectionDate;
 
     /**
-     * @var integer $fkRoleId
-     *
-     * @ORM\Column(name="fk_role_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Roles", inversedBy="teacher")
+     * @ORM\JoinColumn(name="fk_role_id", referencedColumnName="id")
      */
-    private $fkRoleId;
-    
+    protected $role;
+
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -113,7 +112,7 @@ class Teacher implements UserInterface, EquatableInterface {
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
     }
-    
+
     public function eraseCredentials() {
         
     }
@@ -123,10 +122,11 @@ class Teacher implements UserInterface, EquatableInterface {
     }
 
     public function getRoles() {
-        return Array('ROLE_USER');
+        return $this->getRole();
     }
 
     public function getSalt() {
+        
     }
 
     public function getUsername() {
@@ -136,16 +136,16 @@ class Teacher implements UserInterface, EquatableInterface {
     public function isEqualTo(UserInterface $user) {
         return $this->username === $user->getUsername();
     }
+
     /**
      * Set isActive
      *
      * @param boolean $isActive
      * @return Teacher
      */
-    public function setIsActive($isActive)
-    {
+    public function setIsActive($isActive) {
         $this->isActive = $isActive;
-    
+
         return $this;
     }
 
@@ -154,8 +154,7 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @return boolean 
      */
-    public function getIsActive()
-    {
+    public function getIsActive() {
         return $this->isActive;
     }
 
@@ -165,10 +164,9 @@ class Teacher implements UserInterface, EquatableInterface {
      * @param string $lastName
      * @return Teacher
      */
-    public function setLastName($lastName)
-    {
+    public function setLastName($lastName) {
         $this->lastName = $lastName;
-    
+
         return $this;
     }
 
@@ -177,8 +175,7 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @return string 
      */
-    public function getLastName()
-    {
+    public function getLastName() {
         return $this->lastName;
     }
 
@@ -188,10 +185,9 @@ class Teacher implements UserInterface, EquatableInterface {
      * @param string $firstName
      * @return Teacher
      */
-    public function setFirstName($firstName)
-    {
+    public function setFirstName($firstName) {
         $this->firstName = $firstName;
-    
+
         return $this;
     }
 
@@ -200,8 +196,7 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @return string 
      */
-    public function getFirstName()
-    {
+    public function getFirstName() {
         return $this->firstName;
     }
 
@@ -211,10 +206,9 @@ class Teacher implements UserInterface, EquatableInterface {
      * @param string $phoneNumber
      * @return Teacher
      */
-    public function setPhoneNumber($phoneNumber)
-    {
+    public function setPhoneNumber($phoneNumber) {
         $this->phoneNumber = $phoneNumber;
-    
+
         return $this;
     }
 
@@ -223,8 +217,7 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @return string 
      */
-    public function getPhoneNumber()
-    {
+    public function getPhoneNumber() {
         return $this->phoneNumber;
     }
 
@@ -234,10 +227,9 @@ class Teacher implements UserInterface, EquatableInterface {
      * @param string $cellphoneNumber
      * @return Teacher
      */
-    public function setCellphoneNumber($cellphoneNumber)
-    {
+    public function setCellphoneNumber($cellphoneNumber) {
         $this->cellphoneNumber = $cellphoneNumber;
-    
+
         return $this;
     }
 
@@ -246,8 +238,7 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @return string 
      */
-    public function getCellphoneNumber()
-    {
+    public function getCellphoneNumber() {
         return $this->cellphoneNumber;
     }
 
@@ -257,10 +248,9 @@ class Teacher implements UserInterface, EquatableInterface {
      * @param string $emailAddress
      * @return Teacher
      */
-    public function setEmailAddress($emailAddress)
-    {
+    public function setEmailAddress($emailAddress) {
         $this->emailAddress = $emailAddress;
-    
+
         return $this;
     }
 
@@ -269,8 +259,7 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @return string 
      */
-    public function getEmailAddress()
-    {
+    public function getEmailAddress() {
         return $this->emailAddress;
     }
 
@@ -280,10 +269,9 @@ class Teacher implements UserInterface, EquatableInterface {
      * @param string $username
      * @return Teacher
      */
-    public function setUsername($username)
-    {
+    public function setUsername($username) {
         $this->username = $username;
-    
+
         return $this;
     }
 
@@ -293,10 +281,9 @@ class Teacher implements UserInterface, EquatableInterface {
      * @param string $password
      * @return Teacher
      */
-    public function setPassword($password)
-    {
+    public function setPassword($password) {
         $this->password = $password;
-    
+
         return $this;
     }
 
@@ -306,10 +293,9 @@ class Teacher implements UserInterface, EquatableInterface {
      * @param \DateTime $registrationDate
      * @return Teacher
      */
-    public function setRegistrationDate($registrationDate)
-    {
+    public function setRegistrationDate($registrationDate) {
         $this->registrationDate = $registrationDate;
-    
+
         return $this;
     }
 
@@ -318,8 +304,7 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @return \DateTime 
      */
-    public function getRegistrationDate()
-    {
+    public function getRegistrationDate() {
         return $this->registrationDate;
     }
 
@@ -329,10 +314,9 @@ class Teacher implements UserInterface, EquatableInterface {
      * @param \DateTime $lastConnectionDate
      * @return Teacher
      */
-    public function setLastConnectionDate($lastConnectionDate)
-    {
+    public function setLastConnectionDate($lastConnectionDate) {
         $this->lastConnectionDate = $lastConnectionDate;
-    
+
         return $this;
     }
 
@@ -341,31 +325,29 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @return \DateTime 
      */
-    public function getLastConnectionDate()
-    {
+    public function getLastConnectionDate() {
         return $this->lastConnectionDate;
     }
 
     /**
-     * Set fkRoleId
+     * Set role
      *
-     * @param integer $fkRoleId
+     * @param \Virgule\Bundle\MainBundle\Entity\Roles $role
      * @return Teacher
      */
-    public function setFkRoleId($fkRoleId)
-    {
-        $this->fkRoleId = $fkRoleId;
-    
+    public function setRole(\Virgule\Bundle\MainBundle\Entity\Roles $role = null) {
+        $this->role = $role;
+
         return $this;
     }
 
     /**
-     * Get fkRoleId
+     * Get role
      *
-     * @return integer 
+     * @return \Virgule\Bundle\MainBundle\Entity\Roles 
      */
-    public function getFkRoleId()
-    {
-        return $this->fkRoleId;
+    public function getRole() {
+        return $this->role;
     }
+
 }
