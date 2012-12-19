@@ -21,7 +21,7 @@ class TeacherType extends AbstractType
             ->add('password')
             ->add('registrationDate')
             ->add('lastConnectionDate')
-            ->add('fkRoleId')
+            ->add('role')
         ;
     }
 
