@@ -19,6 +19,8 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $prof1->setPassword("password");
         $prof1->setFirstName("Henry");
         $prof1->setLastName("Jones");
+        $prof1->setCellphoneNumber("06 05 04 03 02");
+        $prof1->setPhoneNumber("01 02 03 04 05");
         $prof1->setEmailAddress("henry.jones@example.com");
         $prof1->setRegistrationDate(new \DateTime('now'));
         $prof1->setFkRoleId($this->getReference('user-role')->getId());
@@ -28,6 +30,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $prof2->setPassword("password");
         $prof2->setFirstName("John");
         $prof2->setLastName("Keating");
+        $prof1->setCellphoneNumber("06 05 04 03 02");
         $prof2->setEmailAddress("john.keating@example.com");
         $prof2->setRegistrationDate(new \DateTime('now'));
         $prof2->setFkRoleId($this->getReference('user-role')->getId());
