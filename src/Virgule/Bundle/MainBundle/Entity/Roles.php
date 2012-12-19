@@ -132,4 +132,7 @@ class Roles implements RoleInterface {
         return $this->teachers;
     }
 
+    public function __toString() {
+        return $this->label;
+    }
 }
