@@ -17,7 +17,7 @@ class LoadRolesData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager) {
         $roleViewer = new Roles();
         $roleViewer->setCode("ROLE_VIEWER");
-        $roleViewer->setLabel("Utilisateur (lecture seulement)");
+        $roleViewer->setLabel("Utilisateur (lecture seule)");
         
         $roleUser = new Roles();
         $roleUser->setCode("ROLE_USER");
