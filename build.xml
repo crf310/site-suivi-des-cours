@@ -53,7 +53,7 @@
     
     <!-- Data -->
     <target name="build:data"
-           depends="data:clean, data:create, data:load"
+           depends="data:clean, data:create"
            description="Clean and load data" />
    
     <target name="data:clean" description="Droping database schema">
