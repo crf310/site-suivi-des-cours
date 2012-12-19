@@ -25,7 +25,7 @@ class Roles implements RoleInterface {
     /**
      * @var string $label
      *
-     * @ORM\Column(name="label", type="string", length=30, nullable=true)
+     * @ORM\Column(name="label", type="string", length=50, nullable=true)
      */
     protected $label;
 
