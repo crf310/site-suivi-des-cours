@@ -20,21 +20,21 @@ class Roles implements RoleInterface {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string $label
      *
      * @ORM\Column(name="label", type="string", length=30, nullable=true)
      */
-    private $label;
+    protected $label;
 
     /**
      * @var string $code
      *
      * @ORM\Column(name="code", type="string", length=30, nullable=true)
      */
-    private $code;
+    protected $code;
 
     /**
      * @ORM\OneToMany(targetEntity="Teacher", mappedBy="role")

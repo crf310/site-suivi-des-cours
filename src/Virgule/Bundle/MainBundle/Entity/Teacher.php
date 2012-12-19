@@ -21,77 +21,77 @@ class Teacher implements UserInterface, EquatableInterface {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var boolean $isActive
      *
      * @ORM\Column(name="is_active", type="boolean", nullable=false)
      */
-    private $isActive;
+    protected $isActive;
 
     /**
      * @var string $lastName
      *
      * @ORM\Column(name="last_name", type="string", length=50, nullable=false)
      */
-    private $lastName;
+    protected $lastName;
 
     /**
      * @var string $firstName
      *
      * @ORM\Column(name="first_name", type="string", length=50, nullable=false)
      */
-    private $firstName;
+    protected $firstName;
 
     /**
      * @var string $phoneNumber
      *
      * @ORM\Column(name="phone_number", type="string", length=10, nullable=true)
      */
-    private $phoneNumber;
+    protected $phoneNumber;
 
     /**
      * @var string $cellphoneNumber
      *
      * @ORM\Column(name="cellphone_number", type="string", length=10, nullable=true)
      */
-    private $cellphoneNumber;
+    protected $cellphoneNumber;
 
     /**
      * @var string $emailAddress
      *
      * @ORM\Column(name="email_address", type="string", length=50, nullable=true)
      */
-    private $emailAddress;
+    protected $emailAddress;
 
     /**
      * @var string $username
      *
      * @ORM\Column(name="username", type="string", length=50, nullable=false)
      */
-    private $username;
+    protected $username;
 
     /**
      * @var string $password
      *
      * @ORM\Column(name="password", type="string", length=50, nullable=false)
      */
-    private $password;
+    protected $password;
 
     /**
      * @var \DateTime $registrationDate
      *
      * @ORM\Column(name="registration_date", type="datetime", nullable=false)
      */
-    private $registrationDate;
+    protected $registrationDate;
 
     /**
      * @var \DateTime $lastConnectionDate
      *
      * @ORM\Column(name="last_connection_date", type="datetime", nullable=true)
      */
-    private $lastConnectionDate;
+    protected $lastConnectionDate;
 
     /**
      * @ORM\ManyToOne(targetEntity="Roles", inversedBy="teacher")
@@ -119,10 +119,6 @@ class Teacher implements UserInterface, EquatableInterface {
 
     public function getPassword() {
         return $this->password;
-    }
-
-    public function getRoles() {
-        return $this->getRole();
     }
 
     public function getSalt() {
@@ -337,7 +333,6 @@ class Teacher implements UserInterface, EquatableInterface {
      */
     public function setRole(\Virgule\Bundle\MainBundle\Entity\Roles $role = null) {
         $this->role = $role;
-
         return $this;
     }
 
@@ -349,5 +344,8 @@ class Teacher implements UserInterface, EquatableInterface {
     public function getRole() {
         return $this->role;
     }
-
+    
+    public function getRoles() {
+        return Array($this->getRole()->getCode());
+    }
 }
