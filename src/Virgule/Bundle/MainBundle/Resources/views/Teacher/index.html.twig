@@ -1,16 +1,14 @@
 {% extends '::base.html.twig' %}
 {% block body %}
-<div id="nav_table">
-<ul>
-    <li>
-        <a href="{{ path('teacher_new') }}">
-            Create a new entry
+<h1>Liste des utilisateurs</h1>
+<div id="results_actions">
+    <div class="action_tab">
+        <a class="add_entry" href="{{ path('teacher_new') }}">
+            Ajouter un utilisateur
         </a>
-    </li>
-</ul>
+    </div>
 </div>
 <div id="results_table">
-    <h1>Liste des formateurs</h1>
     <table class="records_list">
         <thead>
             <tr>

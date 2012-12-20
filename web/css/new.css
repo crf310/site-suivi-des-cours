@@ -101,6 +101,23 @@ a:hover{color: #F45338;}
 .ctrlHolder .right{ float: right;}
 
 /*----- Tables ----*/
+a.add_entry {
+    background: url('../images/icons/add.png') no-repeat;
+    padding: 2px 0px 0px 20px;
+}
+
+#results_actions div.action_tab {
+    background-color: #48473f;
+    width: 200px;
+    padding: 10px;
+    -moz-border-radius: 12px 12px 0 0;
+    -webkit-border-radius: 12px 12px 0 0;
+    border-radius: 12px 12px 0 0;
+    font: 12px  "proxima-nova-1","proxima-nova-2";
+    letter-spacing: .08em;
+    align: right;
+}
+
 #results_table {
     widht: 50%;
     margin-left: auto; 
