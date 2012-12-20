@@ -12,16 +12,31 @@ use Doctrine\ORM\EntityRepository;
  */
 class CourseRepository extends EntityRepository {
     
-    /*
-     * SELECT COUNT(*)
-     * FROM course c
-     * WHERE c.day_of_week = ""
-     * AND c.classroom = ""
-     * AND 
-     * (c.start_hour BETWEEN "start" and "end"
-     *  OR
-     *  c.end_hour BETWEEN "start" and "end"
-     * )
-     * 
+    /**
+     * Count number of courses that overlap
+     * $another_meeting = ($from >= $from_compare && $from <= $to_compare) || ($from_compare >= $from && $from_compare <= $to);
+     * @param type $semesterId
+     * @param type $dayOfWeek
+     * @param type $classRoomId
+     * @param type $startTime
+     * @param type $endTime
+     * @return type Integer
      */
+    public function getNumberOfOverlapingCourses($semesterId, $dayOfWeek, $classRoomId, $startTime, $endTime) {
+        $q = $this
+            ->createQueryBuilder('c')
+            ->where('c.fkSemesterId = :semesterId')
+            ->andWhere('c.dayOfWeek = :dayOfWeek')
+            ->andWhere('c.fkClassRoomId = :classRoomId')
+            ->andWhere('(c.startTime > :startTime AND c.startTime < :endTime) OR (:startTime > c.startTime AND :startTime < c.endTime)')
+            ->setParameter('semesterId', $semesterId)    
+            ->setParameter('dayOfWeek', $dayOfWeek)
+            ->setParameter('classRoomId', $classRoomId)
+            ->setParameter('startTime', $startTime)
+            ->setParameter('endTime', $endTime)                
+            ->getQuery()
+        ;
+        $nb = $q->execute();
+        return $nb;
+    }
 }
