@@ -30,7 +30,10 @@ a{font-size:100%;vertical-align:baseline;background:transparent;margin:0;padding
 /*-----Structure-----*/
 body{color: #514d46;  background: #F0EDDA;}
 #header{margin-bottom: 0px;overflow:hidden; text-align: center;}
-#content { }
+#content {
+    width: 80%;
+    margin: auto;
+}
 
 /*-----Headings-----*/
 h1, h3  {font-family: "proxima-nova-1","proxima-nova-2";}
@@ -110,6 +113,7 @@ a:hover{color: #F45338;}
 	text-align: left;
 	border-collapse: collapse;
         border: 1px solid #48473f;
+        width: 100%;
 }
 .records_list th {
 	font: bold 12px "proxima-nova-1","proxima-nova-2"; 
