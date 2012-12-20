@@ -8,10 +8,12 @@
     <link href="{{ asset('css/uni-form.css') }}" media="screen" rel="stylesheet"/>
     <link href="{{ asset('css/default.uni-form.css') }}" id="formStyle" title="Default Style" media="screen" rel="stylesheet"/>
     <link href="{{ asset('css/new.css') }}" media="screen" rel="stylesheet"/>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <link href="{{ asset('css/jquery-ui-1.9.2.custom.css') }}" media="screen" rel="stylesheet"/>
+    <script type="text/javascript" src="{{ asset('js/jquery-1.8.3.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-ui-1.9.2.custom.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/uni-form.jquery.js') }}"></script>
     <script type="text/javascript">
-      $(function(){
+      $(function() {
 
         // init Uni-Form
         $('form.uniForm').uniform();
@@ -22,7 +24,9 @@
           $("#formStyle").attr("href",$(this).attr('rel'));
           return false;
         });
-      });
+        
+        $('.date').datepicker({ dateFormat: 'dd/mm/yy' });
+      }); 
     </script>
   </head>
   <body>
