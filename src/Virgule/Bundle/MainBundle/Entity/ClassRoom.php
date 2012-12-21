@@ -11,11 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\ClassRoomRepository")
  */
 class ClassRoom {
-
+    
     /**
      * @var boolean
      *
-     * @ORM\Column(name="id", type="boolean", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
