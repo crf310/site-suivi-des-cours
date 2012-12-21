@@ -1,8 +1,9 @@
 <?php
 namespace Virgule\Bundle\MainBundle\DataFixtures\ORM\Demo;
 
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Virgule\Bundle\MainBundle\Entity\OrganizationBranch;
 
 /**
@@ -11,7 +12,7 @@ use Virgule\Bundle\MainBundle\Entity\OrganizationBranch;
  * @author Guillaume Lucazeau
  */
 
-class LoadOrganizationBranchData implements FixtureInterface {
+class LoadOrganizationBranchData extends AbstractFixture implements OrderedFixtureInterface {
     public function load(ObjectManager $manager) {       
         $branch1 = new OrganizationBranch();
         $branch1->setName("Délégation locale de Paris III et X");
@@ -28,8 +29,14 @@ class LoadOrganizationBranchData implements FixtureInterface {
         
         $manager->persist($branch1);
         $manager->persist($branch2);
+        
+        $this->addReference('deleg-3-10', $branch1);
                 
         $manager->flush();
+    }
+    
+    public function getOrder() {
+        return 2;
     }
 }
 
