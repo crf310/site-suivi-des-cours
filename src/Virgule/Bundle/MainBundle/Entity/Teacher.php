@@ -94,7 +94,7 @@ class Teacher implements UserInterface, EquatableInterface {
     protected $lastConnectionDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Roles", inversedBy="teacher")
+     * @ORM\ManyToOne(targetEntity="Roles", inversedBy="teachers")
      * @ORM\JoinColumn(name="fk_role_id", referencedColumnName="id")
      */
     protected $role;
