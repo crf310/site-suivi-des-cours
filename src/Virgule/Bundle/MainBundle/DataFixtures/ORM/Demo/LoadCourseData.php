@@ -56,6 +56,8 @@ class LoadCourseData extends AbstractFixture implements OrderedFixtureInterface 
         
         $manager->persist($course1);
         $manager->persist($course2);
+        $manager->persist($course3);
+        $manager->persist($course4);
         
         $manager->flush();
     }
