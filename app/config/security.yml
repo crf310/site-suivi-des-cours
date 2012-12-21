@@ -5,7 +5,7 @@ security:
         Virgule\Bundle\MainBundle\Entity\Teacher: plaintext
 
     role_hierarchy:
-        ROLE_USER:        ROLE_VIEWER
+        ROLE_USER:        ROLE_GUEST
         ROLE_SECRETARY:   ROLE_USER
         ROLE_SUPER_SECRETARY: ROLE_SECRETARY
         ROLE_ADMIN:       ROLE_SECRETARY
