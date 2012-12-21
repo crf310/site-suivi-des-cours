@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="course")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\CourseRepository")
  */
-class Course
-{
+class Course {
+
     /**
      * @var integer
      *
@@ -56,46 +56,44 @@ class Course
      */
     private $alternateEnddate;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="fk_level_id", type="integer", nullable=false)
-     */
-    private $fkLevelId;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="fk_semester_id", type="integer", nullable=false)
-     */
-    private $fkSemesterId;
+     * @ORM\ManyToOne(targetEntity="ClassLevel", inversedBy="courses")
+     * @ORM\JoinColumn(name="fk_class_level", referencedColumnName="id")
+     */   
+    private $classLevel;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="fk_teacher_id", type="integer", nullable=false)
-     */
-    private $fkTeacherId;
+     * @ORM\ManyToOne(targetEntity="Semester", inversedBy="courses")
+     * @ORM\JoinColumn(name="fk_semester", referencedColumnName="id")
+     */    
+    private $semester;
 
     /**
-     * @var \OrganizationBranch
-     *
-     * @ORM\ManyToOne(targetEntity="OrganizationBranch")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="fk_organization_branch", referencedColumnName="id")
-     * })
+     * @ORM\ManyToOne(targetEntity="Teacher", inversedBy="courses")
+     * @ORM\JoinColumn(name="fk_teacher", referencedColumnName="id")
+     */    
+    private $teacher;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ClassRoom", inversedBy="courses")
+     * @ORM\JoinColumn(name="fk_class_room", referencedColumnName="id")
      */
-    private $fkOrganizationBranch;
-
-
+    protected $classRoom;    
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="OrganizationBranch", inversedBy="courses")
+     * @ORM\JoinColumn(name="fk_organization_branch", referencedColumnName="id")
+     */
+    private $organizationBranch;
+    
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -105,10 +103,9 @@ class Course
      * @param boolean $dayOfWeek
      * @return Course
      */
-    public function setDayOfWeek($dayOfWeek)
-    {
+    public function setDayOfWeek($dayOfWeek) {
         $this->dayOfWeek = $dayOfWeek;
-    
+
         return $this;
     }
 
@@ -117,8 +114,7 @@ class Course
      *
      * @return boolean 
      */
-    public function getDayOfWeek()
-    {
+    public function getDayOfWeek() {
         return $this->dayOfWeek;
     }
 
@@ -128,10 +124,9 @@ class Course
      * @param \DateTime $startTime
      * @return Course
      */
-    public function setStartTime($startTime)
-    {
+    public function setStartTime($startTime) {
         $this->startTime = $startTime;
-    
+
         return $this;
     }
 
@@ -140,8 +135,7 @@ class Course
      *
      * @return \DateTime 
      */
-    public function getStartTime()
-    {
+    public function getStartTime() {
         return $this->startTime;
     }
 
@@ -151,10 +145,9 @@ class Course
      * @param \DateTime $endTime
      * @return Course
      */
-    public function setEndTime($endTime)
-    {
+    public function setEndTime($endTime) {
         $this->endTime = $endTime;
-    
+
         return $this;
     }
 
@@ -163,8 +156,7 @@ class Course
      *
      * @return \DateTime 
      */
-    public function getEndTime()
-    {
+    public function getEndTime() {
         return $this->endTime;
     }
 
@@ -174,10 +166,9 @@ class Course
      * @param \DateTime $alternateStartdate
      * @return Course
      */
-    public function setAlternateStartdate($alternateStartdate)
-    {
+    public function setAlternateStartdate($alternateStartdate) {
         $this->alternateStartdate = $alternateStartdate;
-    
+
         return $this;
     }
 
@@ -186,8 +177,7 @@ class Course
      *
      * @return \DateTime 
      */
-    public function getAlternateStartdate()
-    {
+    public function getAlternateStartdate() {
         return $this->alternateStartdate;
     }
 
@@ -197,10 +187,9 @@ class Course
      * @param \DateTime $alternateEnddate
      * @return Course
      */
-    public function setAlternateEnddate($alternateEnddate)
-    {
+    public function setAlternateEnddate($alternateEnddate) {
         $this->alternateEnddate = $alternateEnddate;
-    
+
         return $this;
     }
 
@@ -209,8 +198,7 @@ class Course
      *
      * @return \DateTime 
      */
-    public function getAlternateEnddate()
-    {
+    public function getAlternateEnddate() {
         return $this->alternateEnddate;
     }
 
@@ -220,10 +208,9 @@ class Course
      * @param integer $fkLevelId
      * @return Course
      */
-    public function setFkLevelId($fkLevelId)
-    {
+    public function setFkLevelId($fkLevelId) {
         $this->fkLevelId = $fkLevelId;
-    
+
         return $this;
     }
 
@@ -232,8 +219,7 @@ class Course
      *
      * @return integer 
      */
-    public function getFkLevelId()
-    {
+    public function getFkLevelId() {
         return $this->fkLevelId;
     }
 
@@ -243,10 +229,9 @@ class Course
      * @param integer $fkSemesterId
      * @return Course
      */
-    public function setFkSemesterId($fkSemesterId)
-    {
+    public function setFkSemesterId($fkSemesterId) {
         $this->fkSemesterId = $fkSemesterId;
-    
+
         return $this;
     }
 
@@ -255,8 +240,7 @@ class Course
      *
      * @return integer 
      */
-    public function getFkSemesterId()
-    {
+    public function getFkSemesterId() {
         return $this->fkSemesterId;
     }
 
@@ -266,10 +250,9 @@ class Course
      * @param integer $fkTeacherId
      * @return Course
      */
-    public function setFkTeacherId($fkTeacherId)
-    {
+    public function setFkTeacherId($fkTeacherId) {
         $this->fkTeacherId = $fkTeacherId;
-    
+
         return $this;
     }
 
@@ -278,8 +261,7 @@ class Course
      *
      * @return integer 
      */
-    public function getFkTeacherId()
-    {
+    public function getFkTeacherId() {
         return $this->fkTeacherId;
     }
 
@@ -289,10 +271,9 @@ class Course
      * @param \Virgule\Bundle\MainBundle\Entity\OrganizationBranch $fkOrganizationBranch
      * @return Course
      */
-    public function setFkOrganizationBranch(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $fkOrganizationBranch = null)
-    {
+    public function setFkOrganizationBranch(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $fkOrganizationBranch = null) {
         $this->fkOrganizationBranch = $fkOrganizationBranch;
-    
+
         return $this;
     }
 
@@ -301,8 +282,123 @@ class Course
      *
      * @return \Virgule\Bundle\MainBundle\Entity\OrganizationBranch 
      */
-    public function getFkOrganizationBranch()
-    {
+    public function getFkOrganizationBranch() {
         return $this->fkOrganizationBranch;
+    }
+
+
+    /**
+     * Set classLevel
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevel
+     * @return Course
+     */
+    public function setClassLevel(\Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevel = null)
+    {
+        $this->classLevel = $classLevel;
+    
+        return $this;
+    }
+
+    /**
+     * Get classLevel
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\ClassLevel 
+     */
+    public function getClassLevel()
+    {
+        return $this->classLevel;
+    }
+
+    /**
+     * Set semester
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Semester $semester
+     * @return Course
+     */
+    public function setSemester(\Virgule\Bundle\MainBundle\Entity\Semester $semester = null)
+    {
+        $this->semester = $semester;
+    
+        return $this;
+    }
+
+    /**
+     * Get semester
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\Semester 
+     */
+    public function getSemester()
+    {
+        return $this->semester;
+    }
+
+    /**
+     * Set teacher
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Teacher $teacher
+     * @return Course
+     */
+    public function setTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $teacher = null)
+    {
+        $this->teacher = $teacher;
+    
+        return $this;
+    }
+
+    /**
+     * Get teacher
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\Teacher 
+     */
+    public function getTeacher()
+    {
+        return $this->teacher;
+    }
+
+    /**
+     * Set classRoom
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassRoom $classRoom
+     * @return Course
+     */
+    public function setClassRoom(\Virgule\Bundle\MainBundle\Entity\ClassRoom $classRoom = null)
+    {
+        $this->classRoom = $classRoom;
+    
+        return $this;
+    }
+
+    /**
+     * Get classRoom
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\ClassRoom 
+     */
+    public function getClassRoom()
+    {
+        return $this->classRoom;
+    }
+
+    /**
+     * Set organizationBranch
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranch
+     * @return Course
+     */
+    public function setOrganizationBranch(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranch = null)
+    {
+        $this->organizationBranch = $organizationBranch;
+    
+        return $this;
+    }
+
+    /**
+     * Get organizationBranch
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\OrganizationBranch 
+     */
+    public function getOrganizationBranch()
+    {
+        return $this->organizationBranch;
     }
 }

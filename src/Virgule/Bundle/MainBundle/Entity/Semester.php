@@ -35,7 +35,10 @@ class Semester
      */
     private $endDate;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="Course", mappedBy="semester")
+     */
+    private $courses; 
 
     /**
      * Get id
@@ -91,5 +94,45 @@ class Semester
     public function getEndDate()
     {
         return $this->endDate;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->courses = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add courses
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
+     * @return Semester
+     */
+    public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
+    {
+        $this->courses[] = $courses;
+    
+        return $this;
+    }
+
+    /**
+     * Remove courses
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
+     */
+    public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
+    {
+        $this->courses->removeElement($courses);
+    }
+
+    /**
+     * Get courses
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCourses()
+    {
+        return $this->courses;
     }
 }

@@ -35,7 +35,10 @@ class ClassLevel
      */
     private $htmlColorCode;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="Course", mappedBy="classLevel")
+     */
+    private $courses;
 
     /**
      * Get id
@@ -91,5 +94,45 @@ class ClassLevel
     public function getHtmlColorCode()
     {
         return $this->htmlColorCode;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->courses = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add courses
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
+     * @return ClassLevel
+     */
+    public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
+    {
+        $this->courses[] = $courses;
+    
+        return $this;
+    }
+
+    /**
+     * Remove courses
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
+     */
+    public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
+    {
+        $this->courses->removeElement($courses);
+    }
+
+    /**
+     * Get courses
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCourses()
+    {
+        return $this->courses;
     }
 }

@@ -40,6 +40,11 @@ class ClassRoom {
      * @ORM\JoinColumn(name="fk_organization_branch", referencedColumnName="id")
      */
     private $organizationBranch;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Course", mappedBy="classRoom")
+     */
+    private $courses;
 
     /**
      * Get id
@@ -113,4 +118,44 @@ class ClassRoom {
         return $this->organizationBranch;
     }
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->courses = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add courses
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
+     * @return ClassRoom
+     */
+    public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
+    {
+        $this->courses[] = $courses;
+    
+        return $this;
+    }
+
+    /**
+     * Remove courses
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
+     */
+    public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
+    {
+        $this->courses->removeElement($courses);
+    }
+
+    /**
+     * Get courses
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCourses()
+    {
+        return $this->courses;
+    }
 }

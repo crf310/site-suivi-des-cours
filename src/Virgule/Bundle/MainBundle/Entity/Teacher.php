@@ -100,6 +100,11 @@ class Teacher implements UserInterface, EquatableInterface {
     protected $role;
 
     /**
+     * @ORM\OneToMany(targetEntity="Course", mappedBy="teacher")
+     */
+    private $courses;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -344,8 +349,42 @@ class Teacher implements UserInterface, EquatableInterface {
     public function getRole() {
         return $this->role;
     }
-    
+
     public function getRoles() {
         return Array($this->getRole()->getCode());
+    }
+
+
+    /**
+     * Add courses
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
+     * @return Teacher
+     */
+    public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
+    {
+        $this->courses[] = $courses;
+    
+        return $this;
+    }
+
+    /**
+     * Remove courses
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
+     */
+    public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
+    {
+        $this->courses->removeElement($courses);
+    }
+
+    /**
+     * Get courses
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCourses()
+    {
+        return $this->courses;
     }
 }

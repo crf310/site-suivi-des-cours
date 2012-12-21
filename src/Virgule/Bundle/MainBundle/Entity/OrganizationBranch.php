@@ -69,6 +69,11 @@ class OrganizationBranch {
     protected $classRooms;
 
     /**
+     * @ORM\OneToMany(targetEntity="Course", mappedBy="organizationBranch")
+     */
+    private $courses;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -239,4 +244,37 @@ class OrganizationBranch {
         return $this->classRooms;
     }
 
+
+    /**
+     * Add courses
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
+     * @return OrganizationBranch
+     */
+    public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
+    {
+        $this->courses[] = $courses;
+    
+        return $this;
+    }
+
+    /**
+     * Remove courses
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
+     */
+    public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
+    {
+        $this->courses->removeElement($courses);
+    }
+
+    /**
+     * Get courses
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCourses()
+    {
+        return $this->courses;
+    }
 }
