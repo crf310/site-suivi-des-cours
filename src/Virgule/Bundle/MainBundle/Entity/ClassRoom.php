@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="classroom")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\ClassRoomRepository")
  */
-class ClassRoom
-{
+class ClassRoom {
+
     /**
      * @var boolean
      *
@@ -31,26 +31,22 @@ class ClassRoom
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="string", length=250, nullable=true)
-     */
-    private $address;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="comments", type="string", length=250, nullable=true)
      */
     private $comments;
 
-
+    /**
+     * @ORM\ManyToOne(targetEntity="OrganizationBranch", inversedBy="classRooms")
+     * @ORM\JoinColumn(name="fk_organization_branch", referencedColumnName="id")
+     */
+    private $organizationBranch;
 
     /**
      * Get id
      *
      * @return boolean 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -60,10 +56,9 @@ class ClassRoom
      * @param string $name
      * @return Classroom
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
-    
+
         return $this;
     }
 
@@ -72,32 +67,8 @@ class ClassRoom
      *
      * @return string 
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
-    }
-
-    /**
-     * Set address
-     *
-     * @param string $address
-     * @return Classroom
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-    
-        return $this;
-    }
-
-    /**
-     * Get address
-     *
-     * @return string 
-     */
-    public function getAddress()
-    {
-        return $this->address;
     }
 
     /**
@@ -106,10 +77,9 @@ class ClassRoom
      * @param string $comments
      * @return Classroom
      */
-    public function setComments($comments)
-    {
+    public function setComments($comments) {
         $this->comments = $comments;
-    
+
         return $this;
     }
 
@@ -118,8 +88,29 @@ class ClassRoom
      *
      * @return string 
      */
-    public function getComments()
-    {
+    public function getComments() {
         return $this->comments;
     }
+
+    /**
+     * Set organizationBranch
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\organizationBranch $organizationBranch
+     * @return ClassRoom
+     */
+    public function setOrganizationBranch(\Virgule\Bundle\MainBundle\Entity\organizationBranch $organizationBranch = null) {
+        $this->organizationBranch = $organizationBranch;
+
+        return $this;
+    }
+
+    /**
+     * Get organizationBranch
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\organizationBranch 
+     */
+    public function getOrganizationBranch() {
+        return $this->organizationBranch;
+    }
+
 }

@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="organization_branch")
  * @ORM\Entity
  */
-class OrganizationBranch
-{
+class OrganizationBranch {
+
     /**
      * @var integer
      *
@@ -63,15 +63,17 @@ class OrganizationBranch
      */
     private $emailAddress;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="ClassRoom", mappedBy="organizationBranch")
+     */
+    protected $classRooms;
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -81,10 +83,9 @@ class OrganizationBranch
      * @param string $name
      * @return OrganizationBranch
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
-    
+
         return $this;
     }
 
@@ -93,8 +94,7 @@ class OrganizationBranch
      *
      * @return string 
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -104,10 +104,9 @@ class OrganizationBranch
      * @param string $address
      * @return OrganizationBranch
      */
-    public function setAddress($address)
-    {
+    public function setAddress($address) {
         $this->address = $address;
-    
+
         return $this;
     }
 
@@ -116,8 +115,7 @@ class OrganizationBranch
      *
      * @return string 
      */
-    public function getAddress()
-    {
+    public function getAddress() {
         return $this->address;
     }
 
@@ -127,10 +125,9 @@ class OrganizationBranch
      * @param string $presidentName
      * @return OrganizationBranch
      */
-    public function setPresidentName($presidentName)
-    {
+    public function setPresidentName($presidentName) {
         $this->presidentName = $presidentName;
-    
+
         return $this;
     }
 
@@ -139,8 +136,7 @@ class OrganizationBranch
      *
      * @return string 
      */
-    public function getPresidentName()
-    {
+    public function getPresidentName() {
         return $this->presidentName;
     }
 
@@ -150,10 +146,9 @@ class OrganizationBranch
      * @param string $phoneNumber
      * @return OrganizationBranch
      */
-    public function setPhoneNumber($phoneNumber)
-    {
+    public function setPhoneNumber($phoneNumber) {
         $this->phoneNumber = $phoneNumber;
-    
+
         return $this;
     }
 
@@ -162,8 +157,7 @@ class OrganizationBranch
      *
      * @return string 
      */
-    public function getPhoneNumber()
-    {
+    public function getPhoneNumber() {
         return $this->phoneNumber;
     }
 
@@ -173,10 +167,9 @@ class OrganizationBranch
      * @param string $faxNumber
      * @return OrganizationBranch
      */
-    public function setFaxNumber($faxNumber)
-    {
+    public function setFaxNumber($faxNumber) {
         $this->faxNumber = $faxNumber;
-    
+
         return $this;
     }
 
@@ -185,8 +178,7 @@ class OrganizationBranch
      *
      * @return string 
      */
-    public function getFaxNumber()
-    {
+    public function getFaxNumber() {
         return $this->faxNumber;
     }
 
@@ -196,10 +188,9 @@ class OrganizationBranch
      * @param string $emailAddress
      * @return OrganizationBranch
      */
-    public function setEmailAddress($emailAddress)
-    {
+    public function setEmailAddress($emailAddress) {
         $this->emailAddress = $emailAddress;
-    
+
         return $this;
     }
 
@@ -208,8 +199,44 @@ class OrganizationBranch
      *
      * @return string 
      */
-    public function getEmailAddress()
-    {
+    public function getEmailAddress() {
         return $this->emailAddress;
     }
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->classRooms = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add classRooms
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassRoom $classRooms
+     * @return OrganizationBranch
+     */
+    public function addClassRoom(\Virgule\Bundle\MainBundle\Entity\ClassRoom $classRoom) {
+        $this->classRooms[] = $classRoom;
+        return $this;
+    }
+
+    /**
+     * Remove classRooms
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassRoom $classRooms
+     */
+    public function removeClassRoom(\Virgule\Bundle\MainBundle\Entity\ClassRoom $classRooms) {
+        $this->classRooms->removeElement($classRooms);
+    }
+
+    /**
+     * Get classRooms
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getClassRooms() {
+        return $this->classRooms;
+    }
+
 }
