@@ -49,7 +49,10 @@ class LoadClassLevelData extends AbstractFixture implements OrderedFixtureInterf
         $manager->persist($level5);
         $manager->persist($level6);
         $manager->persist($level7);
-                
+        
+        $this->addReference('A1', $level1);
+        $this->addReference('A2', $level2);
+        
         $manager->flush();
     }
     
