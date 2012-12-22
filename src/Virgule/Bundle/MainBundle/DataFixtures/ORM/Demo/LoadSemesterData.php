@@ -22,12 +22,12 @@ class LoadSemesterData extends AbstractFixture implements OrderedFixtureInterfac
         $semester2 = new Semester();
         $semester2->setStartDate(new \DateTime('2011-09-02'));
         $semester2->setEndDate(new \DateTime('2012-06-02'));
-        $semester1->setOrganizationBranch($this->getReference('deleg-3-10'));
+        $semester2->setOrganizationBranch($this->getReference('deleg-3-10'));
         
         $semester3 = new Semester();
         $semester3->setStartDate(new \DateTime('2012-09-02'));
         $semester3->setEndDate(new \DateTime('2013-06-01'));
-        $semester1->setOrganizationBranch($this->getReference('deleg-3-10'));
+        $semester2->setOrganizationBranch($this->getReference('deleg-3-10'));
         
         $manager->persist($semester1);
         $manager->persist($semester2);
