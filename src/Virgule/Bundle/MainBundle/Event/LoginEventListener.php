@@ -33,8 +33,14 @@ class LoginEventListener {
             $organizationBranchId = $request->get('organization_branch_id');
             $organizationBranch = $this->entityManager->getRepository('Virgule\Bundle\MainBundle\Entity\OrganizationBranch')->loadOne($organizationBranchId);
 
+            $currentSemester = $this->entityManager->getRepository('Virgule\Bundle\MainBundle\Entity\Semester')->loadCurrentSemester($organizationBranchId);
+            
             $session->set('organizationBranchId', $organizationBranchId);
             $session->set('organizationBranchName', $organizationBranch->getName());
+            
+            $session->set('semesterId', $currentSemester->getId());
+            $session->set('semesterStartDate', $currentSemester->getStartDate());
+            $session->set('semesterEndDate', $currentSemester->getEndDate());
         }
     }
 

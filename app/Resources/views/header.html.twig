@@ -3,7 +3,7 @@
         <ul>
             <li><a>{{ app.user.firstName }} {{ app.user.lastName }} ({{ app.user.role.label }})</a></li>
             <li><a>{{ app.session.get('organizationBranchName') }}</a></li>
-            <li><a>Session du 01/01/2011 au 02/02/2012</a></li>
+            <li><a>Session du {{ app.session.get('semesterStartDate')|date("d/m/Y") }} au {{ app.session.get('semesterEndDate')|date("d/m/Y") }}</a></li>
             <li><a>Aide</a></li>
             <li><a href="{{ path('logout') }}" title="Déconnexion">Déconnexion</a></li>
         </ul>
