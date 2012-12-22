@@ -5,10 +5,10 @@ namespace Virgule\Bundle\MainBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * OrganizationBranch
+ * Virgule\Bundle\MainBundle\OrganizationBranch
  *
  * @ORM\Table(name="organization_branch")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\OrganizationBranchRepository") 
  */
 class OrganizationBranch {
 

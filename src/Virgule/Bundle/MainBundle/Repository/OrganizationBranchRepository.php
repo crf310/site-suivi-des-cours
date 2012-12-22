@@ -12,9 +12,19 @@ use Doctrine\ORM\NoResultException;
  */
 class OrganizationBranchRepository extends EntityRepository {
     
-    public function getBranchesNames() {
-        $entities = $em->getRepository('VirguleMainBundle:Teacher')->findAll();
-    }    
+    public function getOrganizationBranchesNames() {
+        //$entities = $em->getRepository('VirguleMainBundle:Teacher')->->findAll();
+    }
+    
+    public function loadOne($id) {
+        $og = $this->findOneBy(array('id' => $id));
+        if ($og == null) {
+            throw new NoResultException("Can't find the Organization Branch");
+        } else {
+            return $og;
+        }
+    }
+    
 }
 
 ?>
