@@ -72,6 +72,11 @@ class OrganizationBranch {
      * @ORM\OneToMany(targetEntity="Course", mappedBy="organizationBranch")
      */
     private $courses;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Semester", mappedBy="organizationBranch")
+     */
+    private $semesters;
 
     /**
      * Get id
@@ -276,5 +281,38 @@ class OrganizationBranch {
     public function getCourses()
     {
         return $this->courses;
+    }
+
+    /**
+     * Add semesters
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Semester $semesters
+     * @return OrganizationBranch
+     */
+    public function addSemester(\Virgule\Bundle\MainBundle\Entity\Semester $semesters)
+    {
+        $this->semesters[] = $semesters;
+    
+        return $this;
+    }
+
+    /**
+     * Remove semesters
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Semester $semesters
+     */
+    public function removeSemester(\Virgule\Bundle\MainBundle\Entity\Semester $semesters)
+    {
+        $this->semesters->removeElement($semesters);
+    }
+
+    /**
+     * Get semesters
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSemesters()
+    {
+        return $this->semesters;
     }
 }

@@ -39,6 +39,12 @@ class Semester
      * @ORM\OneToMany(targetEntity="Course", mappedBy="semester")
      */
     private $courses; 
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="OrganizationBranch", inversedBy="semesters")
+     * @ORM\JoinColumn(name="fk_organization_branch", referencedColumnName="id")
+     */   
+    private $organizationBranch;
 
     /**
      * Get id
@@ -134,5 +140,28 @@ class Semester
     public function getCourses()
     {
         return $this->courses;
+    }
+
+    /**
+     * Set organizationBranch
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranch
+     * @return Semester
+     */
+    public function setOrganizationBranch(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranch = null)
+    {
+        $this->organizationBranch = $organizationBranch;
+    
+        return $this;
+    }
+
+    /**
+     * Get organizationBranch
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\OrganizationBranch 
+     */
+    public function getOrganizationBranch()
+    {
+        return $this->organizationBranch;
     }
 }
