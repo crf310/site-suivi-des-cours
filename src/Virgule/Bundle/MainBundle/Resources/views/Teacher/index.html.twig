@@ -16,7 +16,7 @@
                 <th>Téléphone fixe</th>
                 <th>Téléphone portable</th>
                 <th>Adresse email</th>
-                <th>Dernière connexion</th>
+                <th>Rôle</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -27,13 +27,7 @@
                 <td>{{ entity.phoneNumber }}</td>
                 <td>{{ entity.cellphoneNumber }}</td>
                 <td><a href="mailto:{{ entity.emailAddress }}">{{ entity.emailAddress }}</a></td>
-                <td>
-                    {% if entity.lastConnectionDate %}
-                        {{ entity.lastConnectionDate|date('Y-m-d H:i:s') }}
-                    {% else %}
-                        jamais
-                    {% endif %}
-                </td>
+                <td>{{ entity.role }}</td>
                 <td class="entity_actions">
                     <ul>
                         <li>
