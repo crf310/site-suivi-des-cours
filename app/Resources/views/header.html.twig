@@ -2,7 +2,8 @@
     <nav id="nav">
         <ul>
             <li><a>{{ app.user.firstName }} {{ app.user.lastName }} ({{ app.user.role.label }})</a></li>
-            <li><a>Délégation du 3e et 10e</a></li>
+            <li><a>{{ app.session.get('organizationBranchName') }}</a></li>
+            <li><a>{{ app.session.get('organizationBranchId') }}</a></li>
             <li><a>Session du 01/01/2011 au 02/02/2012</a></li>
             <li><a>Aide</a></li>
             <li><a href="{{ path('logout') }}" title="Déconnexion">Déconnexion</a></li>
@@ -15,7 +16,7 @@
             <li><a class="schedule" href="{{ path('course') }}">Planning des cours</a></li>
             <li><a class="students" href="{{ path('student') }}">Apprenants</a></li>
             <li><a class="teachers" href="{{ path('teacher_index') }}">Formateurs</a></li>
-            <li><a class="user_profile" href="{{ path('teacher_show', { 'id': app.user.id }) }}">Mon compte</a></li>
+            <li><a class="user_profile" href="{{ path('teacher_show', { 'id': app.user.id }) }}">Mes informations</a></li>
             <li><a class="administration" href="">Administration</a></li>
         </ul></div>
 </header>
