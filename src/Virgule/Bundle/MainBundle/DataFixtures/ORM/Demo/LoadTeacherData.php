@@ -43,13 +43,45 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $prof3->setEmailAddress("walter.lewin@example.com");
         $prof3->setRegistrationDate(new \DateTime('now'));
         $prof3->setRole($this->getReference('user-role'));
+
+        $prof4 = new Teacher();
+        $prof4->setUsername("prof4");
+        $prof4->setPassword("password");
+        $prof4->setFirstName("Philippe");
+        $prof4->setLastName("Marrast");
+        $prof4->setEmailAddress("philippe.marrast@example.com");
+        $prof4->setRegistrationDate(new \DateTime('now'));
+        $prof4->setRole($this->getReference('user-role'));
+        
+        $guest = new Teacher();
+        $guest->setUsername("guest");
+        $guest->setPassword("password");
+        $guest->setFirstName("Ludovic");
+        $guest->setLastName("Tessier");
+        $guest->setEmailAddress("ludovic.tessier@example.com");
+        $guest->setRegistrationDate(new \DateTime('now'));
+        $guest->setRole($this->getReference('guest-role'));
+        
+        $secretary = new Teacher();
+        $secretary->setUsername("secretary");
+        $secretary->setPassword("password");
+        $secretary->setFirstName("Safia");
+        $secretary->setLastName("Slimane");
+        $secretary->setEmailAddress("safia.slimane@example.com");
+        $secretary->setRegistrationDate(new \DateTime('now'));
+        $secretary->setRole($this->getReference('secretary-role'));
         
         $manager->persist($prof1);
         $manager->persist($prof2);
         $manager->persist($prof3);
+        $manager->persist($prof4);
+        $manager->persist($guest);
+        $manager->persist($secretary);
         
         $this->addReference('prof1', $prof1);
         $this->addReference('prof2', $prof2);        
+        $this->addReference('prof3', $prof3);
+        $this->addReference('prof4', $prof4);
                 
         $manager->flush();
     }

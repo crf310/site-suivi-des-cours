@@ -15,9 +15,9 @@ use Virgule\Bundle\MainBundle\Entity\Roles;
 class LoadRolesData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager) {
-        $roleViewer = new Roles();
-        $roleViewer->setCode("ROLE_VIEWER");
-        $roleViewer->setLabel("Utilisateur (lecture seule)");
+        $roleGuest = new Roles();
+        $roleGuest->setCode("ROLE_GUEST");
+        $roleGuest->setLabel("Invité");
         
         $roleUser = new Roles();
         $roleUser->setCode("ROLE_USER");
@@ -25,11 +25,11 @@ class LoadRolesData extends AbstractFixture implements OrderedFixtureInterface
         
         $roleSecretary = new Roles();
         $roleSecretary->setCode("ROLE_SECRETARY");
-        $roleSecretary->setLabel("Secrétaire");
+        $roleSecretary->setLabel("Responsable");
         
         $roleSuperSecretary = new Roles();
         $roleSuperSecretary->setCode("ROLE_SUPER_SECRETARY");
-        $roleSuperSecretary->setLabel("Secrétaire général");        
+        $roleSuperSecretary->setLabel("Responsable général");        
         
         $roleAdmin = new Roles();
         $roleAdmin->setCode("ROLE_ADMIN");
@@ -39,15 +39,19 @@ class LoadRolesData extends AbstractFixture implements OrderedFixtureInterface
         $roleSuperAdmin->setCode("ROLE_SUPER_ADMIN");
         $roleSuperAdmin->setLabel("Super administrateur");
         
-        $manager->persist($roleViewer);
+        $manager->persist($roleGuest);
         $manager->persist($roleUser);
         $manager->persist($roleSecretary);
         $manager->persist($roleSuperSecretary);
         $manager->persist($roleAdmin);
         $manager->persist($roleSuperAdmin);
         
+        $this->addReference('guest-role', $roleGuest);
         $this->addReference('user-role', $roleUser);
-        $this->addReference('admin-role', $roleSuperAdmin);
+        $this->addReference('secretary-role', $roleSecretary);
+        $this->addReference('super-secretary-role', $roleSuperSecretary);
+        $this->addReference('admin-role', $roleAdmin);
+        $this->addReference('super-admin-role', $roleSuperAdmin);
         
         $manager->flush();
     }
