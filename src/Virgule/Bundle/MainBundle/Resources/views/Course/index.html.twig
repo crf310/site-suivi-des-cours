@@ -1,32 +1,34 @@
-<h1>Course list</h1>
-
+{% extends '::base.html.twig' %}
+{% block body %}
+<h1>Liste des cours</h1>
+<div id="results_actions">
+    <div class="action_tab">
+        <a class="add_entry" href="{{ path('course_new') }}">
+            Ajouter un cours
+        </a>
+    </div>
+</div>
 <table class="records_list">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Dayofweek</th>
-            <th>Starttime</th>
-            <th>Endtime</th>
+            <th>Jour</th>
+            <th>Horaires</th>
             <th>Alternatestartdate</th>
             <th>Alternateenddate</th>
-            <th>Fklevelid</th>
-            <th>Fksemesterid</th>
-            <th>Fkteacherid</th>
+            <th>Niveau</th>
+            <th>Formateur</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
     {% for entity in entities %}
         <tr>
-            <td><a href="{{ path('course_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>{{ entity.dayOfWeek }}</td>
-            <td>{{ entity.startTime }}</td>
-            <td>{{ entity.endTime }}</td>
+            <td>{{ entity.startTime|date('H:i') }} - {{ entity.endTime|date('H:i') }}</td>
             <td>{% if entity.alternateStartdate %}{{ entity.alternateStartdate|date('Y-m-d H:i:s') }}{% endif %}</td>
             <td>{% if entity.alternateEnddate %}{{ entity.alternateEnddate|date('Y-m-d H:i:s') }}{% endif %}</td>
-            <td>{{ entity.fkLevelId }}</td>
-            <td>{{ entity.fkSemesterId }}</td>
-            <td>{{ entity.fkTeacherId }}</td>
+            <td>{{ entity.classLevel }}</td>
+            <td>{{ entity.teacher }}</td>
             <td>
                 <ul>
                     <li>
@@ -41,11 +43,4 @@
     {% endfor %}
     </tbody>
 </table>
-
-<ul>
-    <li>
-        <a href="{{ path('course_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+{% endblock %}
