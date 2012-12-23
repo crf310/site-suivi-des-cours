@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="semester")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\SemesterRepository")
  */
-class Semester
-{
+class Semester {
+
     /**
      * @var integer
      *
@@ -38,12 +38,12 @@ class Semester
     /**
      * @ORM\OneToMany(targetEntity="Course", mappedBy="semester")
      */
-    private $courses; 
-    
+    private $courses;
+
     /**
      * @ORM\ManyToOne(targetEntity="OrganizationBranch", inversedBy="semesters")
      * @ORM\JoinColumn(name="fk_organization_branch", referencedColumnName="id")
-     */   
+     */
     private $organizationBranch;
 
     /**
@@ -51,8 +51,7 @@ class Semester
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -62,10 +61,9 @@ class Semester
      * @param \DateTime $startDate
      * @return Semester
      */
-    public function setStartDate($startDate)
-    {
+    public function setStartDate($startDate) {
         $this->startDate = $startDate;
-    
+
         return $this;
     }
 
@@ -74,8 +72,7 @@ class Semester
      *
      * @return \DateTime 
      */
-    public function getStartDate()
-    {
+    public function getStartDate() {
         return $this->startDate;
     }
 
@@ -85,10 +82,9 @@ class Semester
      * @param \DateTime $endDate
      * @return Semester
      */
-    public function setEndDate($endDate)
-    {
+    public function setEndDate($endDate) {
         $this->endDate = $endDate;
-    
+
         return $this;
     }
 
@@ -97,28 +93,26 @@ class Semester
      *
      * @return \DateTime 
      */
-    public function getEndDate()
-    {
+    public function getEndDate() {
         return $this->endDate;
     }
+
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->courses = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add courses
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
      * @return Semester
      */
-    public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
-    {
+    public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
         $this->courses[] = $courses;
-    
+
         return $this;
     }
 
@@ -127,8 +121,7 @@ class Semester
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
      */
-    public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
-    {
+    public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
         $this->courses->removeElement($courses);
     }
 
@@ -137,8 +130,7 @@ class Semester
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getCourses()
-    {
+    public function getCourses() {
         return $this->courses;
     }
 
@@ -148,10 +140,9 @@ class Semester
      * @param \Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranch
      * @return Semester
      */
-    public function setOrganizationBranch(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranch = null)
-    {
+    public function setOrganizationBranch(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranch = null) {
         $this->organizationBranch = $organizationBranch;
-    
+
         return $this;
     }
 
@@ -160,8 +151,11 @@ class Semester
      *
      * @return \Virgule\Bundle\MainBundle\Entity\OrganizationBranch 
      */
-    public function getOrganizationBranch()
-    {
+    public function getOrganizationBranch() {
         return $this->organizationBranch;
+    }
+    
+    public function __toString() {
+        return 'du ' . $this->getStartDate() . ' au ' . $this->getEndDate();
     }
 }

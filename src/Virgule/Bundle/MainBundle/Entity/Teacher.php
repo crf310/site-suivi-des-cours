@@ -354,17 +354,15 @@ class Teacher implements UserInterface, EquatableInterface {
         return Array($this->getRole()->getCode());
     }
 
-
     /**
      * Add courses
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
      * @return Teacher
      */
-    public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
-    {
+    public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
         $this->courses[] = $courses;
-    
+
         return $this;
     }
 
@@ -373,8 +371,7 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
      */
-    public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
-    {
+    public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
         $this->courses->removeElement($courses);
     }
 
@@ -383,8 +380,11 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getCourses()
-    {
+    public function getCourses() {
         return $this->courses;
+    }
+    
+    public function __toString() {
+        return $this->getFirstName() . ' ' . $this->getLastName();
     }
 }
