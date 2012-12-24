@@ -28,7 +28,7 @@
             <td>{% if entity.alternateStartdate %}{{ entity.alternateStartdate|date('Y-m-d H:i:s') }}{% endif %}</td>
             <td>{% if entity.alternateEnddate %}{{ entity.alternateEnddate|date('Y-m-d H:i:s') }}{% endif %}</td>
             <td>{{ entity.classLevel }}</td>
-            <td>{{ entity.teacher }}</td>
+            <td><a href="{{ path('teacher_show', { 'id': entity.teacher.id }) }}">{{ entity.teacher }}</a></td>
             <td>
                 <ul>
                     <li>
