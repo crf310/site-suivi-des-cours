@@ -2,6 +2,10 @@
 
 namespace Virgule\Bundle\MainBundle\Controller;
 
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Exception\NotValidCurrentPageException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -15,23 +19,29 @@ use Virgule\Bundle\MainBundle\Form\StudentType;
  *
  * @Route("/student")
  */
-class StudentController extends Controller
-{
+class StudentController extends Controller {
+
     /**
      * Lists all Student entities.
      *
      * @Route("/", name="student")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction($page=1) {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('VirguleMainBundle:Student')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+        $pagerfanta = new Pagerfanta(new ArrayAdapter($entities));
+        $pagerfanta->setMaxPerPage(15);
+
+        try {
+            $pagerfanta->setCurrentPage($page);
+        } catch (NotValidCurrentPageException $e) {
+            throw new NotFoundHttpException();
+        }
+
+        return array('entities' => $pagerfanta);        
     }
 
     /**
@@ -40,8 +50,7 @@ class StudentController extends Controller
      * @Route("/{id}/show", name="student_show")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:Student')->find($id);
@@ -53,7 +62,7 @@ class StudentController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -64,14 +73,13 @@ class StudentController extends Controller
      * @Route("/new", name="student_new")
      * @Template()
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new Student();
-        $form   = $this->createForm(new StudentType(), $entity);
+        $form = $this->createForm(new StudentType(), $entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -82,9 +90,8 @@ class StudentController extends Controller
      * @Method("POST")
      * @Template("VirguleMainBundle:Student:new.html.twig")
      */
-    public function createAction(Request $request)
-    {
-        $entity  = new Student();
+    public function createAction(Request $request) {
+        $entity = new Student();
         $form = $this->createForm(new StudentType(), $entity);
         $form->bind($request);
 
@@ -98,7 +105,7 @@ class StudentController extends Controller
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -108,8 +115,7 @@ class StudentController extends Controller
      * @Route("/{id}/edit", name="student_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:Student')->find($id);
@@ -122,8 +128,8 @@ class StudentController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -135,8 +141,7 @@ class StudentController extends Controller
      * @Method("POST")
      * @Template("VirguleMainBundle:Student:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:Student')->find($id);
@@ -157,8 +162,8 @@ class StudentController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -169,8 +174,7 @@ class StudentController extends Controller
      * @Route("/{id}/delete", name="student_delete")
      * @Method("POST")
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
 
@@ -189,11 +193,11 @@ class StudentController extends Controller
         return $this->redirect($this->generateUrl('student'));
     }
 
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                        ->add('id', 'hidden')
+                        ->getForm()
         ;
     }
+
 }
