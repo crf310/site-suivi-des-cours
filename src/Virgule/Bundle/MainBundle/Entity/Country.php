@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="country")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\CountryRepository")
  */
-class Country
-{
+class Country {
+
     /**
      * @var integer $id
      *
@@ -35,15 +35,17 @@ class Country
      */
     private $isoCode;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="Student", mappedBy="nativeCountry")
+     */
+    private $students;
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -53,10 +55,9 @@ class Country
      * @param string $label
      * @return Country
      */
-    public function setLabel($label)
-    {
+    public function setLabel($label) {
         $this->label = $label;
-    
+
         return $this;
     }
 
@@ -65,8 +66,7 @@ class Country
      *
      * @return string 
      */
-    public function getLabel()
-    {
+    public function getLabel() {
         return $this->label;
     }
 
@@ -76,10 +76,9 @@ class Country
      * @param string $isoCode
      * @return Country
      */
-    public function setIsoCode($isoCode)
-    {
+    public function setIsoCode($isoCode) {
         $this->isoCode = $isoCode;
-    
+
         return $this;
     }
 
@@ -88,8 +87,45 @@ class Country
      *
      * @return string 
      */
-    public function getIsoCode()
-    {
+    public function getIsoCode() {
         return $this->isoCode;
     }
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->students = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add students
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Student $students
+     * @return Country
+     */
+    public function addStudent(\Virgule\Bundle\MainBundle\Entity\Student $students) {
+        $this->students[] = $students;
+
+        return $this;
+    }
+
+    /**
+     * Remove students
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Student $students
+     */
+    public function removeStudent(\Virgule\Bundle\MainBundle\Entity\Student $students) {
+        $this->students->removeElement($students);
+    }
+
+    /**
+     * Get students
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStudents() {
+        return $this->students;
+    }
+
 }
