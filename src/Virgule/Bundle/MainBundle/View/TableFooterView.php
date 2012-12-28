@@ -60,7 +60,7 @@ class TableFooterView implements ViewInterface
         // pages
         for ($page = $startPage; $page <= $endPage; $page++) {
             if ($page == $currentPage) {
-                $pages[] = sprintf('<span class="%s">%s</span>', $options['css_current_class'], $page);
+                $pages[] = sprintf('<span class="%s">%s</span>&nbsp;', $options['css_current_class'], $page);
             } else {
                 $pages[] = array($page, $page);
             }
@@ -101,7 +101,7 @@ class TableFooterView implements ViewInterface
             if (is_string($page)) {
                 $pagesHtml .= $page;
             } else {
-                $pagesHtml .= '<a href="'.$routeGenerator($page[0]).'">'.$page[1].'</a>';
+                $pagesHtml .= '<a href="'.$routeGenerator($page[0]).'">'.$page[1].'</a>&nbsp;';
             }
         }
 
