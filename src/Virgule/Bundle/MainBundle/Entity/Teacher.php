@@ -103,6 +103,11 @@ class Teacher implements UserInterface, EquatableInterface {
      * @ORM\OneToMany(targetEntity="Course", mappedBy="teacher")
      */
     private $courses;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Student", mappedBy="welcomedByTeacher")
+     */
+    private $studentsWelcomed;
 
     /**
      * Get id
@@ -386,5 +391,38 @@ class Teacher implements UserInterface, EquatableInterface {
     
     public function __toString() {
         return $this->getFirstName() . ' ' . $this->getLastName();
+    }
+
+    /**
+     * Add studentsWelcomed
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Student $studentsWelcomed
+     * @return Teacher
+     */
+    public function addStudentsWelcomed(\Virgule\Bundle\MainBundle\Entity\Student $studentsWelcomed)
+    {
+        $this->studentsWelcomed[] = $studentsWelcomed;
+    
+        return $this;
+    }
+
+    /**
+     * Remove studentsWelcomed
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Student $studentsWelcomed
+     */
+    public function removeStudentsWelcomed(\Virgule\Bundle\MainBundle\Entity\Student $studentsWelcomed)
+    {
+        $this->studentsWelcomed->removeElement($studentsWelcomed);
+    }
+
+    /**
+     * Get studentsWelcomed
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStudentsWelcomed()
+    {
+        return $this->studentsWelcomed;
     }
 }

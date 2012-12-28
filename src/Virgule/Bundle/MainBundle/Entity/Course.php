@@ -29,14 +29,14 @@ class Course {
     private $dayOfWeek;
 
     /**
-     * @var \DateTime
+     * @var \Time
      *
      * @ORM\Column(name="start_time", type="time", nullable=false)
      */
     private $startTime;
 
     /**
-     * @var \DateTime
+     * @var \Time
      *
      * @ORM\Column(name="end_time", type="time", nullable=false)
      */
