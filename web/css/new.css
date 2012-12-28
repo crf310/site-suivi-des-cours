@@ -36,9 +36,9 @@ body{color: #514d46;  background: #F0EDDA;}
 }
 
 /*-----Headings-----*/
-h1, h3  {font-family: "proxima-nova-1","proxima-nova-2";}
+h1, h2, h3  {font-family: "proxima-nova-1","proxima-nova-2";}
 h1 {font-size: 35px; text-transform: uppercase; letter-spacing: 3px; line-height: 1; color:#d34831; -webkit-box-shadow: -2px -2px 0 #fff; -moz-box-shadow: -2px -2px 0 #fff; text-shadow: -1px 1px 0 rgba(0,0,0,.70); }
-h2 {color: #d34831; font: 57px/1 "tamarillo-1","tamarillo-2"; margin-right: 10px;}
+h2 {color: #d34831; font: 25px; margin-right: 10px;}
 h3{color: #514d46; text-transform: uppercase; letter-spacing: 2px; line-height: 36px;font-size: 16px;}
 
 /*-----Links-----*/
@@ -169,7 +169,6 @@ a.add_entry {
 .records_list td.nav_right {
 	text-align: right;
 }
-.records_list td.entity_actions ul li{
+.records_list ul li{
     list-style: none; display: inline; margin-left: 0px;
 }
-
