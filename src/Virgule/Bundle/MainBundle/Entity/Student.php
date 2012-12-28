@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="student")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\StudentRepository")
  */
-class Student
-{
+class Student {
+
     /**
      * @var integer $id
      *
@@ -113,13 +113,6 @@ class Student
     private $commentaires;
 
     /**
-     * @var \DateTime $registringDate
-     *
-     * @ORM\Column(name="registring_date", type="date", nullable=false)
-     */
-    private $registringDate;
-
-    /**
      * @var string $picturePath
      *
      * @ORM\Column(name="picture_path", type="string", length=50, nullable=true)
@@ -195,33 +188,25 @@ class Student
      * @ORM\Column(name="emergency_contact_connection_type", type="string", length=45, nullable=true)
      */
     private $emergencyContactConnectionType;
-
+    
     /**
-     * @var Country
-     *
-     * @ORM\ManyToOne(targetEntity="Country")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="fk_native_country_id", referencedColumnName="id")
-     * })
-     */
-    private $fkNativeCountry;
-
-    /**
-     * @var Teacher
-     *
-     * @ORM\ManyToOne(targetEntity="Teacher")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="fk_welcomed_by_teacher_id", referencedColumnName="id")
-     * })
-     */
-    private $fkWelcomedByTeacher;
+     * @ORM\ManyToOne(targetEntity="Country", inversedBy="students")
+     * @ORM\JoinColumn(name="fk_native_country", referencedColumnName="id")
+     */   
+    private $nativeCountry;
+    
+        /**
+     * @ORM\ManyToOne(targetEntity="Teacher", inversedBy="studentsWelcomed")
+     * @ORM\JoinColumn(name="fk_welcomed_by_teacher", referencedColumnName="id")
+     */   
+    private $welcomedByTeacher;
 
     /**
      * @var Language
      *
      * @ORM\ManyToOne(targetEntity="Language")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="fk_mother_tongue_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="fk_mother_tongue", referencedColumnName="id")
      * })
      */
     private $fkMotherTongue;
@@ -246,15 +231,12 @@ class Student
      */
     private $fkProposedLevel;
 
-
-
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -264,10 +246,9 @@ class Student
      * @param \DateTime $registrationDate
      * @return Student
      */
-    public function setRegistrationDate($registrationDate)
-    {
+    public function setRegistrationDate($registrationDate) {
         $this->registrationDate = $registrationDate;
-    
+
         return $this;
     }
 
@@ -276,8 +257,7 @@ class Student
      *
      * @return \DateTime 
      */
-    public function getRegistrationDate()
-    {
+    public function getRegistrationDate() {
         return $this->registrationDate;
     }
 
@@ -287,10 +267,9 @@ class Student
      * @param string $lastname
      * @return Student
      */
-    public function setLastname($lastname)
-    {
+    public function setLastname($lastname) {
         $this->lastname = $lastname;
-    
+
         return $this;
     }
 
@@ -299,8 +278,7 @@ class Student
      *
      * @return string 
      */
-    public function getLastname()
-    {
+    public function getLastname() {
         return $this->lastname;
     }
 
@@ -310,10 +288,9 @@ class Student
      * @param string $firstname
      * @return Student
      */
-    public function setFirstname($firstname)
-    {
+    public function setFirstname($firstname) {
         $this->firstname = $firstname;
-    
+
         return $this;
     }
 
@@ -322,8 +299,7 @@ class Student
      *
      * @return string 
      */
-    public function getFirstname()
-    {
+    public function getFirstname() {
         return $this->firstname;
     }
 
@@ -333,10 +309,9 @@ class Student
      * @param \DateTime $birthdate
      * @return Student
      */
-    public function setBirthdate($birthdate)
-    {
+    public function setBirthdate($birthdate) {
         $this->birthdate = $birthdate;
-    
+
         return $this;
     }
 
@@ -345,8 +320,7 @@ class Student
      *
      * @return \DateTime 
      */
-    public function getBirthdate()
-    {
+    public function getBirthdate() {
         return $this->birthdate;
     }
 
@@ -356,10 +330,9 @@ class Student
      * @param string $phoneNumber
      * @return Student
      */
-    public function setPhoneNumber($phoneNumber)
-    {
+    public function setPhoneNumber($phoneNumber) {
         $this->phoneNumber = $phoneNumber;
-    
+
         return $this;
     }
 
@@ -368,8 +341,7 @@ class Student
      *
      * @return string 
      */
-    public function getPhoneNumber()
-    {
+    public function getPhoneNumber() {
         return $this->phoneNumber;
     }
 
@@ -379,10 +351,9 @@ class Student
      * @param string $cellphoneNumber
      * @return Student
      */
-    public function setCellphoneNumber($cellphoneNumber)
-    {
+    public function setCellphoneNumber($cellphoneNumber) {
         $this->cellphoneNumber = $cellphoneNumber;
-    
+
         return $this;
     }
 
@@ -391,8 +362,7 @@ class Student
      *
      * @return string 
      */
-    public function getCellphoneNumber()
-    {
+    public function getCellphoneNumber() {
         return $this->cellphoneNumber;
     }
 
@@ -402,10 +372,9 @@ class Student
      * @param string $address
      * @return Student
      */
-    public function setAddress($address)
-    {
+    public function setAddress($address) {
         $this->address = $address;
-    
+
         return $this;
     }
 
@@ -414,8 +383,7 @@ class Student
      *
      * @return string 
      */
-    public function getAddress()
-    {
+    public function getAddress() {
         return $this->address;
     }
 
@@ -425,10 +393,9 @@ class Student
      * @param string $zipcode
      * @return Student
      */
-    public function setZipcode($zipcode)
-    {
+    public function setZipcode($zipcode) {
         $this->zipcode = $zipcode;
-    
+
         return $this;
     }
 
@@ -437,8 +404,7 @@ class Student
      *
      * @return string 
      */
-    public function getZipcode()
-    {
+    public function getZipcode() {
         return $this->zipcode;
     }
 
@@ -448,10 +414,9 @@ class Student
      * @param string $city
      * @return Student
      */
-    public function setCity($city)
-    {
+    public function setCity($city) {
         $this->city = $city;
-    
+
         return $this;
     }
 
@@ -460,8 +425,7 @@ class Student
      *
      * @return string 
      */
-    public function getCity()
-    {
+    public function getCity() {
         return $this->city;
     }
 
@@ -471,10 +435,9 @@ class Student
      * @param string $gender
      * @return Student
      */
-    public function setGender($gender)
-    {
+    public function setGender($gender) {
         $this->gender = $gender;
-    
+
         return $this;
     }
 
@@ -483,8 +446,7 @@ class Student
      *
      * @return string 
      */
-    public function getGender()
-    {
+    public function getGender() {
         return $this->gender;
     }
 
@@ -494,10 +456,9 @@ class Student
      * @param string $nationality
      * @return Student
      */
-    public function setNationality($nationality)
-    {
+    public function setNationality($nationality) {
         $this->nationality = $nationality;
-    
+
         return $this;
     }
 
@@ -506,8 +467,7 @@ class Student
      *
      * @return string 
      */
-    public function getNationality()
-    {
+    public function getNationality() {
         return $this->nationality;
     }
 
@@ -517,10 +477,9 @@ class Student
      * @param string $maritalStatus
      * @return Student
      */
-    public function setMaritalStatus($maritalStatus)
-    {
+    public function setMaritalStatus($maritalStatus) {
         $this->maritalStatus = $maritalStatus;
-    
+
         return $this;
     }
 
@@ -529,8 +488,7 @@ class Student
      *
      * @return string 
      */
-    public function getMaritalStatus()
-    {
+    public function getMaritalStatus() {
         return $this->maritalStatus;
     }
 
@@ -540,10 +498,9 @@ class Student
      * @param string $commentaires
      * @return Student
      */
-    public function setCommentaires($commentaires)
-    {
+    public function setCommentaires($commentaires) {
         $this->commentaires = $commentaires;
-    
+
         return $this;
     }
 
@@ -552,8 +509,7 @@ class Student
      *
      * @return string 
      */
-    public function getCommentaires()
-    {
+    public function getCommentaires() {
         return $this->commentaires;
     }
 
@@ -563,10 +519,9 @@ class Student
      * @param \DateTime $registringDate
      * @return Student
      */
-    public function setRegistringDate($registringDate)
-    {
+    public function setRegistringDate($registringDate) {
         $this->registringDate = $registringDate;
-    
+
         return $this;
     }
 
@@ -575,8 +530,7 @@ class Student
      *
      * @return \DateTime 
      */
-    public function getRegistringDate()
-    {
+    public function getRegistringDate() {
         return $this->registringDate;
     }
 
@@ -586,10 +540,9 @@ class Student
      * @param string $picturePath
      * @return Student
      */
-    public function setPicturePath($picturePath)
-    {
+    public function setPicturePath($picturePath) {
         $this->picturePath = $picturePath;
-    
+
         return $this;
     }
 
@@ -598,8 +551,7 @@ class Student
      *
      * @return string 
      */
-    public function getPicturePath()
-    {
+    public function getPicturePath() {
         return $this->picturePath;
     }
 
@@ -609,10 +561,9 @@ class Student
      * @param \DateTime $arrivalDate
      * @return Student
      */
-    public function setArrivalDate($arrivalDate)
-    {
+    public function setArrivalDate($arrivalDate) {
         $this->arrivalDate = $arrivalDate;
-    
+
         return $this;
     }
 
@@ -621,8 +572,7 @@ class Student
      *
      * @return \DateTime 
      */
-    public function getArrivalDate()
-    {
+    public function getArrivalDate() {
         return $this->arrivalDate;
     }
 
@@ -632,10 +582,9 @@ class Student
      * @param boolean $scholarized
      * @return Student
      */
-    public function setScholarized($scholarized)
-    {
+    public function setScholarized($scholarized) {
         $this->scholarized = $scholarized;
-    
+
         return $this;
     }
 
@@ -644,8 +593,7 @@ class Student
      *
      * @return boolean 
      */
-    public function getScholarized()
-    {
+    public function getScholarized() {
         return $this->scholarized;
     }
 
@@ -655,10 +603,9 @@ class Student
      * @param string $profession
      * @return Student
      */
-    public function setProfession($profession)
-    {
+    public function setProfession($profession) {
         $this->profession = $profession;
-    
+
         return $this;
     }
 
@@ -667,8 +614,7 @@ class Student
      *
      * @return string 
      */
-    public function getProfession()
-    {
+    public function getProfession() {
         return $this->profession;
     }
 
@@ -678,10 +624,9 @@ class Student
      * @param boolean $scholarizedInTheCountry
      * @return Student
      */
-    public function setScholarizedInTheCountry($scholarizedInTheCountry)
-    {
+    public function setScholarizedInTheCountry($scholarizedInTheCountry) {
         $this->scholarizedInTheCountry = $scholarizedInTheCountry;
-    
+
         return $this;
     }
 
@@ -690,8 +635,7 @@ class Student
      *
      * @return boolean 
      */
-    public function getScholarizedInTheCountry()
-    {
+    public function getScholarizedInTheCountry() {
         return $this->scholarizedInTheCountry;
     }
 
@@ -701,10 +645,9 @@ class Student
      * @param boolean $scholarizedInAForeignCountry
      * @return Student
      */
-    public function setScholarizedInAForeignCountry($scholarizedInAForeignCountry)
-    {
+    public function setScholarizedInAForeignCountry($scholarizedInAForeignCountry) {
         $this->scholarizedInAForeignCountry = $scholarizedInAForeignCountry;
-    
+
         return $this;
     }
 
@@ -713,8 +656,7 @@ class Student
      *
      * @return boolean 
      */
-    public function getScholarizedInAForeignCountry()
-    {
+    public function getScholarizedInAForeignCountry() {
         return $this->scholarizedInAForeignCountry;
     }
 
@@ -724,10 +666,9 @@ class Student
      * @param boolean $scholarizationLevel
      * @return Student
      */
-    public function setScholarizationLevel($scholarizationLevel)
-    {
+    public function setScholarizationLevel($scholarizationLevel) {
         $this->scholarizationLevel = $scholarizationLevel;
-    
+
         return $this;
     }
 
@@ -736,8 +677,7 @@ class Student
      *
      * @return boolean 
      */
-    public function getScholarizationLevel()
-    {
+    public function getScholarizationLevel() {
         return $this->scholarizationLevel;
     }
 
@@ -747,10 +687,9 @@ class Student
      * @param string $emergencyContactLastname
      * @return Student
      */
-    public function setEmergencyContactLastname($emergencyContactLastname)
-    {
+    public function setEmergencyContactLastname($emergencyContactLastname) {
         $this->emergencyContactLastname = $emergencyContactLastname;
-    
+
         return $this;
     }
 
@@ -759,8 +698,7 @@ class Student
      *
      * @return string 
      */
-    public function getEmergencyContactLastname()
-    {
+    public function getEmergencyContactLastname() {
         return $this->emergencyContactLastname;
     }
 
@@ -770,10 +708,9 @@ class Student
      * @param string $emergencyContactFirstname
      * @return Student
      */
-    public function setEmergencyContactFirstname($emergencyContactFirstname)
-    {
+    public function setEmergencyContactFirstname($emergencyContactFirstname) {
         $this->emergencyContactFirstname = $emergencyContactFirstname;
-    
+
         return $this;
     }
 
@@ -782,8 +719,7 @@ class Student
      *
      * @return string 
      */
-    public function getEmergencyContactFirstname()
-    {
+    public function getEmergencyContactFirstname() {
         return $this->emergencyContactFirstname;
     }
 
@@ -793,10 +729,9 @@ class Student
      * @param string $emergencyContactPhoneNumber
      * @return Student
      */
-    public function setEmergencyContactPhoneNumber($emergencyContactPhoneNumber)
-    {
+    public function setEmergencyContactPhoneNumber($emergencyContactPhoneNumber) {
         $this->emergencyContactPhoneNumber = $emergencyContactPhoneNumber;
-    
+
         return $this;
     }
 
@@ -805,8 +740,7 @@ class Student
      *
      * @return string 
      */
-    public function getEmergencyContactPhoneNumber()
-    {
+    public function getEmergencyContactPhoneNumber() {
         return $this->emergencyContactPhoneNumber;
     }
 
@@ -816,10 +750,9 @@ class Student
      * @param string $emergencyContactConnectionType
      * @return Student
      */
-    public function setEmergencyContactConnectionType($emergencyContactConnectionType)
-    {
+    public function setEmergencyContactConnectionType($emergencyContactConnectionType) {
         $this->emergencyContactConnectionType = $emergencyContactConnectionType;
-    
+
         return $this;
     }
 
@@ -828,8 +761,7 @@ class Student
      *
      * @return string 
      */
-    public function getEmergencyContactConnectionType()
-    {
+    public function getEmergencyContactConnectionType() {
         return $this->emergencyContactConnectionType;
     }
 
@@ -839,10 +771,9 @@ class Student
      * @param Virgule\Bundle\MainBundle\Entity\Country $fkNativeCountry
      * @return Student
      */
-    public function setFkNativeCountry(\Virgule\Bundle\MainBundle\Entity\Country $fkNativeCountry = null)
-    {
+    public function setFkNativeCountry(\Virgule\Bundle\MainBundle\Entity\Country $fkNativeCountry = null) {
         $this->fkNativeCountry = $fkNativeCountry;
-    
+
         return $this;
     }
 
@@ -851,8 +782,7 @@ class Student
      *
      * @return Virgule\Bundle\MainBundle\Entity\Country 
      */
-    public function getFkNativeCountry()
-    {
+    public function getFkNativeCountry() {
         return $this->fkNativeCountry;
     }
 
@@ -862,10 +792,9 @@ class Student
      * @param Virgule\Bundle\MainBundle\Entity\Teacher $fkWelcomedByTeacher
      * @return Student
      */
-    public function setFkWelcomedByTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $fkWelcomedByTeacher = null)
-    {
+    public function setFkWelcomedByTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $fkWelcomedByTeacher = null) {
         $this->fkWelcomedByTeacher = $fkWelcomedByTeacher;
-    
+
         return $this;
     }
 
@@ -874,8 +803,7 @@ class Student
      *
      * @return Virgule\Bundle\MainBundle\Entity\Teacher 
      */
-    public function getFkWelcomedByTeacher()
-    {
+    public function getFkWelcomedByTeacher() {
         return $this->fkWelcomedByTeacher;
     }
 
@@ -885,10 +813,9 @@ class Student
      * @param Virgule\Bundle\MainBundle\Entity\Language $fkMotherTongue
      * @return Student
      */
-    public function setFkMotherTongue(\Virgule\Bundle\MainBundle\Entity\Language $fkMotherTongue = null)
-    {
+    public function setFkMotherTongue(\Virgule\Bundle\MainBundle\Entity\Language $fkMotherTongue = null) {
         $this->fkMotherTongue = $fkMotherTongue;
-    
+
         return $this;
     }
 
@@ -897,8 +824,7 @@ class Student
      *
      * @return Virgule\Bundle\MainBundle\Entity\Language 
      */
-    public function getFkMotherTongue()
-    {
+    public function getFkMotherTongue() {
         return $this->fkMotherTongue;
     }
 
@@ -908,10 +834,9 @@ class Student
      * @param Virgule\Bundle\MainBundle\Entity\Language $fkScholarizationLanguage
      * @return Student
      */
-    public function setFkScholarizationLanguage(\Virgule\Bundle\MainBundle\Entity\Language $fkScholarizationLanguage = null)
-    {
+    public function setFkScholarizationLanguage(\Virgule\Bundle\MainBundle\Entity\Language $fkScholarizationLanguage = null) {
         $this->fkScholarizationLanguage = $fkScholarizationLanguage;
-    
+
         return $this;
     }
 
@@ -920,8 +845,7 @@ class Student
      *
      * @return Virgule\Bundle\MainBundle\Entity\Language 
      */
-    public function getFkScholarizationLanguage()
-    {
+    public function getFkScholarizationLanguage() {
         return $this->fkScholarizationLanguage;
     }
 
@@ -931,10 +855,9 @@ class Student
      * @param Virgule\Bundle\MainBundle\Entity\ClassLevel $fkProposedLevel
      * @return Student
      */
-    public function setFkProposedLevel(\Virgule\Bundle\MainBundle\Entity\ClassLevel $fkProposedLevel = null)
-    {
+    public function setFkProposedLevel(\Virgule\Bundle\MainBundle\Entity\ClassLevel $fkProposedLevel = null) {
         $this->fkProposedLevel = $fkProposedLevel;
-    
+
         return $this;
     }
 
@@ -943,8 +866,54 @@ class Student
      *
      * @return Virgule\Bundle\MainBundle\Entity\ClassLevel 
      */
-    public function getFkProposedLevel()
-    {
+    public function getFkProposedLevel() {
         return $this->fkProposedLevel;
+    }
+
+
+    /**
+     * Set nativeCountry
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Country $nativeCountry
+     * @return Student
+     */
+    public function setNativeCountry(\Virgule\Bundle\MainBundle\Entity\Country $nativeCountry = null)
+    {
+        $this->nativeCountry = $nativeCountry;
+    
+        return $this;
+    }
+
+    /**
+     * Get nativeCountry
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\Country 
+     */
+    public function getNativeCountry()
+    {
+        return $this->nativeCountry;
+    }
+
+    /**
+     * Set welcomedByTeacher
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Teacher $welcomedByTeacher
+     * @return Student
+     */
+    public function setWelcomedByTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $welcomedByTeacher = null)
+    {
+        $this->welcomedByTeacher = $welcomedByTeacher;
+    
+        return $this;
+    }
+
+    /**
+     * Get welcomedByTeacher
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\Teacher 
+     */
+    public function getWelcomedByTeacher()
+    {
+        return $this->welcomedByTeacher;
     }
 }
