@@ -82,6 +82,19 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('prof2', $prof2);        
         $this->addReference('prof3', $prof3);
         $this->addReference('prof4', $prof4);
+        
+        for ($i = 10; $i <= 50; $i++) {
+            $p = new Teacher();
+            $p->setUsername("prof" . $i);
+            $p->setPassword("password");
+            $p->setFirstName("Jean");
+            $p->setLastName("Dupont");
+            $p->setEmailAddress("jean.dupont@example.com");
+            $p->setRegistrationDate(new \DateTime('now'));
+            $p->setRole($this->getReference('guest-role'));
+
+            $manager->persist($p);            
+        }
                 
         $manager->flush();
     }
