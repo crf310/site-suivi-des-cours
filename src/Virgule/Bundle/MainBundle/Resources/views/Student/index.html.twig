@@ -12,6 +12,7 @@
     <thead>
         <tr>
             <th></th>
+            <th></th>
             <th>Prénom - Nom</th>
             <th>Téléphone fixe</th>
             <th>Téléphone portable</th>
@@ -22,11 +23,20 @@
     {% for entity in entities %}
         <tr>
             
-            <td>
-                <img src="{{ asset('images/icons/user_female.png') }}" />
-                <img src="{{ asset('images/drapeaux/mg.png')}}" alt="{{ entity.nativeCountry.isoCode }}" title="{{ entity.nativeCountry.label }}" />
+            <td>                
+                <img src="{{ asset('images/drapeaux/' ~ entity.nativeCountry.isoCode ~ '.png')}}" alt="{{ entity.nativeCountry.isoCode }}" title="{{ entity.nativeCountry.label }}" />
             </td>
-            <td><a href="{{ path('student_show', { 'id': entity.id }) }}">{{ entity.firstname }} {{ entity.lastname }}</a></td>
+            
+            <td>
+                {% if entity.gender == 'F' %}
+                    <img src="{{ asset('images/icons/user_female.png') }}" />
+                {% else %}
+                    <img src="{{ asset('images/icons/user.png') }}" />
+                {% endif %}
+            </td>
+            <td>
+                <a href="{{ path('student_show', { 'id': entity.id }) }}">{{ entity.firstname }} {{ entity.lastname }}</a>
+            </td>
             <td>{{ entity.phoneNumber }}</td>
             <td>{{ entity.cellphoneNumber }}</td>
             <td>
@@ -42,6 +52,6 @@
         </tr>
     {% endfor %}
     </tbody>
-    {% include '::pager_footer.html.twig' %}
+    {% include '::pager_footer.html.twig' with { nb_columns: 6 }  %}
 </table>
 {% endblock %}

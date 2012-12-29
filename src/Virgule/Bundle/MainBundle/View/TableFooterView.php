@@ -18,11 +18,22 @@ class TableFooterView implements ViewInterface
             'css_disabled_class' => 'disabled',
             'css_dots_class'     => 'dots',
             'css_current_class'  => 'current',
-            'colspan_left'       => 2,
-            'colspan_middle'       => 2,
-            'colspan_right'       => 2
+            'nb_columns'       => 6
         ), $options);
 
+        
+        $nbColumns = $options['nb_columns'];
+        if ($options['nb_columns'] % 3 == 0) {
+            $colspanLeft = ($nbColumns / 3);
+            $colspanMiddle = $colspanLeft;
+            $colspanRight = $colspanMiddle;
+        } else {
+            $colspanLeft = round($nbColumns / 3);
+            $colspanMiddle = $colspanLeft + 1;
+            $colspanRight = $colspanLeft;
+        }
+        
+        
         $currentPage = $pagerfanta->getCurrentPage();
 
         $startPage = $currentPage - $options['proximity'];
@@ -38,7 +49,7 @@ class TableFooterView implements ViewInterface
         }
 
         $pages = array();
-        $pages[] = sprintf('<td class="nav_left" colspan="%s">', $options['colspan_left']);
+        $pages[] = sprintf('<td class="nav_left" colspan="%s">', $colspanLeft);
         // previous
         if ($pagerfanta->hasPreviousPage()) {
             $pages[] = array($pagerfanta->getPreviousPage(), $options['previous_message']);
@@ -47,7 +58,7 @@ class TableFooterView implements ViewInterface
         }
         $pages[] = sprintf('</td>');
         
-        $pages[] = sprintf('<td  class="nav_middle" colspan="%s">', $options['colspan_middle']);
+        $pages[] = sprintf('<td  class="nav_middle" colspan="%s">', $colspanMiddle);
         // first
         if ($startPage > 1) {
             $pages[] = array(1, 1);
@@ -86,7 +97,7 @@ class TableFooterView implements ViewInterface
         }
         $pages[] = sprintf('</td>');
 
-        $pages[] = sprintf('<td  class="nav_right" colspan="%s">', $options['colspan_right']);
+        $pages[] = sprintf('<td  class="nav_right" colspan="%s">', $colspanRight);
         // next
         if ($pagerfanta->hasNextPage()) {
             $pages[] = array($pagerfanta->getNextPage(), $options['next_message']);
