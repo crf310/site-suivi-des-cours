@@ -31,7 +31,7 @@ class LoadClassRoomData extends AbstractFixture implements OrderedFixtureInterfa
     }
     
     public function getOrder() {
-        return 3;
+        return 13;
     }
 }
 

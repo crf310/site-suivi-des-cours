@@ -36,7 +36,7 @@ class LoadOrganizationBranchData extends AbstractFixture implements OrderedFixtu
     }
     
     public function getOrder() {
-        return 1;
+        return 11;
     }
 }
 
