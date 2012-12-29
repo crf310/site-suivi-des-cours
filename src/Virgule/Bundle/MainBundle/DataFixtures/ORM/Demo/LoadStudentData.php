@@ -22,7 +22,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
         for ($i = 0; $i <= 100; $i++) {
             $s = new Student();
             $s->setFirstname("Augustin");
-            $s->setLastName("Ratsanani");
+            $s->setLastName("Ranaly");
             $s->setGender("F");
             $s->setNativeCountry($this->getReference('country-MG'));
             $s->setRegistrationDate(new \DateTime('now'));
