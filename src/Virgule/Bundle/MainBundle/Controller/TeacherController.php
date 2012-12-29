@@ -32,14 +32,13 @@ class TeacherController extends Controller {
      * @Route("/page/{page}", requirements={"page" = "\d+"}, defaults={"page" = "1"})
      * @Template()
      */
-    public function indexAction($page=1) {
-        
+    public function indexAction($page=1) {        
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('VirguleMainBundle:Teacher')->getTeachersByStatus(true);
 
         $pagerfanta = new Pagerfanta(new ArrayAdapter($entities));
-        $pagerfanta->setMaxPerPage(10);
+        $pagerfanta->setMaxPerPage($this->container->parameters['pager_nb_results']);
 
         try {
             $pagerfanta->setCurrentPage($page);
@@ -47,9 +46,7 @@ class TeacherController extends Controller {
             throw new NotFoundHttpException();
         }
 
-        return array(
-		'entities' => $pagerfanta
-		);
+        return array('entities' => $pagerfanta);
     }
 
     /**

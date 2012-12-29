@@ -33,7 +33,7 @@ class StudentController extends Controller {
         $entities = $em->getRepository('VirguleMainBundle:Student')->findAll();
 
         $pagerfanta = new Pagerfanta(new ArrayAdapter($entities));
-        $pagerfanta->setMaxPerPage(15);
+        $pagerfanta->setMaxPerPage($this->container->parameters['pager_nb_results']);
 
         try {
             $pagerfanta->setCurrentPage($page);
