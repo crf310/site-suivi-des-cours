@@ -16,15 +16,20 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
 
     public function load(ObjectManager $manager) {
 
-        $countryCodes = Array('cn', '');
-        $gender = Array('F','M');
+        $countryCodes = Array('cn', 'ma', 'us', 'kr', 'mg', 'co', 'ua', 'uy', 'ru', 'sn', 'fr', 'zm', 'gb', 'tg', 'ug', 'me');
+        $genders = Array('F','M');
+        $firstnames = Array('Jean', 'John', 'Juan', 'Xiao', 'Augustin', 'Dimitri', 'Sergiy', 'Ali', 'Abdel');
+        $lastnames = Array('Dupont', 'Smith', 'Suarez', 'Lee', 'Ranaly', 'Serpov', 'Karabatic', 'Bongo', 'Serafi');
         
-        for ($i = 0; $i <= 100; $i++) {
+        for ($i = 0; $i <= 157; $i++) {
             $s = new Student();
-            $s->setFirstname("Augustin");
-            $s->setLastName("Ranaly");
-            $s->setGender("F");
-            $s->setNativeCountry($this->getReference('country-MG'));
+            $s->setFirstname($firstnames[rand(0, count($firstnames)-1)]);
+            $s->setLastname($lastnames[rand(0, count($lastnames)-1)]);
+            $s->setGender($genders[rand(0, 1)]);
+            
+            $rc = strtoupper($countryCodes[rand(0, count($countryCodes)-1)]);
+            $s->setNativeCountry($this->getReference('country-' . $rc));
+            
             $s->setRegistrationDate(new \DateTime('now'));
             $s->setPhoneNumber("0102030405");
             $s->setCellphoneNumber("0607080910");
