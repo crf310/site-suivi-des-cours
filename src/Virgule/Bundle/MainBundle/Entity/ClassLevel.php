@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="class_level")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\ClassLevelRepository")
  */
-class ClassLevel
-{
+class ClassLevel {
+
     /**
      * @var integer $id
      *
@@ -45,8 +45,7 @@ class ClassLevel
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -56,10 +55,9 @@ class ClassLevel
      * @param string $label
      * @return ClassLevel
      */
-    public function setLabel($label)
-    {
+    public function setLabel($label) {
         $this->label = $label;
-    
+
         return $this;
     }
 
@@ -68,8 +66,7 @@ class ClassLevel
      *
      * @return string 
      */
-    public function getLabel()
-    {
+    public function getLabel() {
         return $this->label;
     }
 
@@ -79,10 +76,9 @@ class ClassLevel
      * @param string $htmlColorCode
      * @return ClassLevel
      */
-    public function setHtmlColorCode($htmlColorCode)
-    {
+    public function setHtmlColorCode($htmlColorCode) {
         $this->htmlColorCode = $htmlColorCode;
-    
+
         return $this;
     }
 
@@ -91,28 +87,26 @@ class ClassLevel
      *
      * @return string 
      */
-    public function getHtmlColorCode()
-    {
+    public function getHtmlColorCode() {
         return $this->htmlColorCode;
     }
+
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->courses = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add courses
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
      * @return ClassLevel
      */
-    public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
-    {
+    public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
         $this->courses[] = $courses;
-    
+
         return $this;
     }
 
@@ -121,8 +115,7 @@ class ClassLevel
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
      */
-    public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
-    {
+    public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
         $this->courses->removeElement($courses);
     }
 
@@ -131,8 +124,11 @@ class ClassLevel
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getCourses()
-    {
+    public function getCourses() {
         return $this->courses;
+    }
+
+    public function __toString() {
+        return $this->getLabel();
     }
 }
