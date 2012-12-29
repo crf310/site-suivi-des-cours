@@ -1,3 +1,7 @@
+html * {
+   font-size: 10px;
+   font-family: "Arial";
+}
 /*-----Nav-----*/
 #nav {
     box-shadow: 0px 0px 12px rgba(88, 83, 74, .7);
@@ -5,10 +9,10 @@
     height: 36px; background-color: #48473f;
 }
 #nav ul{ padding-top: 4px;}
-#nav a{color: #f0edda; font: bold 12px "proxima-nova-1","proxima-nova-2"; text-decoration: none; letter-spacing: .2em;	padding: 2px 10px;}
+#nav a{color: #f0edda; font-weight: bold; font-size: 12px; text-decoration: none; letter-spacing: .2em;	padding: 2px 10px;}
 #nav ul li{list-style: none; display: inline; margin-left: 0px; }
 #nav li:first-child{margin-left: 0px;}
-nav a{
+nav a {
     -moz-border-radius: 12px;
     -webkit-border-radius: 12px;
     border-radius: 12px;
@@ -22,7 +26,7 @@ nav a.active {
 }
 
 /* Screen */
-html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent;margin:0;padding:0;}
+html,body,div,span,object,iframe,h1,h2,h3,p,blockquote,pre,abbr,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,footer,header,hgroup,menu,nav{border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent;margin:0;padding:0;}
 article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}
 nav ul{list-style:none;}
 a{font-size:100%;vertical-align:baseline;background:transparent;margin:0;padding:0;}
@@ -31,15 +35,14 @@ a{font-size:100%;vertical-align:baseline;background:transparent;margin:0;padding
 body{color: #514d46;  background: #F0EDDA;}
 #header{margin-bottom: 0px;overflow:hidden; text-align: center;}
 #content {
-    width: 80%;
+    width: 96%;
     margin: auto;
 }
 
 /*-----Headings-----*/
-h1, h2, h3  {font-family: "proxima-nova-1","proxima-nova-2";}
-h1 {font-size: 35px; text-transform: uppercase; letter-spacing: 3px; line-height: 1; color:#d34831; -webkit-box-shadow: -2px -2px 0 #fff; -moz-box-shadow: -2px -2px 0 #fff; text-shadow: -1px 1px 0 rgba(0,0,0,.70); }
-h2 {color: #d34831; font: 25px; margin-right: 10px;}
-h3{color: #514d46; text-transform: uppercase; letter-spacing: 2px; line-height: 36px;font-size: 16px;}
+h1 {font-size: 30px; text-transform: uppercase; letter-spacing: 3px; line-height: 1; color:#d34831; -webkit-box-shadow: -2px -2px 0 #fff; -moz-box-shadow: -2px -2px 0 #fff; text-shadow: -2px 2px 0 rgba(0,0,0,.70); }
+h2 {color: #d34831; font-size: 20px; margin-right: 10px;}
+h3{color: #514d46; text-transform: uppercase; letter-spacing: 2px; line-height: 36px; font-size: 16px;}
 
 /*-----Links-----*/
 a{color: #d34831;}
@@ -54,9 +57,9 @@ a:hover{color: #F45338;}
     -moz-border-radius: 0 0 12px 12px;
     -webkit-border-radius: 0 0 12px 12px;
     border-radius: 0 0 12px 12px;
-    font: 12px  "proxima-nova-1","proxima-nova-2";
-    letter-spacing: .08em;
+    font-size: 12px;
     margin-bottom: 20px;
+    letter-spacing: .08em;
 }
 
 #top_menu li {
@@ -113,19 +116,19 @@ a.add_entry {
     -moz-border-radius: 12px 12px 0 0;
     -webkit-border-radius: 12px 12px 0 0;
     border-radius: 12px 12px 0 0;
-    font: 12px  "proxima-nova-1","proxima-nova-2";
+    font-size: 12px;
     letter-spacing: .08em;
     align: right;
 }
 
 #results_table {
-    widht: 50%;
+    width: 100%;
     margin-left: auto; 
     margin-right: auto; 
 }
 
 .records_list {
-	font: bold 12px "proxima-nova-1","proxima-nova-2"; 
+	font-size: 12px;
 	font-size: 12px;
 	text-align: left;
 	border-collapse: collapse;
@@ -133,7 +136,8 @@ a.add_entry {
         width: 100%;
 }
 .records_list th {
-	font: bold 12px "proxima-nova-1","proxima-nova-2"; 
+	font-size: 12px;
+        font-weight: bold;
 	padding: 8px;
 	background: #48473f url('table-images/gradhead.png') repeat-x;
 	border-top: 2px solid #48473f;
