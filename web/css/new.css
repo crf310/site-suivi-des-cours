@@ -105,17 +105,23 @@ a.add_entry {
     background: url('../images/icons/add.png') no-repeat;
     padding: 2px 0px 0px 20px;
 }
-
+#results_actions {
+    width: 100%;
+    display: block;
+    height: 65px;
+}
 #results_actions div.action_tab {
     background-color: #48473f;
-    width: 200px;
     padding: 10px;
-    -moz-border-radius: 12px 12px 0 0;
-    -webkit-border-radius: 12px 12px 0 0;
+    -moz-border-radius: 2px 1px 0 0;
+    -webkit-border-radius: 2px 1px 0 0;
     border-radius: 12px 12px 0 0;
     font: 12px  "proxima-nova-1","proxima-nova-2";
     letter-spacing: .08em;
-    align: right;
+    width: 180px;
+    float: right;
+    height: 15px;
+    margin-left: 2px;
 }
 
 #results_table {
