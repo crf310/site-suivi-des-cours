@@ -103,15 +103,15 @@ class Teacher implements UserInterface, EquatableInterface {
      * @ORM\OneToMany(targetEntity="Course", mappedBy="teacher")
      */
     private $courses;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Student", mappedBy="welcomedByTeacher")
      */
     private $studentsWelcomed;
-    
+
     /**
-     * @ORM\ManyToOne(targetEntity="OrganizationBranch", inversedBy="teachers")
-     * @ORM\JoinColumn(name="fk_organization_branch_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="OrganizationBranch", inversedBy="teachers")
+     * @ORM\JoinTable(name="teachers_branches")
      */
     protected $organizationBranches;
 
@@ -394,7 +394,7 @@ class Teacher implements UserInterface, EquatableInterface {
     public function getCourses() {
         return $this->courses;
     }
-    
+
     public function __toString() {
         return $this->getFirstName() . ' ' . $this->getLastName();
     }
@@ -405,10 +405,9 @@ class Teacher implements UserInterface, EquatableInterface {
      * @param \Virgule\Bundle\MainBundle\Entity\Student $studentsWelcomed
      * @return Teacher
      */
-    public function addStudentsWelcomed(\Virgule\Bundle\MainBundle\Entity\Student $studentsWelcomed)
-    {
+    public function addStudentsWelcomed(\Virgule\Bundle\MainBundle\Entity\Student $studentsWelcomed) {
         $this->studentsWelcomed[] = $studentsWelcomed;
-    
+
         return $this;
     }
 
@@ -417,8 +416,7 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Student $studentsWelcomed
      */
-    public function removeStudentsWelcomed(\Virgule\Bundle\MainBundle\Entity\Student $studentsWelcomed)
-    {
+    public function removeStudentsWelcomed(\Virgule\Bundle\MainBundle\Entity\Student $studentsWelcomed) {
         $this->studentsWelcomed->removeElement($studentsWelcomed);
     }
 
@@ -427,31 +425,29 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getStudentsWelcomed()
-    {
+    public function getStudentsWelcomed() {
         return $this->studentsWelcomed;
     }
 
     /**
-     * Set organizationBranches
+     * Add organizationBranches
      *
      * @param \Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranches
      * @return Teacher
      */
-    public function setOrganizationBranches(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranches = null)
-    {
-        $this->organizationBranches = $organizationBranches;
-    
+    public function addOrganizationBranch(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranches) {
+        $this->organizationBranches[] = $organizationBranches;
+
         return $this;
     }
 
     /**
-     * Get organizationBranches
+     * Remove organizationBranches
      *
-     * @return \Virgule\Bundle\MainBundle\Entity\OrganizationBranch 
+     * @param \Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranches
      */
-    public function getOrganizationBranches()
-    {
-        return $this->organizationBranches;
+    public function removeOrganizationBranch(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranches) {
+        $this->organizationBranches->removeElement($organizationBranches);
     }
+
 }

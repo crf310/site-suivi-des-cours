@@ -79,7 +79,8 @@ class OrganizationBranch {
     private $semesters;
     
     /**
-     * @ORM\OneToMany(targetEntity="Teacher", mappedBy="organizationBranches")
+     * @ORM\ManyToMany(targetEntity="Teacher", mappedBy="organizationBranches")
+     * @ORM\JoinTable(name="teachers_branches")
      */
     private $teachers;
 
