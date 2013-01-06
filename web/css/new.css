@@ -69,7 +69,7 @@ a:hover{color: #F45338;}
 }
 
 #top_menu a.minutes {
-    background: url('../images/icons/script.png') no-repeat;
+    background: url('../images/icons/page.png') no-repeat;
     padding: 2px 0px 0px 20px;
 }
 #top_menu a.students {
@@ -104,6 +104,11 @@ a:hover{color: #F45338;}
 .ctrlHolder .right{ float: right;}
 
 /*----- Tables ----*/
+a.export_list {
+    background: url('../images/icons/page_excel.png') no-repeat;
+    /* top bottom right left */
+    padding: 2px 0px 0px 20px;
+}
 a.add_entry {
     background: url('../images/icons/add.png') no-repeat;
     padding: 2px 0px 0px 20px;
