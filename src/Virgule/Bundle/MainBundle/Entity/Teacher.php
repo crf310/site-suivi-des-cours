@@ -108,6 +108,12 @@ class Teacher implements UserInterface, EquatableInterface {
      * @ORM\OneToMany(targetEntity="Student", mappedBy="welcomedByTeacher")
      */
     private $studentsWelcomed;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="OrganizationBranch", inversedBy="teachers")
+     * @ORM\JoinColumn(name="fk_organization_branch_id", referencedColumnName="id")
+     */
+    protected $organizationBranches;
 
     /**
      * Get id
@@ -424,5 +430,28 @@ class Teacher implements UserInterface, EquatableInterface {
     public function getStudentsWelcomed()
     {
         return $this->studentsWelcomed;
+    }
+
+    /**
+     * Set organizationBranches
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranches
+     * @return Teacher
+     */
+    public function setOrganizationBranches(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranches = null)
+    {
+        $this->organizationBranches = $organizationBranches;
+    
+        return $this;
+    }
+
+    /**
+     * Get organizationBranches
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\OrganizationBranch 
+     */
+    public function getOrganizationBranches()
+    {
+        return $this->organizationBranches;
     }
 }
