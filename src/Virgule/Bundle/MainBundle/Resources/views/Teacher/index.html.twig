@@ -26,7 +26,7 @@
         </thead>
         <tbody>
         {% for entity in entities.currentPageResults %}
-            <tr{% if loop.index % 2 == 1 %} class="dark" {% endif %}>
+           <tr>
                 <td>{{ entity.firstName }} {{ entity.lastName }}</td>
                 <td>{{ entity.phoneNumber }}</td>
                 <td>{{ entity.cellphoneNumber }}</td>
