@@ -24,6 +24,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $prof1->setEmailAddress("henry.jones@example.com");
         $prof1->setRegistrationDate(new \DateTime('now'));
         $prof1->setRole($this->getReference('user-role'));
+        $prof1->addOrganizationBranch($this->getReference('deleg-3-10'));
         
         $prof2 = new Teacher();
         $prof2->setUsername("prof2");
@@ -34,6 +35,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $prof2->setEmailAddress("john.keating@example.com");
         $prof2->setRegistrationDate(new \DateTime('now'));
         $prof2->setRole($this->getReference('user-role'));
+        $prof2->addOrganizationBranch($this->getReference('deleg-3-10'));
 
         $prof3 = new Teacher();
         $prof3->setUsername("prof3");
@@ -43,7 +45,8 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $prof3->setEmailAddress("walter.lewin@example.com");
         $prof3->setRegistrationDate(new \DateTime('now'));
         $prof3->setRole($this->getReference('user-role'));
-
+        $prof3->addOrganizationBranch($this->getReference('deleg-3-10'));
+        
         $prof4 = new Teacher();
         $prof4->setUsername("prof4");
         $prof4->setPassword("password");
@@ -52,6 +55,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $prof4->setEmailAddress("philippe.marrast@example.com");
         $prof4->setRegistrationDate(new \DateTime('now'));
         $prof4->setRole($this->getReference('user-role'));
+        $prof4->addOrganizationBranch($this->getReference('deleg-3-10'));
         
         $guest = new Teacher();
         $guest->setUsername("guest");
@@ -61,6 +65,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $guest->setEmailAddress("ludovic.tessier@example.com");
         $guest->setRegistrationDate(new \DateTime('now'));
         $guest->setRole($this->getReference('guest-role'));
+        $guest->addOrganizationBranch($this->getReference('deleg-3-10'));
         
         $secretary = new Teacher();
         $secretary->setUsername("secretary");
@@ -70,6 +75,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $secretary->setEmailAddress("safia.slimane@example.com");
         $secretary->setRegistrationDate(new \DateTime('now'));
         $secretary->setRole($this->getReference('secretary-role'));
+        $secretary->addOrganizationBranch($this->getReference('deleg-3-10'));
         
         $manager->persist($prof1);
         $manager->persist($prof2);
@@ -88,10 +94,11 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
             $p->setUsername("prof" . $i);
             $p->setPassword("password");
             $p->setFirstName("Jean");
-            $p->setLastName("Dupont");
+            $p->setLastName("Dupont " . $i);
             $p->setEmailAddress("jean.dupont@example.com");
             $p->setRegistrationDate(new \DateTime('now'));
             $p->setRole($this->getReference('guest-role'));
+            $p->addOrganizationBranch($this->getReference('deleg-5'));
 
             $manager->persist($p);            
         }
