@@ -28,14 +28,15 @@ class TeacherController extends Controller {
     /**
      * Lists all Teacher entities.
      *
-     * @Route("/", name="teacher_index")
-     * @Route("/page/{page}", requirements={"page" = "\d+"}, defaults={"page" = "1"})
+     * @Route("/")
+     * @Route("/page/{page}", requirements={"page" = "\d+"}, defaults={"page" = "1"}, name="teacher_index")
      * @Template()
      */
     public function indexAction($page=1) {        
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('VirguleMainBundle:Teacher')->getTeachersByStatus(true);
+        $organizationBranchId = $this->getRequest()->getSession()->get('organizationBranchId');
+        $entities = $em->getRepository('VirguleMainBundle:Teacher')->getTeachersByStatus($organizationBranchId, true);
 
         $pagerfanta = new Pagerfanta(new ArrayAdapter($entities));
         $pagerfanta->setMaxPerPage($this->container->parameters['pager_nb_results']);

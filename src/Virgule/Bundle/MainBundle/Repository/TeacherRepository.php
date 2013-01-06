@@ -52,11 +52,13 @@ class TeacherRepository extends EntityRepository implements UserProviderInterfac
         return $this->getEntityName() === $class || is_subclass_of($class, $this->getEntityName());
     }
     
-    public function getTeachersByStatus($isActive=true) {
+    public function getTeachersByStatus($organizationBranchId, $isActive=true) {
         $q = $this
             ->createQueryBuilder('t')
             ->where('t.isActive = :isActive')
             ->andWhere('t.username <> :rootUsername')
+            ->innerJoin('t.organizationBranches', 'ob', 'WITH', 'ob.id = :organizationBranchId')
+            ->setParameter('organizationBranchId', $organizationBranchId)
             ->setParameter('isActive', $isActive)
             ->setParameter('rootUsername', "root")
             ->getQuery()
