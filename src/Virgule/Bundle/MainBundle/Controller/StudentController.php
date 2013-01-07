@@ -24,7 +24,7 @@ class StudentController extends Controller {
     /**
      * Lists all Student entities.
      *
-     * @Route("/", name="student")
+     * @Route("/", name="student_index")
      * @Template()
      */
     public function indexAction($page=1) {
