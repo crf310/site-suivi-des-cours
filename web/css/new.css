@@ -84,6 +84,10 @@ a:hover{color: #F45338;}
     background: url('../images/icons/calendar.png') no-repeat;
     padding: 2px 0px 0px 20px;
 }
+#top_menu a.statistics {
+    background: url('../images/icons/chart_bar.png') no-repeat;
+    padding: 2px 0px 0px 20px;
+}
 #top_menu a.user_profile {
     background: url('../images/icons/telephone.png') no-repeat;
     padding: 2px 0px 0px 20px;
