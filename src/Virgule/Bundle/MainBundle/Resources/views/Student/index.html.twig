@@ -28,35 +28,35 @@
     {% for entity in entities %}
         <tr>
             
-            <td>                
-                <img src="{{ asset('images/drapeaux/' ~ entity.nativeCountry.isoCode ~ '.png')}}" alt="{{ entity.nativeCountry.isoCode }}" title="{{ entity.nativeCountry.label }}" />
+            <td>
+                <img src="{{ asset('images/drapeaux/' ~ entity['isoCode'] ~ '.png')}}" alt="{{  entity['isoCode'] }}" title="{{  entity['label'] }}" />
             </td>
             
             <td>
-                {% if entity.gender == 'F' %}
+                {% if entity['gender'] == 'F' %}
                     <img src="{{ asset('images/icons/user_female.png') }}" />
                 {% else %}
                     <img src="{{ asset('images/icons/user.png') }}" />
                 {% endif %}
             </td>
             <td>
-                <a href="{{ path('student_show', { 'id': entity.id }) }}">{{ entity.firstname }} {{ entity.lastname }}</a>
+                <a href="{{ path('student_show', { 'id': entity['id'] }) }}">{{ entity['firstname'] }} {{ entity['lastname'] }}</a>
             </td>
-            <td>{{ entity.phoneNumber }}</td>
-            <td>{{ entity.cellphoneNumber }}</td>
+            <td>{{ entity['phoneNumber'] }}</td>
+            <td>{{ entity['cellphoneNumber'] }}</td>
             <td>
                 <ul>
                     <li>
-                        <a href="{{ path('student_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('student_show', { 'id':  entity['id'] }) }}">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('student_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('student_edit', { 'id':  entity['id'] }) }}">edit</a>
                     </li>
                 </ul>
             </td>
         </tr>
     {% endfor %}
     </tbody>
-    {% include '::pager_footer.html.twig' with { nb_columns: 6 }  %}
+    {% include '::pager_footer.html.twig' with { nb_columns: 6 } %}
 </table>
 {% endblock %}

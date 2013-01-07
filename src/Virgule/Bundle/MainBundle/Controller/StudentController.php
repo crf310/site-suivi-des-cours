@@ -24,13 +24,14 @@ class StudentController extends Controller {
     /**
      * Lists all Student entities.
      *
-     * @Route("/", name="student_index")
+     * @Route("/")
+     * @Route("/page/{page}", requirements={"page" = "\d+"}, defaults={"page" = "1"}, name="student_index")
      * @Template()
      */
     public function indexAction($page=1) {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('VirguleMainBundle:Student')->findAll();
+        $entities = $em->getRepository('VirguleMainBundle:Student')->loadAll();
 
         $pagerfanta = new Pagerfanta(new ArrayAdapter($entities));
         $pagerfanta->setMaxPerPage($this->container->parameters['pager_nb_results']);
