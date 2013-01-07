@@ -21,13 +21,18 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
         $firstnames = Array('Jean', 'John', 'Juan', 'Xiao', 'Augustin', 'Dimitri', 'Sergiy', 'Ali', 'Abdel');
         $lastnames = Array('Dupont', 'Smith', 'Suarez', 'Lee', 'Ranaly', 'Serpov', 'Karabatic', 'Bongo', 'Serafi');
         
-        for ($i = 0; $i <= 157; $i++) {
+        $nbFirstNames =  count($firstnames)-1;
+        $nbLastNames = count($lastnames)-1;
+        $nbCountries = count($countryCodes)-1;
+        
+        for ($i = 0; $i <= 151; $i++) {
             $s = new Student();
-            $s->setFirstname($firstnames[rand(0, count($firstnames)-1)]);
-            $s->setLastname($lastnames[rand(0, count($lastnames)-1)]);
+            $s->setFirstname($firstnames[rand(0, $nbFirstNames)]);
+            $s->setLastname($lastnames[rand(0, $nbLastNames)]);
             $s->setGender($genders[rand(0, 1)]);
             
-            $rc = strtoupper($countryCodes[rand(0, count($countryCodes)-1)]);
+            $rand = rand(0, $nbCountries);
+            $rc = strtoupper($countryCodes[$rand]);
             $s->setNativeCountry($this->getReference('country-' . $rc));
             
             $s->setRegistrationDate(new \DateTime('now'));
@@ -35,8 +40,8 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
             $s->setCellphoneNumber("0607080910");
             $manager->persist($s);
         }
-
         $manager->flush();
+        
     }
 
     public function getOrder() {
