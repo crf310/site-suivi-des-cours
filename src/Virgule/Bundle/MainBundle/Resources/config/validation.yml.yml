@@ -1,4 +1,0 @@
-Virgule\MainBundle\Entity\Formateurs:
-    properties:
-        gender:
-            - Choice: { choices: [male, female], message: Choose a valid gender. }
