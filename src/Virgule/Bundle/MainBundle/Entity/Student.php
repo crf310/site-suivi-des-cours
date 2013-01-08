@@ -106,11 +106,12 @@ class Student {
     private $maritalStatus;
 
     /**
-     * @var string $commentaires
+     * @var string $comments
      *
-     * @ORM\Column(name="commentaires", type="text", nullable=true)
+     * @ORM\Column(name="comments", type="text", nullable=true)
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="student")
      */
-    private $commentaires;
+    private $comments;
 
     /**
      * @var string $picturePath
@@ -188,17 +189,17 @@ class Student {
      * @ORM\Column(name="emergency_contact_connection_type", type="string", length=45, nullable=true)
      */
     private $emergencyContactConnectionType;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Country", inversedBy="students")
      * @ORM\JoinColumn(name="fk_native_country", referencedColumnName="id")
-     */   
+     */
     private $nativeCountry;
-    
-        /**
+
+    /**
      * @ORM\ManyToOne(targetEntity="Teacher", inversedBy="studentsWelcomed")
      * @ORM\JoinColumn(name="fk_welcomed_by_teacher", referencedColumnName="id")
-     */   
+     */
     private $welcomedByTeacher;
 
     /**
@@ -222,14 +223,10 @@ class Student {
     private $fkScholarizationLanguage;
 
     /**
-     * @var ClassLevel
-     *
      * @ORM\ManyToOne(targetEntity="ClassLevel")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="fk_proposed_level_id", referencedColumnName="id")
-     * })
+     * @ORM\JoinColumn(name="fk_suggested_level", referencedColumnName="id")
      */
-    private $fkProposedLevel;
+    private $suggestedLevel;
 
     /**
      * Get id
@@ -787,27 +784,6 @@ class Student {
     }
 
     /**
-     * Set fkWelcomedByTeacher
-     *
-     * @param Virgule\Bundle\MainBundle\Entity\Teacher $fkWelcomedByTeacher
-     * @return Student
-     */
-    public function setFkWelcomedByTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $fkWelcomedByTeacher = null) {
-        $this->fkWelcomedByTeacher = $fkWelcomedByTeacher;
-
-        return $this;
-    }
-
-    /**
-     * Get fkWelcomedByTeacher
-     *
-     * @return Virgule\Bundle\MainBundle\Entity\Teacher 
-     */
-    public function getFkWelcomedByTeacher() {
-        return $this->fkWelcomedByTeacher;
-    }
-
-    /**
      * Set fkMotherTongue
      *
      * @param Virgule\Bundle\MainBundle\Entity\Language $fkMotherTongue
@@ -850,37 +826,14 @@ class Student {
     }
 
     /**
-     * Set fkProposedLevel
-     *
-     * @param Virgule\Bundle\MainBundle\Entity\ClassLevel $fkProposedLevel
-     * @return Student
-     */
-    public function setFkProposedLevel(\Virgule\Bundle\MainBundle\Entity\ClassLevel $fkProposedLevel = null) {
-        $this->fkProposedLevel = $fkProposedLevel;
-
-        return $this;
-    }
-
-    /**
-     * Get fkProposedLevel
-     *
-     * @return Virgule\Bundle\MainBundle\Entity\ClassLevel 
-     */
-    public function getFkProposedLevel() {
-        return $this->fkProposedLevel;
-    }
-
-
-    /**
      * Set nativeCountry
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Country $nativeCountry
      * @return Student
      */
-    public function setNativeCountry(\Virgule\Bundle\MainBundle\Entity\Country $nativeCountry = null)
-    {
+    public function setNativeCountry(\Virgule\Bundle\MainBundle\Entity\Country $nativeCountry = null) {
         $this->nativeCountry = $nativeCountry;
-    
+
         return $this;
     }
 
@@ -889,8 +842,7 @@ class Student {
      *
      * @return \Virgule\Bundle\MainBundle\Entity\Country 
      */
-    public function getNativeCountry()
-    {
+    public function getNativeCountry() {
         return $this->nativeCountry;
     }
 
@@ -900,10 +852,9 @@ class Student {
      * @param \Virgule\Bundle\MainBundle\Entity\Teacher $welcomedByTeacher
      * @return Student
      */
-    public function setWelcomedByTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $welcomedByTeacher = null)
-    {
+    public function setWelcomedByTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $welcomedByTeacher = null) {
         $this->welcomedByTeacher = $welcomedByTeacher;
-    
+
         return $this;
     }
 
@@ -912,8 +863,50 @@ class Student {
      *
      * @return \Virgule\Bundle\MainBundle\Entity\Teacher 
      */
-    public function getWelcomedByTeacher()
-    {
+    public function getWelcomedByTeacher() {
         return $this->welcomedByTeacher;
     }
+
+    /**
+     * Set comments
+     *
+     * @param string $comments
+     * @return Student
+     */
+    public function setComments($comments) {
+        $this->comments = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Get comments
+     *
+     * @return string 
+     */
+    public function getComments() {
+        return $this->comments;
+    }
+
+    /**
+     * Set suggestedLevel
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassLevel $suggestedLevel
+     * @return Student
+     */
+    public function setSuggestedLevel(\Virgule\Bundle\MainBundle\Entity\ClassLevel $suggestedLevel = null) {
+        $this->suggestedLevel = $suggestedLevel;
+
+        return $this;
+    }
+
+    /**
+     * Get suggestedLevel
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\ClassLevel 
+     */
+    public function getSuggestedLevel() {
+        return $this->suggestedLevel;
+    }
+
 }
