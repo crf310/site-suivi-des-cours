@@ -17,9 +17,10 @@ class StudentRepository extends EntityRepository {
     public function loadAll() {
         $q = $this
             ->createQueryBuilder('s')
-            ->addSelect('s.id, s.firstname, s.lastname, s.gender, s.phoneNumber, s.cellphoneNumber')
+            ->addSelect('s.id, s.firstname, s.lastname, s.gender, s.phoneNumber, s.cellphoneNumber, s.registrationDate, t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName')
             ->addSelect('c.isoCode, c.label')
             ->innerJoin('s.nativeCountry', 'c')
+            ->leftJoin('s.welcomedByTeacher', 't')
             ->getQuery()
         ;
         $students = $q->execute(array(), Query::HYDRATE_ARRAY);

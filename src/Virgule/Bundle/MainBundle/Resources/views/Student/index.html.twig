@@ -16,7 +16,8 @@
         <a class="search" href="{{ path('student_new') }}">
             Rechercher
         </a>
-    </div>    
+    </div>
+    <span>Tous les apprenants inscrits à un cours de cette session</span>
 </div>
 <table class="records_list">
     <thead>
@@ -26,6 +27,9 @@
             <th>Prénom - Nom</th>
             <th>Téléphone fixe</th>
             <th>Téléphone portable</th>
+            <th>Date d'inscription</th>
+            <th>Niveau proposé</th>
+            <th>Accueilli par</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -49,6 +53,9 @@
             </td>
             <td>{{ entity['phoneNumber'] }}</td>
             <td>{{ entity['cellphoneNumber'] }}</td>
+            <td>{{ entity['registrationDate'] | date("d/m/Y") }}</td>
+            <td></td>
+            <td><a href="{{ path('teacher_show', { 'id': entity['teacher_id'] }) }}">{{ entity['teacher_firstName'] }} {{ entity['teacher_lastName'] }}</td>
             <td>
                 <ul>
                     <li>
@@ -62,6 +69,6 @@
         </tr>
     {% endfor %}
     </tbody>
-    {% include '::pager_footer.html.twig' with { nb_columns: 6 } %}
+    {% include '::pager_footer.html.twig' with { nb_columns: 9 } %}
 </table>
 {% endblock %}
