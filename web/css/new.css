@@ -67,7 +67,10 @@ a:hover{color: #F45338;}
     display: inline;
     margin-left: 15px;
 }
-
+#top_menu a.welcome {
+    background: url('../images/icons/house.png') no-repeat;
+    padding: 2px 0px 0px 20px;
+}
 #top_menu a.minutes {
     background: url('../images/icons/page.png') no-repeat;
     padding: 2px 0px 0px 20px;

@@ -11,12 +11,13 @@
 
     <div id="top_menu">
         <ul>
+            <li><a class="welcome" href="">Accueil</a></li>
             <li><a class="minutes" href="">Compte-rendus</a></li>
             <li><a class="schedule" href="{{ path('course') }}">Planning des cours</a></li>
             <li><a class="students" href="{{ path('student_index') }}">Apprenants</a></li>
             <li><a class="teachers" href="{{ path('teacher_index') }}">Formateurs</a></li>
             <li><a class="statistics" href="{{ path('teacher_index') }}">Statistiques</a></li>
-            <li><a class="user_profile" href="{{ path('teacher_show', { 'id': app.user.id }) }}">Mes informations</a></li>
+            <li><a class="user_profile" href="{{ path('teacher_show', { 'id': app.user.id }) }}">Mon profil</a></li>
             <li><a class="administration" href="{{ path('admin_show_logs') }}">Administration</a></li>
         </ul></div>
 </header>
