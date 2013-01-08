@@ -1,0 +1,9 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+<div id="results_actions">
+    <h1>{{ environment }}.log</h1>
+    <p>
+        <textarea rows="52" cols="200">{{ log_content }}</textarea>
+    </p>
+</div>
+{% endblock %}

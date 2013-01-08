@@ -17,6 +17,6 @@
             <li><a class="teachers" href="{{ path('teacher_index') }}">Formateurs</a></li>
             <li><a class="statistics" href="{{ path('teacher_index') }}">Statistiques</a></li>
             <li><a class="user_profile" href="{{ path('teacher_show', { 'id': app.user.id }) }}">Mes informations</a></li>
-            <li><a class="administration" href="">Administration</a></li>
+            <li><a class="administration" href="{{ path('admin_show_logs') }}">Administration</a></li>
         </ul></div>
 </header>
