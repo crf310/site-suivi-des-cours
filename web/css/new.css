@@ -117,6 +117,10 @@ a.add_entry {
     background: url('../images/icons/add.png') no-repeat;
     padding: 2px 0px 0px 20px;
 }
+a.search {
+    background: url('../images/icons/magnifier.png') no-repeat;
+    padding: 2px 0px 0px 20px;
+}
 #results_actions {
     width: 100%;
     display: block;
