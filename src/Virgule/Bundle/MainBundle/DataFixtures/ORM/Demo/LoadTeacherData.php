@@ -89,7 +89,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('prof3', $prof3);
         $this->addReference('prof4', $prof4);
         
-        for ($i = 10; $i <= 50; $i++) {
+        for ($i = 5; $i <= 50; $i++) {
             $p = new Teacher();
             $p->setUsername("prof" . $i);
             $p->setPassword("password");
@@ -99,8 +99,10 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
             $p->setRegistrationDate(new \DateTime('now'));
             $p->setRole($this->getReference('guest-role'));
             $p->addOrganizationBranch($this->getReference('deleg-5'));
-
-            $manager->persist($p);            
+            
+            $manager->persist($p);
+            
+            $this->addReference('prof' . $i, $p);
         }
                 
         $manager->flush();

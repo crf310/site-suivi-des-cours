@@ -38,6 +38,8 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
             $s->setRegistrationDate(new \DateTime('now'));
             $s->setPhoneNumber("0102030405");
             $s->setCellphoneNumber("0607080910");
+            
+            $s->setWelcomedByTeacher($this->getReference('prof' . rand(1,50)));
             $manager->persist($s);
         }
         $manager->flush();
@@ -45,7 +47,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
     }
 
     public function getOrder() {
-        return 13;
+        return 14;
     }
 
 }
