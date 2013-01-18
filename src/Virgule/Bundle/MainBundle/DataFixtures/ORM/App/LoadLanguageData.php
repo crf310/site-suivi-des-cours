@@ -108,7 +108,6 @@ class LoadLanguageData extends AbstractFixture implements OrderedFixtureInterfac
 
 
         foreach ($languages as $i => $language) {
-            echo $i;
             $l = new Language();
             $l->setName($language);
             $manager->persist($l);
