@@ -106,7 +106,7 @@ class Student {
     private $maritalStatus;
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="student")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="student", cascade="persist")
      */
     private $comments;
 
