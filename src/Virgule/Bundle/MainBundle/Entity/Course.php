@@ -87,6 +87,10 @@ class Course {
      */
     private $organizationBranch;
     
+    /**
+     * @ORM\OneToMany(targetEntity="ClassSession", mappedBy="course")
+     */
+    private $classSessions;    
 
     /**
      * Get id
@@ -400,5 +404,45 @@ class Course {
     public function getOrganizationBranch()
     {
         return $this->organizationBranch;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->classSessions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add classSessions
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions
+     * @return Course
+     */
+    public function addClassSession(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions)
+    {
+        $this->classSessions[] = $classSessions;
+    
+        return $this;
+    }
+
+    /**
+     * Remove classSessions
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions
+     */
+    public function removeClassSession(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions)
+    {
+        $this->classSessions->removeElement($classSessions);
+    }
+
+    /**
+     * Get classSessions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getClassSessions()
+    {
+        return $this->classSessions;
     }
 }

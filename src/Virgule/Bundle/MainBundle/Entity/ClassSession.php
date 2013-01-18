@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="class_session")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\ClassSessionRepository")
  */
-class ClassSession
-{
+class ClassSession {
+
     /**
      * @var integer $id
      *
@@ -36,35 +36,36 @@ class ClassSession
     private $summary;
 
     /**
-     * @var integer $fkClassId
-     *
-     * @ORM\Column(name="fk_class_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Course", inversedBy="classSessions")
+     * @ORM\JoinColumn(name="fk_course", referencedColumnName="id")
      */
-    private $fkClassId;
+    private $course;
 
     /**
-     * @var integer $fkSessionTeacherId
-     *
-     * @ORM\Column(name="fk_session_teacher_id", type="integer", nullable=false)
+     * Teacher who actually managed the class
+     * @ORM\ManyToOne(targetEntity="Teacher", inversedBy="classSessionsDriven")
+     * @ORM\JoinColumn(name="fk_session_teacher", referencedColumnName="id")
      */
-    private $fkSessionTeacherId;
+    private $sessionTeacher;
 
     /**
-     * @var integer $fkSummaryTeacherId
-     *
-     * @ORM\Column(name="fk_summary_teacher_id", type="integer", nullable=false)
+     * Teacher who posted the report
+     * @ORM\ManyToOne(targetEntity="Teacher", inversedBy="classSessionsReported")
+     * @ORM\JoinColumn(name="fk_report_teacher", referencedColumnName="id")
      */
-    private $fkSummaryTeacherId;
+    private $reportTeacher;
 
-
-
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="classSession")
+     */
+    private $comments;
+    
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -74,10 +75,9 @@ class ClassSession
      * @param \DateTime $date
      * @return ClassSession
      */
-    public function setDate($date)
-    {
+    public function setDate($date) {
         $this->date = $date;
-    
+
         return $this;
     }
 
@@ -86,8 +86,7 @@ class ClassSession
      *
      * @return \DateTime 
      */
-    public function getDate()
-    {
+    public function getDate() {
         return $this->date;
     }
 
@@ -97,10 +96,9 @@ class ClassSession
      * @param string $summary
      * @return ClassSession
      */
-    public function setSummary($summary)
-    {
+    public function setSummary($summary) {
         $this->summary = $summary;
-    
+
         return $this;
     }
 
@@ -109,8 +107,7 @@ class ClassSession
      *
      * @return string 
      */
-    public function getSummary()
-    {
+    public function getSummary() {
         return $this->summary;
     }
 
@@ -120,10 +117,9 @@ class ClassSession
      * @param integer $fkClassId
      * @return ClassSession
      */
-    public function setFkClassId($fkClassId)
-    {
+    public function setFkClassId($fkClassId) {
         $this->fkClassId = $fkClassId;
-    
+
         return $this;
     }
 
@@ -132,8 +128,7 @@ class ClassSession
      *
      * @return integer 
      */
-    public function getFkClassId()
-    {
+    public function getFkClassId() {
         return $this->fkClassId;
     }
 
@@ -143,10 +138,9 @@ class ClassSession
      * @param integer $fkSessionTeacherId
      * @return ClassSession
      */
-    public function setFkSessionTeacherId($fkSessionTeacherId)
-    {
+    public function setFkSessionTeacherId($fkSessionTeacherId) {
         $this->fkSessionTeacherId = $fkSessionTeacherId;
-    
+
         return $this;
     }
 
@@ -155,8 +149,7 @@ class ClassSession
      *
      * @return integer 
      */
-    public function getFkSessionTeacherId()
-    {
+    public function getFkSessionTeacherId() {
         return $this->fkSessionTeacherId;
     }
 
@@ -166,10 +159,9 @@ class ClassSession
      * @param integer $fkSummaryTeacherId
      * @return ClassSession
      */
-    public function setFkSummaryTeacherId($fkSummaryTeacherId)
-    {
+    public function setFkSummaryTeacherId($fkSummaryTeacherId) {
         $this->fkSummaryTeacherId = $fkSummaryTeacherId;
-    
+
         return $this;
     }
 
@@ -178,8 +170,117 @@ class ClassSession
      *
      * @return integer 
      */
-    public function getFkSummaryTeacherId()
-    {
+    public function getFkSummaryTeacherId() {
         return $this->fkSummaryTeacherId;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Set course
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Course $course
+     * @return ClassSession
+     */
+    public function setCourse(\Virgule\Bundle\MainBundle\Entity\Course $course = null)
+    {
+        $this->course = $course;
+    
+        return $this;
+    }
+
+    /**
+     * Get course
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\Course 
+     */
+    public function getCourse()
+    {
+        return $this->course;
+    }
+
+    /**
+     * Set sessionTeacher
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Teacher $sessionTeacher
+     * @return ClassSession
+     */
+    public function setSessionTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $sessionTeacher = null)
+    {
+        $this->sessionTeacher = $sessionTeacher;
+    
+        return $this;
+    }
+
+    /**
+     * Get sessionTeacher
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\Teacher 
+     */
+    public function getSessionTeacher()
+    {
+        return $this->sessionTeacher;
+    }
+
+    /**
+     * Set reportTeacher
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Teacher $reportTeacher
+     * @return ClassSession
+     */
+    public function setReportTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $reportTeacher = null)
+    {
+        $this->reportTeacher = $reportTeacher;
+    
+        return $this;
+    }
+
+    /**
+     * Get reportTeacher
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\Teacher 
+     */
+    public function getReportTeacher()
+    {
+        return $this->reportTeacher;
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Comment $comments
+     * @return ClassSession
+     */
+    public function addComment(\Virgule\Bundle\MainBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+    
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Virgule\Bundle\MainBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

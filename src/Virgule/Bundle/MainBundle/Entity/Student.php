@@ -106,9 +106,6 @@ class Student {
     private $maritalStatus;
 
     /**
-     * @var string $comments
-     *
-     * @ORM\Column(name="comments", type="text", nullable=true)
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="student")
      */
     private $comments;
@@ -490,48 +487,6 @@ class Student {
     }
 
     /**
-     * Set commentaires
-     *
-     * @param string $commentaires
-     * @return Student
-     */
-    public function setCommentaires($commentaires) {
-        $this->commentaires = $commentaires;
-
-        return $this;
-    }
-
-    /**
-     * Get commentaires
-     *
-     * @return string 
-     */
-    public function getCommentaires() {
-        return $this->commentaires;
-    }
-
-    /**
-     * Set registringDate
-     *
-     * @param \DateTime $registringDate
-     * @return Student
-     */
-    public function setRegistringDate($registringDate) {
-        $this->registringDate = $registringDate;
-
-        return $this;
-    }
-
-    /**
-     * Get registringDate
-     *
-     * @return \DateTime 
-     */
-    public function getRegistringDate() {
-        return $this->registringDate;
-    }
-
-    /**
      * Set picturePath
      *
      * @param string $picturePath
@@ -909,4 +864,34 @@ class Student {
         return $this->suggestedLevel;
     }
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add comments
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Comment $comments
+     * @return Student
+     */
+    public function addComment(\Virgule\Bundle\MainBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+    
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Virgule\Bundle\MainBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
 }

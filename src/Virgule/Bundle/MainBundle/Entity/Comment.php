@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="comment")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\CommentRepository")
  */
-class Comment
-{
+class Comment {
+
     /**
      * @var integer $id
      *
@@ -36,21 +36,29 @@ class Comment
     private $date;
 
     /**
-     * @var integer $fkTeacherId
-     *
-     * @ORM\Column(name="fk_teacher_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Teacher")
+     * @ORM\JoinColumn(name="fk_teacher", referencedColumnName="id")
      */
-    private $fkTeacherId;
+    private $teacher;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Student", inversedBy="comments")
+     * @ORM\JoinColumn(name="fk_student", referencedColumnName="id")
+     */
+    private $student;
 
-
-
+    /**
+     * @ORM\ManyToOne(targetEntity="ClassSession", inversedBy="comments")
+     * @ORM\JoinColumn(name="fk_class_session", referencedColumnName="id")
+     */
+    private $classSession;
+    
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -60,10 +68,9 @@ class Comment
      * @param string $comment
      * @return Comment
      */
-    public function setComment($comment)
-    {
+    public function setComment($comment) {
         $this->comment = $comment;
-    
+
         return $this;
     }
 
@@ -72,8 +79,7 @@ class Comment
      *
      * @return string 
      */
-    public function getComment()
-    {
+    public function getComment() {
         return $this->comment;
     }
 
@@ -83,10 +89,9 @@ class Comment
      * @param \DateTime $date
      * @return Comment
      */
-    public function setDate($date)
-    {
+    public function setDate($date) {
         $this->date = $date;
-    
+
         return $this;
     }
 
@@ -95,8 +100,7 @@ class Comment
      *
      * @return \DateTime 
      */
-    public function getDate()
-    {
+    public function getDate() {
         return $this->date;
     }
 
@@ -106,10 +110,9 @@ class Comment
      * @param integer $fkTeacherId
      * @return Comment
      */
-    public function setFkTeacherId($fkTeacherId)
-    {
+    public function setFkTeacherId($fkTeacherId) {
         $this->fkTeacherId = $fkTeacherId;
-    
+
         return $this;
     }
 
@@ -118,8 +121,77 @@ class Comment
      *
      * @return integer 
      */
-    public function getFkTeacherId()
-    {
+    public function getFkTeacherId() {
         return $this->fkTeacherId;
+    }
+
+
+    /**
+     * Set teacher
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Teacher $teacher
+     * @return Comment
+     */
+    public function setTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $teacher = null)
+    {
+        $this->teacher = $teacher;
+    
+        return $this;
+    }
+
+    /**
+     * Get teacher
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\Teacher 
+     */
+    public function getTeacher()
+    {
+        return $this->teacher;
+    }
+
+    /**
+     * Set student
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Student $student
+     * @return Comment
+     */
+    public function setStudent(\Virgule\Bundle\MainBundle\Entity\Student $student = null)
+    {
+        $this->student = $student;
+    
+        return $this;
+    }
+
+    /**
+     * Get student
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\Student 
+     */
+    public function getStudent()
+    {
+        return $this->student;
+    }
+
+    /**
+     * Set classSession
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSession
+     * @return Comment
+     */
+    public function setClassSession(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSession = null)
+    {
+        $this->classSession = $classSession;
+    
+        return $this;
+    }
+
+    /**
+     * Get classSession
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\ClassSession 
+     */
+    public function getClassSession()
+    {
+        return $this->classSession;
     }
 }

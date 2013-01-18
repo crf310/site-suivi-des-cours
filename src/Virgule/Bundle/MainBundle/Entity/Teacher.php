@@ -110,6 +110,16 @@ class Teacher implements UserInterface, EquatableInterface {
     private $studentsWelcomed;
 
     /**
+     * @ORM\OneToMany(targetEntity="ClassSession", mappedBy="sessionTeacher")
+     */
+    private $classSessionsDriven;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="ClassSession", mappedBy="reportTeacher")
+     */
+    private $classSessionsReported;    
+    
+    /**
      * @ORM\ManyToMany(targetEntity="OrganizationBranch", inversedBy="teachers")
      * @ORM\JoinTable(name="teachers_branches")
      */
@@ -146,6 +156,10 @@ class Teacher implements UserInterface, EquatableInterface {
     }
 
     public function isEqualTo(UserInterface $user) {
+        return $this->username === $user->getUsername();
+    }
+    
+     public function equals(UserInterface $user) {
         return $this->username === $user->getUsername();
     }
 
@@ -450,4 +464,103 @@ class Teacher implements UserInterface, EquatableInterface {
         $this->organizationBranches->removeElement($organizationBranches);
     }
 
+
+    /**
+     * Add organizationBranches
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranches
+     * @return Teacher
+     */
+    public function addOrganizationBranche(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranches)
+    {
+        $this->organizationBranches[] = $organizationBranches;
+    
+        return $this;
+    }
+
+    /**
+     * Remove organizationBranches
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranches
+     */
+    public function removeOrganizationBranche(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranches)
+    {
+        $this->organizationBranches->removeElement($organizationBranches);
+    }
+
+    /**
+     * Get organizationBranches
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrganizationBranches()
+    {
+        return $this->organizationBranches;
+    }
+
+    /**
+     * Add classSessionsDriven
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsDriven
+     * @return Teacher
+     */
+    public function addClassSessionsDriven(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsDriven)
+    {
+        $this->classSessionsDriven[] = $classSessionsDriven;
+    
+        return $this;
+    }
+
+    /**
+     * Remove classSessionsDriven
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsDriven
+     */
+    public function removeClassSessionsDriven(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsDriven)
+    {
+        $this->classSessionsDriven->removeElement($classSessionsDriven);
+    }
+
+    /**
+     * Get classSessionsDriven
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getClassSessionsDriven()
+    {
+        return $this->classSessionsDriven;
+    }
+
+    /**
+     * Add classSessionsReported
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsReported
+     * @return Teacher
+     */
+    public function addClassSessionsReported(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsReported)
+    {
+        $this->classSessionsReported[] = $classSessionsReported;
+    
+        return $this;
+    }
+
+    /**
+     * Remove classSessionsReported
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsReported
+     */
+    public function removeClassSessionsReported(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsReported)
+    {
+        $this->classSessionsReported->removeElement($classSessionsReported);
+    }
+
+    /**
+     * Get classSessionsReported
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getClassSessionsReported()
+    {
+        return $this->classSessionsReported;
+    }
 }
