@@ -1,4 +1,6 @@
-<h1>Student</h1>
+{% extends '::base.html.twig' %}
+{% block body %}
+<h1>{{ entity.firstname }} {{ entity.lastname }}</h1>
 
 <table class="record_properties">
     <tbody>
@@ -56,11 +58,13 @@
         </tr>
         <tr>
             <th>Commentaires</th>
-            <td>{{ entity.commentaires }}</td>
-        </tr>
-        <tr>
-            <th>Registringdate</th>
-            <td>{{ entity.registringDate|date('Y-m-d H:i:s') }}</td>
+            <td>
+                <ul>
+                {% for comment in entity.comments %}
+                    <li>{{ comment.comment }}</li>
+                {% endfor %}
+                </ul>
+            </td>
         </tr>
         <tr>
             <th>Picturepath</th>
@@ -111,7 +115,7 @@
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('student') }}">
+        <a href="{{ path('student_index') }}">
             Back to the list
         </a>
     </li>
@@ -127,3 +131,5 @@
         </form>
     </li>
 </ul>
+
+{% endblock %}
