@@ -40,18 +40,27 @@ class Comment {
      * @ORM\JoinColumn(name="fk_teacher", referencedColumnName="id")
      */
     private $teacher;
-    
+    private $fk_teacher;
+
     /**
-     * @ORM\ManyToOne(targetEntity="Student", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="Student", inversedBy="comments"), cascade={"persist", "remove"}
      * @ORM\JoinColumn(name="fk_student", referencedColumnName="id")
      */
     private $student;
+    private $fk_student;
 
     /**
      * @ORM\ManyToOne(targetEntity="ClassSession", inversedBy="comments")
      * @ORM\JoinColumn(name="fk_class_session", referencedColumnName="id")
      */
     private $classSession;
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->date = new \Doctrine\Common\Collections\ArrayCollection();
+    }
     
     /**
      * Get id
@@ -105,93 +114,26 @@ class Comment {
     }
 
     /**
-     * Set fkTeacherId
+     * Set fkTeacher
      *
-     * @param integer $fkTeacherId
+     * @param integer $fkTeacher
      * @return Comment
      */
-    public function setFkTeacherId($fkTeacherId) {
-        $this->fkTeacherId = $fkTeacherId;
+    public function setFkTeacher($fkTeacher) {
+        $this->fkTeacher = $fkTeacher;
 
         return $this;
     }
-
-    /**
-     * Get fkTeacherId
-     *
-     * @return integer 
-     */
-    public function getFkTeacherId() {
-        return $this->fkTeacherId;
-    }
-
-
-    /**
-     * Set teacher
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\Teacher $teacher
-     * @return Comment
-     */
-    public function setTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $teacher = null)
-    {
-        $this->teacher = $teacher;
     
-        return $this;
-    }
-
     /**
-     * Get teacher
+     * Set fkStudent
      *
-     * @return \Virgule\Bundle\MainBundle\Entity\Teacher 
-     */
-    public function getTeacher()
-    {
-        return $this->teacher;
-    }
-
-    /**
-     * Set student
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\Student $student
+     * @param integer $fkStudent
      * @return Comment
      */
-    public function setStudent(\Virgule\Bundle\MainBundle\Entity\Student $student = null)
-    {
-        $this->student = $student;
-    
+    public function setFkStudent($fkStudent) {
+        $this->fkStudent = $fkStudent;
+
         return $this;
-    }
-
-    /**
-     * Get student
-     *
-     * @return \Virgule\Bundle\MainBundle\Entity\Student 
-     */
-    public function getStudent()
-    {
-        return $this->student;
-    }
-
-    /**
-     * Set classSession
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSession
-     * @return Comment
-     */
-    public function setClassSession(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSession = null)
-    {
-        $this->classSession = $classSession;
-    
-        return $this;
-    }
-
-    /**
-     * Get classSession
-     *
-     * @return \Virgule\Bundle\MainBundle\Entity\ClassSession 
-     */
-    public function getClassSession()
-    {
-        return $this->classSession;
     }
 }
