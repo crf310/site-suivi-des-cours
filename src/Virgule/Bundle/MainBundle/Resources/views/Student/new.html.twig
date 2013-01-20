@@ -1,16 +1,26 @@
-<h1>Student creation</h1>
-
-<form action="{{ path('student_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
+{% extends '::base.html.twig' %}
+{% block body %}
+<h1>Enregistrer un apprenant</h1>
+<div id="errorMsg">
+{{ form_errors(form) }}
+</div>
+<form action="{{ path('student_create') }}" method="post" {{ form_enctype(form) }} class="uniForm">
+      <fieldset>
+        <legend>Identité</legend>
+        {{ form_row(form.firstname, { 'label': 'Prénom'}) }}
+        {{ form_row(form.lastname, { 'label': 'Nom' }) }}
+        {{ form_rest(form) }}
+        <p>
+            <button type="submit">Create</button>
+        </p>
+      </fieldset>
 </form>
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('student') }}">
+        <a href="{{ path('student_index') }}">
             Back to the list
         </a>
     </li>
 </ul>
+{% endblock %}
