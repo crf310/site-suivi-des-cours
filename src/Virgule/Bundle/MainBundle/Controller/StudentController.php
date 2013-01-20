@@ -11,8 +11,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Virgule\Bundle\MainBundle\Controller\CommentController;
 use Virgule\Bundle\MainBundle\Entity\Student;
+use Virgule\Bundle\MainBundle\Entity\Comment;
 use Virgule\Bundle\MainBundle\Form\StudentType;
+use Virgule\Bundle\MainBundle\Form\CommentType;
 
 /**
  * Student controller.
@@ -62,9 +65,14 @@ class StudentController extends Controller {
 
         $deleteForm = $this->createDeleteForm($id);
 
+        // coment form
+        $comment = new Comment();
+        $commentForm = $this->createForm(new CommentType(), $comment);
+        
         return array(
             'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
+            'commentForm' => $commentForm->createView(),
         );
     }
 
