@@ -136,4 +136,25 @@ class Comment {
 
         return $this;
     }
+    
+    /**
+     * Set teacher
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Teacher $teacher
+     * @return Comment
+     */
+    public function setTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $teacher = null) {
+        $this->teacher = $teacher;
+
+        return $this;
+    }
+
+    /**
+     * Get teacher
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\Teacher 
+     */
+    public function getTeacher() {
+        return $this->teacher;
+    }    
 }
