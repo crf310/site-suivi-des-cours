@@ -29,17 +29,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
         $commentContent = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 
-        $nbComments = 25;
-        $comments = Array();
-        for ($i = 1; $i <= $nbComments; $i++) {
-            $c = new Comment();
-            $c->setDate(new \DateTime('now'));
-            $c->setComment($commentContent);
-            $c->setTeacher($this->getReference('prof' . rand(1, 50)));
-            $comments[] = $c;
-        }
-
-        for ($i = 0; $i <= 151; $i++) {
+        for ($i = 1; $i <= 155; $i++) {
             $s = new Student();
             $s->setFirstname($firstnames[rand(0, $nbFirstNames)]);
             $s->setLastname($lastnames[rand(0, $nbLastNames)]);
@@ -55,8 +45,13 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
 
             $s->setWelcomedByTeacher($this->getReference('prof' . rand(1, 50)));
 
-            $s->addComment($comments[rand(1, $nbComments-1)]);
-
+            for ($j = 1; $j <= 3; $j++) {
+                $c = new Comment();
+                $c->setDate(new \DateTime('now'));
+                $c->setComment($commentContent);
+                $c->setTeacher($this->getReference('prof' . rand(1, 50)));
+                $s->addComment($c);
+            }
             $manager->persist($s);
         }
         $manager->flush();
