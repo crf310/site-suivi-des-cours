@@ -61,7 +61,10 @@
             <td>
                 <ul>
                 {% for comment in entity.comments %}
-                    <li>{{ comment.comment }}</li>
+                    <li>
+                    le  {{ comment.date|date("d/m/Y") }} par {{ comment.teacher.firstName }}  {{ comment.teacher.lastName }}: <br />
+                    {{ comment.comment }}
+                    </li>
                 {% endfor %}
                 </ul>
             </td>
@@ -131,9 +134,8 @@
         </form>
     </li>
 </ul>
-<form action="{{ path('comment_create') }}" method="post" {{ form_enctype(commentForm) }} class="uniForm">
+<form action="{{ path('student_addComment', { 'id': entity.id }) }}" method="post" {{ form_enctype(commentForm) }} class="uniForm">
       <fieldset>
-        <legend>Commentaire</legend>
         {{ form_row(commentForm.comment, { 'label': 'Commentaire'}) }}
         {{ form_rest(commentForm) }}
         <p>

@@ -40,14 +40,12 @@ class Comment {
      * @ORM\JoinColumn(name="fk_teacher", referencedColumnName="id")
      */
     private $teacher;
-    private $fk_teacher;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Student", inversedBy="comments"), cascade={"persist", "remove"}
+     * @ORM\ManyToOne(targetEntity="Student", inversedBy="comments")
      * @ORM\JoinColumn(name="fk_student", referencedColumnName="id")
      */
     private $student;
-    private $fk_student;
 
     /**
      * @ORM\ManyToOne(targetEntity="ClassSession", inversedBy="comments")
@@ -61,7 +59,7 @@ class Comment {
     public function __construct() {
         $this->date = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
@@ -114,30 +112,6 @@ class Comment {
     }
 
     /**
-     * Set fkTeacher
-     *
-     * @param integer $fkTeacher
-     * @return Comment
-     */
-    public function setFkTeacher($fkTeacher) {
-        $this->fkTeacher = $fkTeacher;
-
-        return $this;
-    }
-    
-    /**
-     * Set fkStudent
-     *
-     * @param integer $fkStudent
-     * @return Comment
-     */
-    public function setFkStudent($fkStudent) {
-        $this->fkStudent = $fkStudent;
-
-        return $this;
-    }
-    
-    /**
      * Set teacher
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Teacher $teacher
@@ -156,5 +130,48 @@ class Comment {
      */
     public function getTeacher() {
         return $this->teacher;
-    }    
+    }
+
+    /**
+     * Set student
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Student $student
+     * @return Comment
+     */
+    public function setStudent(\Virgule\Bundle\MainBundle\Entity\Student $student = null) {
+        $this->student = $student;
+
+        return $this;
+    }
+
+    /**
+     * Get student
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\Student 
+     */
+    public function getStudent() {
+        return $this->student;
+    }
+
+    /**
+     * Set classSession
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSession
+     * @return Comment
+     */
+    public function setClassSession(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSession = null) {
+        $this->classSession = $classSession;
+
+        return $this;
+    }
+
+    /**
+     * Get classSession
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\ClassSession 
+     */
+    public function getClassSession() {
+        return $this->classSession;
+    }
+
 }
