@@ -1,52 +1,35 @@
 {% extends '::base.html.twig' %}
 {% block body %}
-<h1>{{ entity.firstname }} {{ entity.lastname }}</h1>
+<h1>{{ entity.firstname }} {{ entity.lastname }} 
+    <img src="{{ asset('images/drapeaux/' ~ entity.nativeCountry.isoCode ~ '.png')}}" alt="{{  entity.nativeCountry.isoCode }}" title="{{  entity.nativeCountry.label }}" />
+                {% if entity.gender == 'F' %}
+    <img src="{{ asset('images/icons/user_female.png') }}" />
+                {% else %}
+    <img src="{{ asset('images/icons/user.png') }}" />
+                {% endif %}
+</h1>
 
 <table class="record_properties">
     <tbody>
         <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
+            <th>Fiche créée le</th>
+            <td>{{ entity.registrationDate|date('d/m/Y') }}</td>
         </tr>
         <tr>
-            <th>Registrationdate</th>
-            <td>{{ entity.registrationDate|date('Y-m-d H:i:s') }}</td>
-        </tr>
-        <tr>
-            <th>Lastname</th>
-            <td>{{ entity.lastname }}</td>
-        </tr>
-        <tr>
-            <th>Firstname</th>
-            <td>{{ entity.firstname }}</td>
-        </tr>
-        <tr>
-            <th>Birthdate</th>
+            <th>Né le</th>
             <td>{{ entity.birthdate|date('Y-m-d H:i:s') }}</td>
         </tr>
         <tr>
-            <th>Phonenumber</th>
+            <th>Téléphone</th>
             <td>{{ entity.phoneNumber }}</td>
         </tr>
         <tr>
-            <th>Cellphonenumber</th>
+            <th>Téléphone portable</th>
             <td>{{ entity.cellphoneNumber }}</td>
         </tr>
         <tr>
-            <th>Address</th>
-            <td>{{ entity.address }}</td>
-        </tr>
-        <tr>
-            <th>Zipcode</th>
-            <td>{{ entity.zipcode }}</td>
-        </tr>
-        <tr>
-            <th>City</th>
-            <td>{{ entity.city }}</td>
-        </tr>
-        <tr>
-            <th>Gender</th>
-            <td>{{ entity.gender }}</td>
+            <th>Addresse</th>
+            <td>{{ entity.address }} <br />{{ entity.zipcode }} {{ entity.city }}</td>
         </tr>
         <tr>
             <th>Nationality</th>
@@ -61,87 +44,77 @@
             <td>
                 <ul>
                 {% for comment in entity.comments %}
-                    <li>
-                    le  {{ comment.date|date("d/m/Y") }} par {{ comment.teacher.firstName }}  {{ comment.teacher.lastName }}: <br />
+                        <li>
+                            le  {{ comment.date|date("d/m/Y") }} par <a href="{{ path('teacher_show', { 'id': comment.teacher.id }) }}">{{ comment.teacher.firstName }}  {{ comment.teacher.lastName }}</a>: <br />
                     {{ comment.comment }}
-                    </li>
+                        </li>
                 {% endfor %}
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <th>Picturepath</th>
-            <td>{{ entity.picturePath }}</td>
-        </tr>
-        <tr>
-            <th>Arrivaldate</th>
-            <td>{{ entity.arrivalDate|date('Y-m-d H:i:s') }}</td>
-        </tr>
-        <tr>
-            <th>Scholarized</th>
-            <td>{{ entity.scholarized }}</td>
-        </tr>
-        <tr>
-            <th>Profession</th>
-            <td>{{ entity.profession }}</td>
-        </tr>
-        <tr>
-            <th>Scholarizedinthecountry</th>
-            <td>{{ entity.scholarizedInTheCountry }}</td>
-        </tr>
-        <tr>
-            <th>Scholarizedinaforeigncountry</th>
-            <td>{{ entity.scholarizedInAForeignCountry }}</td>
-        </tr>
-        <tr>
-            <th>Scholarizationlevel</th>
-            <td>{{ entity.scholarizationLevel }}</td>
-        </tr>
-        <tr>
-            <th>Emergencycontactlastname</th>
-            <td>{{ entity.emergencyContactLastname }}</td>
-        </tr>
-        <tr>
-            <th>Emergencycontactfirstname</th>
-            <td>{{ entity.emergencyContactFirstname }}</td>
-        </tr>
-        <tr>
-            <th>Emergencycontactphonenumber</th>
-            <td>{{ entity.emergencyContactPhoneNumber }}</td>
-        </tr>
-        <tr>
-            <th>Emergencycontactconnectiontype</th>
-            <td>{{ entity.emergencyContactConnectionType }}</td>
-        </tr>
-    </tbody>
-</table>
+                    </ul>
+                </td>
+            </tr>
+            <!--
+            <tr>
+                <th>Profession</th>
+                <td>{{ entity.profession }}</td>
+            </tr>
+            <tr>
+                <th>Scholarizedinthecountry</th>
+                <td>{{ entity.scholarizedInTheCountry }}</td>
+            </tr>
+            <tr>
+                <th>Scholarizedinaforeigncountry</th>
+                <td>{{ entity.scholarizedInAForeignCountry }}</td>
+            </tr>
+            <tr>
+                <th>Scholarizationlevel</th>
+                <td>{{ entity.scholarizationLevel }}</td>
+            </tr>
+            <tr>
+                <th>Emergencycontactlastname</th>
+                <td>{{ entity.emergencyContactLastname }}</td>
+            </tr>
+            <tr>
+                <th>Emergencycontactfirstname</th>
+                <td>{{ entity.emergencyContactFirstname }}</td>
+            </tr>
+            <tr>
+                <th>Emergencycontactphonenumber</th>
+                <td>{{ entity.emergencyContactPhoneNumber }}</td>
+            </tr>
+            <tr>
+                <th>Emergencycontactconnectiontype</th>
+                <td>{{ entity.emergencyContactConnectionType }}</td>
+            </tr>
+            -->
+        </tbody>
+    </table>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('student_index') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('student_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('student_delete', { 'id': entity.id }) }}" method="post">
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('student_index') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('student_edit', { 'id': entity.id }) }}">
+                Edit
+            </a>
+        </li>
+        <li>
+            <form action="{{ path('student_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
-<form action="{{ path('student_addComment', { 'id': entity.id }) }}" method="post" {{ form_enctype(commentForm) }} class="uniForm">
-      <fieldset>
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        </ul>
+        <form action="{{ path('student_addComment', { 'id': entity.id }) }}" method="post" {{ form_enctype(commentForm) }} class="uniForm">
+            <fieldset>
         {{ form_row(commentForm.comment, { 'label': 'Commentaire'}) }}
         {{ form_rest(commentForm) }}
-        <p>
-            <button type="submit">Ajouter un commentaire</button>
-        </p>
-      </fieldset>
-</form>
+                    <p>
+                        <button type="submit">Ajouter un commentaire</button>
+                    </p>
+                </fieldset>
+            </form>
 
 {% endblock %}
