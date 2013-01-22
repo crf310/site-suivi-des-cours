@@ -112,69 +112,6 @@ class ClassSession {
     }
 
     /**
-     * Set fkClassId
-     *
-     * @param integer $fkClassId
-     * @return ClassSession
-     */
-    public function setFkClassId($fkClassId) {
-        $this->fkClassId = $fkClassId;
-
-        return $this;
-    }
-
-    /**
-     * Get fkClassId
-     *
-     * @return integer 
-     */
-    public function getFkClassId() {
-        return $this->fkClassId;
-    }
-
-    /**
-     * Set fkSessionTeacherId
-     *
-     * @param integer $fkSessionTeacherId
-     * @return ClassSession
-     */
-    public function setFkSessionTeacherId($fkSessionTeacherId) {
-        $this->fkSessionTeacherId = $fkSessionTeacherId;
-
-        return $this;
-    }
-
-    /**
-     * Get fkSessionTeacherId
-     *
-     * @return integer 
-     */
-    public function getFkSessionTeacherId() {
-        return $this->fkSessionTeacherId;
-    }
-
-    /**
-     * Set fkSummaryTeacherId
-     *
-     * @param integer $fkSummaryTeacherId
-     * @return ClassSession
-     */
-    public function setFkSummaryTeacherId($fkSummaryTeacherId) {
-        $this->fkSummaryTeacherId = $fkSummaryTeacherId;
-
-        return $this;
-    }
-
-    /**
-     * Get fkSummaryTeacherId
-     *
-     * @return integer 
-     */
-    public function getFkSummaryTeacherId() {
-        return $this->fkSummaryTeacherId;
-    }
-
-    /**
      * Constructor
      */
     public function __construct()
