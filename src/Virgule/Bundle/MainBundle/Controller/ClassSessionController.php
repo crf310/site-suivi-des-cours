@@ -15,7 +15,7 @@ use Virgule\Bundle\MainBundle\Form\ClassSessionType;
  *
  * @Route("/classsession")
  */
-class ClassSessionController extends VirguleController
+class ClassSessionController extends AbstractVirguleController
 {
     /**
      * Lists all ClassSession entities.
