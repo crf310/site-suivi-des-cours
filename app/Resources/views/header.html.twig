@@ -1,7 +1,7 @@
 <header id="header">
     <nav id="nav">
         <ul>
-            <li><a>{{ app.user.firstName }} {{ app.user.lastName }} ({{ app.user.role.label }})</a></li>
+            <li><a><a href="{{ path('teacher_show', { 'id': app.user.id }) }}">{{ app.user.firstName }} {{ app.user.lastName }} ({{ app.user.role.label }})</a></a></li>
             <li><a>{{ app.session.get('organizationBranchName') }}</a></li>
             <li><a>Session du {{ app.session.get('semesterStartDate')|date("d/m/Y") }} au {{ app.session.get('semesterEndDate')|date("d/m/Y") }}</a></li>
             <li><a>Aide</a></li>
