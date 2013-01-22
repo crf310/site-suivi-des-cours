@@ -121,7 +121,7 @@ class CommentController extends Controller {
      * Creates a new Comment entity
      * related to a Student
      *
-     * @Route("/create/student/{class_session_id}", name="student_comment_create")
+     * @Route("/create/student/{class_session_id}", name="classSession_comment_create")
      * @Method("POST")
      * @Template("VirguleMainBundle:Comment:new.html.twig")
      */
