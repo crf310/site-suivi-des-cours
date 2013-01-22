@@ -3,10 +3,10 @@
 namespace Virgule\Bundle\MainBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Virgule\Bundle\MainBundle\Controller\AbstractVirguleController;
 use Virgule\Bundle\MainBundle\Entity\ClassSession;
 use Virgule\Bundle\MainBundle\Form\ClassSessionType;
 
@@ -15,23 +15,21 @@ use Virgule\Bundle\MainBundle\Form\ClassSessionType;
  *
  * @Route("/classsession")
  */
-class ClassSessionController extends Controller
+class ClassSessionController extends VirguleController
 {
     /**
      * Lists all ClassSession entities.
      *
-     * @Route("/", name="classsession")
+     * @Route("/page/{page}", requirements={"page" = "\d+"}, defaults={"page" = "1"}, name="classsession_index")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($page=1)
     {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('VirguleMainBundle:ClassSession')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+        return parent::paginate($entities, $page);
     }
 
     /**
