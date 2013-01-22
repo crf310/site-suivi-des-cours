@@ -1,26 +1,38 @@
-<h1>ClassSession list</h1>
-
+{% extends '::base.html.twig' %}
+{% block body %}
+<div id="results_actions">
+    <h1>Liste des compte-rendus</h1>
+    <div class="action_tab">
+        <a class="add_entry" href="{{ path('classsession_new') }}">
+            Enregistrer un apprenant
+        </a>
+    </div>
+    <div class="action_tab">
+        <a class="export_list" href="{{ path('classsession_new') }}">
+            Exporter les données
+        </a>
+    </div>
+    <span>Tous les apprenants inscrits à un cours de cette session</span>
+</div>
 <table class="records_list">
     <thead>
         <tr>
-            <th>Id</th>
             <th>Date</th>
-            <th>Summary</th>
-            <th>Fkclassid</th>
-            <th>Fksessionteacherid</th>
-            <th>Fksummaryteacherid</th>
+            <th>Compte-rendu</th>
+            <th>Cours</th>
+            <th>Conduit par</th>
+            <th>Report rédigé par</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
     {% for entity in entities %}
         <tr>
-            <td><a href="{{ path('classsession_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>{% if entity.date %}{{ entity.date|date('Y-m-d H:i:s') }}{% endif %}</td>
-            <td>{{ entity.summary }}</td>
-            <td>{{ entity.fkClassId }}</td>
-            <td>{{ entity.fkSessionTeacherId }}</td>
-            <td>{{ entity.fkSummaryTeacherId }}</td>
+            <td><a href="{{ path('classsession_show', { 'id': entity.id }) }}">Voir</a></td>
+            <td>{{ entity.course.dayOfWeek }}</td>
+            <td>{{ entity.sessionTeacher.firstName }} {{ entity.sessionTeacher.lastName }}</td>
+            <td>{{ entity.reportTeacher.firstName }} {{ entity.reportTeacher.lastName }}</td>
             <td>
                 <ul>
                     <li>
@@ -34,12 +46,6 @@
         </tr>
     {% endfor %}
     </tbody>
+    {% include '::pager_footer.html.twig' with { nb_columns: 9 } %}
 </table>
-
-<ul>
-    <li>
-        <a href="{{ path('classsession_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+{% endblock %}
