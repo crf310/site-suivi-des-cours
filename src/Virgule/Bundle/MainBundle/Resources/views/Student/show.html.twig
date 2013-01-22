@@ -107,7 +107,7 @@
                 </form>
             </li>
         </ul>
-        <form action="{{ path('student_addComment', { 'id': entity.id }) }}" method="post" {{ form_enctype(commentForm) }} class="uniForm">
+        <form action="{{ path('student_comment_create', { 'student_id': entity.id }) }}" method="post" {{ form_enctype(commentForm) }} class="uniForm">
             <fieldset>
         {{ form_row(commentForm.comment, { 'label': 'Commentaire'}) }}
         {{ form_rest(commentForm) }}

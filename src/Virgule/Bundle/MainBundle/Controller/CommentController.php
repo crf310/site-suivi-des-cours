@@ -72,30 +72,73 @@ class CommentController extends Controller {
         );
     }
 
-    /**
-     * Creates a new Comment entity.
-     *
-     * @Route("/create", name="comment_create")
-     * @Method("POST")
-     * @Template("VirguleMainBundle:Comment:new.html.twig")
-     */
-    public function createAction(Request $request) {
-        $entity = new Comment();
-        $form = $this->createForm(new CommentType(), $entity);
+    private function createComment(Request $request, Comment $comment) {
+        $comment->setDate(new \DateTime('now'));
+        $form = $this->createForm(new CommentType(), $comment);
         $form->bind($request);
+        
+        $teacher = $this->getUser();
+        if (!$teacher) {
+            throw $this->createNotFoundException('Unable to find Teacher entity.');
+        }
+        $comment->setTeacher($teacher);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($comment);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('comment_show', array('id' => $entity->getId())));
+            return true;
         }
+        return false;
+    }
+    
+    /**
+     * Creates a new Comment entity
+     * related to a Student
+     *
+     * @Route("/create/student/{student_id}", name="student_comment_create")
+     * @Method("POST")
+     * @Template("VirguleMainBundle:Comment:new.html.twig")
+     */
+    public function createStudentCommentAction(Request $request, $student_id) {
+        $em = $this->getDoctrine()->getManager();
+        $student = $em->getRepository('VirguleMainBundle:Student')->find($student_id);
 
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-        );
+        if (!$student) {
+            throw $this->createNotFoundException('Unable to find Student entity.');
+        }
+        
+        $comment = new Comment();
+        $comment->setStudent($student);
+        
+        if ($this->createComment($request, $comment)) {
+            return $this->redirect($this->generateUrl('student_show', array('id' => $student_id)));
+        }
+    }
+    
+        /**
+     * Creates a new Comment entity
+     * related to a Student
+     *
+     * @Route("/create/student/{class_session_id}", name="student_comment_create")
+     * @Method("POST")
+     * @Template("VirguleMainBundle:Comment:new.html.twig")
+     */
+    public function createClassSessionCommentAction(Request $request, $class_session_id) {
+        $em = $this->getDoctrine()->getManager();
+        $classSession = $em->getRepository('VirguleMainBundle:ClassSession')->find($class_session_id);
+
+        if (!$classSession) {
+            throw $this->createNotFoundException('Unable to find ClassSession entity.');
+        }
+        
+        $comment = new Comment();
+        $comment->setClassSession($classSession);
+        
+        if ($this->createComment($request, $comment)) {
+            return $this->redirect($this->generateUrl('class_session_show', array('id' => $class_session_id)));
+        }
     }
 
     /**
