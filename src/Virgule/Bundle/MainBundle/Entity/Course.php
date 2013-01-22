@@ -56,41 +56,40 @@ class Course {
      */
     private $alternateEnddate;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="ClassLevel", inversedBy="courses")
      * @ORM\JoinColumn(name="fk_class_level", referencedColumnName="id")
-     */   
+     */
     private $classLevel;
 
     /**
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="courses")
      * @ORM\JoinColumn(name="fk_semester", referencedColumnName="id")
-     */    
+     */
     private $semester;
 
     /**
      * @ORM\ManyToOne(targetEntity="Teacher", inversedBy="courses")
      * @ORM\JoinColumn(name="fk_teacher", referencedColumnName="id")
-     */    
+     */
     private $teacher;
 
     /**
      * @ORM\ManyToOne(targetEntity="ClassRoom", inversedBy="courses")
      * @ORM\JoinColumn(name="fk_class_room", referencedColumnName="id")
      */
-    protected $classRoom;    
-    
+    protected $classRoom;
+
     /**
      * @ORM\ManyToOne(targetEntity="OrganizationBranch", inversedBy="courses")
      * @ORM\JoinColumn(name="fk_organization_branch", referencedColumnName="id")
      */
     private $organizationBranch;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="ClassSession", mappedBy="course")
      */
-    private $classSessions;    
+    private $classSessions;
 
     /**
      * Get id
@@ -290,17 +289,15 @@ class Course {
         return $this->fkOrganizationBranch;
     }
 
-
     /**
      * Set classLevel
      *
      * @param \Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevel
      * @return Course
      */
-    public function setClassLevel(\Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevel = null)
-    {
+    public function setClassLevel(\Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevel = null) {
         $this->classLevel = $classLevel;
-    
+
         return $this;
     }
 
@@ -309,8 +306,7 @@ class Course {
      *
      * @return \Virgule\Bundle\MainBundle\Entity\ClassLevel 
      */
-    public function getClassLevel()
-    {
+    public function getClassLevel() {
         return $this->classLevel;
     }
 
@@ -320,10 +316,9 @@ class Course {
      * @param \Virgule\Bundle\MainBundle\Entity\Semester $semester
      * @return Course
      */
-    public function setSemester(\Virgule\Bundle\MainBundle\Entity\Semester $semester = null)
-    {
+    public function setSemester(\Virgule\Bundle\MainBundle\Entity\Semester $semester = null) {
         $this->semester = $semester;
-    
+
         return $this;
     }
 
@@ -332,8 +327,7 @@ class Course {
      *
      * @return \Virgule\Bundle\MainBundle\Entity\Semester 
      */
-    public function getSemester()
-    {
+    public function getSemester() {
         return $this->semester;
     }
 
@@ -343,10 +337,9 @@ class Course {
      * @param \Virgule\Bundle\MainBundle\Entity\Teacher $teacher
      * @return Course
      */
-    public function setTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $teacher = null)
-    {
+    public function setTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $teacher = null) {
         $this->teacher = $teacher;
-    
+
         return $this;
     }
 
@@ -355,8 +348,7 @@ class Course {
      *
      * @return \Virgule\Bundle\MainBundle\Entity\Teacher 
      */
-    public function getTeacher()
-    {
+    public function getTeacher() {
         return $this->teacher;
     }
 
@@ -366,10 +358,9 @@ class Course {
      * @param \Virgule\Bundle\MainBundle\Entity\ClassRoom $classRoom
      * @return Course
      */
-    public function setClassRoom(\Virgule\Bundle\MainBundle\Entity\ClassRoom $classRoom = null)
-    {
+    public function setClassRoom(\Virgule\Bundle\MainBundle\Entity\ClassRoom $classRoom = null) {
         $this->classRoom = $classRoom;
-    
+
         return $this;
     }
 
@@ -378,8 +369,7 @@ class Course {
      *
      * @return \Virgule\Bundle\MainBundle\Entity\ClassRoom 
      */
-    public function getClassRoom()
-    {
+    public function getClassRoom() {
         return $this->classRoom;
     }
 
@@ -389,10 +379,9 @@ class Course {
      * @param \Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranch
      * @return Course
      */
-    public function setOrganizationBranch(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranch = null)
-    {
+    public function setOrganizationBranch(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranch = null) {
         $this->organizationBranch = $organizationBranch;
-    
+
         return $this;
     }
 
@@ -401,28 +390,26 @@ class Course {
      *
      * @return \Virgule\Bundle\MainBundle\Entity\OrganizationBranch 
      */
-    public function getOrganizationBranch()
-    {
+    public function getOrganizationBranch() {
         return $this->organizationBranch;
     }
+
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->classSessions = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add classSessions
      *
      * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions
      * @return Course
      */
-    public function addClassSession(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions)
-    {
+    public function addClassSession(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions) {
         $this->classSessions[] = $classSessions;
-    
+
         return $this;
     }
 
@@ -431,8 +418,7 @@ class Course {
      *
      * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions
      */
-    public function removeClassSession(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions)
-    {
+    public function removeClassSession(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions) {
         $this->classSessions->removeElement($classSessions);
     }
 
@@ -441,8 +427,7 @@ class Course {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getClassSessions()
-    {
+    public function getClassSessions() {
         return $this->classSessions;
     }
 }
