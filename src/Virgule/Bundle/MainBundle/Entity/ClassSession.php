@@ -59,7 +59,12 @@ class ClassSession {
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="classSession")
      */
     private $comments;
-    
+
+    /**
+     * @ORM\OneToMany(targetEntity="Attachment", mappedBy="classSession")
+     */
+    private $attachments;
+
     /**
      * Get id
      *
@@ -114,21 +119,19 @@ class ClassSession {
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Set course
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Course $course
      * @return ClassSession
      */
-    public function setCourse(\Virgule\Bundle\MainBundle\Entity\Course $course = null)
-    {
+    public function setCourse(\Virgule\Bundle\MainBundle\Entity\Course $course = null) {
         $this->course = $course;
-    
+
         return $this;
     }
 
@@ -137,8 +140,7 @@ class ClassSession {
      *
      * @return \Virgule\Bundle\MainBundle\Entity\Course 
      */
-    public function getCourse()
-    {
+    public function getCourse() {
         return $this->course;
     }
 
@@ -148,10 +150,9 @@ class ClassSession {
      * @param \Virgule\Bundle\MainBundle\Entity\Teacher $sessionTeacher
      * @return ClassSession
      */
-    public function setSessionTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $sessionTeacher = null)
-    {
+    public function setSessionTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $sessionTeacher = null) {
         $this->sessionTeacher = $sessionTeacher;
-    
+
         return $this;
     }
 
@@ -160,8 +161,7 @@ class ClassSession {
      *
      * @return \Virgule\Bundle\MainBundle\Entity\Teacher 
      */
-    public function getSessionTeacher()
-    {
+    public function getSessionTeacher() {
         return $this->sessionTeacher;
     }
 
@@ -171,10 +171,9 @@ class ClassSession {
      * @param \Virgule\Bundle\MainBundle\Entity\Teacher $reportTeacher
      * @return ClassSession
      */
-    public function setReportTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $reportTeacher = null)
-    {
+    public function setReportTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $reportTeacher = null) {
         $this->reportTeacher = $reportTeacher;
-    
+
         return $this;
     }
 
@@ -183,8 +182,7 @@ class ClassSession {
      *
      * @return \Virgule\Bundle\MainBundle\Entity\Teacher 
      */
-    public function getReportTeacher()
-    {
+    public function getReportTeacher() {
         return $this->reportTeacher;
     }
 
@@ -194,10 +192,9 @@ class ClassSession {
      * @param \Virgule\Bundle\MainBundle\Entity\Comment $comments
      * @return ClassSession
      */
-    public function addComment(\Virgule\Bundle\MainBundle\Entity\Comment $comments)
-    {
+    public function addComment(\Virgule\Bundle\MainBundle\Entity\Comment $comments) {
         $this->comments[] = $comments;
-    
+
         return $this;
     }
 
@@ -206,8 +203,7 @@ class ClassSession {
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Comment $comments
      */
-    public function removeComment(\Virgule\Bundle\MainBundle\Entity\Comment $comments)
-    {
+    public function removeComment(\Virgule\Bundle\MainBundle\Entity\Comment $comments) {
         $this->comments->removeElement($comments);
     }
 
@@ -216,8 +212,38 @@ class ClassSession {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getComments()
-    {
+    public function getComments() {
         return $this->comments;
     }
+
+    /**
+     * Add attachments
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Attachment $attachments
+     * @return ClassSession
+     */
+    public function addAttachment(\Virgule\Bundle\MainBundle\Entity\Attachment $attachments) {
+        $this->attachments[] = $attachments;
+
+        return $this;
+    }
+
+    /**
+     * Remove attachments
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Attachment $attachments
+     */
+    public function removeAttachment(\Virgule\Bundle\MainBundle\Entity\Attachment $attachments) {
+        $this->attachments->removeElement($attachments);
+    }
+
+    /**
+     * Get attachments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAttachments() {
+        return $this->attachments;
+    }
+
 }
