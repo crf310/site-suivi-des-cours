@@ -15,7 +15,7 @@ security:
         main:
             entity: { class: Virgule\Bundle\MainBundle\Entity\Teacher, property: username }
 
-    firewalls:
+    firewalls:            
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
@@ -34,9 +34,14 @@ security:
             logout:
                 path:   /logout
                 target: /login
-            #anonymous: ~
+            anonymous: false
             #http_basic:
             #    realm: "Secured Demo Area"
+            remember_me:
+                key:      "%secret%"
+                lifetime: 2592000 # 30 days in seconds
+                path:     /
+                domain:   ~ # Defaults to the current domain from $_SERVER
 
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
