@@ -3,10 +3,10 @@
 namespace Virgule\Bundle\MainBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Virgule\Bundle\MainBundle\Controller\AbstractVirguleController;
 use Virgule\Bundle\MainBundle\Entity\Comment;
 use Virgule\Bundle\MainBundle\Form\CommentType;
 
@@ -15,7 +15,7 @@ use Virgule\Bundle\MainBundle\Form\CommentType;
  *
  * @Route("/comment")
  */
-class CommentController extends Controller {
+class CommentController extends AbstractVirguleController {
 
     /**
      * Lists all Comment entities.
@@ -28,9 +28,7 @@ class CommentController extends Controller {
 
         $entities = $em->getRepository('VirguleMainBundle:Comment')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+        return super . paginate($entities);
     }
 
     /**
@@ -76,7 +74,7 @@ class CommentController extends Controller {
         $comment->setDate(new \DateTime('now'));
         $form = $this->createForm(new CommentType(), $comment);
         $form->bind($request);
-        
+
         $teacher = $this->getUser();
         if (!$teacher) {
             throw $this->createNotFoundException('Unable to find Teacher entity.');
@@ -92,7 +90,7 @@ class CommentController extends Controller {
         }
         return false;
     }
-    
+
     /**
      * Creates a new Comment entity
      * related to a Student
@@ -108,16 +106,16 @@ class CommentController extends Controller {
         if (!$student) {
             throw $this->createNotFoundException('Unable to find Student entity.');
         }
-        
+
         $comment = new Comment();
         $comment->setStudent($student);
-        
+
         if ($this->createComment($request, $comment)) {
             return $this->redirect($this->generateUrl('student_show', array('id' => $student_id)));
         }
     }
-    
-        /**
+
+    /**
      * Creates a new Comment entity
      * related to a Student
      *
@@ -132,10 +130,10 @@ class CommentController extends Controller {
         if (!$classSession) {
             throw $this->createNotFoundException('Unable to find ClassSession entity.');
         }
-        
+
         $comment = new Comment();
         $comment->setClassSession($classSession);
-        
+
         if ($this->createComment($request, $comment)) {
             return $this->redirect($this->generateUrl('class_session_show', array('id' => $class_session_id)));
         }
