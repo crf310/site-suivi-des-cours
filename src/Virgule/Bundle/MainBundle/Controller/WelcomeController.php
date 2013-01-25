@@ -35,11 +35,12 @@ class WelcomeController extends Controller {
             $logger->debug('Welcome page: course ID ' . $course->getId() . 'found');
         }
         $myStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledInCourses($courseIds);
-        
+        $nbMyStudents=count($myStudents);
         
         return array(
             'myCourses' => $myCourses,
-            'myStudents' => $myStudents
+            'myStudents' => $myStudents,
+            'nbMyStudents' => $nbMyStudents
         );
     }
 }
