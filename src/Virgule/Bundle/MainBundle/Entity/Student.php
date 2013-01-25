@@ -106,7 +106,7 @@ class Student {
     private $maritalStatus;
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="student", cascade="persist")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="student", cascade={"persist", "remove"})
      */
     private $comments;
 
@@ -224,6 +224,11 @@ class Student {
      * @ORM\JoinColumn(name="fk_suggested_level", referencedColumnName="id")
      */
     private $suggestedLevel;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Course", inversedBy="students")
+     */
+    private $courses;
 
     /**
      * Get id
@@ -823,27 +828,6 @@ class Student {
     }
 
     /**
-     * Set comments
-     *
-     * @param string $comments
-     * @return Student
-     */
-    public function setComments($comments) {
-        $this->comments = $comments;
-
-        return $this;
-    }
-
-    /**
-     * Get comments
-     *
-     * @return string 
-     */
-    public function getComments() {
-        return $this->comments;
-    }
-
-    /**
      * Set suggestedLevel
      *
      * @param \Virgule\Bundle\MainBundle\Entity\ClassLevel $suggestedLevel
@@ -867,21 +851,19 @@ class Student {
     /**
      * Constructor
      */
-    public function __construct()
-    {
-        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+    public function __construct() {
+        $this->registrationDate = new \DateTime('now');
     }
-    
+
     /**
      * Add comments
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Comment $comments
      * @return Student
      */
-    public function addComment(\Virgule\Bundle\MainBundle\Entity\Comment $comments)
-    {
+    public function addComment(\Virgule\Bundle\MainBundle\Entity\Comment $comments) {
         $this->comments[] = $comments;
-    
+
         return $this;
     }
 
@@ -890,8 +872,29 @@ class Student {
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Comment $comments
      */
-    public function removeComment(\Virgule\Bundle\MainBundle\Entity\Comment $comments)
-    {
+    public function removeComment(\Virgule\Bundle\MainBundle\Entity\Comment $comments) {
         $this->comments->removeElement($comments);
     }
+
+    /**
+     * Set comments
+     *
+     * @param string $comments
+     * @return Student
+     */
+    public function setComments($comments) {
+        $this->comments = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Get comments
+     *
+     * @return string 
+     */
+    public function getComments() {
+        return $this->comments;
+    }
+
 }

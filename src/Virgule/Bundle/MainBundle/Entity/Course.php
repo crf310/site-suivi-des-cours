@@ -90,6 +90,12 @@ class Course {
      * @ORM\OneToMany(targetEntity="ClassSession", mappedBy="course")
      */
     private $classSessions;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Student", mappedBy="courses")
+     * @ORM\JoinTable(name="student_courses")
+     */
+    private $students;
 
     /**
      * Get id
