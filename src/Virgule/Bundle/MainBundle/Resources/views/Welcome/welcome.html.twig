@@ -14,6 +14,15 @@
     </ul>
 </div>
 <div id="my_students"><h2>Mes apprenants</h2></div>
+    <ul>
+        {% if myStudents is empty %}
+            Aucun apprenant n'est inscrit à l'un de vos cours pour le moment.
+        {% else %}
+            {% for student in myStudents %}
+                <li class="user_{{ student.gender }}"><a href="{{ path('student_show', { 'id': student.id }) }}">{{ student.firstname }} {{ student.lastname }}</a></li>
+            {% endfor %}
+        {% endif %}
+    </ul>
 <div id="my_reports"><h2>Mes compte-rendus</h2></div>
 <div id="my_documents"><h2>Mes documents</h2></div>
 <div id="last_reports"><h2>Dernier compte-rendus enregistrés</h2></div>

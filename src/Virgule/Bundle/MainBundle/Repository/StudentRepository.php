@@ -24,7 +24,22 @@ class StudentRepository extends EntityRepository {
             ->getQuery()
         ;
         $students = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $students;
-        
+        return $students;   
+    }
+    
+    public function loadAllEnrolledInCourses(Array $courseIds) {
+        $ids = implode(',',$courseIds);
+        $q = $this
+            ->createQueryBuilder('s')
+            ->addSelect('s.id, s.firstname, s.lastname, s.gender, s.phoneNumber, s.cellphoneNumber')
+            ->addSelect('c.isoCode, c.label')
+            ->innerJoin('s.nativeCountry', 'c')
+            ->innerJoin('s.courses', 'c2')
+            ->where('c2.id IN (:coursesIds)')
+            ->setParameter('coursesIds', $ids)
+            ->getQuery()
+        ;
+        $students = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $students;   
     }
 }

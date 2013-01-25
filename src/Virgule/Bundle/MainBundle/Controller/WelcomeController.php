@@ -22,13 +22,24 @@ class WelcomeController extends Controller {
      * @Template
      */
     public function welcomeAction() {
+        $logger = $this->get('logger');
+        
         $em = $this->getDoctrine()->getManager();
         $teacherId = $this->getUser()->getId();
         
         $myCourses = $em->getRepository('VirguleMainBundle:Course')->getCoursesByTeacher($teacherId);
         
+        $courseIds = Array();
+        foreach($myCourses as $course) {
+            $courseIds[] = $course->getId();
+            $logger->debug('Welcome page: course ID ' . $course->getId() . 'found');
+        }
+        $myStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledInCourses($courseIds);
+        
+        
         return array(
-            'myCourses'=> $myCourses
+            'myCourses' => $myCourses,
+            'myStudents' => $myStudents
         );
     }
 }

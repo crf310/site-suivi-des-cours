@@ -25,6 +25,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
         $nbFirstNames = count($firstnames) - 1;
         $nbLastNames = count($lastnames) - 1;
         $nbCountries = count($countryCodes) - 1;
+        $nbCourses= 4;
 
         $commentContent = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
@@ -44,6 +45,8 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
             $s->setCellphoneNumber("0607080910");
 
             $s->setWelcomedByTeacher($this->getReference('prof' . rand(1, 50)));
+            
+            $s->addCourse($this->getReference('course'.rand(1,$nbCourses)));
 
             for ($j = 1; $j <= 3; $j++) {
                 $c = new Comment();
@@ -58,7 +61,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
     }
 
     public function getOrder() {
-        return 14;
+        return 15;
     }
 
 }
