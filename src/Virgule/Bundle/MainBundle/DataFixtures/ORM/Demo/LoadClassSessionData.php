@@ -16,7 +16,7 @@ class LoadClassSessionData extends AbstractFixture implements OrderedFixtureInte
 
     public function load(ObjectManager $manager) {
 
-        $summary = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+        $summary = "<b>Lorem ipsum dolor sit amet</b>, <i>consectetur adipisicing elit</i>, <u>sed do eiusmod tempor incididunt ut labore </u>et dolore magna aliqua. 
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
         for ($c = 1; $c <= 4; $c++) {
             for ($i = 1; $i <= 4; $i++) {
