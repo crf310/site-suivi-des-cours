@@ -36,6 +36,9 @@
                     </li>
                     <li>
                         <a href="{{ path('course_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>                    
+                    <li>
+                        <a href="{{ path('classsession_add', { 'course_id': entity.id }) }}">Enregistrer un compte-rendu</a>
                     </li>
                 </ul>
             </td>

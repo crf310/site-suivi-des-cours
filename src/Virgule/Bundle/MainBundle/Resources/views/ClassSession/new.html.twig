@@ -1,4 +1,9 @@
-<h1>ClassSession creation</h1>
+{% extends '::base.html.twig' %}
+{% block body %}
+<div id="errorMsg">
+{{ form_errors(form) }}
+</div>
+<h1>Nouveau compte-rendu</h1>
 
 <form action="{{ path('classsession_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
@@ -9,8 +14,9 @@
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('classsession') }}">
+        <a href="{{ path('classsession_index') }}">
             Back to the list
         </a>
     </li>
 </ul>
+{% endblock %}

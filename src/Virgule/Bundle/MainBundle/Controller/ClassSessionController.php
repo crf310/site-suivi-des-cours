@@ -15,16 +15,15 @@ use Virgule\Bundle\MainBundle\Form\ClassSessionType;
  *
  * @Route("/classsession")
  */
-class ClassSessionController extends AbstractVirguleController
-{
+class ClassSessionController extends AbstractVirguleController {
+
     /**
      * Lists all ClassSession entities.
      *
      * @Route("/page/{page}", requirements={"page" = "\d+"}, defaults={"page" = "1"}, name="classsession_index")
      * @Template()
      */
-    public function indexAction($page=1)
-    {
+    public function indexAction($page = 1) {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('VirguleMainBundle:ClassSession')->findAll();
@@ -38,8 +37,7 @@ class ClassSessionController extends AbstractVirguleController
      * @Route("/{id}/show", name="classsession_show")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:ClassSession')->find($id);
@@ -51,7 +49,7 @@ class ClassSessionController extends AbstractVirguleController
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -60,18 +58,19 @@ class ClassSessionController extends AbstractVirguleController
      * Displays a form to create a new ClassSession entity.
      *
      * @Route("/new", name="classsession_new")
+     * @Route("/add/course/${course_id}", name="classsession_add")
      * @Template()
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new ClassSession();
-        $form   = $this->createForm(new ClassSessionType(), $entity);
+        $form = $this->createForm(new ClassSessionType(), $entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
+
 
     /**
      * Creates a new ClassSession entity.
@@ -80,9 +79,8 @@ class ClassSessionController extends AbstractVirguleController
      * @Method("POST")
      * @Template("VirguleMainBundle:ClassSession:new.html.twig")
      */
-    public function createAction(Request $request)
-    {
-        $entity  = new ClassSession();
+    public function createAction(Request $request) {
+        $entity = new ClassSession();
         $form = $this->createForm(new ClassSessionType(), $entity);
         $form->bind($request);
 
@@ -96,7 +94,7 @@ class ClassSessionController extends AbstractVirguleController
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -106,8 +104,7 @@ class ClassSessionController extends AbstractVirguleController
      * @Route("/{id}/edit", name="classsession_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:ClassSession')->find($id);
@@ -120,8 +117,8 @@ class ClassSessionController extends AbstractVirguleController
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -133,8 +130,7 @@ class ClassSessionController extends AbstractVirguleController
      * @Method("POST")
      * @Template("VirguleMainBundle:ClassSession:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:ClassSession')->find($id);
@@ -155,8 +151,8 @@ class ClassSessionController extends AbstractVirguleController
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -167,8 +163,7 @@ class ClassSessionController extends AbstractVirguleController
      * @Route("/{id}/delete", name="classsession_delete")
      * @Method("POST")
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
 
@@ -187,11 +182,11 @@ class ClassSessionController extends AbstractVirguleController
         return $this->redirect($this->generateUrl('classsession'));
     }
 
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                        ->add('id', 'hidden')
+                        ->getForm()
         ;
     }
+
 }

@@ -4,7 +4,7 @@
     <h1>Liste des compte-rendus</h1>
     <div class="action_tab">
         <a class="add_entry" href="{{ path('classsession_new') }}">
-            Enregistrer un apprenant
+            Enregistrer un compte-rendu
         </a>
     </div>
     <div class="action_tab">
@@ -46,6 +46,6 @@
         </tr>
     {% endfor %}
     </tbody>
-    {% include '::pager_footer.html.twig' with { nb_columns: 9 } %}
+    {% include '::pager_footer.html.twig' with { nb_columns: 6 } %}
 </table>
 {% endblock %}

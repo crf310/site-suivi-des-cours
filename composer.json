@@ -30,6 +30,7 @@
         "phing/phing": "2.4.14",
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
+        "egeloen/ckeditor-bundle": "2.*",
         
         "pdepend/pdepend" : "1.1.0",
         "phpunit/phpunit": "3.7.10",
