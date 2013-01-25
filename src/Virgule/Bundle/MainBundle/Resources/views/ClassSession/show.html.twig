@@ -16,22 +16,22 @@
         </tr>
         <tr>
             <th>Fkclassid</th>
-            <td>{{ entity.fkClassId }}</td>
+            <td>{{ entity.course }}</td>
         </tr>
         <tr>
             <th>Fksessionteacherid</th>
-            <td>{{ entity.fkSessionTeacherId }}</td>
+            <td>{{ entity.sessionTeacher }}</td>
         </tr>
         <tr>
             <th>Fksummaryteacherid</th>
-            <td>{{ entity.fkSummaryTeacherId }}</td>
+            <td>{{ entity.reportTeacher }}</td>
         </tr>
     </tbody>
 </table>
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('classsession') }}">
+        <a href="{{ path('classsession_index') }}">
             Back to the list
         </a>
     </li>
