@@ -31,27 +31,27 @@ class ClassSession {
     /**
      * @var string $summary
      *
-     * @ORM\Column(name="summary", type="text", nullable=true)
+     * @ORM\Column(name="summary", type="text", nullable=false)
      */
     private $summary;
 
     /**
      * @ORM\ManyToOne(targetEntity="Course", inversedBy="classSessions")
-     * @ORM\JoinColumn(name="fk_course", referencedColumnName="id")
+     * @ORM\JoinColumn(name="fk_course", referencedColumnName="id", nullable=false)
      */
     private $course;
 
     /**
      * Teacher who actually managed the class
      * @ORM\ManyToOne(targetEntity="Teacher", inversedBy="classSessionsDriven")
-     * @ORM\JoinColumn(name="fk_session_teacher", referencedColumnName="id")
+     * @ORM\JoinColumn(name="fk_session_teacher", referencedColumnName="id", nullable=false)
      */
     private $sessionTeacher;
 
     /**
      * Teacher who posted the report
      * @ORM\ManyToOne(targetEntity="Teacher", inversedBy="classSessionsReported")
-     * @ORM\JoinColumn(name="fk_report_teacher", referencedColumnName="id")
+     * @ORM\JoinColumn(name="fk_report_teacher", referencedColumnName="id", nullable=false)
      */
     private $reportTeacher;
 
