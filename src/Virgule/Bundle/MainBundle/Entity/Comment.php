@@ -52,6 +52,12 @@ class Comment {
      * @ORM\JoinColumn(name="fk_class_session", referencedColumnName="id")
      */
     private $classSession;
+        
+    /**
+     * @ORM\ManyToMany(targetEntity="Teacher", inversedBy="commentsRead")
+     * @ORM\JoinTable(name="teachers_comments_read")
+     */
+    private $readByTeachers;        
 
     /**
      * Constructor

@@ -126,7 +126,7 @@ class Teacher implements UserInterface, EquatableInterface {
     protected $organizationBranches;
     
     /**
-     * @ORM\ManyToMany(targetEntity="Comment", inversedBy="readByTeachers")
+     * @ORM\ManyToMany(targetEntity="Comment", mappedBy="readByTeachers")
      * @ORM\JoinTable(name="teachers_comments_read")
      */
     private $commentsRead;    
