@@ -14,7 +14,7 @@ class ClassSessionType extends AbstractType {
         $builder
                 ->add('date', 'date', array(
                     'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy',
+                    'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'date', 'value' => $sNow)))
                 ->add('summary', 'ckeditor', array(
                         'config' => array(

@@ -20,7 +20,7 @@ class TeacherType extends AbstractType {
                 ->add('password')
                 ->add('registrationDate', 'date', array(
                     'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy',
+                    'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'date')
                 ))
                 ->add('role', 'entity', array(
