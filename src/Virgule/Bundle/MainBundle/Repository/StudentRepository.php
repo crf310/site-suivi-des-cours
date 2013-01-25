@@ -36,6 +36,7 @@ class StudentRepository extends EntityRepository {
             ->innerJoin('s.nativeCountry', 'c')
             ->innerJoin('s.courses', 'c2')
             ->where('c2.id IN (:coursesIds)')
+            ->orderBy('s.lastname')
             ->setParameter('coursesIds', $ids)
             ->getQuery()
         ;
