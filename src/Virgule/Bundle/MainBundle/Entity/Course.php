@@ -206,90 +206,6 @@ class Course {
     }
 
     /**
-     * Set fkLevelId
-     *
-     * @param integer $fkLevelId
-     * @return Course
-     */
-    public function setFkLevelId($fkLevelId) {
-        $this->fkLevelId = $fkLevelId;
-
-        return $this;
-    }
-
-    /**
-     * Get fkLevelId
-     *
-     * @return integer 
-     */
-    public function getFkLevelId() {
-        return $this->fkLevelId;
-    }
-
-    /**
-     * Set fkSemesterId
-     *
-     * @param integer $fkSemesterId
-     * @return Course
-     */
-    public function setFkSemesterId($fkSemesterId) {
-        $this->fkSemesterId = $fkSemesterId;
-
-        return $this;
-    }
-
-    /**
-     * Get fkSemesterId
-     *
-     * @return integer 
-     */
-    public function getFkSemesterId() {
-        return $this->fkSemesterId;
-    }
-
-    /**
-     * Set fkTeacherId
-     *
-     * @param integer $fkTeacherId
-     * @return Course
-     */
-    public function setFkTeacherId($fkTeacherId) {
-        $this->fkTeacherId = $fkTeacherId;
-
-        return $this;
-    }
-
-    /**
-     * Get fkTeacherId
-     *
-     * @return integer 
-     */
-    public function getFkTeacherId() {
-        return $this->fkTeacherId;
-    }
-
-    /**
-     * Set fkOrganizationBranch
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\OrganizationBranch $fkOrganizationBranch
-     * @return Course
-     */
-    public function setFkOrganizationBranch(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $fkOrganizationBranch = null) {
-        $this->fkOrganizationBranch = $fkOrganizationBranch;
-
-        return $this;
-    }
-
-    /**
-     * Get fkOrganizationBranch
-     *
-     * @return \Virgule\Bundle\MainBundle\Entity\OrganizationBranch 
-     */
-    public function getFkOrganizationBranch() {
-        return $this->fkOrganizationBranch;
-    }
-
-    /**
      * Set classLevel
      *
      * @param \Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevel
@@ -401,6 +317,10 @@ class Course {
         $this->classSessions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    public function __toString() {
+        return 'Niveau '.$this->$classLevel.', le '.$this->getDayOfWeek().' de '.$this->getStartTime().' à '.$this->getEndTime();
+    }
+    
     /**
      * Add classSessions
      *
