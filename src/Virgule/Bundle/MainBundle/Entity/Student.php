@@ -224,7 +224,7 @@ class Student {
      * @ORM\JoinColumn(name="fk_suggested_level", referencedColumnName="id")
      */
     private $suggestedLevel;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="Course", inversedBy="students")
      */
@@ -895,6 +895,36 @@ class Student {
      */
     public function getComments() {
         return $this->comments;
+    }
+
+    /**
+     * Add courses
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
+     * @return Student
+     */
+    public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
+        $this->courses[] = $courses;
+
+        return $this;
+    }
+
+    /**
+     * Remove courses
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
+     */
+    public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
+        $this->courses->removeElement($courses);
+    }
+
+    /**
+     * Get courses
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCourses() {
+        return $this->courses;
     }
 
 }

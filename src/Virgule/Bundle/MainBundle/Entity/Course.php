@@ -90,7 +90,7 @@ class Course {
      * @ORM\OneToMany(targetEntity="ClassSession", mappedBy="course")
      */
     private $classSessions;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="Student", mappedBy="courses")
      * @ORM\JoinTable(name="student_courses")
@@ -324,9 +324,9 @@ class Course {
     }
 
     public function __toString() {
-        return 'Niveau '.$this->classLevel.', le '.$this->dayOfWeek.' de '.$this->startTime->format('H:m').' à '.$this->endTime->format('H:m');
+        return 'Niveau ' . $this->classLevel . ', le ' . $this->dayOfWeek . ' de ' . $this->startTime->format('H:m') . ' à ' . $this->endTime->format('H:m');
     }
-    
+
     /**
      * Add classSessions
      *
@@ -356,4 +356,35 @@ class Course {
     public function getClassSessions() {
         return $this->classSessions;
     }
+
+    /**
+     * Add students
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Student $students
+     * @return Course
+     */
+    public function addStudent(\Virgule\Bundle\MainBundle\Entity\Student $students) {
+        $this->students[] = $students;
+
+        return $this;
+    }
+
+    /**
+     * Remove students
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Student $students
+     */
+    public function removeStudent(\Virgule\Bundle\MainBundle\Entity\Student $students) {
+        $this->students->removeElement($students);
+    }
+
+    /**
+     * Get students
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStudents() {
+        return $this->students;
+    }
+
 }

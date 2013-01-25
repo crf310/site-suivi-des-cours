@@ -113,23 +113,23 @@ class Teacher implements UserInterface, EquatableInterface {
      * @ORM\OneToMany(targetEntity="ClassSession", mappedBy="sessionTeacher")
      */
     private $classSessionsDriven;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="ClassSession", mappedBy="reportTeacher")
      */
-    private $classSessionsReported;    
-    
+    private $classSessionsReported;
+
     /**
      * @ORM\ManyToMany(targetEntity="OrganizationBranch", inversedBy="teachers")
      * @ORM\JoinTable(name="teachers_branches")
      */
     protected $organizationBranches;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="Comment", mappedBy="readByTeachers")
      * @ORM\JoinTable(name="teachers_comments_read")
      */
-    private $commentsRead;    
+    private $commentsRead;
 
     /**
      * Get id
@@ -164,8 +164,8 @@ class Teacher implements UserInterface, EquatableInterface {
     public function isEqualTo(UserInterface $user) {
         return $this->username === $user->getUsername();
     }
-    
-     public function equals(UserInterface $user) {
+
+    public function equals(UserInterface $user) {
         return $this->username === $user->getUsername();
     }
 
@@ -470,17 +470,15 @@ class Teacher implements UserInterface, EquatableInterface {
         $this->organizationBranches->removeElement($organizationBranches);
     }
 
-
     /**
      * Add organizationBranches
      *
      * @param \Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranches
      * @return Teacher
      */
-    public function addOrganizationBranche(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranches)
-    {
+    public function addOrganizationBranche(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranches) {
         $this->organizationBranches[] = $organizationBranches;
-    
+
         return $this;
     }
 
@@ -489,8 +487,7 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @param \Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranches
      */
-    public function removeOrganizationBranche(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranches)
-    {
+    public function removeOrganizationBranche(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $organizationBranches) {
         $this->organizationBranches->removeElement($organizationBranches);
     }
 
@@ -499,8 +496,7 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getOrganizationBranches()
-    {
+    public function getOrganizationBranches() {
         return $this->organizationBranches;
     }
 
@@ -510,10 +506,9 @@ class Teacher implements UserInterface, EquatableInterface {
      * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsDriven
      * @return Teacher
      */
-    public function addClassSessionsDriven(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsDriven)
-    {
+    public function addClassSessionsDriven(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsDriven) {
         $this->classSessionsDriven[] = $classSessionsDriven;
-    
+
         return $this;
     }
 
@@ -522,8 +517,7 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsDriven
      */
-    public function removeClassSessionsDriven(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsDriven)
-    {
+    public function removeClassSessionsDriven(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsDriven) {
         $this->classSessionsDriven->removeElement($classSessionsDriven);
     }
 
@@ -532,8 +526,7 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getClassSessionsDriven()
-    {
+    public function getClassSessionsDriven() {
         return $this->classSessionsDriven;
     }
 
@@ -543,10 +536,9 @@ class Teacher implements UserInterface, EquatableInterface {
      * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsReported
      * @return Teacher
      */
-    public function addClassSessionsReported(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsReported)
-    {
+    public function addClassSessionsReported(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsReported) {
         $this->classSessionsReported[] = $classSessionsReported;
-    
+
         return $this;
     }
 
@@ -555,8 +547,7 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsReported
      */
-    public function removeClassSessionsReported(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsReported)
-    {
+    public function removeClassSessionsReported(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsReported) {
         $this->classSessionsReported->removeElement($classSessionsReported);
     }
 
@@ -565,8 +556,7 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getClassSessionsReported()
-    {
+    public function getClassSessionsReported() {
         return $this->classSessionsReported;
     }
 
@@ -576,10 +566,9 @@ class Teacher implements UserInterface, EquatableInterface {
      * @param \Virgule\Bundle\MainBundle\Entity\Comment $commentsRead
      * @return Teacher
      */
-    public function addCommentsRead(\Virgule\Bundle\MainBundle\Entity\Comment $commentsRead)
-    {
+    public function addCommentsRead(\Virgule\Bundle\MainBundle\Entity\Comment $commentsRead) {
         $this->commentsRead[] = $commentsRead;
-    
+
         return $this;
     }
 
@@ -588,8 +577,7 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Comment $commentsRead
      */
-    public function removeCommentsRead(\Virgule\Bundle\MainBundle\Entity\Comment $commentsRead)
-    {
+    public function removeCommentsRead(\Virgule\Bundle\MainBundle\Entity\Comment $commentsRead) {
         $this->commentsRead->removeElement($commentsRead);
     }
 
@@ -598,8 +586,8 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getCommentsRead()
-    {
+    public function getCommentsRead() {
         return $this->commentsRead;
     }
+
 }
