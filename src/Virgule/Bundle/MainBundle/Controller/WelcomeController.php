@@ -22,9 +22,13 @@ class WelcomeController extends Controller {
      * @Template
      */
     public function welcomeAction() {
+        $em = $this->getDoctrine()->getManager();
+        $teacherId = $this->getUser()->getId();
+        
+        $myCourses = $em->getRepository('VirguleMainBundle:Course')->getCoursesByTeacher($teacherId);
+        
         return array(
-            
+            'myCourses'=> $myCourses
         );
     }
-
 }

@@ -39,4 +39,15 @@ class CourseRepository extends EntityRepository {
         $nb = $q->execute();
         return $nb;
     }
+    
+    public function getCoursesByTeacher($teacherId) {
+        $q = $this
+            ->createQueryBuilder('c')
+            ->andWhere('c.teacher = :teacherId')
+            ->setParameter('teacherId', $teacherId)          
+            ->getQuery()
+        ;
+        $nb = $q->execute();
+        return $nb;
+    }
 }

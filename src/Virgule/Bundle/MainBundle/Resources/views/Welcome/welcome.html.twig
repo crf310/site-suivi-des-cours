@@ -1,5 +1,21 @@
 {% extends '::base.html.twig' %}
 {% block body %}
  <h1>Bienvenue {{ app.user.firstName }} !</h1>
-
+<div id="my_courses">
+    <h2>Mes cours</h2>
+    <ul>
+        {% if myCourses is empty %}
+            Vous ne dirigez aucun cours pour le moment !
+        {% else %}
+            {% for course in myCourses %}
+                <li>{{ course }} - <a href="{{ path('classsession_add', { 'course_id': course.id }) }}">Ajouter un compte-rendu</a></li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+</div>
+<div id="my_students"><h2>Mes apprenants</h2></div>
+<div id="my_reports"><h2>Mes compte-rendus</h2></div>
+<div id="my_documents"><h2>Mes documents</h2></div>
+<div id="last_reports"><h2>Dernier compte-rendus enregistrés</h2></div>
+<div id="last_comments"><h2>Commentaires</h2></div>
 {% endblock %}
