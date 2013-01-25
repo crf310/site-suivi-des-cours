@@ -197,3 +197,6 @@ a.search {
 .records_list ul li{
     list-style: none; display: inline; margin-left: 0px;
 }
+
+li.user_M { list-style-image:url('../images/icons/user.png'); }
+li.user_F { list-style-image:url('../images/icons/user_female.png'); }
