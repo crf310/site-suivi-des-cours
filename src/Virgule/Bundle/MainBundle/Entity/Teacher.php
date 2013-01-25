@@ -124,6 +124,12 @@ class Teacher implements UserInterface, EquatableInterface {
      * @ORM\JoinTable(name="teachers_branches")
      */
     protected $organizationBranches;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Comment", inversedBy="readByTeachers")
+     * @ORM\JoinTable(name="teachers_comments_read")
+     */
+    private $commentsRead;    
 
     /**
      * Get id
@@ -562,5 +568,38 @@ class Teacher implements UserInterface, EquatableInterface {
     public function getClassSessionsReported()
     {
         return $this->classSessionsReported;
+    }
+
+    /**
+     * Add commentsRead
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Comment $commentsRead
+     * @return Teacher
+     */
+    public function addCommentsRead(\Virgule\Bundle\MainBundle\Entity\Comment $commentsRead)
+    {
+        $this->commentsRead[] = $commentsRead;
+    
+        return $this;
+    }
+
+    /**
+     * Remove commentsRead
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Comment $commentsRead
+     */
+    public function removeCommentsRead(\Virgule\Bundle\MainBundle\Entity\Comment $commentsRead)
+    {
+        $this->commentsRead->removeElement($commentsRead);
+    }
+
+    /**
+     * Get commentsRead
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCommentsRead()
+    {
+        return $this->commentsRead;
     }
 }
