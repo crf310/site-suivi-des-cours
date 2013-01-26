@@ -34,13 +34,17 @@ class WelcomeController extends Controller {
             $courseIds[] = $course->getId();
             $logger->debug('Welcome page: course ID ' . $course->getId() . 'found');
         }
+        
         $myStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledInCourses($courseIds);
         $nbMyStudents=count($myStudents);
+        
+        $myClassSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByTeacher($teacherId);
         
         return array(
             'myCourses' => $myCourses,
             'myStudents' => $myStudents,
-            'nbMyStudents' => $nbMyStudents
+            'nbMyStudents' => $nbMyStudents,
+            'myClassSessions' => $myClassSessions
         );
     }
 }

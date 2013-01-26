@@ -13,7 +13,8 @@
         {% endif %}
     </ul>
 </div>
-<div id="my_students"><h2>Mes apprenants ({{ nbMyStudents }})</h2></div>
+<div id="my_students">
+    <h2>Mes apprenants ({{ nbMyStudents }})</h2></div>
     <ul>
         {% if myStudents is empty %}
             Aucun apprenant n'est inscrit à l'un de vos cours pour le moment.
@@ -23,7 +24,19 @@
             {% endfor %}
         {% endif %}
     </ul>
-<div id="my_reports"><h2>Mes compte-rendus</h2></div>
+<div id="my_reports">
+    <h2>Mes compte-rendus</h2>
+    <ul>
+        {% if myClassSessions is empty %}
+            Vous n'avez enregistré aucun compte-rendu pour le moment, voulez-vous le faire <a href="{{ path('classsession_new') }}">maintenant</a> ?
+        {% else %}
+            {% for classSession in myClassSessions %}
+                <li><a href="{{ path('classsession_show', { 'id': classSession.id }) }}">{{ classSession.date | date("d/m/Y") }}</a></li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+    
+</div>
 <div id="my_documents"><h2>Mes documents</h2></div>
 <div id="last_reports"><h2>Dernier compte-rendus enregistrés</h2></div>
 <div id="last_comments"><h2>Commentaires</h2></div>
