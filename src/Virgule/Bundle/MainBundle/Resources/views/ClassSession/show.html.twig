@@ -26,6 +26,19 @@
             <th>Fksummaryteacherid</th>
             <td>{{ entity.reportTeacher.firstName }} {{ entity.reportTeacher.lastName }}</td>
         </tr>
+        <tr>
+            <th>Commentaires</th>
+            <td>
+                <ul>
+                {% for comment in entity.comments %}
+                        <li>
+                            le  {{ comment.date|date("d/m/Y") }} par <a href="{{ path('teacher_show', { 'id': comment.teacher.id }) }}">{{ comment.teacher.firstName }}  {{ comment.teacher.lastName }}</a>: <br />
+                    {{ comment.comment }}
+                        </li>
+                {% endfor %}
+                    </ul>
+                </td>
+            </tr>        
     </tbody>
 </table>
 
