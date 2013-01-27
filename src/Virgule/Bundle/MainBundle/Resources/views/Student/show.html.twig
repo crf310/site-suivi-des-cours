@@ -46,7 +46,7 @@
                 {% for comment in entity.comments %}
                         <li>
                             le  {{ comment.date|date("d/m/Y") }} par <a href="{{ path('teacher_show', { 'id': comment.teacher.id }) }}">{{ comment.teacher.firstName }}  {{ comment.teacher.lastName }}</a>: <br />
-                    {{ comment.comment }}
+                    {{ comment.comment|raw }}
                         </li>
                 {% endfor %}
                     </ul>
