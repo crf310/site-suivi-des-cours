@@ -31,7 +31,10 @@
             Vous n'avez enregistré aucun compte-rendu pour le moment, voulez-vous le faire <a href="{{ path('classsession_new') }}">maintenant</a> ?
         {% else %}
             {% for classSession in myClassSessions %}
-                <li><a href="{{ path('classsession_show', { 'id': classSession.id }) }}">{{ classSession.date | date("d/m/Y") }}</a></li>
+                <li><a href="{{ path('classsession_show', { 'id': classSession.id }) }}">{{ classSession.date | date("d/m/Y") }}</a>
+                {% if classSession.nb_comments > 0 %}
+                    {{ classSession.nb_comments }} commentaire{% if classSession.nb_comments > 1 %}s{% endif %}
+                {% endif %}</li>
             {% endfor %}
         {% endif %}
     </ul>

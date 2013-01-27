@@ -17,12 +17,14 @@ class ClassSessionRepository extends EntityRepository {
      public function loadAllClassSessionByTeacher($teacherId, $limit=null) {
         $q = $this
             ->createQueryBuilder('c')
-            ->addSelect('c.id, c.date')
+            ->addSelect('c.id, c.date, count(cm.id) as nb_comments')
             ->innerJoin('c.sessionTeacher', 't')
+            ->leftJoin('c.comments', 'cm')
             ->where('t.id = :teacherId')
             ->setParameter('teacherId', $teacherId)
             ->setMaxResults(5) 
             ->add('orderBy', 'c.date DESC')
+            ->add('groupBy', 'c.id')
             ->getQuery()
         ;
         $results = $q->execute(array(), Query::HYDRATE_ARRAY);
