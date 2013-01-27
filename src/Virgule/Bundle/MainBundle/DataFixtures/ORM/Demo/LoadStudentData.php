@@ -25,12 +25,13 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
         $nbFirstNames = count($firstnames) - 1;
         $nbLastNames = count($lastnames) - 1;
         $nbCountries = count($countryCodes) - 1;
-        $nbCourses= 4;
+        $nbCourses = 4;
 
         $commentContent = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 
-        for ($i = 1; $i <= 155; $i++) {
+        $nbStudents = 0;
+        for ($i = 1; $i <= 55; $i++) {
             $s = new Student();
             $s->setFirstname($firstnames[rand(0, $nbFirstNames)]);
             $s->setLastname($lastnames[rand(0, $nbLastNames)]);
@@ -45,17 +46,25 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
             $s->setCellphoneNumber("0607080910");
 
             $s->setWelcomedByTeacher($this->getReference('prof' . rand(1, 50)));
-            
-            $s->addCourse($this->getReference('course'.rand(1,$nbCourses)));
 
-            for ($j = 1; $j <= 3; $j++) {
+            $s->addCourse($this->getReference('course' . rand(1, $nbCourses)));
+
+            $manager->persist($s);
+            $this->addReference('student' . $nbStudents, $s);
+            $nbStudents++;
+        }
+        $manager->flush();
+
+
+        for ($i = 1; $i < $nbStudents; $i++) {
+            for ($j = 1; $j <= rand(1, 3); $j++) {
                 $c = new Comment();
                 $c->setDate(new \DateTime('now'));
                 $c->setComment($commentContent);
                 $c->setTeacher($this->getReference('prof' . rand(1, 50)));
-                $s->addComment($c);
+                $c->setStudent($this->getReference('student'.$i));
+                $manager->persist($c);
             }
-            $manager->persist($s);
         }
         $manager->flush();
     }
