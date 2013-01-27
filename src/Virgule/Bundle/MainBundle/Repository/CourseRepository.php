@@ -43,7 +43,8 @@ class CourseRepository extends EntityRepository {
     public function getCoursesByTeacher($teacherId) {
         $q = $this
             ->createQueryBuilder('c')
-            ->andWhere('c.teacher = :teacherId')
+            ->innerJoin('c.teachers', 't')
+            ->andWhere('t.id = :teacherId')
             ->setParameter('teacherId', $teacherId)          
             ->getQuery()
         ;

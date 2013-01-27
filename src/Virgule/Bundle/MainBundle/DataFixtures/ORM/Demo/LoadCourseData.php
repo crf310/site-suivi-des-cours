@@ -22,7 +22,7 @@ class LoadCourseData extends AbstractFixture implements OrderedFixtureInterface 
         $course1->setClassRoom($this->getReference('salle-cours'));
         $course1->setSemester($this->getReference('lastSemester'));
         $course1->setClassLevel($this->getReference('A1'));
-        $course1->setTeacher($this->getReference('prof1'));
+        $course1->addTeacher($this->getReference('prof1'));
         
         $course2 = new Course();
         $course2->setDayOfWeek(2);
@@ -32,7 +32,7 @@ class LoadCourseData extends AbstractFixture implements OrderedFixtureInterface 
         $course2->setClassRoom($this->getReference('salle-cours'));
         $course2->setSemester($this->getReference('lastSemester'));
         $course2->setClassLevel($this->getReference('A2'));
-        $course2->setTeacher($this->getReference('prof2'));
+        $course2->addTeacher($this->getReference('prof2'));
         
         $course3 = new Course();
         $course3->setDayOfWeek(3);
@@ -42,7 +42,8 @@ class LoadCourseData extends AbstractFixture implements OrderedFixtureInterface 
         $course3->setClassRoom($this->getReference('salle-cours'));
         $course3->setSemester($this->getReference('lastSemester'));
         $course3->setClassLevel($this->getReference('A2'));
-        $course3->setTeacher($this->getReference('prof1'));
+        $course3->addTeacher($this->getReference('prof2'));
+        $course3->addTeacher($this->getReference('prof4'));
         
         $course4 = new Course();
         $course4->setDayOfWeek(4);
@@ -52,7 +53,7 @@ class LoadCourseData extends AbstractFixture implements OrderedFixtureInterface 
         $course4->setClassRoom($this->getReference('salle-cours'));
         $course4->setSemester($this->getReference('lastSemester'));
         $course4->setClassLevel($this->getReference('A1'));
-        $course4->setTeacher($this->getReference('prof2'));
+        $course4->addTeacher($this->getReference('prof2'));
         
         $manager->persist($course1);
         $manager->persist($course2);

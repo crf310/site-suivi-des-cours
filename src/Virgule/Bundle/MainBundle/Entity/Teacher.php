@@ -100,7 +100,7 @@ class Teacher implements UserInterface, EquatableInterface {
     protected $role;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Course", inversedBy="teachers")
+     * @ORM\ManyToMany(targetEntity="Course", cascade={"persist"})
      */        
     private $courses;
 
@@ -383,36 +383,6 @@ class Teacher implements UserInterface, EquatableInterface {
 
     public function getRoles() {
         return Array($this->getRole()->getCode());
-    }
-
-    /**
-     * Add courses
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
-     * @return Teacher
-     */
-    public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
-        $this->courses[] = $courses;
-
-        return $this;
-    }
-
-    /**
-     * Remove courses
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
-     */
-    public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
-        $this->courses->removeElement($courses);
-    }
-
-    /**
-     * Get courses
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCourses() {
-        return $this->courses;
     }
 
     public function __toString() {

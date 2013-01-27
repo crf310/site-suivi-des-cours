@@ -69,9 +69,9 @@ class Course {
     private $semester;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Teacher", mappedBy="courses")
-     * @ORM\JoinTable(name="teacher_courses")
-     */    
+     * @ORM\ManyToMany(targetEntity="Teacher", cascade={"persist"})
+     * @ORM\JoinTable(name="teacher_course")
+     */
     private $teachers;
 
     /**
@@ -300,6 +300,7 @@ class Course {
      */
     public function __construct() {
         $this->classSessions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->teachers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function __toString() {
@@ -366,17 +367,15 @@ class Course {
         return $this->students;
     }
 
-
     /**
      * Add teachers
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Teacher $teachers
      * @return Course
      */
-    public function addTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $teachers)
-    {
-        $this->teachers[] = $teachers;
-    
+    public function addTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $teacher) {
+        $this->teachers[] = $teacher;
+
         return $this;
     }
 
@@ -385,8 +384,7 @@ class Course {
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Teacher $teachers
      */
-    public function removeTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $teachers)
-    {
+    public function removeTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $teachers) {
         $this->teachers->removeElement($teachers);
     }
 
@@ -395,8 +393,8 @@ class Course {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getTeachers()
-    {
+    public function getTeachers() {
         return $this->teachers;
     }
+
 }
