@@ -69,10 +69,10 @@ class Course {
     private $semester;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Teacher", inversedBy="courses")
-     * @ORM\JoinColumn(name="fk_teacher", referencedColumnName="id")
-     */
-    private $teacher;
+     * @ORM\ManyToMany(targetEntity="Teacher", mappedBy="courses")
+     * @ORM\JoinTable(name="teacher_courses")
+     */    
+    private $teachers;
 
     /**
      * @ORM\ManyToOne(targetEntity="ClassRoom", inversedBy="courses")
@@ -254,27 +254,6 @@ class Course {
     }
 
     /**
-     * Set teacher
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\Teacher $teacher
-     * @return Course
-     */
-    public function setTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $teacher = null) {
-        $this->teacher = $teacher;
-
-        return $this;
-    }
-
-    /**
-     * Get teacher
-     *
-     * @return \Virgule\Bundle\MainBundle\Entity\Teacher 
-     */
-    public function getTeacher() {
-        return $this->teacher;
-    }
-
-    /**
      * Set classRoom
      *
      * @param \Virgule\Bundle\MainBundle\Entity\ClassRoom $classRoom
@@ -387,4 +366,37 @@ class Course {
         return $this->students;
     }
 
+
+    /**
+     * Add teachers
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Teacher $teachers
+     * @return Course
+     */
+    public function addTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $teachers)
+    {
+        $this->teachers[] = $teachers;
+    
+        return $this;
+    }
+
+    /**
+     * Remove teachers
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Teacher $teachers
+     */
+    public function removeTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $teachers)
+    {
+        $this->teachers->removeElement($teachers);
+    }
+
+    /**
+     * Get teachers
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTeachers()
+    {
+        return $this->teachers;
+    }
 }

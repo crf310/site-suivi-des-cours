@@ -100,8 +100,8 @@ class Teacher implements UserInterface, EquatableInterface {
     protected $role;
 
     /**
-     * @ORM\OneToMany(targetEntity="Course", mappedBy="teacher")
-     */
+     * @ORM\ManyToMany(targetEntity="Course", inversedBy="teachers")
+     */        
     private $courses;
 
     /**
