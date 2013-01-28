@@ -58,7 +58,7 @@ class ClassSessionController extends AbstractVirguleController {
      * Displays a form to create a new ClassSession entity.
      *
      * @Route("/new", name="classsession_new")
-     * @Route("/add/course/${course_id}", name="classsession_add")
+     * @Route("/add/course/{course_id}", name="classsession_add")
      * @Template()
      */
     public function newAction($course_id=null) {
