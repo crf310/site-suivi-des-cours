@@ -226,7 +226,7 @@ class Student {
     private $suggestedLevel;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Course", inversedBy="students")
+     * @ORM\ManyToMany(targetEntity="Course", mappedBy="students")
      */
     private $courses;
 

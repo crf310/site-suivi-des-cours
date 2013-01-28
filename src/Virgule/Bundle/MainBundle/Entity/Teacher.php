@@ -100,7 +100,7 @@ class Teacher implements UserInterface, EquatableInterface {
     protected $role;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Course", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Course", mappedBy="teachers")
      */        
     private $courses;
 

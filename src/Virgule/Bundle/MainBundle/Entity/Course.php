@@ -69,7 +69,7 @@ class Course {
     private $semester;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Teacher", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Teacher", inversedBy="courses")
      * @ORM\JoinTable(name="teacher_course")
      */
     private $teachers;
@@ -92,8 +92,8 @@ class Course {
     private $classSessions;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Student", mappedBy="courses")
-     * @ORM\JoinTable(name="student_courses")
+     * @ORM\ManyToMany(targetEntity="Student", inversedBy="courses")
+     * @ORM\JoinTable(name="student_course")
      */
     private $students;
 
