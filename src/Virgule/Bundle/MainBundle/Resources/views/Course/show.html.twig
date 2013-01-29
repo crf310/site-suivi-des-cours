@@ -1,42 +1,38 @@
-<h1>Course</h1>
+{% extends '::base.html.twig' %}
+{% block body %}
+<h1>Cours</h1>
 
 <table class="record_properties">
     <tbody>
         <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Dayofweek</th>
+            <th>Jour</th>
             <td>{{ entity.dayOfWeek }}</td>
         </tr>
         <tr>
-            <th>Starttime</th>
-            <td>{{ entity.startTime }}</td>
+            <th>Débute à</th>
+            <td>{{ entity.startTime | date('H:i') }}</td>
         </tr>
         <tr>
-            <th>Endtime</th>
-            <td>{{ entity.endTime }}</td>
+            <th>Fini à</th>
+            <td>{{ entity.endTime | date('H:i') }}</td>
         </tr>
         <tr>
-            <th>Alternatestartdate</th>
+            <th>Date de début</th>
             <td>{{ entity.alternateStartdate|date('Y-m-d H:i:s') }}</td>
         </tr>
         <tr>
-            <th>Alternateenddate</th>
+            <th>Date de fin</th>
             <td>{{ entity.alternateEnddate|date('Y-m-d H:i:s') }}</td>
         </tr>
         <tr>
-            <th>Fklevelid</th>
-            <td>{{ entity.fkLevelId }}</td>
+            <th>Niveau</th>
+            <td>{{ entity.classLevel }}</td>
         </tr>
         <tr>
-            <th>Fksemesterid</th>
-            <td>{{ entity.fkSemesterId }}</td>
-        </tr>
-        <tr>
-            <th>Fkteacherid</th>
-            <td>{{ entity.fkTeacherId }}</td>
+            <th>Formateurs</th>
+            {% for teacher in entity.teachers %}
+                <td>{{ teacher.lastname }} {{ teacher.firstname }}</td>
+            {% endfor %}
         </tr>
     </tbody>
 </table>
@@ -59,3 +55,4 @@
         </form>
     </li>
 </ul>
+{% endblock %}

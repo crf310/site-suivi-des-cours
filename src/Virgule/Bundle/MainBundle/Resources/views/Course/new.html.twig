@@ -1,6 +1,19 @@
-<h1>Course creation</h1>
+{% extends '::base.html.twig' %}
+{% block body %}
+<h1>Ajouter un nouveau cours</h1>
+<div id="errorMsg">
+{{ form_errors(form) }}
+</div>
 
 <form action="{{ path('course_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_row(form.dayOfWeek, { 'label': 'Chaque' }) }}
+    {{ form_row(form.startTime, { 'label': 'De' }) }}
+    {{ form_row(form.endTime, { 'label': 'à' }) }}
+    {{ form_row(form.alternateStartdate, { 'label': 'Date de début alternative' }) }}
+    {{ form_row(form.alternateEnddate, { 'label': 'Date de fin alternative' }) }}
+    {{ form_row(form.classLevel, { 'label': 'Niveau' }) }}
+    {{ form_row(form.teachers, { 'label': 'Formateur(s)' }) }}
+        
     {{ form_widget(form) }}
     <p>
         <button type="submit">Create</button>
@@ -14,3 +27,4 @@
         </a>
     </li>
 </ul>
+{% endblock %}
