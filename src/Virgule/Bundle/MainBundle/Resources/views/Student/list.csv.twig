@@ -1,0 +1,8 @@
+{% for column_title in column_titles %}
+    {{ column_title }},
+{% endfor %};
+{% for student in students %}
+    {% for value in student %}
+        {{ value }},
+    {% endfor %}
+{% endfor %};
