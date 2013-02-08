@@ -30,6 +30,10 @@ abstract class AbstractVirguleController extends Controller {
 
         return array('entities' => $pagerfanta);        
     }
+    
+    public function getSelectedSemesterId()  {
+        return $this->getRequest()->getSession()->get('semesterId');
+    }
 }
 
 ?>

@@ -15,7 +15,7 @@ use Virgule\Bundle\MainBundle\Form\CourseType;
  *
  * @Route("/course")
  */
-class CourseController extends Controller
+class CourseController extends AbstractVirguleController
 {
     /**
      * Lists all Course entities.
@@ -27,7 +27,8 @@ class CourseController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('VirguleMainBundle:Course')->loadAll();
+        $semesterId = $this->getSelectedSemesterId();
+        $entities = $em->getRepository('VirguleMainBundle:Course')->loadAll($semesterId);
 
         return array(
             'entities' => $entities,

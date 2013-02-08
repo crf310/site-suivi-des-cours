@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  *
  * @Route("/")
  */
-class WelcomeController extends Controller {
+class WelcomeController extends AbstractVirguleController {
 
     /**
      * Display log file
@@ -26,8 +26,8 @@ class WelcomeController extends Controller {
         
         $em = $this->getDoctrine()->getManager();
         $teacherId = $this->getUser()->getId();
-        
-        $myCourses = $em->getRepository('VirguleMainBundle:Course')->getCoursesByTeacher($teacherId);
+        $semesterId = $this->getSelectedSemesterId();
+        $myCourses = $em->getRepository('VirguleMainBundle:Course')->getCoursesByTeacher($teacherId, $semesterId);
         
         $courseIds = Array();
         foreach($myCourses as $course) {

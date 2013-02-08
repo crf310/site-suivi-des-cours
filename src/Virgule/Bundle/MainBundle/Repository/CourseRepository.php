@@ -25,7 +25,7 @@ class CourseRepository extends EntityRepository {
     public function getNumberOfOverlapingCourses($semesterId, $dayOfWeek, $classRoomId, $startTime, $endTime) {
         $q = $this
                 ->createQueryBuilder('c')
-                ->where('c.fkSemesterId = :semesterId')
+                ->where('c.semester.id = :semesterId')
                 ->andWhere('c.dayOfWeek = :dayOfWeek')
                 ->andWhere('c.fkClassRoomId = :classRoomId')
                 ->andWhere('(c.startTime > :startTime AND c.startTime < :endTime) OR (:startTime > c.startTime AND :startTime < c.endTime)')
@@ -40,24 +40,31 @@ class CourseRepository extends EntityRepository {
         return $nb;
     }
 
-    public function getCoursesByTeacher($teacherId) {
+    public function getCoursesByTeacher($teacherId, $semesterId) {
         $q = $this
                 ->createQueryBuilder('c')
                 ->innerJoin('c.teachers', 't')
+                ->innerJoin('c.semester', 's')
+                ->where('s.id = :semesterId')
                 ->andWhere('t.id = :teacherId')
+                ->add('orderBy', 'c.dayOfWeek ASC, c.startTime ASC')
                 ->setParameter('teacherId', $teacherId)
+                ->setParameter('semesterId', $semesterId)
                 ->getQuery()
         ;
         $nb = $q->execute();
         return $nb;
     }
 
-    public function loadAll() {
+    public function loadAll($semesterId) {
         $q = $this
-        ->createQueryBuilder('c')
-        ->orderBy('c.dayOfWeek')
-        ->add('orderBy', 'c.dayOfWeek ASC, c.startTime ASC')
-        ->getQuery()
+                ->createQueryBuilder('c')
+                ->innerJoin('c.semester', 's')
+                ->where('s.id = :semesterId')
+                ->orderBy('c.dayOfWeek')
+                ->add('orderBy', 'c.dayOfWeek ASC, c.startTime ASC')
+                ->setParameter('semesterId', $semesterId)
+                ->getQuery()
         ;
         $nb = $q->execute();
         return $nb;
