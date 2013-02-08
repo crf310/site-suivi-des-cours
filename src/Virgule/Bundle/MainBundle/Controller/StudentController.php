@@ -22,7 +22,7 @@ use Virgule\Bundle\MainBundle\Form\CommentType;
  *
  * @Route("/student")
  */
-class StudentController extends Controller {
+class StudentController extends AbstractVirguleController {
 
     /**
      * Lists all Student entities.
@@ -35,17 +35,8 @@ class StudentController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('VirguleMainBundle:Student')->loadAll();
-
-        $pagerfanta = new Pagerfanta(new ArrayAdapter($entities));
-        $pagerfanta->setMaxPerPage($this->container->parameters['pager_nb_results']);
-
-        try {
-            $pagerfanta->setCurrentPage($page);
-        } catch (NotValidCurrentPageException $e) {
-            throw new NotFoundHttpException();
-        }
-
-        return array('entities' => $pagerfanta);        
+    
+        return $this->paginate($entities);     
     }
 
     /**

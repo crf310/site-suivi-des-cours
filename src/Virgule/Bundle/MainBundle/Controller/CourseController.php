@@ -15,24 +15,21 @@ use Virgule\Bundle\MainBundle\Form\CourseType;
  *
  * @Route("/course")
  */
-class CourseController extends AbstractVirguleController
-{
+class CourseController extends AbstractVirguleController {
+
     /**
      * Lists all Course entities.
      *
      * @Route("/", name="course")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $semesterId = $this->getSelectedSemesterId();
         $entities = $em->getRepository('VirguleMainBundle:Course')->loadAll($semesterId);
 
-        return array(
-            'entities' => $entities,
-        );
+        return $this->paginate($entities);
     }
 
     /**
@@ -41,8 +38,7 @@ class CourseController extends AbstractVirguleController
      * @Route("/{id}/show", name="course_show")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:Course')->find($id);
@@ -54,7 +50,7 @@ class CourseController extends AbstractVirguleController
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -65,14 +61,13 @@ class CourseController extends AbstractVirguleController
      * @Route("/new", name="course_new")
      * @Template()
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new Course();
-        $form   = $this->createForm(new CourseType(), $entity);
+        $form = $this->createForm(new CourseType(), $entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -83,9 +78,8 @@ class CourseController extends AbstractVirguleController
      * @Method("POST")
      * @Template("VirguleMainBundle:Course:new.html.twig")
      */
-    public function createAction(Request $request)
-    {
-        $entity  = new Course();
+    public function createAction(Request $request) {
+        $entity = new Course();
         $form = $this->createForm(new CourseType(), $entity);
         $form->bind($request);
 
@@ -99,7 +93,7 @@ class CourseController extends AbstractVirguleController
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -109,8 +103,7 @@ class CourseController extends AbstractVirguleController
      * @Route("/{id}/edit", name="course_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:Course')->find($id);
@@ -123,8 +116,8 @@ class CourseController extends AbstractVirguleController
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -136,8 +129,7 @@ class CourseController extends AbstractVirguleController
      * @Method("POST")
      * @Template("VirguleMainBundle:Course:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:Course')->find($id);
@@ -158,8 +150,8 @@ class CourseController extends AbstractVirguleController
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -170,8 +162,7 @@ class CourseController extends AbstractVirguleController
      * @Route("/{id}/delete", name="course_delete")
      * @Method("POST")
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
 
@@ -190,11 +181,11 @@ class CourseController extends AbstractVirguleController
         return $this->redirect($this->generateUrl('course'));
     }
 
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                        ->add('id', 'hidden')
+                        ->getForm()
         ;
     }
+
 }

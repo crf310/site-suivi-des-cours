@@ -51,5 +51,6 @@
         </tr>
     {% endfor %}
     </tbody>
+    {% include '::pager_footer.html.twig' with { nb_columns: 9 } %}
 </table>
 {% endblock %}
