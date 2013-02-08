@@ -24,7 +24,7 @@ class Course {
     /**
      * @var boolean
      *
-     * @ORM\Column(name="day_of_week", type="boolean", nullable=false)
+     * @ORM\Column(name="day_of_week", type="integer", nullable=false)
      */
     private $dayOfWeek;
 
