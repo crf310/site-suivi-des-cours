@@ -34,7 +34,7 @@ class StudentController extends AbstractVirguleController {
     public function indexAction($page=1) {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('VirguleMainBundle:Student')->loadAll();
+        $entities = $em->getRepository('VirguleMainBundle:Student')->loadAll($this->getSelectedSemesterId());
     
         return $this->paginate($entities);     
     }

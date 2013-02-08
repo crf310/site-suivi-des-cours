@@ -14,13 +14,20 @@ use Doctrine\ORM\Query;
  */
 class StudentRepository extends EntityRepository {
     
-    public function loadAll() {
+    /**
+     * Select all students enrolled in a class of the selected semester
+     * @return type
+     */
+    public function loadAll($semesterId) {
         $q = $this
             ->createQueryBuilder('s')
             ->addSelect('s.id, s.firstname, s.lastname, s.gender, s.phoneNumber, s.cellphoneNumber, s.registrationDate, t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName')
             ->addSelect('c.isoCode, c.label')
             ->innerJoin('s.nativeCountry', 'c')
+            ->innerJoin('s.courses', 'c2')
             ->leftJoin('s.welcomedByTeacher', 't')
+            ->where('c2.semester = :semesterId')
+            ->setParameter('semesterId', $semesterId)
             ->getQuery()
         ;
         $students = $q->execute(array(), Query::HYDRATE_ARRAY);
