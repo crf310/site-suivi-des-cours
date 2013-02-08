@@ -64,7 +64,7 @@ class Course {
 
     /**
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="courses")
-     * @ORM\JoinColumn(name="fk_semester", referencedColumnName="id")
+     * @ORM\JoinColumn(name="fk_semester", referencedColumnName="id", nullable=false)
      */
     private $semester;
 
@@ -76,13 +76,13 @@ class Course {
 
     /**
      * @ORM\ManyToOne(targetEntity="ClassRoom", inversedBy="courses")
-     * @ORM\JoinColumn(name="fk_class_room", referencedColumnName="id")
+     * @ORM\JoinColumn(name="fk_class_room", referencedColumnName="id", nullable=false)
      */
     protected $classRoom;
 
     /**
      * @ORM\ManyToOne(targetEntity="OrganizationBranch", inversedBy="courses")
-     * @ORM\JoinColumn(name="fk_organization_branch", referencedColumnName="id")
+     * @ORM\JoinColumn(name="fk_organization_branch", referencedColumnName="id", nullable=false)
      */
     private $organizationBranch;
 
