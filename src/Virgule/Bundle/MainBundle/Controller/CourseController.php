@@ -27,7 +27,7 @@ class CourseController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('VirguleMainBundle:Course')->findAll();
+        $entities = $em->getRepository('VirguleMainBundle:Course')->loadAll();
 
         return array(
             'entities' => $entities,

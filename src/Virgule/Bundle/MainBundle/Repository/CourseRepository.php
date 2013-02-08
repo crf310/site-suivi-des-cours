@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityRepository;
  * repository methods below.
  */
 class CourseRepository extends EntityRepository {
-    
+
     /**
      * Count number of courses that overlap
      * $another_meeting = ($from >= $from_compare && $from <= $to_compare) || ($from_compare >= $from && $from_compare <= $to);
@@ -24,31 +24,43 @@ class CourseRepository extends EntityRepository {
      */
     public function getNumberOfOverlapingCourses($semesterId, $dayOfWeek, $classRoomId, $startTime, $endTime) {
         $q = $this
-            ->createQueryBuilder('c')
-            ->where('c.fkSemesterId = :semesterId')
-            ->andWhere('c.dayOfWeek = :dayOfWeek')
-            ->andWhere('c.fkClassRoomId = :classRoomId')
-            ->andWhere('(c.startTime > :startTime AND c.startTime < :endTime) OR (:startTime > c.startTime AND :startTime < c.endTime)')
-            ->setParameter('semesterId', $semesterId)    
-            ->setParameter('dayOfWeek', $dayOfWeek)
-            ->setParameter('classRoomId', $classRoomId)
-            ->setParameter('startTime', $startTime)
-            ->setParameter('endTime', $endTime)                
-            ->getQuery()
+                ->createQueryBuilder('c')
+                ->where('c.fkSemesterId = :semesterId')
+                ->andWhere('c.dayOfWeek = :dayOfWeek')
+                ->andWhere('c.fkClassRoomId = :classRoomId')
+                ->andWhere('(c.startTime > :startTime AND c.startTime < :endTime) OR (:startTime > c.startTime AND :startTime < c.endTime)')
+                ->setParameter('semesterId', $semesterId)
+                ->setParameter('dayOfWeek', $dayOfWeek)
+                ->setParameter('classRoomId', $classRoomId)
+                ->setParameter('startTime', $startTime)
+                ->setParameter('endTime', $endTime)
+                ->getQuery()
         ;
         $nb = $q->execute();
         return $nb;
     }
-    
+
     public function getCoursesByTeacher($teacherId) {
         $q = $this
-            ->createQueryBuilder('c')
-            ->innerJoin('c.teachers', 't')
-            ->andWhere('t.id = :teacherId')
-            ->setParameter('teacherId', $teacherId)          
-            ->getQuery()
+                ->createQueryBuilder('c')
+                ->innerJoin('c.teachers', 't')
+                ->andWhere('t.id = :teacherId')
+                ->setParameter('teacherId', $teacherId)
+                ->getQuery()
         ;
         $nb = $q->execute();
         return $nb;
     }
+
+    public function loadAll() {
+        $q = $this
+        ->createQueryBuilder('c')
+        ->orderBy('c.dayOfWeek')
+        ->add('orderBy', 'c.dayOfWeek ASC, c.startTime ASC')
+        ->getQuery()
+        ;
+        $nb = $q->execute();
+        return $nb;
+    }
+
 }
