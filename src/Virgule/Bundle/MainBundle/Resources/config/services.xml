@@ -35,6 +35,10 @@
         <service id="pagerfanta.view.tablefooter" class="Virgule\Bundle\MainBundle\View\TableFooterView" public="true">
             <tag name="pagerfanta.view" alias="tablefooter" />
         </service>
+        
+        <service id="virgule.twig.virgule_extension" class="Virgule\Bundle\MainBundle\Twig\VirguleExtension">
+            <tag name="twig.extension" />
+        </service>
     </services>
 
 </container>

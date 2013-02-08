@@ -23,7 +23,7 @@
     <tbody>
     {% for entity in entities %}
         <tr>
-            <td>{{ entity.dayOfWeek }}</td>
+            <td>{{ entity.dayOfWeek | day }}</td>
             <td>{{ entity.startTime|date('H:i') }} - {{ entity.endTime|date('H:i') }}</td>
             <td>{% if entity.alternateStartdate %}{{ entity.alternateStartdate|date('Y-m-d H:i:s') }}{% endif %}</td>
             <td>{% if entity.alternateEnddate %}{{ entity.alternateEnddate|date('Y-m-d H:i:s') }}{% endif %}</td>
