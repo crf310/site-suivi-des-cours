@@ -14,7 +14,7 @@ use Doctrine\ORM\Query;
  */
 class ClassSessionRepository extends EntityRepository {
     
-     public function loadAllClassSessionByTeacher($teacherId, $limit=null) {
+     public function loadAllClassSessionByTeacher($teacherId, $limit=5) {
         $q = $this
             ->createQueryBuilder('c')
             ->addSelect('c.id, c.date, count(cm.id) as nb_comments')
@@ -22,13 +22,27 @@ class ClassSessionRepository extends EntityRepository {
             ->leftJoin('c.comments', 'cm')
             ->where('t.id = :teacherId')
             ->setParameter('teacherId', $teacherId)
-            ->setMaxResults(5) 
+            ->setMaxResults($limit) 
             ->add('orderBy', 'c.date DESC')
             ->add('groupBy', 'c.id')
             ->getQuery()
         ;
         $results = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $results;   
+    }
+    
+    public function loadLatest($limit = 5) {
+        $q = $this
+            ->createQueryBuilder('c')
+            ->addSelect('c.id, c.date, count(cm.id) as nb_comments')
+            ->leftJoin('c.comments', 'cm')
+            ->setMaxResults($limit) 
+            ->add('orderBy', 'c.date DESC')
+            ->add('groupBy', 'c.id')
+            ->getQuery()
+        ;
+        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $results;  
     }
     
 }

@@ -41,6 +41,20 @@
     
 </div>
 <div id="my_documents"><h2>Mes documents</h2></div>
-<div id="last_reports"><h2>Dernier compte-rendus enregistrés</h2></div>
+<div id="last_reports">
+    <h2>Dernier compte-rendus enregistrés</h2>
+    <ul>
+        {% if latestClassSessions is empty %}
+            Aucun compte-rendu enregistré pour le moment.
+        {% else %}
+            {% for classSession in latestClassSessions %}
+                <li><a href="{{ path('classsession_show', { 'id': classSession.id }) }}">{{ classSession.date | date("d/m/Y") }}</a>
+                {% if classSession.nb_comments > 0 %}
+                    {{ classSession.nb_comments }} commentaire{% if classSession.nb_comments > 1 %}s{% endif %}
+                {% endif %}</li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+</div>
 <div id="last_comments"><h2>Commentaires</h2></div>
 {% endblock %}
