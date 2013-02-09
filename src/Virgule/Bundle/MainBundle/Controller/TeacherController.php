@@ -9,17 +9,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\Teacher;
 use Virgule\Bundle\MainBundle\Form\TeacherType;
-use Pagerfanta\Pagerfanta;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Adapter\ArrayAdapter;
-use Pagerfanta\Exception\NotValidCurrentPageException;
 
 /**
  * Teacher controller.
  *
  * @Route("/teacher")
  */
-class TeacherController extends Controller {
+class TeacherController extends AbstractVirguleController {
 
     private function getManager() {
         return $this->get('virgule.teacher_manager');
