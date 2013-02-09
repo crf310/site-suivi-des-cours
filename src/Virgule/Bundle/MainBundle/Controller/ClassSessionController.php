@@ -25,8 +25,8 @@ class ClassSessionController extends AbstractVirguleController {
      */
     public function indexAction($page = 1) {
         $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('VirguleMainBundle:ClassSession')->findAll();
+        
+        $entities = $em->getRepository('VirguleMainBundle:ClassSession')->loadAll($this->getSelectedSemesterId());
 
         return parent::paginate($entities, $page);
     }

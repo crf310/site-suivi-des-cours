@@ -27,7 +27,7 @@ class WelcomeController extends AbstractVirguleController {
         $em = $this->getDoctrine()->getManager();
         $teacherId = $this->getUser()->getId();
         $semesterId = $this->getSelectedSemesterId();
-        $myCourses = $em->getRepository('VirguleMainBundle:Course')->getCoursesByTeacher($teacherId, $semesterId);
+        $myCourses = $em->getRepository('VirguleMainBundle:Course')->getCoursesByTeacher($semesterId, $teacherId);
         
         $courseIds = Array();
         foreach($myCourses as $course) {
@@ -38,8 +38,8 @@ class WelcomeController extends AbstractVirguleController {
         $myStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledInCourses($courseIds);
         $nbMyStudents=count($myStudents);
         
-        $myClassSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByTeacher($teacherId, 5);
-        $latestClassSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadLatest(10);
+        $myClassSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByTeacher($semesterId, $teacherId, 5);
+        $latestClassSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAll($semesterId, 10);
         
         return array(
             'myCourses' => $myCourses,

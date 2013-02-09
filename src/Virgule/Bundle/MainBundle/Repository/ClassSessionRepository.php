@@ -14,7 +14,7 @@ use Doctrine\ORM\Query;
  */
 class ClassSessionRepository extends EntityRepository {
     
-     public function loadAllClassSessionByTeacher($teacherId, $limit=5) {
+     public function loadAllClassSessionByTeacher($semesterId, $teacherId, $limit=5) {
         $q = $this
             ->createQueryBuilder('c')
             ->addSelect('c.id, c.date, count(cm.id) as nb_comments')
@@ -31,15 +31,24 @@ class ClassSessionRepository extends EntityRepository {
         return $results;   
     }
     
-    public function loadLatest($limit = 5) {
-        $q = $this
+    public function loadAll($semesterId, $limit = null) {
+        $qb = $this
             ->createQueryBuilder('c')
-            ->addSelect('c.id, c.date, count(cm.id) as nb_comments')
-            ->leftJoin('c.comments', 'cm')
-            ->setMaxResults($limit) 
+            ->addSelect('c.id as id, c.date as date, count(cm.id) as nb_comments, c2.id as course_id, c2.dayOfWeek as course_dayOfWeek,
+                c2.startTime as course_startTime, c2.endTime as course_endTime,
+                t.id as sessionTeacher_id, t.firstName as sessionTeacher_firstName, t.lastName as sessionTeacher_lastName'
+                    )
+            ->innerJoin('c.course', 'c2')
+            ->innerJoin('c.sessionTeacher', 't')
+            ->leftJoin('c.comments', 'cm')        
             ->add('orderBy', 'c.date DESC')
-            ->add('groupBy', 'c.id')
-            ->getQuery()
+            ->add('groupBy', 'c.id');
+        
+            if ($limit != null) {
+                $qb->setMaxResults($limit);
+            }
+        
+         $q = $qb->getQuery()
         ;
         $results = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $results;  
