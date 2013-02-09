@@ -8,7 +8,7 @@
             Vous ne dirigez aucun cours pour le moment !
         {% else %}
             {% for course in myCourses %}
-                <li>{{ course }} - <a href="{{ path('classsession_add', { 'course_id': course.id }) }}">Ajouter un compte-rendu</a></li>
+                <li>Niveau {{ course.classLevel }} le {{ course.dayOfWeek| day }} de {{ course.startTime|date('H:i') }} à {{ course.endTime|date('H:i') }} <a href="{{ path('classsession_add', { 'course_id': course.id }) }}">Ajouter un compte-rendu</a></li>
             {% endfor %}
         {% endif %}
     </ul>
