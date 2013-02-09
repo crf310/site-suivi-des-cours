@@ -38,16 +38,7 @@ class TeacherController extends Controller {
         $organizationBranchId = $this->getRequest()->getSession()->get('organizationBranchId');
         $entities = $em->getRepository('VirguleMainBundle:Teacher')->getTeachersByStatus($organizationBranchId, true);
 
-        $pagerfanta = new Pagerfanta(new ArrayAdapter($entities));
-        $pagerfanta->setMaxPerPage($this->container->parameters['pager_nb_results']);
-
-        try {
-            $pagerfanta->setCurrentPage($page);
-        } catch (NotValidCurrentPageException $e) {
-            throw new NotFoundHttpException();
-        }
-
-        return array('entities' => $pagerfanta);
+        return $this->paginate($entities, $page);
     }
 
     /**

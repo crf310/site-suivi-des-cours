@@ -20,16 +20,17 @@ class CourseController extends AbstractVirguleController {
     /**
      * Lists all Course entities.
      *
-     * @Route("/", name="course")
+     * @Route("/")
+     * @Route("/page/{page}", requirements={"page" = "\d+"}, defaults={"page" = "1"}, name="course_index")
      * @Template()
      */
-    public function indexAction() {
+    public function indexAction($page=1) {
         $em = $this->getDoctrine()->getManager();
 
         $semesterId = $this->getSelectedSemesterId();
         $entities = $em->getRepository('VirguleMainBundle:Course')->loadAll($semesterId);
 
-        return $this->paginate($entities);
+        return $this->paginate($entities, $page);
     }
 
     /**

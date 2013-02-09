@@ -2,10 +2,6 @@
 
 namespace Virgule\Bundle\MainBundle\Controller;
 
-use Pagerfanta\Pagerfanta;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Adapter\ArrayAdapter;
-use Pagerfanta\Exception\NotValidCurrentPageException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -36,7 +32,7 @@ class StudentController extends AbstractVirguleController {
 
         $entities = $em->getRepository('VirguleMainBundle:Student')->loadAll($this->getSelectedSemesterId());
     
-        return $this->paginate($entities);     
+        return $this->paginate($entities, $page);     
     }
 
     /**
