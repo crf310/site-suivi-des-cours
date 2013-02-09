@@ -27,6 +27,7 @@ class StudentRepository extends EntityRepository {
             ->innerJoin('s.courses', 'c2')
             ->leftJoin('s.welcomedByTeacher', 't')
             ->where('c2.semester = :semesterId')
+            ->add('orderBy', 's.lastname ASC')
             ->setParameter('semesterId', $semesterId)
             ->getQuery()
         ;
@@ -44,6 +45,7 @@ class StudentRepository extends EntityRepository {
             ->innerJoin('s.courses', 'c2')
             ->where('c2.id IN (:coursesIds)')
             ->orderBy('s.lastname')
+            ->add('orderBy', 's.lastname ASC')
             ->setParameter('coursesIds', $ids)
             ->getQuery()
         ;
