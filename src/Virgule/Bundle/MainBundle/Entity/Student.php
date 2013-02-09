@@ -226,7 +226,7 @@ class Student {
     private $suggestedLevel;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Course", mappedBy="students")
+     * @ORM\ManyToMany(targetEntity="Course", inversedBy="students")
      */
     private $courses;
 
@@ -853,6 +853,7 @@ class Student {
      */
     public function __construct() {
         $this->registrationDate = new \DateTime('now');
+        $this->courses = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
