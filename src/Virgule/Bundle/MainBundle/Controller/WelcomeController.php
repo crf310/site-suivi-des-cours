@@ -38,13 +38,15 @@ class WelcomeController extends AbstractVirguleController {
         $myStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledInCourses($courseIds);
         $nbMyStudents=count($myStudents);
         
-        $myClassSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByTeacher($teacherId);
+        $myClassSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByTeacher($teacherId, 5);
+        $latestClassSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadLatest(10);
         
         return array(
             'myCourses' => $myCourses,
             'myStudents' => $myStudents,
             'nbMyStudents' => $nbMyStudents,
-            'myClassSessions' => $myClassSessions
+            'myClassSessions' => $myClassSessions,
+            'latestClassSessions' => $latestClassSessions
         );
     }
 }
