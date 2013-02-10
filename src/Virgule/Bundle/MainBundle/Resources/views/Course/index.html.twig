@@ -13,10 +13,9 @@
         <tr>
             <th>Jour</th>
             <th>Horaires</th>
-            <th>Alternatestartdate</th>
-            <th>Alternateenddate</th>
             <th>Niveau</th>
             <th>Formateur</th>
+            <th>Salle</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -25,8 +24,6 @@
         <tr>
             <td>{{ entity.dayOfWeek | day }}</td>
             <td>{{ entity.startTime|date('H:i') }} - {{ entity.endTime|date('H:i') }}</td>
-            <td>{% if entity.alternateStartdate %}{{ entity.alternateStartdate|date('Y-m-d H:i:s') }}{% endif %}</td>
-            <td>{% if entity.alternateEnddate %}{{ entity.alternateEnddate|date('Y-m-d H:i:s') }}{% endif %}</td>
             <td>{{ entity.classLevel }}</td>
             <td>
                 <ul>
@@ -35,6 +32,7 @@
                 {% endfor %}
                 </ul>
             </td>
+            <td>{{ entity.classRoom.name }}</td>
             <td>
                 <ul>
                     <li>

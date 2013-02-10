@@ -61,18 +61,30 @@ class LoadCourseData extends AbstractFixture implements OrderedFixtureInterface 
             $courseD->setClassLevel($this->getReference('A1'));
             $courseD->addTeacher($this->getReference('prof2'));
 
+            $courseE = new Course();
+            $courseE->setDayOfWeek(4);
+            $courseE->setStartTime(new \DateTime('14:00'));
+            $courseE->setEndTime(new \DateTime('15:30'));
+            $courseE->setOrganizationBranch($this->getReference('deleg-3-10'));
+            $courseE->setClassRoom($this->getReference('musee'));
+            $courseE->setSemester($this->getReference($semesterReference));
+            $courseE->setClassLevel($this->getReference('A1'));
+            $courseE->addTeacher($this->getReference('prof3'));
+            
             $manager->persist($courseA);
             $manager->persist($courseB);
             $manager->persist($courseC);
             $manager->persist($courseD);
+            $manager->persist($courseE);
 
             $this->addReference('course' . ($numCourse + 1), $courseA);
             $this->addReference('course' . ($numCourse + 2), $courseB);
             $this->addReference('course' . ($numCourse + 3), $courseC);
             $this->addReference('course' . ($numCourse + 4), $courseD);
+            $this->addReference('course' . ($numCourse + 5), $courseE);
             $manager->flush();
             
-            $numCourse += 4;
+            $numCourse += 5;
         }
         
     }
