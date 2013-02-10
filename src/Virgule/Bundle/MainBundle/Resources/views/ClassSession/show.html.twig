@@ -3,29 +3,27 @@
 <table class="record_properties">
     <tbody>
         <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
             <th>Date</th>
-            <td>{{ entity.date|date('Y-m-d H:i:s') }}</td>
+            <td>{{ entity.date|date('d/m/Y') }}</td>
         </tr>
         <tr>
             <th>Summary</th>
             <td>{{ entity.summary|raw }}</td>
         </tr>
         <tr>
-            <th>Fkclassid</th>
+            <th>Course</th>
             <td>{{ entity.course }}</td>
         </tr>
         <tr>
-            <th>Fksessionteacherid</th>
+            <th>Session dirigée par</th>
             <td>{{ entity.sessionTeacher.firstName }} {{ entity.sessionTeacher.lastName }}</td>
         </tr>
+        {% if entity.sessionTeacher.id != entity.reportTeacher.id %}
         <tr>
-            <th>Fksummaryteacherid</th>
+            <th>Compte-rendu saisi par</th>
             <td>{{ entity.reportTeacher.firstName }} {{ entity.reportTeacher.lastName }}</td>
         </tr>
+        {% endif %}
         <tr>
             <th>Commentaires</th>
             <td>

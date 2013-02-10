@@ -18,34 +18,30 @@
     <thead>
         <tr>
             <th>Date</th>
-            <th>Compte-rendu</th>
             <th>Cours</th>
             <th>Conduit par</th>
-            <th>Report rédigé par</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
     {% for entity in entities %}
         <tr>
-            <td>{% if entity.date %}{{ entity.date|date('Y-m-d H:i:s') }}{% endif %}</td>
-            <td><a href="{{ path('classsession_show', { 'id': entity.id }) }}">Voir</a></td>
-            <td>{{ entity.course.dayOfWeek }}</td>
-            <td>{{ entity.sessionTeacher.firstName }} {{ entity.sessionTeacher.lastName }}</td>
-            <td>{{ entity.reportTeacher.firstName }} {{ entity.reportTeacher.lastName }}</td>
+            <td>{% if entity['date'] %}{{ entity['date'] | date('d/m/Y') }} {% endif %}</td>
+            <td>le {{ entity['course_dayOfWeek'] | day }} de {{ entity['course_startTime'] | date('H:i') }} à {{ entity['course_endTime']| date('H:i') }}</td>
+            <td>{{ entity['sessionTeacher_firstName'] }} {{ entity['sessionTeacher_lastName'] }}</td>
             <td>
                 <ul>
                     <li>
-                        <a href="{{ path('classsession_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('classsession_show', { 'id': entity['id'] }) }}">Voir le détail</a>
                     </li>
                     <li>
-                        <a href="{{ path('classsession_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('classsession_edit', { 'id': entity['id'] }) }}">Modifier</a>
                     </li>
                 </ul>
             </td>
         </tr>
     {% endfor %}
     </tbody>
-    {% include '::pager_footer.html.twig' with { nb_columns: 6 } %}
+    {% include '::pager_footer.html.twig' with { nb_columns: 4 } %}
 </table>
 {% endblock %}
