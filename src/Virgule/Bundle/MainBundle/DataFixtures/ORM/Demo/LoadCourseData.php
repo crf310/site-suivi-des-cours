@@ -71,20 +71,58 @@ class LoadCourseData extends AbstractFixture implements OrderedFixtureInterface 
             $courseE->setClassLevel($this->getReference('A1'));
             $courseE->addTeacher($this->getReference('prof3'));
             
+            $courseF = new Course();
+            $courseF->setDayOfWeek(5);
+            $courseF->setStartTime(new \DateTime('18:00'));
+            $courseF->setEndTime(new \DateTime('19:30'));
+            $courseF->setOrganizationBranch($this->getReference('deleg-3-10'));
+            $courseF->setClassRoom($this->getReference('salle-cours'));
+            $courseF->setSemester($this->getReference($semesterReference));
+            $courseF->setClassLevel($this->getReference('B2'));
+            $courseF->addTeacher($this->getReference('prof4'));
+
+            $courseG = new Course();
+            $courseG->setDayOfWeek(5);
+            $courseG->setStartTime(new \DateTime('18:00'));
+            $courseG->setEndTime(new \DateTime('19:30'));
+            $courseG->setOrganizationBranch($this->getReference('deleg-3-10'));
+            $courseG->setClassRoom($this->getReference('musee'));
+            $courseG->setSemester($this->getReference($semesterReference));
+            $courseG->setClassLevel($this->getReference('A2'));
+            $courseG->addTeacher($this->getReference('prof1'));
+            $courseG->addTeacher($this->getReference('prof4'));
+            
+            $courseH = new Course();
+            $courseH->setDayOfWeek(6);
+            $courseG->setStartTime(new \DateTime('9:00'));
+            $courseH->setEndTime(new \DateTime('10:30'));
+            $courseH->setOrganizationBranch($this->getReference('deleg-3-10'));
+            $courseH->setClassRoom($this->getReference('salle-cours'));
+            $courseH->setSemester($this->getReference($semesterReference));
+            $courseH->setClassLevel($this->getReference('A1'));
+            $courseH->addTeacher($this->getReference('prof2'));
+            
             $manager->persist($courseA);
             $manager->persist($courseB);
             $manager->persist($courseC);
             $manager->persist($courseD);
             $manager->persist($courseE);
+            $manager->persist($courseF);
+            $manager->persist($courseG);
+            $manager->persist($courseH);
 
             $this->addReference('course' . ($numCourse + 1), $courseA);
             $this->addReference('course' . ($numCourse + 2), $courseB);
             $this->addReference('course' . ($numCourse + 3), $courseC);
             $this->addReference('course' . ($numCourse + 4), $courseD);
             $this->addReference('course' . ($numCourse + 5), $courseE);
+            $this->addReference('course' . ($numCourse + 6), $courseF);
+            $this->addReference('course' . ($numCourse + 7), $courseG);
+            $this->addReference('course' . ($numCourse + 7), $courseH);
+            
             $manager->flush();
             
-            $numCourse += 5;
+            $numCourse += 8;
         }
         
     }
