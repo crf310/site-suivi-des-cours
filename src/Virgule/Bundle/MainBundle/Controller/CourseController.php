@@ -31,27 +31,11 @@ class CourseController extends AbstractVirguleController {
         $semesterId = $this->getSelectedSemesterId();
         $courses = $em->getRepository('VirguleMainBundle:Course')->loadAll($semesterId);
         
-        // sub array to store multiple teachers
-        $previousId = null;
-        $previousKey = null;
-        
-        foreach ($courses as $key => $course) {
-            $currentId = $course['course_id'];
-            
-
-            if ($previousId == $currentId) {
-                $teachers_array[$previousId][] = Array('teacher_id' => $course['teacher_id'],
-                                    'teacher_firstName' => $course['teacher_firstName'], 
-                                    'teacher_lastName' => $course['teacher_lastName']);
-                unset($courses[$key]);
-            } else {
-                $teachers_array[$currentId][] = Array('teacher_id' => $course['teacher_id'],
-                                    'teacher_firstName' => $course['teacher_firstName'], 
-                                    'teacher_lastName' => $course['teacher_lastName']);
-
-            }                
-            $previousKey = $key;
-            $previousId = $course['course_id'];
+        // sub array to group multiple teachers      
+        foreach ($courses as $course) {
+            $teachers_array[$course['course_id']][] = Array('teacher_id' => $course['teacher_id'],
+            'teacher_firstName' => $course['teacher_firstName'],
+            'teacher_lastName' => $course['teacher_lastName']);
         }
         $entities_paginated = $this->paginate($courses);
         $other_entities = Array('teachers_array' => $teachers_array);
