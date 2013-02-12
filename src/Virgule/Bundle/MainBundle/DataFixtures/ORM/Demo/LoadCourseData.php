@@ -94,7 +94,7 @@ class LoadCourseData extends AbstractFixture implements OrderedFixtureInterface 
             
             $courseH = new Course();
             $courseH->setDayOfWeek(6);
-            $courseG->setStartTime(new \DateTime('9:00'));
+            $courseH->setStartTime(new \DateTime('9:00'));
             $courseH->setEndTime(new \DateTime('10:30'));
             $courseH->setOrganizationBranch($this->getReference('deleg-3-10'));
             $courseH->setClassRoom($this->getReference('salle-cours'));
