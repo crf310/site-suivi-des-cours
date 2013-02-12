@@ -54,9 +54,27 @@ class TeacherController extends AbstractVirguleController {
 
         $deleteForm = $this->createDeleteForm($id);
 
+        // courses
+        $semesterId = $this->getSelectedSemesterId();
+        $teacherCourses = $em->getRepository('VirguleMainBundle:Course')->getCoursesByTeacher($semesterId, $id);
+                
+        $courseIds = Array();
+        foreach($teacherCourses as $course) {
+            $courseIds[] = $course->getId();
+        }
+        
+        $teacherStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledInCourses($courseIds);
+        $nbTeacherStudents = count($teacherStudents);
+        
+        $teacherClassSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByTeacher($semesterId, $id, 5);
+        
         return array(
             'entity' => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'delete_form' => $deleteForm->createView(),            
+            'teacherCourses' => $teacherCourses,
+            'teacherStudents' => $teacherStudents,
+            'nbTeacherStudents' => $nbTeacherStudents,
+            'teacherClassSessions' => $teacherClassSessions
         );
     }
 
