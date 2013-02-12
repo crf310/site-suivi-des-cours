@@ -32,10 +32,19 @@ class CourseController extends AbstractVirguleController {
         $courses = $em->getRepository('VirguleMainBundle:Course')->loadAll($semesterId);
         
         // sub array to group multiple teachers      
-        foreach ($courses as $course) {
+        $course_ids = Array();
+        foreach ($courses as $key => $course) {
+            
             $teachers_array[$course['course_id']][] = Array('teacher_id' => $course['teacher_id'],
             'teacher_firstName' => $course['teacher_firstName'],
             'teacher_lastName' => $course['teacher_lastName']);
+            
+            // delete doubled
+            if (array_key_exists($course['course_id'], $course_ids)) {
+                 unset($courses[$key]);
+            }
+            $course_ids[$course['course_id']] = 1;
+            
         }
         $entities_paginated = $this->paginate($courses);
         $other_entities = Array('teachers_array' => $teachers_array);
