@@ -56,10 +56,19 @@ class StudentController extends AbstractVirguleController {
         $comment = new Comment();
         $commentForm = $this->createForm(new CommentType(), $comment);
         
+        $courses = $em->getRepository('VirguleMainBundle:Course')->getCoursesByStudent($id);
+        
+        $nbEnrollment = count($courses);
+        if ($nbEnrollment > 0) {
+           $previousSemester = $courses[0]->getSemester()->getId();
+        }
         return array(
             'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
             'commentForm' => $commentForm->createView(),
+            'courses' => $courses,
+            'nbEnrollment' => $nbEnrollment,
+            'previousSemester' => $previousSemester
         );
     }
 

@@ -58,23 +58,53 @@ class CourseRepository extends EntityRepository {
         return $nb;
     }
 
+    public function getCoursesByStudent($studentId) {
+        $q = $this->getCoursesByStudentQuery($studentId);
+        $results = $q->execute();
+        return $results;
+    }
+
+    public function getCoursesByStudentAndSemester($studentId, $semesterId) {
+        $q = $this->getCoursesByStudentQuery($studentId)
+                ->andWhere('s2.id = :semesterId')
+                ->setParameter('semesterId', $semesterId)
+                ->getQuery()
+        ;
+        $results = $q->execute();
+        return $results;
+    }
+
+    private function getCoursesByStudentQuery($studentId) {
+        $q = $this
+                ->createQueryBuilder('c')
+                ->innerJoin('c.students', 's')
+                ->innerJoin('c.semester', 's2')
+                ->where('s.id = :studentId')
+                ->add('orderBy', 's2.startDate DESC, c.dayOfWeek ASC, c.startTime ASC')
+                ->setParameter('studentId', $studentId)
+                ->getQuery()
+        ;
+        return $q;
+    }
+
     public function loadAll($semesterId) {
         $q = $this
-            ->createQueryBuilder('c')
-            ->addSelect('c.id as course_id, c.dayOfWeek, c.startTime, c.endTime, c.alternateStartdate, c.alternateEnddate')
-            ->addSelect('r.name as classroom, c2.label as classlevel')
-            ->addSelect('t.id as teacher_id, t.lastName as teacher_lastName, t.firstName as teacher_firstName')
-            ->innerJoin('c.teachers', 't')
-            ->innerJoin('c.classLevel', 'c2')
-            ->innerJoin('c.classRoom', 'r')
-            ->innerJoin('c.semester', 's')
-            ->where('s.id = :semesterId')
-            ->add('orderBy', 'c.dayOfWeek ASC, c.startTime ASC')
-            ->setParameter('semesterId', $semesterId)
-            ->getQuery()
+                ->createQueryBuilder('c')
+                ->addSelect('c.id as course_id, c.dayOfWeek, c.startTime, c.endTime, c.alternateStartdate, c.alternateEnddate')
+                ->addSelect('r.name as classroom, c2.label as classlevel')
+                ->addSelect('t.id as teacher_id, t.lastName as teacher_lastName, t.firstName as teacher_firstName')
+                ->innerJoin('c.teachers', 't')
+                ->innerJoin('c.classLevel', 'c2')
+                ->innerJoin('c.classRoom', 'r')
+                ->innerJoin('c.semester', 's')
+                ->where('s.id = :semesterId')
+                ->add('orderBy', 'c.dayOfWeek ASC, c.startTime ASC')
+                ->setParameter('semesterId', $semesterId)
+                ->getQuery()
         ;
         $results = $q->execute(array(), Query::HYDRATE_ARRAY);
-        
-        return $results;   
+
+        return $results;
     }
+
 }

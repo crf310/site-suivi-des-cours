@@ -88,7 +88,22 @@
             -->
         </tbody>
     </table>
-
+    <h2>Historique des inscriptions</h2>
+    {% if nbEnrollment == 0 %}
+        Cet apprenant n'a été inscrit à aucun cours
+    {% else %}
+        {% for course in courses %}
+            {% if previousSemester == course.semester.id %}
+                {% if not loop.first %}</ul>{% endif %}
+                <h3>du {{ course.semester.startDate | date('d/m/Y') }} au {{ course.semester.endDate | date('d/m/Y') }}</h3>
+                <ul>
+            {% endif %}
+                    <li>Niveau {{ course.classLevel.label }}, le {{ course.dayOfWeek | day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }} <a href="{{ path('course_show', { 'id': course.id }) }}">Voir</a></li>
+                 {% set previousSemester = course.semester.id %}
+            {% if loop.last %}</ul>{% endif %}
+        {% endfor %}
+    {% endif %}
+    </ul>
     <ul class="record_actions">
         <li>
             <a href="{{ path('student_index') }}">
