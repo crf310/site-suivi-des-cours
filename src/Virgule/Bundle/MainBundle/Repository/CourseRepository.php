@@ -3,6 +3,8 @@
 namespace Virgule\Bundle\MainBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query;
 
 /**
  * ClassLevel
@@ -58,16 +60,21 @@ class CourseRepository extends EntityRepository {
 
     public function loadAll($semesterId) {
         $q = $this
-                ->createQueryBuilder('c')
-                ->innerJoin('c.semester', 's')
-                ->where('s.id = :semesterId')
-                ->orderBy('c.dayOfWeek')
-                ->add('orderBy', 'c.dayOfWeek ASC, c.startTime ASC')
-                ->setParameter('semesterId', $semesterId)
-                ->getQuery()
+            ->createQueryBuilder('c')
+            ->addSelect('c.id as course_id, c.dayOfWeek, c.startTime, c.endTime, c.alternateStartdate, c.alternateEnddate')
+            ->addSelect('r.name as classroom, c2.label as classlevel')
+            ->addSelect('t.id as teacher_id, t.lastName as teacher_lastName, t.firstName as teacher_firstName')
+            ->innerJoin('c.teachers', 't')
+            ->innerJoin('c.classLevel', 'c2')
+            ->innerJoin('c.classRoom', 'r')
+            ->innerJoin('c.semester', 's')
+            ->where('s.id = :semesterId')
+            ->add('orderBy', 'c.dayOfWeek ASC, c.startTime ASC')
+            ->setParameter('semesterId', $semesterId)
+            ->getQuery()
         ;
-        $nb = $q->execute();
-        return $nb;
+        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+        
+        return $results;   
     }
-
 }

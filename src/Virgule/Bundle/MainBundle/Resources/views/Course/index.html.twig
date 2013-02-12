@@ -22,33 +22,32 @@
     <tbody>
     {% for entity in entities %}
         <tr>
-            <td>{{ entity.dayOfWeek | day }}</td>
-            <td>{{ entity.startTime|date('H:i') }} - {{ entity.endTime|date('H:i') }}</td>
-            <td>{{ entity.classLevel }}</td>
+            <td>{{ entity['dayOfWeek'] | day }}</td>
+            <td>{{ entity['startTime'] | date('H:i') }} - {{ entity['endTime'] | date('H:i') }}</td>
+            <td>{{ entity['classlevel'] }}</td>
             <td>
                 <ul>
-                {% for teacher in entity.teachers %}
-                    <li><a href="{{ path('teacher_show', { 'id': teacher.id }) }}">{{ teacher }}</a></li>
+                {% for teacher in teachers_array[entity['course_id']] %}
+                    <li><a href="{{ path('teacher_show', { 'id': teacher['teacher_id'] }) }}">{{ teacher['teacher_lastName'] }}</a></li>
                 {% endfor %}
                 </ul>
             </td>
-            <td>{{ entity.classRoom.name }}</td>
+            <td>{{ entity['classroom'] }}</td>
             <td>
                 <ul>
                     <li>
-                        <a href="{{ path('course_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('course_show', { 'id': entity['course_id'] }) }}">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('course_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('course_edit', { 'id': entity['course_id'] }) }}">edit</a>
                     </li>                    
                     <li>
-                        <a href="{{ path('classsession_add', { 'course_id': entity.id }) }}">Enregistrer un compte-rendu</a>
+                        <a href="{{ path('classsession_add', { 'course_id': entity['course_id'] }) }}">Enregistrer un compte-rendu</a>
                     </li>
                 </ul>
             </td>
         </tr>
     {% endfor %}
-    </tbody>
     {% include '::pager_footer.html.twig' with { nb_columns: 6 } %}
 </table>
 {% endblock %}

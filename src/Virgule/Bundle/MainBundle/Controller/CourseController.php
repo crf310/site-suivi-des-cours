@@ -24,13 +24,38 @@ class CourseController extends AbstractVirguleController {
      * @Route("/page/{page}", requirements={"page" = "\d+"}, defaults={"page" = "1"}, name="course_index")
      * @Template()
      */
-    public function indexAction($page=1) {
+    public function indexAction($page = 1) {
+         
         $em = $this->getDoctrine()->getManager();
 
         $semesterId = $this->getSelectedSemesterId();
-        $entities = $em->getRepository('VirguleMainBundle:Course')->loadAll($semesterId);
+        $courses = $em->getRepository('VirguleMainBundle:Course')->loadAll($semesterId);
+        
+        // sub array to store multiple teachers
+        $previousId = null;
+        $previousKey = null;
+        
+        foreach ($courses as $key => $course) {
+            $currentId = $course['course_id'];
+            
 
-        return $this->paginate($entities, $page);
+            if ($previousId == $currentId) {
+                $teachers_array[$previousId][] = Array('teacher_id' => $course['teacher_id'],
+                                    'teacher_firstName' => $course['teacher_firstName'], 
+                                    'teacher_lastName' => $course['teacher_lastName']);
+                unset($courses[$key]);
+            } else {
+                $teachers_array[$currentId][] = Array('teacher_id' => $course['teacher_id'],
+                                    'teacher_firstName' => $course['teacher_firstName'], 
+                                    'teacher_lastName' => $course['teacher_lastName']);
+
+            }                
+            $previousKey = $key;
+            $previousId = $course['course_id'];
+        }
+        $entities_paginated = $this->paginate($courses);
+        $other_entities = Array('teachers_array' => $teachers_array);
+        return array_merge($entities_paginated, $other_entities);
     }
 
     /**
