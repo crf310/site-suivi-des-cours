@@ -32,7 +32,6 @@ class WelcomeController extends AbstractVirguleController {
         $courseIds = Array();
         foreach($myCourses as $course) {
             $courseIds[] = $course->getId();
-            $logger->debug('Welcome page: course ID ' . $course->getId() . 'found');
         }
         
         $myStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledInCourses($courseIds);
