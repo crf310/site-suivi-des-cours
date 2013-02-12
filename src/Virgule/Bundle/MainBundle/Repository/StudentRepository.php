@@ -44,9 +44,27 @@ class StudentRepository extends EntityRepository {
             ->innerJoin('s.nativeCountry', 'c')
             ->innerJoin('s.courses', 'c2')
             ->where('c2.id IN (:coursesIds)')
-            ->orderBy('s.lastname')
             ->add('orderBy', 's.lastname ASC')
             ->setParameter('coursesIds', $ids)
+            ->getQuery()
+        ;
+        $students = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $students;   
+    }
+    
+    /**
+     * 
+     * @param array $courseIds
+     * @return type
+     */
+    public function loadAllEnrolledInCourse($courseId) {
+        $q = $this
+            ->createQueryBuilder('s')
+            ->addSelect('s.id as student_id, s.firstname as student_firstname, s.lastname as student_lastname, s.gender as student_gender')
+            ->innerJoin('s.courses', 'c2')
+            ->where('c2.id == :courseId')
+            ->add('orderBy', 's.lastname ASC')
+            ->setParameter('courseId', $courseId)
             ->getQuery()
         ;
         $students = $q->execute(array(), Query::HYDRATE_ARRAY);
