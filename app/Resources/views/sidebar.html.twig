@@ -1,46 +1,23 @@
-	<div id="logo_appli"><img src="{{ asset('images/logo_crf.gif') }}" alt="Logo Croix-Rouge Française!" /></div>
-        Menu
-	<br />
-	<?php //if ($sf_user->hasCredential('super')): ?>
-	<input type="button" id="bouton_div_menu_administrateur" class="afficher_cacher" value="-" style="width:10px;" onclick="javascript:afficher_cacher('div_menu_administrateur','+','-');" />
-	<span class="titre_menu_general">Menu Administrateur</span>
-	<div id="div_menu_administrateur" >
-	<ul>
-		<li class="lien_liste_permissions"><?php echo link_to('Permissions utilisateurs', 'permissions/list'); ?></li>
-		<li class="lien_liste_raisons"><?php echo link_to('Raisons d\'apprentissage', 'raisonsApprentissage/list'); ?></li>
-		<li class="lien_liste_pays"><?php echo link_to('Pays', 'pays/list'); ?></li>
-		<li class="lien_liste_langues"><?php echo link_to('Langues', 'langues/list'); ?></li>
-	</ul>
-	</div>
-	<?php //endif ?>
-	<br />
-	<?php //if ($sf_user->hasCredential('admin')): ?>
-	<input type="button" id="bouton_div_menu_responsable" class="afficher_cacher" value="-" style="width:10px;" onclick="javascript:afficher_cacher('div_menu_responsable','+','-');" />
-	<span class="titre_menu_general">Menu Responsable</span>
-	<div id="div_menu_responsable" >
-	<ul class="navigation">
-		<li><?php echo link_to('<span class="lien_liste_formateurs">Gestion des formateurs</span>', 'formateurs/index', Array('class' => 'button')); ?></li>
-		<li><?php echo link_to('<span class="lien_liste_niveaux">Gestion des niveaux</span>', 'niveaux/list', Array('class' => 'button')); ?></li>
-		<li><?php echo link_to('<span class="lien_liste_sessions">Gestion des sessions</span>', 'sessions/list', Array('class' => 'button')); ?></li>
-		<li><?php echo link_to('<span class="lien_liste_cours">Gestion du planning</span>', 'cours/list', Array('class' => 'button')); ?></li>
-	</ul>
-	<hr>
-	</div>
-	<?php //endif ?>
-	<ul class="navigation">
-		<li><?php echo link_to('<span class="lien_liste_formateurs">Liste des formateurs</span>', 'formateurs/list', Array('class' => 'button')); ?></li>
-		<li><?php echo link_to('<span class="lien_modifier_fiche">Fiche contact</span>', 'formateurs/edit?id_formateur='.$sf_user->getAttribute('idFormateur'), Array('class' => 'button')); ?></li>
-		<li><?php echo link_to('<span class="lien_liste_apprenants">Tous les apprenants</span>', 'apprenants/listParSession', Array('title' => 'Voir tous les apprenants inscrits à un cours de cette session', 'class' => 'button')); ?></li>
-		<li><?php echo link_to('<span class="lien_liste_apprenants">Mes apprenants</span>', 'apprenants/listMesApprenants', Array('title' => 'Voir la liste des apprenants inscrits à mon cours', 'class' => 'button')); ?></li>
-		<li><?php echo link_to('<span class="lien_liste_coordonnees">Mes apprenants : coordonnées</span>', 'apprenants/listCoordonneesMesApprenants', Array('title' => 'Voir les coordonnées des apprenants inscrits à mon cours', 'class' => 'button')); ?></li>
-		<li><?php echo link_to('<span class="lien_rechercher_apprenant">Rechercher un apprenant</span>', 'apprenants/search', Array('class' => 'button')); ?></li>
-		<li><?php echo link_to('<span class="lien_ajout_apprenant">Inscrire un apprenant</span>', 'apprenants/create', Array('class' => 'button')); ?></li>
-		
-		<li><?php echo link_to('<span class="lien_liste_seances">Tous les comptes-rendus</span>', 'seances/list', Array('title' => 'Afficher les comptes-rendus de tous les cours de cette session', 'class' => 'button')); ?></li>
-		<li><?php echo link_to('<span class="lien_liste_seances">Mes comptes-rendus</span>', 'seances/dispatch?actionDemandee=list', Array('title' => 'Afficher les comptes-rendus de séance pour mes cours', 'class' => 'button')); ?></li>
-		<li><?php echo link_to('<span class="lien_ajout_seance">Ajouter un compte-rendu</span>', 'seances/dispatch?actionDemandee=create', Array('class' => 'button')); ?></li>
-		
-		<li><?php echo link_to('<span class="lien_planning">Voir le planning</span>', 'cours/viewPlanning', Array('class' => 'button')); ?></li>
-		<li><?php echo link_to('<span class="lien_aide">Aide</span>', 'http://www.ouckileou.net/croixrouge/dokuwiki/doku.phpx', Array('class' => 'button')); ?></li>
-		<li><?php echo link_to('<span class="lien_logout">Déconnexion</span>', 'security/logout', Array('class' => 'button')); ?></li>
-	</ul>
+
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Sidebar</li>
+              <li class="active"><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li class="nav-header">Sidebar</li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li class="nav-header">Sidebar</li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
