@@ -21,9 +21,7 @@ class WelcomeController extends AbstractVirguleController {
      * @Route("/welcome", name="welcome")
      * @Template
      */
-    public function welcomeAction() {
-        $logger = $this->get('logger');
-        
+    public function welcomeAction() {        
         $em = $this->getDoctrine()->getManager();
         $teacherId = $this->getUser()->getId();
         $semesterId = $this->getSelectedSemesterId();
@@ -36,16 +34,23 @@ class WelcomeController extends AbstractVirguleController {
         
         $myStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledInCourses($courseIds);
         $nbMyStudents=count($myStudents);
+        $myStudentsLineBreak = $this->getListBreak($nbMyStudents);
         
         $myClassSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByTeacher($semesterId, $teacherId, 5);
+        $myClassSessionsLineBreak = $this->getListBreak(count($myClassSessions));
+
         $latestClassSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAll($semesterId, 10);
+        $latestClassSessionsLineBreak = $this->getListBreak(count($latestClassSessions));        
         
         return array(
             'myCourses' => $myCourses,
             'myStudents' => $myStudents,
+            'nbMyStudentsLineBreak' => $myStudentsLineBreak,
             'nbMyStudents' => $nbMyStudents,
             'myClassSessions' => $myClassSessions,
-            'latestClassSessions' => $latestClassSessions
+            'myClassSessionsLineBreak' => $myClassSessionsLineBreak,
+            'latestClassSessions' => $latestClassSessions,
+            'latestClassSessionsLineBreak' => $latestClassSessionsLineBreak
         );
     }
 }

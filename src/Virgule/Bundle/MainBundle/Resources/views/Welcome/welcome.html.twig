@@ -1,3 +1,4 @@
+
 {% extends '::base.html.twig' %}
 {% block body %} 
         <div class="span9">
@@ -17,31 +18,44 @@
             </div><!--/span-->
             <div class="span4">
                 <h2>Mes apprenants ({{ nbMyStudents }})</h2>
-                <ul>
                     {% if myStudents is empty %}
                         Aucun apprenant n'est inscrit à l'un de vos cours pour le moment.
                     {% else %}
-                        {% for student in myStudents %}
-                            <li class="user_{{ student.gender }}"><a href="{{ path('student_show', { 'id': student.id }) }}">{{ student.firstname }} {{ student.lastname }}</a></li>
-                        {% endfor %}
-                    {% endif %}
-                </ul>
+                        <div class="left_list">
+                            <ul>
+                            {% for student in myStudents %}
+                                <li class="user_{{ student.gender }}"><a href="{{ path('student_show', { 'id': student.id }) }}">{{ student.firstname }} {{ student.lastname }}</a></li>
+                                {% if loop.index == nbMyStudentsLineBreak %}
+                                    </ul></div><div class="right_list"><ul>
+                                {% endif %}
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}                        
+              <div class="clear_list"></div>
               <p><a class="btn" href="{{ path('student_index') }}">Voir tous les apprenants &raquo;</a></p>
             </div><!--/span-->
             <div class="span4">
                 <h2>Mes compte-rendus</h2>
-                <ul>
                     {% if myClassSessions is empty %}
                         Vous n'avez enregistré aucun compte-rendu pour le moment, voulez-vous le faire <a href="{{ path('classsession_new') }}">maintenant</a> ?
                     {% else %}
-                        {% for classSession in myClassSessions %}
-                            <li><a href="{{ path('classsession_show', { 'id': classSession.id }) }}">{{ classSession.date | date("d/m/Y") }}</a>
-                            {% if classSession.nb_comments > 0 %}
-                                <img src="{{ asset('images/icons/comment.png') }}" title="{{ classSession.nb_comments }} commentaire(s)" alt="{{ classSession.nb_comments }} commentaire(s)" />
-                            {% endif %}</li>
-                        {% endfor %}
-                    {% endif %}
-                </ul>
+                        <div class="left_list">
+                            <ul>
+                            {% for classSession in myClassSessions %}
+                                <li><a href="{{ path('classsession_show', { 'id': classSession.id }) }}">{{ classSession.date | date("d/m/Y") }}</a>
+                                {% if classSession.nb_comments > 0 %}
+                                    <img src="{{ asset('images/icons/comment.png') }}" title="{{ classSession.nb_comments }} commentaire(s)" alt="{{ classSession.nb_comments }} commentaire(s)" />
+                                {% endif %}
+                                </li>
+                                {% if loop.index == myClassSessionsLineBreak %}
+                                    </ul></div><div class="right_list"><ul>
+                                {% endif %}
+                            {% endfor %}
+                            </ul>
+                         </div>
+                    {% endif %}                
+                <div class="clear_list"></div>
                 <p><a class="btn" href="{{ path('classsession_index') }}">Voir tous mes compte-rendus &raquo;</a></p>
             </div><!--/span-->
           </div><!--/row-->
@@ -58,21 +72,27 @@
               <p><a class="btn" href="{{ path('classsession_index') }}">Voir tous les documents &raquo;</a></p>
             </div><!--/span-->
             <div class="span4">
-                <h2>Dernier compte-rendus enregistrés</h2>
-                <ul>
-                    {% if latestClassSessions is empty %}
-                        Aucun compte-rendu enregistré pour le moment.
-                    {% else %}
-                        {% for classSession in latestClassSessions %}
-                            <li>
-                                <a href="{{ path('classsession_show', { 'id': classSession.id }) }}">{{ classSession.date | date("d/m/Y") }}</a>
-                                {% if classSession.nb_comments > 0 %}
-                                        <img src="{{ asset('images/icons/comment.png') }}" title="{{ classSession.nb_comments }} commentaire(s)" alt="{{ classSession.nb_comments }} commentaire(s)" />
-                                {% endif %}
-                            </li>
-                        {% endfor %}
-                    {% endif %}
-                </ul>
+                <h2>Dernier compte-rendus enregistrés</h2>                
+                    <div class="left_list">
+                        <ul>
+                            {% if latestClassSessions is empty %}
+                                Aucun compte-rendu enregistré pour le moment.
+                            {% else %}
+                                {% for classSession in latestClassSessions %}
+                                    <li>
+                                        <a href="{{ path('classsession_show', { 'id': classSession.id }) }}">{{ classSession.date | date("d/m/Y") }}</a>
+                                        {% if classSession.nb_comments > 0 %}
+                                                <img src="{{ asset('images/icons/comment.png') }}" title="{{ classSession.nb_comments }} commentaire(s)" alt="{{ classSession.nb_comments }} commentaire(s)" />
+                                        {% endif %}
+                                    </li>                            
+                                    {% if loop.index == latestClassSessionsLineBreak %}
+                                        </ul></div><div class="right_list"><ul>
+                                    {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="clear_list"></div>
                 <p><a class="btn" href="{{ path('classsession_index') }}">Voir tous les compte-rendus &raquo;</a></p>
             </div><!--/span-->
           </div><!--/row-->

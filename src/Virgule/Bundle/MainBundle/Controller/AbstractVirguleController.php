@@ -18,7 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 abstract class AbstractVirguleController extends Controller {
      
-    public function paginate($entities, $page=1) {
+    protected function paginate($entities, $page=1) {
         $pagerfanta = new Pagerfanta(new ArrayAdapter($entities));
         $pagerfanta->setMaxPerPage($this->container->parameters['pager_nb_results']);
 
@@ -31,8 +31,12 @@ abstract class AbstractVirguleController extends Controller {
         return array('entities' => $pagerfanta);        
     }
     
-    public function getSelectedSemesterId()  {
+    protected function getSelectedSemesterId()  {
         return $this->getRequest()->getSession()->get('semesterId');
+    }
+    
+    protected function getListBreak($count) {
+        return (int)($count / 2) + $count % 2;
     }
 }
 
