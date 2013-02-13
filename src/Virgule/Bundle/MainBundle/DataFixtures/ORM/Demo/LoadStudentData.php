@@ -25,7 +25,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
         $nbFirstNames = count($firstnames) - 1;
         $nbLastNames = count($lastnames) - 1;
         $nbCountries = count($countryCodes) - 1;
-        $nbCourses = 8;
+        $nbCourses = 11;
 
         $commentContent = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
