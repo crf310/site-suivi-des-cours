@@ -22,6 +22,8 @@
 <table class="records_list">
     <thead>
         <tr>
+            <th></th>
+            <th></th>
             <th>Prénom - Nom</th>
             <th>Téléphone fixe</th>
             <th>Téléphone portable</th>
@@ -53,7 +55,8 @@
             <td>{{ entity['phoneNumber'] }}</td>
             <td>{{ entity['cellphoneNumber'] }}</td>
             <td>{{ entity['registrationDate'] | date("d/m/Y") }}</td>
-            <td></td>
+            <td><insert classes></td>
+            <td><insert class level></td>
             <td><a href="{{ path('teacher_show', { 'id': entity['teacher_id'] }) }}">{{ entity['teacher_firstName'] }} {{ entity['teacher_lastName'] }}</td>
             <td>
                 <ul>
@@ -68,6 +71,6 @@
         </tr>
     {% endfor %}
     </tbody>
-    {% include '::pager_footer.html.twig' with { nb_columns: 8 } %}
+    {% include '::pager_footer.html.twig' with { nb_columns: 10 } %}
 </table>
 {% endblock %}
