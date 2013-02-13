@@ -16,13 +16,14 @@
             <th>Niveau</th>
             <th>Formateur</th>
             <th>Salle</th>
+            <th>Etudiants inscrits</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
     {% for entity in entities %}
         <tr>
-            <td>{{ entity['dayOfWeek'] | day }}</td>
+            <td>{{ entity['course_id'] }} {{ entity['dayOfWeek'] | day }}</td>
             <td>{{ entity['startTime'] | date('H:i') }} - {{ entity['endTime'] | date('H:i') }}</td>
             <td>{{ entity['classlevel'] }}</td>
             <td>
@@ -32,7 +33,8 @@
                 {% endfor %}
                 </ul>
             </td>
-            <td>{{ entity['classroom'] }}</td>
+            <td>{{ entity['classroom'] }}</td> 
+            <td>{{ entity['nb_students'] }}</td>
             <td>
                 <ul>
                     <li>
@@ -48,6 +50,6 @@
             </td>
         </tr>
     {% endfor %}
-    {% include '::pager_footer.html.twig' with { nb_columns: 6 } %}
+    {% include '::pager_footer.html.twig' with { nb_columns: 7 } %}
 </table>
 {% endblock %}
