@@ -22,13 +22,12 @@
 <table class="records_list">
     <thead>
         <tr>
-            <th></th>
-            <th></th>
             <th>Prénom - Nom</th>
             <th>Téléphone fixe</th>
             <th>Téléphone portable</th>
             <th>Date d'inscription</th>
             <th>Niveau proposé</th>
+            <th>Inscrit à</th>
             <th>Accueilli par</th>
             <th>Actions</th>
         </tr>
@@ -69,6 +68,6 @@
         </tr>
     {% endfor %}
     </tbody>
-    {% include '::pager_footer.html.twig' with { nb_columns: 9 } %}
+    {% include '::pager_footer.html.twig' with { nb_columns: 8 } %}
 </table>
 {% endblock %}
