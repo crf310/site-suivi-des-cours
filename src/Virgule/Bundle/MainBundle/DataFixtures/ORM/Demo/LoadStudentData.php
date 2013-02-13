@@ -31,7 +31,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 
         $nbStudents = 0;
-        for ($i = 1; $i <= 55; $i++) {
+        for ($i = 1; $i <= 253; $i++) {
             $s = new Student();
             $s->setFirstname($firstnames[rand(0, $nbFirstNames)]);
             $s->setLastname($lastnames[rand(0, $nbLastNames)]);
