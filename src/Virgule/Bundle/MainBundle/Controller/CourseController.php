@@ -33,6 +33,7 @@ class CourseController extends AbstractVirguleController {
         
         // sub array to group multiple teachers      
         $course_ids = Array();
+        $teachers_array = Array();
         foreach ($courses as $key => $course) {
             
             $teachers_array[$course['course_id']][] = Array('teacher_id' => $course['teacher_id'],
