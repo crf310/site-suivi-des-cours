@@ -17,15 +17,15 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
 
     public function load(ObjectManager $manager) {
 
-        $countryCodes = Array('cn', 'ma', 'us', 'kr', 'mg', 'co', 'ua', 'uy', 'ru', 'sn', 'fr', 'zm', 'gb', 'tg', 'ug', 'me');
+        $countryCodes = Array('cn', 'ma', 'us', 'kr', 'mg', 'co', 'ua', 'uy', 'ru', 'sn', 'fr', 'zm', 'gb', 'tg', 'ug', 'me', 'za', 'ax', 'al', 'sa', 'ar', 'am', 'au', 'at', 'az');
         $genders = Array('F', 'M');
-        $firstnames = Array('Jean', 'John', 'Juan', 'Xiao', 'Augustin', 'Dimitri', 'Sergiy', 'Ali', 'Abdel');
-        $lastnames = Array('Dupont', 'Smith', 'Suarez', 'Lee', 'Ranaly', 'Serpov', 'Karabatic', 'Bongo', 'Serafi');
+        $firstnames = Array('Jean', 'John', 'Juan', 'Xiao', 'Augustin', 'Dimitri', 'Sergiy', 'Ali', 'Abdel', 'Linus', 'Zinedine', 'Pol', 'Anas', 'Jean-Marc', 'Auguste', 'Zhen');
+        $lastnames = Array('Dupont', 'Smith', 'Suarez', 'Lee', 'Ranaly', 'Serpov', 'Karabatic', 'Bongo', 'Serafi', 'Zidane', 'Bellaloui', 'Lopez', 'Eriksson', 'Torvalds' ,'Larsson', 'Soualem');
 
         $nbFirstNames = count($firstnames) - 1;
         $nbLastNames = count($lastnames) - 1;
         $nbCountries = count($countryCodes) - 1;
-        $nbCourses = 4;
+        $nbCourses = 8;
 
         $commentContent = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
