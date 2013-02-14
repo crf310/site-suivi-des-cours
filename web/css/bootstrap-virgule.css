@@ -1,6 +1,9 @@
 body {
     background-color: #FBFBFB;
 }
+.row-fluid .span9 {
+  width: 90%;
+}
 .left_list {
     float:left;
     margin-right: 25px;
