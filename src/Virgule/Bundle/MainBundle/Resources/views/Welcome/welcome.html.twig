@@ -26,8 +26,8 @@
                             <ul>
                             {% for student in myStudents %}
                                 <li class="user_{{ student.gender }}"><a href="{{ path('student_show', { 'id': student.id }) }}">{{ student.firstname }} {{ student.lastname }}</a></li>
-                                {% if loop.index == nbMyStudentsLineBreak %}
-                                    </ul></div><div class="right_list"><ul>
+                                {% if loop.index % nbMyStudentsLineBreak == 0 %}
+                                    </ul></div><div class="left_list"><ul>
                                 {% endif %}
                             {% endfor %}
                             </ul>

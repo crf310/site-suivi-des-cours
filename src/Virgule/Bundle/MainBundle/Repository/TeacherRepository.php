@@ -16,14 +16,13 @@ use Doctrine\ORM\NoResultException;
  * repository methods below.
  */
 class TeacherRepository extends EntityRepository implements UserProviderInterface {
-    
-    
-     public function loadUserByUsername($username) {
+
+    public function loadUserByUsername($username) {
         $q = $this
-            ->createQueryBuilder('t')
-            ->where('t.username = :username')
-            ->setParameter('username', $username)
-            ->getQuery()
+                ->createQueryBuilder('t')
+                ->where('t.username = :username')
+                ->setParameter('username', $username)
+                ->getQuery()
         ;
 
         try {
@@ -34,11 +33,9 @@ class TeacherRepository extends EntityRepository implements UserProviderInterfac
             throw new UsernameNotFoundException(sprintf('Unable to find an active Teacher object identified by "%s".', $username), null, 0, $e);
         }
         return $user;
-        
     }
 
-    public function refreshUser(UserInterface $user)
-    {
+    public function refreshUser(UserInterface $user) {
         $class = get_class($user);
         if (!$this->supportsClass($class)) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $class));
@@ -47,12 +44,11 @@ class TeacherRepository extends EntityRepository implements UserProviderInterfac
         return $this->loadUserByUsername($user->getUsername());
     }
 
-    public function supportsClass($class)
-    {
+    public function supportsClass($class) {
         return $this->getEntityName() === $class || is_subclass_of($class, $this->getEntityName());
     }
-    
-    public function getTeachersByStatus($organizationBranchId, $isActive=true) {
+
+    public function getTeachersByStatus($organizationBranchId, $isActive = true) {
         $q = $this
             ->createQueryBuilder('t')
             ->where('t.isActive = :isActive')
@@ -65,9 +61,5 @@ class TeacherRepository extends EntityRepository implements UserProviderInterfac
         ;
         $teachers = $q->execute();
         return $teachers;
-    }
-    
-    public function updateLastConnectionDate() {
-        
     }
 }

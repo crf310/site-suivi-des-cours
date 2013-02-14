@@ -35,8 +35,8 @@ abstract class AbstractVirguleController extends Controller {
         return $this->getRequest()->getSession()->get('semesterId');
     }
     
-    protected function getListBreak($count) {
-        return (int)($count / 2) + $count % 2;
+    protected function getListBreak($count, $break=2) {
+        return (int)($count / $break) + $count % $break;
     }
 }
 

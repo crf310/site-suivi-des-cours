@@ -2,16 +2,17 @@ body {
     background-color: #FBFBFB;
 }
 .row-fluid .span9 {
-  width: 90%;
+  width: 100%;
 }
+.row-fluid .span4 {
+  
+}
+
 .left_list {
     float:left;
-    margin-right: 25px;
+    margin-right: 15px;
 }
-.right_list {
-    float:left;
-    margin-right: 25px;
-}
+
 .clear_list {
     clear: both; float: none; height: 0;
 }
