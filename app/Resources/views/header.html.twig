@@ -12,8 +12,10 @@
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
                 <a class="navbar-link" href="{{ path('teacher_show', { 'id': app.user.id }) }}">{{ app.user.firstName }} {{ app.user.lastName }}</a>
+                <!--
                 | {{ app.session.get('organizationBranchName') }}
                 | <a class="navbar-link">Session du {{ app.session.get('semesterStartDate')|date("d/m/Y") }} au {{ app.session.get('semesterEndDate')|date("d/m/Y") }}</a>
+                -->
                 | <a class="navbar-link">Aide</a>
                 | <a class="navbar-link" href="{{ path('logout') }}" title="Déconnexion">Déconnexion</a>
             </p>
