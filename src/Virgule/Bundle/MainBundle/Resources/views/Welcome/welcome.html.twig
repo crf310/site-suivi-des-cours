@@ -31,7 +31,7 @@
                                         <img src="{{ asset('images/icons/comment.png') }}" title="{{ student['nb_comments'] }} commentaire(s)" alt="{{ student['nb_comments'] }} commentaire(s)" />
                                     {% endif %}
                                 </li>
-                                {% if loop.index % nbMyStudentsLineBreak == 0 %}
+                                {% if loop.index % nbMyStudentsLineBreak == 0  and loop.index != loop.last %}
                                     </ul></div><div class="left_list"><ul>
                                 {% endif %}
                             {% endfor %}
@@ -54,8 +54,8 @@
                                     <img src="{{ asset('images/icons/comment.png') }}" title="{{ classSession.nb_comments }} commentaire(s)" alt="{{ classSession.nb_comments }} commentaire(s)" />
                                 {% endif %}
                                 </li>
-                                {% if loop.index == myClassSessionsLineBreak %}
-                                    </ul></div><div class="right_list"><ul>
+                                {% if loop.index == myClassSessionsLineBreak and loop.index != loop.last %}
+                                    </ul></div><div class="left_list"><ul>
                                 {% endif %}
                             {% endfor %}
                             </ul>
@@ -91,8 +91,8 @@
                                                 <img src="{{ asset('images/icons/comment.png') }}" title="{{ classSession['nb_comments'] }} commentaire(s)" alt="{{ classSession['nb_comments'] }} commentaire(s)" />
                                         {% endif %}
                                     </li>                            
-                                    {% if loop.index == latestClassSessionsLineBreak %}
-                                        </ul></div><div class="right_list"><ul>
+                                    {% if loop.index == latestClassSessionsLineBreak and loop.index != loop.last %}
+                                        </ul></div><div class="left_list"><ul>
                                     {% endif %}
                             {% endfor %}
                         {% endif %}
