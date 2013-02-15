@@ -3,6 +3,8 @@
 namespace Virgule\Bundle\MainBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query;
 
 /**
  * CommentRepository
