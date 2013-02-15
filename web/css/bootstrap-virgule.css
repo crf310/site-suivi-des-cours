@@ -8,9 +8,11 @@ body {
   
 }
 
+.span4 li { list-style-image:url('../images/icons/bullet-square.png'); }
+
 .left_list {
     float:left;
-    margin-right: 15px;
+    margin-right: 25px;
 }
 
 .clear_list {
