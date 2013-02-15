@@ -25,7 +25,12 @@
                         <div class="left_list">
                             <ul>
                             {% for student in myStudents %}
-                                <li class="user_{{ student.gender }}"><a href="{{ path('student_show', { 'id': student.id }) }}">{{ student.firstname }} {{ student.lastname }}</a></li>
+                                <li class="user_{{ student['gender'] }}">
+                                    <a href="{{ path('student_show', { 'id': student['id'] }) }}">{{ student['firstname']}} {{ student['lastname'] }}</a>
+                                    {% if student['nb_comments'] > 0 %}
+                                        <img src="{{ asset('images/icons/comment.png') }}" title="{{ student['nb_comments'] }} commentaire(s)" alt="{{ student['nb_comments'] }} commentaire(s)" />
+                                    {% endif %}
+                                </li>
                                 {% if loop.index % nbMyStudentsLineBreak == 0 %}
                                     </ul></div><div class="left_list"><ul>
                                 {% endif %}
@@ -81,9 +86,9 @@
                             {% else %}
                                 {% for classSession in latestClassSessions %}
                                     <li>
-                                        <a href="{{ path('classsession_show', { 'id': classSession.id }) }}">{{ classSession.date | date("d/m/Y") }}</a>
-                                        {% if classSession.nb_comments > 0 %}
-                                                <img src="{{ asset('images/icons/comment.png') }}" title="{{ classSession.nb_comments }} commentaire(s)" alt="{{ classSession.nb_comments }} commentaire(s)" />
+                                        <a href="{{ path('classsession_show', { 'id': classSession['id'] }) }}">{{ classSession['date'] | date("d/m/Y") }}</a>
+                                        {% if classSession['nb_comments'] > 0 %}
+                                                <img src="{{ asset('images/icons/comment.png') }}" title="{{ classSession['nb_comments'] }} commentaire(s)" alt="{{ classSession['nb_comments'] }} commentaire(s)" />
                                         {% endif %}
                                     </li>                            
                                     {% if loop.index == latestClassSessionsLineBreak %}
