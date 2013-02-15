@@ -20,7 +20,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
         $countryCodes = Array('cn', 'ma', 'us', 'kr', 'mg', 'co', 'ua', 'uy', 'ru', 'sn', 'fr', 'zm', 'gb', 'tg', 'ug', 'me', 'za', 'ax', 'al', 'sa', 'ar', 'am', 'au', 'at', 'az');
         $genders = Array('F', 'M');
         $firstnames = Array('Jean', 'John', 'Juan', 'Xiao', 'Augustin', 'Dimitri', 'Sergiy', 'Ali', 'Abdel', 'Linus', 'Zinedine', 'Pol', 'Anas', 'Jean-Marc', 'Auguste', 'Zhen');
-        $lastnames = Array('Dupont', 'Smith', 'Suarez', 'Lee', 'Ranaly', 'Serpov', 'Karabatic', 'Bongo', 'Serafi', 'Zidane', 'Bellaloui', 'Lopez', 'Eriksson', 'Torvalds' ,'Larsson', 'Soualem');
+        $lastnames = Array('Dupont', 'Smith', 'Suarez', 'Lee', 'Ranaly', 'Serpov', 'Karabatic', 'Bongo', 'Serafi', 'Zidane', 'Bellaloui', 'Lopez', 'Eriksson', 'Torvalds', 'Larsson', 'Soualem');
 
         $nbFirstNames = count($firstnames) - 1;
         $nbLastNames = count($lastnames) - 1;
@@ -49,7 +49,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
 
             $idCourse1 = rand(1, $nbCourses);
             $s->addCourse($this->getReference('course' . $idCourse1));
-            if (rand(1,5) % 5 == 0) {
+            if (rand(1, 5) % 5 == 0) {
                 $idCourse2 = rand(1, $nbCourses);
                 while ($idCourse1 == $idCourse2) {
                     $idCourse2 = rand(1, $nbCourses);
@@ -65,13 +65,15 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
 
 
         for ($i = 1; $i < $nbStudents; $i++) {
-            for ($j = 1; $j <= rand(1, 3); $j++) {
-                $c = new Comment();
-                $c->setDate(new \DateTime('now'));
-                $c->setComment($commentContent);
-                $c->setTeacher($this->getReference('prof' . rand(1, 50)));
-                $c->setStudent($this->getReference('student'.$i));
-                $manager->persist($c);
+            if (rand(0, 1)) {
+                for ($j = 1; $j <= rand(0, 2); $j++) {
+                    $c = new Comment();
+                    $c->setDate(new \DateTime('now'));
+                    $c->setComment($commentContent);
+                    $c->setTeacher($this->getReference('prof' . rand(1, 50)));
+                    $c->setStudent($this->getReference('student' . $i));
+                    $manager->persist($c);
+                }
             }
         }
         $manager->flush();
