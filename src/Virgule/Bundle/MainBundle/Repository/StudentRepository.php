@@ -35,16 +35,33 @@ class StudentRepository extends EntityRepository {
         return $students;   
     }
     
+         public function loadAllClassSessionByTeacher($semesterId, $teacherId, $limit=5) {
+        $q = $this
+            ->createQueryBuilder('c')
+            ->addSelect('c.id, c.date, count(cm.id) as nb_comments')
+            ->innerJoin('c.sessionTeacher', 't', 'WITH', 't.id = :teacherId')
+            ->leftJoin('c.comments', 'cm')
+            ->setParameter('teacherId', $teacherId)
+            ->setMaxResults($limit) 
+            ->add('orderBy', 'c.date DESC')
+            ->add('groupBy', 'c.id')
+            ->getQuery()
+        ;
+        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $results;   
+    }
+    
     public function loadAllEnrolledInCourses(Array $courseIds) {
         $ids = implode(',',$courseIds);
         $q = $this
             ->createQueryBuilder('s')
-            ->addSelect('s.id, s.firstname, s.lastname, s.gender, s.phoneNumber, s.cellphoneNumber')
+            ->addSelect('s.id, s.firstname as firstname, s.lastname as lastname, s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, count(cm.id) as nb_comments')
             ->addSelect('c.isoCode, c.label')
             ->innerJoin('s.nativeCountry', 'c')
-            ->innerJoin('s.courses', 'c2')
-            ->where('c2.id IN (:coursesIds)')
+            ->innerJoin('s.courses', 'c2', 'WITH', 'c2.id IN (:coursesIds)')
+            ->leftJoin('s.comments', 'cm')
             ->add('orderBy', 's.lastname ASC')
+            ->add('groupBy', 's.id')
             ->setParameter('coursesIds', $ids)
             ->getQuery()
         ;
@@ -58,16 +75,6 @@ class StudentRepository extends EntityRepository {
      * @return type
      */
     public function loadAllEnrolledInCourse($courseId) {
-        $q = $this
-            ->createQueryBuilder('s')
-            ->addSelect('s.id as student_id, s.firstname as student_firstname, s.lastname as student_lastname, s.gender as student_gender')
-            ->innerJoin('s.courses', 'c2')
-            ->where('c2.id == :courseId')
-            ->add('orderBy', 's.lastname ASC')
-            ->setParameter('courseId', $courseId)
-            ->getQuery()
-        ;
-        $students = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $students;   
+        return $this->loadAllEnrolledInCourses(Array($courseId));
     }
 }
