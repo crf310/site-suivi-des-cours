@@ -40,7 +40,20 @@ class WelcomeController extends AbstractVirguleController {
         $myClassSessionsLineBreak = $this->getListBreak(count($myClassSessions));
 
         $latestClassSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAll($semesterId, 10);
-        $latestClassSessionsLineBreak = $this->getListBreak(count($latestClassSessions));        
+        $latestClassSessionsLineBreak = $this->getListBreak(count($latestClassSessions)); 
+        
+        /*
+        foreach ($myStudents as $student) {
+            $myStudentIds[] = $student['id'];
+        }
+        
+        foreach ($myClassSessions as $classSession) {
+            $myClassSessionsIds[] = $classSession['id'];
+        }
+        
+        $latestRelatedComments = $em->getRepository('VirguleMainBundle:Comment')->loadLatestRelatedToTeacher($myClassSessionsIds, $myStudentIds);        
+        $latestRelatedCommentsLineBreak = $this->getListBreak(count($latestRelatedComments)); 
+         * */
         
         return array(
             'myCourses' => $myCourses,
