@@ -4,8 +4,13 @@ body {
 .row-fluid .span9 {
   width: 100%;
 }
+.row-fluid .span3 {
+  width: 300px;
+  margin-left: 0;
+}
 .row-fluid .span4 {
-  
+  width: 500px;
+  margin-left: 0;
 }
 
 .span4 li { list-style-image:url('../images/icons/bullet-square.png'); }

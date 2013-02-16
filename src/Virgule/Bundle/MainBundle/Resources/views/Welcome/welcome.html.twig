@@ -3,7 +3,7 @@
 {% block body %} 
         <div class="span9">
           <div class="row-fluid">
-            <div class="span4">
+            <div class="span3">
                 <h2>Mes cours</h2>
                 <ul>
                     {% if myCourses is empty %}
@@ -41,7 +41,7 @@
               <div class="clear_list"></div>
               <p><a class="btn" href="{{ path('student_index') }}">Voir tous les apprenants &raquo;</a></p>
             </div><!--/span-->
-            <div class="span4">
+            <div class="span3">
                 <h2>Mes compte-rendus</h2>
                     {% if myClassSessions is empty %}
                         Vous n'avez enregistré aucun compte-rendu pour le moment, voulez-vous le faire <a href="{{ path('classsession_new') }}">maintenant</a> ?
@@ -66,7 +66,7 @@
             </div><!--/span-->
           </div><!--/row-->
           <div class="row-fluid">
-            <div class="span4">
+            <div class="span3">
               <h2>Mes documents</h2>
               <ul>
                   <li>Document A</li>
