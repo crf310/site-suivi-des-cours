@@ -52,7 +52,7 @@ class StudentRepository extends EntityRepository {
     }
     
     public function loadAllEnrolledInCourses(Array $courseIds) {
-        $this->getQueryBuilderForStudentEnrolledInCourses($courseIds);
+        $q = $this->getQueryBuilderForStudentEnrolledInCourses($courseIds);
         return $students = $q->execute(array(), Query::HYDRATE_ARRAY);
     }
     
