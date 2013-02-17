@@ -4,7 +4,7 @@
 {{ form_errors(form) }}
 </div>
 <h1>Nouveau compte-rendu</h1>
-
+Cours: {{ course }}
 <form action="{{ path('classsession_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>

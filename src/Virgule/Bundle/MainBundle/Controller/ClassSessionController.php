@@ -65,9 +65,14 @@ class ClassSessionController extends AbstractVirguleController {
         $entity = new ClassSession();
         $form = $this->createForm(new ClassSessionType($course_id, $this->getDoctrine()), $entity);
 
+        
+        $em = $this->getDoctrine()->getManager();
+        $course = $em->getRepository('VirguleMainBundle:Course')->find($course_id);
+        
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
+            'course'=> $course
         );
     }
 
