@@ -65,6 +65,12 @@ class ClassSession {
      */
     private $attachments;
 
+   /**
+     * @ORM\ManyToMany(targetEntity="Student")
+     * @ORM\JoinTable(name="student_classsession")
+     */
+    private $students;
+    
     /**
      * Get id
      *
@@ -121,6 +127,7 @@ class ClassSession {
      */
     public function __construct() {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->students = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -246,4 +253,37 @@ class ClassSession {
         return $this->attachments;
     }
 
+
+    /**
+     * Add students
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Student $students
+     * @return ClassSession
+     */
+    public function addStudent(\Virgule\Bundle\MainBundle\Entity\Student $students)
+    {
+        $this->students[] = $students;
+    
+        return $this;
+    }
+
+    /**
+     * Remove students
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Student $students
+     */
+    public function removeStudent(\Virgule\Bundle\MainBundle\Entity\Student $students)
+    {
+        $this->students->removeElement($students);
+    }
+
+    /**
+     * Get students
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStudents()
+    {
+        return $this->students;
+    }
 }
