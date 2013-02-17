@@ -35,23 +35,7 @@ class StudentRepository extends EntityRepository {
         return $students;   
     }
     
-         public function loadAllClassSessionByTeacher($semesterId, $teacherId, $limit=5) {
-        $q = $this
-            ->createQueryBuilder('c')
-            ->addSelect('c.id, c.date, count(cm.id) as nb_comments')
-            ->innerJoin('c.sessionTeacher', 't', 'WITH', 't.id = :teacherId')
-            ->leftJoin('c.comments', 'cm')
-            ->setParameter('teacherId', $teacherId)
-            ->setMaxResults($limit) 
-            ->add('orderBy', 'c.date DESC')
-            ->add('groupBy', 'c.id')
-            ->getQuery()
-        ;
-        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $results;   
-    }
-    
-    public function loadAllEnrolledInCourses(Array $courseIds) {
+    public function getQueryBuilderForStudentEnrolledInCourses(Array $courseIds) {
         $ids = implode(',',$courseIds);
         $q = $this
             ->createQueryBuilder('s')
@@ -63,10 +47,13 @@ class StudentRepository extends EntityRepository {
             ->add('orderBy', 's.lastname ASC')
             ->add('groupBy', 's.id')
             ->setParameter('coursesIds', $ids)
-            ->getQuery()
         ;
-        $students = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $students;   
+        return $q;
+    }
+    
+    public function loadAllEnrolledInCourses(Array $courseIds) {
+        $this->getQueryBuilderForStudentEnrolledInCourses($courseIds);
+        return $students = $q->execute(array(), Query::HYDRATE_ARRAY);
     }
     
     /**
