@@ -36,6 +36,12 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
             $s->setFirstname($firstnames[rand(0, $nbFirstNames)]);
             $s->setLastname($lastnames[rand(0, $nbLastNames)]);
             $s->setGender($genders[rand(0, 1)]);
+            
+            $y = rand(1950, 1992);
+            $m = rand(01, 12);
+            $d = rand(01, 30);
+            $timestamp = strtotime($d . '-' . $m . '-' . $y);
+            $s->setBirthdate(new \DateTime("@$timestamp"));
 
             $rand = rand(0, $nbCountries);
             $rc = strtoupper($countryCodes[$rand]);
