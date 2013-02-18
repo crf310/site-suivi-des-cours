@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+<div id="results_actions">
+    <h1>Statistiques de la session en cours</h1>
+    <h2>Apprenants</h2>
+    {{ total_students }} apprenants:<br />
+        <ul>
+            {% for students_gender in students_genders %}
+                <li class="user_{{ students_gender['gender'] }}">{{ students_gender['nb_students'] }}</li>
+            {% endfor %}
+        </ul>
+    <h2>Niveaux</h2>
+    
+    <h2>Cours</h2>
+</div>
+{% endblock %}

@@ -64,4 +64,32 @@ class StudentRepository extends EntityRepository {
     public function loadAllEnrolledInCourse($courseId) {
         return $this->loadAllEnrolledInCourses(Array($courseId));
     }
+    
+    public function getGenders($semesterId) {
+        $q = $this
+            ->createQueryBuilder('s')
+            ->addSelect('s.gender, count(s.gender) as nb_students')
+            ->innerJoin('s.courses', 'c2')
+            ->where('c2.semester = :semesterId')
+            ->groupBy('s.gender')
+            ->setParameter('semesterId', $semesterId)
+            ->getQuery()
+        ;
+        $students = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $students; 
+    }
+    
+    public function getAges($semesterId) {
+        $q = $this
+            ->createQueryBuilder('s')
+            ->addSelect('s.id, , count(s.gender) as nb_students')
+            ->innerJoin('s.courses', 'c2')
+            ->where('c2.semester = :semesterId')
+            ->groupBy('s.gender')
+            ->setParameter('semesterId', $semesterId)
+            ->getQuery()
+        ;
+        $students = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $students; 
+    }
 }
