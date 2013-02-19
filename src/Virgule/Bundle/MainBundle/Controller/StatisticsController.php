@@ -32,7 +32,12 @@ class StatisticsController extends AbstractVirguleController {
             $total_students = $total_students + $students_gender['nb_students'];
         }
         
-        return array('students_genders' => $students_genders, 'total_students' => $total_students);
+        $students_countries = $em->getRepository('VirguleMainBundle:Student')->getCountries($semesterId);
+        
+        return array(
+            'students_genders' => $students_genders, 
+            'total_students' => $total_students,
+            'students_countries' => $students_countries);
     }
 
 }
