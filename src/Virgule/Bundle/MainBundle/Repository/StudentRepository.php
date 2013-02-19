@@ -13,49 +13,49 @@ use Doctrine\ORM\Query;
  * repository methods below.
  */
 class StudentRepository extends EntityRepository {
-    
+
     /**
      * Select all students enrolled in a class of the selected semester
      * @return type
      */
     public function loadAll($semesterId) {
         $q = $this
-            ->createQueryBuilder('s')
-            ->addSelect('s.id, s.firstname, s.lastname, s.gender, s.phoneNumber, s.cellphoneNumber, s.registrationDate, t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName')
-            ->addSelect('c.isoCode, c.label')
-            ->innerJoin('s.nativeCountry', 'c')
-            ->innerJoin('s.courses', 'c2')
-            ->leftJoin('s.welcomedByTeacher', 't')
-            ->where('c2.semester = :semesterId')
-            ->add('orderBy', 's.lastname ASC')
-            ->setParameter('semesterId', $semesterId)
-            ->getQuery()
+                ->createQueryBuilder('s')
+                ->addSelect('s.id, s.firstname, s.lastname, s.gender, s.phoneNumber, s.cellphoneNumber, s.registrationDate, t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName')
+                ->addSelect('c.isoCode, c.label')
+                ->innerJoin('s.nativeCountry', 'c')
+                ->innerJoin('s.courses', 'c2')
+                ->leftJoin('s.welcomedByTeacher', 't')
+                ->where('c2.semester = :semesterId')
+                ->add('orderBy', 's.lastname ASC')
+                ->setParameter('semesterId', $semesterId)
+                ->getQuery()
         ;
         $students = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $students;   
+        return $students;
     }
-    
+
     public function getQueryBuilderForStudentEnrolledInCourses(Array $courseIds) {
-        $ids = implode(',',$courseIds);
+        $ids = implode(',', $courseIds);
         $q = $this
-            ->createQueryBuilder('s')
-            ->addSelect('s.id, s.firstname as firstname, s.lastname as lastname, s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, count(cm.id) as nb_comments')
-            ->addSelect('c.isoCode, c.label')
-            ->innerJoin('s.nativeCountry', 'c')
-            ->innerJoin('s.courses', 'c2', 'WITH', 'c2.id IN (:coursesIds)')
-            ->leftJoin('s.comments', 'cm')
-            ->add('orderBy', 's.lastname ASC')
-            ->add('groupBy', 's.id')
-            ->setParameter('coursesIds', $ids)
+                ->createQueryBuilder('s')
+                ->addSelect('s.id, s.firstname as firstname, s.lastname as lastname, s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, count(cm.id) as nb_comments')
+                ->addSelect('c.isoCode, c.label')
+                ->innerJoin('s.nativeCountry', 'c')
+                ->innerJoin('s.courses', 'c2', 'WITH', 'c2.id IN (:coursesIds)')
+                ->leftJoin('s.comments', 'cm')
+                ->add('orderBy', 's.lastname ASC')
+                ->add('groupBy', 's.id')
+                ->setParameter('coursesIds', $ids)
         ;
         return $q;
     }
-    
+
     public function loadAllEnrolledInCourses(Array $courseIds) {
         $q = $this->getQueryBuilderForStudentEnrolledInCourses($courseIds);
         return $q->getQuery()->execute(array(), Query::HYDRATE_ARRAY);
     }
-    
+
     /**
      * 
      * @param array $courseIds
@@ -64,32 +64,48 @@ class StudentRepository extends EntityRepository {
     public function loadAllEnrolledInCourse($courseId) {
         return $this->loadAllEnrolledInCourses(Array($courseId));
     }
-    
+
     public function getGenders($semesterId) {
         $q = $this
-            ->createQueryBuilder('s')
-            ->addSelect('s.gender, count(s.gender) as nb_students')
-            ->innerJoin('s.courses', 'c2')
-            ->where('c2.semester = :semesterId')
-            ->groupBy('s.gender')
-            ->setParameter('semesterId', $semesterId)
-            ->getQuery()
+                ->createQueryBuilder('s')
+                ->addSelect('s.gender, count(s.gender) as nb_students')
+                ->innerJoin('s.courses', 'c2')
+                ->where('c2.semester = :semesterId')
+                ->groupBy('s.gender')
+                ->setParameter('semesterId', $semesterId)
+                ->getQuery()
         ;
         $students = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $students; 
+        return $students;
     }
-    
+
     public function getAges($semesterId) {
         $q = $this
-            ->createQueryBuilder('s')
-            ->addSelect('s.id, , count(s.gender) as nb_students')
-            ->innerJoin('s.courses', 'c2')
-            ->where('c2.semester = :semesterId')
-            ->groupBy('s.gender')
-            ->setParameter('semesterId', $semesterId)
-            ->getQuery()
+                ->createQueryBuilder('s')
+                ->addSelect('s.id, count(s.gender) as nb_students')
+                ->innerJoin('s.courses', 'c2')
+                ->where('c2.semester = :semesterId')
+                ->groupBy('s.gender')
+                ->setParameter('semesterId', $semesterId)
+                ->getQuery()
         ;
         $students = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $students; 
+        return $students;
     }
+
+    public function getCountries($semesterId) {
+        $q = $this
+                ->createQueryBuilder('s')
+                ->addSelect('c1.isoCode as isoCode, c1.label as label, count(s.id) as nb_students')
+                ->innerJoin('s.nativeCountry', 'c1')
+                ->innerJoin('s.courses', 'c2')
+                ->where('c2.semester = :semesterId')
+                ->groupBy('isoCode')
+                ->setParameter('semesterId', $semesterId)
+                ->getQuery()
+        ;
+        $students = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $students;
+    }
+
 }
