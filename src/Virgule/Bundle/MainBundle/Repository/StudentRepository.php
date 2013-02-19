@@ -82,7 +82,7 @@ class StudentRepository extends EntityRepository {
     public function getAges($semesterId) {
         $q = $this
                 ->createQueryBuilder('s')
-                ->addSelect('s.id, count(s.gender) as nb_students')
+                ->select('s.id, count(s.gender) as nb_students')
                 ->innerJoin('s.courses', 'c2')
                 ->where('c2.semester = :semesterId')
                 ->groupBy('s.gender')
