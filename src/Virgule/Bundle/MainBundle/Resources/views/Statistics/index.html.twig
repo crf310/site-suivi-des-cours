@@ -18,7 +18,7 @@
             {% endfor %}
         ]);
 
-        var options = {backgroundColor: '#FBFBFB'};
+        var options = {backgroundColor: '#FBFBFB', width: 869, height: 542};
         
         var geochart = new google.visualization.GeoChart(document.getElementById('chart_div'));
         var formatter = new google.visualization.PatternFormat('{1}');  
@@ -27,7 +27,7 @@
         var view = new google.visualization.DataView(data);
         view.setColumns([0, 1]);  
 
-        geochart.draw(view, {width: 869, height: 542});
+        geochart.draw(view, options);
     };
     </script>
 {% endblock %}
