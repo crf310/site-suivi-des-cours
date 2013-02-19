@@ -4,38 +4,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alphabétisation - {{ app.session.get('organizationBranchName') }}</title>
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}">      
-    <!--
-    <link href="{{ asset('css/uni-form.css') }}" media="screen" rel="stylesheet"/>
-    <link href="{{ asset('css/default.uni-form.css') }}" id="formStyle" title="Default Style" media="screen" rel="stylesheet"/>-->
-    <!--<link href="{{ asset('css/new.css') }}" media="screen" rel="stylesheet"/>-->
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" media="screen" />
-    <link href="{{ asset('css/bootstrap-responsive.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/bootstrap-virgule.css') }}" rel="stylesheet" media="screen" />
-    <link href="{{ asset('css/jquery-ui-1.9.2.custom.css') }}" media="screen" rel="stylesheet"/>
-    <script type="text/javascript" src="{{ asset('js/jquery-1.8.3.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery-ui-1.9.2.custom.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/uni-form.jquery.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
-     <!-- Bootstrap -->    
-    <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-      .sidebar-nav {
-        padding: 9px 0;
-      }
+    {% block stylesheets %}
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" media="screen" />
+        <link href="{{ asset('css/bootstrap-responsive.min.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/bootstrap-virgule.css') }}" rel="stylesheet" media="screen" />
+        <link href="{{ asset('css/jquery-ui-1.9.2.custom.css') }}" media="screen" rel="stylesheet"/>
+        <!-- Bootstrap -->
+        <style type="text/css">
+          body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+          }
+          .sidebar-nav {
+            padding: 9px 0;
+          }
 
-      @media (max-width: 980px) {
-        /* Enable use of floated navbar text */
-        .navbar-text.pull-right {
-          float: none;
-          padding-left: 5px;
-          padding-right: 5px;
-        }
-      }
-    </style>
-    <script type="text/javascript">
+          @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+              float: none;
+              padding-left: 5px;
+              padding-right: 5px;
+            }
+          }
+        </style>        
+    {% endblock %}
+    {% block javascripts %}
+        <script type="text/javascript" src="{{ asset('js/jquery-1.8.3.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery-ui-1.9.2.custom.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/uni-form.jquery.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+            <script type="text/javascript">
       $(function() {
 
         // init Uni-Form
@@ -51,6 +50,7 @@
         $('.date').datepicker({ dateFormat: 'dd/mm/yy' });
       }); 
     </script>
+    {% endblock %}
   </head>
   <body>
   {% include '::header.html.twig' %}
