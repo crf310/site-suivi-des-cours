@@ -1,55 +1,58 @@
 body {
     background-color: #FBFBFB;
 }
-.row-fluid .span9 {
-  width: 100%;
-}
-.row-fluid .span3 {
-  width: 300px;
-  margin-left: 0;
-}
-.row-fluid .span4 {
-  width: 500px;
-  margin-left: 0;
-}
 
-.span4 li { list-style-image:url('../images/icons/bullet-square.png'); }
+h1 { font-size: 20px; }
+h2 { font-size: 16px; }
+
+/*li { list-style-image:url('../images/icons/bullet-square.png'); } */
 
 .left_list {
     float:left;
     margin-right: 25px;
 }
-
 .clear_list {
     clear: both; float: none; height: 0;
 }
-
-#top_menu a {    
-    padding-left: 20px; padding-right: 20px;
+#top_bar a {
+    color: #D2D2D2;
+}
+#top_bar a:hover {
+    color: #FFFFFF;
 }
 #top_menu a.welcome {
     background: url('../images/icons/house.png') 0px 10px no-repeat;
+    padding-left: 25px;
 }
-#top_menu a.minutes {
-    background: url('../images/icons/page.png') 0px 10px no-repeat;
+#side_menu li {
+     margin-bottom: 10px;
 }
-#top_menu a.students {
-    background: url('../images/icons/group.png') 0px 10px no-repeat;
+#side_menu li a { display: block; }
+#side_menu a:hover {
+     background-color: #0088CC;
+     color: #FFFFFF;
+         text-decoration: none;
 }
-#top_menu a.teachers {
-    background: url('../images/icons/user_suit.png') 0px 10px no-repeat;
+#side_menu li.minutes {
+    list-style-image: url('../images/icons/page.png');
 }
-#top_menu a.schedule {
-    background: url('../images/icons/calendar.png') 0px 10px no-repeat;
+#side_menu li.students {
+    list-style-image: url('../images/icons/group.png');
 }
-#top_menu a.statistics {
-    background: url('../images/icons/chart_bar.png') 0px 10px no-repeat;
+#side_menu li.teachers {
+    list-style-image: url('../images/icons/user_suit.png');
 }
-#top_menu a.user_profile {
-    background: url('../images/icons/telephone.png') 0px 10px no-repeat;
+#side_menu li.schedule {
+    list-style-image: url('../images/icons/calendar.png');
 }
-#top_menu a.administration {
-    background: url('../images/icons/cog.png') 0px 10px no-repeat;
+#side_menu li.statistics {
+    list-style-image: url('../images/icons/chart_bar.png');
+}
+#side_menu li.user_profile {
+    list-style-image: url('../images/icons/telephone.png');
+}
+#side_menu li.administration {
+    list-style-image: url('../images/icons/cog.png');
 }
 
 li.user_M { list-style-image:url('../images/icons/user.png'); }

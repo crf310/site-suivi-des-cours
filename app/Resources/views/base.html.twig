@@ -53,11 +53,15 @@
     {% endblock %}
   </head>
   <body>
-  {% include '::header.html.twig' %}
-
+    {% include '::header.html.twig' %}
     <div class="container-fluid">
         <div class="row-fluid">
-            {% block body %}{% endblock %}
+            <div class="span2" id="side_bar">
+            {% include '::sidebar.html.twig' %}
+            </div>
+            <div class="span10" id="body">
+               {% block body %}{% endblock %}
+           </div>
         </div>
         <hr>
         <footer>

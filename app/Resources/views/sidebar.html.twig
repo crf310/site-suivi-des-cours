@@ -1,23 +1,9 @@
-
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">Sidebar</li>
-              <li class="active"><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li class="nav-header">Sidebar</li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li class="nav-header">Sidebar</li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
+            <ul id="side_menu">
+                <li class="user_profile"><a href="{{ path('teacher_show', { 'id': app.user.id }) }}">Mon profil</a></li>
+                <li class="minutes"><a href="{{ path('classsession_index') }}">Compte-rendus</a></li>
+                <li class="schedule"><a href="{{ path('course_index') }}">Planning des cours</a></li>
+                <li class="students"><a href="{{ path('student_index') }}">Apprenants</a></li>
+                <li class="teachers"><a href="{{ path('teacher_index') }}">Formateurs</a></li>
+                <li class="statistics"><a href="{{ path('stats_index') }}">Statistiques</a></li>
+                <li class="administration"><a href="{{ path('admin_show_logs') }}">Administration</a></li>                
             </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
