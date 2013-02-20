@@ -1,7 +1,6 @@
 
 {% extends '::base.html.twig' %}
 {% block body %} 
-        <div class="span12">
           <div class="row-fluid">
             <div class="span3">
                 <h2>Mes cours</h2>
@@ -17,7 +16,7 @@
                 </ul>
                 <p><a class="btn" href="{{ path('course_index') }}">Voir tous les cours &raquo;</a></p>
             </div><!--/span-->
-            <div class="span9">
+            <div class="span7">
                 <h2>Mes apprenants ({{ nbMyStudents }})</h2>
                     {% if myStudents is empty %}
                         Aucun apprenant n'est inscrit à l'un de vos cours pour le moment.
@@ -77,7 +76,7 @@
               </ul>
               <p><a class="btn" href="{{ path('classsession_index') }}">Voir tous les documents &raquo;</a></p>
             </div><!--/span-->
-            <div class="span5">
+            <div class="span3">
                 <h2>Dernier compte-rendus enregistrés</h2>                
                     <div class="left_list">
                         <ul>
@@ -103,5 +102,4 @@
             </div><!--/span-->
           </div><!--/row-->
         </div><!--/span-->
-      </div><!--/row-->
 {% endblock %}
