@@ -47,7 +47,7 @@ class StudentController extends AbstractVirguleController {
             // set flag: we processed a line for this student
             $students_ids[$student['id']] = 1;
         }
-        $entities_paginated = $this->paginate($students);
+        $entities_paginated = $this->paginate($students, $page);
         $other_entities = Array('courses_array' => $courses_array);
         return array_merge($entities_paginated, $other_entities);
     }
