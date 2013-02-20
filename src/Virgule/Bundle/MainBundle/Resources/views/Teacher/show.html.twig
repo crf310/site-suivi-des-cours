@@ -1,88 +1,107 @@
 {% extends '::base.html.twig' %}
 {% block body %}
-<h1>{{ entity.firstName }} {{ entity.lastName }}</h1>
-
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('teacher_index') }}">
-            Retour à la liste des formateurs
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('teacher_edit', { 'id': entity.id }) }}">
-            Modifier la fiche
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('teacher_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Supprimer</button>
-        </form>
-    </li>
-</ul>
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Actif</th>
-            <td>{{ entity.isActive }}</td>
-        </tr>
-        <tr>
-            <th>Téléphone fixe</th>
-            <td>{{ entity.phoneNumber }}</td>
-        </tr>
-        <tr>
-            <th>Téléphone portable</th>
-            <td>{{ entity.cellphoneNumber }}</td>
-        </tr>
-        <tr>
-            <th>Adresse email</th>
-            <td><a href="mailto:{{ entity.emailAddress }}"/>{{ entity.emailAddress }}</a></td>
-        </tr>
-        <tr>
-            <th>Inscrit(e) le</th>
-            <td>{{ entity.registrationDate|date('d/m/Y') }}</td>
-        </tr>
-    </tbody>
-</table>
-<div id="teacher_courses">
-    <h2>Cours dirigé(s)</h2>
-    <ul>
-        {% if teacherCourses is empty %}
-            Aucun cours dirigé pour le moment.
-        {% else %}
-            {% for course in teacherCourses %}
-                <li>Niveau {{ course.classLevel }} le {{ course.dayOfWeek| day }} de {{ course.startTime|date('H:i') }} à {{ course.endTime|date('H:i') }} <a href="{{ path('classsession_add', { 'course_id': course.id }) }}">Ajouter un compte-rendu</a></li>
-            {% endfor %}
-        {% endif %}
-    </ul>
-</div>
-<div id="teacher_students">
-    <h2>Apprenants inscrits au(x) cours ({{ nbTeacherStudents }})</h2></div>
-    <ul>
-        {% if teacherStudents is empty %}
-            Aucun apprenant inscrit pour le moment.
-        {% else %}
-            {% for student in teacherStudents %}
-                <li class="user_{{ student.gender }}"><a href="{{ path('student_show', { 'id': student.id }) }}">{{ student.firstname }} {{ student.lastname }}</a></li>
-            {% endfor %}
-        {% endif %}
-    </ul>
-<div id="teacher_reports">
-    <h2>Compte-rendus</h2>
-    <ul>
-        {% if teacherClassSessions is empty %}
-            Aucun compte-rendu enregistré pour le moment.
-        {% else %}
-            {% for classSession in teacherClassSessions %}
-                <li><a href="{{ path('classsession_show', { 'id': classSession.id }) }}">{{ classSession.date | date("d/m/Y") }}</a>
-                {% if classSession.nb_comments > 0 %}
-                    {{ classSession.nb_comments }} commentaire{% if classSession.nb_comments > 1 %}s{% endif %}
-                {% endif %}</li>
-            {% endfor %}
-        {% endif %}
-    </ul>
-    
-</div>
+          <div class="row-fluid">
+            <div class="span5">
+                <h1>{{ entity.firstName }} {{ entity.lastName }}</h1>
+                <table class="record_properties">
+                    <tbody>
+                        <tr>
+                            <th>Actif</th>
+                            <td>{{ entity.isActive }}</td>
+                        </tr>
+                        <tr>
+                            <th>Téléphone fixe</th>
+                            <td>{{ entity.phoneNumber }}</td>
+                        </tr>
+                        <tr>
+                            <th>Téléphone portable</th>
+                            <td>{{ entity.cellphoneNumber }}</td>
+                        </tr>
+                        <tr>
+                            <th>Adresse email</th>
+                            <td><a href="mailto:{{ entity.emailAddress }}"/>{{ entity.emailAddress }}</a></td>
+                        </tr>
+                        <tr>
+                            <th>Inscrit(e) le</th>
+                            <td>{{ entity.registrationDate|date('d/m/Y') }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ul class="record_actions">
+                    <li>
+                        <a href="{{ path('teacher_index') }}">
+                            Retour à la liste des formateurs
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('teacher_edit', { 'id': entity.id }) }}">
+                            Modifier la fiche
+                        </a>
+                    </li>
+                    <li>
+                        <form action="{{ path('teacher_delete', { 'id': entity.id }) }}" method="post">
+                            {{ form_widget(delete_form) }}
+                            <button type="submit">Supprimer</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            <div class="span5" id="teacher_courses">
+                <div>
+                <h2>Cours dirigé(s)</h2>
+                    <ul>
+                        {% if teacherCourses is empty %}
+                            Aucun cours dirigé pour le moment.
+                        {% else %}
+                            {% for course in teacherCourses %}
+                                <li>Niveau {{ course.classLevel }} le {{ course.dayOfWeek| day }} de {{ course.startTime|date('H:i') }} à {{ course.endTime|date('H:i') }} <a href="{{ path('classsession_add', { 'course_id': course.id }) }}">Ajouter un compte-rendu</a></li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
+                    <div id="teacher_students">
+                <h2>Apprenants inscrits au(x) cours ({{ nbTeacherStudents }})</h2>
+                <ul>
+                    {% if teacherStudents is empty %}
+                        Aucun apprenant inscrit pour le moment.
+                    {% else %}
+                        <div class="left_list">
+                            <ul>
+                                {% for student in teacherStudents %}
+                                    <li class="user_{{ student['gender'] }}">
+                                        <a href="{{ path('student_show', { 'id': student['id'] }) }}">{{ student['firstname']}} {{ student['lastname'] }}</a>
+                                        {% if student['nb_comments'] > 0 %}
+                                            <img src="{{ asset('images/icons/comment.png') }}" title="{{ student['nb_comments'] }} commentaire(s)" alt="{{ student['nb_comments'] }} commentaire(s)" />
+                                        {% endif %}
+                                    </li>
+                                    {% if loop.index % teacherStudentsLineBreak == 0  and loop.index != loop.last %}
+                                        </ul></div><div class="left_list"><ul>
+                                    {% endif %}
+                                {% endfor %}
+                                </ul>
+                        </div>
+                    {% endif %}
+                </ul>
+            </div>
+            </div>            
+            
+         </div>
+         <div class="row-fluid">
+            <div class="span5" id="teacher_reports">
+                <h2>Compte-rendus</h2>
+                <ul>
+                    {% if teacherClassSessions is empty %}
+                        Aucun compte-rendu enregistré pour le moment.
+                    {% else %}
+                        {% for classSession in teacherClassSessions %}
+                            <li><a href="{{ path('classsession_show', { 'id': classSession.id }) }}">{{ classSession.date | date("d/m/Y") }}</a>
+                            {% if classSession.nb_comments > 0 %}
+                                {{ classSession.nb_comments }} commentaire{% if classSession.nb_comments > 1 %}s{% endif %}
+                            {% endif %}</li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
 <div id="teacher_documents"><h2>Documents ajoutés</h2></div>
 {% endblock %}

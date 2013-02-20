@@ -65,6 +65,7 @@ class TeacherController extends AbstractVirguleController {
         
         $teacherStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledInCourses($courseIds);
         $nbTeacherStudents = count($teacherStudents);
+        $teacherStudentsLineBreak = $this->getListBreak($nbTeacherStudents, 3);
         
         $teacherClassSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByTeacher($semesterId, $id, 5);
         
@@ -74,6 +75,7 @@ class TeacherController extends AbstractVirguleController {
             'teacherCourses' => $teacherCourses,
             'teacherStudents' => $teacherStudents,
             'nbTeacherStudents' => $nbTeacherStudents,
+            'teacherStudentsLineBreak' => $teacherStudentsLineBreak,
             'teacherClassSessions' => $teacherClassSessions
         );
     }
