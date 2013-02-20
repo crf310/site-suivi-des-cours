@@ -9,7 +9,7 @@
             </p>            
             <ul class="nav" id="top_menu">
               <li><a class="welcome" href="{{ path('welcome') }}">Accueil</a></li>
-              <li><a href="">{{ app.session.get('organizationBranchName') }}</a></li>
+              <li><a href="">{{ app.session.get('organizationBranch').name }}</a></li>
               <li><a href="">Session du {{ app.session.get('semesterStartDate')|date("d/m/Y") }} au {{ app.session.get('semesterEndDate')|date("d/m/Y") }}</a></li>
             </ul>
           </div><!--/.nav-collapse -->

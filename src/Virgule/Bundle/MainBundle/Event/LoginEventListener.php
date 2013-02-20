@@ -35,6 +35,7 @@ class LoginEventListener {
 
             $currentSemester = $this->entityManager->getRepository('Virgule\Bundle\MainBundle\Entity\Semester')->loadCurrentSemester($organizationBranchId);
             
+            $session->set('organizationBranch', $organizationBranch);
             $session->set('organizationBranchId', $organizationBranchId);
             $session->set('organizationBranchName', $organizationBranch->getName());
             

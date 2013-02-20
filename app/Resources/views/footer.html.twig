@@ -1,3 +1,1 @@
-﻿<a href="http://paris03et10.croix-rouge.fr">Croix Rouge Française - Délégation locale de Paris III et X</a> |
-40 rue Albert Thomas 75010 PARIS | 
-01 42 06 79 05 | <a href="mailto:dl.paris10@croix-rouge.fr">dl.paris10@croix-rouge.fr</a>
+{{ app.session.get('organizationBranch').name }} | {{ app.session.get('organizationBranch').address }} | {{ app.session.get('organizationBranch').phoneNumber }} |  - <a href="mailto:{{ app.session.get('organizationBranch').emailAddress }}">{{ app.session.get('organizationBranch').emailAddress }}</a>
