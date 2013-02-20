@@ -55,8 +55,14 @@
             <td>{{ entity['phoneNumber'] }}</td>
             <td>{{ entity['cellphoneNumber'] }}</td>
             <td>{{ entity['registrationDate'] | date("d/m/Y") }}</td>
-            <td><insert classes></td>
             <td><insert class level></td>
+            <td>
+                <ul>
+                {% for course in courses_array[entity['id']] %}
+                    <li><a href="{{ path('course_show', { 'id': course['course_id'] }) }}">{{ course['course_id'] }}</a></li>
+                {% endfor %}
+                </ul>
+            </td>
             <td><a href="{{ path('teacher_show', { 'id': entity['teacher_id'] }) }}">{{ entity['teacher_firstName'] }} {{ entity['teacher_lastName'] }}</td>
             <td>
                 <ul>

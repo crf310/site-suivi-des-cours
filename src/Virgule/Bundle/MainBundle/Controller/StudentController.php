@@ -30,9 +30,26 @@ class StudentController extends AbstractVirguleController {
     public function indexAction($page=1) {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('VirguleMainBundle:Student')->loadAll($this->getSelectedSemesterId());
+        $students = $em->getRepository('VirguleMainBundle:Student')->loadAll($this->getSelectedSemesterId());
     
-        return $this->paginate($entities, $page);     
+        // sub array to group students enrolled to many courses
+        $students_ids = Array();
+        $courses_array = Array();
+        foreach ($students as $key => $student) {
+            
+            // store courses for each student
+            $courses_array[$student['id']][] = Array('course_id' => $student['course_id']);
+            
+            // delete doubled line in students results (if we already processed a line for the same student
+            if (array_key_exists($student['id'], $students_ids)) {
+                 unset($students[$key]);
+            }
+            // set flag: we processed a line for this student
+            $students_ids[$student['id']] = 1;
+        }
+        $entities_paginated = $this->paginate($students);
+        $other_entities = Array('courses_array' => $courses_array);
+        return array_merge($entities_paginated, $other_entities);
     }
 
     /**

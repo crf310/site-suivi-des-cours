@@ -22,6 +22,7 @@ class StudentRepository extends EntityRepository {
         $q = $this
                 ->createQueryBuilder('s')
                 ->addSelect('s.id, s.firstname, s.lastname, s.gender, s.phoneNumber, s.cellphoneNumber, s.registrationDate, t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName')
+                ->addSelect('c2.id as course_id')
                 ->addSelect('c.isoCode, c.label')
                 ->innerJoin('s.nativeCountry', 'c')
                 ->innerJoin('s.courses', 'c2')
@@ -85,7 +86,8 @@ class StudentRepository extends EntityRepository {
                 ->select('s.id, count(s.gender) as nb_students')
                 ->innerJoin('s.courses', 'c2')
                 ->where('c2.semester = :semesterId')
-                ->groupBy('s.gender')
+                ->groupBy(' s.gender')
+                ->distinct()
                 ->setParameter('semesterId', $semesterId)
                 ->getQuery()
         ;
@@ -101,6 +103,7 @@ class StudentRepository extends EntityRepository {
                 ->innerJoin('s.courses', 'c2')
                 ->where('c2.semester = :semesterId')
                 ->groupBy('isoCode')
+                ->distinct()
                 ->setParameter('semesterId', $semesterId)
                 ->getQuery()
         ;
