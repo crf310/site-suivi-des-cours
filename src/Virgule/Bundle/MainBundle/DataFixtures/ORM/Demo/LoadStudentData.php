@@ -17,7 +17,27 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
 
     public function load(ObjectManager $manager) {
 
-        $countryCodes = Array('cn', 'ma', 'us', 'kr', 'mg', 'co', 'ua', 'uy', 'ru', 'sn', 'fr', 'zm', 'gb', 'tg', 'ug', 'me', 'za', 'ax', 'al', 'sa', 'ar', 'am', 'au', 'at', 'az');
+        $countryCodes = Array('af', 'za', 'ax', 'al', 'dz', 'de', 'ad', 'ao', 'ai', 
+            'aq', 'ag', 'sa', 'ar', 'am', 'aw', 'au', 'at', 'az', 'bs', 'bh', 'bd', 
+            'bb', 'by', 'be', 'bz', 'bj', 'bm', 'bt', 'bo', 'bq', 'ba', 'bw', 'bv', 
+            'br', 'bn', 'bg', 'bf', 'bi', 'ky', 'kh', 'cm', 'ca', 'cv', 'cf', 'cl', 
+            'cn', 'cx', 'cy', 'cc', 'co', 'km', 'cg', 'cd', 'ck', 'kr', 'kp', 'cr', 
+            'ci', 'hr', 'cu', 'cw', 'dk', 'dj', 'do', 'dm', 'eg', 'sv', 'ae', 'ec', 
+            'er', 'es', 'ee', 'us', 'et', 'fk', 'fo', 'fj', 'fi', 'fr', 'ga', 'gm', 
+            'ge', 'gs', 'gh', 'gi', 'gr', 'gd', 'gl', 'gp', 'gu', 'gt', 'gg', 'gn', 
+            'gw', 'gq', 'gy', 'gf', 'ht', 'hm', 'hn', 'hk', 'hu', 'im', 'um', 'vg', 
+            'vi', 'in', 'id', 'ir', 'iq', 'ie', 'is', 'il', 'it', 'jm', 'jp', 'je', 
+            'jo', 'kz', 'ke', 'kg', 'ki', 'kw', 'la', 'ls', 'lv', 'lb', 'lr', 'ly', 
+            'li', 'lt', 'lu', 'mo', 'mk', 'mg', 'my', 'mw', 'mv', 'ml', 'mt', 'mp', 
+            'ma', 'mh', 'mq', 'mu', 'mr', 'yt', 'mx', 'fm', 'md', 'mc', 'mn', 'me', 
+            'ms', 'mz', 'mm', 'na', 'nr', 'np', 'ni', 'ne', 'ng', 'nu', 'nf', 'no', 
+            'nc', 'nz', 'io', 'om', 'ug', 'uz', 'pk', 'pw', 'ps', 'pa', 'pg', 'py', 
+            'nl', 'pe', 'ph', 'pn', 'pl', 'pf', 'pr', 'pt', 'qa', 're', 'ro', 'gb', 
+            'ru', 'rw', 'eh', 'bl', 'sh', 'lc', 'kn', 'sm', 'mf', 'sx', 'pm', 'va', 
+            'vc', 'sb', 'ws', 'as', 'st', 'sn', 'rs', 'sc', 'sl', 'sg', 'sk', 'si', 
+            'so', 'sd', 'ss', 'lk', 'se', 'ch', 'sr', 'sj', 'sz', 'sy', 'tj', 'tw', 
+            'tz', 'td', 'cz', 'tf', 'th', 'tl', 'tg', 'tk', 'to', 'tt', 'tn', 'tm', 
+            'tc', 'tr', 'tv', 'ua', 'uy', 'vu', 've', 'vn', 'wf', 'ye', 'zm', 'zw');
         $genders = Array('F', 'M');
         $firstnames = Array('Jean', 'John', 'Juan', 'Xiao', 'Augustin', 'Dimitri', 'Sergiy', 'Ali', 'Abdel', 'Linus', 'Zinedine', 'Pol', 'Anas', 'Jean-Marc', 'Auguste', 'Zhen');
         $lastnames = Array('Dupont', 'Smith', 'Suarez', 'Lee', 'Ranaly', 'Serpov', 'Karabatic', 'Bongo', 'Serafi', 'Zidane', 'Bellaloui', 'Lopez', 'Eriksson', 'Torvalds', 'Larsson', 'Soualem');
@@ -31,12 +51,12 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 
         $nbStudents = 0;
-        for ($i = 1; $i <= 253; $i++) {
+        for ($i = 1; $i <= 234; $i++) {
             $s = new Student();
             $s->setFirstname($firstnames[rand(0, $nbFirstNames)]);
             $s->setLastname($lastnames[rand(0, $nbLastNames)]);
             $s->setGender($genders[rand(0, 1)]);
-            
+
             $y = rand(1950, 1992);
             $m = rand(01, 12);
             $d = rand(01, 30);
