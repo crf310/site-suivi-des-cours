@@ -6,7 +6,9 @@ Installation
  git clone https://github.com/glucazeau/Virgule.git
  Créer parameters.ini dans Virgule/app/config
  cd Virgule
+  php composer.phar self-update
  php composer.phar update
+  php composer.phar update --dev
  php ./vendor/bin/phing
  php ./vendor/bin/phing data:load # Type "Y"
  http://localhost/Virgule/web/app_dev.php/login
