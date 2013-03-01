@@ -17,27 +17,11 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
 
     public function load(ObjectManager $manager) {
 
-        $countryCodes = Array('af', 'za', 'ax', 'al', 'dz', 'de', 'ad', 'ao', 'ai', 
-            'aq', 'ag', 'sa', 'ar', 'am', 'aw', 'au', 'at', 'az', 'bs', 'bh', 'bd', 
-            'bb', 'by', 'be', 'bz', 'bj', 'bm', 'bt', 'bo', 'bq', 'ba', 'bw', 'bv', 
-            'br', 'bn', 'bg', 'bf', 'bi', 'ky', 'kh', 'cm', 'ca', 'cv', 'cf', 'cl', 
-            'cn', 'cx', 'cy', 'cc', 'co', 'km', 'cg', 'cd', 'ck', 'kr', 'kp', 'cr', 
-            'ci', 'hr', 'cu', 'cw', 'dk', 'dj', 'do', 'dm', 'eg', 'sv', 'ae', 'ec', 
-            'er', 'es', 'ee', 'us', 'et', 'fk', 'fo', 'fj', 'fi', 'fr', 'ga', 'gm', 
-            'ge', 'gs', 'gh', 'gi', 'gr', 'gd', 'gl', 'gp', 'gu', 'gt', 'gg', 'gn', 
-            'gw', 'gq', 'gy', 'gf', 'ht', 'hm', 'hn', 'hk', 'hu', 'im', 'um', 'vg', 
-            'vi', 'in', 'id', 'ir', 'iq', 'ie', 'is', 'il', 'it', 'jm', 'jp', 'je', 
-            'jo', 'kz', 'ke', 'kg', 'ki', 'kw', 'la', 'ls', 'lv', 'lb', 'lr', 'ly', 
-            'li', 'lt', 'lu', 'mo', 'mk', 'mg', 'my', 'mw', 'mv', 'ml', 'mt', 'mp', 
-            'ma', 'mh', 'mq', 'mu', 'mr', 'yt', 'mx', 'fm', 'md', 'mc', 'mn', 'me', 
-            'ms', 'mz', 'mm', 'na', 'nr', 'np', 'ni', 'ne', 'ng', 'nu', 'nf', 'no', 
-            'nc', 'nz', 'io', 'om', 'ug', 'uz', 'pk', 'pw', 'ps', 'pa', 'pg', 'py', 
-            'nl', 'pe', 'ph', 'pn', 'pl', 'pf', 'pr', 'pt', 'qa', 're', 'ro', 'gb', 
-            'ru', 'rw', 'eh', 'bl', 'sh', 'lc', 'kn', 'sm', 'mf', 'sx', 'pm', 'va', 
-            'vc', 'sb', 'ws', 'as', 'st', 'sn', 'rs', 'sc', 'sl', 'sg', 'sk', 'si', 
-            'so', 'sd', 'ss', 'lk', 'se', 'ch', 'sr', 'sj', 'sz', 'sy', 'tj', 'tw', 
-            'tz', 'td', 'cz', 'tf', 'th', 'tl', 'tg', 'tk', 'to', 'tt', 'tn', 'tm', 
-            'tc', 'tr', 'tv', 'ua', 'uy', 'vu', 've', 'vn', 'wf', 'ye', 'zm', 'zw');
+        $countryCodes = Array('AF','ZA','AL','DZ','AO','AM','AT','AZ','BD','BY','BJ','BT','BO','BR','BG','KH','CM','CV','CL','CN','CO',
+                            'KM','CG','CD','KR','CI','HR','DO','EG','AE','EC','ER','ES','ET','FR','GE','GT','GN','HT','HK','IN',
+                            'ID','IR','IQ','IL','IT','JM','JP','KZ','KE','KG','LV','LB','LR','MK','ML','MA','MU','MR','MD','MN','MM',
+                            'NP','NE','NG','UZ','PK','PS','PE','PH','PL','PT','RO','RU','RW','SN','RS','SL','SK','SD','LK','SE','SY',
+                            'CZ','TH','TN','TR','UA','VE','VN','MG');
         $genders = Array('F', 'M');
         $firstnames = Array('Jean', 'John', 'Juan', 'Xiao', 'Augustin', 'Dimitri', 'Sergiy', 'Ali', 'Abdel', 'Linus', 'Zinedine', 'Pol', 'Anas', 'Jean-Marc', 'Auguste', 'Zhen');
         $lastnames = Array('Dupont', 'Smith', 'Suarez', 'Lee', 'Ranaly', 'Serpov', 'Karabatic', 'Bongo', 'Serafi', 'Zidane', 'Bellaloui', 'Lopez', 'Eriksson', 'Torvalds', 'Larsson', 'Soualem');
