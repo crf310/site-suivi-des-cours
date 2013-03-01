@@ -5,6 +5,8 @@ body {
 h1 { font-size: 20px; }
 h2 { font-size: 16px; }
 a { color: #0F5043 }
+a:hover { color: #0F5043; }
+
 footer { font-size: 12px; }
 /*li { list-style-image:url('../images/icons/bullet-square.png'); } */
 
@@ -29,9 +31,7 @@ footer { font-size: 12px; }
      margin-bottom: 10px;
 }
 #side_menu li a { display: block; }
-#side_menu a:hover {
-     color: #0F5043;
-}
+
 #side_menu li.minutes {
     list-style-image: url('../images/icons/page.png');
 }
