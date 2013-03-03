@@ -1,35 +1,39 @@
-{% extends '::base.html.twig' %}
-{% block body %}
-<h1>Formateurs creation</h1>
-<div id="errorMsg">
-{{ form_errors(form) }}
-</div>
-<form action="{{ path('teacher_create') }}" method="post" {{ form_enctype(form) }} class="uniForm">
-      <fieldset>
-        <legend>Informations de connexion</legend>
-        {{ form_row(form.isActive, { 'checked':'checked', 'label': 'Formateur en activité ?', 'hint':'Cochez la case si oui' }) }}
-        {{ form_row(form.lastName, { 'label': 'Nom' }) }}
-        {{ form_row(form.firstName, { 'class':'right', 'label': 'Prénom' }) }}
-        {{ form_row(form.username, { 'label': 'Nom d\'utilisateur' }) }}
-        {{ form_row(form.password, { 'label': 'Mot de passe', 'hint':'Choisissez un mot de passe d\'au moins 8 caractères' }) }}
-      </fieldset>
-        <fieldset>
-        <legend>Coordonnées</legend>
-        {{ form_row(form.phoneNumber, { 'label': 'Téléphone fixe' }) }}
-        {{ form_row(form.cellphoneNumber, { 'label': 'Téléphone portable' }) }}
-        {{ form_row(form.emailAddress, { 'label': 'Adresse email' }) }}
-        {{ form_rest(form) }}
-        <p>
-            <button type="submit">Create</button>
-        </p>
-      </fieldset>
+{% extends '::main_content.html.twig' %}
+{% block content_title %}Créer un nouveau compte utilisateur{% endblock %}
+ {%block submenu %}{% endblock %}
+{% block main_content %}
+<form action="{{ path('teacher_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+    <div class="widget-box">
+        <div class="widget-title">
+                <span class="icon">
+                        <i class="icon-align-justify"></i>									
+                </span>
+                <h5>Informations de connexion</h5>
+        </div>
+        <div class="widget-content nopadding">
+                    {{ form_row(form.isActive, { 'checked':'checked', 'label': 'Formateur en activité ?', 'hint':'Cochez la case si oui' }) }}
+                    {{ form_row(form.lastName, { 'label': 'Nom' }) }}
+                    {{ form_row(form.firstName, { 'class':'right', 'label': 'Prénom' }) }}
+                    {{ form_row(form.username, { 'label': 'Nom d\'utilisateur' }) }}
+                    {{ form_row(form.password, { 'label': 'Mot de passe', 'hint':'Choisissez un mot de passe d\'au moins 8 caractères' }) }}
+        </div>
+    </div>
+    <div class="widget-box">
+        <div class="widget-title">
+                <span class="icon">
+                        <i class="icon-align-justify"></i>									
+                </span>
+                <h5>Coordonnées</h5>
+        </div>
+        <div class="widget-content nopadding">
+                    {{ form_row(form.phoneNumber, { 'label': 'Téléphone fixe' }) }}
+                    {{ form_row(form.cellphoneNumber, { 'label': 'Téléphone portable' }) }}
+                    {{ form_row(form.emailAddress, { 'label': 'Adresse email' }) }}
+                    {{ form_rest(form) }}
+                    <div class="form-actions">                                     
+                        <input class="btn" type="submit" value="Créer le compte" />
+                    </div>
+        </div>
+    </div>        
 </form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('teacher_index') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
 {% endblock %}

@@ -18,11 +18,11 @@ class TeacherType extends AbstractType {
                 ->add('emailAddress')
                 ->add('username')
                 ->add('password')
-                ->add('registrationDate', 'date', array(
+                /*->add('registrationDate', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'date')
-                ))
+                ))*/
                 ->add('role', 'entity', array(
                     'class' => 'VirguleMainBundle:Roles',
                     'expanded' => true,

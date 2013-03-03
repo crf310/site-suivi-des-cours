@@ -1,9 +1,11 @@
 {% block field_row %}
 {% spaceless %}
-    <div class="ctrlHolder {{ class|default('left') }}">
-        {{ form_label(form, label|default(null)) }}<p class="formHint"> {{ hint|default('') }}</p>
+    <div class="control-group">
+        {{ form_label(form, label|default(null), { 'label_attr': {'class': 'control-label'} }) }}
         {{ form_errors(form) }}
-        {{ form_widget(form) }}
+        <div class="controls">{{ form_widget(form) }}
+            <span class="help-block">{{ hint|default('') }}</span>
+        </div>
     </div>
 {% endspaceless %}
 {% endblock field_row %}
@@ -15,7 +17,7 @@
     {% endif %}
     {% set type = type|default('text') %}
     {% set class = class|default('textInput medium') %}
-    <input class="{{ class }} {{macro.hasErrors(form)}}" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    <input {{macro.hasErrors(form)}} type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
 {% endspaceless %}
 {% endblock field_widget %}
 
