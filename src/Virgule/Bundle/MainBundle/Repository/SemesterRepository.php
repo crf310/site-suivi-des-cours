@@ -39,6 +39,18 @@ class SemesterRepository extends EntityRepository {
             throw new NoResultException(sprintf('Unable to find an active Semester object identified by "%s".', $username), null, 0, $e);
         }
         return $semester;
-        
+    }
+    
+    public function loadAll($organizationBranchId) {
+        $q = $this
+            ->createQueryBuilder('s')
+            ->where('s.organizationBranch = :organizationBranchId')
+            ->add('orderBy', 's.startDate DESC')
+            ->setParameter('organizationBranchId', $organizationBranchId)
+            ->getQuery()
+        ;
+
+        $semesters = $q->execute();
+        return $semesters;
     }
 }

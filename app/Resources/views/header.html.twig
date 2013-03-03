@@ -4,7 +4,13 @@
 <div id="header_info">{{ app.session.get('organizationBranch').name }}</div>
 <div id="user-nav" class="navbar navbar-inverse">
     <ul class="nav btn-group">
-        <li class="btn btn-inverse"><a title="" href="{{ path('logout') }}"><i class="icon icon-circle-arrow-down"></i> <span class="text">Session du {{ app.session.get('semesterStartDate')|date("d/m/Y") }} au {{ app.session.get('semesterEndDate')|date("d/m/Y") }}</span></a></li>
+        <li class="btn btn-inverse dropdown" id="menu-session"><a href="#" data-toggle="dropdown" data-target="#menu-sessions" class="dropdown-toggle"><i class="icon icon-circle-arrow-down"></i> <span class="text">Session du {{ app.session.get('semesterStartDate')|date("d/m/Y") }} au {{ app.session.get('semesterEndDate')|date("d/m/Y") }}</span>&nbsp;&nbsp;<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                {% for semester in app.session.get('pastSemesters') %}
+                    <li><a class="sAdd" title="" href="#">du {{ semester.startDate|date("d/m/Y") }} au {{ semester.endDate|date("d/m/Y") }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
         <li class="btn btn-inverse" ><a title="" href="{{ path('teacher_show', { 'id': app.user.id }) }}"><i class="icon icon-user"></i> <span class="text">{{ app.user.firstName }} {{ app.user.lastName }}</span></a></li>
         <li class="btn btn-inverse"><a title="" href="#"><i class="icon icon-question-sign"></i> <span class="text">Aide</span></a></li>
         <li class="btn btn-inverse"><a title="" href="{{ path('logout') }}"><i class="icon icon-share-alt"></i> <span class="text">Déconnexion</span></a></li>
