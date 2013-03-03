@@ -1,0 +1,32 @@
+  <head>  
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ asset('favicon.png') }}">    
+    {% block stylesheets %}
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" media="screen" />
+        <link href="{{ asset('css/bootstrap-responsive.min.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/unicorn.main.css') }}" media="screen" rel="stylesheet"/>
+        <link href="{{ asset('css/unicorn.grey.css') }}" media="screen" rel="stylesheet" class="skin-color"/>
+        <link href="{{ asset('css/uniform.css') }}" rel="stylesheet" media="screen" />        
+        <link href="{{ asset('css/select2.css') }}" rel="stylesheet" media="screen" />
+        <link href="{{ asset('css/virgule.css') }}" media="screen" rel="stylesheet"/>      
+    {% endblock %}
+    {% block javascripts %}
+        <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery-ui.custom.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.validate.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/bootstrap.colorpicker.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/unicorn.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/unicorn.tables.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/unicorn.dashboard.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.uniform.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/select2.min.js') }}"></script>
+            
+        <script type="text/javascript">
+            $(function() {
+              $('.date').datepicker({ dateFormat: 'dd/mm/yy' });
+            }); 
+        </script>
+    {% endblock %}

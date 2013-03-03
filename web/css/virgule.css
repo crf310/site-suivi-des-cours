@@ -1,0 +1,97 @@
+/* Main Application */
+#header h1 {
+    /*background: url("../img/logo_crf.gif") no-repeat scroll 0 0 transparent;*/
+    height: 177px;
+}
+h1 { font-size: 20px; }
+h2 { font-size: 16px; }
+.left_list {
+    float:left;
+    margin-right: 25px;
+}
+.clear_list {
+    clear: both; float: none; height: 0;
+}
+#header_info {
+    position: absolute;
+    z-index: 25;
+    top: 6px;
+    left: 230px;
+    color: #FFFFFF;
+}
+#sidebar i {   
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center;
+    background-color: transparent;
+    display: inline-block;
+    margin: -2px 0 0 !important; 
+    padding: 10px;
+    vertical-align: middle;
+}
+#sidebar i.welcome {
+    background-image: url('../img/icons/house.png');
+}
+#sidebar i.minutes {
+    background-image: url('../img/icons/page.png');
+}
+#sidebar i.students {
+    background-image: url('../img/icons/group.png');
+}
+#sidebar i.teachers {
+    background-image: url('../img/icons/user_suit.png');
+}
+#sidebar i.schedule {
+    background-image: url('../img/icons/calendar.png');
+}
+#sidebar i.statistics {
+    background-image: url('../img/icons/chart_bar.png');
+}
+#sidebar i.user_profile {
+    background-image: url('../img/icons/telephone.png');
+}
+#sidebar i.administration {
+    background-image: url('../img/icons/cog.png');
+}
+
+li.user_M { list-style-image:url('../img/icons/user.png'); }
+li.user_F { list-style-image:url('../img/icons/user_female.png'); }
+
+/*----- Tables ----*/
+a.export_list {
+    background: url('../img/icons/page_excel.png') no-repeat;
+    /* top bottom right left */
+    padding: 2px 0px 0px 20px;
+}
+a.add_entry {
+    background: url('../img/icons/add.png') no-repeat;
+    padding: 2px 0px 0px 20px;
+}
+a.search {
+    background: url('../img/icons/magnifier.png') no-repeat;
+    padding: 2px 0px 0px 20px;
+}
+#results_actions {
+    width: 100%;
+    display: block;
+    height: 65px;
+}
+#results_actions div.action_tab {
+    background-color: #000000;
+    color: #FFFFFF;
+    padding: 10px;
+    font-size: 12px;
+    letter-spacing: .08em;
+    float: right;
+    height: 15px;
+    margin-left: 2px;
+}
+tbody tr:hover td {
+    background-color: #ECEDED;
+}
+tbody ul li{
+    list-style: none; display: inline; margin-left: 0px;
+}
+td.center {
+    text-align: center;
+}
