@@ -1,47 +1,49 @@
-{% extends '::base.html.twig' %}
-{% block body %}
-<div id="results_actions">
-    <h1>Liste des compte-rendus</h1>
-    <div class="action_tab">
-        <a class="add_entry" href="{{ path('classsession_new') }}">
-            Enregistrer un compte-rendu
-        </a>
-    </div>
-    <div class="action_tab">
-        <a class="export_list" href="{{ path('classsession_new') }}">
-            Exporter les données
-        </a>
-    </div>
-    <span>Tous les apprenants inscrits à un cours de cette session</span>
+{% extends '::main_content.html.twig' %}
+{% block content_title %}Tous les comptes-rendus{% endblock %}
+ {%block submenu %}
+<div class="btn-group">
+        <a class="btn tip-bottom" href="{{ path('teacher_new') }}"> <i class="icon-export"></i>Exporter les données</a>
+        <a class="btn tip-bottom" href="{{ path('classsession_new') }}"> <i class="icon-add"></i>Nouveau compte-rendu</a>
 </div>
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Cours</th>
-            <th>Conduit par</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td>{% if entity['date'] %}{{ entity['date'] | date('d/m/Y') }} {% endif %}</td>
-            <td>le {{ entity['course_dayOfWeek'] | day }} de {{ entity['course_startTime'] | date('H:i') }} à {{ entity['course_endTime']| date('H:i') }}</td>
-            <td>{{ entity['sessionTeacher_firstName'] }} {{ entity['sessionTeacher_lastName'] }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('classsession_show', { 'id': entity['id'] }) }}">Voir le détail</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('classsession_edit', { 'id': entity['id'] }) }}">Modifier</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-    {% include '::pager_footer.html.twig' with { nb_columns: 4 } %}
-</table>
+{% endblock %}
+{% block main_content %}
+<div class="widget-box">
+    <div class="widget-title">
+            <span class="icon">
+                    <i class="icon-th"></i>
+            </span>
+            <h5>Tous les comptes-rendus</h5>
+    </div>
+    <div class="widget-content nopadding">
+        <table class="table table-bordered data-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Cours</th>
+                    <th>Conduit par</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{% if entity['date'] %}{{ entity['date'] | date('d/m/Y') }} {% endif %}</td>
+                    <td>le {{ entity['course_dayOfWeek'] | day }} de {{ entity['course_startTime'] | date('H:i') }} à {{ entity['course_endTime']| date('H:i') }}</td>
+                    <td>{{ entity['sessionTeacher_firstName'] }} {{ entity['sessionTeacher_lastName'] }}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('classsession_show', { 'id': entity['id'] }) }}">Voir le détail</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('classsession_edit', { 'id': entity['id'] }) }}">Modifier</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}
