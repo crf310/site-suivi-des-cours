@@ -29,6 +29,19 @@ h2 { font-size: 16px; }
     padding: 10px;
     vertical-align: middle;
 }
+/* Actions button */
+#content-header i {   
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center;
+    background-color: transparent;
+    display: inline-block;
+    margin: -2px 5px 0 !important; 
+    vertical-align: middle;
+}
+i.icon-add {
+    background-image: url('../img/icons/add.png');
+}
 #sidebar i.welcome {
     background-image: url('../img/icons/house.png');
 }

@@ -1,19 +1,21 @@
-{% extends '::base.html.twig' %}
-{% block body %}
-<div id="results_actions">
-    <h1>Liste des utilisateurs</h1>
-    <div class="action_tab">
-        <a class="add_entry" href="{{ path('teacher_new') }}">
-            Ajouter un utilisateur
-        </a>
-    </div><div class="action_tab">
-        <a class="add_entry" href="{{ path('teacher_new') }}">
-            Ajouter un utilisateur
-        </a>
-    </div>
-    <span>Tous les formateurs actifs de cette session</span>
+{% extends '::main_content.html.twig' %}
+{% block content_title %}Listes d'apprenants{% endblock %}
+ {%block submenu %}
+<div class="btn-group">
+        <a class="btn tip-bottom" title="Ajouter un compte utilisateur" href="{{ path('teacher_new') }}"> <i class="icon-add"></i>Nouvel utilisateur</a>
 </div>
-<table class="records_list">
+{% endblock %}
+{% block main_content %}
+
+<div class="widget-box">
+    <div class="widget-title">
+            <span class="icon">
+                    <i class="icon-th"></i>
+            </span>
+            <h5>Formateurs actifs</h5>
+    </div>
+    <div class="widget-content nopadding">
+        <table class="table table-bordered data-table">
         <thead>
             <tr>
                 <th>Nom</th>
@@ -25,7 +27,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for entity in entities.currentPageResults %}
+        {% for entity in entities %}
            <tr>
                 <td>{{ entity.firstName }} {{ entity.lastName }}</td>
                 <td>{{ entity.phoneNumber }}</td>
@@ -45,7 +47,7 @@
             </tr>
         {% endfor %}
         </tbody>
-        {% include '::pager_footer.html.twig' with { nb_columns: 6 }  %}
     </table>
+    </div>
 </div>
 {% endblock %}

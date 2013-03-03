@@ -34,7 +34,7 @@ class TeacherController extends AbstractVirguleController {
         $organizationBranchId = $this->getRequest()->getSession()->get('organizationBranchId');
         $entities = $em->getRepository('VirguleMainBundle:Teacher')->getTeachersByStatus($organizationBranchId, true);
 
-        return $this->paginate($entities, $page);
+        return Array('entities' => $entities);
     }
 
     /**
