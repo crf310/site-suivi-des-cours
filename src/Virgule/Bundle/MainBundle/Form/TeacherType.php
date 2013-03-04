@@ -17,7 +17,11 @@ class TeacherType extends AbstractType {
                 ->add('cellphoneNumber')
                 ->add('emailAddress')
                 ->add('username')
-                ->add('password')
+                ->add('password', 'repeated', array(
+                    'type' => 'password',
+                    'invalid_message' => 'The password fields must match.',
+                    'options' => array('label' => 'Mot de passe'),
+                ))
                 /*->add('registrationDate', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
@@ -28,7 +32,7 @@ class TeacherType extends AbstractType {
                     'expanded' => false,
                     'multiple' => false,
                     'property' => 'label',
-                    'property_path' => false,
+                    'property_path' => 'role',
                 ));
     }
 
