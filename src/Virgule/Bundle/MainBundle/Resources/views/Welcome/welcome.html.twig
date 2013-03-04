@@ -17,7 +17,8 @@
                         {% else %}
                             {% for course in myCourses %}
                                 <li>Niveau {{ course.classLevel }} le {{ course.dayOfWeek| day }} de {{ course.startTime|date('H:i') }} à {{ course.endTime|date('H:i') }} 
-                                    <br /><a  class="btn" href="{{ path('classsession_add', { 'course_id': course.id }) }}"><i class="icon-add"></i> Ajouter un compte-rendu</a></li>
+                                    <br /><a  class="btn virgule-btn" href="{{ path('classsession_add', { 'course_id': course.id }) }}"><i class="icon-add"></i> Ajouter un compte-rendu</a>
+                                </li>
                             {% endfor %}
                         {% endif %}
                     </ul>
