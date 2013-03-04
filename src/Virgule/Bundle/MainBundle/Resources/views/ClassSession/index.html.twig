@@ -1,10 +1,7 @@
 {% extends '::main_content.html.twig' %}
 {% block content_title %}Tous les comptes-rendus{% endblock %}
  {%block submenu %}
-<div class="btn-group">
-        <a class="btn tip-bottom" href="{{ path('teacher_new') }}"> <i class="icon-export"></i>Exporter les données</a>
-        <a class="btn tip-bottom" href="{{ path('classsession_new') }}"> <i class="icon-add"></i>Nouveau compte-rendu</a>
-</div>
+    <a class="btn tip-bottom" href="{{ path('classsession_new') }}"> <i class="icon-add"></i>Nouveau compte-rendu</a>
 {% endblock %}
 {% block main_content %}
 <div class="widget-box">

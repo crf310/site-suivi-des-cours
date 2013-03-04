@@ -1,5 +1,9 @@
 {% extends '::main_content.html.twig' %}
-{% block content_title %}Listes d'apprenants{% endblock %}
+{% block content_title %}Listes d'apprenants{% endblock %} 
+{%block submenu %}
+    <a class="btn tip-bottom" href="#"> <i class="icon-export"></i>Exporter les données</a>
+    <a class="btn tip-bottom" href="{{ path('student_new') }}"> <i class="icon-add"></i>Nouvel apprenant</a>
+{% endblock %}
 {% block main_content %}
 <div class="widget-box">
     <div class="widget-title">
