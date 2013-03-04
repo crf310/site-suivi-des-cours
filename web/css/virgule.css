@@ -47,6 +47,9 @@ h2 { font-size: 16px; }
     margin: -2px 5px 0 5px !important; 
     vertical-align: middle;
 }
+i.icon-go {
+    background-image: url('../img/icons/arrow_right.png');
+}
 i.icon-add {
     background-image: url('../img/icons/add.png');
 }
