@@ -12,6 +12,9 @@
 h1 { font-size: 20px; }
 h2 { font-size: 16px; }
 
+#user-nav span.text {
+    font-size: 14px;
+}
 .left_list {
     float:left;
     margin-right: 15px;
@@ -22,8 +25,8 @@ h2 { font-size: 16px; }
 #search .connected_branch {
     padding:4px 35px 4px 14px;
     margin-bottom:20px;
-    color: #FFFFFF;
-    font-size: 18px;
+    color: #9A9A9A;
+    font-size: 16px;
 }
 
 #content .container-fluid .row-fluid:first-child {
