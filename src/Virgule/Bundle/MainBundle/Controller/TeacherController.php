@@ -105,6 +105,7 @@ class TeacherController extends AbstractVirguleController {
      */
     public function createAction(Request $request) {
         $entity = new Teacher();
+        $entity->setRegistrationDate(new \DateTime('now'));
         $form = $this->createForm(new TeacherType(), $entity);
         $form->bind($request);
 
