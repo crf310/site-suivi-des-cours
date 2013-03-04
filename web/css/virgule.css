@@ -53,7 +53,7 @@ h2 { font-size: 16px; }
     background-position: center;
     background-color: transparent;
     display: inline-block;
-    margin: -2px 5px 0 5px !important; 
+    margin: -2px 5px 2px 5px !important; 
     vertical-align: middle;
 }
 i.icon-go {
@@ -62,6 +62,16 @@ i.icon-go {
 i.icon-add {
     background-image: url('../img/icons/add.png');
 }
+i.icon-user_add {
+    background-image: url('../img/icons/user_add.png');
+}
+i.icon-user_edit {
+    background-image: url('../img/icons/user_edit.png');
+}
+i.icon-user_delete {
+    background-image: url('../img/icons/user_delete.png');
+}
+
 i.icon-export {
     background-image: url('../img/icons/page_excel.png');
 }
