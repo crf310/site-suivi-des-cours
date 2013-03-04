@@ -10,7 +10,10 @@ class TeacherType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('isActive')
+                ->add('isActive', 'checkbox', array(
+                    'required'  => false,
+                    'attr'      => array('checked'   => 'checked'),
+                ))
                 ->add('lastName')
                 ->add('firstName')
                 ->add('phoneNumber')
