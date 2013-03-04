@@ -1,59 +1,64 @@
-{% extends '::base.html.twig' %}
-{% block javascripts %}
+{% extends '::main_content.html.twig' %}
+{% block head %}    
     {{ parent() }}
-    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
-    <script type='text/javascript'>
-     var bgColor = '#FBFBFB';
-     
-     google.load('visualization', '1', {'packages': ['geochart']});
-     google.setOnLoadCallback(drawRegionsMap);
+    {% block javascripts %}
 
-      function drawRegionsMap() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'country-code');
-        data.addColumn('number', 'Apprenants');
-        data.addColumn('string', 'country_label');
-        data.addRows([
-            {% for students_country in students_countries %}
-                ['{{ students_country['isoCode'] }}', {{ students_country['nb_students'] }}, '{{ students_country['label'] }}']{% if loop.index != loop.last %},{% endif %}
-            {% endfor %}
-        ]);
+        <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+        <script type='text/javascript'>
+         var bgColor = '#FBFBFB';
 
-        var options = {backgroundColor: bgColor, width: 869, height: 542};
-        
-        var geochart = new google.visualization.GeoChart(document.getElementById('worldmap_div'));
-        var formatter = new google.visualization.PatternFormat('{1}');  
-        formatter.format(data, [0, 2]);
+         google.load('visualization', '1', {'packages': ['geochart']});
+         google.setOnLoadCallback(drawRegionsMap);
 
-        var view = new google.visualization.DataView(data);
-        view.setColumns([0, 1]);  
+          function drawRegionsMap() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'country-code');
+            data.addColumn('number', 'Apprenants');
+            data.addColumn('string', 'country_label');
+            data.addRows([
+                {% for students_country in students_countries %}
+                    ['{{ students_country['isoCode'] }}', {{ students_country['nb_students'] }}, '{{ students_country['label'] }}']{% if loop.index != loop.last %},{% endif %}
+                {% endfor %}
+            ]);
 
-        geochart.draw(view, options);
-    };
-    
-    google.load("visualization", "1", {packages:["corechart"]});
-    google.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Sexe', 'Apprenants'],
-          {% for students_gender in students_genders %}
-            ['{{ students_gender['gender'] }}',     {{ students_gender['nb_students'] }}]{% if loop.index != loop.last %},{% endif %}          
-          {% endfor %}
-        ]);
+            var options = {backgroundColor: bgColor, width: 869, height: 542};
 
-        var options = {
-          title: 'Répartition par sexe',
-          colors:['#E06F8A','#5EB1FE'],
-          backgroundColor: bgColor
+            var geochart = new google.visualization.GeoChart(document.getElementById('worldmap_div'));
+            var formatter = new google.visualization.PatternFormat('{1}');  
+            formatter.format(data, [0, 2]);
+
+            var view = new google.visualization.DataView(data);
+            view.setColumns([0, 1]);  
+
+            geochart.draw(view, options);
         };
 
-        var chart = new google.visualization.PieChart(document.getElementById('gender_div'));
-        chart.draw(data, options);
-      };
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+          function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+              ['Sexe', 'Apprenants'],
+              {% for students_gender in students_genders %}
+                ['{{ students_gender['gender'] }}',     {{ students_gender['nb_students'] }}]{% if loop.index != loop.last %},{% endif %}          
+              {% endfor %}
+            ]);
 
-    </script>
+            var options = {
+              title: 'Répartition par sexe',
+              colors:['#E06F8A','#5EB1FE'],
+              backgroundColor: bgColor
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('gender_div'));
+            chart.draw(data, options);
+          };
+
+        </script>
+    {% endblock %}
 {% endblock %}
-{% block body %}
+{% block content_title %}Statistiques de la session en cours{% endblock %}
+{%block submenu %}{% endblock %}
+{% block main_content %}
 <div id="results_actions">
     <h1>Statistiques de la session en cours</h1>
     <h2>Apprenants</h2>
