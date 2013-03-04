@@ -25,7 +25,7 @@ class TeacherType extends AbstractType {
                 ))*/
                 ->add('role', 'entity', array(
                     'class' => 'VirguleMainBundle:Roles',
-                    'expanded' => true,
+                    'expanded' => false,
                     'multiple' => false,
                     'property' => 'label',
                     'property_path' => false,
