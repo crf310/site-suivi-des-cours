@@ -12,6 +12,11 @@ h2 { font-size: 16px; }
 .clear_list {
     clear: both; float: none; height: 0;
 }
+#search .alert{
+    padding:4px 35px 4px 14px;
+    margin-bottom:20px;
+}
+
 #content .container-fluid .row-fluid:first-child {
     margin-top: 0px;
 }
