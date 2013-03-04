@@ -1,7 +1,11 @@
 <div id="header">
     <h1><a href="./dashboard.html">Croix-Rouge Française</a></h1>		
 </div>
-<div id="header_info">{{ app.session.get('organizationBranch').name }}</div>
+<div id="search">
+    <div class="alert alert-info">
+       Connecté sur <strong>{{ app.session.get('organizationBranch').name }}</strong>
+    </div>
+</div>
 <div id="user-nav" class="navbar navbar-inverse">
     <ul class="nav btn-group">
         <li class="btn btn-inverse dropdown" id="menu-session"><a href="#" data-toggle="dropdown" data-target="#menu-sessions" class="dropdown-toggle"><i class="icon icon-circle-arrow-down"></i> <span class="text">Session du {{ app.session.get('semesterStartDate')|date("d/m/Y") }} au {{ app.session.get('semesterEndDate')|date("d/m/Y") }}</span>&nbsp;&nbsp;<b class="caret"></b></a>
