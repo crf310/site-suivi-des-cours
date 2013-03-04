@@ -12,7 +12,7 @@ h2 { font-size: 16px; }
 .clear_list {
     clear: both; float: none; height: 0;
 }
-.container-fluid .row-fluid:first-child {
+#content .container-fluid .row-fluid:first-child {
     margin-top: 0px;
 }
 #header_info {
