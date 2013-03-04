@@ -38,7 +38,7 @@ h2 { font-size: 16px; }
     vertical-align: middle;
 }
 /* Actions button */
-#content-header i {   
+#content-header i,.alert i, .virgule-btn i {   
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-position: center;
@@ -52,6 +52,9 @@ i.icon-add {
 }
 i.icon-export {
     background-image: url('../img/icons/page_excel.png');
+}
+i.icon-info {
+    background-image: url('../img/icons/information.png');
 }
 #sidebar i.welcome {
     background-image: url('../img/icons/house.png');
