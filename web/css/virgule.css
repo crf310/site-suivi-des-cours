@@ -1,7 +1,13 @@
 /* Main Application */
 #header h1 {
-    /*background: url("../img/logo_crf.gif") no-repeat scroll 0 0 transparent;*/
-    height: 177px;
+    background: url("../img/logo-crf.png") no-repeat scroll 0 0 transparent;
+    height: 60px;
+    left: 2px;
+    line-height: 600px;
+    overflow: hidden;
+    position: relative;
+    top: 14px;
+    width: 215px;
 }
 h1 { font-size: 20px; }
 h2 { font-size: 16px; }
@@ -12,9 +18,11 @@ h2 { font-size: 16px; }
 .clear_list {
     clear: both; float: none; height: 0;
 }
-#search .alert{
+#search .connected_branch {
     padding:4px 35px 4px 14px;
     margin-bottom:20px;
+    color: #FFFFFF;
+    font-size: 17px;
 }
 
 #content .container-fluid .row-fluid:first-child {

@@ -1,9 +1,9 @@
 <div id="header">
-    <h1><a href="./dashboard.html">Croix-Rouge Française</a></h1>		
+    <h1><a href="{{ path('welcome') }}">Croix-Rouge Française</a></h1>		
 </div>
 <div id="search">
-    <div class="alert alert-info">
-       <i class="icon-info"></i> Connecté sur <strong>{{ app.session.get('organizationBranch').name }}</strong>
+    <div class="connected_branch">
+       <i class="icon-info"></i><strong>{{ app.session.get('organizationBranch').name }}</strong>
     </div>
 </div>
 <div id="user-nav" class="navbar navbar-inverse">
