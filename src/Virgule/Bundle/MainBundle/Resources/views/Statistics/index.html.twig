@@ -44,7 +44,7 @@
             var data = google.visualization.arrayToDataTable([
               ['Sexe', 'Apprenants'],
               {% for students_gender in students_genders %}
-                [{% if students_gender['gender'] == 'F' %} 'Femmes', {% else %} 'Hommes', {% endif %}, {{ students_gender['nb_students'] }}]{% if loop.index != loop.last %},{% endif %}          
+                [{% if students_gender['gender'] == 'F' %} 'Femmes', {% else %} 'Hommes', {% endif %} {{ students_gender['nb_students'] }}]{% if loop.index != loop.last %},{% endif %}          
               {% endfor %}
             ]);
 
