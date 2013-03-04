@@ -5,7 +5,7 @@
 
         <script type='text/javascript' src='https://www.google.com/jsapi'></script>
         <script type='text/javascript'>
-         var bgColor = '#FBFBFB';
+         var bgColor = '#EEEEEE';
 
          google.load('visualization', '1', {'packages': ['geochart']});
          google.setOnLoadCallback(drawRegionsMap);
@@ -39,7 +39,7 @@
             var data = google.visualization.arrayToDataTable([
               ['Sexe', 'Apprenants'],
               {% for students_gender in students_genders %}
-                ['{{ students_gender['gender'] }}',     {{ students_gender['nb_students'] }}]{% if loop.index != loop.last %},{% endif %}          
+                [{% if students_gender['gender'] == 'F' %} 'Femmes' {% else %} 'Hommes' {% endif %}, {{ students_gender['nb_students'] }}]{% if loop.index != loop.last %},{% endif %}          
               {% endfor %}
             ]);
 
@@ -59,19 +59,31 @@
 {% block content_title %}Statistiques de la session en cours{% endblock %}
 {%block submenu %}{% endblock %}
 {% block main_content %}
-<div id="results_actions">
-    <h1>Statistiques de la session en cours</h1>
-    <h2>Apprenants</h2>
-    {{ total_students }} apprenants:<br />
-        <ul>
-            {% for students_gender in students_genders %}
-                <li class="user_{{ students_gender['gender'] }}">{{ students_gender['nb_students'] }}</li>
-            {% endfor %}
-        </ul>
-     <div id="gender_div" style="width: 450px; height: 250px;"></div>
-     <div id="worldmap_div" style="width: 900px; height: 500px;"></div>
-    <h2>Niveaux</h2>
-    
-    <h2>Cours</h2>
+<div id="results_actions">    
+    <div class="row-fluid">
+	<div class="span3">
+            <h2>Apprenants</h2>
+            {{ total_students }} apprenants:<br />
+                <ul>
+                    {% for students_gender in students_genders %}
+                        <li class="user_{{ students_gender['gender'] }}">{{ students_gender['nb_students'] }}</li>
+                    {% endfor %}
+                </ul>
+             <div id="gender_div" style="width: 450px; height: 250px;"></div>
+        </div>
+	<div class="span9">
+             <div id="worldmap_div" style="width: 900px; height: 500px;"></div>
+        </div>
+    </div> 
+    <div class="row-fluid">
+	<div class="span12">
+            <h2>Niveaux</h2>
+        </div>
+    </div> 
+    <div class="row-fluid">
+	<div class="span12"> 
+            <h2>Cours</h2>
+        </div>
+    </div> 
 </div>
 {% endblock %}
