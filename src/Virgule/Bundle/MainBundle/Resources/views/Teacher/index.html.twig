@@ -15,6 +15,7 @@
         <table class="table table-bordered data-table">
         <thead>
             <tr>
+                <th></th>
                 <th>Nom</th>
                 <th>Téléphone fixe</th>
                 <th>Téléphone portable</th>
@@ -26,6 +27,13 @@
         <tbody>
         {% for entity in entities %}
            <tr>
+                <td class="center">
+                    {% if entity.isActive %}
+                        <img src="{{ asset('img/icons/user_green.png') }}" title="Utilisateur actif" alt="Utilisateur actif" />
+                    {% else %}
+                        <img src="{{ asset('img/icons/user_red.png') }}" title="Utilisateur inactif" alt="Utilisateur inactif" />
+                    {% endif %}
+                </td>
                 <td>{{ entity.firstName }} {{ entity.lastName }}</td>
                 <td>{{ entity.phoneNumber }}</td>
                 <td>{{ entity.cellphoneNumber }}</td>
