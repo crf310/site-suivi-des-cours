@@ -33,7 +33,7 @@
                     <td>
                         <ul>
                         {% for teacher in teachers_array[entity['course_id']] %}
-                            <li><a href="{{ path('teacher_show', { 'id': teacher['teacher_id'] }) }}">{{ teacher['teacher_firstName'] }} {{ teacher['teacher_lastName'] }}</a></li>
+                            <li><a href="{{ path('teacher_show', { 'id': teacher['teacher_id'] }) }}">{{ teacher['teacher_firstName'] }} {{ teacher['teacher_lastName'] }}</a></li>{% if teacher != loop.last %},{% endif %}
                         {% endfor %}
                         </ul>
                     </td>
