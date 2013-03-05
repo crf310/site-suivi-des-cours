@@ -59,6 +59,10 @@ h2 { font-size: 16px; }
     margin: -2px 5px 2px 5px !important; 
     vertical-align: middle;
 }
+
+.role_select {
+    width: 200  px;
+}
 i.icon-go {
     background-image: url('../img/icons/arrow_right.png');
 }

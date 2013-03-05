@@ -35,8 +35,9 @@ class TeacherType extends AbstractType {
                     'expanded' => false,
                     'multiple' => false,
                     'property' => 'label',
-                    'property_path' => 'role',
-                ));
+                    'property_path' => 'role',            
+                    'attr' => array('class' => 'role_select')
+                 ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
