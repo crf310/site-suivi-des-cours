@@ -105,9 +105,15 @@ class TeacherController extends AbstractVirguleController {
      */
     public function createAction(Request $request) {
         $entity = new Teacher();
-        $entity->setRegistrationDate(new \DateTime('now'));
         $form = $this->createForm(new TeacherType(), $entity);
-        $form->bind($request);
+        $form->bind($request);        
+        
+        $entity->setRegistrationDate(new \DateTime('now'));
+        
+        $em = $this->getDoctrine()->getManager();
+        $currentBranchId = $this->getRequest()->getSession()->get('organizationBranchId');
+        $organizationBranch = $em->getRepository('VirguleMainBundle:OrganizationBranch')->find($currentBranchId);
+        $entity->addOrganizationBranch($organizationBranch);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
