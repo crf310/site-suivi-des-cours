@@ -25,16 +25,16 @@ class TeacherController extends AbstractVirguleController {
      * Lists all Teacher entities.
      *
      * @Route("/")
-     * @Route("/page/{page}", requirements={"page" = "\d+"}, defaults={"page" = "1"}, name="teacher_index")
+     * @Route("/page/{active}", requirements={"active" = "^[a-zA-Z]+$"}, defaults={"page" = "true"}, name="teacher_index")
      * @Template()
      */
-    public function indexAction($page=1) {        
+    public function indexAction($active=true) {        
         $em = $this->getDoctrine()->getManager();
 
         $organizationBranchId = $this->getRequest()->getSession()->get('organizationBranchId');
-        $entities = $em->getRepository('VirguleMainBundle:Teacher')->getTeachersByStatus($organizationBranchId, true);
+        $entities = $em->getRepository('VirguleMainBundle:Teacher')->getTeachersByStatus($organizationBranchId, $active);
 
-        return Array('entities' => $entities);
+        return Array('entities' => $entities, 'active' => $active);
     }
 
     /**
