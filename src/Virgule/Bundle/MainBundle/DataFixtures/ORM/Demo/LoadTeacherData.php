@@ -77,12 +77,24 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $secretary->setRole($this->getReference('secretary-role'));
         $secretary->addOrganizationBranch($this->getReference('deleg-3-10'));
         
+        $inactiveUser = new Teacher();
+        $inactiveUser->setUsername("secretary");
+        $inactiveUser->setPassword("password");
+        $inactiveUser->setFirstName("Guillaume");
+        $inactiveUser->setLastName("Lucazeau");
+        $inactiveUser->setEmailAddress("glucazeau@example.com");
+        $inactiveUser->setRegistrationDate(new \DateTime('now'));
+        $inactiveUser->setRole($this->getReference('admin-role'));
+        $inactiveUser->addOrganizationBranch($this->getReference('deleg-3-10'));
+        
         $manager->persist($prof1);
         $manager->persist($prof2);
         $manager->persist($prof3);
         $manager->persist($prof4);
         $manager->persist($guest);
         $manager->persist($secretary);
+        $inactiveUser->persist($secretary);
+        
         
         $this->addReference('prof1', $prof1);
         $this->addReference('prof2', $prof2);        
