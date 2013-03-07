@@ -34,7 +34,6 @@
                     <td class="center">
                         <img src="{{ asset('img/drapeaux/' ~ entity['isoCode'] ~ '.png')}}" alt="{{  entity['isoCode'] }}" title="{{  entity['label'] }}" />
                     </td>
-
                     <td class="center">
                         {% if entity['gender'] == 'F' %}
                             <img src="{{ asset('img/icons/user_female.png') }}" />
@@ -50,22 +49,14 @@
                     <td>{{ entity['registrationDate'] | date("d/m/Y") }}</td>
                     <td><insert class level></td>
                     <td>
-                        <ul>
                         {% for course in courses_array[entity['id']] %}
-                            <li><a href="{{ path('course_show', { 'id': course['course_id'] }) }}">{{ course['course_id'] }}</a></li>
+                            <a href="{{ path('course_show', { 'id': course['course_id'] }) }}">{{ course['course_id'] }}</a>{% if course != loop.last %},&nbsp;{% endif %}
                         {% endfor %}
-                        </ul>
                     </td>
                     <td><a href="{{ path('teacher_show', { 'id': entity['teacher_id'] }) }}">{{ entity['teacher_firstName'] }} {{ entity['teacher_lastName'] }}</td>
                     <td>
-                        <ul>
-                            <li>
-                                <a href="{{ path('student_show', { 'id':  entity['id'] }) }}">show</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('student_edit', { 'id':  entity['id'] }) }}">edit</a>
-                            </li>
-                        </ul>
+                        <a href="{{ path('student_show', { 'id':  entity['id'] }) }}">show</a>&nbsp;
+                        <a href="{{ path('student_edit', { 'id':  entity['id'] }) }}">edit</a>
                     </td>
                 </tr>
                 {% endfor %}

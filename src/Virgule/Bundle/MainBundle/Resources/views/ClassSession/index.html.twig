@@ -28,14 +28,8 @@
                     <td>le {{ entity['course_dayOfWeek'] | day }} de {{ entity['course_startTime'] | date('H:i') }} à {{ entity['course_endTime']| date('H:i') }}</td>
                     <td>{{ entity['sessionTeacher_firstName'] }} {{ entity['sessionTeacher_lastName'] }}</td>
                     <td>
-                        <ul>
-                            <li>
-                                <a href="{{ path('classsession_show', { 'id': entity['id'] }) }}">Voir le détail</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('classsession_edit', { 'id': entity['id'] }) }}">Modifier</a>
-                            </li>
-                        </ul>
+                        <a href="{{ path('classsession_show', { 'id': entity['id'] }) }}">Voir le détail</a>&nbsp;
+                        <a href="{{ path('classsession_edit', { 'id': entity['id'] }) }}">Modifier</a>
                     </td>
                 </tr>
             {% endfor %}

@@ -45,14 +45,8 @@
                 <td><a href="mailto:{{ entity.emailAddress }}">{{ entity.emailAddress }}</a></td>
                 <td>{{ entity.role }}</td>
                 <td class="entity_actions">
-                    <ul>
-                        <li>
-                            <a href="{{ path('teacher_show', { 'id': entity.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('teacher_edit', { 'id': entity.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    <a href="{{ path('teacher_show', { 'id': entity.id }) }}">show</a>&nbsp;
+                    <a href="{{ path('teacher_edit', { 'id': entity.id }) }}">edit</a>
                 </td>
             </tr>
         {% endfor %}

@@ -31,26 +31,16 @@
                     <td>{{ entity['startTime'] | date('H:i') }} - {{ entity['endTime'] | date('H:i') }}</td>
                     <td>{{ entity['classlevel'] }}</td>
                     <td>
-                        <ul>
                         {% for teacher in teachers_array[entity['course_id']] %}
-                            <li><a href="{{ path('teacher_show', { 'id': teacher['teacher_id'] }) }}">{{ teacher['teacher_firstName'] }} {{ teacher['teacher_lastName'] }}</a></li>{% if teacher != loop.last %},{% endif %}
+                            <a href="{{ path('teacher_show', { 'id': teacher['teacher_id'] }) }}">{{ teacher['teacher_firstName'] }} {{ teacher['teacher_lastName'] }}</a>{% if teacher != loop.last %},&nbsp;{% endif %}
                         {% endfor %}
-                        </ul>
                     </td>
                     <td>{{ entity['classroom'] }}</td> 
                     <td class="center">{{ entity['nb_students'] }}</td>
                     <td>
-                        <ul>
-                            <li>
-                                <a href="{{ path('course_show', { 'id': entity['course_id'] }) }}">show</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('course_edit', { 'id': entity['course_id'] }) }}">edit</a>
-                            </li>                    
-                            <li>
-                                <a href="{{ path('classsession_add', { 'course_id': entity['course_id'] }) }}">Enregistrer un compte-rendu</a>
-                            </li>
-                        </ul>
+                        <a href="{{ path('course_show', { 'id': entity['course_id'] }) }}">show</a>&nbsp;
+                        <a href="{{ path('course_edit', { 'id': entity['course_id'] }) }}">edit</a>&nbsp;
+                        <a href="{{ path('classsession_add', { 'course_id': entity['course_id'] }) }}">Enregistrer un compte-rendu</a>
                     </td>
                 </tr>
             {% endfor %}
