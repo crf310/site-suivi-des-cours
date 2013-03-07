@@ -15,6 +15,7 @@ class VirguleExtension extends \Twig_Extension {
     public function getFilters() {
         return array(
             'day' => new \Twig_Filter_Method($this, 'dayFilter'),
+            'phoneNumber' => new \Twig_Filter_Method($this, 'phoneNumberFilter'),
         );
     }
     
@@ -26,6 +27,16 @@ class VirguleExtension extends \Twig_Extension {
             $day = ucfirst($day);
         }
         return $day;
+    }
+    
+    public function phoneNumberFilter($phoneNumber) {
+        $sPhoneNumber = '';
+        if (isset($phoneNumber) && !empty($phoneNumber)) {
+            $d = ' ';
+            $sPhoneNumber = $phoneNumber[0] . $phoneNumber[1] . $d .$phoneNumber[2] . $phoneNumber[3] . $d .$phoneNumber[4] . $phoneNumber[5] . $d .$phoneNumber[6] . $phoneNumber[7] . $d .$phoneNumber[8] . $phoneNumber[9];
+
+        }
+        return $sPhoneNumber;
     }
 
     public function getName() {

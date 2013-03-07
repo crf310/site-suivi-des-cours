@@ -44,8 +44,8 @@
                     <td>
                         <a href="{{ path('student_show', { 'id': entity['id'] }) }}">{{ entity['firstname'] }} {{ entity['lastname'] }}</a>
                     </td>
-                    <td>{{ entity['phoneNumber'] }}</td>
-                    <td>{{ entity['cellphoneNumber'] }}</td>
+                    <td>{{ entity['phoneNumber']|phoneNumber }}</td>
+                    <td>{{ entity['cellphoneNumber']|phoneNumber }}</td>
                     <td>{{ entity['registrationDate'] | date("d/m/Y") }}</td>
                     <td><insert class level></td>
                     <td>
