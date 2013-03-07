@@ -18,7 +18,8 @@
                 <tr>
                     <th>Pays</th>
                     <th>Sexe</th>
-                    <th>Prénom - Nom</th>
+                    <th>Prénom</th>
+                    <th>Nom</th>
                     <th>Téléphone fixe</th>
                     <th>Téléphone portable</th>
                     <th>Date d'inscription</th>
@@ -41,9 +42,8 @@
                             <img src="{{ asset('img/icons/user.png') }}" />
                         {% endif %}
                     </td>
-                    <td>
-                        <a href="{{ path('student_show', { 'id': entity['id'] }) }}">{{ entity['firstname'] }} {{ entity['lastname'] }}</a>
-                    </td>
+                    <td>{{ entity['firstname'] }}</td>
+                    <td>{{ entity['lastname'] }}</td>
                     <td>{{ entity['phoneNumber']|phoneNumber }}</td>
                     <td>{{ entity['cellphoneNumber']|phoneNumber }}</td>
                     <td>{{ entity['registrationDate'] | date("d/m/Y") }}</td>
