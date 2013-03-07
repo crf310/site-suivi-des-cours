@@ -93,7 +93,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($prof4);
         $manager->persist($guest);
         $manager->persist($secretary);
-        $inactiveUser->persist($secretary);
+        $manager->persist($inactiveUser);
         
         
         $this->addReference('prof1', $prof1);
