@@ -85,8 +85,14 @@ i.icon-user_add {
 i.icon-user_edit {
     background-image: url('../img/icons/user_edit.png');
 }
-i.icon-user_delete {
-    background-image: url('../img/icons/user_delete.png');
+i.icon-add {
+    background-image: url('../img/icons/add.png');
+}
+i.icon-user-inactive {
+    background-image: url('../img/icons/user_red.png');
+}
+i.icon-user-active {
+    background-image: url('../img/icons/user_green.png');
 }
 
 i.icon-export {
