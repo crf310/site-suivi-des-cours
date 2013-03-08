@@ -1,9 +1,22 @@
-{% extends '::base.html.twig' %}
-{% block body %}
-<div id="results_actions">
-    <h1>{{ environment }}.log</h1>
-    <p>
-        <textarea rows="52" cols="200">{{ log_content }}</textarea>
-    </p>
-</div>
+{% extends '::main_content.html.twig' %}
+{% block content_title %}Administration{% endblock %} 
+{%block submenu %}
+{% endblock %}
+{% block main_content %}
+    <div class="widget-box" id="log_file">
+        <div class="widget-title">
+                <span class="icon">
+                        <i class="icon-align-justify"></i>									
+                </span>
+                <h5>Fichier de log: {{ environment }}.log</h5>
+        </div>
+        <div class="widget-content nopadding">            
+            <div class="control-group">
+                    <label class="control-label"></label>
+                    <div class="controls">
+                            <textarea>{{ log_content }}</textarea>
+                    </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

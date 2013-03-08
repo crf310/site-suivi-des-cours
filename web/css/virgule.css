@@ -167,3 +167,9 @@ tbody ul li{
 td.center {
     text-align: center;
 }
+
+/* Administration */
+#log_file textarea {
+	width: 98%;;
+	height: 650px;
+}
