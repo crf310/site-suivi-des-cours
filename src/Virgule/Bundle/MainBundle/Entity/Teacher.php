@@ -5,12 +5,15 @@ namespace Virgule\Bundle\MainBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Virgule\Bundle\MainBundle\Entity\Teacher
  *
  * @ORM\Table(name="teacher")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\TeacherRepository")
+ * @UniqueEntity("username")
  */
 class Teacher implements UserInterface, EquatableInterface {
 
@@ -19,7 +22,7 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="AUTO")**
      */
     protected $id;
 
@@ -34,6 +37,8 @@ class Teacher implements UserInterface, EquatableInterface {
      * @var string $lastName
      *
      * @ORM\Column(name="last_name", type="string", length=50, nullable=false)
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     protected $lastName;
 
@@ -41,6 +46,8 @@ class Teacher implements UserInterface, EquatableInterface {
      * @var string $firstName
      *
      * @ORM\Column(name="first_name", type="string", length=50, nullable=false)
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     protected $firstName;
 
@@ -62,13 +69,18 @@ class Teacher implements UserInterface, EquatableInterface {
      * @var string $emailAddress
      *
      * @ORM\Column(name="email_address", type="string", length=50, nullable=true)
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Email()
      */
     protected $emailAddress;
 
     /**
      * @var string $username
      *
-     * @ORM\Column(name="username", type="string", length=50, nullable=false)
+     * @ORM\Column(name="username", type="string", length=50, nullable=false, unique = true)
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     protected $username;
 
@@ -76,6 +88,8 @@ class Teacher implements UserInterface, EquatableInterface {
      * @var string $password
      *
      * @ORM\Column(name="password", type="string", length=50, nullable=false)
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     protected $password;
 
