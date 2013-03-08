@@ -78,7 +78,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $secretary->addOrganizationBranch($this->getReference('deleg-3-10'));
         
         $inactiveUser = new Teacher();
-        $inactiveUser->setUsername("secretary");
+        $inactiveUser->setUsername("glucazeau");
         $inactiveUser->setPassword("password");
         $inactiveUser->setFirstName("Guillaume");
         $inactiveUser->setLastName("Lucazeau");
