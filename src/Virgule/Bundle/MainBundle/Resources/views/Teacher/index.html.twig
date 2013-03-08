@@ -1,10 +1,10 @@
 {% extends '::main_content.html.twig' %}
 {% block content_title %}Listes des formateurs{% endblock %}
 {%block submenu %}
-    {% if active %}
-        <a class="btn tip-bottom" title="Voir les utilisateurs inactifs" href="{{ path('teacher_index', { 'active': 'false' }) }}"> <i class="icon-user-inactive"></i>Voir les utilisateurs inactifs</a>
+    {% if status == 'active' %}
+        <a class="btn tip-bottom" title="Voir les utilisateurs inactifs" href="{{ path('teacher_index', { 'status': 'inactive' }) }}"> <i class="icon-user-inactive"></i>Voir les utilisateurs inactifs</a>
     {% else %}
-        <a class="btn tip-bottom" title="Voir les utilisateurs actifs" href="{{ path('teacher_index', { 'active': 'true' }) }}"> <i class="icon-user-active"></i>Voir les utilisateurs actifs</a>
+        <a class="btn tip-bottom" title="Voir les utilisateurs actifs" href="{{ path('teacher_index', { 'status': 'active' }) }}"> <i class="icon-user-active"></i>Voir les utilisateurs actifs</a>
     {% endif %}
     <a class="btn tip-bottom" title="Ajouter un compte utilisateur" href="{{ path('teacher_new') }}"> <i class="icon-add"></i>Nouvel utilisateur</a>
 {% endblock %}
