@@ -90,6 +90,7 @@ class Teacher implements UserInterface, EquatableInterface {
      * @ORM\Column(name="password", type="string", length=50, nullable=false)
      * @Assert\NotBlank()
      * @Assert\NotNull()
+     * @Assert\MinLength("3");
      */
     protected $password;
 
