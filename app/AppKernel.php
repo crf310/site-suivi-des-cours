@@ -28,6 +28,7 @@ class AppKernel extends Kernel
            
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

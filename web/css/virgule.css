@@ -39,6 +39,7 @@ h2 { font-size: 16px; }
     left: 230px;
     color: #FFFFFF;
 }
+/* Side menu */
 #sidebar i {   
     background-repeat: no-repeat;
     background-attachment: scroll;
@@ -57,6 +58,37 @@ h2 { font-size: 16px; }
 }
 #sidebar > ul > li > a:hover {
     color: #FFFFFF;
+}
+/* Take same style but use "current" from KnpMenu instead of "active" */
+#sidebar > ul > li.current {
+	box-shadow: 0 2px 4px rgba(0,0,0,0.2) inset;
+}
+#sidebar > ul > li.current > a {
+	background: url("../img/menu-active.png") no-repeat scroll right center transparent !important;
+}
+#sidebar a.welcome i {
+    background-image: url('../img/icons/house.png');
+}
+#sidebar a.minutes i {
+    background-image: url('../img/icons/page.png');
+}
+#sidebar a.students i {
+    background-image: url('../img/icons/group.png');
+}
+#sidebar a.teachers i {
+    background-image: url('../img/icons/user_suit.png');
+}
+#sidebar a.schedule i {
+    background-image: url('../img/icons/calendar.png');
+}
+#sidebar a.statistics i {
+    background-image: url('../img/icons/chart_bar.png');
+}
+#sidebar a.user_profile i {
+    background-image: url('../img/icons/telephone.png');
+}
+#sidebar a.administration i {
+    background-image: url('../img/icons/cog.png');
 }
 
 /* Actions button */
@@ -100,30 +132,6 @@ i.icon-export {
 }
 i.icon-info {
     background-image: url('../img/icons/information.png');
-}
-#sidebar i.welcome {
-    background-image: url('../img/icons/house.png');
-}
-#sidebar i.minutes {
-    background-image: url('../img/icons/page.png');
-}
-#sidebar i.students {
-    background-image: url('../img/icons/group.png');
-}
-#sidebar i.teachers {
-    background-image: url('../img/icons/user_suit.png');
-}
-#sidebar i.schedule {
-    background-image: url('../img/icons/calendar.png');
-}
-#sidebar i.statistics {
-    background-image: url('../img/icons/chart_bar.png');
-}
-#sidebar i.user_profile {
-    background-image: url('../img/icons/telephone.png');
-}
-#sidebar i.administration {
-    background-image: url('../img/icons/cog.png');
 }
 
 li.user_M { list-style-image:url('../img/icons/user.png'); }

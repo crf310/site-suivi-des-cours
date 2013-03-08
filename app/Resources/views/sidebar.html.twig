@@ -1,11 +1,3 @@
 		<div id="sidebar">
-			<ul>
-                            <li class="active"><a href="{{ path('welcome') }}"><i class="welcome"></i> <span>Accueil</span></a></li>
-                            <li><a href="{{ path('classsession_index') }}"><i class="minutes"></i> <span>Compte-rendus</span></a></li>
-                            <li><a href="{{ path('course_index') }}"><i class="schedule"></i> <span>Planning des cours</span></a></li>
-                            <li><a href="{{ path('student_index') }}"><i class="students"></i> <span>Apprenants</span></a></li>
-                            <li><a href="{{ path('teacher_index') }}"><i class="teachers"></i> <span>Formateurs</span></a></li>
-                            <li><a href="{{ path('stats_index') }}"><i class="statistics"></i> <span>Statistiques</span></a></li>
-                            <li><a href="{{ path('admin_show_logs') }}"><i class="administration"></i> <span>Administration</span></a></li>   
-			</ul>		
+                        {{ knp_menu_render('VirguleMainBundle:MenuBuilder:mainMenu', {'template': 'VirguleMainBundle:Menu:knp_menu.html.twig'}) }}
 		</div>
