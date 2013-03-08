@@ -25,7 +25,7 @@ class TeacherController extends AbstractVirguleController {
      * Lists all Teacher entities.
      *
      * @Route("/")
-     * @Route("/{status}", requirements={"status" = "^[a-zA-Z]+$"}, defaults={"status" = "active"}, name="teacher_index")
+     * @Route("/status/{status}", requirements={"status" = "^[a-zA-Z]+$"}, defaults={"status" = "active"}, name="teacher_index")
      * @Template()
      */
     public function indexAction($status="active") {
