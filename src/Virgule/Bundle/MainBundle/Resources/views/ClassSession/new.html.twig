@@ -1,22 +1,27 @@
-{% extends '::base.html.twig' %}
-{% block body %}
-<div id="errorMsg">
-{{ form_errors(form) }}
-</div>
-<h1>Nouveau compte-rendu</h1>
-Cours: {{ course }}
-<form action="{{ path('classsession_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
+{% extends '::main_content.html.twig' %}
+{% block content_title %}Ajouter un compte-rendu{% endblock %}
+ {%block submenu %}{% endblock %}
+{% block main_content %}
+<form action="{{ path('classsession_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+            <!--
+        <div class="alert alert-error alert-block">
+        <a class="close" data-dismiss="alert" href="#">×</a>
+        <h4 class="alert-heading">Erreur dans la saisie</h4>
+        {{ form_errors(form) }}
+    </div>-->
+    <div class="widget-box">
+        <div class="widget-title">
+                <span class="icon">
+                        <i class="icon-align-justify"></i>									
+                </span>
+                <h5>Cours: {{ course }}</h5>
+        </div>
+        <div class="widget-content nopadding">
+            {{ form_widget(form) }}
+                <div class="form-actions">                                     
+                    <input class="btn" type="submit" value="Créer le compte" />
+                </div>
+        </div>
+    </div>        
 </form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('classsession_index') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
 {% endblock %}
