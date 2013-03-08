@@ -55,6 +55,9 @@ class Teacher implements UserInterface, EquatableInterface {
      * @var string $phoneNumber
      *
      * @ORM\Column(name="phone_number", type="string", length=10, nullable=true)
+     * @Assert\Type("integer");
+     * @Assert\Min("10");
+     * @Assert\Max("10");
      */
     protected $phoneNumber;
 
@@ -62,6 +65,9 @@ class Teacher implements UserInterface, EquatableInterface {
      * @var string $cellphoneNumber
      *
      * @ORM\Column(name="cellphone_number", type="string", length=10, nullable=true)
+     * @Assert\Type("integer");
+     * @Assert\Min("10");
+     * @Assert\Max("10");
      */
     protected $cellphoneNumber;
 
