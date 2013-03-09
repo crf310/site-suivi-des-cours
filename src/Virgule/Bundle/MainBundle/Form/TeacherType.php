@@ -22,7 +22,7 @@ class TeacherType extends AbstractType {
                 ->add('username')
                 ->add('password', 'repeated', array(
                     'type' => 'password',
-                    'invalid_message' => 'The password fields must match.',
+                    'invalid_message' => 'Les mots de passe ne correspondent pas',
                     'options' => array('label' => 'Mot de passe'),
                 ))
                 /*->add('registrationDate', 'date', array(

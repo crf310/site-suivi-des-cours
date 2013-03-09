@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="teacher")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\TeacherRepository")
- * @UniqueEntity("username")
+ * @UniqueEntity(fields="username", message="Ce nom d'utilisateur est déjà pris")
  */
 class Teacher implements UserInterface, EquatableInterface {
 
@@ -37,7 +37,7 @@ class Teacher implements UserInterface, EquatableInterface {
      * @var string $lastName
      *
      * @ORM\Column(name="last_name", type="string", length=50, nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Merci de saisir un nom de famille")
      * @Assert\NotNull()
      */
     protected $lastName;
@@ -46,7 +46,7 @@ class Teacher implements UserInterface, EquatableInterface {
      * @var string $firstName
      *
      * @ORM\Column(name="first_name", type="string", length=50, nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Merci de saisir un prénom")
      * @Assert\NotNull()
      */
     protected $firstName;
@@ -55,9 +55,8 @@ class Teacher implements UserInterface, EquatableInterface {
      * @var string $phoneNumber
      *
      * @ORM\Column(name="phone_number", type="string", length=10, nullable=true)
-     * @Assert\Type("integer");
-     * @Assert\Min("10");
-     * @Assert\Max("10");
+     * @Assert\MinLength(limit=10, message="Le numéro de téléphone doit comporter {{ limit }} chiffres")
+     * @Assert\MinLength(limit=10, message="Le numéro de téléphone ne peut excéder {{ limit }} chiffres")
      */
     protected $phoneNumber;
 
@@ -65,9 +64,8 @@ class Teacher implements UserInterface, EquatableInterface {
      * @var string $cellphoneNumber
      *
      * @ORM\Column(name="cellphone_number", type="string", length=10, nullable=true)
-     * @Assert\Type("integer");
-     * @Assert\Min("10");
-     * @Assert\Max("10");
+     * @Assert\MinLength(limit=10, message="Le numéro de téléphone doit comporter {{ limit }} chiffres")
+     * @Assert\MaxLength(limit=10, message="Le numéro de téléphone ne peut excéder {{ limit }} chiffres")
      */
     protected $cellphoneNumber;
 
@@ -77,7 +75,7 @@ class Teacher implements UserInterface, EquatableInterface {
      * @ORM\Column(name="email_address", type="string", length=50, nullable=true)
      * @Assert\NotBlank()
      * @Assert\NotNull()
-     * @Assert\Email()
+     * @Assert\Email(message="Cette adresse est invalide")
      */
     protected $emailAddress;
 
@@ -85,7 +83,7 @@ class Teacher implements UserInterface, EquatableInterface {
      * @var string $username
      *
      * @ORM\Column(name="username", type="string", length=50, nullable=false, unique = true)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Merci de saisir un nom d'utilisateur")
      * @Assert\NotNull()
      */
     protected $username;
@@ -96,7 +94,7 @@ class Teacher implements UserInterface, EquatableInterface {
      * @ORM\Column(name="password", type="string", length=50, nullable=false)
      * @Assert\NotBlank()
      * @Assert\NotNull()
-     * @Assert\MinLength("3");
+     * @Assert\MinLength(limit="8", message="Le mot de passe doit comporter au moins {{ limit }} caractères");
      */
     protected $password;
 
