@@ -107,6 +107,7 @@ class Student {
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="student", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"date" = "DESC"}).
      */
     private $comments;
 
