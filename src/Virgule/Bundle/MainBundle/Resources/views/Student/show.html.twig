@@ -1,57 +1,128 @@
-{% extends '::base.html.twig' %}
-{% block body %}
-<h1>{{ entity.firstname }} {{ entity.lastname }} 
-    <img src="{{ asset('images/drapeaux/' ~ entity.nativeCountry.isoCode ~ '.png')}}" alt="{{  entity.nativeCountry.isoCode }}" title="{{  entity.nativeCountry.label }}" />
-                {% if entity.gender == 'F' %}
-    <img src="{{ asset('images/icons/user_female.png') }}" />
-                {% else %}
-    <img src="{{ asset('images/icons/user.png') }}" />
-                {% endif %}
-</h1>
-
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Fiche créée le</th>
-            <td>{{ entity.registrationDate|date('d/m/Y') }}</td>
-        </tr>
-        <tr>
-            <th>Né le</th>
-            <td>{{ entity.birthdate|date('Y-m-d H:i:s') }}</td>
-        </tr>
-        <tr>
-            <th>Téléphone</th>
-            <td>{{ entity.phoneNumber }}</td>
-        </tr>
-        <tr>
-            <th>Téléphone portable</th>
-            <td>{{ entity.cellphoneNumber }}</td>
-        </tr>
-        <tr>
-            <th>Addresse</th>
-            <td>{{ entity.address }} <br />{{ entity.zipcode }} {{ entity.city }}</td>
-        </tr>
-        <tr>
-            <th>Nationality</th>
-            <td>{{ entity.nationality }}</td>
-        </tr>
-        <tr>
-            <th>Maritalstatus</th>
-            <td>{{ entity.maritalStatus }}</td>
-        </tr>
-        <tr>
-            <th>Commentaires</th>
-            <td>
-                <ul>
-                {% for comment in entity.comments %}
-                        <li>
-                            le  {{ comment.date|date("d/m/Y") }} par <a href="{{ path('teacher_show', { 'id': comment.teacher.id }) }}">{{ comment.teacher.firstName }}  {{ comment.teacher.lastName }}</a>: <br />
-                    {{ comment.comment|raw }}
-                        </li>
-                {% endfor %}
-                    </ul>
-                </td>
-            </tr>
+{% extends '::main_content.html.twig' %}
+{% block content_title %}Fiche apprenant{% endblock %}
+{%block submenu %}
+    {% if app.user.id == entity.id %}
+        <a class="btn tip-bottom" href="{{ path('student_edit', { 'id': entity.id }) }}"> <i class="icon-user_edit"></i>Modifier la fiche</a>
+    {% endif %}    
+    <!--<form action="{{ path('student_delete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}-->
+        <button  class="btn tip-bottom" type="submit"><i class="icon-user_delete"></i>Supprimer la fiche</button>
+    <!-</form>-->
+{% endblock %}
+{% block main_content %}
+<div class="container-fluid">
+    <form class="form-horizontal not-form-horizontal">
+        <div class="row-fluid">
+            <div class="span6">
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <span class="icon">
+                                    <i class="icon-user"></i>
+                            </span>
+                            <h5>{{ entity.firstName }} {{ entity.lastName }}</h5>
+                        </div>            
+                        <div class="widget-content nopadding">
+                            <div class="control-group">
+                                <label class="control-label">Inscrit(e) le </label>
+                                <div class="controls">{{ entity.registrationDate|date('d/m/Y') }}</div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Sexe</label>
+                                <div class="controls">
+                                {% if entity.gender == 'F' %}
+                                    <img src="{{ asset('images/icons/user_female.png') }}" />
+                                {% else %}
+                                    <img src="{{ asset('images/icons/user.png') }}" />
+                                {% endif %}
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Pays d'origine</label>
+                                <div class="controls">{{  entity.nativeCountry.label }}&nbsp;<img src="{{ asset('img/drapeaux/' ~ entity.nativeCountry.isoCode ~ '.png')}}" alt="{{  entity.nativeCountry.isoCode }}" title="{{  entity.nativeCountry.label }}" /></div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Date de naissance</label>
+                                <div class="controls">{{ entity.birthdate|date('d/m/Y') }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-box">
+                        <div class="widget-title"><h5>Coordonnées</h5></div> 
+                        <div class="widget-content nopadding"> 
+                            <div class="control-group">
+                                <label class="control-label">Téléphone</label>
+                                <div class="controls">{{ entity.phoneNumber|phoneNumber }}</div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Téléphone portable</label>
+                                <div class="controls">{{ entity.cellPhoneNumber|phoneNumber }}</div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Adresse</label>
+                                <div class="controls">{{ entity.address }} <br />{{ entity.zipcode }} {{ entity.city }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="span6">                    
+                    {% if courses|length > 0 %}
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <h5>Historique des inscriptions</h5>
+                            <span title="{{ courses|length }} inscriptions(s)" class="label label-info tip-left">{{ courses|length }}</span>
+                        </div>
+                        <div class="widget-content nopadding">
+                            <ul class="recent-posts">
+                                {% if nbEnrollment == 0 %}
+                                    Cet apprenant n'a été inscrit à aucun cours
+                                {% else %}
+                                    {% for course in courses %}
+                                        <li>
+                                        {% if previousSemester == course.semester.id %}
+                                            <span class="user-info">du {{ course.semester.startDate | date('d/m/Y') }} au {{ course.semester.endDate | date('d/m/Y') }}</span>
+                                        {% endif %}
+                                                <p>Niveau {{ course.classLevel.label }}, le {{ course.dayOfWeek | day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }} <a href="{{ path('course_show', { 'id': course.id }) }}">Voir</a></p>
+                                                 {% set previousSemester = course.semester.id %}
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
+                            </ul>
+                         </div>
+                        </div>
+                    {% endif %}
+                    {% if entity.comments.count > 0 %}
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <span class="icon"><i class="icon-comment"></i></span>
+                            <h5>Commentaires</h5><span title="{{ entity.comments.count }} commentaire(s)" class="label label-info tip-left">{{ entity.comments.count }}</span>
+                        </div>
+                        <div class="widget-content nopadding">
+                            <ul class="recent-comments">
+                                {% for comment in entity.comments %}
+                                <li>
+                                    <div class="comments">
+                                        <span class="user-info">
+                                            le  {{ comment.date|date("d/m/Y à H:i") }} par <a href="{{ path('teacher_show', { 'id': comment.teacher.id }) }}">{{ comment.teacher.firstName }}  {{ comment.teacher.lastName }}</a>
+                                        </span>
+                                        <p>
+                                            {{ comment.comment|raw }}
+                                        </p>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endif %}
+             </div><!-- span -->
+        </div><!-- row -->
+        <div class="row-fluid">
+            <div class="span6">
+            </div>
+        </div>
+    </form>
+</div>
+                                                
             <!--
             <tr>
                 <th>Profession</th>
@@ -86,50 +157,5 @@
                 <td>{{ entity.emergencyContactConnectionType }}</td>
             </tr>
             -->
-        </tbody>
-    </table>
-    <h2>Historique des inscriptions</h2>
-    {% if nbEnrollment == 0 %}
-        Cet apprenant n'a été inscrit à aucun cours
-    {% else %}
-        {% for course in courses %}
-            {% if previousSemester == course.semester.id %}
-                {% if not loop.first %}</ul>{% endif %}
-                <h3>du {{ course.semester.startDate | date('d/m/Y') }} au {{ course.semester.endDate | date('d/m/Y') }}</h3>
-                <ul>
-            {% endif %}
-                    <li>Niveau {{ course.classLevel.label }}, le {{ course.dayOfWeek | day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }} <a href="{{ path('course_show', { 'id': course.id }) }}">Voir</a></li>
-                 {% set previousSemester = course.semester.id %}
-            {% if loop.last %}</ul>{% endif %}
-        {% endfor %}
-    {% endif %}
-    </ul>
-    <ul class="record_actions">
-        <li>
-            <a href="{{ path('student_index') }}">
-                Back to the list
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('student_edit', { 'id': entity.id }) }}">
-                Edit
-            </a>
-        </li>
-        <li>
-            <form action="{{ path('student_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-                    <button type="submit">Delete</button>
-                </form>
-            </li>
-        </ul>
-        <form action="{{ path('student_comment_create', { 'student_id': entity.id }) }}" method="post" {{ form_enctype(commentForm) }} class="uniForm">
-            <fieldset>
-        {{ form_row(commentForm.comment, { 'label': 'Commentaire'}) }}
-        {{ form_rest(commentForm) }}
-                    <p>
-                        <button type="submit">Ajouter un commentaire</button>
-                    </p>
-                </fieldset>
-            </form>
-
+    
 {% endblock %}
