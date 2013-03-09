@@ -22,10 +22,11 @@ class StudentRepository extends EntityRepository {
         $q = $this
                 ->createQueryBuilder('s')
                 ->addSelect('s.id, s.firstname, s.lastname, s.gender, s.phoneNumber, s.cellphoneNumber, s.registrationDate, t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName')
-                ->addSelect('c2.id as course_id')
+                ->addSelect('c2.id as course_id, l.label as level')
                 ->addSelect('c.isoCode, c.label')
                 ->innerJoin('s.nativeCountry', 'c')
                 ->innerJoin('s.courses', 'c2')
+                ->innerJoin('c2.classLevel', 'l')
                 ->leftJoin('s.welcomedByTeacher', 't')
                 ->where('c2.semester = :semesterId')
                 ->add('orderBy', 's.lastname ASC, s.firstname ASC')

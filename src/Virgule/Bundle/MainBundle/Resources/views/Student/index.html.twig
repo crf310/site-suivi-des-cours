@@ -24,7 +24,7 @@
                     <th>Téléphone portable</th>
                     <th>Date d'inscription</th>
                     <th>Niveau conseillé</th>
-                    <th>Inscrit à</th>
+                    <th>Inscrit en</th>
                     <th>Accueilli par</th>
                     <th>Actions</th>
                 </tr>
@@ -50,7 +50,7 @@
                     <td><insert class level></td>
                     <td>
                         {% for course in courses_array[entity['id']] %}
-                            <a href="{{ path('course_show', { 'id': course['course_id'] }) }}">{{ course['course_id'] }}</a>{% if course != loop.last %},&nbsp;{% endif %}
+                            <a href="{{ path('course_show', { 'id': course['course_id'] }) }}">{{ course['level'] }}</a>{% if course != loop.last %},&nbsp;{% endif %}
                         {% endfor %}
                     </td>
                     <td><a href="{{ path('teacher_show', { 'id': entity['teacher_id'] }) }}">{{ entity['teacher_firstName'] }} {{ entity['teacher_lastName'] }}</td>

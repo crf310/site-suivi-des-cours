@@ -38,7 +38,7 @@ class StudentController extends AbstractVirguleController {
         foreach ($students as $key => $student) {
             
             // store courses for each student
-            $courses_array[$student['id']][] = Array('course_id' => $student['course_id']);
+            $courses_array[$student['id']][] = Array('course_id' => $student['course_id'], 'level' => $student['level']);
             
             // delete doubled line in students results (if we already processed a line for the same student
             if (array_key_exists($student['id'], $students_ids)) {
