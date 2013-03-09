@@ -50,7 +50,11 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
             $rand = rand(0, $nbCountries);
             $rc = strtoupper($countryCodes[$rand]);
             $s->setNativeCountry($this->getReference('country-' . $rc));
-
+            
+            $y = rand(2010, 2012);
+            $m = rand(01, 12);
+            $d = rand(01, 30);
+            $timestamp = strtotime($d . '-' . $m . '-' . $y);
             $s->setRegistrationDate(new \DateTime('now'));
             $s->setPhoneNumber("0102030405");
             $s->setCellphoneNumber("0607080910");
@@ -78,7 +82,11 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
             if (rand(0, 1)) {
                 for ($j = 1; $j <= rand(0, 2); $j++) {
                     $c = new Comment();
-                    $c->setDate(new \DateTime('now'));
+                    $y = rand(2012, 2013);
+                    $m = rand(01, 12);
+                    $d = rand(01, 30);
+                    $timestamp = strtotime($d . '-' . $m . '-' . $y);
+                    $c->setDate(new \DateTime("@$timestamp"));
                     $c->setComment($commentContent);
                     $c->setTeacher($this->getReference('prof' . rand(1, 50)));
                     $c->setStudent($this->getReference('student' . $i));
