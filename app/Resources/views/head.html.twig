@@ -21,13 +21,24 @@
         <script type="text/javascript" src="{{ asset('js/jquery.peity.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/unicorn.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/unicorn.tables.js') }}"></script>        
-        <script type="text/javascript" src="{{ asset('js/unicorn.interface.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/unicorn.tables.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/select2.min.js') }}"></script>
         <!--
         <script type="text/javascript">
             $(function() {
               $('.date').datepicker({ dateFormat: 'dd/mm/yy' });
             }); 
-        </script>-->
+        </script>-->        
+        <script type="text/javascript">
+            $(document).ready(function(){
+                {% if app.session.hasFlash('notice') %}
+                $.gritter.add({
+                    time: '',
+                    title:	'Information',
+                    text:	'{{ app.session.flash('notice') }}',
+                    sticky: false
+                });
+                {% endif %}
+            });
+        </script>
     {% endblock %}
