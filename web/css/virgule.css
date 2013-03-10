@@ -102,8 +102,14 @@ h2 { font-size: 16px; }
     vertical-align: middle;
 }
 
-.role_select {
+.small-select {
     width: 200px;
+}
+.medium-select {
+    width: 400px;
+}
+.medium-select {
+    width: 600px;
 }
 i.icon-go {
     background-image: url('../img/icons/arrow_right.png');
@@ -181,12 +187,16 @@ td.center {
 
 /* Administration */
 #log_file textarea {
-	width: 98%;;
-	height: 650px;
+    width: 98%;
+    height: 650px;
 }
 
 /* Reuse form style for presentation */
 .not-form-horizontal .controls {
-	margin-left: 200px;
-	padding-top: 15px;
+    margin-left: 200px;
+    padding-top: 15px;
+}
+
+select .medium-select {
+    width: 3300px;
 }
