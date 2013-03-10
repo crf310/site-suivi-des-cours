@@ -116,7 +116,7 @@ class TeacherController extends AbstractVirguleController {
         $entity->setRegistrationDate(new \DateTime('now'));
         
         $em = $this->getDoctrine()->getManager();
-        $currentBranchId = $this->getRequest()->getSession()->get('organizationBranchId');
+        $currentBranchId = $this->getSelectedOrganizationBranch()->getId();
         $organizationBranch = $em->getRepository('VirguleMainBundle:OrganizationBranch')->find($currentBranchId);
         $entity->addOrganizationBranch($organizationBranch);
 
@@ -129,7 +129,7 @@ class TeacherController extends AbstractVirguleController {
                 'notice',
                 'Compte utilisateur "' . $entity->getUsername() . '" créé avec succès !'
             );
-            return $this->redirect($this->generateUrl('teacher_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('teacher_index'));
         }
 
         return array(
