@@ -124,7 +124,11 @@ class TeacherController extends AbstractVirguleController {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
+            
+            $this->get('session')->setFlash(
+                'notice',
+                'Compte utilisateur "' . $entity->getUsername() . ' créé avec succès !'
+            );
             return $this->redirect($this->generateUrl('teacher_show', array('id' => $entity->getId())));
         }
 
