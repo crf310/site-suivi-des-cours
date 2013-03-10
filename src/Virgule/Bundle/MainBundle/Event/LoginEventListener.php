@@ -40,9 +40,7 @@ class LoginEventListener {
             $session->set('organizationBranchId', $organizationBranchId);
             $session->set('organizationBranchName', $organizationBranch->getName());
             
-            $session->set('semesterId', $currentSemester->getId());
-            $session->set('semesterStartDate', $currentSemester->getStartDate());
-            $session->set('semesterEndDate', $currentSemester->getEndDate());
+            $session->set('currentSemester', $currentSemester);
             $session->set('pastSemesters', $pastSemesters);
         }
     }
