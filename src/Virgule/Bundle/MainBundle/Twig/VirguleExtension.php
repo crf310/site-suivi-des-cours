@@ -22,7 +22,10 @@ class VirguleExtension extends \Twig_Extension {
     public function dayFilter($dayNumber, $upperFistChar = false) {
         $days = Array(1 => 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche');
         
-        $day = $days[$dayNumber];
+        $day = $dayNumber;
+        if (array_key_exists($dayNumber, $days)) {            
+            $day = $days[$dayNumber];
+        }
         if ($upperFistChar) {
             $day = ucfirst($day);
         }
