@@ -1,30 +1,28 @@
-{% extends '::base.html.twig' %}
-{% block body %}
-<h1>Ajouter un nouveau cours</h1>
-<div id="errorMsg">
-{{ form_errors(form) }}
-</div>
-
-<form action="{{ path('course_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_row(form.dayOfWeek, { 'label': 'Chaque' }) }}
-    {{ form_row(form.startTime, { 'label': 'De' }) }}
-    {{ form_row(form.endTime, { 'label': 'à' }) }}
-    {{ form_row(form.alternateStartdate, { 'label': 'Date de début alternative' }) }}
-    {{ form_row(form.alternateEnddate, { 'label': 'Date de fin alternative' }) }}
-    {{ form_row(form.classLevel, { 'label': 'Niveau' }) }}
-    {{ form_row(form.teachers, { 'label': 'Formateur(s)' }) }}
-        
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
+{% extends '::main_content.html.twig' %}
+{% block content_title %}Enregistrer un nouvel apprenant{% endblock %}
+ {%block submenu %}{% endblock %}
+{% block main_content %}
+<form action="{{ path('course_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon">
+                    <i class="icon-align-justify"></i>									
+            </span>
+            <h5>Informations personnelles et coordonnées</h5>
+        </div>
+        <div class="widget-content nopadding">
+            {{ form_row(form.dayOfWeek, { 'label': 'Chaque' }) }}
+            {{ form_row(form.startTime, { 'label': 'De' }) }}
+            {{ form_row(form.endTime, { 'label': 'à' }) }}
+            {{ form_row(form.alternateStartdate, { 'label': 'Date de début alternative' }) }}
+            {{ form_row(form.alternateEnddate, { 'label': 'Date de fin alternative' }) }}
+            {{ form_row(form.classLevel, { 'label': 'Niveau' }) }}
+            {{ form_row(form.teachers, { 'label': 'Formateur(s)' }) }}
+            {{ form_rest(form) }}
+            <div class="form-actions">                                     
+                <input class="btn" type="submit" value="Enregistrer le cours" />
+            </div>
+        </div>
+    </div>
 </form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('course') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
 {% endblock %}

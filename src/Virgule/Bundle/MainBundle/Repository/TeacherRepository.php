@@ -16,10 +16,15 @@ use Doctrine\ORM\NoResultException;
  * repository methods below.
  */
 class TeacherRepository extends EntityRepository implements UserProviderInterface {
-
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function createDefaultQueryBuilder() {
+        return $this->createQueryBuilder('t');
+    }
+    
     public function loadUserByUsername($username) {
-        $q = $this
-                ->createQueryBuilder('t')
+        $q = $this->createDefaultQueryBuilder()
                 ->where('t.username = :username')
                 ->setParameter('username', $username)
                 ->getQuery()
@@ -48,9 +53,19 @@ class TeacherRepository extends EntityRepository implements UserProviderInterfac
         return $this->getEntityName() === $class || is_subclass_of($class, $this->getEntityName());
     }
 
+    public function getAvailableTeachersQueryBuilder($organizationBranchId, $isActive = true) {
+        $q = $this->createDefaultQueryBuilder()
+            ->where('t.isActive = :isActive')
+            ->andWhere('t.username <> :rootUsername')
+            ->innerJoin('t.organizationBranches', 'ob', 'WITH', 'ob.id = :organizationBranchId')                
+            ->add('orderBy', 't.lastName ASC, t.firstName ASC')
+            ->setParameter('organizationBranchId', $organizationBranchId)
+            ->setParameter('isActive', $isActive)
+            ->setParameter('rootUsername', "root");
+         return $q;
+    }
     public function getTeachersByStatus($organizationBranchId, $isActive = true) {
-        $q = $this
-            ->createQueryBuilder('t')
+        $q = $this->createDefaultQueryBuilder()
             ->where('t.isActive = :isActive')
             ->andWhere('t.username <> :rootUsername')
             ->innerJoin('t.organizationBranches', 'ob', 'WITH', 'ob.id = :organizationBranchId')                

@@ -80,9 +80,13 @@ class CourseController extends AbstractVirguleController {
      * @Route("/new", name="course_new")
      * @Template()
      */
-    public function newAction() {
+    public function newAction() {        
+        $em = $this->getDoctrine()->getManager();
+        $teacherRepository = $em->getRepository('VirguleMainBundle:Teacher');
+                
         $entity = new Course();
-        $form = $this->createForm(new CourseType(), $entity);
+        $organizationBranchId = $this->getRequest()->getSession()->get('organizationBranchId');
+        $form = $this->createForm(new CourseType($teacherRepository, $organizationBranchId), $entity);
 
         return array(
             'entity' => $entity,

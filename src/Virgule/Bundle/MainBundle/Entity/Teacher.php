@@ -120,7 +120,7 @@ class Teacher implements UserInterface, EquatableInterface {
 
     /**
      * @ORM\ManyToMany(targetEntity="Course", mappedBy="teachers")
-     */        
+     */
     private $courses;
 
     /**
@@ -579,17 +579,15 @@ class Teacher implements UserInterface, EquatableInterface {
         return $this->commentsRead;
     }
 
-
     /**
      * Add courses
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
      * @return Teacher
      */
-    public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
-    {
+    public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
         $this->courses[] = $courses;
-    
+
         return $this;
     }
 
@@ -598,8 +596,7 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
      */
-    public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
-    {
+    public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
         $this->courses->removeElement($courses);
     }
 
@@ -608,8 +605,12 @@ class Teacher implements UserInterface, EquatableInterface {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getCourses()
-    {
+    public function getCourses() {
         return $this->courses;
     }
+    
+    public function getFullName() {
+        return $this->firstName . ' ' . $this->lastName;
+    }
+
 }
