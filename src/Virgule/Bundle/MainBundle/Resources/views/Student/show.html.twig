@@ -35,10 +35,12 @@
                                 {% endif %}
                                 </div>
                             </div>
+                            {% if entity.nativeCountry != null %}
                             <div class="control-group">
                                 <label class="control-label">Pays d'origine</label>
                                 <div class="controls">{{  entity.nativeCountry.label }}&nbsp;<img src="{{ asset('img/drapeaux/' ~ entity.nativeCountry.isoCode ~ '.png')}}" alt="{{  entity.nativeCountry.isoCode }}" title="{{  entity.nativeCountry.label }}" /></div>
                             </div>
+                            {% endif %}
                             <div class="control-group">
                                 <label class="control-label">Date de naissance</label>
                                 <div class="controls">{{ entity.birthdate|date('d/m/Y') }}</div>
@@ -106,17 +108,15 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="collapse accordion-body" id="collapseCommentForm">
-                            <div class="widget-content">                                                           
-                                <div class="widget-content nopadding">
-                                    <form action="{{ path('student_comment_create', { 'student_id': entity.id }) }}" method="post" {{ form_enctype(commentForm) }} class="form-horizontal">
-                                        {{ form_row(commentForm.comment, { 'label': 'Commentaire'}) }}
-                                        {{ form_rest(commentForm) }}
-                                        <div class="form-actions"> 
-                                            <button  class="btn" type="submit">Enregistrer le commentaire</button>
-                                        </div>
-                                    </form>
-                                </div>
+                        <div class="collapse accordion-body" id="collapseCommentForm">                          
+                            <div class="widget-content nopadding">
+                                <form action="{{ path('student_comment_create', { 'student_id': entity.id }) }}" method="post" {{ form_enctype(commentForm) }} class="form-horizontal">
+                                    {{ form_row(commentForm.comment, { 'label': 'Commentaire'}) }}
+                                    {{ form_rest(commentForm) }}
+                                    <div class="form-actions"> 
+                                        <button  class="btn" type="submit">Enregistrer le commentaire</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
