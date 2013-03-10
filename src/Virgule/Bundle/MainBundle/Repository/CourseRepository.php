@@ -98,7 +98,7 @@ class CourseRepository extends EntityRepository {
                 ->innerJoin('c.classLevel', 'c2')
                 ->innerJoin('c.classRoom', 'r')
                 ->innerJoin('c.semester', 's')
-                ->innerJoin('c.students', 'stu')
+                ->leftJoin('c.students', 'stu')
                 ->where('s.id = :semesterId')
                 ->groupBy('c.id, t.id')
                 ->add('orderBy', 'c.dayOfWeek ASC, c.startTime ASC')
