@@ -8,11 +8,12 @@
             <span class="icon">
                     <i class="icon-align-justify"></i>									
             </span>
-            <h5>Coordonnées</h5>
+            <h5>Informations personnelles et coordonnées</h5>
         </div>
         <div class="widget-content nopadding">
             {{ form_row(form.firstname, { 'label': 'Prénom'}) }}
-            {{ form_row(form.lastname, { 'label': 'Nom' }) }}
+            {{ form_row(form.lastname, { 'label': 'Nom' }) }}                
+            {{ form_row(form.birthdate, { 'label': 'Date de naissance' }) }}
             {{ form_rest(form) }}
             <div class="form-actions">                                     
                 <input class="btn" type="submit" value="Enregistrer l'apprenant" />
