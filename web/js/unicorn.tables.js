@@ -9,6 +9,7 @@ $(document).ready(function(){
 		"sPaginationType": "full_numbers",
 		"sDom": '<""l>t<"F"fp>',
                 "iDisplayLength": '15',
+                 "aaSorting": [],
                 "oLanguage": {
                     "sProcessing":     "Traitement en cours...",
                     "sSearch":         "Rechercher&nbsp;:",
