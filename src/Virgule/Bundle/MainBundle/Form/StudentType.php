@@ -13,8 +13,14 @@ class StudentType extends AbstractType {
                 //->add('registrationDate')
                 ->add('lastname')
                 ->add('firstname')
+                ->add('birthdate', 'date', array(
+                    'widget' => 'single_text',
+                    'format' => 'dd/MM/yyyy',
+                    'attr' => array('class' => 'datepicker','data-date-format' => 'dd/mm/yyyy')
+                ))
+                
+                                            
         /*
-          ->add('birthdate')
           ->add('phoneNumber')
           ->add('cellphoneNumber')
           ->add('address')
