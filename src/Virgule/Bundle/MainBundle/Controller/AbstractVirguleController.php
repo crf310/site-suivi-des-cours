@@ -36,12 +36,29 @@ abstract class AbstractVirguleController extends Controller {
         return array('entities' => $pagerfanta);        
     }
     
+    protected function getEntityManager() {
+        return $em = $this->getDoctrine()->getManager();
+    }
     protected function getSelectedSemesterId()  {
         return $this->getRequest()->getSession()->get('currentSemester')->getId();
     }
     
-    protected function getSelectedOrganizationBranch()  {
-        return $this->getRequest()->getSession()->get('organizationBranch');
+    protected function getSelectedSemester() {
+        $currentSemesterId = $this->getSelectedSemesterId();
+        $semesterRepository = $this->getEntityManager()->getRepository('VirguleMainBundle:Semester');
+        $semester = $semesterRepository->find($currentSemesterId);
+        return $semester;
+    }
+    
+    protected function getSelectedOrganizationBranchId()  {
+        return $this->getRequest()->getSession()->get('organizationBranch')->getId();
+    }
+    
+    protected function getSelectedOrganizationBranch() {
+        $obRepository = $this->getEntityManager()->getRepository('VirguleMainBundle:OrganizationBranch');
+        $organizationBranchId = $this->getSelectedOrganizationBranchId();
+        $organizationBranch = $obRepository->find($organizationBranchId);
+        return $organizationBranch;
     }
     
     protected function getListBreak($count, $break=2) {
