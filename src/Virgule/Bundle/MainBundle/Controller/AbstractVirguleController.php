@@ -32,7 +32,7 @@ abstract class AbstractVirguleController extends Controller {
     }
     
     protected function getSelectedSemesterId()  {
-        return $this->getRequest()->getSession()->get('semesterId');
+        return $this->getRequest()->getSession()->get('currentSemester')->getId();
     }
     
     protected function getListBreak($count, $break=2) {
