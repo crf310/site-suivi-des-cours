@@ -75,6 +75,7 @@ class StudentController extends AbstractVirguleController {
         
         $courses = $em->getRepository('VirguleMainBundle:Course')->getCoursesByStudent($id);
         
+        $previousSemester = null;
         $nbEnrollment = count($courses);
         if ($nbEnrollment > 0) {
            $previousSemester = $courses[0]->getSemester()->getId();
