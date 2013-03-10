@@ -86,6 +86,11 @@ class CommentController extends AbstractVirguleController {
             $em->persist($comment);
             $em->flush();
 
+            $this->get('session')->setFlash(
+                'notice',
+                'Votre commentaire a bien été enregistré'
+            );
+            
             return true;
         }
         return false;
