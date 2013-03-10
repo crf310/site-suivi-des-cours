@@ -124,7 +124,11 @@ class CourseController extends AbstractVirguleController {
                 'Nouveau cours créé avec succès !'
             );
             
-            return $this->redirect($this->generateUrl('course_index'));
+            if ($request->get('save_and_add_new')) {
+                return $this->redirect($this->generateUrl('course_new'));
+            } else {
+                return $this->redirect($this->generateUrl('course_index'));
+            }
         }
 
         return array(
