@@ -28,6 +28,14 @@ class CourseType extends AbstractType {
                 ))
                 ->add('startTime')
                 ->add('endTime')
+                ->add('classRoom', 'entity', array(
+                    'class' => 'VirguleMainBundle:ClassRoom',
+                    'expanded' => false,
+                    'multiple' => false,
+                    'property' => 'name',
+                    'property_path' => 'classRoom',            
+                    'attr' => array('class' => 'small-select')
+                 ))
                 ->add('alternateStartdate', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',

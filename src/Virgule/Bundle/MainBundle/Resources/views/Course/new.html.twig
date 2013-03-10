@@ -1,5 +1,5 @@
 {% extends '::main_content.html.twig' %}
-{% block content_title %}Enregistrer un nouvel apprenant{% endblock %}
+{% block content_title %}Enregistrer un nouveau cours{% endblock %}
  {%block submenu %}{% endblock %}
 {% block main_content %}
 <form action="{{ path('course_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
@@ -8,12 +8,13 @@
             <span class="icon">
                     <i class="icon-align-justify"></i>									
             </span>
-            <h5>Informations personnelles et coordonnées</h5>
+            <h5>Nouveau cours</h5>
         </div>
         <div class="widget-content nopadding">
             {{ form_row(form.dayOfWeek, { 'label': 'Chaque' }) }}
             {{ form_row(form.startTime, { 'label': 'De' }) }}
             {{ form_row(form.endTime, { 'label': 'à' }) }}
+            {{ form_row(form.classRoom, { 'label': 'Salle' }) }}
             {{ form_row(form.alternateStartdate, { 'label': 'Date de début alternative' }) }}
             {{ form_row(form.alternateEnddate, { 'label': 'Date de fin alternative' }) }}
             {{ form_row(form.classLevel, { 'label': 'Niveau' }) }}
