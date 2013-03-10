@@ -101,14 +101,16 @@ h2 { font-size: 16px; }
     margin: -2px 5px 2px 5px !important; 
     vertical-align: middle;
 }
-
+.tiny-select {
+    width: 100px;
+}
 .small-select {
     width: 200px;
 }
 .medium-select {
     width: 400px;
 }
-.medium-select {
+.big-select {
     width: 600px;
 }
 i.icon-go {
