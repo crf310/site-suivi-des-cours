@@ -3,6 +3,7 @@
 namespace Virgule\Bundle\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Virgule\Bundle\MainBundle\Entity\Student
@@ -32,6 +33,8 @@ class Student {
      * @var string $lastname
      *
      * @ORM\Column(name="lastname", type="string", length=50, nullable=false)
+     * @Assert\NotBlank(message="Merci de saisir un nom de famille")
+     * @Assert\NotNull()
      */
     private $lastname;
 
@@ -39,6 +42,8 @@ class Student {
      * @var string $firstname
      *
      * @ORM\Column(name="firstname", type="string", length=50, nullable=false)
+     * @Assert\NotBlank(message="Merci de saisir un prénom")
+     * @Assert\NotNull()
      */
     private $firstname;
 
