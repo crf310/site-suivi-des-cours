@@ -8,23 +8,26 @@
         <link href="{{ asset('css/unicorn.grey.css') }}" media="screen" rel="stylesheet" class="skin-color"/>
         <link href="{{ asset('css/uniform.css') }}" rel="stylesheet" media="screen" />        
         <link href="{{ asset('css/select2.css') }}" rel="stylesheet" media="screen" />
+        <link href="{{ asset('css/jquery.gritter.css') }}" media="screen" rel="stylesheet"/>      
         <link href="{{ asset('css/virgule.css') }}" media="screen" rel="stylesheet"/>      
     {% endblock %}
     {% block javascripts %}
         <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/jquery.ui.custom.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/jquery.validate.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.validate.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.gritter.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.uniform.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.peity.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/unicorn.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/unicorn.tables.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/unicorn.dashboard.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/jquery.uniform.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/unicorn.tables.js') }}"></script>        
+        <script type="text/javascript" src="{{ asset('js/unicorn.interface.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/select2.min.js') }}"></script>
-            
+        <!--
         <script type="text/javascript">
             $(function() {
               $('.date').datepicker({ dateFormat: 'dd/mm/yy' });
             }); 
-        </script>
+        </script>-->
     {% endblock %}
