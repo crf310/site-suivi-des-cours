@@ -85,7 +85,7 @@ class CourseController extends AbstractVirguleController {
         $teacherRepository = $em->getRepository('VirguleMainBundle:Teacher');
                 
         $entity = new Course();
-        $organizationBranchId = $this->getRequest()->getSession()->get('organizationBranchId');
+        $organizationBranchId = $this->getSelectedOrganizationBranch()->getId();
         $form = $this->createForm(new CourseType($teacherRepository, $organizationBranchId), $entity);
 
         return array(
@@ -103,7 +103,15 @@ class CourseController extends AbstractVirguleController {
      */
     public function createAction(Request $request) {
         $entity = new Course();
-        $form = $this->createForm(new CourseType(), $entity);
+       
+        $organizationBranch = $this->getSelectedOrganizationBranch();
+        $entity->setOrganizationBranch($organizationBranch);
+        $entity->setSemester($this->getSelectedSemester());
+                        
+        $em = $this->getDoctrine()->getManager();
+        $teacherRepository = $em->getRepository('VirguleMainBundle:Teacher');
+               
+        $form = $this->createForm(new CourseType($teacherRepository, $organizationBranch->getId()), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -111,7 +119,12 @@ class CourseController extends AbstractVirguleController {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('course_show', array('id' => $entity->getId())));
+            $this->get('session')->setFlash(
+                'notice',
+                'Nouveau cours créé avec succès !'
+            );
+            
+            return $this->redirect($this->generateUrl('course_index'));
         }
 
         return array(
