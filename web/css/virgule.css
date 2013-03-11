@@ -90,6 +90,12 @@ h2 { font-size: 16px; }
 #sidebar a.administration i {
     background-image: url('../img/icons/cog.png');
 }
+#sidebar a.schoolbag i {
+    background-image: url('../img/icons/book.png');
+}
+#sidebar a.organization_branch i {
+    background-image: url('../img/icons/telephone.png');
+}
 
 .tiny-select {
     width: 100px;

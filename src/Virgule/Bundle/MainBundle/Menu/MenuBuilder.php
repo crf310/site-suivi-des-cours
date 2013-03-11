@@ -28,6 +28,12 @@ class MenuBuilder extends ContainerAware {
         $menu->addChild('Statistiques', array('route' => 'stats_index'));
         $menu['Statistiques']->setLinkAttribute('class', 'statistics');
         
+        $menu->addChild('Délégation', array('route' => 'stats_index'));
+        $menu['Délégation']->setLinkAttribute('class', 'organization_branch');
+        
+        $menu->addChild('Cartable', array('route' => 'stats_index'));
+        $menu['Cartable']->setLinkAttribute('class', 'schoolbag');
+        
         $menu->addChild('Administration', array('route' => 'admin_show_logs'));
         $menu['Administration']->setLinkAttribute('class', 'administration');
         
