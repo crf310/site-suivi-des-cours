@@ -18,6 +18,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 abstract class AbstractVirguleController extends Controller {
      
+    protected function addFlash($message, $type='notice') {
+         $this->get('session')->getFlashBag()->add($type, $message);
+    }
+    
     protected function logInfo($message) {
         $logger = $this->get('logger');
         $logger->info($message);

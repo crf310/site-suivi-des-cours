@@ -119,10 +119,7 @@ class CourseController extends AbstractVirguleController {
             $em->persist($entity);
             $em->flush();
 
-            $this->get('session')->setFlash(
-                'notice',
-                'Nouveau cours créé avec succès !'
-            );
+            $this->addFlash('Nouveau cours créé avec succès !');
             
             if ($request->get('save_and_add_new')) {
                 return $this->redirect($this->generateUrl('course_new'));
