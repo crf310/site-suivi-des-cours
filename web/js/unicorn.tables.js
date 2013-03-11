@@ -8,8 +8,8 @@ $(document).ready(function(){
 		"bJQueryUI": true,
 		"sPaginationType": "full_numbers",
 		"sDom": '<""l>t<"F"fp>',
-                "iDisplayLength": '15',
-                 "aaSorting": [],
+                "iDisplayLength": 15,
+                "aaSorting": [],
                 "oLanguage": {
                     "sProcessing":     "Traitement en cours...",
                     "sSearch":         "Filtrer&nbsp;:",
