@@ -146,12 +146,14 @@ i.icon-user-inactive {
 i.icon-user-active {
     background-image: url('../img/icons/user_green.png');
 }
-
 i.icon-export {
     background-image: url('../img/icons/page_excel.png');
 }
 i.icon-info {
     background-image: url('../img/icons/information.png');
+}
+i.icon-search {
+    background-image: url('../img/icons/magnifier.png');
 }
 
 li.user_M { list-style-image:url('../img/icons/user.png'); }
