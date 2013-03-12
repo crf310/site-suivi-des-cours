@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class CourseNotOverlapping extends Constraint {
 
-    public $message = 'Ce cours entre en conflit avec un autre le même jour et dans la même salle.';
+    public $message = 'Ce cours entre en conflit avec %nb_cours%  autre(s) le même jour et dans la même salle';
     
     public function validatedBy() {
         //return get_class($this).'Validator';

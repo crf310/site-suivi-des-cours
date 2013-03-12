@@ -13,9 +13,10 @@ class CourseNotOverlappingValidator extends ConstraintValidator {
     }
     
     public function validate($value, Constraint $constraint) {        
-        $nbCourses = $this->courseRepository->getNumberOfOverlappingCourses($value);
-        if ($nbCourses > 0) {
-            $this->context->addViolation($constraint->message, array('%string%' => $value));
+        $nbCours = $this->courseRepository->getNumberOfOverlappingCourses($value);
+        
+        if ($nbCours > 0) {
+            $this->context->addViolation($constraint->message, array('%nb_cours%' => (string)$nbCours));
         }
     }
 }
