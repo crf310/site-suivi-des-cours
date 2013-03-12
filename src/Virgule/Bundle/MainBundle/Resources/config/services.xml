@@ -20,12 +20,18 @@
     <!-- Managers -->
     <parameters>
         <parameter key="virgule.teacher_manager.class">Virgule\Bundle\MainBundle\Manager\TeacherManager</parameter>       
+        <parameter key="virgule.course_manager.class">Virgule\Bundle\MainBundle\Manager\CourseManager</parameter>
     </parameters>
 
     <services>
+        <!-- Managers -->
         <service id="virgule.teacher_manager" class="%virgule.teacher_manager.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
+        <service id="virgule.course_manager" class="%virgule.course_manager.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+        
         <service id="my.login.listener" class="Virgule\Bundle\MainBundle\Event\LoginEventListener">
             <tag name="kernel.event_listener" event="security.interactive_login" />
             <argument type="service" id="doctrine.orm.entity_manager" />
@@ -36,8 +42,15 @@
             <tag name="pagerfanta.view" alias="tablefooter" />
         </service>
         
+        <!-- Extensions -->
         <service id="virgule.twig.virgule_extension" class="Virgule\Bundle\MainBundle\Twig\VirguleExtension">
             <tag name="twig.extension" />
+        </service>
+        
+        <!-- Validators -->
+        <service id="validator.not_overlapping_course" class="Virgule\Bundle\MainBundle\Validator\CourseNotOverlappingValidator">
+            <argument type="service" id="virgule.course_manager" />
+            <tag name="validator.constraint_validator" alias="course_not_overlapping" />
         </service>
     </services>
 

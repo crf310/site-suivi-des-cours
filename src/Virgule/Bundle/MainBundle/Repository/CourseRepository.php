@@ -5,6 +5,7 @@ namespace Virgule\Bundle\MainBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
+use Doctrine\DBAL\Types\Type;
 
 /**
  * ClassLevel
@@ -27,15 +28,17 @@ class CourseRepository extends EntityRepository {
     public function getNumberOfOverlapingCourses($semesterId, $dayOfWeek, $classRoomId, $startTime, $endTime) {
         $q = $this
                 ->createQueryBuilder('c')
-                ->where('c.semester.id = :semesterId')
+                ->innerJoin('c.semester', 's')                
+                ->innerJoin('c.classRoom', 'c2')
+                ->where('s.id = :semesterId')
                 ->andWhere('c.dayOfWeek = :dayOfWeek')
-                ->andWhere('c.fkClassRoomId = :classRoomId')
+                ->andWhere('c2.id = :classRoomId')
                 ->andWhere('(c.startTime > :startTime AND c.startTime < :endTime) OR (:startTime > c.startTime AND :startTime < c.endTime)')
                 ->setParameter('semesterId', $semesterId)
                 ->setParameter('dayOfWeek', $dayOfWeek)
                 ->setParameter('classRoomId', $classRoomId)
-                ->setParameter('startTime', $startTime)
-                ->setParameter('endTime', $endTime)
+                ->setParameter('startTime', $startTime, Type::TIME)
+                ->setParameter('endTime', $endTime, Type::TIME)
                 ->getQuery()
         ;
         $nb = $q->execute();
