@@ -18,7 +18,7 @@ class CourseManager extends BaseManager {
         return $this->em->getRepository('VirguleMainBundle:Course');
     }
 
-    public function getNumberOfOverlapingCourses(Course $course) {
+    public function getNumberOfOverlappingCourses(Course $course) {
 
         $semesterId = $course->getSemester()->getId();
         $dayOfWeek = $course->getDayOfWeek();
@@ -26,8 +26,8 @@ class CourseManager extends BaseManager {
         $startTime = $course->getStartTime();
         $endTime = $course->getEndTime();
         
-        $nbCourses = $this->getRepository()->getNumberOfOverlapingCourses($semesterId, $dayOfWeek, $classRoomId, $startTime, $endTime);
-        return $nbCourses;
+        $result = $this->getRepository()->getNumberOfOverlappingCourses($semesterId, $dayOfWeek, $classRoomId, $startTime, $endTime);
+        return $result['nb_courses'];
     }
 
 }
