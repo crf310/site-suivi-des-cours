@@ -34,7 +34,7 @@ class CourseRepository extends EntityRepository {
                 ->where('s.id = :semesterId')
                 ->andWhere('c.dayOfWeek = :dayOfWeek')
                 ->andWhere('c2.id = :classRoomId')
-                ->andWhere('(c.startTime > :startTime AND c.startTime < :endTime) OR (:startTime > c.startTime AND :startTime < c.endTime)')
+                ->andWhere('(c.startTime >= :startTime AND c.startTime <= :endTime) OR (:startTime >= c.startTime AND :startTime <= c.endTime)')
                 ->setParameter('semesterId', $semesterId)
                 ->setParameter('dayOfWeek', $dayOfWeek)
                 ->setParameter('classRoomId', $classRoomId)
