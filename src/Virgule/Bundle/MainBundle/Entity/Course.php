@@ -3,12 +3,15 @@
 namespace Virgule\Bundle\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Virgule\Bundle\MainBundle\Validator\Constraints as VirguleAssert;
 
 /**
  * Course
  *
  * @ORM\Table(name="course")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\CourseRepository")
+ * @VirguleAssert\CourseNotOverlapping
  */
 class Course {
 
@@ -25,6 +28,13 @@ class Course {
      * @var boolean
      *
      * @ORM\Column(name="day_of_week", type="integer", nullable=false)
+     * @Assert\Type("integer")
+     * @Assert\Range(
+     *      min = "1",
+     *      max = "7",
+     *      minMessage = "Le jour est invalide",
+     *      maxMessage = "Le jour est invalide"
+     * )
      */
     private $dayOfWeek;
 
@@ -71,6 +81,7 @@ class Course {
     /**
      * @ORM\ManyToMany(targetEntity="Teacher", inversedBy="courses")
      * @ORM\JoinTable(name="teacher_course")
+     * @Assert\NotNull
      */
     private $teachers;
 
