@@ -46,9 +46,8 @@ class CourseController extends AbstractVirguleController {
             }
             $course_ids[$course['course_id']] = 1;
         }
-        $entities_paginated = $this->paginate($courses, $page);
         $other_entities = Array('teachers_array' => $teachers_array);
-        return array_merge($entities_paginated, $other_entities);
+        return array_merge(Array('entities' => $courses), $other_entities);
     }
 
     /**
@@ -126,6 +125,8 @@ class CourseController extends AbstractVirguleController {
             } else {
                 return $this->redirect($this->generateUrl('course_index'));
             }
+        } else {
+            
         }
 
         return array(
