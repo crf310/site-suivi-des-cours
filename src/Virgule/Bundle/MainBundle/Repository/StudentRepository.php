@@ -99,6 +99,7 @@ class StudentRepository extends EntityRepository {
     public function getCountries($semesterId) {
         $q = $this
                 ->createQueryBuilder('s')
+                ->select('s.')
                 ->addSelect('c1.isoCode as isoCode, c1.label as label, count(s.id) as nb_students')
                 ->innerJoin('s.nativeCountry', 'c1')
                 ->innerJoin('s.courses', 'c2')
@@ -111,5 +112,20 @@ class StudentRepository extends EntityRepository {
         $students = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $students;
     }
-
+    
+    public function getStudentsInformation($semesterId) {
+        $q = $this
+                ->createQueryBuilder('s')
+                ->addSelect('s.id as student_id, s.gender as student_gender')
+                ->addSelect('c1.isoCode as country_code, c1.label as country_label')
+                ->innerJoin('s.nativeCountry', 'c1')
+                ->innerJoin('s.courses', 'c2')
+                ->where('c2.semester = :semesterId')
+                ->setParameter('semesterId', $semesterId)
+                ->distinct()
+                ->getQuery()
+        ;
+        $students = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $students;
+    }
 }

@@ -17,7 +17,7 @@
             data.addColumn('string', 'country_label');
             data.addRows([
                 {% for students_country in students_countries %}
-                    ['{{ students_country['isoCode'] }}', {{ students_country['nb_students'] }}, '{{ students_country['label'] }}']{% if loop.index != loop.last %},{% endif %}
+                    ['{{ students_country['country_code'] }}', {{ students_country['nb_students'] }}, '{{ students_country['country_label'] }}']{% if loop.index != loop.last %},{% endif %}
                 {% endfor %}
             ]);
 
@@ -43,8 +43,8 @@
           function drawChart() {
             var data = google.visualization.arrayToDataTable([
               ['Sexe', 'Apprenants'],
-              {% for students_gender in students_genders %}
-                [{% if students_gender['gender'] == 'F' %} 'Femmes', {% else %} 'Hommes', {% endif %} {{ students_gender['nb_students'] }}]{% if loop.index != loop.last %},{% endif %}          
+              {% for gender_code, nb_students in students_genders %}
+                [{% if gender_code == 'F' %} 'Femmes', {% else %} 'Hommes', {% endif %} {{ nb_students }}]{% if loop.index != loop.last %},{% endif %}          
               {% endfor %}
             ]);
 

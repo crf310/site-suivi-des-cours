@@ -25,19 +25,28 @@ class StatisticsController extends AbstractVirguleController {
         $em = $this->getDoctrine()->getManager();
 
         $semesterId = $this->getSelectedSemesterId();
-        $students_genders = $em->getRepository('VirguleMainBundle:Student')->getGenders($semesterId);
+        $students = $em->getRepository('VirguleMainBundle:Student')->getStudentsInformation($semesterId);
         
         $total_students = 0;
-        foreach ($students_genders as $students_gender) {
-            $total_students = $total_students + $students_gender['nb_students'];
+        $students_genders['F'] = 0;
+        $students_genders['M'] = 0;
+        $students_countries = Array();
+        foreach ($students as $student) {
+            $students_genders[$student['student_gender']] += 1;
+            
+            if (! array_key_exists($student['country_code'], $students_countries)) {
+                $students_countries[$student['country_code']]['country_code'] = $student['country_code'];
+                $students_countries[$student['country_code']]['nb_students'] = 0;
+                $students_countries[$student['country_code']]['country_label'] = $student['country_label'];
+            }
+            $students_countries[$student['country_code']]['nb_students'] += 1;
+            $total_students += 1;
         }
-        
-        $students_countries = $em->getRepository('VirguleMainBundle:Student')->getCountries($semesterId);
         
         return array(
             'students_genders' => $students_genders, 
             'total_students' => $total_students,
             'students_countries' => $students_countries);
     }
-
 }
+
