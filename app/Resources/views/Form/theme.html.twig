@@ -15,6 +15,28 @@
 {% endspaceless %}
 {% endblock form_errors %}
 
+{% block checkbox_widget %}
+{% spaceless %}
+    <label>
+    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+    {{ label|trans({}, translation_domain) }}</label>
+{% endspaceless %}
+{% endblock checkbox_widget %}
+    
+{% block choice_widget_expanded %}
+{% spaceless %}
+    <div class="left_list">
+    {% for child in form %}
+        {{ form_widget(child) }}
+        {% if loop.index % (loop.length // 5) == 0  and loop.index != loop.last %}
+            </div><div class="left_list">
+        {% endif %}
+    {% endfor %}
+    </div>
+    <div class="clear_list"></div>
+{% endspaceless %}
+{% endblock choice_widget_expanded %}
+       
 {% block field_rows %}
 {% spaceless %}
     {% for child in form %}
