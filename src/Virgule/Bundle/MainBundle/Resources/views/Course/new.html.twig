@@ -11,10 +11,7 @@
             <h5>Nouveau cours</h5>
         </div>
         <div class="widget-content nopadding">
-            <div class="alert alert-error">
-                <strong>Erreur:</strong> 
-                {{ form_errors(form) }}
-            </div>
+            {{ form_errors(form) }}
             {{ form_row(form.dayOfWeek, { 'label': 'Chaque' }) }}
             {{ form_row(form.startTime, { 'label': 'De' }) }}
             {{ form_row(form.endTime, { 'label': 'à' }) }}
