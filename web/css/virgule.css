@@ -97,29 +97,6 @@ h2 { font-size: 16px; }
     background-image: url('../img/icons/telephone.png');
 }
 
-.tiny-select {
-    width: 100px;
-}
-.small-select {
-    width: 200px;
-}
-.medium-select {
-    width: 400px;
-}
-.big-select {
-    width: 600px;
-}
-
-.required {
-    font-weight: bold;
-}
-.form-horizontal .control-label {
-    width: 200px;
-}
-.form-horizontal .controls {
-    margin-left: 220px;
-}
-
 /* Actions button */
 #content-header i,.alert i, .virgule-btn i {   
     background-repeat: no-repeat;
@@ -214,9 +191,33 @@ td.center {
     height: 650px;
 }
 
+
+.tiny-select {
+    width: 100px;
+}
+.small-select {
+    width: 200px;
+}
+.medium-select {
+    width: 400px;
+}
+.big-select {
+    width: 600px;
+}
+
+.required {
+    font-weight: bold;
+}
+.form-horizontal .control-label {
+    width: 200px;
+}
+.form-horizontal .controls {
+    margin-left: 220px;
+}
+
 /* Reuse form style for presentation */
 .not-form-horizontal .controls {
-    margin-left: 200px;
+    margin-left: 220px;
     padding-top: 15px;
 }
 
