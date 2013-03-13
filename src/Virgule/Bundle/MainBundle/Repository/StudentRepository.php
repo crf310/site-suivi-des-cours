@@ -67,24 +67,16 @@ class StudentRepository extends EntityRepository {
         return $this->loadAllEnrolledInCourses(Array($courseId));
     }
 
-    private function getCurrentStudents($semesterId) {
+    public function getGenders($semesterId) {
         $q = $this
                 ->createQueryBuilder('s')
-                ->select('s.id, s.gender')
+                ->addSelect('s.gender, count(s.gender) as nb_students')
                 ->innerJoin('s.courses', 'c2')
                 ->where('c2.semester = :semesterId')
+                ->groupBy('s.gender')
                 ->setParameter('semesterId', $semesterId)
-                ->getDQL()
+                ->getQuery()
         ;
-        return $q;
-    }
-    public function getGenders($semesterId) {
-        $q = $this->createQueryBuilder('s')->addSelect('s.gender, count(s.gender) as nb_students')
-        ->orWhere('s.id IN (SELECT DISTINCT s.id FROM student s INNER JOIN student_course s2 ON s.id = s2.student_id INNER JOIN course c ON s2.course_id = c.id WHERE c.fk_semester_id = :semesterId)')        
-        ->groupBy('s.gender')
-        ->setParameter('semesterId', $semesterId)
-        ->getQuery();
-        
         $students = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $students;
     }
