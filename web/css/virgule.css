@@ -220,9 +220,6 @@ td.center {
     margin-left: 220px;
     padding-top: 15px;
 }
-.not-form-horizontal label {
-    font-weight: bold;
-}
 
 select .medium-select {
     width: 3300px;
