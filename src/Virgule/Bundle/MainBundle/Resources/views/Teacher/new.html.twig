@@ -1,4 +1,18 @@
 {% extends '::main_content.html.twig' %}
+{% block head %}    
+    {{ parent() }}
+    {% block stylesheets %}
+        <link href="{{ asset('css/pwdstrength.css') }}" rel="stylesheet" media="screen" />
+    {% endblock %}
+    {% block javascripts %}
+        <script type="text/javascript" src="{{ asset('js/jquery.pwstrength.min.js') }}"></script>
+        <script type="text/javascript">
+          jQuery(function($) { 
+                $('#virgule_bundle_mainbundle_teachertype_password_first').pwstrength(); 
+            });
+        </script>       
+    {% endblock %}
+{%endblock %}
 {% block content_title %}Créer un nouveau compte utilisateur{% endblock %}
  {%block submenu %}{% endblock %}
 {% block main_content %}
@@ -29,7 +43,7 @@
             {{ form_row(form.isActive, { 'checked':'checked', 'label': 'Formateur en activité', 'hint':'Cochez la case si l\'utilisateur doit être actif' }) }}                
             {{ form_row(form.role, { 'label': 'Rôle' })  }}
             {{ form_row(form.username, { 'label': 'Nom d\'utilisateur' }) }}
-            {{ form_row(form.password.first, { 'label': 'Mot de passe', 'hint':'Choisissez un mot de passe d\'au moins 8 caractères. Vous pouvez prendre une phrase, si cela est plus facile à retenir' }) }}
+            {{ form_row(form.password.first, { 'label': 'Mot de passe', 'hint':'Choisissez un mot de passe d\'au moins 8 caractères. Vous pouvez prendre une phrase, si cela est plus facile à retenir', 'attr': { 'data-indicator' : 'pwindicator' } }) }}
             {{ form_row(form.password.second, { 'label': 'Confirmez le mot de passe' }) }}
             {{ form_rest(form) }}
             <div class="form-actions">                                     

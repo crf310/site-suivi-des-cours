@@ -24,6 +24,7 @@ class TeacherType extends AbstractType {
                     'type' => 'password',
                     'invalid_message' => 'Les mots de passe ne correspondent pas',
                     'options' => array('label' => 'Mot de passe'),
+                    'attr'    => array('data-indicator' => 'pwindicator')
                 ))
                 /*->add('registrationDate', 'date', array(
                     'widget' => 'single_text',

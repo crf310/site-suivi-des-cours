@@ -36,7 +36,18 @@
     <div class="clear_list"></div>
 {% endspaceless %}
 {% endblock choice_widget_expanded %}
-       
+
+{% block password_widget %}
+{% spaceless %}
+    {% set type = type|default('password') %}
+    {{ block('form_widget_simple') }}
+            <div id="pwindicator">
+                <div class="bar"></div>
+                <div class="label"></div>
+            </div>
+{% endspaceless %}
+{% endblock password_widget %}
+    
 {% block field_rows %}
 {% spaceless %}
     {% for child in form %}
