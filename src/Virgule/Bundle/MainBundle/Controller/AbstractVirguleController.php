@@ -43,6 +43,11 @@ abstract class AbstractVirguleController extends Controller {
     protected function getEntityManager() {
         return $em = $this->getDoctrine()->getManager();
     }
+    
+    protected function getConnectedUser() {
+        return $this->get('security.context')->getToken()->getUser();
+    }
+    
     protected function getSelectedSemesterId()  {
         return $this->getRequest()->getSession()->get('currentSemester')->getId();
     }

@@ -19,6 +19,7 @@
     -->
     <!-- Managers -->
     <parameters>
+        <parameter key="namespace">Virgule\Bundle\MainBundle</parameter>
         <parameter key="virgule.teacher_manager.class">Virgule\Bundle\MainBundle\Manager\TeacherManager</parameter>       
         <parameter key="virgule.course_manager.class">Virgule\Bundle\MainBundle\Manager\CourseManager</parameter>
     </parameters>
@@ -32,11 +33,19 @@
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
         
+        <!-- Listeners -->
         <service id="my.login.listener" class="Virgule\Bundle\MainBundle\Event\LoginEventListener">
             <tag name="kernel.event_listener" event="security.interactive_login" />
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
         
+        <!-- Forms -->
+        <!--
+        <service id="form.class_session" class="%namespace%\Form\ClassSessionType" public="false">
+            <tag name="form.type" />
+            <argument type="service" id="doctrine" />
+        </service>-->
+
         <!-- Views -->
         <service id="pagerfanta.view.tablefooter" class="Virgule\Bundle\MainBundle\View\TableFooterView" public="true">
             <tag name="pagerfanta.view" alias="tablefooter" />

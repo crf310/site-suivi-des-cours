@@ -17,10 +17,14 @@
                 <h5>Cours: {{ course }}</h5>
         </div>
         <div class="widget-content nopadding">
-            {{ form_widget(form) }}
-                <div class="form-actions">                                     
-                    <input class="btn" type="submit" value="Créer le compte" />
-                </div>
+            {{ form_row(form.date, { 'label': 'Date'}) }}
+            {{ form_row(form.sessionTeacher, { 'label': 'Formateur'}) }}
+            {{ form_row(form.summary, { 'label': 'Résumé du cours' }) }}                
+            {{ form_row(form.students, { 'label': 'Apprenants présents' }) }}
+            {{ form_rest(form) }}
+            <div class="form-actions">                                     
+                <input class="btn" type="submit" value="Enregistrer le compte-rendu" />
+            </div>
         </div>
     </div>        
 </form>

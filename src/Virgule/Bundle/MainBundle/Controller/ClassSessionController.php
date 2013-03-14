@@ -24,8 +24,7 @@ class ClassSessionController extends AbstractVirguleController {
      * @Template()
      */
     public function indexAction($page = 1) {
-        $em = $this->getDoctrine()->getManager();
-        
+        $em = $this->getEntityManager();        
         $entities = $em->getRepository('VirguleMainBundle:ClassSession')->loadAll($this->getSelectedSemesterId());
 
         return parent::paginate($entities, $page);
@@ -62,8 +61,10 @@ class ClassSessionController extends AbstractVirguleController {
      * @Template()
      */
     public function newAction($course_id) {
+        $organizationBranchId = $this->getSelectedOrganizationBranchId();
+            
         $entity = new ClassSession();
-        $form = $this->createForm(new ClassSessionType($course_id, $this->getDoctrine()), $entity);
+        $form = $this->createForm(new ClassSessionType($this->getDoctrine(), $course_id, $organizationBranchId), $entity);
 
         
         $em = $this->getDoctrine()->getManager();
@@ -84,20 +85,30 @@ class ClassSessionController extends AbstractVirguleController {
      * @Method("POST")
      * @Template("VirguleMainBundle:ClassSession:new.html.twig")
      */
-    public function createAction(Request $request) {
+    public function createAction(Request $request) {        
         $entity = new ClassSession();
-        $form = $this->createForm(new ClassSessionType(), $entity);
+
+        $form = $this->createForm(new ClassSessionType($this->getDoctrine()), $entity);
         $form->bind($request);
 
+        $courseId = $form->get('course_id')->getData();
+        $em = $this->getEntityManager();        
+        $course = $em->getRepository('VirguleMainBundle:Course')->find($courseId);
+        $entity->setCourse($course);
+        
+        $connectedUser = $this->getConnectedUser();
+        $entity->setReportTeacher($connectedUser);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('classsession_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('classsession_index'));
         }
-
+        
         return array(
+            'course_id' => $courseId,
+            'course' => $course,
             'entity' => $entity,
             'form' => $form->createView(),
         );

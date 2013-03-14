@@ -14,13 +14,15 @@ use Doctrine\ORM\Query;
  */
 class StudentRepository extends EntityRepository {
 
+    private function createDefaultQueryBuilder() {
+        return $this->createQueryBuilder('s');
+    }
     /**
      * Select all students enrolled in a class of the selected semester
      * @return type
      */
     public function loadAll($semesterId) {
-        $q = $this
-                ->createQueryBuilder('s')
+        $q = $this->createDefaultQueryBuilder()
                 ->addSelect('s.id, s.firstname, s.lastname, s.gender, s.phoneNumber, s.cellphoneNumber, s.registrationDate, t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName')
                 ->addSelect('c2.id as course_id, l.label as level')
                 ->addSelect('c.isoCode, c.label')
@@ -40,9 +42,7 @@ class StudentRepository extends EntityRepository {
     public function getQueryBuilderForStudentEnrolledInCourses(Array $courseIds) {
         $ids = implode(',', $courseIds);
         $q = $this
-                ->createQueryBuilder('s')
-                ->addSelect('s.id, s.firstname as firstname, s.lastname as lastname, s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, count(cm.id) as nb_comments')
-                ->addSelect('c.isoCode, c.label')
+                ->createDefaultQueryBuilder()
                 ->innerJoin('s.nativeCountry', 'c')
                 ->innerJoin('s.courses', 'c2', 'WITH', 'c2.id IN (:coursesIds)')
                 ->leftJoin('s.comments', 'cm')
@@ -54,7 +54,9 @@ class StudentRepository extends EntityRepository {
     }
 
     public function loadAllEnrolledInCourses(Array $courseIds) {
-        $q = $this->getQueryBuilderForStudentEnrolledInCourses($courseIds);
+        $q = $this->getQueryBuilderForStudentEnrolledInCourses($courseIds)
+                ->addSelect('s.id, s.firstname as firstname, s.lastname as lastname, s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, count(cm.id) as nb_comments')
+                ->addSelect('c.isoCode, c.label');
         return $q->getQuery()->execute(array(), Query::HYDRATE_ARRAY);
     }
 
@@ -69,7 +71,7 @@ class StudentRepository extends EntityRepository {
 
     public function getGenders($semesterId) {
         $q = $this
-                ->createQueryBuilder('s')
+                ->createDefaultQueryBuilder()
                 ->addSelect('s.gender, count(s.gender) as nb_students')
                 ->innerJoin('s.courses', 'c2')
                 ->where('c2.semester = :semesterId')
@@ -83,7 +85,7 @@ class StudentRepository extends EntityRepository {
 
     public function getAges($semesterId) {
         $q = $this
-                ->createQueryBuilder('s')
+                ->createDefaultQueryBuilder()
                 ->select('s.id, count(s.gender) as nb_students')
                 ->innerJoin('s.courses', 'c2')
                 ->where('c2.semester = :semesterId')
@@ -98,7 +100,7 @@ class StudentRepository extends EntityRepository {
 
     public function getCountries($semesterId) {
         $q = $this
-                ->createQueryBuilder('s')
+                ->createDefaultQueryBuilder()
                 ->select('s.')
                 ->addSelect('c1.isoCode as isoCode, c1.label as label, count(s.id) as nb_students')
                 ->innerJoin('s.nativeCountry', 'c1')
@@ -115,7 +117,7 @@ class StudentRepository extends EntityRepository {
     
     public function getStudentsInformation($semesterId) {
         $q = $this
-                ->createQueryBuilder('s')
+                ->createDefaultQueryBuilder()
                 ->addSelect('s.id as student_id, s.gender as student_gender')
                 ->addSelect('c1.isoCode as country_code, c1.label as country_label')
                 ->innerJoin('s.nativeCountry', 'c1')
