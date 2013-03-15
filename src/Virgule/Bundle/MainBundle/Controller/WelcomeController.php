@@ -36,7 +36,7 @@ class WelcomeController extends AbstractVirguleController {
         $nbMyStudents=count($myStudents);
         $myStudentsLineBreak = $this->getListBreak($nbMyStudents, 3);
         
-        $myClassSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByTeacher($semesterId, $teacherId, 5);
+        $myClassSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByTeacher($semesterId, $teacherId);
         $myClassSessionsLineBreak = $this->getListBreak(count($myClassSessions));
 
         $latestClassSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAll($semesterId, 10);

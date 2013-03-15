@@ -18,22 +18,20 @@
                     <th>Date</th>
                     <th>Niveau</th>
                     <th>Cours</th>
+                    <th>Apprenants présents</th>
                     <th>Dirigé par</th>
                     <th>Saisi par</th>
-                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
             {% for entity in entities %}
                 <tr>
-                    <td>{% if entity['date'] %}{{ entity['date'] | date('d/m/Y') }} {% endif %}</td>
-                    <td>
+                    <td><a href="{{ path('classsession_show', { 'id': entity['id'] }) }}">{% if entity['date'] %}{{ entity['date'] | date('d/m/Y') }} {% endif %}</a></td>
+                    <td>{{ entity['classLevel'] }}
                     <td>le {{ entity['course_dayOfWeek'] | day }} de {{ entity['course_startTime'] | date('H:i') }} à {{ entity['course_endTime']| date('H:i') }}</td>
+                    <td>{{ entity['nb_students'] }}
                     <td>{{ entity['sessionTeacher_firstName'] }} {{ entity['sessionTeacher_lastName'] }}</td>
-                    <td>
-                        <a href="{{ path('classsession_show', { 'id': entity['id'] }) }}">Voir le détail</a>&nbsp;
-                        <a href="{{ path('classsession_edit', { 'id': entity['id'] }) }}">Modifier</a>
-                    </td>
+                    <td>{{ entity['reportTeacher_firstName'] }} {{ entity['reportTeacher_lastName'] }}</td>
                 </tr>
             {% endfor %}
             </tbody>

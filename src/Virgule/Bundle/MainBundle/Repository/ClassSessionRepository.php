@@ -14,35 +14,59 @@ use Doctrine\ORM\Query;
  */
 class ClassSessionRepository extends EntityRepository {
     
-     public function loadAllClassSessionByTeacher($semesterId, $teacherId, $limit=5) {
-        $q = $this
-            ->createQueryBuilder('c')
+    private function getDefaultQueryBuilder() {
+        return $this->createQueryBuilder('c');
+    }
+   
+    private function getBasicQueryBuilder() {
+        
+    }
+    public function loadAllClassSessionByTeacher($semesterId, $teacherId, $limit = null) {
+        $qb = $this->getDefaultQueryBuilder()
             ->addSelect('c.id, c.date, count(cm.id) as nb_comments')
             ->innerJoin('c.sessionTeacher', 't')
+            ->innerJoin('c.course', 'c2')
+            ->innerJoin('c2.semester', 's')
             ->leftJoin('c.comments', 'cm')
-            ->where('t.id = :teacherId')
+            ->where('t.id = :teacherId')             
+            ->andWhere('s.id = :semesterId')
             ->setParameter('teacherId', $teacherId)
-            ->setMaxResults($limit) 
+            ->setParameter('semesterId', $semesterId)
             ->add('orderBy', 'c.date DESC')
             ->add('groupBy', 'c.id')
-            ->getQuery()
         ;
+        
+        if ($limit != null) {
+            $qb->setMaxResults($limit);
+        }
+        
+        $q = $qb->getQuery();
+                
         $results = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $results;   
     }
     
     public function loadAll($semesterId, $limit = null) {
-        $qb = $this
-            ->createQueryBuilder('c')
-            ->addSelect('c.id as id, c.date as date, count(cm.id) as nb_comments, c2.id as course_id, c2.dayOfWeek as course_dayOfWeek,
-                c2.startTime as course_startTime, c2.endTime as course_endTime,
-                t.id as sessionTeacher_id, t.firstName as sessionTeacher_firstName, t.lastName as sessionTeacher_lastName'
-                    )
+        $qb = $this->getDefaultQueryBuilder()
+            ->addSelect('c.id as id, c.date as date')
+            ->addSelect('count(cm.id) as nb_comments')
+            ->addSelect('c2.id as course_id, c2.dayOfWeek as course_dayOfWeek,
+                c2.startTime as course_startTime, c2.endTime as course_endTime')
+            ->addSelect('t1.id as sessionTeacher_id, t1.firstName as sessionTeacher_firstName, t1.lastName as sessionTeacher_lastName')
+            ->addSelect('t2.id as reportTeacher_id, t2.firstName as reportTeacher_firstName, t2.lastName as reportTeacher_lastName')
+            ->addSelect('cl.label as classLevel')
+            ->addSelect('count(st.id) as nb_students')
             ->innerJoin('c.course', 'c2')
-            ->innerJoin('c.sessionTeacher', 't')
-            ->leftJoin('c.comments', 'cm')        
+            ->innerJoin('c2.classLevel', 'cl')
+            ->innerJoin('c2.semester', 's')
+            ->innerJoin('c.sessionTeacher', 't1')
+            ->innerJoin('c.reportTeacher', 't2')
+            ->leftJoin('c.comments', 'cm')
+            ->leftJoin('c.students', 'st')
+            ->where('s.id = :semesterId')
             ->add('orderBy', 'c.date DESC')
-            ->add('groupBy', 'c.id');
+            ->add('groupBy', 'c.id')
+            ->setParameter('semesterId', $semesterId);
         
             if ($limit != null) {
                 $qb->setMaxResults($limit);
