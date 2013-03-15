@@ -28,6 +28,9 @@ Morbi lectus turpis, gravida eu rhoncus eu, dictum at orci. Sed auctor nulla vit
         $commentContent = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore";
 
         $nbClassSessions = 0;
+        
+        $nbStudents = 234;
+        
         for ($c = 1; $c <= 4; $c++) {
             $course = $this->getReference('course' . $c);
             for ($i = 1; $i <= 4; $i++) {
@@ -45,6 +48,15 @@ Morbi lectus turpis, gravida eu rhoncus eu, dictum at orci. Sed auctor nulla vit
                 $cs->setReportTeacher($teachers[0]);
                 $cs->setSummary($summary);
 
+                $studentAlreadyAdded = Array();
+                for ($nbStudents = 1; $nbStudents <= rand(5,25); $nbStudents++) {
+                    do {
+                        $studentRef = 'student-' . rand(1, $nbStudents);
+                    } while (in_array($studentRef, $studentAlreadyAdded));
+                    
+                    $cs->addStudent($this->getReference($studentRef));
+                    $studentAlreadyAdded[] = $studentRef;
+                }
                 $manager->persist($cs);
                 $nbClassSessions++;
                 $this->addReference('classsession' . $nbClassSessions, $cs);
@@ -73,7 +85,7 @@ Morbi lectus turpis, gravida eu rhoncus eu, dictum at orci. Sed auctor nulla vit
     }
 
     public function getOrder() {
-        return 15;
+        return 16;
     }
 
 }

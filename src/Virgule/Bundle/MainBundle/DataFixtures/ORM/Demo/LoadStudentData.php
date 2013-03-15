@@ -73,7 +73,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
             }
 
             $manager->persist($s);
-            $this->addReference('student' . $nbStudents, $s);
+            $this->addReference('student-' . $nbStudents, $s);
             $nbStudents++;
         }
         $manager->flush();
@@ -90,7 +90,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
                     $c->setDate(new \DateTime("@$timestamp"));
                     $c->setComment($commentContent);
                     $c->setTeacher($this->getReference('prof' . rand(1, 50)));
-                    $c->setStudent($this->getReference('student' . $i));
+                    $c->setStudent($this->getReference('student-' . $i));
                     $manager->persist($c);
                 }
             }
