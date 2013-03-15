@@ -1,41 +1,24 @@
-<h1>Comment list</h1>
-
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Comment</th>
-            <th>Date</th>
-            <th>Fkteacherid</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('comment_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.comment }}</td>
-            <td>{% if entity.date %}{{ entity.date|date('Y-m-d H:i:s') }}{% endif %}</td>
-            <td>{{ entity.fkTeacherId }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('comment_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('comment_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-<ul>
-    <li>
-        <a href="{{ path('comment_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+{% if comments.count > 0 %}
+<div class="widget-box">
+    <div class="widget-title">
+        <span class="icon"><i class="icon-comment"></i></span>
+        <h5>Commentaires</h5><span title="{{ comments.count }} commentaire(s)" class="label label-info tip-left">{{ comments.count }}</span>
+    </div> 
+    <div class="widget-content nopadding">
+        <ul class="recent-comments">
+            {% for comment in comments %}
+            <li>
+                <div class="comments">
+                    <span class="user-info">
+                        le  {{ comment.date|date("d/m/Y à H:i") }} par <a href="{{ path('teacher_show', { 'id': comment.teacher.id }) }}">{{ comment.teacher.firstName }}  {{ comment.teacher.lastName }}</a>
+                    </span>
+                    <p>
+                        {{ comment.comment|raw }}
+                    </p>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endif %}

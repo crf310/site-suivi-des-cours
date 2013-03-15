@@ -100,13 +100,13 @@ class CommentController extends AbstractVirguleController {
      * Creates a new Comment entity
      * related to a Student
      *
-     * @Route("/create/student/{student_id}", name="student_comment_create")
+     * @Route("/create/student/{id}", name="student_comment_create")
      * @Method("POST")
      * @Template("VirguleMainBundle:Comment:new.html.twig")
      */
-    public function createStudentCommentAction(Request $request, $student_id) {
+    public function createStudentCommentAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
-        $student = $em->getRepository('VirguleMainBundle:Student')->find($student_id);
+        $student = $em->getRepository('VirguleMainBundle:Student')->find($id);
 
         if (!$student) {
             throw $this->createNotFoundException('Unable to find Student entity.');
@@ -116,7 +116,7 @@ class CommentController extends AbstractVirguleController {
         $comment->setStudent($student);
 
         if ($this->createComment($request, $comment)) {
-            return $this->redirect($this->generateUrl('student_show', array('id' => $student_id)));
+            return $this->redirect($this->generateUrl('student_show', array('id' => $id)));
         }
     }
 

@@ -100,50 +100,8 @@
                          </div>
                         </div>
                     {% endif %}
-                    <div class="accordion-group widget-box">
-                        <div class="accordion-heading">
-                            <div class="widget-title">
-                                <a data-parent="#collapse-group" href="#collapseCommentForm" data-toggle="collapse">
-                                    <span class="icon"><i class="icon-plus"></i></span><h5>Ajouter un commentaire</h5>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="collapse accordion-body" id="collapseCommentForm">                          
-                            <div class="widget-content nopadding">
-                                <form action="{{ path('student_comment_create', { 'student_id': entity.id }) }}" method="post" {{ form_enctype(commentForm) }} class="form-horizontal">
-                                    {{ form_row(commentForm.comment, { 'label': 'Commentaire'}) }}
-                                    {{ form_rest(commentForm) }}
-                                    <div class="form-actions"> 
-                                        <button  class="btn" type="submit">Enregistrer le commentaire</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    {% if entity.comments.count > 0 %}
-                    <div class="widget-box">
-                        <div class="widget-title">
-                            <span class="icon"><i class="icon-comment"></i></span>
-                            <h5>Commentaires</h5><span title="{{ entity.comments.count }} commentaire(s)" class="label label-info tip-left">{{ entity.comments.count }}</span>
-                        </div> 
-                        <div class="widget-content nopadding">
-                            <ul class="recent-comments">
-                                {% for comment in entity.comments %}
-                                <li>
-                                    <div class="comments">
-                                        <span class="user-info">
-                                            le  {{ comment.date|date("d/m/Y à H:i") }} par <a href="{{ path('teacher_show', { 'id': comment.teacher.id }) }}">{{ comment.teacher.firstName }}  {{ comment.teacher.lastName }}</a>
-                                        </span>
-                                        <p>
-                                            {{ comment.comment|raw }}
-                                        </p>
-                                    </div>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                {% endif %}
+                    {% include 'VirguleMainBundle:Comment:new.html.twig' with {'commentForm': commentForm, 'target_id': entity.id }  %}
+                    {% include 'VirguleMainBundle:Comment:index.html.twig' with {'comments': entity.comments }  %}
              </div><!-- span -->
         </div><!-- row -->
         <div class="row-fluid">
