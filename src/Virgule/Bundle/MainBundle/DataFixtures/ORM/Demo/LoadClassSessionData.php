@@ -31,9 +31,11 @@ Morbi lectus turpis, gravida eu rhoncus eu, dictum at orci. Sed auctor nulla vit
         
         $nbStudents = 234;
         
-        for ($c = 1; $c <= 4; $c++) {
+        $nbCourses = 11;
+        
+        for ($c = 1; $c <= $nbCourses; $c++) {
             $course = $this->getReference('course' . $c);
-            for ($i = 1; $i <= 4; $i++) {
+            for ($i = 1; $i <= rand(5,15); $i++) {
                 $cs = new ClassSession();
                 $cs->setCourse($course);
 
