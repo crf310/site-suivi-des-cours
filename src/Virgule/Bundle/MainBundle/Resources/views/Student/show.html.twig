@@ -100,7 +100,7 @@
                          </div>
                         </div>
                     {% endif %}
-                    {% include 'VirguleMainBundle:Comment:new.html.twig' with {'commentForm': commentForm, 'target_id': entity.id }  %}
+                    {% include 'VirguleMainBundle:Comment:new.html.twig' with {'commentForm': commentForm, 'target_id': entity.id, 'target_route': 'student_comment_create' }  %}
                     {% include 'VirguleMainBundle:Comment:index.html.twig' with {'comments': entity.comments }  %}
              </div><!-- span -->
         </div><!-- row -->

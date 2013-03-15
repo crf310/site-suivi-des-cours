@@ -1,61 +1,52 @@
-{% extends '::base.html.twig' %}
-{% block body %}
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Date</th>
-            <td>{{ entity.date|date('d/m/Y') }}</td>
-        </tr>
-        <tr>
-            <th>Summary</th>
-            <td>{{ entity.summary|raw }}</td>
-        </tr>
-        <tr>
-            <th>Course</th>
-            <td>{{ entity.course }}</td>
-        </tr>
-        <tr>
-            <th>Session dirigée par</th>
-            <td>{{ entity.sessionTeacher.firstName }} {{ entity.sessionTeacher.lastName }}</td>
-        </tr>
-        {% if entity.sessionTeacher.id != entity.reportTeacher.id %}
-        <tr>
-            <th>Compte-rendu saisi par</th>
-            <td>{{ entity.reportTeacher.firstName }} {{ entity.reportTeacher.lastName }}</td>
-        </tr>
-        {% endif %}
-        <tr>
-            <th>Commentaires</th>
-            <td>
-                <ul>
-                {% for comment in entity.comments %}
-                        <li>
-                            le  {{ comment.date|date("d/m/Y") }} par <a href="{{ path('teacher_show', { 'id': comment.teacher.id }) }}">{{ comment.teacher.firstName }}  {{ comment.teacher.lastName }}</a>: <br />
-                    {{ comment.comment|raw }}
-                        </li>
-                {% endfor %}
-                    </ul>
-                </td>
-            </tr>        
-    </tbody>
-</table>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('classsession_index') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('classsession_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('classsession_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+{% extends '::main_content.html.twig' %}
+{% block content_title %}Compte-rendu de cours{% endblock %}
+{%block submenu %}
+    {% if app.user.id == entity.reportTeacher.id %}
+        <a class="btn tip-bottom" href="{{ path('classsession_edit', { 'id': entity.id }) }}"> <i class="icon-user_edit"></i>Modifier la compte-rendu</a> 
+        <!--<form action="{{ path('classsession_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}-->
+            <button  class="btn tip-bottom" type="submit"><i class="icon-user_delete"></i>Supprimer le compte-rendu</button>
+        <!-</form>-->
+    {% endif %}   
+{% endblock %}
+{% block main_content %}
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span6 form-horizontal not-form-horizontal">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                            <i class="icon-user"></i>
+                    </span>
+                    <h5>{{ entity.course }}</h5>
+                </div>            
+                <div class="widget-content nopadding">
+                    <div class="control-group">
+                        <label class="control-label">Cours du</label>
+                        <div class="controls">{{ entity.date|date('d/m/Y') }}</div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Dirigé par</label>
+                        <div class="controls">{{ entity.sessionTeacher.firstName }} {{ entity.sessionTeacher.lastName }}</div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Compte-rendu saisi par</label>
+                        <div class="controls">{{ entity.reportTeacher.firstName }} {{ entity.reportTeacher.lastName }}</div>
+                    </div>
+                    <div class="control-group">
+                        <div>
+                            <div class="text-block">
+                                {{ entity.summary|raw }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>            
+        <div class="span6">   
+            {% include 'VirguleMainBundle:Comment:new.html.twig' with {'commentForm': commentForm, 'target_id': entity.id, 'target_route': 'classsession_comment_create' }  %}
+            {% include 'VirguleMainBundle:Comment:index.html.twig' with {'comments': entity.comments }  %}
+        </div>
+    </div>
+</div>                 
 {% endblock %}

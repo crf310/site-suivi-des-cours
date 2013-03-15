@@ -8,7 +8,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Controller\AbstractVirguleController;
 use Virgule\Bundle\MainBundle\Entity\ClassSession;
+use Virgule\Bundle\MainBundle\Entity\Comment;
 use Virgule\Bundle\MainBundle\Form\ClassSessionType;
+use Virgule\Bundle\MainBundle\Form\CommentType;
 
 /**
  * ClassSession controller.
@@ -47,9 +49,13 @@ class ClassSessionController extends AbstractVirguleController {
 
         $deleteForm = $this->createDeleteForm($id);
 
+        $comment = new Comment();
+        $commentForm = $this->createForm(new CommentType(), $comment);
+        
         return array(
             'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
+            'commentForm' => $commentForm->createView(),
         );
     }
 
