@@ -17,44 +17,43 @@ class StudentRepository extends EntityRepository {
     private function createDefaultQueryBuilder() {
         return $this->createQueryBuilder('s');
     }
+    
+    public function getBasicQueryBuilder() {
+        $qb = $this
+            ->createDefaultQueryBuilder()
+            ->addSelect('s.id, s.firstname as firstname, s.lastname as lastname, s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber')
+            ->addSelect('c.isoCode, c.label')
+            ->innerJoin('s.nativeCountry', 'c')
+            ->add('orderBy', 's.lastname ASC, s.firstname ASC');
+        return $qb;
+    }
+    
     /**
      * Select all students enrolled in a class of the selected semester
      * @return type
      */
     public function loadAll($semesterId) {
-        $q = $this->createDefaultQueryBuilder()
-                ->addSelect('s.id, s.firstname, s.lastname, s.gender, s.phoneNumber, s.cellphoneNumber, s.registrationDate, t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName')
+        $q = $this->getBasicQueryBuilder()
+                ->addSelect('t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName, count(cm.id) as nb_comments, s.registrationDate')
                 ->addSelect('c2.id as course_id, l.label as level')
-                ->addSelect('c.isoCode, c.label')
-                ->innerJoin('s.nativeCountry', 'c')
                 ->innerJoin('s.courses', 'c2')
                 ->innerJoin('c2.classLevel', 'l')
                 ->leftJoin('s.welcomedByTeacher', 't')
+                ->leftJoin('s.comments', 'cm')
                 ->where('c2.semester = :semesterId')
                 ->add('orderBy', 's.lastname ASC, s.firstname ASC')
+                ->add('groupBy', 's.id')
                 ->setParameter('semesterId', $semesterId)
                 ->getQuery()
         ;
         $students = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $students;
     }
-
-    private function getBasicQueryBuilder() {
-        $qb = $this
-            ->createDefaultQueryBuilder()
-            ->addSelect('s.id, s.firstname as firstname, s.lastname as lastname, s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, count(cm.id) as nb_comments')
-            ->addSelect('c.isoCode, c.label')
-            ->innerJoin('s.nativeCountry', 'c')
-            ->leftJoin('s.comments', 'cm')
-            ->add('orderBy', 's.lastname ASC, s.firstname ASC')
-            ->add('groupBy', 's.id');
-        return $qb;
-    }
     
     public function getQueryBuilderForStudentEnrolledInCourses(Array $courseIds) {
         $ids = implode(',', $courseIds);
         $q = $this
-                ->getBasicQueryBuilder()
+                ->createDefaultQueryBuilder()
                 ->innerJoin('s.courses', 'c2', 'WITH', 'c2.id IN (:coursesIds)')
                 ->setParameter('coursesIds', $ids)
         ;
