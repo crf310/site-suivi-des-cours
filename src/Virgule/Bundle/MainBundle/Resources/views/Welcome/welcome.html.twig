@@ -32,36 +32,8 @@
     </div><!--/row-->
     <div class="row-fluid">
       <div class="span4">          
-          <div class="widget-box">
-                <div class="widget-title">
-                        <span class="icon">
-                                <i class="icon-th-list"></i>
-                        </span>
-                        <h5>Mes compte-rendus</h5>
-                </div>
-                <div class="widget-content">
-                    {% if myClassSessions is empty %}
-                        Vous n'avez enregistré aucun compte-rendu pour le moment, voulez-vous le faire <a href="{{ path('classsession_new') }}">maintenant</a> ?
-                    {% else %}
-                        <div class="left_list">
-                            <ul>
-                            {% for classSession in myClassSessions %}
-                                <li><a href="{{ path('classsession_show', { 'id': classSession.id }) }}">{{ classSession.date | date("d/m/Y") }}</a>
-                                {% if classSession.nb_comments > 0 %}
-                                    <img src="{{ asset('img/icons/comment.png') }}" title="{{ classSession.nb_comments }} commentaire(s)" alt="{{ classSession.nb_comments }} commentaire(s)" />
-                                {% endif %}
-                                </li>
-                                {% if loop.index == myClassSessionsLineBreak and loop.index != loop.last %}
-                                    </ul></div><div class="left_list"><ul>
-                                {% endif %}
-                            {% endfor %}
-                            </ul>
-                         </div>
-                    {% endif %}                
-                <div class="clear_list"></div>
-                <p><a class="btn virgule-btn" href="{{ path('classsession_index') }}"><i class="icon-go"></i> Voir tous mes compte-rendus</a></p>
-                </div>
-            </div>
+        {% set listBreak = myClassSessions | length // 3 %}
+        {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Mes compte-rendus', 'classSessions': myClassSessions, 'listBreak': listBreak }  %}
       </div><!--/span-->
       <div class="span4">          
           <div class="widget-box">
@@ -83,38 +55,9 @@
                 </div>
             </div>
       </div><!--/span-->
-      <div class="span4">          
-          <div class="widget-box">
-                <div class="widget-title">
-                        <span class="icon">
-                                <i class="icon-th-list"></i>
-                        </span>
-                        <h5>Dernier compte-rendus enregistrés</h5>
-                </div>
-                <div class="widget-content">
-                    <div class="left_list">
-                        <ul>
-                            {% if latestClassSessions is empty %}
-                                Aucun compte-rendu enregistré pour le moment.
-                            {% else %}
-                                {% for classSession in latestClassSessions %}
-                                    <li>
-                                        <a href="{{ path('classsession_show', { 'id': classSession['id'] }) }}">{{ classSession['date'] | date("d/m/Y") }}</a>
-                                        {% if classSession['nb_comments'] > 0 %}
-                                                <img src="{{ asset('img/icons/comment.png') }}" title="{{ classSession['nb_comments'] }} commentaire(s)" alt="{{ classSession['nb_comments'] }} commentaire(s)" />
-                                        {% endif %}
-                                    </li>                            
-                                    {% if loop.index == latestClassSessionsLineBreak and loop.index != loop.last %}
-                                        </ul></div><div class="left_list"><ul>
-                                    {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    </ul>
-                </div>
-                <div class="clear_list"></div>
-                <p><a class="btn virgule-btn" href="{{ path('classsession_index') }}"><i class="icon-go"></i> Voir tous les compte-rendus</a></p>
-                </div>
-            </div>
+      <div class="span4">                     
+        {% set listBreak = latestClassSessions | length // 3 %}
+        {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Les 10 derniers compte-rendus enregistrés', 'classSessions': latestClassSessions, 'listBreak': listBreak, 'displayAllClassSessionsButton': true }  %}
       </div><!--/span-->
     </div><!--/row-->
     </div><!--/span-->
