@@ -43,7 +43,8 @@
                 </div>
             </div>
         </div>            
-        <div class="span6">   
+        <div class="span6">
+            {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Apprenants présents', 'students': students, 'listBreak': 3 }  %}
             {% include 'VirguleMainBundle:Comment:new.html.twig' with {'commentForm': commentForm, 'target_id': entity.id, 'target_route': 'classsession_comment_create' }  %}
             {% include 'VirguleMainBundle:Comment:index.html.twig' with {'comments': entity.comments }  %}
         </div>

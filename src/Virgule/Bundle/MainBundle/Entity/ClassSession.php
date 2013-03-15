@@ -66,7 +66,7 @@ class ClassSession {
     private $attachments;
 
    /**
-     * @ORM\ManyToMany(targetEntity="Student")
+     * @ORM\ManyToMany(targetEntity="Student", inversedBy="classSessions")
      * @ORM\JoinTable(name="student_classsession")
      */
     private $students;

@@ -16,8 +16,10 @@
             <thead>
                 <tr>
                     <th>Date</th>
+                    <th>Niveau</th>
                     <th>Cours</th>
-                    <th>Conduit par</th>
+                    <th>Dirigé par</th>
+                    <th>Saisi par</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -25,6 +27,7 @@
             {% for entity in entities %}
                 <tr>
                     <td>{% if entity['date'] %}{{ entity['date'] | date('d/m/Y') }} {% endif %}</td>
+                    <td>
                     <td>le {{ entity['course_dayOfWeek'] | day }} de {{ entity['course_startTime'] | date('H:i') }} à {{ entity['course_endTime']| date('H:i') }}</td>
                     <td>{{ entity['sessionTeacher_firstName'] }} {{ entity['sessionTeacher_lastName'] }}</td>
                     <td>

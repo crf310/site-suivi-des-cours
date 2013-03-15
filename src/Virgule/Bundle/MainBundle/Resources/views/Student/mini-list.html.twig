@@ -1,0 +1,34 @@
+<div class="widget-box">
+    <div class="widget-title">
+            <span class="icon">
+                    <i class="icon-th-list"></i>
+            </span>
+            <h5>{{ title }}</h5>
+            <span title="{{ students | length }} apprenant(s)" class="label label-info tip-left">{{ students | length }}</span>
+    </div>
+    <div class="widget-content">
+            {% if students is empty %}
+                Aucun apprenant trouvé
+            {% else %}
+                <div class="left_list">
+                    <ul>
+                    {% for student in students %}
+                        <li class="user_{{ student['gender'] }}">
+                            <a href="{{ path('student_show', { 'id': student['id'] }) }}">{{ student['firstname']}} {{ student['lastname'] }}</a>
+                            {% if student['nb_comments'] > 0 %}
+                                <img src="{{ asset('img/icons/comment.png') }}" title="{{ student['nb_comments'] }} commentaire(s)" alt="{{ student['nb_comments'] }} commentaire(s)" />
+                            {% endif %}
+                        </li>
+                        {% if loop.index % listBreak == 0  and loop.index != loop.last %}
+                            </ul></div><div class="left_list"><ul>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}                        
+      <div class="clear_list"></div>
+      {% if displayAllStudentButton is defined and displayAllStudentButton == true %}
+        <p><a class="btn virgule-btn" href="{{ path('student_index') }}"><i class="icon-go"></i> Voir tous les apprenants</a></p>
+      {% endif %}
+    </div>
+</div>

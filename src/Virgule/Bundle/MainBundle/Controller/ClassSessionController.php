@@ -39,7 +39,7 @@ class ClassSessionController extends AbstractVirguleController {
      * @Template()
      */
     public function showAction($id) {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getEntityManager();  
 
         $entity = $em->getRepository('VirguleMainBundle:ClassSession')->find($id);
 
@@ -52,10 +52,13 @@ class ClassSessionController extends AbstractVirguleController {
         $comment = new Comment();
         $commentForm = $this->createForm(new CommentType(), $comment);
         
+        $students = $em->getRepository('VirguleMainBundle:Student')->loadAllPresentAtClassSession($id);
+        
         return array(
             'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
             'commentForm' => $commentForm->createView(),
+            'students' => $students,
         );
     }
 

@@ -235,6 +235,11 @@ class Student {
      * @ORM\ManyToMany(targetEntity="Course", inversedBy="students")
      */
     private $courses;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="ClassSession", mappedBy="students")
+     */
+    private $classSessions;
 
     /**
      * Get id

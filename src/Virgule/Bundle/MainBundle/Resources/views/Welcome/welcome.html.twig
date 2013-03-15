@@ -27,37 +27,7 @@
             </div>
       </div><!--/span-->
       <div class="span8">
-          <div class="widget-box">
-                <div class="widget-title">
-                        <span class="icon">
-                                <i class="icon-th-list"></i>
-                        </span>
-                        <h5>Mes apprenants ({{ nbMyStudents }})</h5>
-                </div>
-                <div class="widget-content">
-                        {% if myStudents is empty %}
-                            Aucun apprenant n'est inscrit à l'un de vos cours pour le moment.
-                        {% else %}
-                            <div class="left_list">
-                                <ul>
-                                {% for student in myStudents %}
-                                    <li class="user_{{ student['gender'] }}">
-                                        <a href="{{ path('student_show', { 'id': student['id'] }) }}">{{ student['firstname']}} {{ student['lastname'] }}</a>
-                                        {% if student['nb_comments'] > 0 %}
-                                            <img src="{{ asset('img/icons/comment.png') }}" title="{{ student['nb_comments'] }} commentaire(s)" alt="{{ student['nb_comments'] }} commentaire(s)" />
-                                        {% endif %}
-                                    </li>
-                                    {% if loop.index % nbMyStudentsLineBreak == 0  and loop.index != loop.last %}
-                                        </ul></div><div class="left_list"><ul>
-                                    {% endif %}
-                                {% endfor %}
-                                </ul>
-                            </div>
-                        {% endif %}                        
-                  <div class="clear_list"></div>
-                  <p><a class="btn virgule-btn" href="{{ path('student_index') }}"><i class="icon-go"></i> Voir tous les apprenants</a></p>
-                </div>
-            </div>
+          {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Mes apprenants', 'students': myStudents, 'listBreak': nbMyStudentsLineBreak }  %}
       </div><!--/span-->
     </div><!--/row-->
     <div class="row-fluid">
