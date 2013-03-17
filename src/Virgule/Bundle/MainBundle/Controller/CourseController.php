@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\Course;
+use Virgule\Bundle\MainBundle\Entity\Planning\Planning;
 use Virgule\Bundle\MainBundle\Form\CourseType;
 
 /**
@@ -17,6 +18,26 @@ use Virgule\Bundle\MainBundle\Form\CourseType;
  */
 class CourseController extends AbstractVirguleController {
 
+    private function getRepository() {
+        $em = $this->getEntityManager();
+        return $em->getRepository('VirguleMainBundle:Course');
+    }
+    
+    /**
+     * Lists all Course entities.
+     *
+     * @Route("/showPlanning")
+     * @Template("VirguleMainBundle:Course:planning.html.twig")
+     */
+    public function showPlanningAction() {
+        $semesterId = $this->getSelectedSemesterId();
+        
+        $courses = $this->getRepository()->loadAllObjects($semesterId);
+        
+        $planning = new Planning($courses);
+        return Array('headerCells' => $planning->getHeader(), 'planningRows' => $planning->getRows());
+    }
+    
     /**
      * Lists all Course entities.
      *
@@ -24,12 +45,9 @@ class CourseController extends AbstractVirguleController {
      * @Route("/page/{page}", requirements={"page" = "\d+"}, defaults={"page" = "1"}, name="course_index")
      * @Template()
      */
-    public function indexAction($page = 1) {
-         
-        $em = $this->getDoctrine()->getManager();
-
+    public function indexAction() {
         $semesterId = $this->getSelectedSemesterId();
-        $courses = $em->getRepository('VirguleMainBundle:Course')->loadAll($semesterId);
+        $courses = $this->getRepository()->loadAll($semesterId);
         
         // sub array to group multiple teachers      
         $course_ids = Array();

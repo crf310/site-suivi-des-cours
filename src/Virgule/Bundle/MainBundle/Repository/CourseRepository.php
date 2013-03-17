@@ -116,5 +116,23 @@ class CourseRepository extends EntityRepository {
 
         return $results;
     }
+    
+    public function loadAllObjects($semesterId) {
+        $q = $this
+                ->createQueryBuilder('c')
+                ->innerJoin('c.teachers', 't')
+                ->innerJoin('c.classLevel', 'c2')
+                ->innerJoin('c.classRoom', 'r')
+                ->innerJoin('c.semester', 's')
+                ->leftJoin('c.students', 'stu')
+                ->where('s.id = :semesterId')
+                ->groupBy('c.id')
+                ->add('orderBy', 'c.dayOfWeek ASC, c.startTime ASC')
+                ->setParameter('semesterId', $semesterId)
+                ->getQuery()
+        ;
+        $results = $q->execute(array());
+        return $results;
+    }
 
 }

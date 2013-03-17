@@ -1,0 +1,37 @@
+{% extends '::main_content.html.twig' %}
+{% block content_title %}Planning des cours{% endblock %}
+{%block submenu %}
+    <a class="btn tip-bottom" href="{{ path('course_new') }}"> <i class="icon-add"></i>Nouveau cours</a>
+{% endblock %}
+{% block main_content %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                {% for headerCell in headerCells %}
+                    <th colspan="{{ headerCell.classRooms | length }}">{{ headerCell.day | day }}</th>   
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                {% for headerCell in headerCells %}
+                    {% for classRoom in headerCell.classRooms %}
+                        <td>{{ classRoom }}</td>     
+                    {% endfor %}
+                {% endfor %}
+            </tr>
+        </thead>
+        {% for row in planningRows %}
+            <tr>
+                <td>{{ row.startTime | date('H:i') }} - {{ row.endTime | date('H:i')}}</td>
+                {% for dayCells in row.cells %}
+                    {% for classRoomCell in dayCells %}
+                        {% if classRoomCell is not null %}
+                            <td {% if classRoomCell.rowspan > 0 %}rowspan="{{ classRoomCell.rowspan }}"{% endif %}>{{ classRoomCell.content | raw }}</td>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
