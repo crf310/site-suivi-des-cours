@@ -22,7 +22,7 @@ class Planning {
     
     public function __construct($courses, $totalClassRooms=2) {  
         $this->dayStart = 1;
-        $this->dayEnd = 6;
+        $this->dayEnd = 7;
         $this->startTime = new \DateTime('08:00');
         $this->endTime = new \DateTime('22:00');
         $this->totalClassRooms = $totalClassRooms;
@@ -72,8 +72,6 @@ class Planning {
     }
     
     private function addCourse(Course $course) {
-        echo '<br />';
-        echo 'Course #'.$course->getId();
         $t = $course->getStartTime();
         $this->rows[$t->format('H:i')]->addCell($course);
         $timeCell = clone $course->getStartTime();

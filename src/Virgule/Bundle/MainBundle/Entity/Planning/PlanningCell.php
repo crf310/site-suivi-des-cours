@@ -7,7 +7,7 @@ class PlanningCell {
     
     private $course;
     
-    private $content = 'vide';
+    private $content = '&nbsp;';
     
     private $rowspan = 0;
     
@@ -16,13 +16,16 @@ class PlanningCell {
         
         if ($course != null) {
             $this->rowspan = $this->calculateRowspan($course->getStartTime(), $course->getEndTime());
-            //echo $course->getStartTime()->format('H:i'). ' - '.$course->getEndTime()->format('H:i');
-            $this->content = $course;
+            $this->course = $course;
         }
     }
     
     public function getContent() {
         return $this->content;
+    }
+    
+    public function getCourse() {
+        return $this->course;
     }
     
     public function getRowspan() {

@@ -27,7 +27,13 @@
                 {% for dayCells in row.cells %}
                     {% for classRoomCell in dayCells %}
                         {% if classRoomCell is not null %}
-                            <td {% if classRoomCell.rowspan > 0 %}rowspan="{{ classRoomCell.rowspan }}"{% endif %}>{{ classRoomCell.content | raw }}</td>
+                            <td {% if classRoomCell.rowspan > 0 %}rowspan="{{ classRoomCell.rowspan }}"{% endif %}>
+                            {% if classRoomCell.course is not null %}
+                                    {{ classRoomCell.course.startTime | date('H:i') }} - {{ classRoomCell.course.endTime | date('H:i') }}
+                            {% else %}
+                                {{ classRoomCell.content | raw }}
+                            {% endif %}
+                            </td>
                         {% endif %}
                     {% endfor %}
                 {% endfor %}
