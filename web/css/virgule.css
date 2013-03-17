@@ -17,7 +17,7 @@ h2 { font-size: 16px; }
 }
 .left_list {
     float:left;
-    margin-right: 15px;
+    margin-right: 5px;
 }
 .clear_list {
     clear: both; float: none; height: 0;
