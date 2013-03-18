@@ -1,7 +1,7 @@
 {% extends '::main_content.html.twig' %}
 {% block content_title %}Planning des cours{% endblock %}
 {%block submenu %}
-    <a class="btn tip-bottom" href="{{ path('course_index') }}"> <i class="icon-list"></i>Voir la liste</a>
+    <a class="btn tip-bottom" href="{{ path('course_index') }}"> <i class="icon-list"></i>Voir la liste des cours</a>
     <a class="btn tip-bottom" href="{{ path('course_new') }}"> <i class="icon-add"></i>Nouveau cours</a>
 {% endblock %}
 {% block main_content %}
@@ -39,8 +39,13 @@
                             <td class="center" {% if classRoomCell.rowspan > 0 %} rowspan="{{ classRoomCell.rowspan }}" bgcolor="{{ classRoomCell.course.classLevel.htmlColorCode }}"{% endif %}>
                                <!-- {{ dayId }}, {{ classRoomId }} -->
                             {% if classRoomCell.course is not null %}
-                                    <b>{{ classRoomCell.course.classLevel.label }}<br/>{{ classRoomCell.course.startTime | date('H:i') }} - {{ classRoomCell.course.endTime | date('H:i') }}</b>
-                                    <a href="{{ path('course_show', { 'id': classRoomCell.course.id }) }}">Détail</a>
+                                    <div class="transbox">
+                                        <p>
+                                        Niveau {{ classRoomCell.course.classLevel.label }}<br/>{{ classRoomCell.course.startTime | date('H:i') }} - {{ classRoomCell.course.endTime | date('H:i') }}
+                                        <br />
+                                        <a href="{{ path('course_show', { 'id': classRoomCell.course.id }) }}">Détail</a>
+                                        </p>
+                                    </div>
                             {% else %}
                                 {{ classRoomCell.content | raw }}
                             {% endif %}
