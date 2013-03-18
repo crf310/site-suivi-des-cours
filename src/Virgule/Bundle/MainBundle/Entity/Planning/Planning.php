@@ -22,9 +22,9 @@ class Planning {
     
     public function __construct($courses, $totalClassRooms=2) {  
         $this->dayStart = 1;
-        $this->dayEnd = 7;
+        $this->dayEnd = 6;
         $this->startTime = new \DateTime('08:00');
-        $this->endTime = new \DateTime('22:00');
+        $this->endTime = new \DateTime('21:30');
         $this->totalClassRooms = $totalClassRooms;
         
         $this->initHeader();
@@ -77,11 +77,20 @@ class Planning {
         $timeCell = clone $course->getStartTime();
         $timeCell->modify("+" . self::$cellSize . " minutes");
         
-        while ($timeCell <= $this->endTime) {      
+        while ($timeCell < $course->getEndTime()) {      
             $timeIndex = $timeCell->format('H:i');
             $this->rows[$timeIndex]->removeCell($course->getDayOfWeek(), $course->getClassRoom()->getId());
             $timeCell->modify("+" . self::$cellSize . " minutes");
         }        
+    }
+    
+    private function sortCells() {
+        foreach ($this->rows as $time => $row) {
+            $this->rows[$time] = ksort($row->getCells());
+            foreach ($row as $day => $cells) {
+                $this->rows[$time][$day] = krsort($cells);
+            }
+        }
     }
 }
 ?>

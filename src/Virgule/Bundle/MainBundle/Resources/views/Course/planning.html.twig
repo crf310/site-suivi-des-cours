@@ -4,7 +4,7 @@
     <a class="btn tip-bottom" href="{{ path('course_new') }}"> <i class="icon-add"></i>Nouveau cours</a>
 {% endblock %}
 {% block main_content %}
-    <table border="1">
+    <table border="1" class="planning">
         <thead>
             <tr>
                 <th>&nbsp;</th>
@@ -24,12 +24,12 @@
         {% for row in planningRows %}
             <tr>
                 <td>{{ row.startTime | date('H:i') }} - {{ row.endTime | date('H:i')}}</td>
-                {% for dayCells in row.cells %}
-                    {% for classRoomCell in dayCells %}
+                {% for dayId,dayCells in row.cells %}
+                    {% for classRoomId,classRoomCell in dayCells %}
                         {% if classRoomCell is not null %}
-                            <td {% if classRoomCell.rowspan > 0 %}rowspan="{{ classRoomCell.rowspan }}"{% endif %}>
+                            <td class="center" {% if classRoomCell.rowspan > 0 %} rowspan="{{ classRoomCell.rowspan }}" bgcolor="{{ classRoomCell.course.classLevel.htmlColorCode }}"{% endif %}>
                             {% if classRoomCell.course is not null %}
-                                    {{ classRoomCell.course.startTime | date('H:i') }} - {{ classRoomCell.course.endTime | date('H:i') }}
+                                    <b>{{ classRoomCell.course.classLevel.label }}<br/>{{ classRoomCell.course.startTime | date('H:i') }} - {{ classRoomCell.course.endTime | date('H:i') }}</b>
                             {% else %}
                                 {{ classRoomCell.content | raw }}
                             {% endif %}
