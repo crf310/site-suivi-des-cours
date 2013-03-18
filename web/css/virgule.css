@@ -199,18 +199,8 @@ a.search {
 #planning td {
     height: auto;
     font-size: 12px;
-    padding: 5px 10px 2px;
+    padding: 5px 5px 5px;
     border-bottom: 0;
-}
-
-div.transbox {
-    background-color:#ffffff;
-    opacity:0.5;
-    filter:alpha(opacity=60); /* For IE8 and earlier */
-}
-div.transbox p {
-    font-weight:bold;
-    color:#000000;
 }
   
 td.center {

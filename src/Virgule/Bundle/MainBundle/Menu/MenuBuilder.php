@@ -16,7 +16,7 @@ class MenuBuilder extends ContainerAware {
         $menu->addChild('Compte-rendus', array('route' => 'classsession_index'));
         $menu['Compte-rendus']->setLinkAttribute('class', 'minutes');
         
-        $menu->addChild('Planning des cours', array('route' => 'course_planning'));
+        $menu->addChild('Planning des cours', array('route' => 'course_show_planning'));
         $menu['Planning des cours']->setLinkAttribute('class', 'schedule');
         
         $menu->addChild('Apprenants', array('route' => 'student_index'));

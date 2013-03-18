@@ -1,7 +1,7 @@
 {% extends '::main_content.html.twig' %}
 {% block content_title %}Planning des cours{% endblock %}
 {%block submenu %}
-    <a class="btn tip-bottom" href="{{ path('course_planning') }}"> <i class="icon-calendar"></i>Voir le planning</a>
+    <a class="btn tip-bottom" href="{{ path('course_show_planning') }}"> <i class="icon-calendar"></i>Voir le planning</a>
     <a class="btn tip-bottom" href="{{ path('course_new') }}"> <i class="icon-add"></i>Nouveau cours</a>
 {% endblock %}
 {% block main_content %}

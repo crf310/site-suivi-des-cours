@@ -22,12 +22,28 @@ class CourseController extends AbstractVirguleController {
         $em = $this->getEntityManager();
         return $em->getRepository('VirguleMainBundle:Course');
     }
+    /**
+     *
+     * @Route("/printPlanning", name="course_print_planning"))
+     * @Template("VirguleMainBundle:Course:planning.print.html.twig")
+     */
+    public function printPlanningAction() {
+        $semesterId = $this->getSelectedSemesterId();
+        
+        $courses = $this->getRepository()->loadAllObjects($semesterId);
+        
+        $organizationBranchId = $this->getSelectedOrganizationBranchId();
+        $classRooms = $this->getEntityManager()->getRepository('VirguleMainBundle:ClassRoom')->getClassRoomsForOrganizationBranch($organizationBranchId);
+        
+        $planning = new Planning($classRooms, $courses);
+        return Array('headerCells' => $planning->getHeader(), 'planningRows' => $planning->getRows());
+    }
     
     /**
      * Lists all Course entities.
      *
-     * @Route("/showPlanning", name="course_planning"))
-     * @Template("VirguleMainBundle:Course:planning.html.twig")
+     * @Route("/showPlanning", name="course_show_planning"))
+     * @Template("VirguleMainBundle:Course:planning.web.html.twig")
      */
     public function showPlanningAction() {
         $semesterId = $this->getSelectedSemesterId();
