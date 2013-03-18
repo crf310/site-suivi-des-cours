@@ -16,13 +16,12 @@
         <table id="planning" class="table table-bordered">
             <thead>
                 <tr>
-                    <th>&nbsp;</th>
+                    <th rowspan="2">&nbsp;</th>
                     {% for headerCell in headerCells %}
                         <th colspan="{{ headerCell.classRooms | length }}">{{ headerCell.day | day }}</th>   
                     {% endfor %}
                 </tr>
                 <tr>
-                    <th>&nbsp;</th>
                     {% for headerCell in headerCells %}
                         {% for classRoom in headerCell.classRooms %}
                             <th>{{ classRoom }}</th>     
