@@ -19,6 +19,35 @@ class LoadCourseData extends AbstractFixture implements OrderedFixtureInterface 
         
         $numCourse = 0;
         foreach ($semesterReferences as $semesterReference) {
+            $courseI = new Course();
+            $courseI->setDayOfWeek(1);
+            $courseI->setStartTime(new \DateTime('10:00'));
+            $courseI->setEndTime(new \DateTime('11:30'));
+            $courseI->setOrganizationBranch($this->getReference('deleg-3-10'));
+            $courseI->setClassRoom($this->getReference('salle-cours'));
+            $courseI->setSemester($this->getReference($semesterReference));
+            $courseI->setClassLevel($this->getReference('A1'));
+            $courseI->addTeacher($this->getReference('prof5'));
+            
+            $courseJ = new Course();
+            $courseJ->setDayOfWeek(1);
+            $courseJ->setStartTime(new \DateTime('13:00'));
+            $courseJ->setEndTime(new \DateTime('14:30'));
+            $courseJ->setOrganizationBranch($this->getReference('deleg-3-10'));
+            $courseJ->setClassRoom($this->getReference('salle-cours'));
+            $courseJ->setSemester($this->getReference($semesterReference));
+            $courseJ->setClassLevel($this->getReference('A2'));
+            $courseJ->addTeacher($this->getReference('prof3'));
+            
+            $courseK = new Course();
+            $courseK->setDayOfWeek(1);
+            $courseK->setStartTime(new \DateTime('15:00'));
+            $courseK->setEndTime(new \DateTime('16:30'));
+            $courseK->setOrganizationBranch($this->getReference('deleg-3-10'));
+            $courseK->setClassRoom($this->getReference('salle-cours'));
+            $courseK->setSemester($this->getReference($semesterReference));
+            $courseK->setClassLevel($this->getReference('B1/1'));
+            $courseK->addTeacher($this->getReference('prof6'));
             
             $courseA = new Course();
             $courseA->setDayOfWeek(2);
@@ -125,7 +154,7 @@ class LoadCourseData extends AbstractFixture implements OrderedFixtureInterface 
             $courseK = new Course();
             $courseK->setDayOfWeek(1);
             $courseK->setStartTime(new \DateTime('14:30'));
-            $courseK->setEndTime(new \DateTime('15:00'));
+            $courseK->setEndTime(new \DateTime('16:00'));
             $courseK->setOrganizationBranch($this->getReference('deleg-3-10'));
             $courseK->setClassRoom($this->getReference('salle-cours'));
             $courseK->setSemester($this->getReference($semesterReference));

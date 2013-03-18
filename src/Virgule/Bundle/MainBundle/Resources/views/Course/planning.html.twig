@@ -1,35 +1,45 @@
 {% extends '::main_content.html.twig' %}
 {% block content_title %}Planning des cours{% endblock %}
 {%block submenu %}
+    <a class="btn tip-bottom" href="{{ path('course_index') }}"> <i class="icon-list"></i>Voir la liste</a>
     <a class="btn tip-bottom" href="{{ path('course_new') }}"> <i class="icon-add"></i>Nouveau cours</a>
 {% endblock %}
 {% block main_content %}
-    <table border="1" class="planning">
-        <thead>
-            <tr>
-                <th>&nbsp;</th>
-                {% for headerCell in headerCells %}
-                    <th colspan="{{ headerCell.classRooms | length }}">{{ headerCell.day | day }}</th>   
-                {% endfor %}
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                {% for headerCell in headerCells %}
-                    {% for classRoom in headerCell.classRooms %}
-                        <td>{{ classRoom }}</td>     
+<div class="widget-box">
+    <div class="widget-title">
+            <span class="icon">
+                    <i class="icon-th"></i>
+            </span>
+            <h5>Planning de cette session</h5>
+    </div>
+    <div class="widget-content nopadding">
+        <table id="planning" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    {% for headerCell in headerCells %}
+                        <th colspan="{{ headerCell.classRooms | length }}">{{ headerCell.day | day }}</th>   
                     {% endfor %}
-                {% endfor %}
-            </tr>
-        </thead>
-        {% for row in planningRows %}
+                </tr>
+                <tr>
+                    <th>&nbsp;</th>
+                    {% for headerCell in headerCells %}
+                        {% for classRoom in headerCell.classRooms %}
+                            <th>{{ classRoom }}</th>     
+                        {% endfor %}
+                    {% endfor %}
+                </tr>
+            </thead>
+            {% for row in planningRows %}
             <tr>
-                <td>{{ row.startTime | date('H:i') }} - {{ row.endTime | date('H:i')}}</td>
+                <th>{{ row.startTime | date('H:i') }} - {{ row.endTime | date('H:i')}}</th>
                 {% for dayId,dayCells in row.cells %}
                     {% for classRoomId,classRoomCell in dayCells %}
                         {% if classRoomCell is not null %}
                             <td class="center" {% if classRoomCell.rowspan > 0 %} rowspan="{{ classRoomCell.rowspan }}" bgcolor="{{ classRoomCell.course.classLevel.htmlColorCode }}"{% endif %}>
                             {% if classRoomCell.course is not null %}
                                     <b>{{ classRoomCell.course.classLevel.label }}<br/>{{ classRoomCell.course.startTime | date('H:i') }} - {{ classRoomCell.course.endTime | date('H:i') }}</b>
+                                    <a href="{{ path('course_show', { 'id': classRoomCell.course.id }) }}">Détail</a>
                             {% else %}
                                 {{ classRoomCell.content | raw }}
                             {% endif %}
@@ -38,6 +48,8 @@
                     {% endfor %}
                 {% endfor %}
             </tr>
-        {% endfor %}
-    </table>
+            {% endfor %}
+        </table>
+    </div>
+</div>
 {% endblock %}

@@ -77,7 +77,7 @@ class Planning {
         $timeCell = clone $course->getStartTime();
         $timeCell->modify("+" . self::$cellSize . " minutes");
         
-        while ($timeCell < $course->getEndTime()) {      
+        while ($timeCell <= $course->getEndTime()) {      
             $timeIndex = $timeCell->format('H:i');
             $this->rows[$timeIndex]->removeCell($course->getDayOfWeek(), $course->getClassRoom()->getId());
             $timeCell->modify("+" . self::$cellSize . " minutes");

@@ -148,6 +148,12 @@ i.icon-info {
 i.icon-search {
     background-image: url('../img/icons/magnifier.png');
 }
+i.icon-calendar {
+    background-image: url('../img/icons/calendar.png');
+}
+i.icon-list {
+    background-image: url('../img/icons/application_view_list.png');
+}
 
 li.user_M { list-style-image:url('../img/icons/user.png'); }
 li.user_F { list-style-image:url('../img/icons/user_female.png'); }
@@ -181,11 +187,17 @@ a.search {
     height: 15px;
     margin-left: 2px;
 }
-tbody tr:hover td {
+.data-table tbody tr:hover td {
     background-color: #ECEDED;
 }
-tbody ul li{
+.data-table tbody ul li{
     list-style: none; display: inline; margin-left: 0px;
+}
+#planning td {
+    height: auto;
+    font-size: 12px;
+    padding: 5px 10px 2px;
+    border-bottom: 0;
 }
 td.center {
     text-align: center;
@@ -196,7 +208,6 @@ td.center {
     width: 98%;
     height: 650px;
 }
-
 
 .tiny-select {
     width: 100px;
