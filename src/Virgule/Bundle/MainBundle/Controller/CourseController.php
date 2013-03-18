@@ -54,7 +54,9 @@ class CourseController extends AbstractVirguleController {
         // sub array to group multiple teachers      
         $course_ids = Array();
         $teachers_array = Array();
+       
         foreach ($courses as $key => $course) {
+            $this->logDebug("Finding teachers for course #".$course['course_id']);
             
             $teachers_array[$course['course_id']][] = Array('teacher_id' => $course['teacher_id'],
             'teacher_firstName' => $course['teacher_firstName'],
@@ -62,7 +64,8 @@ class CourseController extends AbstractVirguleController {
             
             // delete doubled
             if (array_key_exists($course['course_id'], $course_ids)) {
-                 unset($courses[$key]);
+                $this->logDebug("Course already processed #".$course['course_id']);
+                unset($courses[$key]);
             }
             $course_ids[$course['course_id']] = 1;
         }
