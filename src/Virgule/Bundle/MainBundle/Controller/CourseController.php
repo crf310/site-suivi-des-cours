@@ -26,7 +26,7 @@ class CourseController extends AbstractVirguleController {
     /**
      * Lists all Course entities.
      *
-     * @Route("/showPlanning")
+     * @Route("/showPlanning", name="course_planning"))
      * @Template("VirguleMainBundle:Course:planning.html.twig")
      */
     public function showPlanningAction() {
@@ -41,8 +41,7 @@ class CourseController extends AbstractVirguleController {
     /**
      * Lists all Course entities.
      *
-     * @Route("/")
-     * @Route("/page/{page}", requirements={"page" = "\d+"}, defaults={"page" = "1"}, name="course_index")
+     * @Route("/", name="course_index")
      * @Template()
      */
     public function indexAction() {
