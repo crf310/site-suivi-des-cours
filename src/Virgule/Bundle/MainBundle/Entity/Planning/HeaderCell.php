@@ -18,8 +18,8 @@ class HeaderCell {
         return $this->classRooms;
     }
     
-    public function addClassRoom($classRoom)  {
-        $this->classRooms[] = $classRoom;
+    public function addClassRoom($classRoomId, $classRoomName)  {
+        $this->classRooms[$classRoomId] = $classRoomName;
     }
 }
 ?>

@@ -20,12 +20,14 @@ class Planning {
     
     private $totalClassRooms;
     
-    public function __construct($courses, $totalClassRooms=2) {  
+    public function __construct($classRooms, $courses) {  
         $this->dayStart = 1;
         $this->dayEnd = 6;
         $this->startTime = new \DateTime('08:00');
         $this->endTime = new \DateTime('21:30');
-        $this->totalClassRooms = $totalClassRooms;
+        
+        $this->classRooms = $classRooms;
+        $this->totalClassRooms = count($classRooms);
         
         $this->initHeader();
         $this->initPlanning();
@@ -45,8 +47,8 @@ class Planning {
     private function initHeader() {
         for ($day = $this->dayStart; $day <= $this->dayEnd; $day++) {
             $this->header[$day] = new HeaderCell($day);
-            for ($classRoom = 1; $classRoom <= $this->totalClassRooms; $classRoom++) {
-                $this->header[$day]->addClassRoom('Classroom #' . $classRoom);
+            foreach ($this->classRooms as $classRoom) {
+                $this->header[$day]->addClassRoom($classRoom['classroom_id'], $classRoom['classroom_name']);
             }
         }
     }
@@ -62,8 +64,8 @@ class Planning {
             $this->rows[$timeIndex] = new PlanningRow($startTimeCell->format('H:i'), $endTimeCell->format('H:i'));
             
             for ($day = $this->dayStart; $day <= $this->dayEnd; $day++) {
-                for ($classRoom = 1; $classRoom <= $this->totalClassRooms; $classRoom++) {
-                    $this->rows[$timeIndex]->initCell($day, $classRoom);
+                foreach ($this->classRooms as $classRoom) {
+                    $this->rows[$timeIndex]->initCell($day, $classRoom['classroom_id']);
                 }
             }
             $startTimeCell->modify("+" . self::$cellSize . " minutes");
@@ -77,7 +79,7 @@ class Planning {
         $timeCell = clone $course->getStartTime();
         $timeCell->modify("+" . self::$cellSize . " minutes");
         
-        while ($timeCell <= $course->getEndTime()) {      
+        while ($timeCell < $course->getEndTime()) {      
             $timeIndex = $timeCell->format('H:i');
             $this->rows[$timeIndex]->removeCell($course->getDayOfWeek(), $course->getClassRoom()->getId());
             $timeCell->modify("+" . self::$cellSize . " minutes");

@@ -37,6 +37,7 @@
                     {% for classRoomId,classRoomCell in dayCells %}
                         {% if classRoomCell is not null %}
                             <td class="center" {% if classRoomCell.rowspan > 0 %} rowspan="{{ classRoomCell.rowspan }}" bgcolor="{{ classRoomCell.course.classLevel.htmlColorCode }}"{% endif %}>
+                               <!-- {{ dayId }}, {{ classRoomId }} -->
                             {% if classRoomCell.course is not null %}
                                     <b>{{ classRoomCell.course.classLevel.label }}<br/>{{ classRoomCell.course.startTime | date('H:i') }} - {{ classRoomCell.course.endTime | date('H:i') }}</b>
                                     <a href="{{ path('course_show', { 'id': classRoomCell.course.id }) }}">Détail</a>
