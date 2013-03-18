@@ -151,6 +151,9 @@ i.icon-search {
 i.icon-calendar {
     background-image: url('../img/icons/calendar.png');
 }
+i.icon-printer {
+    background-image: url('../img/icons/printer.png');
+}
 i.icon-list {
     background-image: url('../img/icons/application_view_list.png');
 }
