@@ -201,9 +201,6 @@ a.search {
 }
 
 div.transbox {
-    height: 90%;
-    width: 90%;
-    margin: auto;
     background-color:#ffffff;
     opacity:0.5;
     filter:alpha(opacity=60); /* For IE8 and earlier */
