@@ -37,6 +37,27 @@ class MenuBuilder extends ContainerAware {
         $menu->addChild('Administration', array('route' => 'admin_show_logs'));
         $menu['Administration']->setLinkAttribute('class', 'administration');
         
+        $route = $this->container->get('request')->getRequestUri();
+        
+        if (strpos($route, '/course/')) {
+            $menu['Planning des cours']->setCurrent(true);
+        }
+        if (strpos($route, '/classsession/')) {
+            $menu['Compte-rendus']->setCurrent(true);
+        }
+        if (strpos($route, '/student/')) {
+            $menu['Apprenants']->setCurrent(true);
+        }
+        if (strpos($route, '/teacher/')) {
+            $menu['Formateurs']->setCurrent(true);
+        }
+        if (strpos($route, '/student/')) {
+            $menu['Apprenants']->setCurrent(true);
+        }
+        if (strpos($route, '/student/')) {
+            $menu['Apprenants']->setCurrent(true);
+        }
+    
         return $menu;
     }
 }
