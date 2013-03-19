@@ -57,6 +57,10 @@ class Planning {
             $this->storeClassRoom($course->getClassRoomId(), $course->getClassRoomName());
         }
         
+        if (count($this->classRooms) == 0) {
+            $this->storeClassRoom(0, "");
+        }
+        
         while ($startTimeCell <= $this->endTime) {           
             $timeIndex = $startTimeCell->format('H:i');
             
