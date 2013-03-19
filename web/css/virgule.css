@@ -130,6 +130,9 @@ i.icon-user_edit {
 i.icon-user_delete {
     background-image: url('../img/icons/user_delete.png');
 }
+i.icon-user-certificate {
+    background-image: url('../img/icons/rosette.png');
+}
 i.icon-add {
     background-image: url('../img/icons/add.png');
 }
