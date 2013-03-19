@@ -2,7 +2,10 @@
 
 {% block linkElement %}
     <a href="{{ item.uri }}"{{ knp_menu.attributes(item.linkAttributes) }}>
-        <i class="{{ item.attribute('icon-class') }}"></i> 
+        <i class="{{ item.attribute('icon-class') }}"></i>
         <span>{{ block('label') }}</span>
+        {% if item.attribute('nb_sublinks') %}
+            <span class="label">{{ item.attribute('nb_sublinks') }}</span></a>
+        {% endif %}
     </a>
 {% endblock %}
