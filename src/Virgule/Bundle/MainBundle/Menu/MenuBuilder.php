@@ -40,7 +40,7 @@ class MenuBuilder extends ContainerAware {
         $menu['Administration']->setLinkAttribute('class', 'administration');
         
         $menu['Administration']->addChild('Gérer la délégation', array('uri' => '#'));
-        $menu['Administration']['Gérer la délégation']->setLinkAttribute('class', 'administration');
+        $menu['Administration']['Gérer la délégation']->setLinkAttribute('class', 'red-cross');
         
         $menu['Administration']->addChild('Voir les logs', array('route' => 'admin_show_logs'));
         $menu['Administration']['Voir les logs']->setLinkAttribute('class', 'logs');
@@ -58,6 +58,9 @@ class MenuBuilder extends ContainerAware {
         foreach($adminRoutes as $adminRoute) {
             if (strpos($currentRoute, $adminRoute)) {                
                 $menu['Administration']->setCurrent(true);
+                if ($menu['Administration']->getAttribute('class') == 'open') {
+                    $menu['Administration']->setAttribute('class', '');
+                }
                 $menu['Administration']->setAttribute('class', 'open');
             }
         }
