@@ -145,7 +145,7 @@ class CourseController extends AbstractVirguleController {
             if ($request->get('save_and_add_new')) {
                 return $this->redirect($this->generateUrl('course_new'));
             } else {
-                return $this->redirect($this->generateUrl('course_index'));
+                return $this->redirect($this->generateUrl('course_show_planning'));
             }
         } else {
             
