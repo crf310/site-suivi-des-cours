@@ -27,19 +27,21 @@
             {% for row in planningRows %}
             <tr>
                 <th>{{ row.startTime | date('H:i') }} - {{ row.endTime | date('H:i')}}</th>
-                {% for dayId,dayCells in row.cells %}
-                    {% for classRoomId,classRoomCell in dayCells %}
+                {% for dayCells in row.cells %}
+                    {% for classRoomCell in dayCells %}
                         {% if classRoomCell is not null %}
-                            <td class="center" {% if classRoomCell.rowspan > 0 %} rowspan="{{ classRoomCell.rowspan }}" style="border: 3px solid {{ classRoomCell.course.classLevel.htmlColorCode }}"{% endif %}>
-                               <!-- {{ dayId }}, {{ classRoomId }} -->
+                            <td class="center" {% if classRoomCell.rowspan > 0 %} rowspan="{{ classRoomCell.rowspan }}" style="border: 3px solid {{ classRoomCell.course.classLevelColorCode }}"{% endif %}>
                             {% if classRoomCell.course is not null %}
                                     <div class="transbox">
                                         <p>
-                                        <strong>Niveau {{ classRoomCell.course.classLevel.label }}</strong>
+                                        <strong>Niveau {{ classRoomCell.course.classLevelLabel }}</strong>
                                         <br/>
                                         {{ classRoomCell.course.startTime | date('H:i') }} - {{ classRoomCell.course.endTime | date('H:i') }}
                                         <br />
-                                        <a href="{{ path('course_show', { 'id': classRoomCell.course.id }) }}">Détail</a>
+                                        {% for teacher in classRoomCell.course.teachers %}
+                                            {{ teacher['teacher_firstName'] }} {{ teacher['teacher_lastName'] }}<br />
+                                        {% endfor %}
+                                        <!--<a href="{{ path('course_show', { 'id': classRoomCell.course.id }) }}">Détail</a>-->
                                         </p>
                                     </div>
                             {% else %}

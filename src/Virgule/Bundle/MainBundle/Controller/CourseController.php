@@ -22,21 +22,18 @@ class CourseController extends AbstractVirguleController {
         $em = $this->getEntityManager();
         return $em->getRepository('VirguleMainBundle:Course');
     }
+    
+    private function getManager() {
+        return $this->get('virgule.course_manager');
+    }
+    
     /**
      *
      * @Route("/printPlanning", name="course_print_planning"))
      * @Template("VirguleMainBundle:Course:planning.print.html.twig")
      */
     public function printPlanningAction() {
-        $semesterId = $this->getSelectedSemesterId();
-        
-        $courses = $this->getRepository()->loadAllObjects($semesterId);
-        
-        $organizationBranchId = $this->getSelectedOrganizationBranchId();
-        $classRooms = $this->getEntityManager()->getRepository('VirguleMainBundle:ClassRoom')->getClassRoomsForOrganizationBranch($organizationBranchId);
-        
-        $planning = new Planning($classRooms, $courses);
-        return Array('headerCells' => $planning->getHeader(), 'planningRows' => $planning->getRows());
+        return $this->generatePlanning();
     }
     
     /**
@@ -46,17 +43,21 @@ class CourseController extends AbstractVirguleController {
      * @Template("VirguleMainBundle:Course:planning.web.html.twig")
      */
     public function showPlanningAction() {
-        $semesterId = $this->getSelectedSemesterId();
-        
-        $courses = $this->getRepository()->loadAllObjects($semesterId);
-        
-        $organizationBranchId = $this->getSelectedOrganizationBranchId();
-        $classRooms = $this->getEntityManager()->getRepository('VirguleMainBundle:ClassRoom')->getClassRoomsForOrganizationBranch($organizationBranchId);
-        
-        $planning = new Planning($classRooms, $courses);
-        return Array('headerCells' => $planning->getHeader(), 'planningRows' => $planning->getRows());
+        return $this->generatePlanning();
     }
     
+    private function generatePlanning() {
+        $semesterId = $this->getSelectedSemesterId();
+        
+        $courses = $this->getManager()->getAllHydratedCourses($semesterId);
+        
+        // $organizationBranchId = $this->getSelectedOrganizationBranchId();
+        // $classRooms = $this->getEntityManager()->getRepository('VirguleMainBundle:ClassRoom')->getClassRoomsForOrganizationBranch($organizationBranchId);
+        
+        $planning = new Planning($courses);
+        return Array('headerCells' => $planning->getHeader(), 'planningRows' => $planning->getRows());
+        
+    }
     /**
      * Lists all Course entities.
      *
@@ -65,28 +66,10 @@ class CourseController extends AbstractVirguleController {
      */
     public function indexAction() {
         $semesterId = $this->getSelectedSemesterId();
-        $courses = $this->getRepository()->loadAll($semesterId);
         
-        // sub array to group multiple teachers      
-        $course_ids = Array();
-        $teachers_array = Array();
-       
-        foreach ($courses as $key => $course) {
-            $this->logDebug("Finding teachers for course #".$course['course_id']);
-            
-            $teachers_array[$course['course_id']][] = Array('teacher_id' => $course['teacher_id'],
-            'teacher_firstName' => $course['teacher_firstName'],
-            'teacher_lastName' => $course['teacher_lastName']);
-            
-            // delete doubled
-            if (array_key_exists($course['course_id'], $course_ids)) {
-                $this->logDebug("Course already processed #".$course['course_id']);
-                unset($courses[$key]);
-            }
-            $course_ids[$course['course_id']] = 1;
-        }
-        $other_entities = Array('teachers_array' => $teachers_array);
-        return array_merge(Array('entities' => $courses), $other_entities);
+        $courses = $this->getManager()->getAllHydratedCourses($semesterId);
+        
+        return Array('courses' => $courses);
     }
 
     /**

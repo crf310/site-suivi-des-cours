@@ -1,7 +1,7 @@
 <?php
 namespace Virgule\Bundle\MainBundle\Entity\Planning;
 
-use Virgule\Bundle\MainBundle\Entity\Course;
+use Virgule\Bundle\MainBundle\Entity\CourseHydrated;
 
 class PlanningCell {
     
@@ -11,7 +11,7 @@ class PlanningCell {
     
     private $rowspan = 0;
     
-    public function __construct(Course $course = null) {
+    public function __construct(CourseHydrated $course = null) {
         $this->course = $course;
         
         if ($course != null) {

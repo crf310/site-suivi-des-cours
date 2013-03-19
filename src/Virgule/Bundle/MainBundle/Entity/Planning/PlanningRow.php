@@ -1,7 +1,7 @@
 <?php
 namespace Virgule\Bundle\MainBundle\Entity\Planning;
 
-use Virgule\Bundle\MainBundle\Entity\Course;
+use Virgule\Bundle\MainBundle\Entity\CourseHydrated;
 use Virgule\Bundle\MainBundle\Entity\Planning\PlanningCell;
 
 class PlanningRow {
@@ -31,8 +31,8 @@ class PlanningRow {
         $this->cells[$day][$classRoom] = new PlanningCell();
     }
             
-    public function addCell(Course $course = null) {
-        $this->cells[$course->getDayOfWeek()][$course->getClassRoom()->getId()] = new PlanningCell($course);
+    public function addCell(CourseHydrated $course = null) {
+        $this->cells[$course->getDayOfWeek()][$course->getClassRoomId()] = new PlanningCell($course);
     }
     
     public function removeCell($day, $classRoom) {

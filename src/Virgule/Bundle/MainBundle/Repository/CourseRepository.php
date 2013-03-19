@@ -98,7 +98,8 @@ class CourseRepository extends EntityRepository {
         $q = $this
                 ->createQueryBuilder('c')
                 ->addSelect('c.id as course_id, c.dayOfWeek, c.startTime, c.endTime, c.alternateStartdate, c.alternateEnddate')
-                ->addSelect('r.name as classroom, c2.label as classlevel')
+                ->addSelect('r.id as classroom_id, r.name as classroom_name')
+                ->addSelect('c2.id as classlevel_id, c2.label as classlevel_name, c2.htmlColorCode as classlevel_colorcode')
                 ->addSelect('t.id as teacher_id, t.lastName as teacher_lastName, t.firstName as teacher_firstName')
                 ->addSelect('count(stu.id) as nb_students')
                 ->innerJoin('c.teachers', 't')
