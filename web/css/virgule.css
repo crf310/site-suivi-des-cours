@@ -168,6 +168,9 @@ i.icon-printer {
 i.icon-list {
     background-image: url('../img/icons/application_view_list.png');
 }
+i.icon-rss {
+    background-image: url('../img/icons/rss.png');
+}
 
 li.user_M { list-style-image:url('../img/icons/user.png'); }
 li.user_F { list-style-image:url('../img/icons/user_female.png'); }
