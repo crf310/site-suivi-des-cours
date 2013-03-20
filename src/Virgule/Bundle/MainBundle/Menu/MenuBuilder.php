@@ -58,10 +58,7 @@ class MenuBuilder extends ContainerAware {
         foreach($adminRoutes as $adminRoute) {
             if (strpos($currentRoute, $adminRoute)) {                
                 $menu['Administration']->setCurrent(true);
-                if ($menu['Administration']->getAttribute('class') == 'open') {
-                    $menu['Administration']->setAttribute('class', '');
-                }
-                $menu['Administration']->setAttribute('class', 'open');
+                $menu['Administration']->setAttribute('class', 'submenu open active');
             }
         }
         
