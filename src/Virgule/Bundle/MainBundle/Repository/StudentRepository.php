@@ -5,6 +5,7 @@ namespace Virgule\Bundle\MainBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
+use Doctrine\DBAL\Connection;
 
 /**
  * StudentRepository
@@ -28,10 +29,9 @@ class StudentRepository extends EntityRepository {
     }
     
     public function getQueryBuilderForStudentEnrolledInCourses(Array $courseIds) {
-        $ids = implode(',', $courseIds);
         $qb = $this->getBasicQueryBuilder()
             ->innerJoin('s.courses', 'c2', 'WITH', 'c2.id IN (:coursesIds)')
-            ->setParameter('coursesIds', $ids);
+            ->setParameter('coursesIds', $courseIds, Connection::PARAM_INT_ARRAY);
         return $qb;
     }
     
