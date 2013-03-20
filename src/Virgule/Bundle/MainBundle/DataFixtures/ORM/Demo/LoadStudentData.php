@@ -83,7 +83,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
             if (rand(0, 1)) {
                 for ($j = 1; $j <= rand(0, 2); $j++) {
                     $c = new Comment();
-                    $y = rand(2012, 2013);
+                    $y = rand(2012, 2012);
                     $m = rand(01, 12);
                     $d = rand(01, 30);
                     $timestamp = strtotime($d . '-' . $m . '-' . $y);
