@@ -45,13 +45,14 @@
                                             {% set currentSemester = app.session.get('currentSemester') %}
                                             {% if classRoomCell.course.alternateStartDate is not empty %}
                                               à partir du {{ classRoomCell.course.alternateStartDate | date("d/m/Y") }}
+                                                <br />
                                             {%endif %}
                                             
                                             {% if classRoomCell.course.alternateEndDate is not empty %}
                                                jusqu'au {{ classRoomCell.course.alternateEndDate | date("d/m/Y") }}
+                                                <br />
                                             {%endif %}
                                         {% endif %}
-                                            <br />
                                         <a href="{{ path('course_show', { 'id': classRoomCell.course.id }) }}">Détail</a>
                                         </p>
                                     </div>
