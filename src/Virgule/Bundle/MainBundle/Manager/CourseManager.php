@@ -57,7 +57,7 @@ class CourseManager extends BaseManager {
         
         foreach ($courses as $course) {
             $courseHydrated = new CourseHydrated($course['course_id'], $course['dayOfWeek'], $course['startTime'], $course['endTime'], 
-            $course['alternateEnddate'], $course['alternateEnddate'], $course['nb_students'], $course['classlevel_id'], 
+            $course['alternateStartdate'], $course['alternateEnddate'], $course['nb_students'], $course['classlevel_id'], 
             $course['classlevel_name'], $course['classlevel_colorcode'], $teachers_array[$course['course_id']], $course['classroom_id'], $course['classroom_name']);
             $coursesHydrated[] = $courseHydrated;
         }
