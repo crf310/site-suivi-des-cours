@@ -64,7 +64,7 @@
                                     Aucun cours dirigé pour le moment.
                                 {% else %}
                                     {% for course in teacherCourses %}
-                                        <li>Niveau {{ course.classLevel }} le {{ course.dayOfWeek| day }} de {{ course.startTime|date('H:i') }} à {{ course.endTime|date('H:i') }} 
+                                        <li><a href="{{ path('course_show', { 'id': course.id }) }}">Niveau {{ course.classLevel }} le {{ course.dayOfWeek| day }} de {{ course.startTime|date('H:i') }} à {{ course.endTime|date('H:i') }}</a> 
                                         </li>
                                     {% endfor %}
                                 {% endif %}
