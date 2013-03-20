@@ -34,30 +34,66 @@ class MenuBuilder extends ContainerAware {
         $menu->addChild('Cartable', array('route' => 'stats_index'));
         $menu['Cartable']->setLinkAttribute('class', 'schoolbag');
         
-        $menu->addChild('Administration', array('route' => 'admin_show_logs'));
+        // Administration
+        $menu->addChild('Administration', array('uri' => '#'));
+        $menu['Administration']->setAttribute('class', 'submenu');
         $menu['Administration']->setLinkAttribute('class', 'administration');
         
-        $route = $this->container->get('request')->getRequestUri();
+        $menu['Administration']->addChild('Gérer la délégation', array('uri' => '#'));
+        $menu['Administration']['Gérer la délégation']->setLinkAttribute('class', 'red-cross');
         
-        if (strpos($route, '/course/')) {
+        $menu['Administration']->addChild('Voir les logs', array('route' => 'admin_show_logs'));
+        $menu['Administration']['Voir les logs']->setLinkAttribute('class', 'logs');
+        if ($this->isActive($menu['Administration']['Voir les logs'])) {
+            $menu['Administration']['Voir les logs']->setCurrent(true);
+        }
+        $nb_sublinks = count($menu['Administration']->getChildren());
+        $menu['Administration']->setAttribute('nb_sublinks', $nb_sublinks);
+        
+        $adminRoutes = Array('show_logs');
+        // Fin Administration
+        
+        $currentRoute = $this->container->get('request')->getRequestUri();
+          
+        foreach($adminRoutes as $adminRoute) {
+            if (strpos($currentRoute, $adminRoute)) {                
+                $menu['Administration']->setCurrent(true);
+                if ($menu['Administration']->getAttribute('class') == 'open') {
+                    $menu['Administration']->setAttribute('class', '');
+                }
+                $menu['Administration']->setAttribute('class', 'open');
+            }
+        }
+        
+        // Set main menu link as active if another link related is active
+        // Example: set "Teachers" active if "Create new teacher" is active
+        if (strpos($currentRoute, '/course/')) {
             $menu['Planning des cours']->setCurrent(true);
         }
-        if (strpos($route, '/classsession/')) {
+        if (strpos($currentRoute, '/classsession/')) {
             $menu['Compte-rendus']->setCurrent(true);
         }
-        if (strpos($route, '/student/')) {
+        if (strpos($currentRoute, '/student/')) {
             $menu['Apprenants']->setCurrent(true);
         }
-        if (strpos($route, '/teacher/')) {
+        if (strpos($currentRoute, '/teacher/')) {
             $menu['Formateurs']->setCurrent(true);
         }
-        if (strpos($route, '/student/')) {
+        if (strpos($currentRoute, '/student/')) {
             $menu['Apprenants']->setCurrent(true);
         }
-        if (strpos($route, '/student/')) {
+        if (strpos($currentRoute, '/student/')) {
             $menu['Apprenants']->setCurrent(true);
         }
     
         return $menu;
+    }
+    
+    private function isActive($link) {        
+        $currentRoute = $this->container->get('request')->getRequestUri();
+        if ($currentRoute == $link->getUri()) {
+            return true;
+        }
+        return false;
     }
 }
