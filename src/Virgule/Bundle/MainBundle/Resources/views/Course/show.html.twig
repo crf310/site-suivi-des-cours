@@ -19,12 +19,8 @@
                                     <div class="controls">{{ entity.dayOfWeek | day }}</div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label">Débute à</label>
-                                    <div class="controls">{{ entity.startTime | date('H:i') }}</div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label">Termine à</label>
-                                    <div class="controls">{{ entity.endTime | date('H:i') }}</div>
+                                    <label class="control-label">Horaires</label>
+                                    <div class="controls">de {{ entity.startTime | date('H\\hi') }} à {{ entity.endTime | date('H\\hi') }}</div>
                                 </div>
                                 {% if entity.alternateStartdate is not empty %}
                                 <div class="control-group">
@@ -55,6 +51,16 @@
                     </form>
                 </div>
             </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    {% if classSessions | length % 3 == 0 %}
+                        {% set listBreak = classSessions | length // 3 %}
+                    {% else %}
+                        {% set listBreak = (classSessions | length // 3) + 1 %}
+                    {% endif %}
+                    {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Comptes-rendus de ce cours', 'classSessions': classSessions, 'listBreak': listBreak }  %}
+                </div>
+            </div>
         </div>
         <div class="span5">
             <div class="row-fluid">
@@ -65,16 +71,6 @@
                         {% set listBreak = (enrolledStudents | length // 3) + 1 %}
                     {% endif %}
                     {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Apprenants inscrits', 'students': enrolledStudents, 'listBreak': listBreak }  %}
-                </div>
-            </div>
-            <div class="row-fluid">
-                <div class="span12">
-                    {% if classSessions | length % 3 == 0 %}
-                        {% set listBreak = classSessions | length // 3 %}
-                    {% else %}
-                        {% set listBreak = (classSessions | length // 3) + 1 %}
-                    {% endif %}
-                    {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Comptes-rendus de ce cours', 'classSessions': classSessions, 'listBreak': listBreak }  %}
                 </div>
             </div>
         </div>
