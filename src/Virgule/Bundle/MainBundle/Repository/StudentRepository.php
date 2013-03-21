@@ -29,7 +29,7 @@ class StudentRepository extends EntityRepository {
     }
     
     public function getQueryBuilderForStudentEnrolledInCourses(Array $courseIds) {
-        $qb = $this->getBasicQueryBuilder()
+        $qb = $this->createDefaultQueryBuilder()
             ->innerJoin('s.courses', 'c2', 'WITH', 'c2.id IN (:coursesIds)')
             ->setParameter('coursesIds', $courseIds, Connection::PARAM_INT_ARRAY);
         return $qb;
@@ -84,7 +84,7 @@ class StudentRepository extends EntityRepository {
                 ->leftJoin('s.comments', 'cm')
                 ->add('groupBy', 's.id');
         
-        return $q->getQuery()->execute(array(), Query::HYDRATE_ARRAY);
+        return $qb->getQuery()->execute(array(), Query::HYDRATE_ARRAY);
     }
     
     public function getStudentsInformation($semesterId) {
