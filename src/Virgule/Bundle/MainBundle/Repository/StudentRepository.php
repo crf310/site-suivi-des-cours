@@ -59,8 +59,11 @@ class StudentRepository extends EntityRepository {
     }
 
     public function loadAllEnrolledInCourses(Array $courseIds) {
-        $qb = $this->getQueryBuilderForStudentEnrolledInCourses($courseIds);
-        $qb->addSelect('count(cm.id) as nb_comments')
+        $qb = $this->getQueryBuilderForStudentEnrolledInCourses($courseIds)
+            ->select('s.id, s.firstname as firstname, s.lastname as lastname, s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, s.registrationDate')
+            ->addSelect('c.isoCode, c.label')
+            ->addSelect('count(cm.id) as nb_comments')
+            ->innerJoin('s.nativeCountry', 'c')
             ->leftJoin('s.comments', 'cm')
             ->add('groupBy', 's.id');
         return $qb->getQuery()->execute(array(), Query::HYDRATE_ARRAY);
