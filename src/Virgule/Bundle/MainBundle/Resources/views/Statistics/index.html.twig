@@ -39,8 +39,8 @@
         };
 
         google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawChart);
-          function drawChart() {
+        google.setOnLoadCallback(drawGenderChart);
+          function drawGenderChart() {
             var data = google.visualization.arrayToDataTable([
               ['Sexe', 'Apprenants'],
               {% for gender_code, nb_students in students_genders %}
@@ -58,20 +58,78 @@
             chart.draw(data, options);
           };
 
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawAgeChart);
+          function drawAgeChart() {
+            var data = google.visualization.arrayToDataTable([
+              ['Tranche d\'âge', 'Nombre d\'apprenants'],
+              {% for age_range, nb_students in students_ages %}
+                ['{{ age_range }} ans', {{ nb_students }}]{% if loop.index != loop.last %},{% endif %}          
+              {% endfor %}
+            ]);
+
+            var options = {
+              title: 'Répartition par tranche d\'âge',
+              backgroundColor: bgColor,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('ages_div'));
+            chart.draw(data, options);
+          };
         </script>
     {% endblock %}
 {% endblock %}
-{% block content_title %}Statistiques de la session en cours{% endblock %}
+{% set currentSemester = app.session.get('currentSemester') %}
+{% block content_title %}Statistiques de la session du {{ currentSemester.startDate|date("d/m/Y") }} au {{ currentSemester.endDate|date("d/m/Y") }}{% endblock %}
  {%block submenu %}
     <a class="btn tip-bottom" href="{{ path('classsession_new') }}"> <i class="icon-export"></i>Exporter les données</a>
 {% endblock %}
 {% block main_content %}
-<div id="results_actions">    
+<div id="results_actions"> 
     <div class="row-fluid">
-	<div class="span3">
-             <div id="gender_div"></div>
+        <div class="span12">
+            <div class="widget-box widget-plain">
+                <div class="widget-content center">
+                    <ul class="stats-plain">
+                        <li>										
+                            <h4>{{ total_students }}</h4>
+                            <span>apprenants inscrit à un cours</span>
+                        </li>
+                        <li>										
+                            <h4>{{ students_genders['F'] }}</h4>
+                            <span>femmes</span>
+                        </li>
+                        <li>										
+                            <h4>{{ students_genders['M'] }}</h4>
+                            <span>hommes</span>
+                        </li>
+                        <li>										
+                            <h4>{{ students_countries | length }}</h4>
+                            <span>pays représentés</span>
+                        </li>
+                        <li>										
+                            <h4>{{ studentsWithManyEnrollments | length }}</h4>
+                            <span>apprenants suivent plus d'un cours</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-	<div class="span9">
+    </div>   
+    <div class="row-fluid">
+        <div class="span4">        
+            <div class="row-fluid">
+                <div class="span12">
+                     <div id="gender_div"></div>
+                </div>
+            </div>        
+            <div class="row-fluid">
+                <div class="span12">
+                     <div id="ages_div"></div>
+                </div>
+            </div>
+        </div>
+	<div class="span8">
              <div id="worldmap_div"></div>
         </div>
     </div> 
