@@ -117,5 +117,22 @@ class StudentRepository extends EntityRepository {
         ;
         $students = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $students;
+    }  
+    
+    public function getNumberOfStudentsPerClassLevel($semesterId) {
+        $q = $this
+                ->getBasicQueryBuilder()
+                ->addSelect('cl.id as classLevel_id, cl.label as classLevel_label, cl.htmlColorCode as classLevel_color, count(s.id) as nb_students')
+                ->innerJoin('s.courses', 'c2')
+                ->innerJoin('c2.classLevel', 'cl')
+                ->where('c2.semester = :semesterId')
+                ->setParameter('semesterId', $semesterId)
+                ->distinct()
+                ->add('orderBy', 'cl.label')
+                ->add('groupBy', 'cl.id')
+                ->getQuery()
+        ;
+        $students = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $students;
     }
 }

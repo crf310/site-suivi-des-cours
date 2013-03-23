@@ -74,13 +74,15 @@ class StatisticsController extends AbstractVirguleController {
         
         $studentsWithManyEnrollments = $studentRepository->getStudentsWithManyEnrollments($semesterId);
         
+        $nbStudentsPerClassLevel = $studentRepository->getNumberOfStudentsPerClassLevel($semesterId);
         
         return array(
             'studentsWithManyEnrollments' => $studentsWithManyEnrollments,
             'students_genders' => $students_genders, 
             'total_students' => $total_students,
             'students_countries' => $students_countries,
-            'students_ages' => $student_ages);
+            'students_ages' => $student_ages,
+            'nbStudentsPerClassLevel' => $nbStudentsPerClassLevel);
     }
 }
 

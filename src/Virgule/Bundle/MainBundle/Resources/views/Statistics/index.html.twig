@@ -11,6 +11,7 @@
          google.setOnLoadCallback(drawGenderChart);
          google.setOnLoadCallback(drawAgeChart);
          google.setOnLoadCallback(drawRegionsMap);
+         google.setOnLoadCallback(drawClassLevelsCharts);
 
           function drawRegionsMap() {
             var data = new google.visualization.DataTable();
@@ -74,6 +75,27 @@
             var chart = new google.visualization.PieChart(document.getElementById('ages_div'));
             chart.draw(data, options);
           };
+          
+          function drawClassLevelsCharts() {
+            var data = google.visualization.arrayToDataTable([
+              ['Niveau', 'Nombre d\'apprenants'],
+              {% for classLevel in nbStudentsPerClassLevel %}
+                ['{{ classLevel['classLevel_label'] }}', {{ classLevel['nb_students'] }}]{% if loop.index != loop.last %},{% endif %}          
+              {% endfor %}
+            ]);
+
+            var options = {
+              title: 'Répartition par niveau',              
+              colors:[
+              {% for classLevel in nbStudentsPerClassLevel %}
+                '{{ classLevel['classLevel_color'] }}'{% if loop.index != loop.last %},{% endif %}         
+              {% endfor %}],
+              backgroundColor: bgColor,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('classlevels_div'));
+            chart.draw(data, options);
+          };
         </script>
     {% endblock %}
 {% endblock %}
@@ -125,20 +147,15 @@
                 <div class="span12">
                      <div id="ages_div"></div>
                 </div>
-            </div>
+            </div>     
+            <div class="row-fluid">
+                <div class="span12">
+                     <div id="classlevels_div"></div>
+                </div>
+            </div>        
         </div>
 	<div class="span8">
              <div id="worldmap_div"></div>
-        </div>
-    </div> 
-    <div class="row-fluid">
-	<div class="span12">
-            <h2>Niveaux</h2>
-        </div>
-    </div> 
-    <div class="row-fluid">
-	<div class="span12"> 
-            <h2>Cours</h2>
         </div>
     </div> 
 </div>
