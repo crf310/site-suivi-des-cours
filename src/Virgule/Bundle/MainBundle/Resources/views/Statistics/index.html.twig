@@ -7,7 +7,9 @@
         <script type='text/javascript'>
          var bgColor = '#EEEEEE';
 
-         google.load('visualization', '1', {'packages': ['geochart']});
+         google.load('visualization', '1', {'packages': ['geochart', 'corechart']});
+         google.setOnLoadCallback(drawGenderChart);
+         google.setOnLoadCallback(drawAgeChart);
          google.setOnLoadCallback(drawRegionsMap);
 
           function drawRegionsMap() {
@@ -38,8 +40,6 @@
             geochart.draw(view, options);
         };
 
-        google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawGenderChart);
           function drawGenderChart() {
             var data = google.visualization.arrayToDataTable([
               ['Sexe', 'Apprenants'],
@@ -58,8 +58,6 @@
             chart.draw(data, options);
           };
 
-        google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawAgeChart);
           function drawAgeChart() {
             var data = google.visualization.arrayToDataTable([
               ['Tranche d\'âge', 'Nombre d\'apprenants'],
