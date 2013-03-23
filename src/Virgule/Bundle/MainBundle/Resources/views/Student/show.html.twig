@@ -1,6 +1,7 @@
 {% extends '::main_content.html.twig' %}
 {% block content_title %}Fiche apprenant{% endblock %}
 {%block submenu %}
+    <button  class="btn tip-bottom" type="submit"><i class="icon-user-certificate"></i>Générer une attestation</button>
     {% if app.user.id == entity.id %}
         <a class="btn tip-bottom" href="{{ path('student_edit', { 'id': entity.id }) }}"> <i class="icon-user_edit"></i>Modifier la fiche</a>
     {% endif %}    

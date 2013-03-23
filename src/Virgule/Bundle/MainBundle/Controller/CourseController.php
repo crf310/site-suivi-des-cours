@@ -88,8 +88,14 @@ class CourseController extends AbstractVirguleController {
         }
 
         $deleteForm = $this->createDeleteForm($id);
+        
+        $enrolledStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledInCourse($id);
+        
+        $classSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByCourse($id);
 
         return array(
+            'classSessions' => $classSessions,
+            'enrolledStudents' => $enrolledStudents,
             'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );

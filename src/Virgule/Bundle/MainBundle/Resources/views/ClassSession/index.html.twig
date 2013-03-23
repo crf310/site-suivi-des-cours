@@ -1,6 +1,7 @@
 {% extends '::main_content.html.twig' %}
 {% block content_title %}Tous les comptes-rendus{% endblock %}
  {%block submenu %}
+    <a class="btn tip-bottom" href="#"> <i class="icon-rss"></i>S'abonner au flux RSS</a>
     <a class="btn tip-bottom" href="{{ path('classsession_new') }}"> <i class="icon-add"></i>Nouveau compte-rendu</a>
 {% endblock %}
 {% block main_content %}

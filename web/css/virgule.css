@@ -71,9 +71,7 @@ h2 { font-size: 16px; }
 }
 #sidebar > ul > li.current > a {
     background: url("../img/menu-active.png") no-repeat scroll right center transparent !important;
-}
-#sidebar > ul > li.current > a {
-	background: url("../img/menu-active.png") no-repeat scroll right center transparent !important;
+    text-decoration: none;
 }
 
 #sidebar a.welcome i {
@@ -140,6 +138,9 @@ i.icon-user_edit {
 i.icon-user_delete {
     background-image: url('../img/icons/user_delete.png');
 }
+i.icon-user-certificate {
+    background-image: url('../img/icons/rosette.png');
+}
 i.icon-add {
     background-image: url('../img/icons/add.png');
 }
@@ -166,6 +167,9 @@ i.icon-printer {
 }
 i.icon-list {
     background-image: url('../img/icons/application_view_list.png');
+}
+i.icon-rss {
+    background-image: url('../img/icons/rss.png');
 }
 
 li.user_M { list-style-image:url('../img/icons/user.png'); }

@@ -41,7 +41,19 @@
                                         {% for teacher in classRoomCell.course.teachers %}
                                             {{ teacher['teacher_firstName'] }} {{ teacher['teacher_lastName'] }}<br />
                                         {% endfor %}
-                                        <!--<a href="{{ path('course_show', { 'id': classRoomCell.course.id }) }}">Détail</a>-->
+                                        {% if classRoomCell.course.alternateStartDate is not empty or classRoomCell.course.alternateStartDate is not empty %}
+                                            {% set currentSemester = app.session.get('currentSemester') %}
+                                            {% if classRoomCell.course.alternateStartDate is not empty %}
+                                              à partir du {{ classRoomCell.course.alternateStartDate | date("d/m/Y") }}
+                                                <br />
+                                            {%endif %}
+                                            
+                                            {% if classRoomCell.course.alternateEndDate is not empty %}
+                                               jusqu'au {{ classRoomCell.course.alternateEndDate | date("d/m/Y") }}
+                                                <br />
+                                            {%endif %}
+                                        {% endif %}
+                                        <a href="{{ path('course_show', { 'id': classRoomCell.course.id }) }}">Détail</a>
                                         </p>
                                     </div>
                             {% else %}

@@ -31,8 +31,12 @@
       </div><!--/span-->
     </div><!--/row-->
     <div class="row-fluid">
-      <div class="span4">          
-        {% set listBreak = myClassSessions | length // 3 %}
+      <div class="span4">
+        {% if myClassSessions | length % 3 == 0 %}
+            {% set listBreak = myClassSessions | length // 3 %}
+        {% else %}
+            {% set listBreak = (myClassSessions | length // 3) + 1 %}
+        {% endif %}
         {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Mes compte-rendus', 'classSessions': myClassSessions, 'listBreak': listBreak }  %}
       </div><!--/span-->
       <div class="span4">          
@@ -55,8 +59,12 @@
                 </div>
             </div>
       </div><!--/span-->
-      <div class="span4">                     
-        {% set listBreak = latestClassSessions | length // 3 %}
+      <div class="span4">
+        {% if latestClassSessions | length % 3 == 0 %}
+            {% set listBreak = latestClassSessions | length // 3 %}
+        {% else %}
+            {% set listBreak = (latestClassSessions | length // 3) + 1 %}
+        {% endif %}
         {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Les 10 derniers compte-rendus enregistrés', 'classSessions': latestClassSessions, 'listBreak': listBreak, 'displayAllClassSessionsButton': true }  %}
       </div><!--/span-->
     </div><!--/row-->
