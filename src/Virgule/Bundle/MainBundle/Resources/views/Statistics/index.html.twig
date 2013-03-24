@@ -18,11 +18,9 @@
             data.addColumn('string', 'country-code');
             data.addColumn('number', 'Apprenants');
             data.addColumn('string', 'country_label');
-            data.addRows([
-                {% for students_country in students_countries %}
-                    ['{{ students_country['country_code'] }}', {{ students_country['nb_students'] }}, '{{ students_country['country_label'] }}']{% if loop.index != loop.last %},{% endif %}
-                {% endfor %}
-            ]);
+            {% for students_country in students_countries %}
+                data.addRow(['{{ students_country['country_code'] }}', {{ students_country['nb_students'] }}, '{{ students_country['country_label'] }}']);
+            {% endfor %}
 
             var options = {
                 backgroundColor: bgColor, 
