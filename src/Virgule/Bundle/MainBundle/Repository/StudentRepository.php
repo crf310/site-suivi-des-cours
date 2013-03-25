@@ -24,7 +24,7 @@ class StudentRepository extends EntityRepository {
             ->createDefaultQueryBuilder()
             ->select('s.id, s.firstname as firstname, s.lastname as lastname, s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, s.registrationDate')
             ->addSelect('c.isoCode, c.label')
-            ->innerJoin('s.nativeCountry', 'c');
+            ->leftJoin('s.nativeCountry', 'c');
         return $qb;
     }
     
@@ -40,6 +40,48 @@ class StudentRepository extends EntityRepository {
      * @return type
      */
     public function loadAll($semesterId) {
+        $qb = $this->getBasicQueryBuilder()
+                ->addSelect('t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName')
+                ->addSelect('c2.id as course_id, l.label as level')
+                ->addSelect('count(cm.id) as nb_comments')
+                ->leftJoin('s.courses', 'c2')
+                ->innerJoin('c2.classLevel', 'l')
+                ->leftJoin('s.welcomedByTeacher', 't')
+                ->leftJoin('s.comments', 'cm')
+                ->where('c2.semester = :semesterId')
+                ->add('orderBy', 's.lastname ASC, s.firstname ASC')
+                ->add('groupBy', 's.id')
+                ->setParameter('semesterId', $semesterId);
+        
+        $q = $qb->getQuery();
+        $students = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $students;
+    }
+    
+    /**
+     * Select all students enrolled in a class of the selected semester
+     * @return type
+     */
+    public function loadAllForOrganizationBranch($semesterId) {
+        $qb = $this->getBasicQueryBuilder()
+                ->addSelect('t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName')
+                ->addSelect('count(cm.id) as nb_comments')
+                ->leftJoin('s.welcomedByTeacher', 't')
+                ->leftJoin('s.comments', 'cm')
+                ->add('orderBy', 's.lastname ASC, s.firstname ASC')
+                ->add('groupBy', 's.id')
+                ->setParameter('semesterId', $semesterId);
+        
+        $q = $qb->getQuery();
+        $students = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $students;
+    }
+    
+    /**
+     * Select all students enrolled in a class of the selected semester
+     * @return type
+     */
+    public function loadAllForSemester($semesterId) {
         $qb = $this->getBasicQueryBuilder()
                 ->addSelect('t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName')
                 ->addSelect('c2.id as course_id, l.label as level')
@@ -63,7 +105,7 @@ class StudentRepository extends EntityRepository {
             ->select('s.id, s.firstname as firstname, s.lastname as lastname, s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, s.registrationDate')
             ->addSelect('c.isoCode, c.label')
             ->addSelect('count(cm.id) as nb_comments')
-            ->innerJoin('s.nativeCountry', 'c')
+            ->leftJoin('s.nativeCountry', 'c')
             ->leftJoin('s.comments', 'cm')
             ->add('groupBy', 's.id');
         return $qb->getQuery()->execute(array(), Query::HYDRATE_ARRAY);

@@ -61,6 +61,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
             $s->setAddress("12 rue Georges Meynieu 75010 Paris");
 
             $s->setWelcomedByTeacher($this->getReference('prof' . rand(1, 50)));
+            $s->setWelcomedInOrganizationBranch($this->getReference('deleg-3-10'));
 
             $idCourse1 = rand(1, $nbCourses);
             $s->addCourse($this->getReference('course' . $idCourse1));
