@@ -93,13 +93,46 @@ class StudentRepository extends EntityRepository {
     public function getStudentsInformation($semesterId) {
         $q = $this
                 ->createDefaultQueryBuilder()
-                ->addSelect('s.id as student_id, s.gender as student_gender')
+                ->addSelect('s.id as student_id, s.gender as student_gender, s.birthdate as student_birthDate')
                 ->addSelect('c1.isoCode as country_code, c1.label as country_label')
                 ->innerJoin('s.nativeCountry', 'c1')
                 ->innerJoin('s.courses', 'c2')
                 ->where('c2.semester = :semesterId')
                 ->setParameter('semesterId', $semesterId)
                 ->distinct()
+                ->getQuery()
+        ;
+        $students = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $students;
+    }
+    
+    public function getStudentsWithManyEnrollments($semesterId) {
+        $q = $this
+                ->getBasicQueryBuilder()
+                ->addSelect('count(c2.id) as nb_enrollements')
+                ->innerJoin('s.courses', 'c2')
+                ->where('c2.semester = :semesterId')
+                ->setParameter('semesterId', $semesterId)
+                ->distinct()
+                ->add('groupBy', 's.id')
+                ->add('having', 'count(c2.id) > 1')
+                ->getQuery()
+        ;
+        $students = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $students;
+    }  
+    
+    public function getNumberOfStudentsPerClassLevel($semesterId) {
+        $q = $this
+                ->getBasicQueryBuilder()
+                ->addSelect('cl.id as classLevel_id, cl.label as classLevel_label, cl.htmlColorCode as classLevel_color, count(s.id) as nb_students')
+                ->innerJoin('s.courses', 'c2')
+                ->innerJoin('c2.classLevel', 'cl')
+                ->where('c2.semester = :semesterId')
+                ->setParameter('semesterId', $semesterId)
+                ->distinct()
+                ->add('orderBy', 'cl.label')
+                ->add('groupBy', 'cl.id')
                 ->getQuery()
         ;
         $students = $q->execute(array(), Query::HYDRATE_ARRAY);

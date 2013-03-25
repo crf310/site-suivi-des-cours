@@ -83,15 +83,17 @@ class Planning {
     }
     private function addCourse(CourseHydrated $course) {
         $t = $course->getStartTime();
-        $this->rows[$t->format('H:i')]->addCell($course);
-        $timeCell = clone $course->getStartTime();
-        $timeCell->modify("+" . self::$cellSize . " minutes");
-                
-        while ($timeCell < $course->getEndTime()) {      
-            $timeIndex = $timeCell->format('H:i');
-            $this->rows[$timeIndex]->removeCell($course->getDayOfWeek(), $course->getClassRoomId());
+        if (array_key_exists($t->format('H:i'), $this->rows)) {
+            $this->rows[$t->format('H:i')]->addCell($course);
+            $timeCell = clone $course->getStartTime();
             $timeCell->modify("+" . self::$cellSize . " minutes");
-        }        
+
+            while ($timeCell < $course->getEndTime()) {      
+                $timeIndex = $timeCell->format('H:i');
+                $this->rows[$timeIndex]->removeCell($course->getDayOfWeek(), $course->getClassRoomId());
+                $timeCell->modify("+" . self::$cellSize . " minutes");
+            }  
+        }
     }
     
     private function sortCells() {
