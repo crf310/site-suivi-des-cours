@@ -206,6 +206,12 @@ class Student {
     private $welcomedByTeacher;
 
     /**
+     * @ORM\ManyToOne(targetEntity="OrganizationBranch")
+     * @ORM\JoinColumn(name="fk_organization_branch", referencedColumnName="id")
+     */
+    private $welcomedInOrganizationBranch;
+
+    /**
      * @var Language
      *
      * @ORM\ManyToOne(targetEntity="Language")
@@ -235,7 +241,7 @@ class Student {
      * @ORM\ManyToMany(targetEntity="Course", inversedBy="students")
      */
     private $courses;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="ClassSession", mappedBy="students")
      */
@@ -870,6 +876,7 @@ class Student {
     public function __toString() {
         return $this->firstname . ' ' . $this->lastname;
     }
+
     /**
      * Add comments
      *
@@ -940,6 +947,27 @@ class Student {
      */
     public function getCourses() {
         return $this->courses;
+    }
+
+    /**
+     * Set welcomedInOrganizationBranch
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\OrganizationBranch $welcomedInOrganizationBranch
+     * @return Student
+     */
+    public function setWelcomedInOrganizationBranch(\Virgule\Bundle\MainBundle\Entity\OrganizationBranch $welcomedInOrganizationBranch = null) {
+        $this->welcomedInOrganizationBranch = $welcomedInOrganizationBranch;
+
+        return $this;
+    }
+
+    /**
+     * Get welcomedInOrganizationBranch
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\OrganizationBranch 
+     */
+    public function getWelcomedInOrganizationBranch() {
+        return $this->welcomedInOrganizationBranch;
     }
 
 }
