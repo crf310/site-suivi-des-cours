@@ -8,15 +8,16 @@
 {% block main_content %}
 <div class="widget-box">
     <div class="widget-title">
-            <span class="icon">
-                    <i class="icon-th"></i>
-            </span>
-            <h5>Tous les apprenants inscrits à un cours de cette session : {{ entities|length }}</h5>
+        <span class="icon">
+            <input type="checkbox" id="title-checkbox" name="title-checkbox" />
+        </span>
+        <h5>Tous les apprenants inscrits à un cours de cette session : {{ entities|length }}</h5>
     </div>
     <div class="widget-content nopadding">
-        <table class="table table-bordered data-table">
+        <table class="table table-bordered table-striped table-hover with-check data-table">
             <thead>
                 <tr>
+                    <th><i class="icon-resize-vertical"></i></th>
                     <th>Pays</th>
                     <th>Sexe</th>
                     <th>Prénom</th>
@@ -33,6 +34,7 @@
             <tbody>
                 {% for entity in entities %}
                 <tr class="gradeA">
+                    <td><input type="checkbox" name="students[]" value="{{ entity['id'] }}"/></td>
                     <td class="center">
                         <img src="{{ asset('img/drapeaux/' ~ entity['isoCode'] ~ '.png')}}" alt="{{  entity['isoCode'] }}" title="{{  entity['label'] }}" />
                     </td>
