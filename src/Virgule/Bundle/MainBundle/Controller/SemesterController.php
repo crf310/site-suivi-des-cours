@@ -15,22 +15,22 @@ use Virgule\Bundle\MainBundle\Form\SemesterType;
  *
  * @Route("/semester")
  */
-class SemesterController extends Controller
-{
+class SemesterController extends AbstractVirguleController {
+    
+    private function getManager() {
+        return $this->get('virgule.semester_manager');
+    }
     /**
      * Lists all Semester entities.
      *
-     * @Route("/", name="semester")
+     * @Route("/", name="semester_index")
      * @Template()
      */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('VirguleMainBundle:Semester')->findAll();
+    public function indexAction() {
+        $semesters = $this->getManager()->loadAllSemestersForBranch($this->getSelectedOrganizationBranchId());
 
         return array(
-            'entities' => $entities,
+            'semesters' => $semesters,
         );
     }
 
@@ -40,8 +40,7 @@ class SemesterController extends Controller
      * @Route("/{id}/show", name="semester_show")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:Semester')->find($id);
@@ -53,7 +52,7 @@ class SemesterController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -64,14 +63,13 @@ class SemesterController extends Controller
      * @Route("/new", name="semester_new")
      * @Template()
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new Semester();
-        $form   = $this->createForm(new SemesterType(), $entity);
+        $form = $this->createForm(new SemesterType(), $entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -82,9 +80,8 @@ class SemesterController extends Controller
      * @Method("POST")
      * @Template("VirguleMainBundle:Semester:new.html.twig")
      */
-    public function createAction(Request $request)
-    {
-        $entity  = new Semester();
+    public function createAction(Request $request) {
+        $entity = new Semester();
         $form = $this->createForm(new SemesterType(), $entity);
         $form->bind($request);
 
@@ -98,7 +95,7 @@ class SemesterController extends Controller
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -108,8 +105,7 @@ class SemesterController extends Controller
      * @Route("/{id}/edit", name="semester_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:Semester')->find($id);
@@ -122,8 +118,8 @@ class SemesterController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -135,8 +131,7 @@ class SemesterController extends Controller
      * @Method("POST")
      * @Template("VirguleMainBundle:Semester:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:Semester')->find($id);
@@ -157,8 +152,8 @@ class SemesterController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -169,8 +164,7 @@ class SemesterController extends Controller
      * @Route("/{id}/delete", name="semester_delete")
      * @Method("POST")
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
 
@@ -189,11 +183,11 @@ class SemesterController extends Controller
         return $this->redirect($this->generateUrl('semester'));
     }
 
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                        ->add('id', 'hidden')
+                        ->getForm()
         ;
     }
+
 }

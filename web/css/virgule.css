@@ -97,6 +97,9 @@ h2 { font-size: 16px; }
 #sidebar a.schedule i {
     background-image: url('../img/icons/calendar.png');
 }
+#sidebar a.schedule-edit i {
+    background-image: url('../img/icons/calendar_edit.png');
+}
 #sidebar a.statistics i {
     background-image: url('../img/icons/chart_bar.png');
 }

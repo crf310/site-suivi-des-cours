@@ -49,7 +49,10 @@ class MenuBuilder extends ContainerAware {
         /* Administration */
         $menu->addChild('Administration', array('uri' => '#'));
         $menu['Administration']->setAttribute('class', 'submenu');
-        $menu['Administration']->setLinkAttribute('class', 'administration');
+        $menu['Administration']->setLinkAttribute('class', 'administration');        
+        
+        $menu['Administration']->addChild('Gérer les semestres', array('route' => 'semester_index'));
+        $menu['Administration']['Gérer les semestres']->setLinkAttribute('class', 'schedule-edit');
         
         $menu['Administration']->addChild('Gérer la délégation', array('uri' => '#'));
         $menu['Administration']['Gérer la délégation']->setLinkAttribute('class', 'red-cross');

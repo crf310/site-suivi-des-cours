@@ -21,7 +21,8 @@
     <parameters>
         <parameter key="namespace">Virgule\Bundle\MainBundle</parameter>
         <parameter key="virgule.teacher_manager.class">Virgule\Bundle\MainBundle\Manager\TeacherManager</parameter>       
-        <parameter key="virgule.course_manager.class">Virgule\Bundle\MainBundle\Manager\CourseManager</parameter>
+        <parameter key="virgule.course_manager.class">Virgule\Bundle\MainBundle\Manager\CourseManager</parameter>               
+        <parameter key="virgule.semester_manager.class">Virgule\Bundle\MainBundle\Manager\SemesterManager</parameter>
     </parameters>
 
     <services>
@@ -30,6 +31,9 @@
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
         <service id="virgule.course_manager" class="%virgule.course_manager.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+        <service id="virgule.semester_manager" class="%virgule.semester_manager.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
         
