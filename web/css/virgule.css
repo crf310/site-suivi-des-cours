@@ -66,14 +66,22 @@ h2 { font-size: 16px; }
     color: #FFFFFF;
 }
 /* Take same style but use "current" from KnpMenu instead of "active" */
-#sidebar > ul > li.current {
+#sidebar > ul > li.current, #sidebar > ul > li > ul > li.current {
     box-shadow: 0 2px 4px rgba(0,0,0,0.2) inset;
+    opacity: 1;
 }
+/* Sublinks */
+#sidebar > ul > li.current > a > i, #sidebar > ul > li > ul > li.current > a > i {
+    opacity: 1;
+}
+#sidebar > ul > li.current > a, #sidebar > ul > li > ul > li.current > a {
+    color: #FFFFFF;
+}
+
 #sidebar > ul > li.current > a {
     background: url("../img/menu-active.png") no-repeat scroll right center transparent !important;
     text-decoration: none;
 }
-
 #sidebar a.welcome i {
     background-image: url('../img/icons/house.png');
 }
@@ -94,6 +102,9 @@ h2 { font-size: 16px; }
 }
 #sidebar a.user_profile i {
     background-image: url('../img/icons/telephone.png');
+}
+#sidebar a.user_add i {
+    background-image: url('../img/icons/user_add.png');
 }
 #sidebar a.administration i {
     background-image: url('../img/icons/cog.png');
@@ -170,6 +181,9 @@ i.icon-list {
 }
 i.icon-rss {
     background-image: url('../img/icons/rss.png');
+}
+i.icon-copy {
+    background-image: url('../img/icons/page_white_paste.png');
 }
 
 li.user_M { list-style-image:url('../img/icons/user.png'); }

@@ -19,8 +19,20 @@ class MenuBuilder extends ContainerAware {
         $menu->addChild('Planning des cours', array('route' => 'course_show_planning'));
         $menu['Planning des cours']->setLinkAttribute('class', 'schedule');
         
-        $menu->addChild('Apprenants', array('route' => 'student_index'));
+        /* Students */
+        $menu->addChild('Apprenants', array('uri' => '#'));
+        $menu['Apprenants']->setAttribute('class', 'submenu');
         $menu['Apprenants']->setLinkAttribute('class', 'students');
+        
+        $menu['Apprenants']->addChild('Inscrits à un cours', array('route' => 'student_index'));
+        $menu['Apprenants']['Inscrits à un cours']->setLinkAttribute('class', 'students');
+        $menu['Apprenants']->addChild('Non inscrits', array('route' => 'student_index'));
+        $menu['Apprenants']['Non inscrits']->setLinkAttribute('class', 'students');
+        $menu['Apprenants']->addChild('Enregistrer un apprenant', array('route' => 'student_new'));
+        $menu['Apprenants']['Enregistrer un apprenant']->setLinkAttribute('class', 'user_add');
+        
+        $this->addNbSubLinks($menu, 'Apprenants');
+        /* End Students */
         
         $menu->addChild('Formateurs', array('route' => 'teacher_index'));
         $menu['Formateurs']->setLinkAttribute('class', 'teachers');
@@ -34,7 +46,7 @@ class MenuBuilder extends ContainerAware {
         $menu->addChild('Cartable', array('route' => 'stats_index'));
         $menu['Cartable']->setLinkAttribute('class', 'schoolbag');
         
-        // Administration
+        /* Administration */
         $menu->addChild('Administration', array('uri' => '#'));
         $menu['Administration']->setAttribute('class', 'submenu');
         $menu['Administration']->setLinkAttribute('class', 'administration');
@@ -44,24 +56,12 @@ class MenuBuilder extends ContainerAware {
         
         $menu['Administration']->addChild('Voir les logs', array('route' => 'admin_show_logs'));
         $menu['Administration']['Voir les logs']->setLinkAttribute('class', 'logs');
-        if ($this->isActive($menu['Administration']['Voir les logs'])) {
-            $menu['Administration']['Voir les logs']->setCurrent(true);
-        }
-        $nb_sublinks = count($menu['Administration']->getChildren());
-        $menu['Administration']->setAttribute('nb_sublinks', $nb_sublinks);
         
-        $adminRoutes = Array('show_logs');
-        // Fin Administration
+        $this->addNbSubLinks($menu, 'Administration');
+        /* End Administration */
         
+        /*
         $currentRoute = $this->container->get('request')->getRequestUri();
-          
-        foreach($adminRoutes as $adminRoute) {
-            if (strpos($currentRoute, $adminRoute)) {                
-                $menu['Administration']->setCurrent(true);
-                $menu['Administration']->setAttribute('class', 'submenu open active');
-            }
-        }
-        
         // Set main menu link as active if another link related is active
         // Example: set "Teachers" active if "Create new teacher" is active
         if (strpos($currentRoute, '/course/')) {
@@ -81,16 +81,13 @@ class MenuBuilder extends ContainerAware {
         }
         if (strpos($currentRoute, '/student/')) {
             $menu['Apprenants']->setCurrent(true);
-        }
+        }*/
     
         return $menu;
     }
     
-    private function isActive($link) {        
-        $currentRoute = $this->container->get('request')->getRequestUri();
-        if ($currentRoute == $link->getUri()) {
-            return true;
-        }
-        return false;
+    private function addNbSubLinks($menu, $index) {
+        $nb_sublinks = count($menu[$index]->getChildren());
+        $menu[$index]->setAttribute('nb_sublinks', $nb_sublinks);
     }
 }

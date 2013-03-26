@@ -1,4 +1,21 @@
 {% extends '::main_content.html.twig' %}
+{% block head %}    
+    {{ parent() }}
+    {% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/jquery.zclip.min.js') }}"></script>
+    <script type='text/javascript'>
+    $(document).ready(function(){
+        $('a#copy-button').zclip({
+            path:"{{ asset('swf/ZeroClipboard.swf') }}",
+            copy:"Toto",
+            afterCopy:function(){
+                alert('The poem has been copied to the clipboard.');
+            },
+        });
+    });
+    </script>
+    {% endblock %}
+{% endblock %}
 {% block content_title %}Listes des formateurs{% endblock %}
 {%block submenu %}
     {% if status == 'active' %}
@@ -6,7 +23,9 @@
     {% else %}
         <a class="btn" title="Voir les utilisateurs actifs" href="{{ path('teacher_index', { 'status': 'active' }) }}"> <i class="icon-user-active"></i>Voir les utilisateurs actifs</a>
     {% endif %}
-    <a class="btn" title="Ajouter un compte utilisateur" href="{{ path('teacher_new') }}"> <i class="icon-add"></i>Nouvel utilisateur</a>
+        
+    <a class="btn" id="copy-button" title="Copier les adresses emails" href="#"> <i class="icon-copy"></i>Copier les adresses emails</a>
+    <a class="btn" title="Ajouter un compte utilisateur" href="{{ path('teacher_new') }}"> <i class="icon-add"></i>Nouvel utilisateur</a>    
 {% endblock %}
 {% block main_content %}
 <div class="widget-box">
