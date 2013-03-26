@@ -182,6 +182,9 @@ i.icon-list {
 i.icon-rss {
     background-image: url('../img/icons/rss.png');
 }
+i.icon-copy {
+    background-image: url('../img/icons/page_white_paste.png');
+}
 
 li.user_M { list-style-image:url('../img/icons/user.png'); }
 li.user_F { list-style-image:url('../img/icons/user_female.png'); }
