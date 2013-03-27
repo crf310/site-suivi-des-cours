@@ -5,9 +5,17 @@ namespace Virgule\Bundle\MainBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Virgule\Bundle\MainBundle\Repository\TeacherRepository;
 
 class StudentType extends AbstractType {
 
+    private $teacherRepository;
+    
+    public function __construct(TeacherRepository $teacherRepository, $organizationBranchId) {
+        $this->teacherRepository = $teacherRepository;
+        $this->organizationBranchId = $organizationBranchId;
+    }
+    
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 //->add('registrationDate')
@@ -17,6 +25,16 @@ class StudentType extends AbstractType {
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker','data-date-format' => 'dd/mm/yyyy')
+                ))        
+                ->add('registrationDate')
+                ->add('welcomedByTeacher', 'entity', array(
+                    'class' => 'VirguleMainBundle:Teacher',
+                    'query_builder' =>  $this->teacherRepository->getAvailableTeachersQueryBuilder($this->organizationBranchId, true),
+                    'expanded' => false,
+                    'multiple' => false,
+                    'property' => 'fullname',
+                    'property_path' => 'welcomedByTeacher',            
+                    'attr' => array('class' => 'medium-select')
                 ))
                 
                                             

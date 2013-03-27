@@ -23,12 +23,11 @@ class StudentController extends AbstractVirguleController {
     /**
      * Lists all Student entities.
      *
-     * @Route("/")
-     * @Route("/page/{page}", requirements={"page" = "\d+"}, defaults={"page" = "1"}, name="student_index")
+     * @Route("/", name="student_index")
      * @Template()
      */
-    public function indexAction($page=1) {
-        $em = $this->getDoctrine()->getManager();
+    public function indexAction() {
+        $em = $this->getEntityManager();
 
         $students = $em->getRepository('VirguleMainBundle:Student')->loadAll($this->getSelectedSemesterId());
     
@@ -97,8 +96,13 @@ class StudentController extends AbstractVirguleController {
      * @Template()
      */
     public function newAction() {
+        $em = $this->getEntityManager();
+        $teacherRepository = $em->getRepository('VirguleMainBundle:Teacher');
+        
+        $organizationBranchId = $this->getSelectedOrganizationBranchId();
+        
         $entity = new Student();
-        $form = $this->createForm(new StudentType(), $entity);
+        $form = $this->createForm(new StudentType($teacherRepository, $organizationBranchId), $entity);
 
         return array(
             'entity' => $entity,
