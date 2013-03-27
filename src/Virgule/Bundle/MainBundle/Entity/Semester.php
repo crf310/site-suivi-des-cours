@@ -44,7 +44,12 @@ class Semester {
      * @ORM\ManyToOne(targetEntity="OrganizationBranch", inversedBy="semesters")
      * @ORM\JoinColumn(name="fk_organization_branch", referencedColumnName="id")
      */
-    private $organizationBranch;
+    private $organizationBranch;    
+    
+    /**
+     * @ORM\OneToMany(targetEntity="OpenHouse", mappedBy="semester")
+     */
+    private $openHouses;
 
     /**
      * Get id
