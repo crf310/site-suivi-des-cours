@@ -6,15 +6,19 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Virgule\Bundle\MainBundle\Repository\TeacherRepository;
+use Virgule\Bundle\MainBundle\Repository\CountryRepository;
 
 class StudentType extends AbstractType {
 
     private $teacherRepository;
+    
+    private $countryRepository;
         
     private $openHousesDates;
     
-    public function __construct(TeacherRepository $teacherRepository, $organizationBranchId, $openHousesDates) {
+    public function __construct(TeacherRepository $teacherRepository = null, CountryRepository $countryRepository = null, $organizationBranchId = null, $openHousesDates = null) {
         $this->teacherRepository = $teacherRepository;
+        $this->countryRepository = $countryRepository;
         $this->organizationBranchId = $organizationBranchId;
         $this->openHousesDates = $openHousesDates;
     }
@@ -28,6 +32,16 @@ class StudentType extends AbstractType {
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker','data-date-format' => 'dd/mm/yyyy')
+                ))
+                ->add('nationality')
+                ->add('nationality', 'entity', array(
+                    'class' => 'VirguleMainBundle:Country',
+                    'query_builder' =>  $this->countryRepository->loadAllQueryBuilder(),
+                    'expanded' => false,
+                    'multiple' => false,
+                    'property' => 'label',
+                    'property_path' => 'nationality',            
+                    'attr' => array('class' => 'medium-select')
                 ))
                 ->add('registrationDate', 'date', array(
                     'widget' => 'single_text',

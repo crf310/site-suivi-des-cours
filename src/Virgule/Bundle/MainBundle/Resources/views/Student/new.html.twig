@@ -24,7 +24,8 @@
             {{ form_row(form.firstname, { 'label': 'Prénom'}) }}
             {{ form_row(form.lastname, { 'label': 'Nom' }) }}                
             {{ form_row(form.birthdate, { 'label': 'Date de naissance' }) }}                
-            {{ form_row(form.registrationDate, { 'label': 'Accueilli le', 'id': 'registrationDateField' }) }}                
+            {{ form_row(form.nationality, { 'label': 'Pays d\'origine' }) }}
+            {{ form_row(form.registrationDate, { 'label': 'Accueilli le', 'id': 'registrationDateField', 'hint':'Cliquez sur le bouton correspondant à une journée d\'accueil pour insérer la date' }) }}                
             {{ form_row(form.welcomedByTeacher, { 'label': 'Accueilli par' }) }}                
             {{ form_rest(form) }}
             <div class="form-actions">                                     

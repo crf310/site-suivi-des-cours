@@ -19,11 +19,6 @@ use Virgule\Bundle\MainBundle\Form\CommentType;
  * @Route("/student")
  */
 class StudentController extends AbstractVirguleController {
-
-    private function getRepository() {
-        $em = $this->getEntityManager();
-        return $em->getRepository('VirguleMainBundle:Student');
-    }
     
     /*
     private function getManager() {
@@ -38,7 +33,7 @@ class StudentController extends AbstractVirguleController {
      * @Template()
      */
     public function indexAction() {
-        $students = $this->getRepository()->loadAll($this->getSelectedSemesterId());
+        $students = $this->getStudentRepository()->loadAll($this->getSelectedSemesterId());
     
         // sub array to group students enrolled to many courses
         $students_ids = Array();
@@ -67,9 +62,7 @@ class StudentController extends AbstractVirguleController {
      * @Template()
      */
     public function showAction($id) {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('VirguleMainBundle:Student')->find($id);
+        $entity = $this->getStudentRepository()->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Student entity.');
@@ -81,7 +74,7 @@ class StudentController extends AbstractVirguleController {
         $comment = new Comment();
         $commentForm = $this->createForm(new CommentType(), $comment);
         
-        $courses = $em->getRepository('VirguleMainBundle:Course')->getCoursesByStudent($id);
+        $courses = $this->getCourseRepository()->getCoursesByStudent($id);
         
         $previousSemester = null;
         $nbEnrollment = count($courses);
@@ -105,8 +98,8 @@ class StudentController extends AbstractVirguleController {
      * @Template()
      */
     public function newAction() {
-        $em = $this->getEntityManager();
-        $teacherRepository = $em->getRepository('VirguleMainBundle:Teacher');
+        $teacherRepository = $this->getTeacherRepository();
+        $countryRepository = $this->getCountryRepository();
         
         $organizationBranchId = $this->getSelectedOrganizationBranchId();
         
@@ -115,7 +108,7 @@ class StudentController extends AbstractVirguleController {
         $openHousesDates = $this->getOpenHouseManager()->getOpenHousesDates($semesterId);
         
         $entity = new Student();
-        $form = $this->createForm(new StudentType($teacherRepository, $organizationBranchId, $openHousesDates), $entity);
+        $form = $this->createForm(new StudentType($teacherRepository, $countryRepository, $organizationBranchId, $openHousesDates), $entity);
 
         return array(
             'entity' => $entity,
@@ -156,9 +149,8 @@ class StudentController extends AbstractVirguleController {
      * @Template()
      */
     public function editAction($id) {
-        $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('VirguleMainBundle:Student')->find($id);
+        $entity = $this->getStudentRepository()->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Student entity.');
@@ -182,9 +174,9 @@ class StudentController extends AbstractVirguleController {
      * @Template("VirguleMainBundle:Student:edit.html.twig")
      */
     public function updateAction(Request $request, $id) {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getEntityManager();
 
-        $entity = $em->getRepository('VirguleMainBundle:Student')->find($id);
+        $entity = $this->getStudentRepository()->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Student entity.');
@@ -219,8 +211,8 @@ class StudentController extends AbstractVirguleController {
         $form->bind($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('VirguleMainBundle:Student')->find($id);
+            $em = $this->getEntityManager();
+            $entity = $em->getStudentRepository()->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Student entity.');
