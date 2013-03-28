@@ -97,7 +97,7 @@ abstract class AbstractVirguleController extends Controller {
     protected function getTeacherRepository() {
         return $this->getEntityManager()->getRepository('VirguleMainBundle:Teacher');
     }
-    protected function getStudentepository() {
+    protected function getStudentRepository() {
         return $this->getEntityManager()->getRepository('VirguleMainBundle:Student');
     }
     protected function getCourseRepository() {
