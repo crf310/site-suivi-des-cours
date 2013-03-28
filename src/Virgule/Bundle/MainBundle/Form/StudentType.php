@@ -25,8 +25,13 @@ class StudentType extends AbstractType {
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker','data-date-format' => 'dd/mm/yyyy')
-                ))        
-                ->add('registrationDate')
+                ))
+                ->add('registrationDate', 'date', array(
+                    'widget' => 'single_text',
+                    'format' => 'dd/MM/yyyy',
+                    'open_houses_dates' => array('01/01/1970', '04/03/1070'),
+                    'attr' => array('class' => 'datepicker','data-date-format' => 'dd/mm/yyyy')
+                ))
                 ->add('welcomedByTeacher', 'entity', array(
                     'class' => 'VirguleMainBundle:Teacher',
                     'query_builder' =>  $this->teacherRepository->getAvailableTeachersQueryBuilder($this->organizationBranchId, true),

@@ -1,4 +1,14 @@
 {% extends '::main_content.html.twig' %}
+{% block head %}    
+    {{ parent() }}
+    {% block javascripts %}
+     <script type='text/javascript'>
+        function setRegistrationDate(date) {
+            document.getElementById('registrationDateField').value = date;
+        }
+     </script>
+    {% endblock %}
+{% endblock %}
 {% block content_title %}Enregistrer un nouvel apprenant{% endblock %}
  {%block submenu %}{% endblock %}
 {% block main_content %}
@@ -13,7 +23,9 @@
         <div class="widget-content nopadding">
             {{ form_row(form.firstname, { 'label': 'Prénom'}) }}
             {{ form_row(form.lastname, { 'label': 'Nom' }) }}                
-            {{ form_row(form.birthdate, { 'label': 'Date de naissance' }) }}
+            {{ form_row(form.birthdate, { 'label': 'Date de naissance' }) }}                
+            {{ form_row(form.registrationDate, { 'label': 'Accueilli le', 'id': 'registrationDateField' }) }}                
+            {{ form_row(form.welcomedByTeacher, { 'label': 'Accueilli par' }) }}                
             {{ form_rest(form) }}
             <div class="form-actions">                                     
                 <input class="btn" type="submit" value="Enregistrer l'apprenant" />

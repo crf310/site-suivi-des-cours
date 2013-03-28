@@ -49,6 +49,11 @@
             <tag name="form.type" />
             <argument type="service" id="doctrine" />
         </service>-->
+        
+        <!-- Form Extensions -->
+        <service id="virgule_main_bundle.welcome_date_extension" class="%namespace%\Form\Extension\WelcomeDateTypeExtension">
+            <tag name="form.type_extension" alias="date" />
+        </service>
 
         <!-- Views -->
         <service id="pagerfanta.view.tablefooter" class="Virgule\Bundle\MainBundle\View\TableFooterView" public="true">
