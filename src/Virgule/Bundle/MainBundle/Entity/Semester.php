@@ -47,7 +47,7 @@ class Semester {
     private $organizationBranch;    
     
     /**
-     * @ORM\OneToMany(targetEntity="OpenHouse", mappedBy="semester")
+     * @ORM\OneToMany(targetEntity="OpenHouse", mappedBy="semester", cascade={"persist"})
      */
     private $openHouses;
 
@@ -107,6 +107,7 @@ class Semester {
      */
     public function __construct() {
         $this->courses = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->openHouses = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -162,5 +163,17 @@ class Semester {
     
     public function __toString() {
         return 'du ' . $this->getStartDate() . ' au ' . $this->getEndDate();
+    }
+    
+   /**
+     * Add courses
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
+     * @return Semester
+     */
+    public function addOpenHouse(\Virgule\Bundle\MainBundle\Entity\OpenHouse $openHouse) {
+        $this->openHouses[] = $openHouse;
+
+        return $this;
     }
 }
