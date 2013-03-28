@@ -10,10 +10,13 @@ use Virgule\Bundle\MainBundle\Repository\TeacherRepository;
 class StudentType extends AbstractType {
 
     private $teacherRepository;
+        
+    private $openHousesDates;
     
-    public function __construct(TeacherRepository $teacherRepository, $organizationBranchId) {
+    public function __construct(TeacherRepository $teacherRepository, $organizationBranchId, $openHousesDates) {
         $this->teacherRepository = $teacherRepository;
         $this->organizationBranchId = $organizationBranchId;
+        $this->openHousesDates = $openHousesDates;
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options) {
@@ -29,7 +32,7 @@ class StudentType extends AbstractType {
                 ->add('registrationDate', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
-                    'open_houses_dates' => array('01/01/1970', '04/03/1070'),
+                    'open_houses_dates' => $this->openHousesDates,
                     'attr' => array('class' => 'datepicker','data-date-format' => 'dd/mm/yyyy')
                 ))
                 ->add('welcomedByTeacher', 'entity', array(
@@ -65,7 +68,7 @@ class StudentType extends AbstractType {
           ->add('emergencyContactConnectionType') */
         ;
     }
-
+    
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'Virgule\Bundle\MainBundle\Entity\Student'

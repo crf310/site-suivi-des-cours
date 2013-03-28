@@ -78,6 +78,20 @@ abstract class AbstractVirguleController extends Controller {
     protected function getListBreak($count, $break=2) {
         return (int)($count / $break) + $count % $break;
     }
+    
+    /* Managers */   
+    protected function getCourseManager() {
+        return $this->get('virgule.course_manager');
+    }
+    protected function getTeacherManager() {
+        return $this->get('virgule.teacher_manager');
+    }
+    protected function getSemesterManager() {
+        return $this->get('virgule.semester_manager');
+    }
+    protected function getOpenHouseManager() {
+        return $this->get('virgule.openhouse_manager');
+    }
 }
 
 ?>

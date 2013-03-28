@@ -20,6 +20,17 @@ use Virgule\Bundle\MainBundle\Form\CommentType;
  */
 class StudentController extends AbstractVirguleController {
 
+    private function getRepository() {
+        $em = $this->getEntityManager();
+        return $em->getRepository('VirguleMainBundle:Student');
+    }
+    
+    /*
+    private function getManager() {
+        return $this->get('virgule.course_manager');
+    }
+    */
+    
     /**
      * Lists all Student entities.
      *
@@ -27,9 +38,7 @@ class StudentController extends AbstractVirguleController {
      * @Template()
      */
     public function indexAction() {
-        $em = $this->getEntityManager();
-
-        $students = $em->getRepository('VirguleMainBundle:Student')->loadAll($this->getSelectedSemesterId());
+        $students = $this->getRepository()->loadAll($this->getSelectedSemesterId());
     
         // sub array to group students enrolled to many courses
         $students_ids = Array();
@@ -101,8 +110,12 @@ class StudentController extends AbstractVirguleController {
         
         $organizationBranchId = $this->getSelectedOrganizationBranchId();
         
+        $semesterId = $this->getSelectedSemesterId();
+        
+        $openHousesDates = $this->getOpenHouseManager()->getOpenHousesDates($semesterId);
+        
         $entity = new Student();
-        $form = $this->createForm(new StudentType($teacherRepository, $organizationBranchId), $entity);
+        $form = $this->createForm(new StudentType($teacherRepository, $organizationBranchId, $openHousesDates), $entity);
 
         return array(
             'entity' => $entity,

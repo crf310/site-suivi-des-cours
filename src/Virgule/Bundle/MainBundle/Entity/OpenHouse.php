@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Semester
  *
  * @ORM\Table(name="open_house")
- * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\SemesterRepository")
+ * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\OpenHouseRepository")
  */
 class OpenHouse {
 
