@@ -5,6 +5,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Virgule\Bundle\MainBundle\Entity\Semester;
+use Virgule\Bundle\MainBundle\Entity\OpenHouse;
 
 /**
  * Description of LoadSemesterData
@@ -43,6 +44,17 @@ class LoadSemesterData extends AbstractFixture implements OrderedFixtureInterfac
         $this->addReference('previousSemester', $semester2);
         $this->addReference('lastSemester', $semester3);
         
+        $manager->flush();
+        
+        $oh1 = new OpenHouse();
+        $oh1->setDate(new \DateTime('2012-09-01'));
+        $oh1->setSemester($semester3);
+        $oh2 = new OpenHouse();
+        $oh2->setDate(new \DateTime('2012-08-30'));
+        $oh2->setSemester($semester3);
+        
+        $manager->persist($oh1);
+        $manager->persist($oh2);
         $manager->flush();
     }
     
