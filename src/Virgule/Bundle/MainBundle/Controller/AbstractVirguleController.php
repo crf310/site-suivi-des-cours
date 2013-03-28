@@ -92,6 +92,23 @@ abstract class AbstractVirguleController extends Controller {
     protected function getOpenHouseManager() {
         return $this->get('virgule.openhouse_manager');
     }
+    
+    /* Repositories */
+    protected function getTeacherRepository() {
+        return $this->getEntityManager()->getRepository('VirguleMainBundle:Teacher');
+    }
+    protected function getStudentepository() {
+        return $this->getEntityManager()->getRepository('VirguleMainBundle:Student');
+    }
+    protected function getCourseRepository() {
+        return $this->getEntityManager()->getRepository('VirguleMainBundle:Course');
+    }
+    protected function getOpenHouseRepository() {
+        return $this->getEntityManager()->getRepository('VirguleMainBundle:Student');
+    }
+    protected function getCountryRepository() {
+        return $this->getEntityManager()->getRepository('VirguleMainBundle:Country');
+    }
 }
 
 ?>
