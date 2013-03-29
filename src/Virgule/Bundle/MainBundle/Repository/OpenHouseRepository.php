@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class OpenHouseRepository extends EntityRepository {
     
     public function createDefaultQueryBuilder() {
-        return $this->createQueryBuilder('oh')->add('orderBy', 'oh.date ASC');
+        return $this->createQueryBuilder('oh')->add('orderBy', 'oh.date DESC');
     }
     
     public function loadAllForSemesterQueryBuilder($semesterId) {
