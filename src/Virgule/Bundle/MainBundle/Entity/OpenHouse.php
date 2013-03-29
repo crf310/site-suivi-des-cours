@@ -30,7 +30,7 @@ class OpenHouse {
 
     /**
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="openHouses")
-     * @ORM\JoinColumn(name="fk_semester", referencedColumnName="id")
+     * @ORM\JoinColumn(name="fk_semester", referencedColumnName="id", nullable=false)
      */
     private $semester;
 

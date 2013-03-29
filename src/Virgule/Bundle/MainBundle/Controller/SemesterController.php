@@ -8,7 +8,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\Semester;
+use Virgule\Bundle\MainBundle\Entity\OpenHouse;
 use Virgule\Bundle\MainBundle\Form\SemesterType;
+use Virgule\Bundle\MainBundle\Form\OpenHouseType;
 
 /**
  * Semester controller.
@@ -17,9 +19,6 @@ use Virgule\Bundle\MainBundle\Form\SemesterType;
  */
 class SemesterController extends AbstractVirguleController {
     
-    private function getManager() {
-        return $this->get('virgule.semester_manager');
-    }
     /**
      * Lists all Semester entities.
      *
@@ -27,11 +26,19 @@ class SemesterController extends AbstractVirguleController {
      * @Template()
      */
     public function indexAction() {
-        $semesters = $this->getManager()->loadAllSemestersForBranch($this->getSelectedOrganizationBranchId());
+        $semesters = $this->getSemesterManager()->loadAllSemestersForBranch($this->getSelectedOrganizationBranchId());
 
-        return array(
+        $openHouses = $this->getOpenHouseManager()->getOpenHousesDates($this->getSelectedSemesterId());
+        
+        $openHouseEntity = new OpenHouse();
+        $openHouseForm   = $this->createForm(new OpenHouseType(), $openHouseEntity);
+                
+        return array_merge(array(
             'semesters' => $semesters,
-        );
+            'openHouses' => $openHouses,
+            'openHouseEntity' => $openHouseEntity,
+            'openHouseForm'   => $openHouseForm->createView(),
+        ), $this->newAction());
     }
 
     /**
@@ -68,8 +75,8 @@ class SemesterController extends AbstractVirguleController {
         $form = $this->createForm(new SemesterType(), $entity);
 
         return array(
-            'entity' => $entity,
-            'form' => $form->createView(),
+            'semesterEntity' => $entity,
+            'semesterForm' => $form->createView(),
         );
     }
 
@@ -84,13 +91,17 @@ class SemesterController extends AbstractVirguleController {
         $entity = new Semester();
         $form = $this->createForm(new SemesterType(), $entity);
         $form->bind($request);
+        
+        $entity->setOrganizationBranch($this->getSelectedOrganizationBranch());
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('semester_show', array('id' => $entity->getId())));
+            $this->addFlash('Nouveau semestre créé avec succès !');
+             
+            return $this->redirect($this->generateUrl('semester_index', array('id' => $entity->getId())));
         }
 
         return array(
