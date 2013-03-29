@@ -18,7 +18,8 @@
 {% block form_widget_simple %}
 {% spaceless %}
     {% set type = type|default('text') %}
-    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/> 
+    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    <br />
     {% if open_houses_dates is defined and open_houses_dates is not null %}
         {% for open_house_date in open_houses_dates %}
             &nbsp;<input class="btn" type="button" value="{{ open_house_date | date('w') | day }} {{ open_house_date | date('d/m') }}" onClick="setRegistrationDate('{{ open_house_date | date('d/m/Y') }}');"/>
