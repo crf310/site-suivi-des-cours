@@ -15,7 +15,7 @@ use Virgule\Bundle\MainBundle\Form\OpenHouseType;
  *
  * @Route("/openhouse")
  */
-class aOpenHouseController extends AbstractVirguleController
+class OpenHouseController extends AbstractVirguleController
 {
     /**
      * Lists all OpenHouse entities.
