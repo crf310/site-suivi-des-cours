@@ -15,7 +15,7 @@ use Virgule\Bundle\MainBundle\Form\OpenHouseType;
  *
  * @Route("/openhouse")
  */
-class OpenHouseController extends AbstractVirguleController
+class aOpenHouseController extends AbstractVirguleController
 {
     /**
      * Lists all OpenHouse entities.
@@ -55,7 +55,7 @@ class OpenHouseController extends AbstractVirguleController
             $em->persist($entity);
             $em->flush();
             
-            $this->addFlash('Journée d\accueil créée avec succès !');
+            $this->addFlash('Journée d\'accueil créée avec succès !');
              
             return $this->redirect($this->generateUrl('semester_index'));
         }
