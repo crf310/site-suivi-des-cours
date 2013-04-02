@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Connection;
 
 /**
  * ClassLevel
@@ -134,6 +135,15 @@ class CourseRepository extends EntityRepository {
         ;
         $results = $q->execute(array());
         return $results;
+    }
+    
+    public function findByIds(array $coursesIds) {
+        $q = $this
+                ->createQueryBuilder('c')                
+                ->where('c.id IN (:coursesIds)')
+                ->setParameter('coursesIds', $coursesIds, Connection::PARAM_INT_ARRAY)
+                ->getQuery();
+        return $q->execute();        
     }
 
 }

@@ -74,7 +74,10 @@ class SemesterController extends AbstractVirguleController {
         $entity = new Semester();
         $form = $this->createForm(new SemesterType(), $entity);
 
+        $courses = $this->getCourseManager()->getAllHydratedCourses($this->getSelectedSemesterId());
+        
         return array(
+            'courses' => $courses,
             'semesterEntity' => $entity,
             'semesterForm' => $form->createView(),
         );
@@ -98,8 +101,17 @@ class SemesterController extends AbstractVirguleController {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
-            $this->addFlash('Nouveau semestre créé avec succès !');
+            
+            $flashMessage = 'Nouveau semestre créé avec succès !';
+            if ($request->get('courses')) {
+                $coursesToCopy = $request->get('courses');
+                $nbCoursesToCopy = count($coursesToCopy);
+                
+                $this->getCourseManager()->cloneCourses($coursesToCopy, $entity);
+                $this->addFlash($flashMessage . '\n' . $nbCoursesToCopy . ' cours copiés');
+            } else {
+                $this->addFlash($flashMessage);
+            }
              
             return $this->redirect($this->generateUrl('semester_index', array('id' => $entity->getId())));
         }
