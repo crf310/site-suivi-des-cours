@@ -9,7 +9,14 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Virgule\Bundle\MainBundle\Repository\OrganizationBranchRepository;
 
 class SecurityController extends Controller {
-
+    
+    /**
+     * Display login form
+     *
+     * @Route("/", name="start")
+     * @Route("/login", name="login")
+     * @Template()
+     */
     public function loginAction() {
         $em = $this->getDoctrine()->getManager();
 
