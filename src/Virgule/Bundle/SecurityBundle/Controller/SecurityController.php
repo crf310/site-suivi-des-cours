@@ -40,4 +40,17 @@ class SecurityController extends Controller {
             'organization_branches' => $organizationBranches
         ));
     }
+    
+    /**
+     * Display login form
+     *
+     * @Route("/logout", name="logout")
+     * @Template()
+     */    
+    public function logoutAction() {
+        $session = $this->get('session');
+        $session->clear();
+
+        return $this->render('VirguleSecurityBundle:Security:login.html.twig');
+    }
 }
