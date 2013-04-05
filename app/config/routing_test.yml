@@ -1,0 +1,3 @@
+routing_test.yml:
+    _main:
+        resource: routing_dev.yml
