@@ -12,8 +12,7 @@ class SecurityControllerTest extends WebTestCase {
         $client = static::createClient();
 
         // Check default URL
-        $crawler = $client->request('GET', '/');   
-        file_put_contents("/home/guillaume/git/Virgule/response.html", $client->getResponse());
+        $crawler = $client->request('GET', '/');
         $this->assertTrue($client->getResponse()->isRedirection('/login'));
         
         $crawler = $client->request('GET', '/login');
