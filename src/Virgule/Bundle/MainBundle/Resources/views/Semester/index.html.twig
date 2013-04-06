@@ -1,10 +1,11 @@
 {% extends '::main_content.html.twig' %}
 {% block content_title %}Semestres enregistrés pour cette délégation{% endblock %}
- {%block submenu %}
+{%block submenu %}
+    <a class="btn tip-bottom" href="{{ path('semester_new') }}"> <i class="icon-add"></i>Nouveau semestre</a>
 {% endblock %}
 {% block main_content %}
-<div class="row-fluid">    
-    <div class="span6">
+<div class="span6">
+    <div class="row-fluid">    
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">
@@ -35,39 +36,7 @@
             </div>
         </div>
     </div>
-    <div class="span6">
-        <div class="widget-box">
-            <div class="widget-title">
-                <span class="icon">
-                    <i class="icon-th"></i>
-                </span>
-                <h5>Tous les semestres de la délégation sélectionnée</h5>
-            </div>
-            <div class="widget-content nopadding">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Date de début</th>
-                            <th>Date de fin</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for semester in semesters %}
-                              <tr>
-                                  <td>{% if semester.startDate %}{{ semester.startDate | date('d/m/Y') }}{% endif %}</td>
-                                  <td>{% if semester.endDate %}{{ semester.endDate|date('d/m/Y') }}{% endif %}</td>
-                                  <td><a href="{{ path('semester_show', { 'id': semester.id }) }}">Détails</a></td>
-                              </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row-fluid">    
-    <div class="span6">
+    <div class="row-fluid">   
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon"><i class="icon-plus"></i></span><h5>Ajouter une journée d'accueil</h5>
@@ -86,21 +55,34 @@
             </div>
         </div>
     </div>
-    <div class="span6">
-        <div class="widget-box">
-            <div class="widget-title">
-                <span class="icon"><i class="icon-plus"></i></span><h5>Ajouter un semestre</h5>
-            </div>                        
-            <div class="widget-content nopadding">
-                <form action="{{ path('semester_create') }}" method="post" {{ form_enctype(semesterForm) }} class="form-horizontal">
-                    {{ form_row(semesterForm.startDate, { 'label': 'Date de début' }) }}
-                    {{ form_row(semesterForm.endDate, { 'label': 'Date de fin' }) }}
-                    {{ form_rest(semesterForm) }}
-                    <div class="form-actions"> 
-                        <button  class="btn" type="submit">Enregistrer le semestre</button>
-                    </div>
-                </form>
-            </div>
+</div>
+<div class="span6">
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon">
+                <i class="icon-th"></i>
+            </span>
+            <h5>Tous les semestres de la délégation sélectionnée</h5>
+        </div>
+        <div class="widget-content nopadding">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Date de début</th>
+                        <th>Date de fin</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for semester in semesters %}
+                          <tr>
+                              <td>{% if semester.startDate %}{{ semester.startDate | date('d/m/Y') }}{% endif %}</td>
+                              <td>{% if semester.endDate %}{{ semester.endDate|date('d/m/Y') }}{% endif %}</td>
+                              <td><a href="{{ path('semester_show', { 'id': semester.id }) }}">Détails</a></td>
+                          </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

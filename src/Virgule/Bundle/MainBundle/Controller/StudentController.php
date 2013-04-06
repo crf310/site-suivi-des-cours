@@ -133,7 +133,11 @@ class StudentController extends AbstractVirguleController {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('student_show', array('id' => $entity->getId())));
+            if ($request->get('save_and_add_new')) {
+                return $this->redirect($this->generateUrl('student_new'));
+            } else {
+                return $this->redirect($this->generateUrl('student_show', array('id' => $entity->getId())));
+            }
         }
 
         return array(

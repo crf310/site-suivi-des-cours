@@ -9,7 +9,14 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Virgule\Bundle\MainBundle\Repository\OrganizationBranchRepository;
 
 class SecurityController extends Controller {
-
+    
+    /**
+     * Display login form
+     *
+     * @Route("/", name="start")
+     * @Route("/login", name="login")
+     * @Template()
+     */
     public function loginAction() {
         $em = $this->getDoctrine()->getManager();
 
@@ -32,5 +39,18 @@ class SecurityController extends Controller {
             'error'         => $error,
             'organization_branches' => $organizationBranches
         ));
+    }
+    
+    /**
+     * Display login form
+     *
+     * @Route("/logout", name="logout")
+     * @Template()
+     */    
+    public function logoutAction() {
+        $session = $this->get('session');
+        $session->clear();
+
+        return $this->render('VirguleSecurityBundle:Security:login.html.twig');
     }
 }

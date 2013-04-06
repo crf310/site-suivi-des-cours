@@ -63,7 +63,16 @@ class CourseManager extends BaseManager {
         }
         return $coursesHydrated;
     }
-
+    
+    public function cloneCourses($courseIds, $newSemester) {
+        $courses = $this->getRepository()->findByIds($courseIds);
+        foreach($courses as $course) {
+            $newCourse = clone $course;
+            $newCourse->setSemester($newSemester);
+            $this->em->persist($newCourse);
+        }
+        $this->em->flush();
+    }
 }
 
 ?>

@@ -1,16 +1,57 @@
-<h1>Semester creation</h1>
-
-<form action="{{ path('semester_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
+{% extends '::main_content.html.twig' %}
+{% block content_title %}Enregistrer un nouveau semestre{% endblock %}
+ {%block submenu %}{% endblock %}
+{% block main_content %}
+<form action="{{ path('semester_create') }}" method="post" {{ form_enctype(semesterForm) }} class="form-horizontal">
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon"><i class="icon-plus"></i></span><h5>Dates du semestres</h5>
+        </div>                        
+        <div class="widget-content">
+            {{ form_row(semesterForm.startDate, { 'label': 'Date de début' }) }}
+            {{ form_row(semesterForm.endDate, { 'label': 'Date de fin' }) }}
+            {{ form_rest(semesterForm) }}
+            <div class="alert alert-info">
+                Sélectionnez ici les cours que vous souhaitez conserver pour ce semestre. Par exemple, vous pouvez en copier certains pour conserver le niveau et les horaires, et changer le formateur associé par la suite. 
+                <br />Cette copie n'affecte pas les données précédemment enregistrées.
+            </div>
+            <table class="table table-bordered table-striped table-hover with-check">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox" /></th>
+                        <th>Jour</th>
+                        <th>Horaires</th>
+                        <th>Niveau</th>
+                        <th>Formateur</th>
+                        <th>Salle</th>
+                        <th>Etudiants inscrits</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for course in courses %}
+                    <tr>
+                        <td><input type="checkbox" name="courses[]" value="{{ course.id }}"/></td>
+                        <td>{{ course.dayOfWeek | day }}</td>
+                        <td>{{ course.startTime | date('H:i') }} - {{ course.endTime | date('H:i') }}</td>
+                        <td>{{ course.classLevelLabel }}</td>
+                        <td>
+                            {% for teacher in course.teachers %}
+                                <a href="{{ path('teacher_show', { 'id': teacher['teacher_id'] }) }}">{{ teacher['teacher_firstName'] }} {{ teacher['teacher_lastName'] }}</a>{% if teacher != loop.last %},&nbsp;{% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>{{ course.classRoomName }}</td> 
+                        <td class="center">{{ course.nbStudents }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="form-actions"> 
+                <button  class="btn" type="submit">Enregistrer le semestre</button>
+            </div>
+        </div>
+    </div>
 </form>
+{% endblock %}
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('semester') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+
+
+        
