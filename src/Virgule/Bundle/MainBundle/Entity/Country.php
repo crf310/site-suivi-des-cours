@@ -98,6 +98,9 @@ class Country {
         $this->students = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    public function __toString() {
+        return $this->label;
+    }
     /**
      * Add students
      *
