@@ -55,8 +55,12 @@ class Teacher implements UserInterface, EquatableInterface {
      * @var string $phoneNumber
      *
      * @ORM\Column(name="phone_number", type="string", length=10, nullable=true)
-     * @Assert\MinLength(limit=10, message="Le numéro de téléphone doit comporter {{ limit }} chiffres")
-     * @Assert\MinLength(limit=10, message="Le numéro de téléphone ne peut excéder {{ limit }} chiffres")
+     * @Assert\Length(
+     *      min = "10",
+     *      max = "10",
+     *      minMessage = "Le numéro de téléphone doit comporter {{ limit }} chiffres",
+     *      maxMessage = "Le numéro de téléphone ne peut excéder {{ limit }} chiffres"
+     * )
      */
     protected $phoneNumber;
 
@@ -64,8 +68,12 @@ class Teacher implements UserInterface, EquatableInterface {
      * @var string $cellphoneNumber
      *
      * @ORM\Column(name="cellphone_number", type="string", length=10, nullable=true)
-     * @Assert\MinLength(limit=10, message="Le numéro de téléphone doit comporter {{ limit }} chiffres")
-     * @Assert\MaxLength(limit=10, message="Le numéro de téléphone ne peut excéder {{ limit }} chiffres")
+     * @Assert\Length(
+     *      min = "10",
+     *      max = "10",
+     *      minMessage = "Le numéro de téléphone doit comporter {{ limit }} chiffres",
+     *      maxMessage = "Le numéro de téléphone ne peut excéder {{ limit }} chiffres"
+     * )
      */
     protected $cellphoneNumber;
 
@@ -94,7 +102,10 @@ class Teacher implements UserInterface, EquatableInterface {
      * @ORM\Column(name="password", type="string", length=50, nullable=false)
      * @Assert\NotBlank()
      * @Assert\NotNull()
-     * @Assert\MinLength(limit="8", message="Le mot de passe doit comporter au moins {{ limit }} caractères");
+     * @Assert\Length(
+     *      min = "8",
+     *      minMessage = "Le mot de passe doit comporter au moins {{ limit }} caractères"
+     * )
      */
     protected $password;
 
