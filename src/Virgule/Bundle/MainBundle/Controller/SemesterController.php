@@ -12,13 +12,21 @@ use Virgule\Bundle\MainBundle\Entity\OpenHouse;
 use Virgule\Bundle\MainBundle\Form\SemesterType;
 use Virgule\Bundle\MainBundle\Form\OpenHouseType;
 
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Virgule\Bundle\MainBundle\StoreEvents;
+use Virgule\Bundle\MainBundle\Event\NewSemesterEvent;
+
 /**
  * Semester controller.
  *
  * @Route("/semester")
  */
 class SemesterController extends AbstractVirguleController {
-    
+    protected $dispatcher = null;
+
+    public function __construct(EventDispatcherInterface $dispatcher) {
+        $this->dispatcher = $dispatcher;
+    }
     /**
      * Lists all Semester entities.
      *
@@ -102,6 +110,9 @@ class SemesterController extends AbstractVirguleController {
             $em->persist($entity);
             $em->flush();
             
+            $event = new NewSemesterEvent($order);
+            $dispatcher->dispatch(ReloadEvents::RELOAD_SEMESTERS, $event);
+
             $flashMessage = 'Nouveau semestre créé avec succès !';
             if ($request->get('courses')) {
                 $coursesToCopy = $request->get('courses');

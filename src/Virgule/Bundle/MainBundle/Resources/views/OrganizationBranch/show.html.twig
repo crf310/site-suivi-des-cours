@@ -1,53 +1,42 @@
-<h1>OrganizationBranch</h1>
-
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Name</th>
-            <td>{{ entity.name }}</td>
-        </tr>
-        <tr>
-            <th>Address</th>
-            <td>{{ entity.address }}</td>
-        </tr>
-        <tr>
-            <th>Presidentname</th>
-            <td>{{ entity.presidentName }}</td>
-        </tr>
-        <tr>
-            <th>Phonenumber</th>
-            <td>{{ entity.phoneNumber }}</td>
-        </tr>
-        <tr>
-            <th>Faxnumber</th>
-            <td>{{ entity.faxNumber }}</td>
-        </tr>
-        <tr>
-            <th>Emailaddress</th>
-            <td>{{ entity.emailAddress }}</td>
-        </tr>
-    </tbody>
-</table>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('organizationbranch') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('organizationbranch_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('organizationbranch_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+{% extends '::main_content.html.twig' %}
+{% block content_title %}Information sur la délégation{% endblock %}
+{%block submenu %}
+{% endblock %}
+{% block main_content %}
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span6 form-horizontal not-form-horizontal">
+                <div class="widget-box">
+                    <div class="widget-title">
+                        <span class="icon">
+                                <i class=""></i>
+                        </span>
+                        <h5>{{ entity.name }}</h5>
+                    </div>            
+                    <div class="widget-content nopadding">
+                        <div class="control-group">
+                            <label class="control-label">Président</label>
+                            <div class="controls">{{ entity.presidentName }}</div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Adresse</label>
+                            <div class="controls">{{ entity.address }}</div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Téléphone</label>
+                            <div class="controls">{{ entity.phoneNumber | phoneNumber }}</div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Fax</label>
+                            <div class="controls">{{ entity.faxNumber }}</div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Adresse email</label>
+                            <div class="controls"><a href="mailto:{{ entity.emailAddress }}">{{ entity.emailAddress }}</a></div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

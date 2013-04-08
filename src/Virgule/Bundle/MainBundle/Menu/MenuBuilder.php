@@ -4,6 +4,7 @@ namespace Virgule\Bundle\MainBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\HttpFoundation\Request;
 
 class MenuBuilder extends ContainerAware {
 
@@ -42,10 +43,11 @@ class MenuBuilder extends ContainerAware {
         $menu->addChild('Statistiques', array('route' => 'stats_index'));
         $menu['Statistiques']->setLinkAttribute('class', 'statistics');
         
-        $menu->addChild('Délégation', array('route' => 'stats_index'));
+        $orgBranchId = $this->container->get('request')->getSession()->get('organizationBranchId');
+        $menu->addChild('Délégation', array('route' => 'organizationbranch_show', 'routeParameters' => array('id' => $orgBranchId)));
         $menu['Délégation']->setLinkAttribute('class', 'organization_branch');
         
-        $menu->addChild('Cartable', array('route' => 'stats_index'));
+        $menu->addChild('Cartable', array('uri' => '#'));
         $menu['Cartable']->setLinkAttribute('class', 'schoolbag');
         
         /* Administration */
