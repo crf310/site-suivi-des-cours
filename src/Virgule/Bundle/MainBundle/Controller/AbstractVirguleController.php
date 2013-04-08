@@ -109,6 +109,9 @@ abstract class AbstractVirguleController extends Controller {
     protected function getCountryRepository() {
         return $this->getEntityManager()->getRepository('VirguleMainBundle:Country');
     }
+    protected function getClassRoomRepository() {
+        return $this->getEntityManager()->getRepository('VirguleMainBundle:ClassRoom');
+    }
 }
 
 ?>

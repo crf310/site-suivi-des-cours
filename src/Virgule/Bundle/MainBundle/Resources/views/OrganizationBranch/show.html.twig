@@ -1,41 +1,68 @@
 {% extends '::main_content.html.twig' %}
-{% block content_title %}Information sur la délégation{% endblock %}
+{% block content_title %}Informations sur la délégation{% endblock %}
 {%block submenu %}
 {% endblock %}
 {% block main_content %}
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span6 form-horizontal not-form-horizontal">
-                <div class="widget-box">
-                    <div class="widget-title">
-                        <span class="icon">
-                                <i class=""></i>
-                        </span>
-                        <h5>{{ entity.name }}</h5>
-                    </div>            
-                    <div class="widget-content nopadding">
-                        <div class="control-group">
-                            <label class="control-label">Président</label>
-                            <div class="controls">{{ entity.presidentName }}</div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Adresse</label>
-                            <div class="controls">{{ entity.address }}</div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Téléphone</label>
-                            <div class="controls">{{ entity.phoneNumber | phoneNumber }}</div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Fax</label>
-                            <div class="controls">{{ entity.faxNumber }}</div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Adresse email</label>
-                            <div class="controls"><a href="mailto:{{ entity.emailAddress }}">{{ entity.emailAddress }}</a></div>
-                        </div>
-                    </div>
-                </div>
+<div class="span6 form-horizontal not-form-horizontal">
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon">
+                    <i class=""></i>
+            </span>
+            <h5>{{ organizationBranch.name }}</h5>
+        </div>            
+        <div class="widget-content nopadding">
+            <div class="control-group">
+                <label class="control-label">Président</label>
+                <div class="controls">{{ organizationBranch.presidentName }}</div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Adresse</label>
+                <div class="controls">{{ organizationBranch.address }}</div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Téléphone</label>
+                <div class="controls">{{ organizationBranch.phoneNumber | phoneNumber }}</div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Fax</label>
+                <div class="controls">{{ organizationBranch.faxNumber }}</div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Adresse email</label>
+                <div class="controls"><a href="mailto:{{ organizationBranch.emailAddress }}">{{ organizationBranch.emailAddress }}</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="span6">
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon">
+                <i class="icon-th"></i>
+            </span>
+            <h5>Salles disponibles dans cette délégation</h5>
+        </div>
+        <div class="widget-content nopadding">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Adresse</th>
+                        <th>Commentaires</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for classRoom in classRooms %}
+                    <tr>
+                        <td>{{ classRoom['classroom_name'] }}</td>
+                        <td>&nbsp;</td>
+                        <td>{{ classRoom['classroom_comments'] }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

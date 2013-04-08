@@ -15,16 +15,15 @@ use Virgule\Bundle\MainBundle\Form\ClassRoomType;
  *
  * @Route("/classroom")
  */
-class ClassRoomController extends Controller
-{
+class ClassRoomController extends Controller {
+
     /**
      * Lists all ClassRoom entities.
      *
      * @Route("/", name="classroom")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('VirguleMainBundle:ClassRoom')->findAll();
@@ -40,8 +39,7 @@ class ClassRoomController extends Controller
      * @Route("/{id}/show", name="classroom_show")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:ClassRoom')->find($id);
@@ -53,7 +51,7 @@ class ClassRoomController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -64,14 +62,13 @@ class ClassRoomController extends Controller
      * @Route("/new", name="classroom_new")
      * @Template()
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new ClassRoom();
-        $form   = $this->createForm(new ClassRoomType(), $entity);
+        $form = $this->createForm(new ClassRoomType(), $entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -82,9 +79,8 @@ class ClassRoomController extends Controller
      * @Method("POST")
      * @Template("VirguleMainBundle:ClassRoom:new.html.twig")
      */
-    public function createAction(Request $request)
-    {
-        $entity  = new ClassRoom();
+    public function createAction(Request $request) {
+        $entity = new ClassRoom();
         $form = $this->createForm(new ClassRoomType(), $entity);
         $form->bind($request);
 
@@ -98,7 +94,7 @@ class ClassRoomController extends Controller
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -108,8 +104,7 @@ class ClassRoomController extends Controller
      * @Route("/{id}/edit", name="classroom_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:ClassRoom')->find($id);
@@ -122,8 +117,8 @@ class ClassRoomController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -135,8 +130,7 @@ class ClassRoomController extends Controller
      * @Method("POST")
      * @Template("VirguleMainBundle:ClassRoom:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:ClassRoom')->find($id);
@@ -157,8 +151,8 @@ class ClassRoomController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -169,8 +163,7 @@ class ClassRoomController extends Controller
      * @Route("/{id}/delete", name="classroom_delete")
      * @Method("POST")
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
 
@@ -189,11 +182,11 @@ class ClassRoomController extends Controller
         return $this->redirect($this->generateUrl('classroom'));
     }
 
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                        ->add('id', 'hidden')
+                        ->getForm()
         ;
     }
+
 }
