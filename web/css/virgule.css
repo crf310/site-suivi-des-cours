@@ -285,3 +285,7 @@ div .text-block {
     padding: 5px;
     text-align : justify;
 }
+
+.alert-padding {
+    margin: 5px;
+}
