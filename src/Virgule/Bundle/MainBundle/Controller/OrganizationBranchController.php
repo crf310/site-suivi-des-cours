@@ -15,7 +15,7 @@ use Virgule\Bundle\MainBundle\Form\OrganizationBranchType;
  *
  * @Route("/organizationbranch")
  */
-class OrganizationBranchController extends Controller
+class OrganizationBranchController extends AbstractVirguleController
 {
     /**
      * Lists all OrganizationBranch entities.
@@ -49,12 +49,9 @@ class OrganizationBranchController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find OrganizationBranch entity.');
         }
-
-        $deleteForm = $this->createDeleteForm($id);
-
+        
         return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity'      => $entity
         );
     }
 
