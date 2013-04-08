@@ -124,6 +124,9 @@ h2 { font-size: 16px; }
 #sidebar a.red-cross i {
     background-image: url('../img/icons/red-cross.png');
 }
+#sidebar a.class-levels i {
+    background-image: url('../img/icons/medal_gold_2.png');
+}
 
 /* Actions button */
 #content-header i,.alert i, .virgule-btn i {   
