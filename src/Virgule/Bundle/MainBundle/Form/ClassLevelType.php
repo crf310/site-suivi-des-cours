@@ -12,7 +12,9 @@ class ClassLevelType extends AbstractType
     {
         $builder
             ->add('label')
-            ->add('htmlColorCode')
+            ->add('htmlColorCode', 'text', array(
+                    'attr' => array('class' => 'colorpicker input-small', 'value' => '#000000', 'data-color' => '#000000'),
+                ))
         ;
     }
 

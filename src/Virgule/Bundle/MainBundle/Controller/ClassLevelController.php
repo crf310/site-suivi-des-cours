@@ -15,22 +15,21 @@ use Virgule\Bundle\MainBundle\Form\ClassLevelType;
  *
  * @Route("/classlevel")
  */
-class ClassLevelController extends Controller
-{
+class ClassLevelController extends AbstractVirguleController {
+
     /**
      * Lists all ClassLevel entities.
      *
-     * @Route("/", name="classlevel")
+     * @Route("/", name="classlevel_index")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('VirguleMainBundle:ClassLevel')->findAll();
+        $classLevels = $em->getRepository('VirguleMainBundle:ClassLevel')->findAll();
 
-        return array(
-            'entities' => $entities,
+        return array_merge(array(
+                    'classLevels' => $classLevels), $this->newAction()
         );
     }
 
@@ -40,8 +39,7 @@ class ClassLevelController extends Controller
      * @Route("/{id}/show", name="classlevel_show")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:ClassLevel')->find($id);
@@ -53,7 +51,7 @@ class ClassLevelController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -64,14 +62,13 @@ class ClassLevelController extends Controller
      * @Route("/new", name="classlevel_new")
      * @Template()
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new ClassLevel();
-        $form   = $this->createForm(new ClassLevelType(), $entity);
+        $form = $this->createForm(new ClassLevelType(), $entity);
 
         return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+            'newClassLevel' => $entity,
+            'classLevelForm' => $form->createView(),
         );
     }
 
@@ -82,9 +79,8 @@ class ClassLevelController extends Controller
      * @Method("POST")
      * @Template("VirguleMainBundle:ClassLevel:new.html.twig")
      */
-    public function createAction(Request $request)
-    {
-        $entity  = new ClassLevel();
+    public function createAction(Request $request) {
+        $entity = new ClassLevel();
         $form = $this->createForm(new ClassLevelType(), $entity);
         $form->bind($request);
 
@@ -93,12 +89,14 @@ class ClassLevelController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('classlevel_show', array('id' => $entity->getId())));
+            $this->addFlash('Nouveau niveau créé avec succès !');
+
+            return $this->redirect($this->generateUrl('classlevel_index'));
         }
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -108,8 +106,7 @@ class ClassLevelController extends Controller
      * @Route("/{id}/edit", name="classlevel_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:ClassLevel')->find($id);
@@ -122,8 +119,8 @@ class ClassLevelController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -135,8 +132,7 @@ class ClassLevelController extends Controller
      * @Method("POST")
      * @Template("VirguleMainBundle:ClassLevel:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:ClassLevel')->find($id);
@@ -157,8 +153,8 @@ class ClassLevelController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -169,8 +165,7 @@ class ClassLevelController extends Controller
      * @Route("/{id}/delete", name="classlevel_delete")
      * @Method("POST")
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
 
@@ -189,11 +184,11 @@ class ClassLevelController extends Controller
         return $this->redirect($this->generateUrl('classlevel'));
     }
 
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                        ->add('id', 'hidden')
+                        ->getForm()
         ;
     }
+
 }

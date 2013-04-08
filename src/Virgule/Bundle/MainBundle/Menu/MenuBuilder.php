@@ -25,8 +25,10 @@ class MenuBuilder extends ContainerAware {
         $menu['Apprenants']->setLinkAttribute('class', 'students');
         
         $menu['Apprenants']->addChild('Inscrits à un cours', array('route' => 'student_index'));
-        $menu['Apprenants']['Inscrits à un cours']->setLinkAttribute('class', 'students');
-        $menu['Apprenants']->addChild('Non inscrits', array('route' => 'student_index'));
+        $menu['Apprenants']['Inscrits à un cours']->setLinkAttribute('class', 'students');        
+        $menu['Apprenants']->addChild('Inscrits à plusieurs cours', array('uri' => '#'));
+        $menu['Apprenants']['Inscrits à plusieurs cours']->setLinkAttribute('class', 'students');
+        $menu['Apprenants']->addChild('Non inscrits', array('uri' => '#'));
         $menu['Apprenants']['Non inscrits']->setLinkAttribute('class', 'students');
         $menu['Apprenants']->addChild('Enregistrer un apprenant', array('route' => 'student_new'));
         $menu['Apprenants']['Enregistrer un apprenant']->setLinkAttribute('class', 'user_add');
@@ -53,6 +55,9 @@ class MenuBuilder extends ContainerAware {
         
         $menu['Administration']->addChild('Gérer les semestres', array('route' => 'semester_index'));
         $menu['Administration']['Gérer les semestres']->setLinkAttribute('class', 'schedule-edit');
+        
+        $menu['Administration']->addChild('Gérer les niveaux', array('route' => 'classlevel_index'));
+        $menu['Administration']['Gérer les niveaux']->setLinkAttribute('class', 'class-levels');
         
         $menu['Administration']->addChild('Gérer la délégation', array('uri' => '#'));
         $menu['Administration']['Gérer la délégation']->setLinkAttribute('class', 'red-cross');

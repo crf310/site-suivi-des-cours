@@ -1,39 +1,64 @@
-<h1>ClassLevel list</h1>
-
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Label</th>
-            <th>Htmlcolorcode</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('classlevel_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.label }}</td>
-            <td>{{ entity.htmlColorCode }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('classlevel_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('classlevel_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-<ul>
-    <li>
-        <a href="{{ path('classlevel_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+{% extends '::main_content.html.twig' %}
+{% block head %}    
+    {{ parent() }}
+    {% block stylesheets %}
+        <link href="{{ asset('css/colorpicker.css') }}" rel="stylesheet" media="screen" />
+    {% endblock %}
+    {% block javascripts %}
+        <script type="text/javascript" src="{{ asset('js/bootstrap-colorpicker.js') }}"></script> 
+    {% endblock %}
+{% endblock %}
+{% block content_title %}Niveaux de cours{% endblock %}
+{%block submenu %}new
+{% endblock %}
+{% block main_content %}
+<div class="span6">  
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon">
+                <i class="icon-th"></i>
+            </span>
+            <h5>Niveaux de cours (partagés par les délégations)</h5>
+        </div>
+        <div class="widget-content nopadding">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Label</th>
+                        <th>Couleur associée</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for classLevel in classLevels %}
+                    <tr>
+                        <td class="center">{{ classLevel.label }}</td>
+                        <td class="center" style="background-color: {{ classLevel.htmlColorCode }}"><b>{{ classLevel.htmlColorCode }}</b></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="span6">
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon"><i class="icon-plus"></i></span><h5>Ajouter un niveau de cours</h5>
+        </div>                        
+        <div class="widget-content nopadding">
+            <div class="alert alert-info">
+                La couleur associée sera utilisée dans le planning.
+            </div>
+            <form action="{{ path('classlevel_create') }}" method="post" {{ form_enctype(classLevelForm) }} class="form-horizontal">
+                {{ form_errors(classLevelForm) }}
+                {{ form_row(classLevelForm.label, { 'label': 'Label' }) }}
+                {{ form_row(classLevelForm.htmlColorCode, { 'label': 'Code couleur' }) }}
+                {{ form_rest(classLevelForm) }}
+                <div class="form-actions"> 
+                    <button  class="btn" type="submit">Enregistrer le niveau</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
