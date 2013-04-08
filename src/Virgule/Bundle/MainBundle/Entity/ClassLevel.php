@@ -24,14 +24,14 @@ class ClassLevel {
     /**
      * @var string $label
      *
-     * @ORM\Column(name="label", type="string", length=20, nullable=true)
+     * @ORM\Column(name="label", type="string", length=20, nullable=false)
      */
     private $label;
 
     /**
      * @var string $htmlColorCode
      *
-     * @ORM\Column(name="html_color_code", type="string", length=7, nullable=true)
+     * @ORM\Column(name="html_color_code", type="string", length=7, nullable=false)
      */
     private $htmlColorCode;
 
