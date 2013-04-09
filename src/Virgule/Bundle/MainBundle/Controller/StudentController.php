@@ -91,13 +91,8 @@ class StudentController extends AbstractVirguleController {
         );
     }
 
-    /**
-     * Displays a form to create a new Student entity.
-     *
-     * @Route("/new", name="student_new")
-     * @Template()
-     */
-    public function newAction() {
+    
+    private function initStudentForm($entity) {
         $teacherRepository = $this->getTeacherRepository();
         $countryRepository = $this->getCountryRepository();
         
@@ -107,9 +102,23 @@ class StudentController extends AbstractVirguleController {
         
         $openHousesDates = $this->getOpenHouseManager()->getOpenHousesDates($semesterId);
         
-        $entity = new Student();
-        $form = $this->createForm(new StudentType($teacherRepository, $countryRepository, $organizationBranchId, $openHousesDates), $entity);
+        $currentTeacher = $this->getConnectedUser();
+        
+        $form = $this->createForm(new StudentType($teacherRepository, $countryRepository, $organizationBranchId, $openHousesDates, $currentTeacher), $entity);
 
+        return $form;
+    }
+    
+    /**
+     * Displays a form to create a new Student entity.
+     *
+     * @Route("/new", name="student_new")
+     * @Template()
+     */
+    public function newAction() {
+        $entity = new Student();
+        $form = $this->initStudentForm($entity);
+        
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
@@ -125,7 +134,8 @@ class StudentController extends AbstractVirguleController {
      */
     public function createAction(Request $request) {
         $entity = new Student();
-        $form = $this->createForm(new StudentType(), $entity);
+        $form = $this->initStudentForm($entity);
+        
         $form->bind($request);
 
         if ($form->isValid()) {

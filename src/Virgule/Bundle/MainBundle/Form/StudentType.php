@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Virgule\Bundle\MainBundle\Repository\TeacherRepository;
 use Virgule\Bundle\MainBundle\Repository\CountryRepository;
+use Virgule\Bundle\MainBundle\Entity\Teacher;
 
 class StudentType extends AbstractType {
 
@@ -16,11 +17,14 @@ class StudentType extends AbstractType {
         
     private $openHousesDates;
     
-    public function __construct(TeacherRepository $teacherRepository = null, CountryRepository $countryRepository = null, $organizationBranchId = null, $openHousesDates = null) {
+    private $currentTeacher;
+    
+    public function __construct(TeacherRepository $teacherRepository = null, CountryRepository $countryRepository = null, $organizationBranchId = null, $openHousesDates = null, Teacher $currentTeacher = null) {
         $this->teacherRepository = $teacherRepository;
         $this->countryRepository = $countryRepository;
         $this->organizationBranchId = $organizationBranchId;
         $this->openHousesDates = $openHousesDates;
+        $this->currentTeacher = $currentTeacher;
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options) {
@@ -55,7 +59,8 @@ class StudentType extends AbstractType {
                     'expanded' => false,
                     'multiple' => false,
                     'property' => 'fullname',
-                    'property_path' => 'welcomedByTeacher',            
+                    'property_path' => 'welcomedByTeacher',
+                    'preferred_choices' => array($this->currentTeacher),
                     'attr' => array('class' => 'medium-select')
                 ))
                 
