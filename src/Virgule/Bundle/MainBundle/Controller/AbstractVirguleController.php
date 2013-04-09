@@ -92,6 +92,9 @@ abstract class AbstractVirguleController extends Controller {
     protected function getOpenHouseManager() {
         return $this->get('virgule.openhouse_manager');
     }
+    protected function getStudentManager() {
+        return $this->get('virgule.student_manager');
+    }
     
     /* Repositories */
     protected function getTeacherRepository() {
@@ -104,7 +107,7 @@ abstract class AbstractVirguleController extends Controller {
         return $this->getEntityManager()->getRepository('VirguleMainBundle:Course');
     }
     protected function getOpenHouseRepository() {
-        return $this->getEntityManager()->getRepository('VirguleMainBundle:Student');
+        return $this->getEntityManager()->getRepository('VirguleMainBundle:OpenHouse');
     }
     protected function getCountryRepository() {
         return $this->getEntityManager()->getRepository('VirguleMainBundle:Country');

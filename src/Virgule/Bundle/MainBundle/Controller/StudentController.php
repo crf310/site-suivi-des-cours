@@ -20,12 +20,6 @@ use Virgule\Bundle\MainBundle\Form\CommentType;
  */
 class StudentController extends AbstractVirguleController {
     
-    /*
-    private function getManager() {
-        return $this->get('virgule.course_manager');
-    }
-    */
-    
     /**
      * Lists all Student entities.
      *
@@ -33,26 +27,19 @@ class StudentController extends AbstractVirguleController {
      * @Template()
      */
     public function indexAction() {
-        $students = $this->getStudentRepository()->loadAll($this->getSelectedSemesterId());
+        $students_lines = $this->getStudentManager()->loadAllEnrolled($this->getSelectedSemesterId());
+        return array_merge(Array('title' => 'Tous les apprenants inscrits à un cours de cette session'), $students_lines);
+    }
     
-        // sub array to group students enrolled to many courses
-        $students_ids = Array();
-        $courses_array = Array();
-        foreach ($students as $key => $student) {
-            
-            // store courses for each student
-            $courses_array[$student['id']][] = Array('course_id' => $student['course_id'], 'level' => $student['level']);
-            
-            // delete doubled line in students results (if we already processed a line for the same student
-            if (array_key_exists($student['id'], $students_ids)) {
-                 unset($students[$key]);
-            }
-            // set flag: we processed a line for this student
-            $students_ids[$student['id']] = 1;
-        }
-        //$entities_paginated = $this->paginate($students, $page);
-        $other_entities = Array('courses_array' => $courses_array);
-        return array_merge(Array('entities' => $students), $other_entities);
+    /**
+     * Lists all Student entities.
+     *     * 
+     * @Route("/manyClasses", name="student_index_manyclasses"))
+     * @Template("VirguleMainBundle:Student:index.html.twig")
+     */
+    public function indexManyClassesAction() {
+        $students_lines = $this->getStudentManager()->loadAllEnrolledTwice($this->getSelectedSemesterId());
+        return array_merge(Array('title' => 'Tous les apprenants inscrits à plus d\'un cours de cette session'), $students_lines);
     }
 
     /**

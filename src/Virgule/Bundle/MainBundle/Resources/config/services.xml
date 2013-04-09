@@ -24,6 +24,7 @@
         <parameter key="virgule.course_manager.class">%namespace%\Manager\CourseManager</parameter>               
         <parameter key="virgule.semester_manager.class">%namespace%\Manager\SemesterManager</parameter>
         <parameter key="virgule.openhouse_manager.class">%namespace%\Manager\OpenHouseManager</parameter>
+        <parameter key="virgule.student_manager.class">%namespace%\Manager\StudentManager</parameter>
     </parameters>
 
     <services>
@@ -39,6 +40,9 @@
             <argument type="service" id="request" />
         </service>
         <service id="virgule.openhouse_manager" class="%virgule.openhouse_manager.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+        <service id="virgule.student_manager" class="%virgule.student_manager.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
         

@@ -11,7 +11,7 @@
         <span class="icon">
             <input type="checkbox" id="title-checkbox" name="title-checkbox" />
         </span>
-        <h5>Tous les apprenants inscrits à un cours de cette session : {{ entities|length }}</h5>
+        <h5>{{ title }}&nbsp;({{ students_array | length }})</h5>
     </div>
     <div class="widget-content nopadding">
         <table class="table table-bordered table-striped table-hover with-check data-table">
@@ -32,9 +32,9 @@
                 </tr>
             </thead>
             <tbody>
-                {% for entity in entities %}
+                {% for key,entity in students_array %}
                 <tr class="gradeA">
-                    <td><input type="checkbox" name="students[]" value="{{ entity['id'] }}"/></td>
+                    <td><input type="checkbox" name="students[]" value="{{ entity['student_id'] }}"/></td>
                     <td class="center">
                         <img src="{{ asset('img/drapeaux/' ~ entity['isoCode'] ~ '.png')}}" alt="{{  entity['isoCode'] }}" title="{{  entity['label'] }}" />
                     </td>
@@ -52,14 +52,14 @@
                     <td>{{ entity['registrationDate'] | date("d/m/Y") }}</td>
                     <td><insert class level></td>
                     <td>
-                        {% for course in courses_array[entity['id']] %}
+                        {% for course in courses_array[entity['student_id']] %}
                             <a href="{{ path('course_show', { 'id': course['course_id'] }) }}">{{ course['level'] }}</a>{% if course != loop.last %},&nbsp;{% endif %}
                         {% endfor %}
                     </td>
                     <td><a href="{{ path('teacher_show', { 'id': entity['teacher_id'] }) }}">{{ entity['teacher_firstName'] }} {{ entity['teacher_lastName'] }}</td>
                     <td>
-                        <a href="{{ path('student_show', { 'id':  entity['id'] }) }}">show</a>&nbsp;
-                        <a href="{{ path('student_edit', { 'id':  entity['id'] }) }}">edit</a>
+                        <a href="{{ path('student_show', { 'id':  entity['student_id'] }) }}">show</a>&nbsp;
+                        <a href="{{ path('student_edit', { 'id':  entity['student_id'] }) }}">edit</a>
                     </td>
                 </tr>
                 {% endfor %}
