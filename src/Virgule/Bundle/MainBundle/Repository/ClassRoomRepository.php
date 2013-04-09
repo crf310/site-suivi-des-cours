@@ -13,13 +13,14 @@ use Doctrine\DBAL\Types\Type;
  * repository methods below.
  */
 class ClassRoomRepository extends EntityRepository {
+    
     private function createDefaultQueryBuilder() {
         return $this->createQueryBuilder('cr')->add('orderBy', 'cr.id');
     }
     
     public function getClassRoomsForOrganizationBranch($organizationBranchId) {
         $qb = $this->createDefaultQueryBuilder()
-                ->select('cr.id as classroom_id, cr.name as classroom_name')
+                ->select('cr.id as classroom_id, cr.name as classroom_name, cr.comments as classroom_comments')
                 ->innerJoin('cr.organizationBranch' , 'ob')
                 ->where('ob.id = :organizationBranchId')
                 ->setParameter('organizationBranchId', $organizationBranchId);

@@ -35,7 +35,7 @@
                         <div class="widget-content nopadding">
                             <form id="form_login" action="{{ path('login_check') }}" method="post" class="form-horizontal">
                                 {% if error %}
-                                    <div class="alert alert-error">
+                                    <div class="alert alert-error alert-padding">
                                         {{ error.message | trans }}
                                     </div>
                                 {% endif %}	

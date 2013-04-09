@@ -15,16 +15,15 @@ use Virgule\Bundle\MainBundle\Form\OrganizationBranchType;
  *
  * @Route("/organizationbranch")
  */
-class OrganizationBranchController extends AbstractVirguleController
-{
+class OrganizationBranchController extends AbstractVirguleController {
+
     /**
      * Lists all OrganizationBranch entities.
      *
      * @Route("/", name="organizationbranch")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('VirguleMainBundle:OrganizationBranch')->findAll();
@@ -40,18 +39,20 @@ class OrganizationBranchController extends AbstractVirguleController
      * @Route("/{id}/show", name="organizationbranch_show")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('VirguleMainBundle:OrganizationBranch')->find($id);
+        $organizationBranch = $em->getRepository('VirguleMainBundle:OrganizationBranch')->find($id);
 
-        if (!$entity) {
+        $classRooms = $this->getClassRoomRepository()->getClassRoomsForOrganizationBranch($this->getSelectedOrganizationBranchId());
+        
+        if (!$organizationBranch) {
             throw $this->createNotFoundException('Unable to find OrganizationBranch entity.');
         }
-        
+
         return array(
-            'entity'      => $entity
+            'organizationBranch' => $organizationBranch,
+            'classRooms' => $classRooms
         );
     }
 
@@ -61,14 +62,13 @@ class OrganizationBranchController extends AbstractVirguleController
      * @Route("/new", name="organizationbranch_new")
      * @Template()
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new OrganizationBranch();
-        $form   = $this->createForm(new OrganizationBranchType(), $entity);
+        $form = $this->createForm(new OrganizationBranchType(), $entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -79,9 +79,8 @@ class OrganizationBranchController extends AbstractVirguleController
      * @Method("POST")
      * @Template("VirguleMainBundle:OrganizationBranch:new.html.twig")
      */
-    public function createAction(Request $request)
-    {
-        $entity  = new OrganizationBranch();
+    public function createAction(Request $request) {
+        $entity = new OrganizationBranch();
         $form = $this->createForm(new OrganizationBranchType(), $entity);
         $form->bind($request);
 
@@ -95,7 +94,7 @@ class OrganizationBranchController extends AbstractVirguleController
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -105,8 +104,7 @@ class OrganizationBranchController extends AbstractVirguleController
      * @Route("/{id}/edit", name="organizationbranch_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:OrganizationBranch')->find($id);
@@ -119,8 +117,8 @@ class OrganizationBranchController extends AbstractVirguleController
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -132,8 +130,7 @@ class OrganizationBranchController extends AbstractVirguleController
      * @Method("POST")
      * @Template("VirguleMainBundle:OrganizationBranch:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:OrganizationBranch')->find($id);
@@ -154,8 +151,8 @@ class OrganizationBranchController extends AbstractVirguleController
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -166,8 +163,7 @@ class OrganizationBranchController extends AbstractVirguleController
      * @Route("/{id}/delete", name="organizationbranch_delete")
      * @Method("POST")
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
 
@@ -186,11 +182,11 @@ class OrganizationBranchController extends AbstractVirguleController
         return $this->redirect($this->generateUrl('organizationbranch'));
     }
 
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                        ->add('id', 'hidden')
+                        ->getForm()
         ;
     }
+
 }
