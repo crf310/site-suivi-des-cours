@@ -26,7 +26,7 @@
                     <tbody>
                     {% for openHouse in openHouses %}
                         <tr>
-                            <td class="center">{% if openHouse.date %}{{ openHouse.date | date('d/m/Y') }}{% endif %}</td>
+                            <td class="center">{% if openHouse.date %}{{ openHouse.date | date('w') | day }} {{ openHouse.date | date('d/m/Y') }}{% endif %}</td>
                             <td></td>
                             <td></td>
                         </tr>
@@ -42,7 +42,7 @@
                 <span class="icon"><i class="icon-plus"></i></span><h5>Ajouter une journée d'accueil</h5>
             </div>                        
             <div class="widget-content nopadding">
-                <div class="alert alert-info">
+                <div class="alert alert-info alert-padding">
                     Les dates des journées d'accueil seront affichées dans le formulaire de saisie d'une fiche apprenant, afin d'accélérer l'enregistrement de la date d'accueil.
                 </div>
                 <form action="{{ path('openhouse_create') }}" method="post" {{ form_enctype(openHouseForm) }} class="form-horizontal">
