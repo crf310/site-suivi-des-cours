@@ -230,6 +230,11 @@ a.search {
 .data-table tbody ul li{
     list-style: none; display: inline; margin-left: 0px;
 }
+
+.dataTables_length {
+    margin: 9px 55px 0 0;
+}
+
 #planning td {
     height: auto;
     font-size: 12px;

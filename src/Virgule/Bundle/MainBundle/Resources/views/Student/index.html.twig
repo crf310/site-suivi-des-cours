@@ -11,7 +11,8 @@
         <span class="icon">
             <input type="checkbox" id="title-checkbox" name="title-checkbox" />
         </span>
-        <h5>{{ title }}&nbsp;({{ students_array | length }})</h5>
+        <h5>{{ title }}&nbsp;()</h5>
+        <span class="label label-info tip-left" data-original-title="{{ students_array | length }} apprenant(s)">{{ students_array | length }}</span>
     </div>
     <div class="widget-content nopadding">
         <table class="table table-bordered table-striped table-hover with-check data-table">
