@@ -32,9 +32,14 @@ class WelcomeController extends AbstractVirguleController {
             $courseIds[] = $course->getId();
         }
         
-        $myStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledInCourses($courseIds);
-        $nbMyStudents=count($myStudents);
-        $myStudentsLineBreak = $this->getListBreak($nbMyStudents, 3);
+        $nbMyStudents = 0;
+        $myStudents = array();
+        $myStudentsLineBreak = 0;
+        if (count($courseIds) > 0) {
+            $myStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledInCourses($courseIds);
+            $nbMyStudents = count($myStudents);
+            $myStudentsLineBreak = $this->getListBreak($nbMyStudents, 3);
+        }
         
         $classSessionRepo = $em->getRepository('VirguleMainBundle:ClassSession');
         $myClassSessions = $classSessionRepo->loadAllClassSessionByTeacher($semesterId, $teacherId);
