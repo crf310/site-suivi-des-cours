@@ -22,7 +22,7 @@ class Course {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var boolean
@@ -36,54 +36,54 @@ class Course {
      *      maxMessage = "Le jour est invalide"
      * )
      */
-    private $dayOfWeek;
+    protected $dayOfWeek;
 
     /**
      * @var \Time
      *
      * @ORM\Column(name="start_time", type="time", nullable=false)
      */
-    private $startTime;
+    protected $startTime;
 
     /**
      * @var \Time
      *
      * @ORM\Column(name="end_time", type="time", nullable=false)
      */
-    private $endTime;
+    protected $endTime;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="alternate_startdate", type="date", nullable=true)
      */
-    private $alternateStartdate;
+    protected $alternateStartdate;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="alternate_enddate", type="date", nullable=true)
      */
-    private $alternateEnddate;
+    protected $alternateEnddate;
 
     /**
      * @ORM\ManyToOne(targetEntity="ClassLevel", inversedBy="courses")
      * @ORM\JoinColumn(name="fk_class_level", referencedColumnName="id")
      */
-    private $classLevel;
+    protected $classLevel;
 
     /**
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="courses")
      * @ORM\JoinColumn(name="fk_semester", referencedColumnName="id", nullable=false)
      */
-    private $semester;
+    protected $semester;
 
     /**
      * @ORM\ManyToMany(targetEntity="Teacher", inversedBy="courses")
      * @ORM\JoinTable(name="teacher_course")
      * @Assert\NotNull
      */
-    private $teachers;
+    protected $teachers;
 
     /**
      * @ORM\ManyToOne(targetEntity="ClassRoom", inversedBy="courses")
@@ -95,18 +95,18 @@ class Course {
      * @ORM\ManyToOne(targetEntity="OrganizationBranch", inversedBy="courses")
      * @ORM\JoinColumn(name="fk_organization_branch", referencedColumnName="id", nullable=false)
      */
-    private $organizationBranch;
+    protected $organizationBranch;
 
     /**
      * @ORM\OneToMany(targetEntity="ClassSession", mappedBy="course")
      */
-    private $classSessions;
+    protected $classSessions;
 
     /**
      * @ORM\ManyToMany(targetEntity="Student", mappedBy="courses")
      * @ORM\JoinTable(name="student_course")
      */
-    private $students;
+    protected $students;
 
     /**
      * Get id

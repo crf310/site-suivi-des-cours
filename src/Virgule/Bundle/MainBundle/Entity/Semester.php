@@ -19,37 +19,37 @@ class Semester {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="start_date", type="date", nullable=false)
      */
-    private $startDate;
+    protected $startDate;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="end_date", type="date", nullable=false)
      */
-    private $endDate;
+    protected $endDate;
 
     /**
      * @ORM\OneToMany(targetEntity="Course", mappedBy="semester")
      */
-    private $courses;
+    protected $courses;
 
     /**
      * @ORM\ManyToOne(targetEntity="OrganizationBranch", inversedBy="semesters")
      * @ORM\JoinColumn(name="fk_organization_branch", referencedColumnName="id")
      */
-    private $organizationBranch;    
+    protected $organizationBranch;    
     
     /**
      * @ORM\OneToMany(targetEntity="OpenHouse", mappedBy="semester", cascade={"persist"})
      */
-    private $openHouses;
+    protected $openHouses;
 
     /**
      * Get id
