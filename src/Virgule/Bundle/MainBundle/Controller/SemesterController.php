@@ -22,11 +22,7 @@ use Virgule\Bundle\MainBundle\Event\NewSemesterEvent;
  * @Route("/semester")
  */
 class SemesterController extends AbstractVirguleController {
-    protected $dispatcher = null;
-
-    public function __construct(EventDispatcherInterface $dispatcher) {
-        $this->dispatcher = $dispatcher;
-    }
+    
     /**
      * Lists all Semester entities.
      *
@@ -108,21 +104,23 @@ class SemesterController extends AbstractVirguleController {
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
-            $em->flush();
+            $em->flush();           
             
-            $event = new NewSemesterEvent($order);
-            $dispatcher->dispatch(ReloadEvents::RELOAD_SEMESTERS, $event);
-
             $flashMessage = 'Nouveau semestre créé avec succès !';
+            
             if ($request->get('courses')) {
                 $coursesToCopy = $request->get('courses');
                 $nbCoursesToCopy = count($coursesToCopy);
                 
                 $this->getCourseManager()->cloneCourses($coursesToCopy, $entity);
-                $this->addFlash($flashMessage . '\n' . $nbCoursesToCopy . ' cours copiés');
-            } else {
-                $this->addFlash($flashMessage);
+                $flashMessage .= '\n' . $nbCoursesToCopy . ' cours copiés';
             }
+            
+            $this->getSemesterManager()->reloadAllSemestersIntoSession($this->getSelectedOrganizationBranchId());
+            if ($this->getSemesterManager()->setNewSemesterAsCurrent($entity)) {
+                $flashMessage .= '\nVous avez été repositionné sur ce semestre';
+            }
+            $this->addFlash($flashMessage);
              
             return $this->redirect($this->generateUrl('semester_index', array('id' => $entity->getId())));
         }

@@ -5,6 +5,7 @@ namespace Virgule\Bundle\MainBundle\Event;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Virgule\Bundle\MainBundle\Entity\Teacher as Teacher;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\NoResultException;
 
 class LoginEventListener {
 
@@ -33,15 +34,20 @@ class LoginEventListener {
             $organizationBranchId = $request->get('organization_branch_id');
             $organizationBranch = $this->entityManager->getRepository('Virgule\Bundle\MainBundle\Entity\OrganizationBranch')->loadOne($organizationBranchId);
 
-            $currentSemester = $this->entityManager->getRepository('Virgule\Bundle\MainBundle\Entity\Semester')->loadCurrentSemester($organizationBranchId);
-            $pastSemesters = $this->entityManager->getRepository('Virgule\Bundle\MainBundle\Entity\Semester')->loadAll($organizationBranchId);
-            
             $session->set('organizationBranch', $organizationBranch);
             $session->set('organizationBranchId', $organizationBranchId);
             $session->set('organizationBranchName', $organizationBranch->getName());
             
+            try {
+                $currentSemester = $this->entityManager->getRepository('Virgule\Bundle\MainBundle\Entity\Semester')->loadCurrent($organizationBranchId);
+            } catch (NoResultException $e) {
+                echo 'no result';
+                $currentSemester =  $this->entityManager->getRepository('Virgule\Bundle\MainBundle\Entity\Semester')->loadLast($organizationBranchId);
+            }
+            $allSemesters = $this->entityManager->getRepository('Virgule\Bundle\MainBundle\Entity\Semester')->loadAll($organizationBranchId);
+            
             $session->set('currentSemester', $currentSemester);
-            $session->set('pastSemesters', $pastSemesters);
+            $session->set('allSemesters', $allSemesters);
         }
     }
 

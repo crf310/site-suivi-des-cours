@@ -3,6 +3,7 @@
 namespace Virgule\Bundle\MainBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use \Doctrine\ORM\NoResultException;
 
 /**
  * SemesterRepository
@@ -18,7 +19,7 @@ class SemesterRepository extends EntityRepository {
      * @return type
      * @throws NoResultException
      */
-    public function loadCurrentSemester($organizationBranchId) {
+    public function loadCurrent($organizationBranchId) {
         $now = new \DateTime('now');
         $now = $now->format("Y-m-d");
         
@@ -36,7 +37,7 @@ class SemesterRepository extends EntityRepository {
             // if there is no record matching the criteria.
             $semester = $q->getSingleResult();
         } catch (NoResultException $e) {
-            throw new NoResultException(sprintf('Unable to find an active Semester object identified by "%s".', $username), null, 0, $e);
+            throw new NoResultException(sprintf('Unable to find an current Semester object'), null, 0, $e);
         }
         return $semester;
     }
@@ -52,5 +53,22 @@ class SemesterRepository extends EntityRepository {
 
         $semesters = $q->execute();
         return $semesters;
+    }
+    
+    public function loadLast($organizationBranchId) {
+        $q = $this
+            ->createQueryBuilder('s')
+            ->where('s.organizationBranch = :organizationBranchId')
+            ->add('orderBy', 's.startDate DESC')
+            ->setParameter('organizationBranchId', $organizationBranchId)
+            ->setMaxResults(1)
+            ->getQuery()
+        ;
+        try {
+            $semester = $q->getSingleResult();
+        } catch (NoResultException $e) {
+            throw new NoResultException(sprintf('No last semester found'), null, 0, $e);
+        }
+        return $semester;
     }
 }

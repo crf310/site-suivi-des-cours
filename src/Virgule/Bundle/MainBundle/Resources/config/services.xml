@@ -34,8 +34,9 @@
         <service id="virgule.course_manager" class="%virgule.course_manager.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
-        <service id="virgule.semester_manager" class="%virgule.semester_manager.class%">
+        <service id="virgule.semester_manager" class="%virgule.semester_manager.class%" scope="request">
             <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="request" />
         </service>
         <service id="virgule.openhouse_manager" class="%virgule.openhouse_manager.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
