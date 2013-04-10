@@ -18,7 +18,7 @@
                     <span class="icon">
                             <i class="icon-align-justify"></i>
                     </span>
-                    <h5>{{ entity.course }}</h5>
+                    <h5>Niveau {{ entity.course.classLevel.label }}, le {{ entity.course.dayOfWeek | day }} de {{ entity.course.startTime | date('h:m') }} à {{ entity.course.endTime | date('h:m') }} </h5>
                 </div>            
                 <div class="widget-content nopadding">
                     <div class="control-group">
