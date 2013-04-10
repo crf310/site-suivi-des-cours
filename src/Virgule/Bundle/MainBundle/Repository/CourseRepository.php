@@ -119,6 +119,21 @@ class CourseRepository extends EntityRepository {
         return $results;
     }
     
+    public function loadAllIdsForSemester($semesterId) {
+        $q = $this
+                ->createQueryBuilder('c')
+                ->addSelect('c.id as course_id')
+                ->innerJoin('c.semester', 's')
+                ->where('s.id = :semesterId')
+                ->setParameter('semesterId', $semesterId)
+                ->getQuery()
+        ;
+        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+
+        return $results;
+    }
+    
+    
     public function loadAllObjects($semesterId) {
         $q = $this
                 ->createQueryBuilder('c')

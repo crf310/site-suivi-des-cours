@@ -41,6 +41,17 @@ class StudentController extends AbstractVirguleController {
         $students_lines = $this->getStudentManager()->loadAllEnrolledTwice($this->getSelectedSemesterId());
         return array_merge(Array('title' => 'Tous les apprenants inscrits à plus d\'un cours de cette session'), $students_lines);
     }
+    
+    /**
+     * Lists all Student entities.
+     *     * 
+     * @Route("/noClass", name="student_index_noclass"))
+     * @Template("VirguleMainBundle:Student:index.html.twig")
+     */
+    public function indexNoClassAction() {
+        $students_lines = $this->getStudentManager()->loadAllNotEnrolled($this->getSelectedSemesterId());
+        return array_merge(Array('title' => 'Tous les apprenants non inscrits à un cours de cette session'), $students_lines);
+    }
 
     /**
      * Finds and displays a Student entity.

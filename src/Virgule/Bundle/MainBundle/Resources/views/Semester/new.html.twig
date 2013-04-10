@@ -1,4 +1,16 @@
 {% extends '::main_content.html.twig' %}
+{% block head %}    
+    {{ parent() }}
+    {% block javascripts %}
+    <!-- Add 6 months to end date when a start date has been entered -->
+    <script type='text/javascript'>
+        
+        $('#semester_startDateField').focus(function() {
+alert('Handler for .focus() called.');
+});
+    </script>
+    {% endblock %}
+{% endblock %}
 {% block content_title %}Enregistrer un nouveau semestre{% endblock %}
  {%block submenu %}{% endblock %}
 {% block main_content %}
@@ -8,8 +20,8 @@
             <span class="icon"><i class="icon-plus"></i></span><h5>Dates du semestres</h5>
         </div>                        
         <div class="widget-content">
-            {{ form_row(semesterForm.startDate, { 'label': 'Date de début' }) }}
-            {{ form_row(semesterForm.endDate, { 'label': 'Date de fin' }) }}
+            {{ form_row(semesterForm.startDate, { 'label': 'Date de début', 'id': 'semester_startDateField' }) }}
+            {{ form_row(semesterForm.endDate, { 'label': 'Date de fin', 'id': 'semester_endDateField'  }) }}
             {{ form_rest(semesterForm) }}
             <div class="alert alert-info alert-padding">
                 Sélectionnez ici les cours que vous souhaitez conserver pour ce semestre. Par exemple, vous pouvez en copier certains pour conserver le niveau et les horaires, et changer le formateur associé par la suite. 

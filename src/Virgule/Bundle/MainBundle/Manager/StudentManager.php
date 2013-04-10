@@ -40,6 +40,23 @@ class StudentManager extends BaseManager {
     }
     
     /**
+     * Load all students not enrolled in any class of the current semester
+     * @param type $semesterId
+     * @return type
+     */
+    public function loadAllNotEnrolled($semesterId) {
+        $courseRepository = $this->em->getRepository('VirguleMainBundle:Course');
+        $coursesIds = $courseRepository->loadAllIdsForSemester($semesterId);
+        
+        $students = $this->getRepository()->loadNotEnrolledInCourses($coursesIds);
+        
+        return Array('students_array' => $students);
+    }
+    
+    
+    
+    
+    /**
      * Remove line in double (students with more than one course)
      * @param type $students
      */

@@ -57,6 +57,20 @@ class StudentRepository extends EntityRepository {
         $students = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $students;
     }
+    
+    public function loadNotEnrolledInCourses(Array $courseIds) {
+        $qb = $this->getBasicQueryBuilder()
+            ->addSelect('t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName')
+            ->addSelect('count(cm.id) as nb_comments')
+            ->leftJoin('s.welcomedByTeacher', 't')
+            ->leftJoin('s.comments', 'cm')
+            ->leftJoin('s.courses', 'c2')
+            ->where('c2.id IS NULL')
+            ->orWhere('c2.id NOT IN (:coursesIds)')
+            ->add('groupBy', 's.id')
+            ->setParameter('coursesIds', $courseIds, Connection::PARAM_INT_ARRAY);
+        return $qb->getQuery()->execute(array(), Query::HYDRATE_ARRAY);
+    }
 
     public function loadAllEnrolledInCourses(Array $courseIds) {
         $qb = $this->getQueryBuilderForStudentEnrolledInCourses($courseIds)
