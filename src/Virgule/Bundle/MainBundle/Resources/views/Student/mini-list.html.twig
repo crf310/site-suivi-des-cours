@@ -10,8 +10,11 @@
             {% if students is empty %}
                 Aucun apprenant trouvé
             {% else %}
-                <div class="left_list">
-                    <ul>
+                {% set nb_columns = 4 %}
+                {% set listBreak = (students | length) // nb_columns %}
+                {% set span_size = 3 %}
+                <div class="span{{ span_size }}">
+                    <ul>                    
                     {% for student in students %}
                         <li class="user_{{ student['gender'] }}">
                             <a href="{{ path('student_show', { 'id': student['student_id'] }) }}">{{ student['firstname']}} {{ student['lastname'] }}</a>
@@ -20,7 +23,7 @@
                             {% endif %}
                         </li>
                         {% if loop.index % listBreak == 0  and loop.index != loop.last %}
-                            </ul></div><div class="left_list"><ul>
+                            </ul></div><div class="span{{ span_size }}"><ul>
                         {% endif %}
                     {% endfor %}
                     </ul>
