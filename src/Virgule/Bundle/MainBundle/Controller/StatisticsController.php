@@ -22,11 +22,11 @@ class StatisticsController extends AbstractVirguleController {
      * @Template()
      */
     public function indexAction() {         
-        $em = $this->getDoctrine()->getManager();
-
         $semesterId = $this->getSelectedSemesterId();
         
-        $studentRepository = $em->getRepository('VirguleMainBundle:Student');
+        $studentRepository = $this->getStudentRepository();
+        $studentManager = $this->getStudentManager();
+        
         $students = $studentRepository->getStudentsInformation($semesterId);
         
         $total_students = 0;
@@ -72,7 +72,7 @@ class StatisticsController extends AbstractVirguleController {
             $total_students += 1;
         }
         
-        $studentsWithManyEnrollments = $studentRepository->getStudentsWithManyEnrollments($semesterId);
+        $studentsWithManyEnrollments = $studentManager->loadAllEnrolledTwice($semesterId)['students_array'];
         
         $nbStudentsPerClassLevel = $studentRepository->getNumberOfStudentsPerClassLevel($semesterId);
         
