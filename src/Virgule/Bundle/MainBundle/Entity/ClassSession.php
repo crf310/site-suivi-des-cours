@@ -21,12 +21,20 @@ class ClassSession {
      */
     private $id;
 
+    
     /**
      * @var \DateTime $date
      *
-     * @ORM\Column(name="date", type="date", nullable=false)
+     * @ORM\Column(name="report_date", type="date", nullable=false)
      */
-    private $date;
+    private $reportDate;
+    
+    /**
+     * @var \DateTime $date
+     *
+     * @ORM\Column(name="session_date", type="date", nullable=false)
+     */
+    private $sessionDate;
 
     /**
      * @var string $summary
@@ -66,7 +74,7 @@ class ClassSession {
     private $attachments;
 
    /**
-     * @ORM\ManyToMany(targetEntity="Student", inversedBy="classSessions")
+     * @ORM\ManyToMany(targetEntity="Student", inversedBy="classSessions", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="student_classsession")
      */
     private $students;
@@ -81,24 +89,45 @@ class ClassSession {
     }
 
     /**
-     * Set date
+     * Set Report date
      *
      * @param \DateTime $date
      * @return ClassSession
      */
-    public function setDate($date) {
-        $this->date = $date;
+    public function setReportDate($date) {
+        $this->reportDate = $date;
+
+        return $this;
+    }
+    
+    /**
+     * Get report date
+     *
+     * @return \DateTime 
+     */
+    public function getReportDate() {
+        return $this->reportDate;
+    }    
+    
+    /**
+     * Set Session date
+     *
+     * @param \DateTime $date
+     * @return ClassSession
+     */
+    public function setSessionDate($date) {
+        $this->sessionDate = $date;
 
         return $this;
     }
 
     /**
-     * Get date
+     * Get session date
      *
      * @return \DateTime 
      */
-    public function getDate() {
-        return $this->date;
+    public function getSessionDate() {
+        return $this->sessionDate;
     }
 
     /**
