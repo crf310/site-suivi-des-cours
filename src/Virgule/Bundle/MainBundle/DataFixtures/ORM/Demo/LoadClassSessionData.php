@@ -43,7 +43,8 @@ Morbi lectus turpis, gravida eu rhoncus eu, dictum at orci. Sed auctor nulla vit
                 $m = rand(01, 12);
                 $d = rand(01, 30);
                 $timestamp = strtotime($d . '-' . $m . '-' . $y);
-                $cs->setDate(new \DateTime("@$timestamp"));
+                $cs->setSessionDate(new \DateTime("@$timestamp"));
+                $cs->setReportDate(new \DateTime("@$timestamp"));
 
                 $teachers = $course->getTeachers();
                 $cs->setSessionTeacher($teachers[0]);

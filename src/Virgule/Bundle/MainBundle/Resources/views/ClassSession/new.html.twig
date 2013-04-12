@@ -2,62 +2,17 @@
 {% block head %}    
     {{ parent() }}
     {% block stylesheets %}
-    <style>
-        #editor {
-            max-height: 250px;
-            height: 250px;
-            background-color: white;
-            border-collapse: separate; 
-            border: 1px solid rgb(204, 204, 204); 
-            padding: 4px; 
-            box-sizing: content-box; 
-            -webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset; 
-            box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
-            border-top-right-radius: 3px; border-bottom-right-radius: 3px;
-            border-bottom-left-radius: 3px; border-top-left-radius: 3px;
-            overflow: scroll;
-            outline: none;
+        <link href="{{ asset('css/bootstrap-wysihtml5-0.0.2.css') }}" media="screen" rel="stylesheet"/>
+        <link href="{{ asset('css/prettify.css') }}" media="screen" rel="stylesheet"/>
+        <style type="text/css" media="screen">
+        #summaryField {
+            height: 300px;
         }
-    </style>
+        </style>
     {% endblock %}
     {% block javascripts %}
-    <link rel="apple-touch-icon" href="//mindmup.s3.amazonaws.com/lib/img/apple-touch-icon.png" />
-    <link rel="shortcut icon" href="http://mindmup.s3.amazonaws.com/lib/img/favicon.ico" >
-		<link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
-		<script src="https://mindmup.s3.amazonaws.com/lib/jquery.hotkeys.js"></script>
-        <script type="text/javascript" src="{{ asset('js/bootstrap-wysiwyg.js') }}"></script>
-        <script type='text/javascript'>
-            
-  $(function(){
-    function initToolbarBootstrapBindings() {
-      var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier', 
-            'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
-            'Times New Roman', 'Verdana'],
-            fontTarget = $('[title=Font]').siblings('.dropdown-menu');
-      $.each(fonts, function (idx, fontName) {
-          fontTarget.append($('<li><a data-edit="fontName ' + fontName +'" style="font-family:\''+ fontName +'\'">'+fontName + '</a></li>'));
-      });
-      $('a[title]').tooltip({container:'body'});
-    	$('.dropdown-menu input').click(function() {return false;})
-		    .change(function () {$(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');})
-        .keydown('esc', function () {this.value='';$(this).change();});
-
-      $('[data-role=magic-overlay]').each(function () { 
-        var overlay = $(this), target = $(overlay.data('target')); 
-        overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
-      });
-      if ("onwebkitspeechchange"  in document.createElement("input")) {
-        var editorOffset = $('#editor').offset();
-        $('#voiceBtn').css('position','absolute').offset({top: editorOffset.top, left: editorOffset.left+$('#editor').innerWidth()-35});
-      } else {
-        $('#voiceBtn').hide();
-      }
-    };
-    initToolbarBootstrapBindings();  
-    $('#editor').wysiwyg();
-    window.prettyPrint && prettyPrint();
-  });
-</script>
+        <script type="text/javascript" src="{{ asset('js/wysihtml5-0.3.0_rc2.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/bootstrap-wysihtml5-0.0.2.min.js') }}"></script>
     {% endblock %}
 {% endblock %}
 {% block content_title %}Ajouter un compte-rendu{% endblock %}
@@ -78,16 +33,19 @@
                 <h5>Cours: {{ course }}</h5>
         </div>
         <div class="widget-content nopadding">
-            {{ form_row(form.date, { 'label': 'Date'}) }}
+            {{ form_row(form.sessionDate, { 'label': 'Date'}) }}
             {{ form_row(form.sessionTeacher, { 'label': 'Formateur'}) }}
-                
-            {{ form_row(form.summary, { 'label': 'Résumé du cours', 'id': 'summaryField' }) }}                
-            {{ form_row(form.students, { 'label': 'Apprenants présents' }) }}
+            {{ form_row(form.summary, { 'label': 'Résumé du cours', 'id' : 'summaryField' }) }}                
+            {{ form_row(form.students, { 'label': 'Apprenants présents' }) }}           
             {{ form_rest(form) }}
             <div class="form-actions">                                     
-                <input class="btn" type="submit" value="Enregistrer le compte-rendu" />
+                <input class="btn btn-success" type="submit" value="Enregistrer le compte-rendu" />
             </div>
         </div>
     </div>        
 </form>
+<script type="text/javascript" src="{{ asset('js/bootstrap-wysihtml5.fr-FR.js') }}"></script>
+<script type="text/javascript">
+  $('#summaryField').wysihtml5({locale: 'fr-FR'});
+</script>
 {% endblock %}

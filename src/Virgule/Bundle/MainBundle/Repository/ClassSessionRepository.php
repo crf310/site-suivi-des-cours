@@ -23,7 +23,7 @@ class ClassSessionRepository extends EntityRepository {
     }
     public function loadAllClassSessionByTeacher($semesterId, $teacherId, $limit = null) {
         $qb = $this->getDefaultQueryBuilder()
-            ->addSelect('c.id, c.date, count(cm.id) as nb_comments')
+            ->addSelect('c.id, c.reportDate, c.sessionDate, count(cm.id) as nb_comments')
             ->innerJoin('c.sessionTeacher', 't')
             ->innerJoin('c.course', 'c2')
             ->innerJoin('c2.semester', 's')
@@ -32,7 +32,7 @@ class ClassSessionRepository extends EntityRepository {
             ->andWhere('s.id = :semesterId')
             ->setParameter('teacherId', $teacherId)
             ->setParameter('semesterId', $semesterId)
-            ->add('orderBy', 'c.date DESC')
+            ->add('orderBy', 'c.sessionDate DESC')
             ->add('groupBy', 'c.id')
         ;
         
@@ -48,13 +48,13 @@ class ClassSessionRepository extends EntityRepository {
     
 public function loadAllClassSessionByCourse($courseId, $limit = null) {
         $qb = $this->getDefaultQueryBuilder()
-            ->addSelect('c.id, c.date, count(cm.id) as nb_comments')
+            ->addSelect('c.id, c.reportDate, c.sessionDate, count(cm.id) as nb_comments')
             ->innerJoin('c.course', 'c2')
             ->innerJoin('c.sessionTeacher', 't')
             ->leftJoin('c.comments', 'cm')
             ->where('c2.id = :courseId')
             ->setParameter('courseId', $courseId)
-            ->add('orderBy', 'c.date DESC')
+            ->add('orderBy', 'c.reportDate DESC')
             ->add('groupBy', 'c.id')
         ;
         
@@ -70,7 +70,7 @@ public function loadAllClassSessionByCourse($courseId, $limit = null) {
     
     public function loadAll($semesterId, $limit = null) {
         $qb = $this->getDefaultQueryBuilder()
-            ->addSelect('c.id as id, c.date as date')
+            ->addSelect('c.id as id, c.reportDate, c.sessionDate')
             ->addSelect('count(cm.id) as nb_comments')
             ->addSelect('c2.id as course_id, c2.dayOfWeek as course_dayOfWeek,
                 c2.startTime as course_startTime, c2.endTime as course_endTime')
@@ -86,7 +86,7 @@ public function loadAllClassSessionByCourse($courseId, $limit = null) {
             ->leftJoin('c.comments', 'cm')
             ->leftJoin('c.students', 'st')
             ->where('s.id = :semesterId')
-            ->add('orderBy', 'c.date DESC')
+            ->add('orderBy', 'c.reportDate DESC')
             ->add('groupBy', 'c.id')
             ->setParameter('semesterId', $semesterId);
         

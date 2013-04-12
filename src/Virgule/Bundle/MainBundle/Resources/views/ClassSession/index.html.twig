@@ -22,17 +22,19 @@
                     <th>Apprenants présents</th>
                     <th>Dirigé par</th>
                     <th>Saisi par</th>
+                    <th>Saisi le</th>
                 </tr>
             </thead>
             <tbody>
             {% for entity in entities %}
                 <tr>
-                    <td><a href="{{ path('classsession_show', { 'id': entity['id'] }) }}">{% if entity['date'] %}{{ entity['date'] | date('d/m/Y') }} {% endif %}</a></td>
+                    <td class="center"><a href="{{ path('classsession_show', { 'id': entity['id'] }) }}">{% if entity['sessionDate'] %}{{ entity['sessionDate'] | date('d/m/Y') }} {% endif %}</a></td>
                     <td>{{ entity['classLevel'] }}
                     <td>le {{ entity['course_dayOfWeek'] | day }} de {{ entity['course_startTime'] | date('H:i') }} à {{ entity['course_endTime']| date('H:i') }}</td>
-                    <td>{{ entity['nb_students'] }}
+                    <td class="center">{{ entity['nb_students'] }}
                     <td>{{ entity['sessionTeacher_firstName'] }} {{ entity['sessionTeacher_lastName'] }}</td>
                     <td>{{ entity['reportTeacher_firstName'] }} {{ entity['reportTeacher_lastName'] }}</td>
+                    <td class="center">{% if entity['reportDate'] %}{{ entity['reportDate'] | date('d/m/Y h:i') }} {% endif %}</td>
                 </tr>
             {% endfor %}
             </tbody>

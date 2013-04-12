@@ -61,6 +61,15 @@ class ClassSessionController extends AbstractVirguleController {
             'students' => $students,
         );
     }
+    
+    private function initClassSessionForm($entity, $courseId) {
+        $organizationBranchId = $this->getSelectedOrganizationBranchId();
+        $currentTeacher = $this->getConnectedUser();
+        
+        $form = $this->createForm(new ClassSessionType($this->getDoctrine(), $courseId, $organizationBranchId, $currentTeacher), $entity);
+        
+        return $form;
+    }
 
     /**
      * Displays a form to create a new ClassSession entity.
@@ -70,11 +79,8 @@ class ClassSessionController extends AbstractVirguleController {
      * @Template()
      */
     public function newAction($course_id) {
-        $organizationBranchId = $this->getSelectedOrganizationBranchId();
-            
-        $entity = new ClassSession();
-        $form = $this->createForm(new ClassSessionType($this->getDoctrine(), $course_id, $organizationBranchId), $entity);
-
+        $entity = new ClassSession();      
+        $form = $this->initClassSessionForm($entity, $course_id);
         
         $em = $this->getDoctrine()->getManager();
         $course = $em->getRepository('VirguleMainBundle:Course')->find($course_id);
@@ -94,16 +100,18 @@ class ClassSessionController extends AbstractVirguleController {
      * @Method("POST")
      * @Template("VirguleMainBundle:ClassSession:new.html.twig")
      */
-    public function createAction(Request $request) {        
-        $entity = new ClassSession();
-
-        $form = $this->createForm(new ClassSessionType($this->getDoctrine()), $entity);
+    public function createAction(Request $request) {
+        $entity = new ClassSession();      
+        $courseId = $request->get('course_id');
+        $form = $this->initClassSessionForm($entity, $courseId);
+                
         $form->bind($request);
 
         $courseId = $form->get('course_id')->getData();
         $em = $this->getEntityManager();        
         $course = $em->getRepository('VirguleMainBundle:Course')->find($courseId);
         $entity->setCourse($course);
+        $entity->setReportDate(new \Datetime('now'));
         
         $connectedUser = $this->getConnectedUser();
         $entity->setReportTeacher($connectedUser);

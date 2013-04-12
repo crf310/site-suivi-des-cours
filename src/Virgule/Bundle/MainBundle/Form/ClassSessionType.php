@@ -8,7 +8,8 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-    
+use Virgule\Bundle\MainBundle\Entity\Teacher;
+
 class ClassSessionType extends AbstractType {
 
     private $courseId;
@@ -16,22 +17,25 @@ class ClassSessionType extends AbstractType {
     private $organizationBranchId;
     
     private $doctrine;
+    
+    private $currentTeacher;
 
-    public function __construct(RegistryInterface $doctrine, $courseId = null, $organizationBranchId = null) {
+    public function __construct(RegistryInterface $doctrine, $courseId = null, $organizationBranchId = null, Teacher $currentTeacher = null) {
         $this->courseId = $courseId;
         $this->doctrine = $doctrine;
         $this->organizationBranchId = $organizationBranchId;
+        $this->currentTeacher = $currentTeacher;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $now = new \DateTime('now');
         $sNow = $now->format('d/m/Y');
         $builder
-                ->add('date', 'date', array(
+                ->add('sessionDate', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'date', 'value' => $sNow)))
-                ->add('summary', 'ckeditor', array(
+                /*->add('summary', 'ckeditor', array(
                     'config' => array(
                         'toolbar' => array(
                             array(
@@ -45,7 +49,8 @@ class ClassSessionType extends AbstractType {
                             ),
                         ),
                         'ui_color' => '#ffffff'
-                        )))
+                        )))*/
+                ->add('summary')
                 ->add('students', 'entity', array(
                         'class' => 'VirguleMainBundle:Student', 
                         'query_builder' => $this->getStudents($this->courseId), 
@@ -56,11 +61,12 @@ class ClassSessionType extends AbstractType {
                         'multiple' => false,
                         'expanded' => false,
                         'property_path' => 'sessionTeacher',
-                        'attr' => array('class' => 'small-select')))
+                        'attr' => array('class' => 'small-select'),
+                        'preferred_choices' => array($this->currentTeacher))
+                    )
                 ->add('course_id', 'hidden', array(
                     'data' => $this->courseId,
-                    'mapped' => false
-                ));
+                    'mapped' => false))
                 ;
     }
 
