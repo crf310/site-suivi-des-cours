@@ -15,6 +15,7 @@ class VirguleExtension extends \Twig_Extension {
     public function getFilters() {
         return array(
             'day' => new \Twig_Filter_Method($this, 'dayFilter'),
+            'month' => new \Twig_Filter_Method($this, 'monthFilter'),
             'phoneNumber' => new \Twig_Filter_Method($this, 'phoneNumberFilter'),
         );
     }
@@ -30,6 +31,19 @@ class VirguleExtension extends \Twig_Extension {
             $day = ucfirst($day);
         }
         return $day;
+    }
+    
+    public function monthFilter($monthNumber, $upperFistChar = false) {
+        $months = Array(1 => 'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
+        
+        $month = $monthNumber;
+        if (array_key_exists($monthNumber, $months)) {            
+            $month = $months[$monthNumber];
+        }
+        if ($upperFistChar) {
+            $month = ucfirst($month);
+        }
+        return $month;
     }
     
     public function phoneNumberFilter($phoneNumber) {

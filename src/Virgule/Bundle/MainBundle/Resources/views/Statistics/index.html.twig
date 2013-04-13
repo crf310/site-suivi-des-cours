@@ -98,8 +98,12 @@
     {% endblock %}
 {% endblock %}
 {% set currentSemester = app.session.get('currentSemester') %}
-{% block content_title %}Statistiques de la session du {{ currentSemester.startDate|date("d/m/Y") }} au {{ currentSemester.endDate|date("d/m/Y") }}{% endblock %}
- {%block submenu %}
+{% block content_title %}Statistiques de la session du 
+<b>{{ currentSemester.startDate | date("j") }}{% if currentSemester.startDate | date("j")  == 1 %}<sup>er</sup>{% endif %}&nbsp;{{ currentSemester.startDate | date("n") | month }}&nbsp;{{ currentSemester.startDate | date("Y") }}</b>
+au 
+<b>{{ currentSemester.endDate | date("j") }}{% if currentSemester.endDate | date("j")  == 1 %}<sup>er</sup>{% endif %}&nbsp;{{ currentSemester.endDate | date("n") | month }}&nbsp;{{ currentSemester.endDate | date("Y") }}</b>
+{% endblock %}
+{%block submenu %}
     <a class="btn tip-bottom" href="{{ path('classsession_new') }}"> <i class="icon-export"></i>Exporter les données</a>
 {% endblock %}
 {% block main_content %}
