@@ -72,12 +72,12 @@ class StatisticsController extends AbstractVirguleController {
             $total_students += 1;
         }
         
-        $studentsWithManyEnrollments = $studentManager->loadAllEnrolledTwice($semesterId)['students_array'];
+        $studentsWithManyEnrollments = $studentManager->loadAllEnrolledTwice($semesterId);
         
         $nbStudentsPerClassLevel = $studentRepository->getNumberOfStudentsPerClassLevel($semesterId);
         
         return array(
-            'studentsWithManyEnrollments' => $studentsWithManyEnrollments,
+            'studentsWithManyEnrollments' => $studentsWithManyEnrollments['students_array'],
             'students_genders' => $students_genders, 
             'total_students' => $total_students,
             'students_countries' => $students_countries,
