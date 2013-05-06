@@ -10,7 +10,9 @@
             {% if students is empty %}
                 Aucun apprenant trouvé
             {% else %}
-                {% set nbColumns = 3 %}
+                {% if nbColumns is not defined %}
+                    {% set nbColumns = 3 %}
+                {% endif %}
                 {% set listBreak = (students | length) // nbColumns %}
                 {% if ((students | length) // nbColumns) > 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
                 {% if listBreak == 0 %}{% set listBreak = 1 %}{% endif %}
