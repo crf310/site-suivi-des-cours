@@ -84,7 +84,7 @@ public function loadAllClassSessionByCourse($courseId, $limit = null) {
             ->innerJoin('c.sessionTeacher', 't1')
             ->innerJoin('c.reportTeacher', 't2')
             ->leftJoin('c.comments', 'cm')
-            ->leftJoin('c.students', 'st')
+            ->leftJoin('c.classSessionStudents', 'st')
             ->where('s.id = :semesterId')
             ->add('orderBy', 'c.reportDate DESC')
             ->add('groupBy', 'c.id')
