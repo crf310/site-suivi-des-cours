@@ -3,6 +3,7 @@
 namespace Virgule\Bundle\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Virgule\Bundle\MainBundle\Entity\ClassSession
@@ -21,16 +22,15 @@ class ClassSession {
      */
     private $id;
 
-    
     /**
-     * @var \DateTime $date
+     * @var \DateTime $reportDate
      *
-     * @ORM\Column(name="report_date", type="date", nullable=false)
+     * @ORM\Column(name="report_date", type="datetime", nullable=false)
      */
     private $reportDate;
-    
+
     /**
-     * @var \DateTime $date
+     * @var \DateTime $sessionDate
      *
      * @ORM\Column(name="session_date", type="date", nullable=false)
      */
@@ -73,12 +73,13 @@ class ClassSession {
      */
     private $attachments;
 
-   /**
-     * @ORM\ManyToMany(targetEntity="Student", inversedBy="classSessions", cascade={"persist", "remove"})
-     * @ORM\JoinTable(name="student_classsession")
+    /**
+     * @ORM\ManyToMany(targetEntity="Student", inversedBy="classSessions")
+     * @ORM\JoinTable(name="class_session_students")
+     * @Assert\NotNull
      */
-    private $students;
-    
+    protected $classSessionStudents;
+
     /**
      * Get id
      *
@@ -99,7 +100,7 @@ class ClassSession {
 
         return $this;
     }
-    
+
     /**
      * Get report date
      *
@@ -107,8 +108,8 @@ class ClassSession {
      */
     public function getReportDate() {
         return $this->reportDate;
-    }    
-    
+    }
+
     /**
      * Set Session date
      *
@@ -156,7 +157,7 @@ class ClassSession {
      */
     public function __construct() {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->students = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->classSessionStudents = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -282,28 +283,25 @@ class ClassSession {
         return $this->attachments;
     }
 
-
     /**
      * Add students
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Student $students
      * @return ClassSession
      */
-    public function addStudent(\Virgule\Bundle\MainBundle\Entity\Student $students)
-    {
-        $this->students[] = $students;
-    
+    public function addClassSessionStudent(\Virgule\Bundle\MainBundle\Entity\Student $student) {
+        $this->classSessionStudents[] = $student;        
+        
         return $this;
     }
-
+    
     /**
      * Remove students
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Student $students
      */
-    public function removeStudent(\Virgule\Bundle\MainBundle\Entity\Student $students)
-    {
-        $this->students->removeElement($students);
+    public function removeClassSessionStudent(\Virgule\Bundle\MainBundle\Entity\Student $student) {
+        $this->classSessionStudents->removeElement($student);
     }
 
     /**
@@ -311,8 +309,12 @@ class ClassSession {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getStudents()
-    {
-        return $this->students;
+    public function getClassSessionStudents() {
+        return $this->classSessionStudents;
     }
+    
+    public function setClassSessionStudents(\Doctrine\Common\Collections\ArrayCollection $students) {
+        $this->classSessionStudents = $students;
+    }
+
 }

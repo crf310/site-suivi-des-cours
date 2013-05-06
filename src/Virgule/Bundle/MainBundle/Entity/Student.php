@@ -243,7 +243,7 @@ class Student {
     private $courses;
 
     /**
-     * @ORM\ManyToMany(targetEntity="ClassSession", mappedBy="students")
+     * @ORM\ManyToMany(targetEntity="ClassSession", mappedBy="classSessionStudents", cascade={"persist"})
      */
     private $classSessions;
 
@@ -317,6 +317,10 @@ class Student {
      */
     public function getFirstname() {
         return $this->firstname;
+    }
+    
+    public function getFullName() {
+        return $this->firstname . ' ' .  $this->lastname;
     }
 
     /**
@@ -871,6 +875,7 @@ class Student {
     public function __construct() {
         $this->registrationDate = new \DateTime('now');
         $this->courses = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->classSessions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function __toString() {

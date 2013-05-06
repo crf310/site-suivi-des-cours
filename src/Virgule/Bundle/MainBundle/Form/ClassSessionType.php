@@ -2,59 +2,40 @@
 
 namespace Virgule\Bundle\MainBundle\Form;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityManager;
 
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 use Virgule\Bundle\MainBundle\Entity\Teacher;
+use Virgule\Bundle\MainBundle\Form\EventListener\AddClassSessionStudentsFieldSubscriber;
 
 class ClassSessionType extends AbstractType {
-
-    private $courseId;
-    
-    private $organizationBranchId;
-    
+        
     private $doctrine;
     
+    private $organizationBranchId;
+        
     private $currentTeacher;
 
-    public function __construct(RegistryInterface $doctrine, $courseId = null, $organizationBranchId = null, Teacher $currentTeacher = null) {
-        $this->courseId = $courseId;
+    public function __construct(RegistryInterface $doctrine, $organizationBranchId = null, Teacher $currentTeacher = null) {
         $this->doctrine = $doctrine;
         $this->organizationBranchId = $organizationBranchId;
         $this->currentTeacher = $currentTeacher;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options) {    
         $now = new \DateTime('now');
         $sNow = $now->format('d/m/Y');
+        
         $builder
                 ->add('sessionDate', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'date', 'value' => $sNow)))
-                /*->add('summary', 'ckeditor', array(
-                    'config' => array(
-                        'toolbar' => array(
-                            array(
-                                'name' => 'document',
-                                'items' => array('Source', '-', 'Save', 'NewPage', 'DocProps', 'Preview', 'Print', '-', 'Templates'),
-                            ),
-                            '/',
-                            array(
-                                'name' => 'basicstyles',
-                                'items' => array('Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'),
-                            ),
-                        ),
-                        'ui_color' => '#ffffff'
-                        )))*/
-                ->add('summary')
-                ->add('students', 'entity', array(
-                        'class' => 'VirguleMainBundle:Student', 
-                        'query_builder' => $this->getStudents($this->courseId), 
-                        'multiple' => true, 'expanded' => true))                
+                ->add('summary')          
                 ->add('sessionTeacher', 'entity', array(
                         'class' => 'VirguleMainBundle:Teacher', 
                         'query_builder' => $this->getTeachers($this->organizationBranchId),
@@ -63,13 +44,12 @@ class ClassSessionType extends AbstractType {
                         'property_path' => 'sessionTeacher',
                         'attr' => array('class' => 'small-select'),
                         'preferred_choices' => array($this->currentTeacher))
-                    )
-                ->add('course_id', 'hidden', array(
-                    'data' => $this->courseId,
-                    'mapped' => false))
-                ;
+                    );
+        
+        $subscriber = new AddClassSessionStudentsFieldSubscriber($builder->getFormFactory(), $options['em']);
+        $builder->addEventSubscriber($subscriber);
     }
-
+    
     private function getTeachers($organizationBranchId) {
         $qb = $this->doctrine->getRepository('VirguleMainBundle:Teacher')->getAvailableTeachersQueryBuilder($organizationBranchId);
         return $qb;
@@ -82,7 +62,16 @@ class ClassSessionType extends AbstractType {
     
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Virgule\Bundle\MainBundle\Entity\ClassSession'
+            'data_class' => 'Virgule\Bundle\MainBundle\Entity\ClassSession',
+        ));
+        
+        
+        $resolver->setRequired(array(
+            'em',
+        ));
+
+        $resolver->setAllowedTypes(array(
+            'em' => 'Doctrine\Common\Persistence\ObjectManager',
         ));
     }
 

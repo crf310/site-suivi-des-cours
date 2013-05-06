@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Controller\AbstractVirguleController;
 use Virgule\Bundle\MainBundle\Entity\ClassSession;
 use Virgule\Bundle\MainBundle\Entity\Comment;
+use Virgule\Bundle\MainBundle\Entity\Course;
 use Virgule\Bundle\MainBundle\Form\ClassSessionType;
 use Virgule\Bundle\MainBundle\Form\CommentType;
 
@@ -22,10 +23,10 @@ class ClassSessionController extends AbstractVirguleController {
     /**
      * Lists all ClassSession entities.
      *
-     * @Route("/page/{page}", requirements={"page" = "\d+"}, defaults={"page" = "1"}, name="classsession_index")
+     * @Route("/", name="classsession_index")
      * @Template()
      */
-    public function indexAction($page = 1) {
+    public function indexAction() {
         $em = $this->getEntityManager();        
         $classSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAll($this->getSelectedSemesterId());
 
@@ -52,41 +53,35 @@ class ClassSessionController extends AbstractVirguleController {
         $comment = new Comment();
         $commentForm = $this->createForm(new CommentType(), $comment);
         
-        $students = $em->getRepository('VirguleMainBundle:Student')->loadAllPresentAtClassSession($id);
+        $classSessionStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllPresentAtClassSession($id);
         
         return array(
             'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
             'commentForm' => $commentForm->createView(),
-            'students' => $students,
+            'classSessionStudents' => $classSessionStudents,
         );
     }
     
-    private function initClassSessionForm($entity, $courseId) {
-        $organizationBranchId = $this->getSelectedOrganizationBranchId();
-        $currentTeacher = $this->getConnectedUser();
-        
-        $form = $this->createForm(new ClassSessionType($this->getDoctrine(), $courseId, $organizationBranchId, $currentTeacher), $entity);
-        
-        return $form;
-    }
-
     /**
      * Displays a form to create a new ClassSession entity.
      *
-     * @Route("/new", name="classsession_new")
-     * @Route("/add/course/{course_id}", name="classsession_add")
+     * @Route("/add", name="classsession_new")
+     * @Route("/add/course/{id}", name="classsession_add")
      * @Template()
      */
-    public function newAction($course_id) {
-        $entity = new ClassSession();      
-        $form = $this->initClassSessionForm($entity, $course_id);
+    public function newAction(Course $course) {       
+        $classSession = new ClassSession();
+        $classSession->setCourse($course);
+       
+        $organizationBranchId = $this->getSelectedOrganizationBranchId();
+        $currentTeacher = $this->getConnectedUser();
+        $semesterId = $this->getSelectedSemesterId();
         
-        $em = $this->getDoctrine()->getManager();
-        $course = $em->getRepository('VirguleMainBundle:Course')->find($course_id);
-        
+        $form = $this->createForm(new ClassSessionType($this->getDoctrine(), $organizationBranchId, $currentTeacher, $semesterId), $classSession, array('em' => $this->getDoctrine()->getManager()));
+       
         return array(
-            'entity' => $entity,
+            'entity' => $classSession,
             'form' => $form->createView(),
             'course'=> $course
         );
@@ -101,31 +96,35 @@ class ClassSessionController extends AbstractVirguleController {
      * @Template("VirguleMainBundle:ClassSession:new.html.twig")
      */
     public function createAction(Request $request) {
-        $entity = new ClassSession();      
-        $courseId = $request->get('course_id');
-        $form = $this->initClassSessionForm($entity, $courseId);
+        $entity = new ClassSession();
+        $organizationBranchId = $this->getSelectedOrganizationBranchId();
+        $currentTeacher = $this->getConnectedUser();
                 
-        $form->bind($request);
-
-        $courseId = $form->get('course_id')->getData();
-        $em = $this->getEntityManager();        
-        $course = $em->getRepository('VirguleMainBundle:Course')->find($courseId);
-        $entity->setCourse($course);
+        $form = $this->createForm(new ClassSessionType($this->getDoctrine(), $organizationBranchId, $currentTeacher), $entity, array('em' => $this->getDoctrine()->getManager()));
+        $form->bind($request);   
+        
         $entity->setReportDate(new \Datetime('now'));
         
+        $courseId = $form->get('course_id')->getData();
+        $course = $this->getCourseRepository()->find($courseId);
+        $entity->setCourse($course);
+            
         $connectedUser = $this->getConnectedUser();
         $entity->setReportTeacher($connectedUser);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($entity);           
             $em->flush();
 
             return $this->redirect($this->generateUrl('classsession_index'));
         }
         
+        $this->logDebug("Students saved: " . count($entity->getClassSessionStudents()));
+        foreach ($entity->getClassSessionStudents() as $student) {
+            $this->logDebug($student->getId());
+        }
+        
         return array(
-            'course_id' => $courseId,
-            'course' => $course,
             'entity' => $entity,
             'form' => $form->createView(),
         );
