@@ -17,7 +17,7 @@
                         {% else %}
                             {% for course in myCourses %}
                                 <li>Niveau {{ course.classLevel }} le {{ course.dayOfWeek| day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }} 
-                                    <br /><a  class="btn virgule-btn" href="{{ path('classsession_add', { 'course_id': course.id }) }}"><i class="icon-add"></i> Ajouter un compte-rendu</a>
+                                    <br /><a  class="btn virgule-btn" href="{{ path('classsession_add', { 'id': course.id }) }}"><i class="icon-add"></i> Ajouter un compte-rendu</a>
                                 </li>
                             {% endfor %}
                         {% endif %}
@@ -27,7 +27,7 @@
             </div>
       </div><!--/span-->
       <div class="span8">
-          {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Mes apprenants', 'students': myStudents, 'listBreak': nbMyStudentsLineBreak, 'displayAllStudentButton': true }  %}
+          {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Mes apprenants', 'students': myStudents, 'nbColumns': 4, 'displayAllStudentButton': true }  %}
       </div><!--/span-->
     </div><!--/row-->
     <div class="row-fluid">
@@ -37,7 +37,7 @@
         {% else %}
             {% set listBreak = (myClassSessions | length // 3) + 1 %}
         {% endif %}
-        {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Mes compte-rendus', 'classSessions': myClassSessions, 'listBreak': listBreak }  %}
+        {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Mes compte-rendus', 'classSessions': myClassSessions, 'nbColumns': 3 }  %}
       </div><!--/span-->
       <div class="span4">          
           <div class="widget-box">
@@ -65,7 +65,7 @@
         {% else %}
             {% set listBreak = (latestClassSessions | length // 3) + 1 %}
         {% endif %}
-        {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Les 10 derniers compte-rendus enregistrés', 'classSessions': latestClassSessions, 'listBreak': listBreak, 'displayAllClassSessionsButton': true }  %}
+        {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Les 10 derniers compte-rendus enregistrés', 'classSessions': latestClassSessions, 'nbColumns': 3, 'displayAllClassSessionsButton': true }  %}
       </div><!--/span-->
     </div><!--/row-->
     </div><!--/span-->

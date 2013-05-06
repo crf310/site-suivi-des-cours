@@ -10,9 +10,11 @@
             {% if students is empty %}
                 Aucun apprenant trouvé
             {% else %}
-                {% set nb_columns = 4 %}
-                {% set listBreak = (students | length) // nb_columns %}
-                {% set span_size = 3 %}
+                {% set nbColumns = 3 %}
+                {% set listBreak = (students | length) // nbColumns %}
+                {% if ((students | length) // nbColumns) > 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
+                {% if listBreak == 0 %}{% set listBreak = 1 %}{% endif %}
+                {% set span_size = 12 /  nbColumns %}
                 <div class="span{{ span_size }}">
                     <ul>                    
                     {% for student in students %}
