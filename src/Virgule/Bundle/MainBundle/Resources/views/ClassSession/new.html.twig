@@ -3,7 +3,6 @@
     {{ parent() }}
     {% block stylesheets %}
         <link href="{{ asset('css/bootstrap-wysihtml5-0.0.2.css') }}" media="screen" rel="stylesheet"/>
-        <link href="{{ asset('css/prettify.css') }}" media="screen" rel="stylesheet"/>
         <style type="text/css" media="screen">
         #summaryField {
             height: 300px;
@@ -30,13 +29,13 @@
                 <span class="icon">
                         <i class="icon-align-justify"></i>									
                 </span>
-                <h5>Cours: {{ course }}</h5>
+                <h5>Cours: {{ entity.course }}</h5>
         </div>
-        <div class="widget-content nopadding">
+        <div class="widget-content nopadding"> 
             {{ form_row(form.sessionDate, { 'label': 'Date'}) }}
             {{ form_row(form.sessionTeacher, { 'label': 'Formateur'}) }}
             {{ form_row(form.summary, { 'label': 'Résumé du cours', 'id' : 'summaryField' }) }}                
-            {{ form_row(form.students, { 'label': 'Apprenants présents' }) }}           
+            {{ form_row(form.classSessionStudents, { 'label': 'Apprenants présents' }) }}           
             {{ form_rest(form) }}
             <div class="form-actions">                                     
                 <input class="btn btn-success" type="submit" value="Enregistrer le compte-rendu" />
