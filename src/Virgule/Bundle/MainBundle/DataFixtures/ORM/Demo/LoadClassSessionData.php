@@ -39,7 +39,7 @@ Morbi lectus turpis, gravida eu rhoncus eu, dictum at orci. Sed auctor nulla vit
                 $cs = new ClassSession();
                 $cs->setCourse($course);
 
-                $y = rand(2012, 2013);
+                $y = rand(2011, 2012);
                 $m = rand(01, 12);
                 $d = rand(01, 30);
                 $timestamp = strtotime($d . '-' . $m . '-' . $y);
@@ -57,7 +57,7 @@ Morbi lectus turpis, gravida eu rhoncus eu, dictum at orci. Sed auctor nulla vit
                         $studentRef = 'student-' . rand(1, $nbStudents);
                     } while (in_array($studentRef, $studentAlreadyAdded));
                     
-                    $cs->addStudent($this->getReference($studentRef));
+                    $cs->addClassSessionStudent($this->getReference($studentRef));
                     $studentAlreadyAdded[] = $studentRef;
                 }
                 $manager->persist($cs);
