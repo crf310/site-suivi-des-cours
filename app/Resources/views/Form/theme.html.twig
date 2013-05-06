@@ -27,7 +27,14 @@
     {% endif %}
 {% endspaceless %}
 {% endblock form_widget_simple %}
-    
+
+{% block hidden_widget %}
+{% spaceless %}
+    {% set type = type|default('hidden') %}
+    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+{% endspaceless %}
+{% endblock hidden_widget %}
+            
 {% block checkbox_widget %}
 {% spaceless %}
     <label>
