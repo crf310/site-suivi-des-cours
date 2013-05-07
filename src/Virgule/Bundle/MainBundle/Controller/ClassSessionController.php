@@ -70,7 +70,7 @@ class ClassSessionController extends AbstractVirguleController {
      * @Route("/add/course/{id}", name="classsession_add")
      * @Template()
      */
-    public function newAction(Course $course) {       
+    public function newAction(Course $course = null) {
         $classSession = new ClassSession();
         $classSession->setCourse($course);
        
@@ -99,14 +99,19 @@ class ClassSessionController extends AbstractVirguleController {
         $entity = new ClassSession();
         $organizationBranchId = $this->getSelectedOrganizationBranchId();
         $currentTeacher = $this->getConnectedUser();
+        $semesterId = $this->getSelectedSemesterId();
                 
-        $form = $this->createForm(new ClassSessionType($this->getDoctrine(), $organizationBranchId, $currentTeacher), $entity, array('em' => $this->getDoctrine()->getManager()));
+        $form = $this->createForm(new ClassSessionType($this->getDoctrine(), $organizationBranchId, $currentTeacher, $semesterId), $entity, array('em' => $this->getDoctrine()->getManager()));
         $form->bind($request);   
         
         $entity->setReportDate(new \Datetime('now'));
         
-        $courseId = $form->get('course_id')->getData();
-        $course = $this->getCourseRepository()->find($courseId);
+        $course = $form->get('course')->getData();
+        
+        if (! $course instanceof Course) {
+            $course = $this->getCourseRepository()->find($course);
+        }
+
         $entity->setCourse($course);
             
         $connectedUser = $this->getConnectedUser();

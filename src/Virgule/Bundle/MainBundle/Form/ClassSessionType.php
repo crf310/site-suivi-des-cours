@@ -20,10 +20,13 @@ class ClassSessionType extends AbstractType {
         
     private $currentTeacher;
 
-    public function __construct(RegistryInterface $doctrine, $organizationBranchId = null, Teacher $currentTeacher = null) {
+    private $semesterId;
+
+    public function __construct(RegistryInterface $doctrine, $organizationBranchId = null, Teacher $currentTeacher = null, $semesterId) {
         $this->doctrine = $doctrine;
         $this->organizationBranchId = $organizationBranchId;
         $this->currentTeacher = $currentTeacher;
+        $this->semesterId = $semesterId;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {    
@@ -46,7 +49,7 @@ class ClassSessionType extends AbstractType {
                         'preferred_choices' => array($this->currentTeacher))
                     );
         
-        $subscriber = new AddClassSessionStudentsFieldSubscriber($builder->getFormFactory(), $options['em']);
+        $subscriber = new AddClassSessionStudentsFieldSubscriber($builder->getFormFactory(), $this->semesterId);
         $builder->addEventSubscriber($subscriber);
     }
     

@@ -17,7 +17,7 @@
 {% block content_title %}Ajouter un compte-rendu{% endblock %}
  {%block submenu %}{% endblock %}
 {% block main_content %}
-<form action="{{ path('classsession_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+<form action="{{ path('classsession_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate="novalidate" >
             <!--
         <div class="alert alert-error alert-block">
         <a class="close" data-dismiss="alert" href="#">×</a>
@@ -32,10 +32,13 @@
                 <h5>Cours: {{ entity.course }}</h5>
         </div>
         <div class="widget-content nopadding"> 
+            {{ form_row(form.course, { 'label': 'Cours'}) }}
             {{ form_row(form.sessionDate, { 'label': 'Date'}) }}
             {{ form_row(form.sessionTeacher, { 'label': 'Formateur'}) }}
-            {{ form_row(form.summary, { 'label': 'Résumé du cours', 'id' : 'summaryField' }) }}                
-            {{ form_row(form.classSessionStudents, { 'label': 'Apprenants présents' }) }}           
+            {{ form_row(form.summary, { 'label': 'Résumé du cours', 'id' : 'summaryField' }) }}       
+            {% if form.classSessionStudents is defined %}
+                {{ form_row(form.classSessionStudents, { 'label': 'Apprenants présents' }) }}           
+            {% endif %}
             {{ form_rest(form) }}
             <div class="form-actions">                                     
                 <input class="btn btn-success" type="submit" value="Enregistrer le compte-rendu" />

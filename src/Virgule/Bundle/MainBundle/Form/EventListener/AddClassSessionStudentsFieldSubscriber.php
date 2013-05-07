@@ -17,17 +17,14 @@ class AddClassSessionStudentsFieldSubscriber implements EventSubscriberInterface
      */
     private $factory;
 
-    /**
-     * @var EntityManager
-     */
-    private $em;
-
+    private $semesterId;
+    
     /**
      * @param factory FormFactoryInterface
      */
-    public function __construct(FormFactoryInterface $factory, EntityManager $em) {
+    public function __construct(FormFactoryInterface $factory, $semesterId) {
         $this->factory = $factory;
-        $this->em = $em;
+        $this->semesterId = $semesterId;
     }
 
     public static function getSubscribedEvents() {
@@ -45,20 +42,23 @@ class AddClassSessionStudentsFieldSubscriber implements EventSubscriberInterface
         $data = $event->getData();
         $form = $event->getForm();
 
-        if (null === $data || null === $data->getCourse()) {
+        if (null === $data) {
             return;
         }
 
-        $courseId = $data->getCourse()->getId();
+        $courseId = null;
+        if (null !== $data->getCourse()) {
+            $courseId = $data->getCourse()->getId();
+        }
         $this->customizeForm($form, $courseId);
     }
 
     public function preBind(FormEvent $event) {
         $data = $event->getData();
-        $courseId = $data['course_id'];
+        $course = $data['course'];
         $form = $event->getForm();
 
-        $this->customizeForm($form, $courseId);
+        $this->customizeForm($form, $course);
     }
 
     protected function customizeForm($form, $courseId) {
@@ -78,10 +78,28 @@ class AddClassSessionStudentsFieldSubscriber implements EventSubscriberInterface
                     ));
             $form->add($field);
                     
-            $form->add('course_id', 'hidden', array(
+            $form->add('course', 'hidden', array(
                 'data' => $courseId,
                 'mapped' => false))
             ;
+        } else {
+            $semesterId = $this->semesterId;
+            
+            $field = $this->factory->createNamed('course', 'entity', null, array(
+                'class' => 'VirguleMainBundle:Course',
+                'query_builder' => function(EntityRepository $er) use ($semesterId) {
+                    return $er->createQueryBuilder('c')
+                            ->innerJoin('c.semester', 's')
+                            ->where('s.id = :semesterId')
+                            ->add('orderBy', 'c.dayOfWeek ASC, c.startTime ASC')
+                            ->setParameter('semesterId', $semesterId);
+                },
+                'expanded' => false,
+                'multiple' => false,
+                'property_path' => 'course',
+                'attr' => array('class' => 'medium-select')
+            ));
+            $form->add($field);
         }
     }
 
