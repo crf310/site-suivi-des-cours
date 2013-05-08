@@ -315,7 +315,7 @@ class Course {
     }
 
     public function __toString() {
-        return 'Niveau ' . $this->classLevel . ', le ' . $this->dayOfWeek . ' de ' . $this->startTime->format('H:m') . ' à ' . $this->endTime->format('H:m');
+        return 'Niveau ' . $this->classLevel . ', le ' . $this->dayOfWeek . ' de ' . $this->startTime->format('H:i') . ' à ' . $this->endTime->format('H:i');
     }
 
     /**
