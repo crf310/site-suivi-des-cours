@@ -16,8 +16,10 @@
                             Vous ne dirigez aucun cours pour le moment !
                         {% else %}
                             {% for course in myCourses %}
-                                <li>Niveau {{ course.classLevel }} le {{ course.dayOfWeek| day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }} 
-                                    <br /><a  class="btn virgule-btn" href="{{ path('classsession_add', { 'id': course.id }) }}"><i class="icon-add"></i> Ajouter un compte-rendu</a>
+                                <li><a href="{{ path('course_show', { 'id': course.id }) }}" >Niveau {{ course.classLevel }} le {{ course.dayOfWeek| day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }}</a>
+                                    <br />
+                                    <a  class="btn virgule-btn" href="{{ path('classsession_add', { 'id': course.id }) }}"><i class="icon-add"></i>Compte-rendu</a>
+                                    <a  class="btn virgule-btn" href="{{ path('classsession_add', { 'id': course.id }) }}"><i class="icon-trombinoscope"></i>Fiche de présence</a>
                                 </li>
                             {% endfor %}
                         {% endif %}

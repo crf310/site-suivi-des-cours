@@ -191,6 +191,9 @@ i.icon-rss {
 i.icon-copy {
     background-image: url('../img/icons/page_white_paste.png');
 }
+i.icon-trombinoscope {
+    background-image: url('../img/icons/vcard.png');
+}
 
 li.user_M { list-style-image:url('../img/icons/user.png'); }
 li.user_F { list-style-image:url('../img/icons/user_female.png'); }
