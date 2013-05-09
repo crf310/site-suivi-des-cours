@@ -46,8 +46,10 @@ a:hover {
 	left: 230px;
 }
 #search input[type=text] {
+	font-size: 12px;
+	line-height: 18px;
 	border-radius: 4px 0 0 4px;
-	padding: 4px 10px 5px;
+	padding: 5px 10px 4px;
 	border: 0;
 	box-shadow: 2px 2px 3px rgba(0,0,0,0.7) inset, 0 1px 0 rgba(255,255,255,0.2); 
 	width: 100px;
@@ -55,7 +57,7 @@ a:hover {
 
 #search button {
 	border: 0;
-	margin-top: -11px;
+	margin-top: -10px;
 	padding: 5px 10px 4px;
 	border-radius: 0 4px 4px 0;
 	box-shadow: -2px 2px 3px rgba(0,0,0,0.7) inset, 0 1px 0 rgba(255,255,255,0.2); 
@@ -203,44 +205,49 @@ a:hover {
     position: relative;
     min-height: 500px;
     width: auto;
-
+    -webkit-background-clip: padding-box;
     border-top-left-radius: 8px;
 }
 
 #content-header {
-	background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#FFFFFF), to(#EEEEEE));
-	background-image: -webkit-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
-	background-image: -moz-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
-	background-image: -ms-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
-	background-image: -o-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
-	background-image: linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#FFFFFF), to(#EEEEEE));
+    background-image: -webkit-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    background-image: -moz-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    background-image: -ms-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    background-image: -o-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    background-image: linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
     border-top-left-radius: 8px;
-    height: 80px;
-    position: abslute;
+    min-height: 80px; /*FIX: Use MIN-height... Allow header to get bigger for larger content (such as the h1) */
+    /*position: absolute; FIX: This breaks layout significantly when spelled correctly*/
+    padding-top: 5px; /*FIX: Allows h1 to not have to be absolutely positioned and control it's parent's height*/
     width: 100%;
     margin-top: -38px;
     z-index: 20;
 }
-
+ 
 #content-header h1 {
     color: #555555;
     font-size: 28px;
     font-weight: normal;
-    float: left;
+    /*float: left; FIX: Keep h1 in DOM flow. Fixes weird layout problems with long text/no absolute positioned parent... */
     text-shadow: 0 1px 0 #ffffff;
     margin-left: 20px;
-    position: absolute;
+    /*position: absolute; FIX: Allow h1 to flow correctly with width changes, keep in DOM flow*/
 }
-
-#content-header .btn-group {
-	float: right;
-	right: 20px;
-	position: absolute;
-}
-
+ 
+/* FIX: The following two items were reordered to allow .btn-group to override margin top! */
 #content-header h1, #content-header .btn-group {
-	margin-top: 20px;
+    margin-top: 20px;
 }
+ 
+#content-header .btn-group {
+    float: right;
+    right: 20px;
+    position: absolute;
+    margin-top:-50px; /*FIX: Line up with the header correctly on > tablet size (will be removed below)*/
+}
+
+/******/
 #content-header .btn-group .btn {
 	padding: 11px 14px 9px;
 }
@@ -291,14 +298,14 @@ a:hover {
 /* Style Switcher */
 #style-switcher {
 	position: absolute;
-	width: 220px;
+	width: 250px;
 	height: 30px;
 	background-color: #000000;
-	z-index: 40;
+	z-index: 10;
 	right: 0;
-	top: 123px;
+	top: 129px;
 	border-radius: 5px 0 0 5px;
-	margin-right: -190px;
+	margin-right: -220px;
 }
 #style-switcher i {
 	display: inline-block;
@@ -638,7 +645,7 @@ a:hover {
 	margin-bottom: 0;
 }
 
-.widget-title, .modal-header, .table th, div.dataTables_wrapper .ui-widget-header {
+.widget-title, .modal-header, .table th, div.dataTables_wrapper .ui-widget-header, .ui-dialog .ui-dialog-titlebar {
 	background-color: #efefef;
 	background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#fdfdfd), to(#eaeaea));
 	background-image: -webkit-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
@@ -719,6 +726,29 @@ a:hover {
 .widget-box.collapsible .collapse.in .widget-content {
     border-bottom: 1px solid #CDCDCD;
 }
+
+.ui-dialog {
+	padding: 0;
+}
+.ui-dialog .ui-dialog-title {
+	font-size: 14px;
+	margin: 4px 0 0;
+}
+.ui-widget-overlay {
+	position: fixed;
+}
+.ui-dialog .ui-dialog-titlebar-close {
+	background: transparent url("../img/glyphicons-halflings.png") -310px 2px scroll;
+	margin: -15px 0 0;
+}
+ul#icons li {
+    cursor: pointer;
+    float: left;
+    list-style: none outside none;
+    margin: 2px;
+    padding: 4px 0;
+    position: relative;
+}
 .recent-posts, .recent-comments, .recent-users {
 	margin: 0;
 	padding: 0;
@@ -727,6 +757,9 @@ a:hover {
     border-bottom: 1px dotted #AEBDC8;
     list-style: none outside none;
     padding: 10px;
+}
+.recent-posts .article-post, .recent-comments .comments {
+    margin-left: 60px;
 }
 .recent-posts li.viewall, .recent-comments li.viewall, .recent-users li.viewall {
 	padding: 0;
@@ -1090,6 +1123,37 @@ a:hover {
     max-width: 76%;
 }
 
+.gallery-masonry {
+    margin: 0 auto;
+}
+.gallery-masonry .item {
+    width: 240px;
+    margin: 10px;
+    float: left;
+    position: relative;
+}
+
+.gallery-masonry .item .actions {
+	width: 32px;
+	height: 16px;
+	background-color: #000000;
+	padding: 5px 8px;
+	border-radius: 5px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -13px;
+	margin-left: -24px;
+	opacity: 0;
+	-moz-transition: opacity 0.3s ease-in-out;
+}
+.gallery-masonry .item .actions i {
+    margin-top: -1px;
+}
+.gallery-masonry .item:hover .actions {
+	opacity: 1;
+}
+
 /* Tables */
 
 span.icon .checker {
@@ -1097,6 +1161,11 @@ span.icon .checker {
 	margin-right: 0;
 }
 
+.dataTable .ui-state-default {
+    box-shadow: 0;
+    border-right: 0;
+    border-left: 0;
+}
 .dataTables_length {
     color: #878787;
     margin: 7px 5px 0;
@@ -1132,6 +1201,7 @@ span.icon .checker {
     background-image: linear-gradient(top, #ffffff, #e6e6e6);
     color: #333333;
     text-shadow: 0 1px 0 #ffffff;
+    margin-right: 0;
 }
 .dataTables_paginate .ui-button:hover, .pagination.alternate li a:hover{
     background-color: #e8e8e8;
@@ -1170,11 +1240,12 @@ span.icon .checker {
     background-image: -moz-linear-gradient(center top , #555555, #222222) !important;
     background-image: -ms-linear-gradient(top, #555555, #222222) !important;
     background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#555555), to(#222222)) !important;
-    background-image: -webkit-linear-gradient(top, #555555, #222222); !important
+    background-image: -webkit-linear-gradient(top, #555555, #222222) !important;
     background-image: -o-linear-gradient(top, #555555, #222222) !important;
     background-image: linear-gradient(top, #555555, #222222) !important;
     color: #ffffff !important;
     cursor: default !important;
+    opacity: 1;
 }
 div.dataTables_wrapper .ui-widget-header {
     border-right: medium none;
@@ -1184,6 +1255,8 @@ div.dataTables_wrapper .ui-widget-header {
 }
 .dataTables_wrapper .ui-toolbar {
     padding: 5px;
+    margin: 0;
+    border-bottom: 0 !important;
 }
 .dataTables_filter {
     color: #878787;
@@ -1196,7 +1269,9 @@ div.dataTables_wrapper .ui-widget-header {
 .dataTables_filter input {
 	margin-bottom: 0;
 }
-
+.DataTables_sort_icon {
+    margin-top: 1px;
+}
 
 .table th {
 	height: auto;
@@ -1219,6 +1294,12 @@ div.dataTables_wrapper .ui-widget-header {
 .table tr.checked td {
 	background-color: #FFFFE3 !important;
 }
+.table-striped tbody > tr:nth-child(2n+1) > td, .table-striped tbody > tr:nth-child(2n+1) > th {
+    background-color: #FCFCFC;
+}
+.table-hover tbody > tr:hover > td {
+    background-color: #f5f5f5;
+}
 /* Misc */
 .nopadding {	
 	padding: 0 !important;
@@ -1229,30 +1310,7 @@ div.dataTables_wrapper .ui-widget-header {
 .nopadding .table-bordered {
 	border: 0;
 }
-.thumbnails {
-	margin-left: -2.12766% !important;
-}
-.thumbnails [class*="span"] {
-    margin-left: 2.12766% !important;
-    position: relative;
-}
-.thumbnails .actions {
-	width: 32px;
-	height: 16px;
-	background-color: #000000;
-	padding: 5px 8px;
-	border-radius: 5px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -13px;
-	margin-left: -24px;
-	opacity: 0;
-	-moz-transition: opacity 0.3s ease-in-out;
-}
-.thumbnails li:hover .actions {
-	opacity: 1;
-}
+
 .line {
     background: url("../img/line.png") repeat-x scroll 0 0 transparent;
     display: block;
@@ -1289,6 +1347,9 @@ div.dataTables_wrapper .ui-widget-header {
 	cursor: pointer;
 	color: #777777;
 }
+.css_right {
+    float: right;
+}
 
 /* Forms */
 form {
@@ -1311,7 +1372,7 @@ form {
 	padding: 10px 0;
 }
 .form-horizontal input[type=text], .form-horizontal input[type=password], .form-horizontal textarea {
-	width: 80%;
+	width: 80% !important;
 }
 .form-horizontal .form-actions {
 	margin-top: 0;
@@ -1319,6 +1380,19 @@ form {
 }
 .help-block, .help-inline {
     color: #999999;
+}
+
+/**/
+.dropdown-menu li a {
+	font-size: 12px;
+}
+.popover .content-big {
+    font-size: 14px;
+    font-weight: bold;
+}
+.popover .content-small {
+    font-size: 11px;
+    color: #777777;
 }
 /* Responsive design */
 @media (max-width: 480px) {
@@ -1346,28 +1420,32 @@ form {
 		margin-left: 0 !important;
 		border-top-left-radius: 0;
 	}
-	#content-header {
-		margin-top: 0;
-		height: 140px;
-		text-align: center;
-	}
-	#content-header h1, #content-header .btn-group {
-		float: none;
-	}
-	#content-header h1 {
-		display: block;
-		text-align: center;
-		margin-left: auto;
-		margin-top: 0;
-		padding-top: 15px;
-		width: 100%;
-	}
-	#content-header .btn-group {
-		margin-top: 70px;
-		margin-bottom: 0;
-		margin-right: 0;
-		left: 30%;
-	}
+    
+    #content-header {
+        margin-top: 0;
+        /*height: 140px; FIX iPhone: Makes header take up too much space/not enough, let it dictate (by h1 text length) */
+        height:auto; /* FIX iPhone: allow h1, btn-group to set height*/
+        text-align: center;
+    }
+    #content-header h1, #content-header .btn-group {
+        float: none;
+        position:relative; /*FIX iPhone: let btn group go in document flow, not absolute. Prevents button/header from running into each other*/
+    }
+    #content-header h1 {
+        display: block;
+        text-align: center;
+        margin-left: auto;
+        margin-top: 0;
+        padding-top: 15px;
+        width: 100%;
+        }
+    #content-header .btn-group {
+        /*margin-top: 70px; FIX iPhone: Makes button group go needlessly far below the header. */
+        margin:10px 0; /* FIX iPhone: give equal margins (as below h1), still able to target with finger */
+        left: 30%;
+    }
+        
+    /*****/
 	#sidebar {
 		float: none;
 		width: 100% !important;
@@ -1397,6 +1475,9 @@ form {
 	#sidebar > ul > li > a > span {
 		display: inline !important;
 	}
+    #style-switcher {
+    	top: 244px;
+    }
 	.widget-title .buttons > .btn {
 		width: 11px;
 		white-space: nowrap;
