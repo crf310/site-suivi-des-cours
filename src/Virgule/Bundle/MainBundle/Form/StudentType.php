@@ -12,13 +12,10 @@ use Virgule\Bundle\MainBundle\Entity\Teacher;
 class StudentType extends AbstractType {
 
     private $teacherRepository;
-    
     private $countryRepository;
-        
     private $openHousesDates;
-    
     private $currentTeacher;
-    
+
     public function __construct(TeacherRepository $teacherRepository = null, CountryRepository $countryRepository = null, $organizationBranchId = null, $openHousesDates = null, Teacher $currentTeacher = null) {
         $this->teacherRepository = $teacherRepository;
         $this->countryRepository = $countryRepository;
@@ -26,7 +23,7 @@ class StudentType extends AbstractType {
         $this->openHousesDates = $openHousesDates;
         $this->currentTeacher = $currentTeacher;
     }
-    
+
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 //->add('registrationDate')
@@ -35,27 +32,27 @@ class StudentType extends AbstractType {
                 ->add('birthdate', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
-                    'attr' => array('class' => 'datepicker','data-date-format' => 'dd/mm/yyyy')
+                    'attr' => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy')
                 ))
                 ->add('nationality')
                 ->add('nationality', 'entity', array(
                     'class' => 'VirguleMainBundle:Country',
-                    'query_builder' =>  $this->countryRepository->loadAllQueryBuilder(),
+                    'query_builder' => $this->countryRepository->loadAllQueryBuilder(),
                     'expanded' => false,
                     'multiple' => false,
                     'property' => 'label',
-                    'property_path' => 'nationality',            
+                    'property_path' => 'nationality',
                     'attr' => array('class' => 'medium-select')
                 ))
                 ->add('registrationDate', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
                     'open_houses_dates' => $this->openHousesDates,
-                    'attr' => array('class' => 'datepicker','data-date-format' => 'dd/mm/yyyy')
+                    'attr' => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy')
                 ))
                 ->add('welcomedByTeacher', 'entity', array(
                     'class' => 'VirguleMainBundle:Teacher',
-                    'query_builder' =>  $this->teacherRepository->getAvailableTeachersQueryBuilder($this->organizationBranchId, true),
+                    'query_builder' => $this->teacherRepository->getAvailableTeachersQueryBuilder($this->organizationBranchId, true),
                     'expanded' => false,
                     'multiple' => false,
                     'property' => 'fullname',
@@ -63,31 +60,53 @@ class StudentType extends AbstractType {
                     'preferred_choices' => array($this->currentTeacher),
                     'attr' => array('class' => 'medium-select')
                 ))
+                ->add('phoneNumber')
+                ->add('cellphoneNumber')
+                ->add('address')
+                ->add('zipcode')
+                ->add('city')
+                ->add('gender', 'choice', array(
+                    'choices' => array('M' => 'Masculin', 'F' => 'Féminin'),
+                    'expanded' => false,
+                    'multiple' => false,
+                ))
+                ->add('nationality', 'country', array('attr' => array('class' => 'medium-select')))
+                ->add('picturePath', 'file')
+                ->add('arrivalDate', 'date', array(
+                    'widget' => 'single_text',
+                    'format' => 'dd/MM/yyyy',
+                    'attr' => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy')
+                ))
+                ->add('emergencyContactLastname')
+                ->add('emergencyContactFirstname')
+                ->add('emergencyContactPhoneNumber')
+                ->add('emergencyContactConnectionType')
+                ->add('suggestedLevel', 'entity', array(
+                    'class' => 'VirguleMainBundle:ClassLevel',
+                    'expanded' => false,
+                    'multiple' => false,
+                    'property' => 'label',         
+                    'attr' => array('class' => 'small-select')
+                 ))
+                ->add('courses', 'entity', array(
+                    'class' => 'VirguleMainBundle:Course',
+                    'expanded' => false,
+                    'multiple' => true,        
+                    'attr' => array('class' => 'medium-select')
+                 ));
                 
-                                            
-        /*
-          ->add('phoneNumber')
-          ->add('cellphoneNumber')
-          ->add('address')
-          ->add('zipcode')
-          ->add('city')
-          ->add('gender')
-          ->add('nationality')
-          ->add('maritalStatus')
-          ->add('picturePath')
-          ->add('arrivalDate')
-          ->add('scholarized')
-          ->add('profession')
-          ->add('scholarizedInTheCountry')
-          ->add('scholarizedInAForeignCountry')
-          ->add('scholarizationLevel')
-          ->add('emergencyContactLastname')
-          ->add('emergencyContactFirstname')
-          ->add('emergencyContactPhoneNumber')
-          ->add('emergencyContactConnectionType') */
+                /*
+                 * 
+                ->add('maritalStatus')
+                ->add('scholarized')
+                ->add('profession')
+                ->add('scholarizedInTheCountry')
+                ->add('scholarizedInAForeignCountry')
+                ->add('scholarizationLevel')
+                 */
         ;
     }
-    
+
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'Virgule\Bundle\MainBundle\Entity\Student'
