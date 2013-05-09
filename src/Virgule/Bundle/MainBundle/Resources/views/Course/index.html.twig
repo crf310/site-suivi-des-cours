@@ -42,7 +42,7 @@
                     <td>
                         <a href="{{ path('course_show', { 'id': course.id }) }}">show</a>&nbsp;
                         <a href="{{ path('course_edit', { 'id': course.id }) }}">edit</a>&nbsp;
-                        <a href="{{ path('classsession_add', { 'course_id': course.id }) }}">Enregistrer un compte-rendu</a>
+                        <a href="{{ path('classsession_add', { 'id': course.id }) }}">Enregistrer un compte-rendu</a>
                     </td>
                 </tr>
             {% endfor %}
