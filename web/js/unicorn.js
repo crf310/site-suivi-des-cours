@@ -113,11 +113,11 @@ $(document).ready(function(){
 	{
 		if($(this).hasClass('open'))
 		{
-			$(this).parent().animate({marginRight:'-=190'});
+			$(this).parent().animate({marginRight:'-=220'});
 			$(this).removeClass('open');
 		} else 
 		{
-			$(this).parent().animate({marginRight:'+=190'});
+			$(this).parent().animate({marginRight:'+=220'});
 			$(this).addClass('open');
 		}
 		$(this).toggleClass('icon-arrow-left');
