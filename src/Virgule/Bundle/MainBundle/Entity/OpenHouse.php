@@ -26,7 +26,21 @@ class OpenHouse {
      *
      * @ORM\Column(name="open_house_date", type="date", nullable=false)
      */
-    private $date;
+    private $date;    
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="open_house_start_time", type="time", nullable=true)
+     */
+    private $startTime;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="open_house_end_time", type="time", nullable=true)
+     */
+    private $endTime;
 
     /**
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="openHouses")
@@ -85,4 +99,50 @@ class OpenHouse {
         return $this->semester;
     }
 
+
+    /**
+     * Set startTime
+     *
+     * @param \DateTime $startTime
+     * @return OpenHouse
+     */
+    public function setStartTime($startTime)
+    {
+        $this->startTime = $startTime;
+    
+        return $this;
+    }
+
+    /**
+     * Get startTime
+     *
+     * @return \DateTime 
+     */
+    public function getStartTime()
+    {
+        return $this->startTime;
+    }
+
+    /**
+     * Set endTime
+     *
+     * @param \DateTime $endTime
+     * @return OpenHouse
+     */
+    public function setEndTime($endTime)
+    {
+        $this->endTime = $endTime;
+    
+        return $this;
+    }
+
+    /**
+     * Get endTime
+     *
+     * @return \DateTime 
+     */
+    public function getEndTime()
+    {
+        return $this->endTime;
+    }
 }

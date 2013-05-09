@@ -16,6 +16,8 @@ class OpenHouseType extends AbstractType
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker','data-date-format' => 'dd/mm/yyyy')
                 ))
+            ->add('startTime')
+            ->add('endTime')
         ;
     }
 

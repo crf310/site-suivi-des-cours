@@ -36,24 +36,8 @@
             </div>
         </div>
     </div>
-    <div class="row-fluid">   
-        <div class="widget-box">
-            <div class="widget-title">
-                <span class="icon"><i class="icon-plus"></i></span><h5>Ajouter une journée d'accueil</h5>
-            </div>                        
-            <div class="widget-content nopadding">
-                <div class="alert alert-info alert-padding">
-                    Les dates des journées d'accueil seront affichées dans le formulaire de saisie d'une fiche apprenant, afin d'accélérer l'enregistrement de la date d'accueil.
-                </div>
-                <form action="{{ path('openhouse_create') }}" method="post" {{ form_enctype(openHouseForm) }} class="form-horizontal">
-                    {{ form_widget(openHouseForm) }}
-                    {{ form_rest(openHouseForm) }}
-                    <div class="form-actions"> 
-                        <button  class="btn" type="submit">Enregistrer la journée d'accueil</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+    <div class="row-fluid"> 
+        {% include 'VirguleMainBundle:OpenHouse:new.html.twig' with { 'openHouseForm': openHouseForm }  %}
     </div>
 </div>
 <div class="span6">

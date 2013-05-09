@@ -1,20 +1,22 @@
-{% extends '::base.html.twig' %}
-
 {% block body -%}
-    <h1>OpenHouse creation</h1>
+<div class="widget-box">
+    <div class="widget-title">
+        <span class="icon"><i class="icon-plus"></i></span><h5>Ajouter une journée d'accueil</h5>
+    </div>                        
+    <div class="widget-content nopadding">
+        <div class="alert alert-info alert-padding">
+            Les dates des journées d'accueil seront affichées dans le formulaire de saisie d'une fiche apprenant, afin d'accélérer l'enregistrement de la date d'accueil.
+        </div>
+        <form action="{{ path('openhouse_create') }}" method="post" {{ form_enctype(openHouseForm) }} class="form-horizontal">
 
-    <form action="{{ path('openhouse_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Create</button>
-        </p>
-    </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('openhouse') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+            {{ form_row(openHouseForm.date, { 'label': 'Date' }) }}
+            {{ form_row(openHouseForm.startTime, { 'label': 'Débute à ' }) }}
+            {{ form_row(openHouseForm.endTime, { 'label': 'Termine à' }) }}
+            {{ form_rest(openHouseForm) }}
+            <div class="form-actions"> 
+                <button  class="btn btn-success" type="submit">Enregistrer la journée d'accueil</button>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
