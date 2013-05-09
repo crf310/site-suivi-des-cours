@@ -31,7 +31,7 @@
                 <tr>
                     <td>{{ course.dayOfWeek | day }}</td>
                     <td>{{ course.startTime | date('H:i') }} - {{ course.endTime | date('H:i') }}</td>
-                    <td>{{ course.classLevelLabel }}</td>
+                    <td class="center"><span class="badge" style="background-color: {{ course.classLevelColorCode }};">{{  course.classLevelLabel }}</span></td>
                     <td>
                         {% for teacher in course.teachers %}
                             <a href="{{ path('teacher_show', { 'id': teacher['teacher_id'] }) }}">{{ teacher['teacher_firstName'] }} {{ teacher['teacher_lastName'] }}</a>{% if teacher != loop.last %},&nbsp;{% endif %}

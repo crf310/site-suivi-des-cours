@@ -76,7 +76,7 @@ public function loadAllClassSessionByCourse($courseId, $limit = null) {
                 c2.startTime as course_startTime, c2.endTime as course_endTime')
             ->addSelect('t1.id as sessionTeacher_id, t1.firstName as sessionTeacher_firstName, t1.lastName as sessionTeacher_lastName')
             ->addSelect('t2.id as reportTeacher_id, t2.firstName as reportTeacher_firstName, t2.lastName as reportTeacher_lastName')
-            ->addSelect('cl.label as classLevel')
+            ->addSelect('cl.label as classLevelLabel, cl.htmlColorCode as classLevelHtmlColorCode')
             ->addSelect('count(st.id) as nb_students')
             ->innerJoin('c.course', 'c2')
             ->innerJoin('c2.classLevel', 'cl')

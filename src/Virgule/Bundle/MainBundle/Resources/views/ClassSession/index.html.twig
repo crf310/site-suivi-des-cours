@@ -29,7 +29,7 @@
             {% for entity in entities %}
                 <tr>
                     <td class="center"><a href="{{ path('classsession_show', { 'id': entity['id'] }) }}">{% if entity['sessionDate'] %}{{ entity['sessionDate'] | date('d/m/Y') }} {% endif %}</a></td>
-                    <td>{{ entity['classLevel'] }}
+                    <td class="center"><span class="badge" style="background-color: {{ entity['classLevelHtmlColorCode'] }};">{{ entity['classLevelLabel'] }}</span></td>
                     <td>le {{ entity['course_dayOfWeek'] | day }} de {{ entity['course_startTime'] | date('H:i') }} à {{ entity['course_endTime']| date('H:i') }}</td>
                     <td class="center">{{ entity['nb_students'] }}
                     <td>{{ entity['sessionTeacher_firstName'] }} {{ entity['sessionTeacher_lastName'] }}</td>
