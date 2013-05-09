@@ -49,9 +49,14 @@ class LoadSemesterData extends AbstractFixture implements OrderedFixtureInterfac
         $oh1 = new OpenHouse();
         $oh1->setDate(new \DateTime('2012-09-01'));
         $oh1->setSemester($semester3);
+        $oh1->setStartTime(new \DateTime('10:00'));
+        $oh1->setEndTime(new \DateTime('18:00'));
+        
         $oh2 = new OpenHouse();
         $oh2->setDate(new \DateTime('2012-08-30'));
         $oh2->setSemester($semester3);
+        $oh2->setStartTime(new \DateTime('10:00'));
+        $oh2->setEndTime(new \DateTime('18:00'));
         
         $manager->persist($oh1);
         $manager->persist($oh2);

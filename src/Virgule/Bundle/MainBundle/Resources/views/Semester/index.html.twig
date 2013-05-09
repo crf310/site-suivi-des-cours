@@ -12,7 +12,7 @@
                     <i class="icon-th"></i>
                 </span>    
                 {% set currentSemester = app.session.get('currentSemester') %}
-                <h5>Journées d'accueil du semestre sélectionné: du {{ currentSemester.startDate|date("d/m/Y") }} au {{ currentSemester.endDate|date("d/m/Y") }}</h5>
+                <h5>Journées d'accueil du semestre sélectionné: du {{ currentSemester.startDate | date("d/m/Y") }} au {{ currentSemester.endDate | date("d/m/Y") }}</h5>
             </div>
             <div class="widget-content nopadding">
                 <table class="table table-bordered">
@@ -27,8 +27,8 @@
                     {% for openHouse in openHouses %}
                         <tr>
                             <td class="center">{% if openHouse.date %}{{ openHouse.date | date('w') | day }} {{ openHouse.date | date('d/m/Y') }}{% endif %}</td>
-                            <td></td>
-                            <td></td>
+                            <td class="center">{% if openHouse.startTime %}{{ openHouse.startTime | date('H:i') }}{% endif %}</td>
+                            <td class="center">{% if openHouse.endTime %}{{ openHouse.endTime | date('H:i') }}{% endif %}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

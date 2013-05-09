@@ -29,14 +29,14 @@ class OpenHouse {
     private $date;    
     
     /**
-     * @var \DateTime
+     * @var \Time
      *
      * @ORM\Column(name="open_house_start_time", type="time", nullable=true)
      */
     private $startTime;
     
     /**
-     * @var \DateTime
+     * @var \Time
      *
      * @ORM\Column(name="open_house_end_time", type="time", nullable=true)
      */
