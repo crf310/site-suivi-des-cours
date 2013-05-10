@@ -31,7 +31,7 @@ Morbi lectus turpis, gravida eu rhoncus eu, dictum at orci. Sed auctor nulla vit
         
         $nbStudents = 234;
         
-        $nbCourses = 11;
+        $nbCourses = 12;
         
         for ($c = 1; $c <= $nbCourses; $c++) {
             $course = $this->getReference('course' . $c);
