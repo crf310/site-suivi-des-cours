@@ -33,8 +33,12 @@
                 </div>          
             {% endif %} 
         <div class="clear_list"></div>
-        {% if displayAllClassSessionsButton is defined and displayAllClassSessionsButton == true %}
-            <p><a class="btn virgule-btn" href="{{ path('classsession_index') }}"><i class="icon-go"></i> Voir tous les compte-rendus</a></p>
+        {% if displayAllClassSessionsButton is defined and displayAllClassSessionsButton == true %}                
+            <ul class="recent-posts">
+                <li class="viewall">
+                    <a href="{{ path('classsession_index') }}" class="tip-top" title=""> + Voir tous les compte-rendus + </a>
+                </li>
+            </ul>
         {% endif %}
     </div>
 </div>

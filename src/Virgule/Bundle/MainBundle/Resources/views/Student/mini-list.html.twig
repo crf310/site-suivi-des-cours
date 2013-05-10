@@ -35,7 +35,11 @@
             {% endif %}                        
       <div class="clear_list"></div>
       {% if displayAllStudentButton is defined and displayAllStudentButton == true %}
-        <p><a class="btn virgule-btn" href="{{ path('student_index') }}"><i class="icon-go"></i> Voir tous les apprenants</a></p>
+        <ul class="recent-posts">
+            <li class="viewall">
+                <a href="{{ path('student_index') }}" class="tip-top" title=""> + Voir tous les apprenants + </a>
+            </li>
+        </ul>
       {% endif %}
     </div>
 </div>
