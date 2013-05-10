@@ -1,16 +1,19 @@
-<h1>ClassLevel creation</h1>
-
-<form action="{{ path('classlevel_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
-</form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('classlevel') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon"><i class="icon-plus"></i></span><h5>Ajouter un niveau de cours</h5>
+        </div>                        
+        <div class="widget-content nopadding">
+            <div class="alert alert-info alert-padding">
+                La couleur associée sera utilisée dans le planning, ainsi que dans les listes de cours et de compte-rendus.
+            </div>
+            <form action="{{ path('classlevel_create') }}" method="post" {{ form_enctype(classLevelForm) }} class="form-horizontal">
+                {{ form_errors(classLevelForm) }}
+                {{ form_row(classLevelForm.label, { 'label': 'Label' }) }}
+                {{ form_row(classLevelForm.htmlColorCode, { 'label': 'Code couleur' }) }}
+                {{ form_rest(classLevelForm) }}
+                <div class="form-actions"> 
+                    <button  class="btn" type="submit">Enregistrer le niveau</button>
+                </div>
+            </form>
+        </div>
+    </div>

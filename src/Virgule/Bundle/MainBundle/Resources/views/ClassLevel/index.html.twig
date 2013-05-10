@@ -41,24 +41,6 @@
     </div>
 </div>
 <div class="span6">
-    <div class="widget-box">
-        <div class="widget-title">
-            <span class="icon"><i class="icon-plus"></i></span><h5>Ajouter un niveau de cours</h5>
-        </div>                        
-        <div class="widget-content nopadding">
-            <div class="alert alert-info alert-padding">
-                La couleur associée sera utilisée dans le planning.
-            </div>
-            <form action="{{ path('classlevel_create') }}" method="post" {{ form_enctype(classLevelForm) }} class="form-horizontal">
-                {{ form_errors(classLevelForm) }}
-                {{ form_row(classLevelForm.label, { 'label': 'Label' }) }}
-                {{ form_row(classLevelForm.htmlColorCode, { 'label': 'Code couleur' }) }}
-                {{ form_rest(classLevelForm) }}
-                <div class="form-actions"> 
-                    <button  class="btn" type="submit">Enregistrer le niveau</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    {% include 'VirguleMainBundle:ClassLevel:new.html.twig'  %}
 </div>
 {% endblock %}
