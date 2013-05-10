@@ -29,11 +29,7 @@
                             <div class="control-group">
                                 <label class="control-label">Sexe</label>
                                 <div class="controls">
-                                {% if entity.gender == 'F' %}
-                                    <img src="{{ asset('img/icons/user_female.png') }}" />
-                                {% else %}
-                                    <img src="{{ asset('img/icons/user.png') }}" />
-                                {% endif %}
+                                {{ entity.gender | gender }}
                                 </div>
                             </div>
                             {% if entity.nativeCountry != null %}

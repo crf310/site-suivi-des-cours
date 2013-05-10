@@ -17,6 +17,7 @@ class VirguleExtension extends \Twig_Extension {
             'day' => new \Twig_Filter_Method($this, 'dayFilter'),
             'month' => new \Twig_Filter_Method($this, 'monthFilter'),
             'phoneNumber' => new \Twig_Filter_Method($this, 'phoneNumberFilter'),
+            'gender' => new \Twig_Filter_Method($this, 'genderFilter'),
         );
     }
     
@@ -54,6 +55,19 @@ class VirguleExtension extends \Twig_Extension {
 
         }
         return $sPhoneNumber;
+    }
+    
+    public function genderFilter($genderCode, $upperFistChar = true) {
+        $genders = Array('f' => 'féminin', 'm' => 'masculin');
+        
+        $gender = $genderCode;
+        if (array_key_exists(strToLower($genderCode), $genders)) {            
+            $gender = $genders[strToLower($genderCode)];
+        }
+        if ($upperFistChar) {
+            $gender = ucfirst($gender);
+        }
+        return $gender;
     }
 
     public function getName() {
