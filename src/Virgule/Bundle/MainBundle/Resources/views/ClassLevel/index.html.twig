@@ -32,7 +32,7 @@
                 {% for classLevel in classLevels %}
                     <tr>
                         <td class="center">{{ classLevel.label }}</td>
-                        <td class="center" style="background-color: {{ classLevel.htmlColorCode }}"><b>{{ classLevel.htmlColorCode }}</b></td>
+                        <td class="center"><span class="badge" style="background-color: {{ classLevel.htmlColorCode }};">{{  classLevel.htmlColorCode }}</span></td>
                     </tr>
                 {% endfor %}
                 </tbody>
