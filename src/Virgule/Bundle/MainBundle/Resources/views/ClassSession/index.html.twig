@@ -24,18 +24,20 @@
                     <th>Dirigé par</th>
                     <th>Saisi par</th>
                     <th>Saisi le</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
             {% for entity in entities %}
                 <tr>
-                    <td class="center"><a href="{{ path('classsession_show', { 'id': entity['id'] }) }}">{% if entity['sessionDate'] %}{{ entity['sessionDate'] | date('d/m/Y') }} {% endif %}</a></td>
+                    <td class="center">{% if entity['sessionDate'] %}{{ entity['sessionDate'] | date('d/m/Y') }} {% endif %}</td>
                     <td class="center"><span class="badge" style="background-color: {{ entity['classLevelHtmlColorCode'] }};">{{ entity['classLevelLabel'] }}</span></td>
-                    <td>le {{ entity['course_dayOfWeek'] | day }} de {{ entity['course_startTime'] | date('H:i') }} à {{ entity['course_endTime']| date('H:i') }}</td>
+                    <td>le {{ entity['course_dayOfWeek'] | day }} de {{ entity['course_startTime'] | date('H:i') }} à {{ entity['course_endTime'] | date('H:i') }}</td>
                     <td class="center">{{ entity['nb_students'] }}
                     <td>{{ entity['sessionTeacher_firstName'] }} {{ entity['sessionTeacher_lastName'] }}</td>
                     <td>{{ entity['reportTeacher_firstName'] }} {{ entity['reportTeacher_lastName'] }}</td>
-                    <td class="center">{% if entity['reportDate'] %}{{ entity['reportDate'] | date('d/m/Y h:i') }} {% endif %}</td>
+                    <td class="center">{% if entity['reportDate'] %}{{ entity['reportDate'] | date('d/m/Y à  h:i') }} {% endif %}</td>
+                    <td class="center"><a href="{{ path('classsession_show', { 'id': entity['id'] }) }}">Voir le compte-rendu</a></td>
                 </tr>
             {% endfor %}
             </tbody>
