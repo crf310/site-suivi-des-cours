@@ -41,9 +41,7 @@ class StatisticsController extends AbstractVirguleController {
             $students_genders[$student['student_gender']] += 1;
             
             if (! array_key_exists($student['country_code'], $students_countries)) {
-                $students_countries[$student['country_code']]['country_code'] = $student['country_code'];
-                $students_countries[$student['country_code']]['nb_students'] = 0;
-                $students_countries[$student['country_code']]['country_label'] = $student['country_label'];
+                $students_countries[$student['country_code']] = 0;
             }
             
             // age calculation
@@ -68,9 +66,10 @@ class StatisticsController extends AbstractVirguleController {
                 $student_ages['86-95']++;
             }
 
-            $students_countries[$student['country_code']]['nb_students'] += 1;
+            $students_countries[$student['country_code']] += 1;
             $total_students += 1;
         }
+        arsort($students_countries);
         
         $studentsWithManyEnrollments = $studentManager->loadAllEnrolledTwice($semesterId);
         
