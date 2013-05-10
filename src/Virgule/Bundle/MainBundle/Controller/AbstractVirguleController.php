@@ -46,7 +46,7 @@ abstract class AbstractVirguleController extends Controller {
     }
     
     protected function getEntityManager() {
-        return $em = $this->getDoctrine()->getManager();
+        return $em = $this->getDoctrine()->getEntityManager();
     }
     
     protected function getConnectedUser() {
@@ -59,7 +59,7 @@ abstract class AbstractVirguleController extends Controller {
     
     protected function getSelectedSemester() {
         $currentSemesterId = $this->getSelectedSemesterId();
-        $semesterRepository = $this->getManager()->getRepository('VirguleMainBundle:Semester');
+        $semesterRepository = $this->getEntityManager()->getRepository('VirguleMainBundle:Semester');
         $semester = $semesterRepository->find($currentSemesterId);
         return $semester;
     }
