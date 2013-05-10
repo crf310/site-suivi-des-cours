@@ -32,7 +32,7 @@ class SemesterController extends AbstractVirguleController {
     public function indexAction() {
         $semesters = $this->getSemesterManager()->loadAllSemestersForBranch($this->getSelectedOrganizationBranchId());
 
-        $openHouses = $this->getOpenHouseManager()->getOpenHousesDates($this->getSelectedSemesterId());
+        $openHouses = $this->getOpenHouseManager()->getOpenHouses($this->getSelectedSemesterId());
         
         $openHouseEntity = new OpenHouse();
         $openHouseForm   = $this->createForm(new OpenHouseType(), $openHouseEntity);
