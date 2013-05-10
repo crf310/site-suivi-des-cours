@@ -45,8 +45,8 @@ abstract class AbstractVirguleController extends Controller {
         return array('entities' => $pagerfanta);        
     }
     
-    protected function getEntityManager() {
-        return $em = $this->getDoctrine()->getEntityManager();
+    protected function getDoctrineManager() {
+        return $em = $this->getDoctrine()->getManager();
     }
     
     protected function getConnectedUser() {
@@ -59,7 +59,7 @@ abstract class AbstractVirguleController extends Controller {
     
     protected function getSelectedSemester() {
         $currentSemesterId = $this->getSelectedSemesterId();
-        $semesterRepository = $this->getEntityManager()->getRepository('VirguleMainBundle:Semester');
+        $semesterRepository = $this->getDoctrineManager()->getRepository('VirguleMainBundle:Semester');
         $semester = $semesterRepository->find($currentSemesterId);
         return $semester;
     }
@@ -69,7 +69,7 @@ abstract class AbstractVirguleController extends Controller {
     }
     
     protected function getSelectedOrganizationBranch() {
-        $obRepository = $this->getEntityManager()->getRepository('VirguleMainBundle:OrganizationBranch');
+        $obRepository = $this->getDoctrineManager()->getRepository('VirguleMainBundle:OrganizationBranch');
         $organizationBranchId = $this->getSelectedOrganizationBranchId();
         $organizationBranch = $obRepository->find($organizationBranchId);
         return $organizationBranch;
@@ -98,22 +98,22 @@ abstract class AbstractVirguleController extends Controller {
     
     /* Repositories */
     protected function getTeacherRepository() {
-        return $this->getEntityManager()->getRepository('VirguleMainBundle:Teacher');
+        return $this->getDoctrineManager()->getRepository('VirguleMainBundle:Teacher');
     }
     protected function getStudentRepository() {
-        return $this->getEntityManager()->getRepository('VirguleMainBundle:Student');
+        return $this->getDoctrineManager()->getRepository('VirguleMainBundle:Student');
     }
     protected function getCourseRepository() {
-        return $this->getEntityManager()->getRepository('VirguleMainBundle:Course');
+        return $this->getDoctrineManager()->getRepository('VirguleMainBundle:Course');
     }
     protected function getOpenHouseRepository() {
-        return $this->getEntityManager()->getRepository('VirguleMainBundle:OpenHouse');
+        return $this->getDoctrineManager()->getRepository('VirguleMainBundle:OpenHouse');
     }
     protected function getCountryRepository() {
-        return $this->getEntityManager()->getRepository('VirguleMainBundle:Country');
+        return $this->getDoctrineManager()->getRepository('VirguleMainBundle:Country');
     }
     protected function getClassRoomRepository() {
-        return $this->getEntityManager()->getRepository('VirguleMainBundle:ClassRoom');
+        return $this->getDoctrineManager()->getRepository('VirguleMainBundle:ClassRoom');
     }
 }
 

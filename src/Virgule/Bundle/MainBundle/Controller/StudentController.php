@@ -186,7 +186,7 @@ class StudentController extends AbstractVirguleController {
      * @Template("VirguleMainBundle:Student:edit.html.twig")
      */
     public function updateAction(Request $request, $id) {
-        $em = $this->getEntityManager();
+        $em = $this->getDoctrineManager();
 
         $entity = $this->getStudentRepository()->find($id);
 
@@ -223,7 +223,7 @@ class StudentController extends AbstractVirguleController {
         $form->bind($request);
 
         if ($form->isValid()) {
-            $em = $this->getEntityManager();
+            $em = $this->getDoctrineManager();
             $entity = $em->getStudentRepository()->find($id);
 
             if (!$entity) {

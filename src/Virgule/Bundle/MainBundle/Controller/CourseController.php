@@ -19,7 +19,7 @@ use Virgule\Bundle\MainBundle\Form\CourseType;
 class CourseController extends AbstractVirguleController {
 
     private function getRepository() {
-        $em = $this->getEntityManager();
+        $em = $this->getDoctrineManager();
         return $em->getRepository('VirguleMainBundle:Course');
     }
     

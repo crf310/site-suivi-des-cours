@@ -27,7 +27,7 @@ class ClassSessionController extends AbstractVirguleController {
      * @Template()
      */
     public function indexAction() {
-        $em = $this->getEntityManager();        
+        $em = $this->getDoctrineManager(); 
         $classSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAll($this->getSelectedSemesterId());
 
         return array('entities' => $classSessions);
@@ -40,7 +40,7 @@ class ClassSessionController extends AbstractVirguleController {
      * @Template()
      */
     public function showAction($id) {
-        $em = $this->getEntityManager();  
+        $em = $this->getDoctrineManager();  
 
         $entity = $em->getRepository('VirguleMainBundle:ClassSession')->find($id);
 
