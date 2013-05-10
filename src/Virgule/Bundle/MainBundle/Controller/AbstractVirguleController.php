@@ -59,7 +59,7 @@ abstract class AbstractVirguleController extends Controller {
     
     protected function getSelectedSemester() {
         $currentSemesterId = $this->getSelectedSemesterId();
-        $semesterRepository = $this->getEntityManager()->getRepository('VirguleMainBundle:Semester');
+        $semesterRepository = $this->getManager()->getRepository('VirguleMainBundle:Semester');
         $semester = $semesterRepository->find($currentSemesterId);
         return $semester;
     }
