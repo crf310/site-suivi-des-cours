@@ -8,7 +8,7 @@
         "php": ">=5.3.3",
         "symfony/symfony": "v2.2.1",
         "symfony/assetic-bundle": "2.1.*",
-        "symfony/swiftmailer-bundle": "2.2.0",
+        "symfony/swiftmailer-bundle": "2.2.1",
         "symfony/doctrine-bridge": "2.2.1",
         "symfony/monolog-bundle": "2.2.0",
         "sensio/distribution-bundle": "2.2.0",
@@ -24,7 +24,8 @@
         "jms/security-extra-bundle": "1.4.0",
         "jms/di-extra-bundle": "1.3.0",
         "egeloen/ckeditor-bundle": "2.*",
-        "knplabs/knp-menu-bundle": "2.0.*@dev"
+        "knplabs/knp-menu-bundle": "2.0.*@dev",
+        "sonata-project/intl-bundle": "2.1.0"
     },
     "require-dev": {
         "doctrine/data-fixtures": "*",
