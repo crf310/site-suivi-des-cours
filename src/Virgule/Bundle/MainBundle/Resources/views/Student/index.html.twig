@@ -37,7 +37,7 @@
                 <tr class="gradeA">
                     <td><input type="checkbox" name="students[]" value="{{ entity['student_id'] }}"/></td>
                     <td class="center">
-                        <img src="{{ asset('img/drapeaux/' ~ entity['isoCode'] ~ '.png')}}" alt="{{  entity['isoCode'] }}" title="{{  entity['label'] }}" />
+                        <img src="{{ asset('img/drapeaux/' ~ entity['nativeCountry'] ~ '.png')}}" alt="{{  entity['nativeCountry'] | upper | country }}" title="{{  entity['nativeCountry'] | upper | country }}" />
                     </td>
                     <td class="center">
                         {% if entity['gender'] == 'F' %}
