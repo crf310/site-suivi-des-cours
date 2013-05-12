@@ -69,9 +69,9 @@ class ClassSession {
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="Attachment", mappedBy="classSession")
+     * @ORM\OneToMany(targetEntity="Document", mappedBy="classSession")
      */
-    private $attachments;
+    private $documents;
 
     /**
      * @ORM\ManyToMany(targetEntity="Student", inversedBy="classSessions")
