@@ -194,8 +194,9 @@ class Student {
     private $emergencyContactConnectionType;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Country", inversedBy="students")
-     * @ORM\JoinColumn(name="fk_native_country", referencedColumnName="id")
+     * @var string $nativeCountry
+     *
+     * @ORM\Column(name="nativeCountry", type="string", length=2, nullable=true)
      */
     private $nativeCountry;
 
@@ -746,10 +747,10 @@ class Student {
     /**
      * Set fkNativeCountry
      *
-     * @param Virgule\Bundle\MainBundle\Entity\Country $fkNativeCountry
+     * @param  $fkNativeCountry
      * @return Student
      */
-    public function setFkNativeCountry(\Virgule\Bundle\MainBundle\Entity\Country $fkNativeCountry = null) {
+    public function setFkNativeCountry($fkNativeCountry = null) {
         $this->fkNativeCountry = $fkNativeCountry;
 
         return $this;
@@ -758,7 +759,7 @@ class Student {
     /**
      * Get fkNativeCountry
      *
-     * @return Virgule\Bundle\MainBundle\Entity\Country 
+     * @return 
      */
     public function getFkNativeCountry() {
         return $this->fkNativeCountry;
@@ -809,10 +810,10 @@ class Student {
     /**
      * Set nativeCountry
      *
-     * @param \Virgule\Bundle\MainBundle\Entity\Country $nativeCountry
+     * @param String $nativeCountry
      * @return Student
      */
-    public function setNativeCountry(\Virgule\Bundle\MainBundle\Entity\Country $nativeCountry = null) {
+    public function setNativeCountry($nativeCountry = null) {
         $this->nativeCountry = $nativeCountry;
 
         return $this;
@@ -821,7 +822,7 @@ class Student {
     /**
      * Get nativeCountry
      *
-     * @return \Virgule\Bundle\MainBundle\Entity\Country 
+     * @return $nativeCountry
      */
     public function getNativeCountry() {
         return $this->nativeCountry;
@@ -975,4 +976,37 @@ class Student {
         return $this->welcomedInOrganizationBranch;
     }
 
+
+    /**
+     * Add classSessions
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions
+     * @return Student
+     */
+    public function addClassSession(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions)
+    {
+        $this->classSessions[] = $classSessions;
+    
+        return $this;
+    }
+
+    /**
+     * Remove classSessions
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions
+     */
+    public function removeClassSession(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions)
+    {
+        $this->classSessions->removeElement($classSessions);
+    }
+
+    /**
+     * Get classSessions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getClassSessions()
+    {
+        return $this->classSessions;
+    }
 }

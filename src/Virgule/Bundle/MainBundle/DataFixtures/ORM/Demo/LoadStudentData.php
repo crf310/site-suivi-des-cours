@@ -17,11 +17,11 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
 
     public function load(ObjectManager $manager) {
 
-        $countryCodes = Array('AF','ZA','AL','DZ','AO','AM','AT','AZ','BD','BY','BJ','BT','BO','BR','BG','KH','CM','CV','CL','CN','CO',
-                            'KM','CG','CD','KR','CI','HR','DO','EG','AE','EC','ER','ES','ET','FR','GE','GT','GN','HT','HK','IN',
-                            'ID','IR','IQ','IL','IT','JM','JP','KZ','KE','KG','LV','LB','LR','MK','ML','MA','MU','MR','MD','MN','MM',
-                            'NP','NE','NG','UZ','PK','PS','PE','PH','PL','PT','RO','RU','RW','SN','RS','SL','SK','SD','LK','SE','SY',
-                            'CZ','TH','TN','TR','UA','VE','VN','MG');
+        $countryCodes = Array('af','za','al','dz','ao','am','at','az','bd','by','bj','bt','bo','br','bg','kh','cm','cv','cl','cn','co',
+                            'km','cg','cd','kr','ci','hr','do','eg','ae','ec','er','es','et','fr','ge','gt','gn','ht','hk','in',
+                            'id','ir','iq','il','it','jm','jp','kz','ke','kg','lv','lb','lr','mk','ml','ma','mu','mr','md','mn','mm',
+                            'np','ne','ng','uz','pk','ps','pe','ph','pl','pt','ro','ru','rw','sn','rs','sl','sk','sd','lk','se','sy',
+                            'cz','th','tn','tr','ua','ve','vn','mg');
         $genders = Array('F', 'M');
         $firstnames = Array('Jean', 'John', 'Juan', 'Xiao', 'Augustin', 'Dimitri', 'Sergiy', 'Ali', 'Abdel', 'Linus', 'Zinedine', 'Pol', 'Anas', 'Jean-Marc', 'Auguste', 'Zhen');
         $lastnames = Array('Dupont', 'Smith', 'Suarez', 'Lee', 'Ranaly', 'Serpov', 'Karabatic', 'Bongo', 'Serafi', 'Zidane', 'Bellaloui', 'Lopez', 'Eriksson', 'Torvalds', 'Larsson', 'Soualem');
@@ -48,8 +48,8 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
             $s->setBirthdate(new \DateTime("@$timestamp"));
 
             $rand = rand(0, $nbCountries);
-            $rc = strtoupper($countryCodes[$rand]);
-            $s->setNativeCountry($this->getReference('country-' . $rc));
+            $rc = $countryCodes[$rand];
+            $s->setNativeCountry($rc);
             
             $y = rand(2010, 2012);
             $m = rand(01, 12);

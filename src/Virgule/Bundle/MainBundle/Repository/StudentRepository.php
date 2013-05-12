@@ -22,9 +22,7 @@ class StudentRepository extends EntityRepository {
     private function getBasicQueryBuilder() {
         $qb = $this
             ->createDefaultQueryBuilder()
-            ->select('s.id as student_id, s.firstname as firstname, s.lastname as lastname, s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, s.registrationDate')
-            ->addSelect('c.isoCode, c.label')
-            ->leftJoin('s.nativeCountry', 'c');
+            ->select('s.id as student_id, s.firstname as firstname, s.lastname as lastname, s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, s.registrationDate, s.nativeCountry');
         return $qb;
     }
     
@@ -74,10 +72,8 @@ class StudentRepository extends EntityRepository {
 
     public function loadAllEnrolledInCourses(Array $courseIds) {
         $qb = $this->getQueryBuilderForStudentEnrolledInCourses($courseIds)
-            ->select('s.id as student_id, s.firstname as firstname, s.lastname as lastname, s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, s.registrationDate')
-            ->addSelect('c.isoCode, c.label')
+            ->select('s.id as student_id, s.firstname as firstname, s.lastname as lastname, s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, s.registrationDate, s.nativeCountry')
             ->addSelect('count(cm.id) as nb_comments')
-            ->leftJoin('s.nativeCountry', 'c')
             ->leftJoin('s.comments', 'cm')
             ->add('groupBy', 's.id');
         return $qb->getQuery()->execute(array(), Query::HYDRATE_ARRAY);
@@ -108,8 +104,7 @@ class StudentRepository extends EntityRepository {
         $q = $this
                 ->createDefaultQueryBuilder()
                 ->addSelect('s.id as student_id, s.gender as student_gender, s.birthdate as student_birthDate')
-                ->addSelect('c1.isoCode as country_code, c1.label as country_label')
-                ->innerJoin('s.nativeCountry', 'c1')
+                ->addSelect('s.nativeCountry')
                 ->innerJoin('s.courses', 'c2')
                 ->where('c2.semester = :semesterId')
                 ->setParameter('semesterId', $semesterId)

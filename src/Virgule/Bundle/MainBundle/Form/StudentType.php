@@ -12,13 +12,11 @@ use Virgule\Bundle\MainBundle\Entity\Teacher;
 class StudentType extends AbstractType {
 
     private $teacherRepository;
-    private $countryRepository;
     private $openHousesDates;
     private $currentTeacher;
 
-    public function __construct(TeacherRepository $teacherRepository = null, CountryRepository $countryRepository = null, $organizationBranchId = null, $openHousesDates = null, Teacher $currentTeacher = null) {
+    public function __construct(TeacherRepository $teacherRepository = null, $organizationBranchId = null, $openHousesDates = null, Teacher $currentTeacher = null) {
         $this->teacherRepository = $teacherRepository;
-        $this->countryRepository = $countryRepository;
         $this->organizationBranchId = $organizationBranchId;
         $this->openHousesDates = $openHousesDates;
         $this->currentTeacher = $currentTeacher;
@@ -34,14 +32,7 @@ class StudentType extends AbstractType {
                     'format' => 'dd/MM/yyyy',
                     'attr' => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy')
                 ))
-                ->add('nationality')
-                ->add('nationality', 'entity', array(
-                    'class' => 'VirguleMainBundle:Country',
-                    'query_builder' => $this->countryRepository->loadAllQueryBuilder(),
-                    'expanded' => false,
-                    'multiple' => false,
-                    'property' => 'label',
-                    'property_path' => 'nationality',
+                ->add('nativeCountry', 'country', array(
                     'attr' => array('class' => 'medium-select')
                 ))
                 ->add('registrationDate', 'date', array(
@@ -70,7 +61,6 @@ class StudentType extends AbstractType {
                     'expanded' => false,
                     'multiple' => false,
                 ))
-                ->add('nationality', 'country', array('attr' => array('class' => 'medium-select')))
                 ->add('picturePath', 'file')
                 ->add('arrivalDate', 'date', array(
                     'widget' => 'single_text',

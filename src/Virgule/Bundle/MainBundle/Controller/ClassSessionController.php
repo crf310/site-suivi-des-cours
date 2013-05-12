@@ -13,6 +13,8 @@ use Virgule\Bundle\MainBundle\Entity\Course;
 use Virgule\Bundle\MainBundle\Form\ClassSessionType;
 use Virgule\Bundle\MainBundle\Form\CommentType;
 
+use Ivory\LuceneSearchBundle\Model\Document;
+use Ivory\LuceneSearchBundle\Model\Field;
 /**
  * ClassSession controller.
  *
@@ -120,6 +122,24 @@ class ClassSessionController extends AbstractVirguleController {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);           
             $em->flush();
+
+            // Update Lucene index
+            // Request an index
+            $index = $this->get('ivory_lucene_search')->getIndex('identifier1');
+
+            // Create a new document
+            $document = new Document();
+            // $document->addField(Field::keyword('field1', 'Keyword'));
+            $document->addField(Field::text('field2', $entity->getSummary()));
+
+            // Add your document to the index
+            $index->addDocument($document);
+
+            // Commit your change
+            $index->commit();
+
+            // If you want you can optimize your index
+            $index->optimize();
 
             return $this->redirect($this->generateUrl('classsession_index'));
         }

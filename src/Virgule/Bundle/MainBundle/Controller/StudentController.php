@@ -92,7 +92,6 @@ class StudentController extends AbstractVirguleController {
     
     private function initStudentForm($entity) {
         $teacherRepository = $this->getTeacherRepository();
-        $countryRepository = $this->getCountryRepository();
         
         $organizationBranchId = $this->getSelectedOrganizationBranchId();
         
@@ -102,7 +101,7 @@ class StudentController extends AbstractVirguleController {
         
         $currentTeacher = $this->getConnectedUser();
         
-        $form = $this->createForm(new StudentType($teacherRepository, $countryRepository, $organizationBranchId, $openHousesDates, $currentTeacher), $entity);
+        $form = $this->createForm(new StudentType($teacherRepository, $organizationBranchId, $openHousesDates, $currentTeacher), $entity);
 
         return $form;
     }

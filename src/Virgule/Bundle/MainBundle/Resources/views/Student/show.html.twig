@@ -35,7 +35,7 @@
                             {% if entity.nativeCountry != null %}
                             <div class="control-group">
                                 <label class="control-label">Pays d'origine</label>
-                                <div class="controls">{{  entity.nativeCountry.isoCode | upper | country }}&nbsp;<img src="{{ asset('img/drapeaux/' ~ entity.nativeCountry.isoCode ~ '.png')}}" alt="{{  entity.nativeCountry.isoCode }}" title="{{  entity.nativeCountry.label }}" /></div>
+                                <div class="controls">{{  entity.nativeCountry | upper | country }}&nbsp;<img src="{{ asset('img/drapeaux/' ~ entity.nativeCountry ~ '.png')}}" alt="{{  entity.nativeCountry }}" title="{{  entity.nativeCountry | upper | country }}" /></div>
                             </div>
                             {% endif %}
                             <div class="control-group">
