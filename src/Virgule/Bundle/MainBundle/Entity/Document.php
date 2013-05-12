@@ -3,6 +3,7 @@
 namespace Virgule\Bundle\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Virgule\Bundle\MainBundle\Entity\Document
@@ -43,10 +44,23 @@ class Document {
 
     /**
      * @ORM\ManyToOne(targetEntity="ClassSession", inversedBy="documents")
-     * @ORM\JoinColumn(name="fk_class_session", referencedColumnName="id")
+     * @ORM\JoinColumn(name="fk_class_session", referencedColumnName="id", nullable=true)
      */
     private $classSession;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="ClassLevel")
+     * @ORM\JoinTable(name="document_class_level")
+     * @Assert\NotNull
+     */
+    private $classLevel;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="documents")
+     * @ORM\JoinTable(name="document_tag")
+     */
+    private $tags;
+    
     /**
      * Get id
      *

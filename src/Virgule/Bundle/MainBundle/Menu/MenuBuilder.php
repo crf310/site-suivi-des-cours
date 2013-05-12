@@ -47,7 +47,7 @@ class MenuBuilder extends ContainerAware {
         $menu->addChild('Délégation', array('route' => 'organizationbranch_show', 'routeParameters' => array('id' => $orgBranchId)));
         $menu['Délégation']->setLinkAttribute('class', 'organization_branch');
         
-        $menu->addChild('Cartable', array('uri' => '#'));
+        $menu->addChild('Cartable', array('route' => 'document'));
         $menu['Cartable']->setLinkAttribute('class', 'schoolbag');
         
         /* Administration */
