@@ -55,7 +55,9 @@
                     <td>
                         {% if courses_array is defined %}
                             {% for course in courses_array[entity['student_id']] %}
-                                <a href="{{ path('course_show', { 'id': course['course_id'] }) }}">{{ course['level'] }}</a>{% if course != loop.last %},&nbsp;{% endif %}
+                                <a href="{{ path('course_show', { 'id': course['course_id'] }) }}">
+                                {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course['levelColorCode'], 'classLevelLabel': course['level'] } %} 
+                                </a>{% if course != loop.last %}&nbsp;{% endif %}
                             {% endfor %}
                         {% endif %}
                     </td>

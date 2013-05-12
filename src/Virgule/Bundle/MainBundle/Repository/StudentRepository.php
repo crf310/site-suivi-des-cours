@@ -42,7 +42,7 @@ class StudentRepository extends EntityRepository {
     public function loadAllEnrolled($semesterId) {
         $qb = $this->getBasicQueryBuilder()
                 ->addSelect('t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName')
-                ->addSelect('c2.id as course_id, l.label as level')
+                ->addSelect('c2.id as course_id, l.label as level, l.htmlColorCode as levelColorCode')
                 ->addSelect('count(cm.id) as nb_comments')
                 ->innerJoin('s.courses', 'c2')
                 ->innerJoin('c2.classLevel', 'l')

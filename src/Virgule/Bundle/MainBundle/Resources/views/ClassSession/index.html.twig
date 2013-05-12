@@ -1,7 +1,8 @@
 {% extends '::main_content.html.twig' %}
 {% block content_title %}Tous les comptes-rendus{% endblock %}
  {%block submenu %}
-    <a class="btn tip-bottom" href="#"> <i class="icon-rss"></i>S'abonner au flux RSS</a>
+    <a class="btn tip-bottom" href="#"> <i class="icon-rss"></i>S'abonner à un flux RSS</a>
+    <a class="btn tip-bottom" href="#"> <i class="icon-search"></i>Rechercher dans les compte-rendus</a>
     <a class="btn tip-bottom" href="{{ path('classsession_new') }}"> <i class="icon-add"></i>Nouveau compte-rendu</a>
 {% endblock %}
 {% block main_content %}
@@ -31,7 +32,9 @@
             {% for entity in entities %}
                 <tr>
                     <td class="center">{% if entity['sessionDate'] %}{{ entity['sessionDate'] | date('d/m/Y') }} {% endif %}</td>
-                    <td class="center"><span class="badge" style="background-color: {{ entity['classLevelHtmlColorCode'] }};">{{ entity['classLevelLabel'] }}</span></td>
+                    <td class="center">
+                        {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': entity['classLevelHtmlColorCode'], 'classLevelLabel': entity['classLevelLabel'] } %} 
+                    </td>
                     <td>le {{ entity['course_dayOfWeek'] | day }} de {{ entity['course_startTime'] | date('H:i') }} à {{ entity['course_endTime'] | date('H:i') }}</td>
                     <td class="center">{{ entity['nb_students'] }}
                     <td>{{ entity['sessionTeacher_firstName'] }} {{ entity['sessionTeacher_lastName'] }}</td>

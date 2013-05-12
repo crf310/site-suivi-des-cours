@@ -31,7 +31,9 @@
                 <tr>
                     <td>{{ course.dayOfWeek | day }}</td>
                     <td>{{ course.startTime | date('H:i') }} - {{ course.endTime | date('H:i') }}</td>
-                    <td class="center"><span class="badge" style="background-color: {{ course.classLevelColorCode }};">{{  course.classLevelLabel }}</span></td>
+                    <td class="center">
+                        {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevelColorCode, 'classLevelLabel': course.classLevelLabel } %} 
+                    </td>
                     <td>
                         {% for teacher in course.teachers %}
                             <a href="{{ path('teacher_show', { 'id': teacher['teacher_id'] }) }}">{{ teacher['teacher_firstName'] }} {{ teacher['teacher_lastName'] }}</a>{% if teacher != loop.last %},&nbsp;{% endif %}
@@ -39,9 +41,8 @@
                     </td>
                     <td>{{ course.classRoomName }}</td> 
                     <td class="center">{{ course.nbStudents }}</td>
-                    <td>
-                        <a href="{{ path('course_show', { 'id': course.id }) }}">show</a>&nbsp;
-                        <a href="{{ path('course_edit', { 'id': course.id }) }}">edit</a>&nbsp;
+                    <td class="center">
+                        <a href="{{ path('course_show', { 'id': course.id }) }}">Détails</a>&nbsp;
                         <a href="{{ path('classsession_add', { 'id': course.id }) }}">Enregistrer un compte-rendu</a>
                     </td>
                 </tr>

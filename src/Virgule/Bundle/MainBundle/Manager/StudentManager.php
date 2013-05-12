@@ -70,7 +70,7 @@ class StudentManager extends BaseManager {
         foreach ($students as $key => $student) {
             
             // store courses for each student
-            $courses_array[$student['student_id']][] = Array('course_id' => $student['course_id'], 'level' => $student['level']);
+            $courses_array[$student['student_id']][] = Array('course_id' => $student['course_id'], 'level' => $student['level'], 'levelColorCode' => $student['levelColorCode']);
             
             // only keep the line if the students has not been processed already
             if (! array_key_exists($student['student_id'], $students_ids)) {
