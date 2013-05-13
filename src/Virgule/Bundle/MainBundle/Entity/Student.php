@@ -344,6 +344,17 @@ class Student {
     public function getBirthdate() {
         return $this->birthdate;
     }
+    
+    /**
+     * Get age
+     * Calculates and returns it in years
+     *
+     * @return \DateTime 
+     */
+    public function getAge() {
+       $now = new \DateTime('now');
+       return $this->birthdate->diff($now)->format('%Y');
+    }
 
     /**
      * Set phoneNumber
