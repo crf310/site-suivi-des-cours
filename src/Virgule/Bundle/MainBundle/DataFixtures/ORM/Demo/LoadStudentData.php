@@ -61,7 +61,9 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
             $s->setRegistrationDate(new \DateTime('now'));
             $s->setPhoneNumber("0102030405");
             $s->setCellphoneNumber("0607080910");
-            $s->setAddress("12 rue Georges Meynieu 75010 Paris");
+            $s->setAddress("12 rue Georges Meynieu");
+            $s->setZipcode("75010");
+            $s->setCity("Paris");
 
             $s->setWelcomedByTeacher($this->getReference('prof' . rand(1, 50)));
             $s->setWelcomedInOrganizationBranch($this->getReference('deleg-3-10'));
