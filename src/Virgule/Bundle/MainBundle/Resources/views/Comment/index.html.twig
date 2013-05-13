@@ -4,21 +4,15 @@
         <span class="icon"><i class="icon-comment"></i></span>
         <h5>Commentaires</h5><span title="{{ comments.count }} commentaire(s)" class="label label-info tip-left">{{ comments.count }}</span>
     </div> 
-    <div class="widget-content nopadding">
-        <ul class="recent-comments">
-            {% for comment in comments %}
-            <li>
-                <div class="comments">
-                    <span class="user-info">
-                        le  {{ comment.date|date("d/m/Y à H:i") }} par <a href="{{ path('teacher_show', { 'id': comment.teacher.id }) }}">{{ comment.teacher.firstName }}  {{ comment.teacher.lastName }}</a>
-                    </span>
-                    <p>
-                        {{ comment.comment|raw }}
-                    </p>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
+    <div class="widget-content">
+        {% for comment in comments %}
+                <span class="user">
+                    Par <a href="{{ path('teacher_show', { 'id': comment.teacher.id }) }}">{{ comment.teacher.firstName }}  {{ comment.teacher.lastName }}</a> le  {{ comment.date|date("d/m/Y à H:i") }}
+                </span>
+                <p class="comment-bubble">
+                    {{ comment.comment|raw }}
+                </p>
+        {% endfor %}
     </div>
 </div>
 {% endif %}
