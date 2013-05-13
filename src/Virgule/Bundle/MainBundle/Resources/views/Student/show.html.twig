@@ -1,4 +1,19 @@
 {% extends '::main_content.html.twig' %}
+{% block head %}    
+    {{ parent() }}
+    {% block javascripts %}
+        <script type='text/javascript'>
+        $(function() {
+            $('#classlevelsuggested_form').hide();
+            
+            $('#show_classlevelsuggested_form').click(function() {
+                $('#classlevelsuggested_form').show();
+                return false;
+            });      
+        });
+        </script>
+    {% endblock %}
+{% endblock %}
 {% block content_title %}Fiche apprenant{% endblock %}
 {%block submenu %}
     <button  class="btn tip-bottom" type="submit"><i class="icon-user-certificate"></i>Générer une attestation</button>
@@ -113,6 +128,10 @@
                                     {% endfor %}
                                 {% endif %}
                             </ul>
+                                <a href="#" id="show_classlevelsuggested_form">Changer le niveau conseillé</a>
+                            <div id="classlevelsuggested_form">
+                                {% include 'VirguleMainBundle:ClassLevelSuggested:new.html.twig' with { 'form': classLevelSuggestedForm, 'studentId': entity.id } %}
+                            </div>
                          </div>
                     </div>
                     {% endif %}

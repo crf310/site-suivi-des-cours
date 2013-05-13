@@ -10,8 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Controller\CommentController;
 use Virgule\Bundle\MainBundle\Entity\Student;
 use Virgule\Bundle\MainBundle\Entity\Comment;
+use Virgule\Bundle\MainBundle\Entity\ClassLevelSuggested;
 use Virgule\Bundle\MainBundle\Form\StudentType;
 use Virgule\Bundle\MainBundle\Form\CommentType;
+use Virgule\Bundle\MainBundle\Form\ClassLevelSuggestedType;
 
 /**
  * Student controller.
@@ -81,7 +83,8 @@ class StudentController extends AbstractVirguleController {
         }
         
         $classLevels = $this->getClassLevelSuggestedRepository()->getClassLevelsHistoryPerStudent($id);
-        
+        $classLevelSuggested = new ClassLevelSuggested();
+        $classLevelSuggestedForm = $this->createForm(new ClassLevelSuggestedType(), $classLevelSuggested);
         return array(
             'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
@@ -89,7 +92,8 @@ class StudentController extends AbstractVirguleController {
             'courses' => $courses,
             'nbEnrollment' => $nbEnrollment,
             'previousSemester' => $previousSemester,
-            'classLevels' => $classLevels
+            'classLevels' => $classLevels,
+            'classLevelSuggestedForm' => $classLevelSuggestedForm->createView(),
         );
     }
 
