@@ -40,8 +40,8 @@ class StatisticsController extends AbstractVirguleController {
         foreach ($students as $student) {
             $students_genders[$student['student_gender']] += 1;
             
-            if (! array_key_exists($student['country_code'], $students_countries)) {
-                $students_countries[$student['country_code']] = 0;
+            if (! array_key_exists($student['nativeCountry'], $students_countries)) {
+                $students_countries[$student['nativeCountry']] = 0;
             }
             
             // age calculation
@@ -66,7 +66,7 @@ class StatisticsController extends AbstractVirguleController {
                 $student_ages['86-95']++;
             }
 
-            $students_countries[$student['country_code']] += 1;
+            $students_countries[$student['nativeCountry']] += 1;
             $total_students += 1;
         }
         arsort($students_countries);
