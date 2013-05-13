@@ -7,6 +7,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Virgule\Bundle\MainBundle\Entity\Student;
 use Virgule\Bundle\MainBundle\Entity\Comment;
+use Virgule\Bundle\MainBundle\Entity\ClassLevelSuggested;
 
 /**
  * Description of LoadStudentData
@@ -31,6 +32,8 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
         $nbCountries = count($countryCodes) - 1;
         $nbCourses = 12;
 
+        $classLevels = Array('A1', 'A2', 'B1/1', 'B1/2', 'B2', 'B3');
+        
         $commentContent = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 
@@ -74,6 +77,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
                     $s->addCourse($this->getReference('course' . $idCourse2));
                 }
             }
+                        
             $manager->persist($s);
             $this->addReference('student-' . $nbStudents, $s);
             $nbStudents++;
@@ -96,6 +100,27 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
                     $manager->persist($c);
                 }
             }
+            
+            // history of suggested class levels
+            $cls = new ClassLevelSuggested();
+            $cls->setClassLevel();
+            $y = rand(2010, 2012);
+            $m = rand(01, 12);
+            $d = rand(01, 30);
+            $timestamp = strtotime($d . '-' . $m . '-' . $y);
+            $cls->setDateOfChange(new \DateTime("@$timestamp"));
+            $cls->setChanger($this->getReference('prof' . rand(1, 50)));
+            $cls->setClassLevel($this->getReference($classLevels[rand(0, count($classLevels)-1)]));
+            $cls->setStudent($this->getReference('student-' . $i));
+            $manager->persist($cls);
+            
+            $cls1 = new ClassLevelSuggested();
+            $cls1->setClassLevel();
+            $cls1->setDateOfChange(new \DateTime("now"));
+            $cls1->setChanger($this->getReference('prof' . rand(1, 50)));
+            $cls1->setClassLevel($this->getReference($classLevels[rand(0, count($classLevels)-1)]));
+            $cls1->setStudent($this->getReference('student-' . $i));
+            $manager->persist($cls1);
         }
         $manager->flush();
     }

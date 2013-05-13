@@ -115,6 +115,9 @@ abstract class AbstractVirguleController extends Controller {
     protected function getClassRoomRepository() {
         return $this->getDoctrineManager()->getRepository('VirguleMainBundle:ClassRoom');
     }
+    protected function getClassLevelSuggestedRepository() {
+        return $this->getDoctrineManager()->getRepository('VirguleMainBundle:ClassLevelSuggested');
+    }
 }
 
 ?>

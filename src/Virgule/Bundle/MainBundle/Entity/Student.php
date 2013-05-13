@@ -233,12 +233,6 @@ class Student {
     private $fkScholarizationLanguage;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ClassLevel")
-     * @ORM\JoinColumn(name="fk_suggested_level", referencedColumnName="id")
-     */
-    private $suggestedLevel;
-
-    /**
      * @ORM\ManyToMany(targetEntity="Course", inversedBy="students")
      */
     private $courses;
@@ -247,6 +241,12 @@ class Student {
      * @ORM\ManyToMany(targetEntity="ClassSession", mappedBy="classSessionStudents", cascade={"persist"})
      */
     private $classSessions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ClassLevelSuggested", mappedBy="student", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"dateOfChange" = "DESC"}).
+     */
+    private $suggestedClassLevel;
 
     /**
      * Get id
@@ -319,9 +319,9 @@ class Student {
     public function getFirstname() {
         return $this->firstname;
     }
-    
+
     public function getFullName() {
-        return $this->firstname . ' ' .  $this->lastname;
+        return $this->firstname . ' ' . $this->lastname;
     }
 
     /**
@@ -850,33 +850,13 @@ class Student {
     }
 
     /**
-     * Set suggestedLevel
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\ClassLevel $suggestedLevel
-     * @return Student
-     */
-    public function setSuggestedLevel(\Virgule\Bundle\MainBundle\Entity\ClassLevel $suggestedLevel = null) {
-        $this->suggestedLevel = $suggestedLevel;
-
-        return $this;
-    }
-
-    /**
-     * Get suggestedLevel
-     *
-     * @return \Virgule\Bundle\MainBundle\Entity\ClassLevel 
-     */
-    public function getSuggestedLevel() {
-        return $this->suggestedLevel;
-    }
-
-    /**
      * Constructor
      */
     public function __construct() {
         $this->registrationDate = new \DateTime('now');
         $this->courses = new \Doctrine\Common\Collections\ArrayCollection();
         $this->classSessions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->suggestedClassLevel = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function __toString() {
@@ -976,17 +956,15 @@ class Student {
         return $this->welcomedInOrganizationBranch;
     }
 
-
     /**
      * Add classSessions
      *
      * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions
      * @return Student
      */
-    public function addClassSession(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions)
-    {
+    public function addClassSession(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions) {
         $this->classSessions[] = $classSessions;
-    
+
         return $this;
     }
 
@@ -995,8 +973,7 @@ class Student {
      *
      * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions
      */
-    public function removeClassSession(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions)
-    {
+    public function removeClassSession(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions) {
         $this->classSessions->removeElement($classSessions);
     }
 
@@ -1005,8 +982,38 @@ class Student {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getClassSessions()
-    {
+    public function getClassSessions() {
         return $this->classSessions;
     }
+
+    /**
+     * Add suggestedClassLevel
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassLevelSuggested $suggestedClassLevel
+     * @return Student
+     */
+    public function addSuggestedClassLevel(\Virgule\Bundle\MainBundle\Entity\ClassLevelSuggested $suggestedClassLevel) {
+        $this->suggestedClassLevel[] = $suggestedClassLevel;
+
+        return $this;
+    }
+
+    /**
+     * Remove suggestedClassLevel
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassLevelSuggested $suggestedClassLevel
+     */
+    public function removeSuggestedClassLevel(\Virgule\Bundle\MainBundle\Entity\ClassLevelSuggested $suggestedClassLevel) {
+        $this->suggestedClassLevel->removeElement($suggestedClassLevel);
+    }
+
+    /**
+     * Get suggestedClassLevel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSuggestedClassLevel() {
+        return $this->suggestedClassLevel;
+    }
+
 }

@@ -79,13 +79,17 @@ class StudentController extends AbstractVirguleController {
         if ($nbEnrollment > 0) {
            $previousSemester = $courses[0]->getSemester()->getId();
         }
+        
+        $classLevels = $this->getClassLevelSuggestedRepository()->getClassLevelsHistoryPerStudent($id);
+        
         return array(
             'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
             'commentForm' => $commentForm->createView(),
             'courses' => $courses,
             'nbEnrollment' => $nbEnrollment,
-            'previousSemester' => $previousSemester
+            'previousSemester' => $previousSemester,
+            'classLevels' => $classLevels
         );
     }
 

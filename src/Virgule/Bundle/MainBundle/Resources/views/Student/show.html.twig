@@ -86,8 +86,8 @@
                                                     <span class="user-info">du {{ course.semester.startDate | date('d/m/Y') }} au {{ course.semester.endDate | date('d/m/Y') }}</span>
                                             {% endif %}
                                                 <p>
-                                                    Niveau {{ course.classLevel.label }}, le {{ course.dayOfWeek | day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }} 
-                                                    <a href="{{ path('course_show', { 'id': course.id }) }}">Voir</a>
+                                                    {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevel.htmlColorCode, 'classLevelLabel': course.classLevel.label } %} le {{ course.dayOfWeek | day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }} 
+                                                    <a href="{{ path('course_show', { 'id': course.id }) }}">Voir ce cours</a>
                                                 </p>
                                             {% set previousSemester = course.semester.id %}
                                             {% if loop.last %}</div></li>{% endif %}
@@ -95,7 +95,26 @@
                                 {% endif %}
                             </ul>
                          </div>
+                    </div>
+                    {% endif %}
+                    {% if classLevels | length > 0 %}
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <h5>Historique des niveaux conseillés</h5>
+                            <span title="{{ classLevels|length }} inscriptions(s)" class="label label-info tip-left">{{ classLevels|length }}</span>
                         </div>
+                        <div class="widget-content">
+                            <ul class="no-img">
+                                {% if classLevels == 0 %}
+                                    Pas de niveau conseillé pour le moment, voulez-vous le mettre à jour ?
+                                {% else %}
+                                    {% for classLevel in classLevels %}
+                                        <li>{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel['classLevelColorCode'], 'classLevelLabel': classLevel['classLevelLabel'] } %} : changé le {{ classLevel['dateOfChange'] | date('d/m/Y') }} par {{ classLevel['teacher_firstName'] }} {{ classLevel['teacher_lastName'] }}</li>
+                                    {% endfor %}
+                                {% endif %}
+                            </ul>
+                         </div>
+                    </div>
                     {% endif %}
                     {% include 'VirguleMainBundle:Comment:new.html.twig' with {'commentForm': commentForm, 'target_id': entity.id, 'target_route': 'student_comment_create' }  %}
                     {% include 'VirguleMainBundle:Comment:index.html.twig' with {'comments': entity.comments }  %}
