@@ -38,4 +38,16 @@ class ClassLevelSuggestedRepository extends EntityRepository {
         $classLevels = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $classLevels;
     }
+    
+    public function getCurrentClassLevelSuggested($studentId) {
+        $qb = $this->createDefaultQueryBuilder()
+                ->innerJoin('cls.student', 's')
+                ->where('s.id = :studentId')
+                ->orderBy('cls.dateOfChange', 'DESC')
+                ->setParameter('studentId', $studentId);
+        
+        $q = $qb->getQuery();
+        $classLevels = $q->execute(array());
+        return $classLevels[0];
+    }
 }

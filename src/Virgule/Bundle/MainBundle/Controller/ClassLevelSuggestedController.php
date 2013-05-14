@@ -33,17 +33,17 @@ class ClassLevelSuggestedController extends AbstractVirguleController {
         $form->bind($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('student_show', array('id' => $entity->getStudent()->getId())));
-        }
-
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-        );
+            
+            // checks that we change to another class level than the current one
+            $currentClassLevel = $this->getClassLevelSuggestedRepository()->getCurrentClassLevelSuggested($entity->getStudent()->getId());
+            if (null !== $currentClassLevel && $currentClassLevel->getClassLevel()->getId() != $entity->getClassLevel()->getId()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($entity);
+                $em->flush();   
+            }
+        }        
+        
+        return $this->redirect($this->generateUrl('student_show', array('id' => $entity->getStudent()->getId())));
     }
 
     /**
