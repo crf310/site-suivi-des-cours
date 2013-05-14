@@ -84,7 +84,7 @@ class StudentController extends AbstractVirguleController {
         
         $classLevels = $this->getClassLevelSuggestedRepository()->getClassLevelsHistoryPerStudent($id);
         $classLevelSuggested = new ClassLevelSuggested();
-        $classLevelSuggestedForm = $this->createForm(new ClassLevelSuggestedType(), $classLevelSuggested);
+        $classLevelSuggestedForm = $this->createForm(new ClassLevelSuggestedType(), $classLevelSuggested, Array('em' => $this->getDoctrineManager()));
         return array(
             'entity' => $entity,
             'delete_form' => $deleteForm->createView(),

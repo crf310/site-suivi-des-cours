@@ -29,7 +29,7 @@ class ClassLevelSuggestedController extends AbstractVirguleController {
         $entity->setDateOfChange(new \DateTime('now'));
         $entity->setChanger($this->getUser());
         
-        $form = $this->createForm(new ClassLevelSuggestedType(), $entity);
+        $form = $this->createForm(new ClassLevelSuggestedType(), $entity, Array('em' => $this->getDoctrineManager()));
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -37,7 +37,7 @@ class ClassLevelSuggestedController extends AbstractVirguleController {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('classlevelsuggested_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('student_show', array('id' => $entity->getStudent()->getId())));
         }
 
         return array(
