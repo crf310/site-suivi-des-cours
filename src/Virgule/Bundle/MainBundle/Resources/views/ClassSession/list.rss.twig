@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
     <channel>
-        <title>Dernier compte-rendus pour les cours du niveau {{ course.level }}</title>
-        <description>Dernier compte-rendus pour les cours du niveau {{ course.level }}</description>
-        <link>{{ path('homepage') }}</link>
+        <title>Compte-rendus</title>
+        <description>Dernier compte-rendus</description>
+        <link>{{ path('welcome') }}</link>
 
-        {% for commit in commits %}
+        {% for classSession in classSessions %}
         <item>
-            <title>{{ commit.message }}</title>
-            <description>{{ commit.author.name }} authored {{ commit.shortHash }} in {{ commit.date | date('d/m/Y \\a\\t H:i:s') }}</description>
-            <link>{{ path('commit', {repo: repo, commit: commit.hash}) }}</link>
-            <pubDate>{{ commit.date | date('r') }}</pubDate>
+            <title>{{ classSession['classLevelLabel'] }} {{ classSession['course_dayOfWeek'] | day }} de {{ classSession['course_startTime'] | date('H:i') }} à {{ classSession['course_endTime'] | date('H:i') }} : session du     {{ classSession['sessionDate'] | date('d/m/Y') }}</title>
+            <description>
+            {{ classSession.summary }}
+            </description>
+            <link>{{ path('classsession_show', { 'id': classSession['id'] }) }}</link>
+            <pubDate>{{ classSession.reportDate | date('r') }}</pubDate>
         </item>
         {% endfor %}
     </channel>

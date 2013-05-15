@@ -36,6 +36,19 @@ class ClassSessionController extends AbstractVirguleController {
     }
 
     /**
+     * Lists all ClassSession entities.
+     *
+     * @Route("/rss", name="classsession_rss")
+     * @Template("VirguleMainBundle:ClassSession:list.rss.twig")
+     */
+    public function rssAction() {
+        $em = $this->getDoctrineManager(); 
+        $classSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAll($this->getSelectedSemesterId());
+
+        return array('classSessions' => $classSessions);
+    }
+    
+    /**
      * Finds and displays a ClassSession entity.
      *
      * @Route("/{id}/show", name="classsession_show")
