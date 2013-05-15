@@ -11,19 +11,20 @@
                         <h5>Mes cours</h5>
                 </div>
                 <div class="widget-content">
-                    <ul>
                         {% if myCourses is empty %}
                             Vous ne dirigez aucun cours pour le moment !
                         {% else %}
                             {% for course in myCourses %}
-                                <li><a href="{{ path('course_show', { 'id': course.id }) }}" >Niveau {{ course.classLevel }} le {{ course.dayOfWeek| day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }}</a>
+                            <div class="course-quick-access">
+                                    <strong>{{ course.classLevel }}, le {{ course.dayOfWeek| day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }}</strong>
+                                    <br />
+                                    <a href="{{ path('course_show', { 'id': course.id }) }}" >Voir le cours</a>
                                     <br />
                                     <a  class="btn virgule-btn" href="{{ path('classsession_add', { 'id': course.id }) }}"><i class="icon-add"></i>Compte-rendu</a>
                                     <a  class="btn virgule-btn" href="{{ path('classsession_add', { 'id': course.id }) }}"><i class="icon-trombinoscope"></i>Fiche de présence</a>
-                                </li>
+                                </div>
                             {% endfor %}
                         {% endif %}
-                    </ul>
                     <ul class="recent-posts">
                         <li class="viewall">
                             <a href="{{ path('course_index') }}" class="tip-top" title=""> + Voir tous les cours + </a>

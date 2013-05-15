@@ -333,3 +333,19 @@ ul.no-img li {
     display:block; 
     width:0;
 }
+
+
+.course-quick-access {
+    background-color: #F5F5F5;
+    border: 1px solid #DDDDDD;
+    cursor: pointer;
+    margin: 0 0 10px;
+    padding: 13px 20px 10px;
+    position: relative;
+    text-align: center;
+}
+.course-quick-access strong {
+	font-weight: bold;
+	font-size: 17px;
+	margin-left: 5px;
+}
