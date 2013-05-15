@@ -25,7 +25,7 @@
             {{ form_row(form.lastname, { 'label': 'Nom' }) }}                
             {{ form_row(form.gender, { 'label': 'Sexe' }) }}                
             {{ form_row(form.birthdate, { 'label': 'Date de naissance', 'hint':'Cliquez une ou deux fois sur l\'en-tête du calendrier pour naviguer plus vite entre les années' }) }}                
-            {{ form_row(form.nationality, { 'label': 'Pays d\'origine' }) }}
+            {{ form_row(form.nativeCountry, { 'label': 'Pays d\'origine' }) }}
             {{ form_row(form.arrivalDate, { 'label': 'Date d\'arrivée en France' }) }}
             {{ form_row(form.phoneNumber, { 'label': 'Téléphone fixe' }) }}
             {{ form_row(form.cellphoneNumber, { 'label': 'Téléphone portable' }) }}
@@ -55,7 +55,7 @@
         <div class="widget-content nopadding">
             {{ form_row(form.registrationDate, { 'label': 'Accueilli le', 'id': 'registrationDateField', 'hint':'Cliquez sur le bouton correspondant à une journée d\'accueil pour insérer la date' }) }}                
             {{ form_row(form.welcomedByTeacher, { 'label': 'Accueilli par' }) }}       
-            {{ form_row(form.suggestedLevel, { 'label': 'Niveau conseillé' }) }}       
+            {{ form_row(form.suggestedClassLevel, { 'label': 'Niveau conseillé' }) }}       
             {{ form_row(form.courses, { 'label': 'Inscrire aux cours' }) }}           
             {{ form_rest(form) }}
             <div class="form-actions">                                     
