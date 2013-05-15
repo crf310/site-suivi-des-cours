@@ -301,6 +301,10 @@ div .text-block {
 ul.no-img {
     list-style-type: none;
 }
+ul.no-img li {
+    list-style-type: none;
+    margin-left: -20px;
+}
 
 /* speech bubbles */
 .comment-bubble {
