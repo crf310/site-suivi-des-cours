@@ -45,7 +45,7 @@ class WelcomeController extends AbstractVirguleController {
         $myClassSessions = $classSessionRepo->loadAllClassSessionByTeacher($semesterId, $teacherId);
         $myClassSessionsLineBreak = $this->getListBreak(count($myClassSessions));
 
-        $latestClassSessions = $classSessionRepo->loadAll($semesterId, 10);
+        $latestClassSessions = $classSessionRepo->loadAllForMiniList($semesterId, 15);
         $latestClassSessionsLineBreak = $this->getListBreak(count($latestClassSessions)); 
         
         /*

@@ -24,9 +24,11 @@ class ClassSessionRepository extends EntityRepository {
     public function loadAllClassSessionByTeacher($semesterId, $teacherId, $limit = null) {
         $qb = $this->getDefaultQueryBuilder()
             ->addSelect('c.id, c.reportDate, c.sessionDate, count(cm.id) as nb_comments')
+            ->addSelect('cl.label as classLevelLabel, cl.htmlColorCode as classLevelHtmlColorCode')
             ->innerJoin('c.sessionTeacher', 't')
             ->innerJoin('c.course', 'c2')
             ->innerJoin('c2.semester', 's')
+            ->innerJoin('c2.classLevel', 'cl')
             ->leftJoin('c.comments', 'cm')
             ->where('t.id = :teacherId')             
             ->andWhere('s.id = :semesterId')
@@ -71,7 +73,6 @@ public function loadAllClassSessionByCourse($courseId, $limit = null) {
     public function loadAll($semesterId, $limit = null) {
         $qb = $this->getDefaultQueryBuilder()
             ->addSelect('c.id as id, c.reportDate, c.sessionDate')
-            ->addSelect('count(cm.id) as nb_comments')
             ->addSelect('c2.id as course_id, c2.dayOfWeek as course_dayOfWeek,
                 c2.startTime as course_startTime, c2.endTime as course_endTime')
             ->addSelect('t1.id as sessionTeacher_id, t1.firstName as sessionTeacher_firstName, t1.lastName as sessionTeacher_lastName')
@@ -83,7 +84,6 @@ public function loadAllClassSessionByCourse($courseId, $limit = null) {
             ->innerJoin('c2.semester', 's')
             ->innerJoin('c.sessionTeacher', 't1')
             ->innerJoin('c.reportTeacher', 't2')
-            ->leftJoin('c.comments', 'cm')
             ->leftJoin('c.classSessionStudents', 'st')
             ->where('s.id = :semesterId')
             ->add('orderBy', 'c.reportDate DESC')
@@ -100,4 +100,27 @@ public function loadAllClassSessionByCourse($courseId, $limit = null) {
         return $results;  
     }
     
+    public function loadAllForMiniList($semesterId, $limit = null) {
+        $qb = $this->getDefaultQueryBuilder()
+            ->addSelect('c.id as id, c.reportDate, c.sessionDate')
+            ->addSelect('count(cm.id) as nb_comments')
+            ->addSelect('cl.label as classLevelLabel, cl.htmlColorCode as classLevelHtmlColorCode')
+            ->innerJoin('c.course', 'c2')
+            ->innerJoin('c2.classLevel', 'cl')
+            ->innerJoin('c2.semester', 's')
+            ->leftJoin('c.comments', 'cm')
+            ->where('s.id = :semesterId')
+            ->add('orderBy', 'c.reportDate DESC')
+            ->add('groupBy', 'c.id')
+            ->setParameter('semesterId', $semesterId);
+        
+            if ($limit != null) {
+                $qb->setMaxResults($limit);
+            }
+        
+         $q = $qb->getQuery()
+        ;
+        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $results;  
+    }
 }
