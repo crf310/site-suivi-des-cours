@@ -1,5 +1,5 @@
 {% extends '::main_content.html.twig' %}
-{% block content_title %}Listes d'apprenants{% endblock %} 
+{% block content_title %}{{ title }}{% endblock %} 
 {%block submenu %}
     <a class="btn tip-bottom" href="#"> <i class="icon-export"></i>Exporter les données</a>
     <a class="btn tip-bottom" href="#"> <i class="icon-search"></i>Rechercher un apprenant</a>
@@ -11,7 +11,6 @@
         <span class="icon">
             <input type="checkbox" id="title-checkbox" name="title-checkbox" />
         </span>
-        <h5>{{ title }}</h5>
         <span class="label label-info tip-left" data-original-title="{{ students_array | length }} apprenant(s)">{{ students_array | length }}</span>
     </div>
     <div class="widget-content nopadding">
