@@ -256,10 +256,10 @@ class ClassSession {
     /**
      * Add attachments
      *
-     * @param \Virgule\Bundle\MainBundle\Entity\Attachment $attachments
+     * @param \Virgule\Bundle\MainBundle\Entity\Document $attachments
      * @return ClassSession
      */
-    public function addAttachment(\Virgule\Bundle\MainBundle\Entity\Attachment $attachments) {
+    public function addAttachment(\Virgule\Bundle\MainBundle\Entity\Document $attachments) {
         $this->attachments[] = $attachments;
 
         return $this;
@@ -268,9 +268,9 @@ class ClassSession {
     /**
      * Remove attachments
      *
-     * @param \Virgule\Bundle\MainBundle\Entity\Attachment $attachments
+     * @param \Virgule\Bundle\MainBundle\Entity\Document $attachments
      */
-    public function removeAttachment(\Virgule\Bundle\MainBundle\Entity\Attachment $attachments) {
+    public function removeAttachment(\Virgule\Bundle\MainBundle\Entity\Document $attachments) {
         $this->attachments->removeElement($attachments);
     }
 
@@ -317,4 +317,37 @@ class ClassSession {
         $this->classSessionStudents = $students;
     }
 
+
+    /**
+     * Add documents
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Document $documents
+     * @return ClassSession
+     */
+    public function addDocument(\Virgule\Bundle\MainBundle\Entity\Document $documents)
+    {
+        $this->documents[] = $documents;
+    
+        return $this;
+    }
+
+    /**
+     * Remove documents
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Document $documents
+     */
+    public function removeDocument(\Virgule\Bundle\MainBundle\Entity\Document $documents)
+    {
+        $this->documents->removeElement($documents);
+    }
+
+    /**
+     * Get documents
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
+    }
 }
