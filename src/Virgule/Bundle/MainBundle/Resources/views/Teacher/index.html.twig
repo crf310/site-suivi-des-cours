@@ -4,12 +4,16 @@
     {% block javascripts %}
     <script type="text/javascript" src="{{ asset('js/jquery.zclip.min.js') }}"></script>
     <script type='text/javascript'>
+    {% set emailAddresses = "" %}
+    {% for entity in entities %}
+       {% set emailAddresses = emailAddresses ~ '\"' ~ entity.firstName ~ ' ' ~ entity.lastName ~ '\" <' ~ entity.emailAddress ~ '>, ' %}
+    {% endfor %}
     $(document).ready(function(){
         $('a#copy-button').zclip({
             path:"{{ asset('swf/ZeroClipboard.swf') }}",
-            copy:"Toto",
+            copy:"{{ emailAddresses | raw }}",
             afterCopy:function(){
-                alert('The poem has been copied to the clipboard.');
+                alert('Les adresses emails ont été copiées avec succès');
             },
         });
     });
@@ -24,6 +28,8 @@
         <a class="btn" title="Voir les utilisateurs actifs" href="{{ path('teacher_index', { 'status': 'active' }) }}"> <i class="icon-user-active"></i>Voir les utilisateurs actifs</a>
     {% endif %}
         
+         <span class="js-zeroclipboard zeroclipboard-button" data-clipboard-text="d964f55edb44abcf7fded8906959b307d5e6c36f" data-copied-hint="copied!" title="Copy SHA"><span class="mini-icon mini-icon-clipboard"></span></span>
+         
     <a class="btn" id="copy-button" title="Copier les adresses emails" href="#"> <i class="icon-copy"></i>Copier les adresses emails</a>
     <a class="btn" title="Ajouter un compte utilisateur" href="{{ path('teacher_new') }}"> <i class="icon-add"></i>Nouvel utilisateur</a>    
 {% endblock %}
