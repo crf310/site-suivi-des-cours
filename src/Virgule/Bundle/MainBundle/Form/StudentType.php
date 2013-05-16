@@ -71,7 +71,7 @@ class StudentType extends AbstractType {
                 ->add('emergencyContactFirstname')
                 ->add('emergencyContactPhoneNumber')
                 ->add('emergencyContactConnectionType')
-                ->add('suggestedLevel', 'entity', array(
+                ->add('suggestedClassLevel', 'entity', array(
                     'class' => 'VirguleMainBundle:ClassLevel',
                     'expanded' => false,
                     'multiple' => false,

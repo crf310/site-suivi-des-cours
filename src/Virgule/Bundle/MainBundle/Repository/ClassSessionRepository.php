@@ -72,7 +72,7 @@ public function loadAllClassSessionByCourse($courseId, $limit = null) {
     
     public function loadAll($semesterId, $limit = null) {
         $qb = $this->getDefaultQueryBuilder()
-            ->addSelect('c.id as id, c.reportDate, c.sessionDate')
+            ->addSelect('c.id as id, c.reportDate, c.sessionDate, c.summary as summary')
             ->addSelect('c2.id as course_id, c2.dayOfWeek as course_dayOfWeek,
                 c2.startTime as course_startTime, c2.endTime as course_endTime')
             ->addSelect('t1.id as sessionTeacher_id, t1.firstName as sessionTeacher_firstName, t1.lastName as sessionTeacher_lastName')
