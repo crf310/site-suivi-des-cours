@@ -32,11 +32,11 @@ class ClassSessionRepository extends EntityRepository {
             ->innerJoin('c.sessionTeacher', 't1')
             ->innerJoin('c.reportTeacher', 't2')
             ->add('orderBy', 'c.reportDate DESC')
-            ->add('groupBy', 'c.id')
-            ->setParameter('semesterId', $semesterId);
+            ->add('groupBy', 'c.id');
         
         if (null !== $semesterId) {
-            $qb->where('s.id = :semesterId');
+            $qb->where('s.id = :semesterId')
+            ->setParameter('semesterId', $semesterId);
         }
         if ($limit != null) {
             $qb->setMaxResults($limit);
