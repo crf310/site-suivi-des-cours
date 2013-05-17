@@ -44,7 +44,7 @@ class ClassSessionController extends AbstractVirguleController {
         $classLevels = $this->getClassLevelRepository()->findAll();
         $classSessions = $this->getClassSessionRepository()->loadAllClassSessionByClassLevel($id, $this->getSelectedSemesterId());
 
-        return array('classSessions' => $classSessions, 'classLevels' => $classLevels, 'currentClassLevel' => $id);
+        return array('classSessions' => $classSessions, 'classLevels' => $classLevels, 'currentClassLevelId' => $id);
     }    
 
     /**

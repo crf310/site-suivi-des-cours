@@ -8,7 +8,7 @@
         <div class="span12 center" style="text-align: center;">
             <ul class="quick-actions-horizontal">
             {% for classLevel in classLevels %}
-                {% if currentClassLevel is empty or classLevel.id != currentClassLevel.id %}
+                {% if currentClassLevelId is empty or classLevel.id != currentClassLevelId %}
                     <li>
                         <a href="{{ path('classsession_index_per_level', { 'id': classLevel.id }) }}">
                             <span>{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel.htmlColorCode, 'classLevelLabel': classLevel.label } %}</span>
