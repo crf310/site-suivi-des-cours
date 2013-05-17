@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Entity\TagRepository")
  */
-class Tag
-{
+class Tag {
+
     /**
      * @var integer
      *
@@ -32,14 +32,13 @@ class Tag
      * @ORM\ManyToMany(targetEntity="Document", mappedBy="tags")
      */
     private $documents;
-    
+
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -49,10 +48,9 @@ class Tag
      * @param string $tagLabel
      * @return Tag
      */
-    public function setTagLabel($tagLabel)
-    {
+    public function setTagLabel($tagLabel) {
         $this->tagLabel = $tagLabel;
-    
+
         return $this;
     }
 
@@ -61,8 +59,45 @@ class Tag
      *
      * @return string 
      */
-    public function getTagLabel()
-    {
+    public function getTagLabel() {
         return $this->tagLabel;
     }
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add documents
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Document $documents
+     * @return Tag
+     */
+    public function addDocument(\Virgule\Bundle\MainBundle\Entity\Document $documents) {
+        $this->documents[] = $documents;
+
+        return $this;
+    }
+
+    /**
+     * Remove documents
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Document $documents
+     */
+    public function removeDocument(\Virgule\Bundle\MainBundle\Entity\Document $documents) {
+        $this->documents->removeElement($documents);
+    }
+
+    /**
+     * Get documents
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDocuments() {
+        return $this->documents;
+    }
+
 }

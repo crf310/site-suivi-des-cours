@@ -54,13 +54,13 @@ class Document {
      * @Assert\NotNull
      */
     private $classLevel;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="documents")
      * @ORM\JoinTable(name="document_tag")
      */
     private $tags;
-    
+
     /**
      * Get id
      *
@@ -152,6 +152,74 @@ class Document {
      */
     public function getClassSession() {
         return $this->classSession;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->classLevel = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add classLevel
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevel
+     * @return Document
+     */
+    public function addClassLevel(\Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevel) {
+        $this->classLevel[] = $classLevel;
+
+        return $this;
+    }
+
+    /**
+     * Remove classLevel
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevel
+     */
+    public function removeClassLevel(\Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevel) {
+        $this->classLevel->removeElement($classLevel);
+    }
+
+    /**
+     * Get classLevel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getClassLevel() {
+        return $this->classLevel;
+    }
+
+    /**
+     * Add tags
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Tag $tags
+     * @return Document
+     */
+    public function addTag(\Virgule\Bundle\MainBundle\Entity\Tag $tags) {
+        $this->tags[] = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Remove tags
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Tag $tags
+     */
+    public function removeTag(\Virgule\Bundle\MainBundle\Entity\Tag $tags) {
+        $this->tags->removeElement($tags);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTags() {
+        return $this->tags;
     }
 
 }
