@@ -1,9 +1,7 @@
 {% extends '::main_content.html.twig' %}
 {% block content_title %}Tous les comptes-rendus{% endblock %}
- {%block submenu %}
-    <a class="btn tip-bottom" href="{{ path('classsession_rss_index') }}"> <i class="icon-rss"></i>S'abonner à un flux RSS</a>
-    <a class="btn tip-bottom" href="#"> <i class="icon-search"></i>Rechercher dans les compte-rendus</a>
-    <a class="btn tip-bottom" href="{{ path('classsession_new') }}"> <i class="icon-add"></i>Nouveau compte-rendu</a>
+{%block submenu %}
+    {% include 'VirguleMainBundle:ClassSession:menu.html.twig' %}
 {% endblock %}
 {% block main_content %}
 <div class="widget-box">
@@ -12,39 +10,12 @@
                     <i class="icon-th"></i>
             </span>
             <h5>Tous les comptes-rendus</h5>
-            <span class="label label-info tip-left" data-original-title="{{ entities | length }} cours">{{ entities | length }}</span>
+            <span class="label label-info tip-left" data-original-title="{{ classSessions | length }} cours">{{ classSessions | length }}</span>
     </div>
     <div class="widget-content nopadding">
-        <table class="table table-bordered data-table">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Niveau</th>
-                    <th>Cours</th>
-                    <th>Apprenants présents</th>
-                    <th>Dirigé par</th>
-                    <th>Saisi par</th>
-                    <th>Saisi le</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for entity in entities %}
-                <tr>
-                    <td class="center">{% if entity['sessionDate'] %}{{ entity['sessionDate'] | date('d/m/Y') }} {% endif %}</td>
-                    <td class="center">
-                        {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': entity['classLevelHtmlColorCode'], 'classLevelLabel': entity['classLevelLabel'] } %} 
-                    </td>
-                    <td>le {{ entity['course_dayOfWeek'] | day }} de {{ entity['course_startTime'] | date('H:i') }} à {{ entity['course_endTime'] | date('H:i') }}</td>
-                    <td class="center">{{ entity['nb_students'] }}
-                    <td>{{ entity['sessionTeacher_firstName'] }} {{ entity['sessionTeacher_lastName'] }}</td>
-                    <td>{{ entity['reportTeacher_firstName'] }} {{ entity['reportTeacher_lastName'] }}</td>
-                    <td class="center">{% if entity['reportDate'] %}{{ entity['reportDate'] | date('d/m/Y à  h:i') }} {% endif %}</td>
-                    <td class="center"><a href="{{ path('classsession_show', { 'id': entity['id'] }) }}">Voir le compte-rendu</a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        {% block table %}
+            {% include 'VirguleMainBundle:ClassSession:table.html.twig' with { 'classSessions': classSessions }  %}
+        {% endblock %}
     </div>
 </div>
 {% endblock %}

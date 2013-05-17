@@ -1,0 +1,30 @@
+<table class="table table-bordered data-table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Niveau</th>
+            <th>Cours</th>
+            <th>Apprenants présents</th>
+            <th>Dirigé par</th>
+            <th>Saisi par</th>
+            <th>Saisi le</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for classSession in classSessions %}
+        <tr>
+            <td class="center">{% if classSession['sessionDate'] %}{{ classSession['sessionDate'] | date('d/m/Y') }} {% endif %}</td>
+            <td class="center">
+                {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classSession['classLevelHtmlColorCode'], 'classLevelLabel': classSession['classLevelLabel'] } %} 
+            </td>
+            <td>le {{ classSession['course_dayOfWeek'] | day }} de {{ classSession['course_startTime'] | date('H:i') }} à {{ classSession['course_endTime'] | date('H:i') }}</td>
+            <td class="center">{{ classSession['nb_students'] }}
+            <td>{{ classSession['sessionTeacher_firstName'] }} {{ classSession['sessionTeacher_lastName'] }}</td>
+            <td>{{ classSession['reportTeacher_firstName'] }} {{ classSession['reportTeacher_lastName'] }}</td>
+            <td class="center">{% if classSession['reportDate'] %}{{ classSession['reportDate'] | date('d/m/Y à  h:i') }} {% endif %}</td>
+            <td class="center"><a href="{{ path('classsession_show', { 'id': classSession['id'] }) }}">Voir le compte-rendu</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

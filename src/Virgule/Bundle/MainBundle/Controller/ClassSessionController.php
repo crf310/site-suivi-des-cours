@@ -22,8 +22,6 @@ use Ivory\LuceneSearchBundle\Model\Field;
  * @Route("/classsession")
  */
 class ClassSessionController extends AbstractVirguleController {
-
-
     /**
      * Lists all ClassSession entities.
      *
@@ -31,23 +29,22 @@ class ClassSessionController extends AbstractVirguleController {
      * @Template()
      */
     public function indexAction() {
-        $em = $this->getDoctrineManager(); 
-        $classSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAll($this->getSelectedSemesterId());
+        $classSessions = $this->getClassSessionRepository()->loadAll($this->getSelectedSemesterId());
 
-        return array('entities' => $classSessions);
+        return array('classSessions' => $classSessions);
     }
     
     /**
      * Lists all ClassSession entities per level.
      *
      * @Route("/level/{id}", name="classsession_index_per_level")
-     * @Template("VirguleMainBundle:ClassSession:index.html.twig")
+     * @Template("VirguleMainBundle:ClassSession:indexPerLevel.html.twig")
      */
     public function indexPerLevelAction(ClassLevel $id = null) {
-        $em = $this->getDoctrineManager(); 
-        $classSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByClassLevel($id, $this->getSelectedSemesterId());
+        $classLevels = $this->getClassLevelRepository()->findAll();
+        $classSessions = $this->getClassSessionRepository()->loadAllClassSessionByClassLevel($id, $this->getSelectedSemesterId());
 
-        return array('entities' => $classSessions);
+        return array('classSessions' => $classSessions, 'classLevels' => $classLevels, 'currentClassLevel' => $id);
     }    
 
     /**
