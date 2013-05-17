@@ -10,7 +10,7 @@ class MenuBuilder extends ContainerAware {
 
     public function mainMenu(FactoryInterface $factory, array $options) {
         $menu = $factory->createItem('root');
-
+        
         $menu->addChild('Accueil', array('route' => 'welcome'));
         $menu['Accueil']->setLinkAttribute('class', 'welcome');
         
@@ -24,11 +24,16 @@ class MenuBuilder extends ContainerAware {
         $menu['Compte-rendus']->addChild('Par niveau', array('route' => 'classsession_index_per_level'));
         $menu['Compte-rendus']['Par niveau']->setLinkAttribute('class', 'minutes');
         
+        /* Hidden children to set this menu active when we visit the pages */
+        $menu['Compte-rendus']->addChild('RSS INDEX', array('route' => 'classsession_rss_index'))->setDisplay(false);
+        
         $this->addNbSubLinks($menu, 'Compte-rendus');
         /* End class reports */
         
         $menu->addChild('Planning des cours', array('route' => 'course_show_planning'));
         $menu['Planning des cours']->setLinkAttribute('class', 'schedule');
+        $menu['Planning des cours']->addChild('LISTE DES COURS', array('route' => 'course_index'))->setDisplay(false);
+        
         
         /* Students */
         $menu->addChild('Apprenants', array('uri' => '#'));
@@ -107,7 +112,12 @@ class MenuBuilder extends ContainerAware {
     }
     
     private function addNbSubLinks($menu, $index) {
-        $nb_sublinks = count($menu[$index]->getChildren());
+        $nb_sublinks = 0;
+        foreach ($menu[$index]->getChildren() as $child) {
+            if ($child->isDisplayed()) {
+                $nb_sublinks++;
+            }
+        }
         $menu[$index]->setAttribute('nb_sublinks', $nb_sublinks);
     }
 }
