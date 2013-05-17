@@ -10,6 +10,7 @@ use Virgule\Bundle\MainBundle\Controller\AbstractVirguleController;
 use Virgule\Bundle\MainBundle\Entity\ClassSession;
 use Virgule\Bundle\MainBundle\Entity\Comment;
 use Virgule\Bundle\MainBundle\Entity\Course;
+use Virgule\Bundle\MainBundle\Entity\ClassLevel;
 use Virgule\Bundle\MainBundle\Form\ClassSessionType;
 use Virgule\Bundle\MainBundle\Form\CommentType;
 
@@ -36,16 +37,35 @@ class ClassSessionController extends AbstractVirguleController {
     }
 
     /**
-     * Lists all ClassSession entities.
+     * Lists ClassSession entities into a RSS feed
      *
-     * @Route("/rss", name="classsession_rss")
+     * @Route("/rss/feed", name="classsession_rss_feed_all")     * 
+     * @Route("/rss/feed/level/{id}", name="classsession_rss_feed_classlevel")
      * @Template("VirguleMainBundle:ClassSession:list.rss.twig")
      */
-    public function rssAction() {
+    public function rssAction(ClassLevel $id = null) {
         $em = $this->getDoctrineManager(); 
-        $classSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAll($this->getSelectedSemesterId());
+        
+        if (null === $id) {
+            $classSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAll($this->getSelectedSemesterId());
+        } else {
+            $classSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByClassLevel($id, $this->getSelectedSemesterId());
+        }
 
         return array('classSessions' => $classSessions);
+    }
+    
+    /**
+     * Lists all ClassSession RSS feeds available
+     *
+     * @Route("/rss", name="classsession_rss_index")
+     * @Template("VirguleMainBundle:ClassSession:index_rss.html.twig")
+     */
+    public function rssIndexAction() {
+        $classLevelRepository = $this->getClassLevelRepository(); 
+        $classLevels = $classLevelRepository->findAll();
+
+        return array('classLevels' => $classLevels);
     }
     
     /**

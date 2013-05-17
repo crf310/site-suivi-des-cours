@@ -48,7 +48,27 @@ class ClassSessionRepository extends EntityRepository {
         return $results;   
     }
     
-public function loadAllClassSessionByCourse($courseId, $limit = null) {
+    public function loadAllClassSessionByClassLevel($classLevelId, $semesterId) {
+        $qb = $this->getDefaultQueryBuilder()
+            ->addSelect('c.id, c.reportDate, c.sessionDate, count(cm.id) as nb_comments')
+            ->innerJoin('c.course', 'c2')
+            ->innerJoin('c2.classLevel', 'cl', 'WITH', 'cl.id = :classLevelId')
+            ->innerJoin('c.sessionTeacher', 't')
+            ->innerJoin('c2.semester', 's', 'WITH', 'c2.id = :semesterId')
+            ->leftJoin('c.comments', 'cm')
+            ->setParameter('classLevelId', $classLevelId)
+            ->setParameter('semesterId', $semesterId)
+            ->add('orderBy', 'c.reportDate DESC')
+            ->add('groupBy', 'c.id')
+        ;
+        
+        $q = $qb->getQuery();
+                
+        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $results;   
+    }    
+    
+    public function loadAllClassSessionByCourse($courseId, $limit = null) {
         $qb = $this->getDefaultQueryBuilder()
             ->addSelect('c.id, c.reportDate, c.sessionDate, count(cm.id) as nb_comments')
             ->innerJoin('c.course', 'c2')
