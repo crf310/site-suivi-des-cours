@@ -81,7 +81,7 @@ class ClassSessionRepository extends EntityRepository {
     }    
     
     public function loadAllClassSessionByCourse($courseId, $limit = null) {
-        $qb = $this->getNbStudentsQueryBuilder(null, $limit)
+        $qb = $this->getNbCommentsQueryBuilder(null, $limit)
             ->andWhere('c2.id = :courseId')   
             ->setParameter('courseId', $courseId)
         ;
