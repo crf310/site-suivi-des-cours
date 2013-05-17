@@ -23,6 +23,7 @@ use Ivory\LuceneSearchBundle\Model\Field;
  */
 class ClassSessionController extends AbstractVirguleController {
 
+
     /**
      * Lists all ClassSession entities.
      *
@@ -35,6 +36,19 @@ class ClassSessionController extends AbstractVirguleController {
 
         return array('entities' => $classSessions);
     }
+    
+    /**
+     * Lists all ClassSession entities per level.
+     *
+     * @Route("/level/{id}", name="classsession_index_per_level")
+     * @Template("VirguleMainBundle:ClassSession:index.html.twig")
+     */
+    public function indexPerLevelAction(ClassLevel $id = null) {
+        $em = $this->getDoctrineManager(); 
+        $classSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByClassLevel($id, $this->getSelectedSemesterId());
+
+        return array('entities' => $classSessions);
+    }    
 
     /**
      * Lists ClassSession entities into a RSS feed

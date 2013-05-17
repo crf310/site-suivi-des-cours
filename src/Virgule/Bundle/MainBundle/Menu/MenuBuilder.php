@@ -14,8 +14,18 @@ class MenuBuilder extends ContainerAware {
         $menu->addChild('Accueil', array('route' => 'welcome'));
         $menu['Accueil']->setLinkAttribute('class', 'welcome');
         
-        $menu->addChild('Compte-rendus', array('route' => 'classsession_index'));
+        /* Class reports */
+        $menu->addChild('Compte-rendus', array('uri' => '#'));
+        $menu['Compte-rendus']->setAttribute('class', 'submenu');
         $menu['Compte-rendus']->setLinkAttribute('class', 'minutes');
+        
+        $menu['Compte-rendus']->addChild('Tous les compte-rendus', array('route' => 'classsession_index'));
+        $menu['Compte-rendus']['Tous les compte-rendus']->setLinkAttribute('class', 'minutes');
+        $menu['Compte-rendus']->addChild('Par niveau', array('route' => 'classsession_index_per_level'));
+        $menu['Compte-rendus']['Par niveau']->setLinkAttribute('class', 'minutes');
+        
+        $this->addNbSubLinks($menu, 'Compte-rendus');
+        /* End class reports */
         
         $menu->addChild('Planning des cours', array('route' => 'course_show_planning'));
         $menu['Planning des cours']->setLinkAttribute('class', 'schedule');
