@@ -40,7 +40,7 @@ class ClassSessionController extends AbstractVirguleController {
      * @Route("/level/{id}", name="classsession_index_per_level")
      * @Template("VirguleMainBundle:ClassSession:indexPerLevel.html.twig")
      */
-    public function indexPerLevelAction(ClassLevel $id = null) {
+    public function indexPerLevelAction($id = null) {
         $classLevels = $this->getClassLevelRepository()->findAll();
         $classSessions = $this->getClassSessionRepository()->loadAllClassSessionByClassLevel($id, $this->getSelectedSemesterId());
 
@@ -54,7 +54,7 @@ class ClassSessionController extends AbstractVirguleController {
      * @Route("/rss/feed/level/{id}", name="classsession_rss_feed_classlevel")
      * @Template("VirguleMainBundle:ClassSession:list.rss.twig")
      */
-    public function rssAction(ClassLevel $id = null) {
+    public function rssAction($id = null) {
         $em = $this->getDoctrineManager(); 
         
         if (null === $id) {
