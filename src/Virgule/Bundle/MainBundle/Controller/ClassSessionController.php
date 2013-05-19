@@ -26,25 +26,28 @@ class ClassSessionController extends AbstractVirguleController {
      * Lists all ClassSession entities.
      *
      * @Route("/", name="classsession_index")
+     * @Route("/level/{id}", name="classsession_index_per_level")
      * @Template()
      */
-    public function indexAction() {
-        $classSessions = $this->getClassSessionRepository()->loadAll($this->getSelectedSemesterId());
-
-        return array('classSessions' => $classSessions);
+    public function indexAction($id = null) {
+        $classLevels = $this->getClassLevelRepository()->findAll();
+        
+        if ($id == null) {
+            $classSessions = $this->getClassSessionRepository()->loadAll($this->getSelectedSemesterId());
+        } else {
+            $classSessions = $this->getClassSessionRepository()->loadAllClassSessionByClassLevel($id, $this->getSelectedSemesterId());
+        }
+        
+        return array('classSessions' => $classSessions, 'classLevels' => $classLevels, 'currentClassLevelId' => $id);
     }
     
     /**
      * Lists all ClassSession entities per level.
      *
-     * @Route("/level/{id}", name="classsession_index_per_level")
      * @Template("VirguleMainBundle:ClassSession:indexPerLevel.html.twig")
      */
-    public function indexPerLevelAction($id = null) {
-        $classLevels = $this->getClassLevelRepository()->findAll();
-        $classSessions = $this->getClassSessionRepository()->loadAllClassSessionByClassLevel($id, $this->getSelectedSemesterId());
+    public function indexPerLevelAction() {
 
-        return array('classSessions' => $classSessions, 'classLevels' => $classLevels, 'currentClassLevelId' => $id);
     }    
 
     /**

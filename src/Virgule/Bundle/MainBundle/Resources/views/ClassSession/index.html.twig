@@ -4,6 +4,28 @@
     {% include 'VirguleMainBundle:ClassSession:menu.html.twig' %}
 {% endblock %}
 {% block main_content %}
+<div class="row-fluid">
+    <div class="span12 center" style="text-align: center;">
+        <ul class="quick-actions-horizontal">
+        {% if currentClassLevelId is not empty %}
+             <li>
+                <a href="{{ path('classsession_index') }}">
+                    <span>{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': '#000000', 'classLevelLabel': 'Tous' } %}</span>
+                </a>
+            </li>   
+        {% endif %}            
+        {% for classLevel in classLevels %}
+            {% if currentClassLevelId is empty or classLevel.id != currentClassLevelId %}
+                <li>
+                    <a href="{{ path('classsession_index_per_level', { 'id': classLevel.id }) }}">
+                        <span>{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel.htmlColorCode, 'classLevelLabel': classLevel.label } %}</span>
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+    </div>    
+</div>
 <div class="widget-box">
     <div class="widget-title">
             <span class="icon">

@@ -15,14 +15,9 @@ class MenuBuilder extends ContainerAware {
         $menu['Accueil']->setLinkAttribute('class', 'welcome');
         
         /* Class reports */
-        $menu->addChild('Compte-rendus', array('uri' => '#'));
-        $menu['Compte-rendus']->setAttribute('class', 'submenu');
+        $menu->addChild('Compte-rendus', array('route' => 'classsession_index'));
         $menu['Compte-rendus']->setLinkAttribute('class', 'minutes');
-        
-        $menu['Compte-rendus']->addChild('Tous les compte-rendus', array('route' => 'classsession_index'));
-        $menu['Compte-rendus']['Tous les compte-rendus']->setLinkAttribute('class', 'minutes');
-        $menu['Compte-rendus']->addChild('Par niveau', array('route' => 'classsession_index_per_level'));
-        $menu['Compte-rendus']['Par niveau']->setLinkAttribute('class', 'minutes');
+        $menu['Compte-rendus']->addChild('Par niveau', array('route' => 'classsession_index_per_level'))->setDisplay(false);
         
         /* Hidden children to set this menu active when we visit the pages */
         $menu['Compte-rendus']->addChild('RSS INDEX', array('route' => 'classsession_rss_index'))->setDisplay(false);
