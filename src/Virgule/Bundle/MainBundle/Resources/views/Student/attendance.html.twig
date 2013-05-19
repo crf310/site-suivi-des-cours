@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>Fiche de présence</title>
+    </head>
+    <body>
+        <h1>Fiche de présence</h1>
+        <h2>Niveau {{ course.classLevel }}, {{ course.dayOfWeek| day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }}</h2> 
+        <h3>Date du cours : </h3>
+        <h3>Apprenants présents : </h3>
+        <table>
+            <tr>
+            {% for key,entity in students_array %}
+                    <td><input type="checkbox"> {{ entity['firstname'] }} {{ entity['lastname'] }}</td>
+                {% if loop.index % 3 == 0 %}
+                    </tr><tr>
+                {% endif %}
+                {% if loop.last == true %}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+        <h3>Commentaires sur le cours</h3>
+        {% for i in 0..10 %}
+            ____________________________________________________________________<br /><br />
+        {% endfor %}
+    <body>
+</html>

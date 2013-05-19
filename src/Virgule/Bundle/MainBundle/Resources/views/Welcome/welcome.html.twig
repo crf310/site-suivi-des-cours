@@ -21,7 +21,7 @@
                                     <a href="{{ path('course_show', { 'id': course.id }) }}" >Voir le cours</a>
                                     <br />
                                     <a  class="btn virgule-btn" href="{{ path('classsession_add', { 'id': course.id }) }}"><i class="icon-add"></i>Compte-rendu</a>
-                                    <a  class="btn virgule-btn" href="{{ path('classsession_add', { 'id': course.id }) }}"><i class="icon-trombinoscope"></i>Fiche de présence</a>
+                                    <a  class="btn virgule-btn" href="{{ path('attendance_list', { 'id': course.id }) }}" target="_blank"><i class="icon-trombinoscope"></i>Fiche de présence</a>
                                 </div>
                             {% endfor %}
                         {% endif %}

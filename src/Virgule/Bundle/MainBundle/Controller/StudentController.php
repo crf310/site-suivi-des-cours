@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Controller\CommentController;
 use Virgule\Bundle\MainBundle\Entity\Student;
 use Virgule\Bundle\MainBundle\Entity\Comment;
+use Virgule\Bundle\MainBundle\Entity\Course;
 use Virgule\Bundle\MainBundle\Entity\ClassLevelSuggested;
 use Virgule\Bundle\MainBundle\Form\StudentType;
 use Virgule\Bundle\MainBundle\Form\CommentType;
@@ -21,6 +22,17 @@ use Virgule\Bundle\MainBundle\Form\ClassLevelSuggestedType;
  * @Route("/student")
  */
 class StudentController extends AbstractVirguleController {
+    
+    /**
+     * Display a list of the students to note their attendance
+     *
+     * @Route("/{id}/attendList", name="attendance_list")
+     * @Template("VirguleMainBundle:Student:attendance.html.twig")
+     */
+    public function attendanceSlipAction(Course $id) {
+        $students = $this->getStudentRepository()->loadAllEnrolledInCourse($id);
+        return Array('course' => $id, 'students_array' => $students);
+    }
     
     /**
      * Lists all Student entities.
@@ -109,7 +121,7 @@ class StudentController extends AbstractVirguleController {
         
         $currentTeacher = $this->getConnectedUser();
         
-        $form = $this->createForm(new StudentType($teacherRepository, $organizationBranchId, $openHousesDates, $currentTeacher), $entity);
+        $form = $this->createForm(new StudentType($teacherRepository, $organizationBranchId, $openHousesDates, $currentTeacher), $entity, Array('em' => $this->getDoctrineManager()));
 
         return $form;
     }
