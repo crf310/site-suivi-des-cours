@@ -6,7 +6,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Virgule\Bundle\MainBundle\Repository\TeacherRepository;
-use Virgule\Bundle\MainBundle\Repository\CountryRepository;
 use Virgule\Bundle\MainBundle\Entity\Teacher;
 
 class StudentType extends AbstractType {
@@ -30,26 +29,26 @@ class StudentType extends AbstractType {
                 ->add('birthdate', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
-                    'attr' => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy')
+                    'attr'   => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy')
                 ))
                 ->add('nativeCountry', 'country', array(
                     'attr' => array('class' => 'medium-select')
                 ))
                 ->add('registrationDate', 'date', array(
-                    'widget' => 'single_text',
-                    'format' => 'dd/MM/yyyy',
+                    'widget'            => 'single_text',
+                    'format'            => 'dd/MM/yyyy',
                     'open_houses_dates' => $this->openHousesDates,
-                    'attr' => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy')
+                    'attr'              => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy')
                 ))
                 ->add('welcomedByTeacher', 'entity', array(
-                    'class' => 'VirguleMainBundle:Teacher',
-                    'query_builder' => $this->teacherRepository->getAvailableTeachersQueryBuilder($this->organizationBranchId, true),
-                    'expanded' => false,
-                    'multiple' => false,
-                    'property' => 'fullname',
-                    'property_path' => 'welcomedByTeacher',
+                    'class'             => 'VirguleMainBundle:Teacher',
+                    'query_builder'     => $this->teacherRepository->getAvailableTeachersQueryBuilder($this->organizationBranchId, true),
+                    'expanded'          => false,
+                    'multiple'          => false,
+                    'property'          => 'fullname',
+                    'property_path'     => 'welcomedByTeacher',
                     'preferred_choices' => array($this->currentTeacher),
-                    'attr' => array('class' => 'medium-select')
+                    'attr'              => array('class' => 'medium-select')
                 ))
                 ->add('phoneNumber')
                 ->add('cellphoneNumber')
@@ -57,33 +56,35 @@ class StudentType extends AbstractType {
                 ->add('zipcode')
                 ->add('city')
                 ->add('gender', 'choice', array(
-                    'choices' => array('M' => 'Masculin', 'F' => 'Féminin'),
-                    'expanded' => false,
-                    'multiple' => false,
+                    'choices'       => array('M' => 'Masculin', 'F' => 'Féminin'),
+                    'expanded'      => true,
+                    'multiple'      => false,
+                    'cols_number'   => 2
                 ))
-                ->add('picturePath', 'file')
+                ->add('picture')
                 ->add('arrivalDate', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
-                    'attr' => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy')
+                    'attr'   => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy', 'required' => false)
                 ))
                 ->add('emergencyContactLastname')
                 ->add('emergencyContactFirstname')
                 ->add('emergencyContactPhoneNumber')
                 ->add('emergencyContactConnectionType')
-                ->add('suggestedClassLevel', 'entity', array(
-                    'class' => 'VirguleMainBundle:ClassLevel',
-                    'expanded' => false,
-                    'multiple' => false,
-                    'property' => 'label',         
-                    'attr' => array('class' => 'small-select')
-                 ))
+                ->add('suggestedClassLevel', 'collection', array(
+                    'type'      => new ClassLevelSuggestedType($options['em']),
+                    'allow_add' => true,
+                    'prototype' => true,
+                    'by_reference' => false,
+                ))
                 ->add('courses', 'entity', array(
-                    'class' => 'VirguleMainBundle:Course',
-                    'expanded' => false,
-                    'multiple' => true,        
-                    'attr' => array('class' => 'medium-select')
+                    'class'     => 'VirguleMainBundle:Course',
+                    'expanded'  => false,
+                    'multiple'  => true,        
+                    'attr'      => array('class' => 'medium-select')
                  ));
+        
+        
                 
                 /*
                  * 
@@ -100,6 +101,14 @@ class StudentType extends AbstractType {
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'Virgule\Bundle\MainBundle\Entity\Student'
+        ));
+        
+        $resolver->setRequired(array(
+            'em',
+        ));
+
+        $resolver->setAllowedTypes(array(
+            'em' => 'Doctrine\Common\Persistence\ObjectManager',
         ));
     }
 

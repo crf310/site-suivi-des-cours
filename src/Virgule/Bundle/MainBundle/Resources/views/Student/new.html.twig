@@ -32,7 +32,7 @@
             {{ form_row(form.address, { 'label': 'Adresse' }) }}
             {{ form_row(form.zipcode, { 'label': 'Code postal' }) }}
             {{ form_row(form.city, { 'label': 'Ville' }) }}
-            {{ form_row(form.picturePath, { 'label': 'Photo' }) }}
+            {{ form_row(form.picture, { 'label': 'Photo' }) }}
         </div>
         <div class="widget-title">
             <span class="icon">
@@ -54,9 +54,11 @@
         </div>
         <div class="widget-content nopadding">
             {{ form_row(form.registrationDate, { 'label': 'Accueilli le', 'id': 'registrationDateField', 'hint':'Cliquez sur le bouton correspondant à une journée d\'accueil pour insérer la date' }) }}                
-            {{ form_row(form.welcomedByTeacher, { 'label': 'Accueilli par' }) }}       
-            {{ form_row(form.suggestedClassLevel, { 'label': 'Niveau conseillé' }) }}       
-            {{ form_row(form.courses, { 'label': 'Inscrire aux cours' }) }}           
+            {{ form_row(form.welcomedByTeacher, { 'label': 'Accueilli par' }) }}  
+            {% for suggestedClassLevel in form.suggestedClassLevel %}
+                {{ form_row(suggestedClassLevel.classLevel, { 'label': 'Niveau conseillé' }) }}
+            {% endfor %}
+            {{ form_row(form.courses, { 'label': 'Inscrire aux cours' }) }}  
             {{ form_rest(form) }}
             <div class="form-actions">                                     
                 <input class="btn btn-success" type="submit" value="Enregistrer l'apprenant" /> 

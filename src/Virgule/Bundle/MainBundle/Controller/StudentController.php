@@ -111,6 +111,10 @@ class StudentController extends AbstractVirguleController {
 
     
     private function initStudentForm($entity) {
+        $classLevelSuggested = new ClassLevelSuggested();
+        $classLevelSuggested->setChanger($this->getUser());
+        
+        $entity->addSuggestedClassLevel($classLevelSuggested);
         $teacherRepository = $this->getTeacherRepository();
         
         $organizationBranchId = $this->getSelectedOrganizationBranchId();
