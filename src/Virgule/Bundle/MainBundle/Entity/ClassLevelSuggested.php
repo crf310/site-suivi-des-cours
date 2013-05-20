@@ -28,28 +28,28 @@ class ClassLevelSuggested {
      * @ORM\Column(name="date_of_change", type="datetime", nullable=false)
      */
     private $dateOfChange;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Teacher")
      * @ORM\JoinColumn(name="fk_changer", referencedColumnName="id", nullable=false)
      * @Assert\NotNull()
      */
     private $changer;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="ClassLevel")
      * @ORM\JoinColumn(name="fk_classlevel", referencedColumnName="id", nullable=false)
      * @Assert\NotNull()
-     */    
+     */
     private $classLevel;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Student", inversedBy="suggestedClassLevel")
      * @ORM\JoinColumn(name="fk_student", referencedColumnName="id")
      * @Assert\NotNull()
      */
     private $student;
-    
+
     /**
      * Get id
      *
@@ -59,17 +59,15 @@ class ClassLevelSuggested {
         return $this->id;
     }
 
-
     /**
      * Set changer
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Teacher $changer
      * @return ClassLevelSuggested
      */
-    public function setChanger(\Virgule\Bundle\MainBundle\Entity\Teacher $changer = null)
-    {
+    public function setChanger(\Virgule\Bundle\MainBundle\Entity\Teacher $changer = null) {
         $this->changer = $changer;
-    
+
         return $this;
     }
 
@@ -78,8 +76,7 @@ class ClassLevelSuggested {
      *
      * @return \Virgule\Bundle\MainBundle\Entity\Teacher 
      */
-    public function getChanger()
-    {
+    public function getChanger() {
         return $this->changer;
     }
 
@@ -89,10 +86,9 @@ class ClassLevelSuggested {
      * @param \Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevel
      * @return ClassLevelSuggested
      */
-    public function setClassLevel(\Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevel = null)
-    {
+    public function setClassLevel(\Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevel = null) {
         $this->classLevel = $classLevel;
-    
+
         return $this;
     }
 
@@ -101,8 +97,7 @@ class ClassLevelSuggested {
      *
      * @return \Virgule\Bundle\MainBundle\Entity\ClassLevel 
      */
-    public function getClassLevel()
-    {
+    public function getClassLevel() {
         return $this->classLevel;
     }
 
@@ -112,10 +107,9 @@ class ClassLevelSuggested {
      * @param \Virgule\Bundle\MainBundle\Entity\Student $student
      * @return ClassLevelSuggested
      */
-    public function setStudent(\Virgule\Bundle\MainBundle\Entity\Student $student = null)
-    {
+    public function setStudent(\Virgule\Bundle\MainBundle\Entity\Student $student = null) {
         $this->student = $student;
-    
+
         return $this;
     }
 
@@ -124,8 +118,7 @@ class ClassLevelSuggested {
      *
      * @return \Virgule\Bundle\MainBundle\Entity\Student 
      */
-    public function getStudent()
-    {
+    public function getStudent() {
         return $this->student;
     }
 
@@ -135,10 +128,9 @@ class ClassLevelSuggested {
      * @param \DateTime $dateOfChange
      * @return ClassLevelSuggested
      */
-    public function setDateOfChange($dateOfChange)
-    {
+    public function setDateOfChange($dateOfChange) {
         $this->dateOfChange = $dateOfChange;
-    
+
         return $this;
     }
 
@@ -147,8 +139,11 @@ class ClassLevelSuggested {
      *
      * @return \DateTime 
      */
-    public function getDateOfChange()
-    {
+    public function getDateOfChange() {
         return $this->dateOfChange;
+    }
+
+    public function __construct() {
+        $this->setDateOfChange(new \Datetime('now'));
     }
 }
