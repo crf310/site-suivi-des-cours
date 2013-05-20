@@ -58,10 +58,17 @@
             <tag name="form.type" />
             <argument type="service" id="doctrine" />
         </service>-->
+        <service id="form.class_level_suggested" class="%namespace%\Form\ClassLevelSuggestedType" public="true">
+            <tag name="form.type" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
         
         <!-- Form Extensions -->
         <service id="virgule_main_bundle.welcome_date_extension" class="%namespace%\Form\Extension\WelcomeDateTypeExtension">
             <tag name="form.type_extension" alias="date" />
+        </service>
+        <service id="virgule_main_bundle.many_cols_extension" class="%namespace%\Form\Extension\ManyColsBoxesTypeExtension">
+            <tag name="form.type_extension" alias="choice" />
         </service>
 
         <!-- Views -->
