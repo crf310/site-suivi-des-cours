@@ -43,6 +43,14 @@
 {% endspaceless %}
 {% endblock checkbox_widget %}
     
+{% block radio_widget %}
+{% spaceless %}
+    <label>
+    <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+    {{ label|trans({}, translation_domain) }}</label>
+{% endspaceless %}
+{% endblock radio_widget %}
+    
 {% block choice_widget_expanded %}
 {% spaceless %}
     <div class="left_list">
@@ -119,9 +127,3 @@
     <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}{% if required %} *{% endif %}</label>
 {% endspaceless %}
 {% endblock form_label %}
-    
-{% block radio_widget %}
-{% spaceless %}
-    <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
-{% endspaceless %}
-{% endblock radio_widget %}
