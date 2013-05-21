@@ -117,11 +117,11 @@ class Student {
     private $comments;
 
     /**
-     * @var string $picturePath
+     * @var string $picture
      *
-     * @ORM\Column(name="picture_path", type="string", length=50, nullable=true)
+     * @ORM\Column(name="picture", type="string", length=50, nullable=true)
      */
-    private $picturePath;
+    private $picture;
 
     /**
      * @var \DateTime $arrivalDate
@@ -527,11 +527,11 @@ class Student {
     /**
      * Set picturePath
      *
-     * @param string $picturePath
+     * @param string picturePath
      * @return Student
      */
-    public function setPicturePath($picturePath) {
-        $this->picturePath = $picturePath;
+    public function setPicture($picture) {
+        $this->picture = $picture;
 
         return $this;
     }
@@ -541,8 +541,8 @@ class Student {
      *
      * @return string 
      */
-    public function getPicturePath() {
-        return $this->picturePath;
+    public function getPicture() {
+        return $this->picture;
     }
 
     /**
