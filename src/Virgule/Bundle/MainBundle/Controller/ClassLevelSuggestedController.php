@@ -29,7 +29,7 @@ class ClassLevelSuggestedController extends AbstractVirguleController {
         $entity->setDateOfChange(new \DateTime('now'));
         $entity->setChanger($this->getUser());
         
-        $form = $this->createForm(new ClassLevelSuggestedType(), $entity, Array('em' => $this->getDoctrineManager()));
+        $form = $this->createForm(new ClassLevelSuggestedType($this->getDoctrineManager()), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
