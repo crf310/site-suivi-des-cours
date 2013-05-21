@@ -1,9 +1,9 @@
-{% if comments.count > 0 %}
 <div class="widget-box">
     <div class="widget-title">
         <span class="icon"><i class="icon-comment"></i></span>
         <h5>Commentaires</h5><span title="{{ comments.count }} commentaire(s)" class="label label-info tip-left">{{ comments.count }}</span>
     </div> 
+    {% include 'VirguleMainBundle:Comment:new.html.twig' with {'commentForm': commentForm, 'target_id': entity.id, 'target_route': 'student_comment_create' }  %}        
     <div class="widget-content">
         {% for comment in comments %}
                 <span class="user">
@@ -15,4 +15,3 @@
         {% endfor %}
     </div>
 </div>
-{% endif %}
