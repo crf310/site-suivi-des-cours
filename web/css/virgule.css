@@ -305,6 +305,9 @@ ul.no-img li {
     list-style-type: none;
     margin-left: -25px;
 }
+ul.no-img li.margin {
+    margin-left: 5px;
+}
 
 /* speech bubbles */
 .comment-bubble {
@@ -348,4 +351,39 @@ ul.no-img li {
 	font-weight: bold;
 	font-size: 17px;
 	margin-left: 5px;
+}
+
+.emergency {
+    background-color: #7A3131;
+}
+
+#emergency_contact {
+    border-bottom: 3px solid #7A3131;
+}
+#emergency_contact .widget-title {
+    color: #FFFFFF;
+    background-color: #7A3131;
+    background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#BF4D4D), to(#7A3131));
+    background-image: -webkit-linear-gradient(top, #BF4D4D 0%, #7A3131 100%);
+    background-image: -moz-linear-gradient(top, #BF4D4D 0%, #7A3131 100%);
+    background-image: -ms-linear-gradient(top, #BF4D4D 0%, #7A3131 100%);
+    background-image: -o-linear-gradient(top, #BF4D4D 0%, #7A3131 100%);
+    background-image: -linear-gradient(top, #BF4D4D 0%, #7A3131 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#BF4D4D', endColorstr='#7A3131',GradientType=0 ); /* IE6-9 */
+    border-bottom: 5px solid #7A3131;
+    height: 36px;
+}
+#emergency_contact .widget-content {
+    border-left: 3px solid #7A3131;
+    border-right: 3px solid #7A3131;
+}
+#emergency_contact h5 {
+    color: #ffffff;
+    text-shadow: 0 1px 0 #666666;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px;
+    line-height: 12px;
+    margin: 0;
 }

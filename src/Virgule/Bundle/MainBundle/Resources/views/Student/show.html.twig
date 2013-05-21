@@ -14,7 +14,7 @@
         </script>
     {% endblock %}
 {% endblock %}
-{% block content_title %}Fiche apprenant{% endblock %}
+{% block content_title %}Fiche apprenant: {{ entity.firstName }} {{ entity.lastName }}{% endblock %}
 {%block submenu %}
     <button  class="btn tip-bottom" type="submit"><i class="icon-user-certificate"></i>Générer une attestation</button>
     {% if app.user.id == entity.id %}
@@ -34,9 +34,13 @@
                             <span class="icon">
                                     <i class="icon-user"></i>
                             </span>
-                            <h5>{{ entity.firstName }} {{ entity.lastName }}</h5>
+                            <h5>Etat civil</h5>
                         </div>            
                         <div class="widget-content nopadding">
+                            <div class="control-group">
+                                <label class="control-label">Prénom / Nom</label>
+                                <div class="controls">{{ entity.firstName }} {{ entity.lastName | upper }}</div>
+                            </div>
                             <div class="control-group">
                                 <label class="control-label">Inscrit(e) le </label>
                                 <div class="controls">{{ entity.registrationDate|date('d/m/Y') }}</div>
@@ -58,8 +62,6 @@
                                 <div class="controls">{{ entity.birthdate|date('d/m/Y') }} ({{ entity.age }} ans)</div>
                             </div>
                         </div>
-                    </div>
-                    <div class="widget-box">
                         <div class="widget-title"><h5>Coordonnées</h5></div> 
                         <div class="widget-content nopadding"> 
                             <div class="control-group">
@@ -75,68 +77,72 @@
                                 <div class="controls">{{ entity.address }} <br />{{ entity.zipcode }} {{ entity.city }}</div>
                             </div>
                         </div>
+                        <div class="widget-title"><h5>Information sur les cours</h5></div> 
+                        <div class="widget-content nopadding"> 
+                            <div class="control-group">
+                                <label class="control-label">Niveau de l'apprenant</label>
+                                <div class="controls">
+                                    <ul class="no-img">
+                                    {% for classLevel in classLevels %}   
+                                        <li>{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel['classLevelColorCode'], 'classLevelLabel': classLevel['classLevelLabel'] } %} : changé le {{ classLevel['dateOfChange'] | date('d/m/Y') }} par {{ classLevel['teacher_firstName'] }} {{ classLevel['teacher_lastName'] }}</li>
+                                    {% endfor %}    
+                                    </ul>
+                                    <a href="#" id="show_classlevelsuggested_form">Changer le niveau conseillé</a>
+                                    <div id="classlevelsuggested_form">
+                                        {% include 'VirguleMainBundle:ClassLevelSuggested:new.html.twig' with { 'form': classLevelSuggestedForm, 'studentId': entity.id } %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Historique des inscriptions</label>
+                                <div class="controls">                                    
+                                    {% if nbEnrollment == 0 %}
+                                        Cet apprenant n'a été inscrit à aucun cours
+                                    {% else %}
+                                        {% for course in courses %}
+                                            {% if loop.first %}
+                                                {% set previousSemester = course.semester.id %}
+                                            {% endif %}
+
+                                            {% if previousSemester != course.semester.id or loop.first %}
+                                                {% if not loop.first %}</li></ul>{% endif %}
+                                                    Session du {{ course.semester.startDate | date('d/m/Y') }} au {{ course.semester.endDate | date('d/m/Y') }}
+                                                    <ul class="no-img">
+                                                {% endif %}
+                                                    <li class="margin">
+                                                        {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevel.htmlColorCode, 'classLevelLabel': course.classLevel.label } %} le {{ course.dayOfWeek | day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }} 
+                                                        <a href="{{ path('course_show', { 'id': course.id }) }}">Voir ce cours</a>
+                                                    </li>
+                                                {% set previousSemester = course.semester.id %}
+                                                {% if loop.last %}</li></ul>{% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="span6">                    
-                    {% if courses|length > 0 %}
-                    <div class="widget-box">
+                <div class="span6 form-horizontal not-form-horizontal">
+                    <div class="widget-box" id="emergency_contact">
                         <div class="widget-title">
-                            <h5>Historique des inscriptions</h5>
-                            <span title="{{ courses|length }} inscriptions(s)" class="label label-info tip-left">{{ courses|length }}</span>
-                        </div>
-                        <div class="widget-content nopadding">
-                            <ul class="recent-posts">
-                                {% if nbEnrollment == 0 %}
-                                    Cet apprenant n'a été inscrit à aucun cours
-                                {% else %}
-                                    {% for course in courses %}
-                                        {% if loop.first %}
-                                            {% set previousSemester = course.semester.id %}
-                                        {% endif %}
-                                    
-                                        {% if previousSemester != course.semester.id or loop.first %}
-                                            {% if not loop.first %}</div></li>{% endif %}
-                                                <li>
-                                                <div class="article-post">
-                                                    <span class="user-info">du {{ course.semester.startDate | date('d/m/Y') }} au {{ course.semester.endDate | date('d/m/Y') }}</span>
-                                            {% endif %}
-                                                <p>
-                                                    {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevel.htmlColorCode, 'classLevelLabel': course.classLevel.label } %} le {{ course.dayOfWeek | day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }} 
-                                                    <a href="{{ path('course_show', { 'id': course.id }) }}">Voir ce cours</a>
-                                                </p>
-                                            {% set previousSemester = course.semester.id %}
-                                            {% if loop.last %}</div></li>{% endif %}
-                                    {% endfor %}
-                                {% endif %}
-                            </ul>
-                         </div>
-                    </div>
-                    {% endif %}
-                    {% if classLevels | length > 0 %}
-                    <div class="widget-box">
-                        <div class="widget-title">
-                            <h5>Historique des niveaux conseillés</h5>
-                            <span title="{{ classLevels|length }} inscriptions(s)" class="label label-info tip-left">{{ classLevels|length }}</span>
-                        </div>
-                        <div class="widget-content">
-                            <ul class="no-img">
-                                {% if classLevels == 0 %}
-                                    Pas de niveau conseillé pour le moment, voulez-vous le mettre à jour ?
-                                {% else %}
-                                    {% for classLevel in classLevels %}
-                                        <li>{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel['classLevelColorCode'], 'classLevelLabel': classLevel['classLevelLabel'] } %} : changé le {{ classLevel['dateOfChange'] | date('d/m/Y') }} par {{ classLevel['teacher_firstName'] }} {{ classLevel['teacher_lastName'] }}</li>
-                                    {% endfor %}
-                                {% endif %}
-                            </ul>
-                                <a href="#" id="show_classlevelsuggested_form">Changer le niveau conseillé</a>
-                            <div id="classlevelsuggested_form">
-                                {% include 'VirguleMainBundle:ClassLevelSuggested:new.html.twig' with { 'form': classLevelSuggestedForm, 'studentId': entity.id } %}
+                            <h5>Contact d'urgence</h5>
+                        </div>            
+                        <div class="widget-content nopadding">                         
+                            <div class="control-group">
+                                <label class="control-label">Personne à contacter</label>
+                                <div class="controls">{{ entity.emergencyContactFirstname }} {{ entity.emergencyContactLastname }}</div>
                             </div>
-                         </div>
+                            <div class="control-group">
+                                <label class="control-label">Numéro de téléphone</label>
+                                <div class="controls">{{ entity.emergencyContactPhoneNumber | phoneNumber }}</div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Lien avec l'apprenant</label>
+                                <div class="controls">{{ entity.emergencyContactConnectionType }}</div>
+                            </div>
+                        </div>
                     </div>
-                    {% endif %}
-                    {% include 'VirguleMainBundle:Comment:new.html.twig' with {'commentForm': commentForm, 'target_id': entity.id, 'target_route': 'student_comment_create' }  %}
-                    {% include 'VirguleMainBundle:Comment:index.html.twig' with {'comments': entity.comments }  %}
+                {% include 'VirguleMainBundle:Comment:index.html.twig' with {'comments': entity.comments }  %}
              </div><!-- span -->
         </div><!-- row -->
         <div class="row-fluid">
@@ -162,21 +168,7 @@
                 <th>Scholarizationlevel</th>
                 <td>{{ entity.scholarizationLevel }}</td>
             </tr>
-            <tr>
-                <th>Emergencycontactlastname</th>
-                <td>{{ entity.emergencyContactLastname }}</td>
-            </tr>
-            <tr>
-                <th>Emergencycontactfirstname</th>
-                <td>{{ entity.emergencyContactFirstname }}</td>
-            </tr>
-            <tr>
-                <th>Emergencycontactphonenumber</th>
-                <td>{{ entity.emergencyContactPhoneNumber }}</td>
-            </tr>
-            <tr>
-                <th>Emergencycontactconnectiontype</th>
-                <td>{{ entity.emergencyContactConnectionType }}</td>
+
             </tr>
             -->
     
