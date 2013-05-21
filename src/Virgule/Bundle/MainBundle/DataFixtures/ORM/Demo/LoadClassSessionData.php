@@ -52,13 +52,16 @@ Morbi lectus turpis, gravida eu rhoncus eu, dictum at orci. Sed auctor nulla vit
                 $cs->setSummary($summary);
 
                 $studentAlreadyAdded = Array();
-                for ($nbStudents = 1; $nbStudents <= rand(5,25); $nbStudents++) {
+                $nbStudentsEnrolled = count($course->getStudents());
+                $students = $course->getStudents();
+                for ($nbStudents = 1; $nbStudents <= rand(5,$nbStudentsEnrolled); $nbStudents++) {
                     do {
-                        $studentRef = 'student-' . rand(1, $nbStudents);
-                    } while (in_array($studentRef, $studentAlreadyAdded));
+                        $studentId = rand(0, $nbStudentsEnrolled-1);
+                        $student = $students->get($studentId);
+                    } while (in_array($student->getId(), $studentAlreadyAdded));
                     
-                    $cs->addClassSessionStudent($this->getReference($studentRef));
-                    $studentAlreadyAdded[] = $studentRef;
+                    $cs->addClassSessionStudent($student);
+                    $studentAlreadyAdded[] = $student->getId();
                 }
                 $manager->persist($cs);
                 $nbClassSessions++;
