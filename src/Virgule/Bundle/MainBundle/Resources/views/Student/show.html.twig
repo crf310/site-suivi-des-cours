@@ -1,7 +1,8 @@
 {% extends '::main_content.html.twig' %}
 {% block head %}    
     {{ parent() }}
-    {% block javascripts %}
+    {% block javascripts %}        
+        <script type="text/javascript" src="{{ asset('js/bootstrap-confirm.js') }}"></script>
         <script type='text/javascript'>
         $(function() {
             $('#classlevelsuggested_form').hide();
@@ -11,6 +12,23 @@
                 return false;
             });      
         });
+        $(function () {
+            $("#delete-student-button").click(function () {
+                openConfirmModal();
+            });
+            $("#delete-student-button").click(function () {
+                openConfirmModal();
+            });
+            function openConfirmModal() {
+                $("#confirmDiv").confirmModal({
+                    heading: 'Supprimer la fiche',
+                    body: 'Vous allez supprimer la fiche de <b>{{ entity.firstName }} {{ entity.lastName }}</b>, êtes-vous sûr(e) ?',
+                    callback: function () {
+                        $("#delete-student-form").submit();
+                    }
+                });
+            }
+        });
         </script>
     {% endblock %}
 {% endblock %}
@@ -18,7 +36,8 @@
 {%block submenu %}
     <button  class="btn tip-bottom" type="submit"><i class="icon-user-certificate"></i>Générer une attestation</button>
     <a class="btn tip-bottom" href="{{ path('student_edit', { 'id': entity.id }) }}"> <i class="icon-user_edit"></i>Modifier la fiche</a>
-    <form action="{{ path('student_delete', { 'id': entity.id }) }}" method="post">{{ form_widget(delete_form) }}<button  class="btn tip-bottom"><i class="icon-user_delete"></i>Supprimer la fiche</button></form>
+    <button id="delete-student-button" class="btn tip-bottom"><i class="icon-user_delete"></i>Supprimer la fiche</button>
+    <form id="delete-student-form" action="{{ path('student_delete', { 'id': entity.id }) }}" method="post">{{ form_widget(delete_form) }}</form>
 {% endblock %}
 {% block main_content %}
 <div class="container-fluid">
@@ -176,4 +195,7 @@
             </tr>
             -->
     
+<div id="confirmDiv" >
+   
+</div> 
 {% endblock %}
