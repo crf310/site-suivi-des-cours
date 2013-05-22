@@ -258,7 +258,7 @@ class StudentController extends AbstractVirguleController {
 
         if ($form->isValid()) {
             $em = $this->getDoctrineManager();
-            $entity = $em->getStudentRepository()->find($id);
+            $entity = $this->getStudentRepository()->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Student entity.');
@@ -268,7 +268,7 @@ class StudentController extends AbstractVirguleController {
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('student'));
+        return $this->redirect($this->generateUrl('student_index'));
     }
 
     private function createDeleteForm($id) {
