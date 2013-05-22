@@ -88,6 +88,8 @@ class StudentController extends AbstractVirguleController {
         
         $courses = $this->getCourseRepository()->getCoursesByStudent($id);
         
+        $nbClassSessionsAttended = $this->getStudentManager()->getAttendanceRate($courses, $id);
+        
         $previousSemester = null;
         $nbEnrollment = count($courses);
         if ($nbEnrollment > 0) {
@@ -106,6 +108,7 @@ class StudentController extends AbstractVirguleController {
             'previousSemester' => $previousSemester,
             'classLevels' => $classLevels,
             'classLevelSuggestedForm' => $classLevelSuggestedForm->createView(),
+            'nbClassSessionsAttended' => $nbClassSessionsAttended,
         );
     }
 

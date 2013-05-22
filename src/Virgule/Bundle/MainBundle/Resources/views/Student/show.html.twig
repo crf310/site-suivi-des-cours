@@ -79,7 +79,7 @@
                                 <div class="controls">
                                     <ul class="no-img">
                                     {% for classLevel in classLevels %}   
-                                        <li>{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel['classLevelColorCode'], 'classLevelLabel': classLevel['classLevelLabel'] } %} : changé le {{ classLevel['dateOfChange'] | date('d/m/Y') }} par {{ classLevel['teacher_firstName'] }} {{ classLevel['teacher_lastName'] }}</li>
+                                        <li>{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel['classLevelColorCode'], 'classLevelLabel': classLevel['classLevelLabel'] } %} : changé le {{ classLevel['dateOfChange'] | date('d/m/Y') }} par <a href="{{ path('teacher_show', { 'id': classLevel['teacher_id'] }) }}">{{ classLevel['teacher_firstName'] }} {{ classLevel['teacher_lastName'] }}</a></li>
                                     {% endfor %}    
                                     </ul>
                                     <a href="#" id="show_classlevelsuggested_form">Changer le niveau conseillé</a>
@@ -105,8 +105,17 @@
                                                     <ul class="no-img">
                                                 {% endif %}
                                                     <li class="margin">
-                                                        {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevel.htmlColorCode, 'classLevelLabel': course.classLevel.label } %} le {{ course.dayOfWeek | day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }} 
-                                                        <a href="{{ path('course_show', { 'id': course.id }) }}">Voir ce cours</a>
+                                                        {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevel.htmlColorCode, 'classLevelLabel': course.classLevel.label } %} <a href="{{ path('course_show', { 'id': course.id }) }}">le {{ course.dayOfWeek | day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }}</a> : 
+                                                        
+                                                        {% if nbClassSessionsAttended is not null %}
+                                                            {% if nbClassSessionsAttended[course.id]['nb_classsessions_attended'] > 0 %}
+                                                                {% set attendance_rate = nbClassSessionsAttended[course.id]['nb_classsessions_attended'] / nbClassSessionsAttended[course.id]['nb_classsessions'] * 100 %}
+                                                                présent{% if entity.gender =='F'%}e{% endif %} à 
+                                                                {{ nbClassSessionsAttended[course.id]['nb_classsessions_attended'] }} cours sur {{ nbClassSessionsAttended[course.id]['nb_classsessions'] }} ({{ '%.0f'|format(attendance_rate) }}%)
+                                                            {% else %}
+                                                                jamais présent
+                                                            {% endif %}
+                                                        {% endif %}
                                                     </li>
                                                 {% set previousSemester = course.semester.id %}
                                                 {% if loop.last %}</li></ul>{% endif %}

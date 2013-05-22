@@ -25,7 +25,7 @@ class ClassLevelSuggestedRepository extends EntityRepository {
     public function getClassLevelsHistoryPerStudent($studentId) {
         $qb = $this->createDefaultQueryBuilder()
                 ->addSelect('cls.dateOfChange as dateOfChange')
-                ->addselect('t.firstName as teacher_firstName, t.lastName as teacher_lastName')
+                ->addselect('t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName')
                 ->addSelect('cl.label as classLevelLabel, cl.htmlColorCode as classLevelColorCode')
                 ->innerJoin('cls.classLevel', 'cl')
                 ->innerJoin('cls.student', 's')

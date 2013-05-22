@@ -5,6 +5,7 @@ namespace Virgule\Bundle\MainBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
+use Doctrine\DBAL\Connection;
 
 /**
  * ClassSessionRepository
@@ -15,24 +16,24 @@ use Doctrine\ORM\Query;
 class ClassSessionRepository extends EntityRepository {
     /* Query builders */
     private function getDefaultQueryBuilder() {
-        return $this->createQueryBuilder('c');
+        return $this->createQueryBuilder('cs');
     }
     
     private function getBasicQueryBuilder($semesterId = null, $limit = null) {
          $qb = $this->getDefaultQueryBuilder()
-            ->addSelect('c.id as id, c.reportDate, c.sessionDate, c.summary as summary')
+            ->addSelect('cs.id as id, cs.reportDate, cs.sessionDate, cs.summary as summary')
             ->addSelect('c2.id as course_id, c2.dayOfWeek as course_dayOfWeek,
                 c2.startTime as course_startTime, c2.endTime as course_endTime')
             ->addSelect('t1.id as sessionTeacher_id, t1.firstName as sessionTeacher_firstName, t1.lastName as sessionTeacher_lastName')
             ->addSelect('t2.id as reportTeacher_id, t2.firstName as reportTeacher_firstName, t2.lastName as reportTeacher_lastName')
             ->addSelect('cl.label as classLevelLabel, cl.htmlColorCode as classLevelHtmlColorCode')
-            ->innerJoin('c.course', 'c2')
+            ->innerJoin('cs.course', 'c2')
             ->innerJoin('c2.classLevel', 'cl')
             ->innerJoin('c2.semester', 's')
-            ->innerJoin('c.sessionTeacher', 't1')
-            ->innerJoin('c.reportTeacher', 't2')
-            ->add('orderBy', 'c.reportDate DESC')
-            ->add('groupBy', 'c.id');
+            ->innerJoin('cs.sessionTeacher', 't1')
+            ->innerJoin('cs.reportTeacher', 't2')
+            ->add('orderBy', 'cs.reportDate DESC')
+            ->add('groupBy', 'cs.id');
         
         if (null !== $semesterId) {
             $qb->where('s.id = :semesterId')
@@ -46,14 +47,14 @@ class ClassSessionRepository extends EntityRepository {
     
     private function getNbStudentsQueryBuilder($semesterId, $limit = null)  {
         $qb = $this->getBasicQueryBuilder($semesterId, $limit) 
-                ->leftJoin('c.classSessionStudents', 'st')               
+                ->leftJoin('cs.classSessionStudents', 'st')               
                 ->addSelect('count(st.id) as nb_students');
         return $qb;
     }
     
     private function getNbCommentsQueryBuilder($semesterId, $limit = null) {
         $qb = $this->getBasicQueryBuilder($semesterId, $limit)
-                ->leftJoin('c.comments', 'cm')
+                ->leftJoin('cs.comments', 'cm')
                 ->addSelect('count(cm.id) as nb_comments');
         return $qb;
     }   
@@ -100,8 +101,33 @@ class ClassSessionRepository extends EntityRepository {
     public function loadAllForMiniList($semesterId, $limit = null) {
         $qb = $this->getNbCommentsQueryBuilder($semesterId, $limit);
         
-         $q = $qb->getQuery()
-        ;
+        $q = $qb->getQuery();
+        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $results;  
+    }
+    
+    public function getNumberOfClassSessionsPerCourse(Array $courseIds) {        
+         $qb = $this->getDefaultQueryBuilder()
+                 ->addSelect('c.id as course_id, count(cs.id) as nb_classsessions')
+                 ->innerJoin('cs.course', 'c', 'WITH', 'c.id IN (:coursesIds)')
+                 ->setParameter('coursesIds', $courseIds, Connection::PARAM_INT_ARRAY)
+                 ->groupBy('c.id');
+         
+        $q = $qb->getQuery();
+        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $results;  
+    }
+    
+    public function getNumberOfClassSessionsPerCourseAndStudent(Array $courseIds, $studentId) {        
+         $qb = $this->getDefaultQueryBuilder()
+                 ->addSelect('c.id as course_id, count(cs.id) as nb_classsessions')
+                 ->innerJoin('cs.course', 'c', 'WITH', 'c.id IN (:coursesIds)')
+                 ->innerJoin('cs.classSessionStudents', 's', 'WITH', 's.id = :studentId')
+                 ->setParameter('coursesIds', $courseIds, Connection::PARAM_INT_ARRAY)
+                 ->setParameter('studentId', $studentId)
+                 ->groupBy('c.id');
+         
+        $q = $qb->getQuery();
         $results = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $results;  
     }
