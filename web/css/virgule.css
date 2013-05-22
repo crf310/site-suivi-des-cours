@@ -271,6 +271,9 @@ td.center {
 .required {
     font-weight: bold;
 }
+
+.btn-group form { display: inline-block; }
+
 .form-horizontal .control-label {
     width: 200px;
 }
