@@ -24,7 +24,7 @@ class Tag {
     /**
      * @var string
      *
-     * @ORM\Column(name="tagLabel", type="string", length=255)
+     * @ORM\Column(name="tagLabel", type="string", length=25)
      */
     private $tagLabel;
 

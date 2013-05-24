@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Virgule\Bundle\MainBundle\Entity\Document
  *
- * @ORM\Table(name="attachments")
+ * @ORM\Table(name="documents")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\DocumentRepository")
  */
 class Document {
@@ -23,18 +23,32 @@ class Document {
     private $id;
 
     /**
+     * @var string $file
+     *
+     * @ORM\Column(name="file", type="string", length=50, nullable=false)
+     */
+    private $file;
+
+    /**
      * @var string $fileName
      *
-     * @ORM\Column(name="fileName", type="text", nullable=false)
+     * @ORM\Column(name="fileName", type="string", length=50, nullable=false)
      */
     private $fileName;
+
+    /**
+     * @var string $description
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
 
     /**
      * @var \DateTime $UploadDate
      *
      * @ORM\Column(name="date", type="datetime", nullable=false)
      */
-    private $UploadDate;
+    private $uploadDate;
 
     /**
      * @ORM\ManyToOne(targetEntity="Teacher")
@@ -98,7 +112,7 @@ class Document {
      * @return Document
      */
     public function setUploadDate($uploadDate) {
-        $this->UploadDate = $uploadDate;
+        $this->uploadDate = $uploadDate;
 
         return $this;
     }
@@ -109,7 +123,7 @@ class Document {
      * @return \DateTime 
      */
     public function getUploadDate() {
-        return $this->UploadDate;
+        return $this->uploadDate;
     }
 
     /**
@@ -220,6 +234,48 @@ class Document {
      */
     public function getTags() {
         return $this->tags;
+    }
+
+    /**
+     * Set file
+     *
+     * @param string $file
+     * @return Document
+     */
+    public function setFile($file) {
+        $this->file = $file;
+
+        return $this;
+    }
+
+    /**
+     * Get file
+     *
+     * @return string 
+     */
+    public function getFile() {
+        return $this->file;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Document
+     */
+    public function setDescription($description) {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription() {
+        return $this->description;
     }
 
 }

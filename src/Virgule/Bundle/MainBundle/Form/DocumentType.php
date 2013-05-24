@@ -10,7 +10,23 @@ class DocumentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
+        $builder          
+            ->add('fileName')
+            ->add('description')
+            ->add('file', 'file')
+            ->add('classLevel', 'entity', array(
+                'class' => 'VirguleMainBundle:ClassLevel',
+                'expanded' => false,
+                'multiple' => true,
+                'property' => 'label',
+                'property_path' => 'classlevel',            
+                'attr' => array('class' => 'medium-select')
+             ))
+            ->add('tags', 'collection', array(
+                'type'         => new TagType(),
+                'allow_add'    => true,
+                'by_reference' => false,
+            ))
         ;
     }
 

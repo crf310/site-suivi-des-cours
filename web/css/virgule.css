@@ -194,6 +194,12 @@ i.icon-copy {
 i.icon-trombinoscope {
     background-image: url('../img/icons/vcard.png');
 }
+i.document-list {
+    background-image: url('../img/icons/book.png');
+}
+i.document-add {
+    background-image: url('../img/icons/book_add.png');
+}
 
 li.user_M { list-style-image:url('../img/icons/user.png'); }
 li.user_F { list-style-image:url('../img/icons/user_female.png'); }

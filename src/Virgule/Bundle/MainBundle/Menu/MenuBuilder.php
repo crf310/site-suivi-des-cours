@@ -58,8 +58,9 @@ class MenuBuilder extends ContainerAware {
         $menu->addChild('Délégation', array('route' => 'organizationbranch_show', 'routeParameters' => array('id' => $orgBranchId)));
         $menu['Délégation']->setLinkAttribute('class', 'organization_branch');
         
-        $menu->addChild('Cartable', array('route' => 'document'));
-        $menu['Cartable']->setLinkAttribute('class', 'schoolbag');
+        $menu->addChild('Cartable de documents', array('route' => 'document_index'));
+        $menu['Cartable de documents']->setLinkAttribute('class', 'schoolbag');
+        $menu['Cartable de documents']->addChild('NEW DOCUMENT', array('route' => 'document_new'))->setDisplay(false);
         
         /* Administration */
         $menu->addChild('Administration', array('uri' => '#'));

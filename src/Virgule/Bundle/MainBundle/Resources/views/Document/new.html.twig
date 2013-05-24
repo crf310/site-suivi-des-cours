@@ -1,20 +1,28 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-    <h1>Document creation</h1>
-
-    <form action="{{ path('document_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Create</button>
-        </p>
-    </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('document') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+{% extends '::main_content.html.twig' %}
+{% block content_title %}Ajouter un document{% endblock %}
+{%block submenu %}
+    <a class="btn tip-bottom" href="{{ path('document_index') }}"> <i class="document-list"></i>Retour à la liste des documents</a>
+{% endblock %}
+{% block main_content %}
+<form action="{{ path('document_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+    <div class="widget-box">
+        <div class="widget-title">
+            <h5>Informations du document</h5>
+        </div>
+        <div class="widget-content nopadding">
+            {{ form_errors(form) }}
+            {{ form_row(form.fileName, {'label': 'Intitulé du document' }) }}
+            {{ form_row(form.description, {'label': 'Description' }) }}
+            {{ form_row(form.file, {'label': 'Fichier' }) }}
+            {{ form_row(form.classLevel, {'label': 'Adapté aux niveaux' }) }}
+            {% for tag in form.tags %}
+                {{ form_row(tag.tagLabel, { 'label': 'Niveau conseillé' }) }}
+            {% endfor %}
+            {{ form_rest(form) }}
+            <div class="form-actions">                                     
+                <input class="btn btn-success" type="submit" value="Enregistrer le document" />
+            </div>
+        </div>
+    </div>
+</form>
 {% endblock %}

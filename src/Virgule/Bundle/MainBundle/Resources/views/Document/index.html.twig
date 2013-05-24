@@ -1,39 +1,36 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-    <h1>Document list</h1>
-
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('document_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('document_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('document_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('document_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+{% extends '::main_content.html.twig' %}
+{% block content_title %}Cartable de documents{% endblock %} 
+{%block submenu %}
+    <a class="btn tip-bottom" href="{{ path('document_new') }}"> <i class="document-add"></i>Nouveau document</a>
+{% endblock %}
+{% block main_content %}
+<div class="widget-box">
+    <div class="widget-title">
+        <span class="label label-info tip-left" data-original-title="{{ documents | length }} document(s)">{{ documents | length }}</span>
+    </div>
+    <div class="widget-content nopadding">
+        <table class="table table-bordered table-striped table-hover data-table">
+            <thead>
+                <tr>
+                    <th>Nom du document</th>
+                    <th>Téléchargement</th>
+                    <th>Type de document</th>
+                    <th>Enregistré par</th>
+                    <th>Adapté au(x) niveau(x)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for document in documents %}
+                    <td>{{ document.fileName }}</td>
+                    <td>{{ document.file }}</td>
+                    <td></td>
+                    <td><a  href="{{ path('teacher_show', { 'id':  document.uploader.id }) }}">{{ document.uploader }}</a></td>
+                    <td></td>
+                    <td><a  href="{{ path('document_show', { 'id':  document.id }) }}">Voir le document</a></td>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
