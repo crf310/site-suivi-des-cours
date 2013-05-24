@@ -21,9 +21,6 @@
 <form action="{{ path('teacher_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
     <div class="widget-box">
         <div class="widget-title">
-            <span class="icon">
-                    <i class="icon-align-justify"></i>									
-            </span>
             <h5>Coordonnées</h5>
         </div>
         <div class="widget-content nopadding">
@@ -33,12 +30,7 @@
             {{ form_row(form.cellphoneNumber, { 'label': 'Téléphone portable' }) }}
             {{ form_row(form.emailAddress, { 'label': 'Adresse email' }) }}
         </div>
-    </div>   
-    <div class="widget-box">
         <div class="widget-title">
-            <span class="icon">
-                    <i class="icon-align-justify"></i>									
-            </span>
             <h5>Informations de connexion</h5>
         </div>
         <div class="widget-content nopadding">
