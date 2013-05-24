@@ -49,6 +49,7 @@ class MenuBuilder extends ContainerAware {
         
         $menu->addChild('Formateurs', array('route' => 'teacher_index'));
         $menu['Formateurs']->setLinkAttribute('class', 'teachers');
+        $menu['Formateurs']->addChild('NEW TEACHER', array('route' => 'teacher_new'))->setDisplay(false);
         
         $menu->addChild('Statistiques', array('route' => 'stats_index'));
         $menu['Statistiques']->setLinkAttribute('class', 'statistics');

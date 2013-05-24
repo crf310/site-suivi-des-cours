@@ -14,7 +14,9 @@
     {% endblock %}
 {%endblock %}
 {% block content_title %}Créer un nouveau compte utilisateur{% endblock %}
- {%block submenu %}{% endblock %}
+{%block submenu %}
+    <a class="btn tip-bottom" href="{{ path('teacher_index') }}"> <i class="icon-list"></i>Retour à la liste des utilisateurs</a>
+{% endblock %}
 {% block main_content %}
 <form action="{{ path('teacher_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
     <div class="widget-box">
@@ -47,7 +49,7 @@
             {{ form_row(form.password.second, { 'label': 'Confirmez le mot de passe' }) }}
             {{ form_rest(form) }}
             <div class="form-actions">                                     
-                <input class="btn" type="submit" value="Créer le compte" />
+                <input class="btn btn-success" type="submit" value="Créer le compte" />
             </div>
         </div>
     </div>
