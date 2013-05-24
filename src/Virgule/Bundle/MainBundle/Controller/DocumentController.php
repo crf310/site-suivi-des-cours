@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\Document;
+use Virgule\Bundle\MainBundle\Entity\Tag;
 use Virgule\Bundle\MainBundle\Form\DocumentType;
 
 /**
@@ -20,17 +21,17 @@ class DocumentController extends Controller {
     /**
      * Lists all Document entities.
      *
-     * @Route("/", name="document")
+     * @Route("/", name="document_index")
      * @Method("GET")
      * @Template()
      */
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('VirguleMainBundle:Document')->findAll();
+        $documents = $em->getRepository('VirguleMainBundle:Document')->findAll();
 
         return array(
-            'entities' => $entities,
+            'documents' => $documents,
         );
     }
 
@@ -47,6 +48,9 @@ class DocumentController extends Controller {
         $form->bind($request);
 
         if ($form->isValid()) {
+            $entity->setUploadDate(new \Datetime('now'));
+            $entity->setUploader($this->getUser());
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -70,7 +74,14 @@ class DocumentController extends Controller {
     public function newAction() {
         $entity = new Document();
         $form = $this->createForm(new DocumentType(), $entity);
-
+        
+        $tag1 = new Tag();
+        $tag1->name = 'tag1';
+        $entity->getTags()->add($tag1);
+        $tag2 = new Tag();
+        $tag2->name = 'tag2';
+        $entity->addTag($tag2);
+        
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
