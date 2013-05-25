@@ -12,6 +12,9 @@
                 blinkBGColor_1: '#3A87AD',
                 blinkBGColor_2: '#A4C0E4',
             });
+            
+             var existingTags = [{%for tag in existingTags %}'{{ tag.label }}',{% endfor %}];   
+            $('.tagManager').typeahead({source: existingTags})
         });
         </script>
     {% endblock %}

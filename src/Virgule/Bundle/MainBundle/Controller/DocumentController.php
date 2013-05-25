@@ -16,7 +16,7 @@ use Virgule\Bundle\MainBundle\Form\DocumentType;
  *
  * @Route("/document")
  */
-class DocumentController extends Controller {
+class DocumentController extends AbstractVirguleController {
 
     /**
      * Lists all Document entities.
@@ -76,11 +76,14 @@ class DocumentController extends Controller {
         $tag1 = new Tag();
         $entity->addTag($tag1);
         
+        $existingTags = $this->getTagRepository()->findAll();
+        
         $form = $this->createForm(new DocumentType(), $entity);
         
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
+            'existingTags' => $existingTags,
         );
     }
 
