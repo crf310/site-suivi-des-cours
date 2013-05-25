@@ -73,14 +73,10 @@ class DocumentController extends Controller {
      */
     public function newAction() {
         $entity = new Document();
-        $form = $this->createForm(new DocumentType(), $entity);
-        
         $tag1 = new Tag();
-        $tag1->name = 'tag1';
-        $entity->getTags()->add($tag1);
-        $tag2 = new Tag();
-        $tag2->name = 'tag2';
-        $entity->addTag($tag2);
+        $entity->addTag($tag1);
+        
+        $form = $this->createForm(new DocumentType(), $entity);
         
         return array(
             'entity' => $entity,

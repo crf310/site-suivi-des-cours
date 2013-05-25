@@ -1,4 +1,21 @@
 {% extends '::main_content.html.twig' %}
+{% block head %}    
+    {{ parent() }}
+    {% block stylesheets %}
+        <link href="{{ asset('css/bootstrap-tagmanager.css') }}" rel="stylesheet" media="screen" />
+    {% endblock %}
+    {% block javascripts %}        
+        <script type="text/javascript" src="{{ asset('js/bootstrap-tagmanager.js') }}"></script>
+        <script type="text/javascript">
+        jQuery(function($) { 
+            $(".tagManager").tagsManager({
+                blinkBGColor_1: '#3A87AD',
+                blinkBGColor_2: '#A4C0E4',
+            });
+        });
+        </script>
+    {% endblock %}
+{% endblock %}
 {% block content_title %}Ajouter un document{% endblock %}
 {%block submenu %}
     <a class="btn tip-bottom" href="{{ path('document_index') }}"> <i class="document-list"></i>Retour à la liste des documents</a>
@@ -15,10 +32,8 @@
             {{ form_row(form.description, {'label': 'Description' }) }}
             {{ form_row(form.file, {'label': 'Fichier' }) }}
             {{ form_row(form.classLevel, {'label': 'Adapté aux niveaux' }) }}
-            {% for tag in form.tags %}
-                {{ form_row(tag.tagLabel, { 'label': 'Niveau conseillé' }) }}
-            {% endfor %}
-            {{ form_rest(form) }}
+            {{ form_row(form.tags, {'label': 'Associer un ou plusieurs tags', 'hint' : 'Utile pour retrouver le document, par exemple "grammaire", "féminin/masculin" etc.' }) }}
+            {{ form_rest(form) }} 
             <div class="form-actions">                                     
                 <input class="btn btn-success" type="submit" value="Enregistrer le document" />
             </div>

@@ -22,12 +22,14 @@
             </thead>
             <tbody>
                 {% for document in documents %}
+                <tr>
                     <td>{{ document.fileName }}</td>
                     <td>{{ document.file }}</td>
                     <td></td>
                     <td><a  href="{{ path('teacher_show', { 'id':  document.uploader.id }) }}">{{ document.uploader }}</a></td>
                     <td></td>
                     <td><a  href="{{ path('document_show', { 'id':  document.id }) }}">Voir le document</a></td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>

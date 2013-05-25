@@ -11,7 +11,7 @@ class TagType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('tagLabel')
+            ->add('label')
         ;
     }
 
@@ -24,6 +24,6 @@ class TagType extends AbstractType
 
     public function getName()
     {
-        return 'virgule_bundle_mainbundle_tagtype';
+        return 'tag';
     }
 }

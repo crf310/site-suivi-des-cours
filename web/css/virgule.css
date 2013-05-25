@@ -396,3 +396,11 @@ ul.no-img li.margin {
     line-height: 12px;
     margin: 0;
 }
+
+/* Tag manager */
+.myTag {
+    background: none repeat scroll 0 0 #3A87AD;
+    border: 1px solid #2D6886;
+    border-radius: 3px 3px 3px 3px;
+    color: #FFFFFF;
+}

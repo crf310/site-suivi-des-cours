@@ -11,7 +11,9 @@ class DocumentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder          
-            ->add('fileName')
+            ->add('fileName', 'text',array(        
+                'attr' => array('class' => 'input-large'))
+                )
             ->add('description')
             ->add('file', 'file')
             ->add('classLevel', 'entity', array(
@@ -22,11 +24,21 @@ class DocumentType extends AbstractType
                 'property_path' => 'classlevel',            
                 'attr' => array('class' => 'medium-select')
              ))
+            ->add('tags', 'text', array(
+                'label' => 'Tags',
+                'mapped' => false,
+                'required' => false,
+                'attr' => array('class' => 'tagManager', 'placeholder' => 'Tags', 'name' => 'tags'))
+                )
+            /*
             ->add('tags', 'collection', array(
                 'type'         => new TagType(),
                 'allow_add'    => true,
                 'by_reference' => false,
-            ))
+                'required' => false,
+                'label' => 'Tags',          
+                'attr' => array('class' => 'input-medium')
+            ))*/
         ;
     }
 
@@ -39,6 +51,6 @@ class DocumentType extends AbstractType
 
     public function getName()
     {
-        return 'virgule_bundle_mainbundle_documenttype';
+        return 'document';
     }
 }

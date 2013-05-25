@@ -70,7 +70,7 @@ class Document {
     private $classLevel;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="documents")
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="documents", cascade={"persist"})
      * @ORM\JoinTable(name="document_tag")
      */
     private $tags;

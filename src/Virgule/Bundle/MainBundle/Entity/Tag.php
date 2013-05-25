@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Tag
  *
- * @ORM\Table()
+ * @ORM\Table(name="tags")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Entity\TagRepository")
  */
 class Tag {
@@ -24,9 +24,9 @@ class Tag {
     /**
      * @var string
      *
-     * @ORM\Column(name="tagLabel", type="string", length=25)
+     * @ORM\Column(name="label", type="string", length=25, nullable=false, unique = true)
      */
-    private $tagLabel;
+    private $label;
 
     /**
      * @ORM\ManyToMany(targetEntity="Document", mappedBy="tags")
@@ -43,13 +43,13 @@ class Tag {
     }
 
     /**
-     * Set tagLabel
+     * Set label
      *
-     * @param string $tagLabel
+     * @param string $label
      * @return Tag
      */
-    public function setTagLabel($tagLabel) {
-        $this->tagLabel = $tagLabel;
+    public function setLabel($label) {
+        $this->label = $label;
 
         return $this;
     }
@@ -59,8 +59,8 @@ class Tag {
      *
      * @return string 
      */
-    public function getTagLabel() {
-        return $this->tagLabel;
+    public function getLabel() {
+        return $this->label;
     }
 
     /**
@@ -68,36 +68,6 @@ class Tag {
      */
     public function __construct() {
         $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add documents
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\Document $documents
-     * @return Tag
-     */
-    public function addDocument(\Virgule\Bundle\MainBundle\Entity\Document $documents) {
-        $this->documents[] = $documents;
-
-        return $this;
-    }
-
-    /**
-     * Remove documents
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\Document $documents
-     */
-    public function removeDocument(\Virgule\Bundle\MainBundle\Entity\Document $documents) {
-        $this->documents->removeElement($documents);
-    }
-
-    /**
-     * Get documents
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getDocuments() {
-        return $this->documents;
     }
 
 }

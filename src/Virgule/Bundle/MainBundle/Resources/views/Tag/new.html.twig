@@ -1,7 +1,7 @@
-{% block body -%}
+{% block body %}
 <form action="{{ path('tag_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_errors(form) }}
-    {{ form_row(form.tagLabel, { 'label': 'Label' }) }}
+    {{ form_row(form.label, { 'label': 'Label' }) }}
     {{ form_rest(form) }} 
         <button type="submit" class="btn btn-success">Enregistrer le tag</button>
 </form>
