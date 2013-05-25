@@ -34,8 +34,8 @@
             {{ form_row(form.fileName, {'label': 'Intitulé du document' }) }}
             {{ form_row(form.description, {'label': 'Description' }) }}
             {{ form_row(form.file, {'label': 'Fichier' }) }}
-            {{ form_row(form.classLevel, {'label': 'Adapté aux niveaux' }) }}
-            {{ form_row(form.tags, {'label': 'Associer un ou plusieurs tags', 'hint' : 'Utile pour retrouver le document, par exemple "grammaire", "féminin/masculin" etc.' }) }}
+            {{ form_row(form.classLevel, {'label': 'Adapté au(x) niveau(x)' }) }}
+            {{ form_row(form.tags, {'label': 'Associer un ou plusieurs tags', 'hint' : 'Utiles pour retrouver le document, séparez les par une virgule' }) }}
             {{ form_rest(form) }} 
             <div class="form-actions">                                     
                 <input class="btn btn-success" type="submit" value="Enregistrer le document" />
