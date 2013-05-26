@@ -14,12 +14,16 @@ use Doctrine\DBAL\Connection;
  * repository methods below.
  */
 class LanguageRepository extends EntityRepository {
-    
+
     private function createDefaultQueryBuilder() {
         return $this->createQueryBuilder('sl')->add('orderBy', 'sl.name ASC');
     }
-    
-    public function getNumberOfLanguagesSpoken($semesterId) {        
+
+    public function findAll() {
+        return $this->findBy(array(), array('name' => 'asc'));
+    }
+
+    public function getNumberOfLanguagesSpoken($semesterId) {
         $qb = $this->createDefaultQueryBuilder()
                 ->addSelect('sl.name as language_name, count(sl.id) as nb_students')
                 ->innerJoin('sl.students', 's')
@@ -28,10 +32,10 @@ class LanguageRepository extends EntityRepository {
                 ->groupBy('sl.id')
                 ->orderby('nb_students', 'DESC')
                 ->setParameter('semesterId', $semesterId);
-        
+
         $q = $qb->getQuery();
         $languages = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $languages;
     }
-    
+
 }
