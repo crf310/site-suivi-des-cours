@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="language")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\LanguageRepository")
  */
-class Language
-{
+class wLanguage {
+
     /**
      * @var integer $id
      *
@@ -27,23 +27,20 @@ class Language
      * @ORM\Column(name="name", type="string", length=45, nullable=true)
      */
     private $name;
-
+        
     /**
-     * @var string $alternativeNames
+     * @var Students
      *
-     * @ORM\Column(name="alternative_names", type="string", length=150, nullable=true)
+     * @ORM\ManyToMany(targetEntity="Student", mappedBy="spokenLanguages")
      */
-    private $alternativeNames;
-
-
-
+    private $students;
+    
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -53,10 +50,9 @@ class Language
      * @param string $name
      * @return Language
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
-    
+
         return $this;
     }
 
@@ -65,31 +61,7 @@ class Language
      *
      * @return string 
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
-    }
-
-    /**
-     * Set alternativeNames
-     *
-     * @param string $alternativeNames
-     * @return Language
-     */
-    public function setAlternativeNames($alternativeNames)
-    {
-        $this->alternativeNames = $alternativeNames;
-    
-        return $this;
-    }
-
-    /**
-     * Get alternativeNames
-     *
-     * @return string 
-     */
-    public function getAlternativeNames()
-    {
-        return $this->alternativeNames;
     }
 }

@@ -34,6 +34,13 @@ class StudentType extends AbstractType {
                 ->add('nativeCountry', 'country', array(
                     'attr' => array('class' => 'medium-select')
                 ))
+                ->add('spokenLanguages', 'entity', array(
+                    'class'             => 'VirguleMainBundle:Language',
+                    'expanded'          => false,
+                    'multiple'          => true,
+                    'property'          => 'name',
+                    'attr'              => array('class' => 'medium-select')
+                ))
                 ->add('registrationDate', 'date', array(
                     'widget'            => 'single_text',
                     'format'            => 'dd/MM/yyyy',
@@ -83,7 +90,9 @@ class StudentType extends AbstractType {
                     'expanded'  => false,
                     'multiple'  => true,        
                     'attr'      => array('class' => 'medium-select')
-                 ));
+                 ))                
+                ->add('profession')
+                ;
         
         
                 
@@ -91,7 +100,6 @@ class StudentType extends AbstractType {
                  * 
                 ->add('maritalStatus')
                 ->add('scholarized')
-                ->add('profession')
                 ->add('scholarizedInTheCountry')
                 ->add('scholarizedInAForeignCountry')
                 ->add('scholarizationLevel')

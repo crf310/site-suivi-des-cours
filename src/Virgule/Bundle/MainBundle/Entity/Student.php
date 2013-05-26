@@ -213,14 +213,11 @@ class Student {
     private $welcomedInOrganizationBranch;
 
     /**
-     * @var Language
+     * @var Spoken Languages
      *
-     * @ORM\ManyToOne(targetEntity="Language")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="fk_mother_tongue", referencedColumnName="id")
-     * })
+     * @ORM\ManyToMany(targetEntity="Language", inversedBy="students")
      */
-    private $fkMotherTongue;
+    private $spokenLanguages;
 
     /**
      * @var Language
@@ -777,27 +774,6 @@ class Student {
     }
 
     /**
-     * Set fkMotherTongue
-     *
-     * @param Virgule\Bundle\MainBundle\Entity\Language $fkMotherTongue
-     * @return Student
-     */
-    public function setFkMotherTongue(\Virgule\Bundle\MainBundle\Entity\Language $fkMotherTongue = null) {
-        $this->fkMotherTongue = $fkMotherTongue;
-
-        return $this;
-    }
-
-    /**
-     * Get fkMotherTongue
-     *
-     * @return Virgule\Bundle\MainBundle\Entity\Language 
-     */
-    public function getFkMotherTongue() {
-        return $this->fkMotherTongue;
-    }
-
-    /**
      * Set fkScholarizationLanguage
      *
      * @param Virgule\Bundle\MainBundle\Entity\Language $fkScholarizationLanguage
@@ -1027,4 +1003,37 @@ class Student {
         return $this->suggestedClassLevel;
     }
 
+
+    /**
+     * Add spokenLanguages
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Language $spokenLanguages
+     * @return Student
+     */
+    public function addSpokenLanguage(\Virgule\Bundle\MainBundle\Entity\Language $spokenLanguages)
+    {
+        $this->spokenLanguages[] = $spokenLanguages;
+    
+        return $this;
+    }
+
+    /**
+     * Remove spokenLanguages
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Language $spokenLanguages
+     */
+    public function removeSpokenLanguage(\Virgule\Bundle\MainBundle\Entity\Language $spokenLanguages)
+    {
+        $this->spokenLanguages->removeElement($spokenLanguages);
+    }
+
+    /**
+     * Get spokenLanguages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSpokenLanguages()
+    {
+        return $this->spokenLanguages;
+    }
 }

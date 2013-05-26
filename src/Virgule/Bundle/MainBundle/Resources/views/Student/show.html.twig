@@ -65,6 +65,10 @@
                                 {{ entity.gender | gender }}
                                 </div>
                             </div>
+                            <div class="control-group">
+                                <label class="control-label">Date de naissance</label>
+                                <div class="controls">{{ entity.birthdate|date('d/m/Y') }} ({{ entity.age }} ans)</div>
+                            </div>
                             {% if entity.nativeCountry != null %}
                             <div class="control-group">
                                 <label class="control-label">Pays d'origine</label>
@@ -72,8 +76,12 @@
                             </div>
                             {% endif %}
                             <div class="control-group">
-                                <label class="control-label">Date de naissance</label>
-                                <div class="controls">{{ entity.birthdate|date('d/m/Y') }} ({{ entity.age }} ans)</div>
+                                <label class="control-label">Langue(s) parlée(s)</label>
+                                <div class="controls">
+                                    {% for language in entity.spokenLanguages %}
+                                        {{ language.name }}{% if not loop.last %},{% endif %}
+                                    {% endfor %}
+                                </div>
                             </div>
                             <div class="control-group">
                                 <label class="control-label">Profession</label>
