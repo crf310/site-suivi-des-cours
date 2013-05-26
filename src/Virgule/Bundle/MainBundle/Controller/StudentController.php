@@ -3,11 +3,9 @@
 namespace Virgule\Bundle\MainBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Virgule\Bundle\MainBundle\Controller\CommentController;
 use Virgule\Bundle\MainBundle\Entity\Student;
 use Virgule\Bundle\MainBundle\Entity\Comment;
 use Virgule\Bundle\MainBundle\Entity\Course;
@@ -115,9 +113,9 @@ class StudentController extends AbstractVirguleController {
     
     private function initStudentForm($entity) {
         $classLevelSuggested = new ClassLevelSuggested();
-        $classLevelSuggested->setChanger($this->getUser());
-        
+        $classLevelSuggested->setChanger($this->getUser());        
         $entity->addSuggestedClassLevel($classLevelSuggested);
+        
         $teacherRepository = $this->getTeacherRepository();
         
         $organizationBranchId = $this->getSelectedOrganizationBranchId();
@@ -166,12 +164,7 @@ class StudentController extends AbstractVirguleController {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             
-            // manual persist as we're dealing with the inversed side
-            $suggestedClassLevels = $entity->getSuggestedClassLevel();
-            foreach($suggestedClassLevels as $suggestedClassLevel) {
-                $suggestedClassLevel->setStudent($entity);
-                $em->persist($suggestedClassLevel);
-            }
+            $this->saveSuggestedClassLevel($entity, $em);
             
             $em->flush();
 
@@ -202,7 +195,7 @@ class StudentController extends AbstractVirguleController {
             throw $this->createNotFoundException('Unable to find Student entity.');
         }
 
-        $editForm = $this->createForm(new StudentType(), $entity);
+        $editForm = $this->initStudentForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -229,11 +222,14 @@ class StudentController extends AbstractVirguleController {
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new StudentType(), $entity);
+        $editForm = $this->initStudentForm($entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
+            
+            $this->saveSuggestedClassLevel($entity, $em);
+            
             $em->flush();
 
             return $this->redirect($this->generateUrl('student_edit', array('id' => $id)));
@@ -246,6 +242,14 @@ class StudentController extends AbstractVirguleController {
         );
     }
 
+    private function saveSuggestedClassLevel($entity, $em) {
+        // manual persist as we're dealing with the inversed side
+        $suggestedClassLevels = $entity->getSuggestedClassLevel();
+        foreach($suggestedClassLevels as $suggestedClassLevel) {
+            $suggestedClassLevel->setStudent($entity);
+            $em->persist($suggestedClassLevel);
+        }
+    }
     /**
      * Deletes a Student entity.
      *
