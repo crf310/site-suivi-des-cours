@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="language")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\LanguageRepository")
  */
-class wLanguage {
+class Language {
 
     /**
      * @var integer $id
