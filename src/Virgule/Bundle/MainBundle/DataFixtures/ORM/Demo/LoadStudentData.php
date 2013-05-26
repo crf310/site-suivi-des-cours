@@ -73,6 +73,16 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
             $s->setEmergencyContactPhoneNumber("5554443332");
             $s->setEmergencyContactConnectionType("Texas Ranger");
             
+            $languagesAdded = Array();
+            for ($sl = 1; $sl <= rand(1,3); $sl++) {
+                do {
+                    $rsl = rand(0, 216);
+                } while (in_array($rsl, $languagesAdded));                
+                $s->addSpokenLanguage($this->getReference('language-' . $rsl));
+                $languagesAdded[] = $rsl;
+            }
+            
+            
             if (rand(1, 10) != 1) {
                 $idCourse1 = rand(1, $nbCourses);
                 $s->addCourse($this->getReference('course' . $idCourse1));
