@@ -36,7 +36,8 @@
                                 {% endif %}
                                 <div class="control-group">
                                     <label class="control-label">Niveau</label>
-                                    <div class="controls">{{ entity.classLevel.label }}</div>
+                                    <div class="controls">{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': entity.classLevel.htmlColorCode, 'classLevelLabel': entity.classLevel.label } %}</div>
+                                    
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label">Formateur{% if entity.teachers.count > 1 %}s{% endif %}</label>
