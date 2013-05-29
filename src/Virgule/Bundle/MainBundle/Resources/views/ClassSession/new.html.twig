@@ -29,15 +29,23 @@
                 <span class="icon">
                         <i class="icon-align-justify"></i>									
                 </span>
-                <h5>Cours: {{ entity.course }}</h5>
+                <h5>Contenu du compte-rendu</h5>
         </div>
-        <div class="widget-content nopadding"> 
-            {{ form_row(form.course, { 'label': 'Cours'}) }}
+        <div class="widget-content nopadding">
+            {{ form_row(form.course, { 'label': 'Cours concerné'}) }}
+            {% if "hidden" in form.course.vars.block_prefixes %}
+            <div class="control-group not-form-horizontal">
+                <label class="control-label">Cours</label>
+                <div class="not-form-horizontal controls">
+                    niveau {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevel.htmlColorCode, 'classLevelLabel': course.classLevel.label } %}
+                    &nbsp;le {{ course.dayOfWeek | day }} de {{ course.startTime | date('H\\hi') }} à {{ course.endTime | date('H\\hi') }}</div>
+            </div>
+            {% endif %}
             {{ form_row(form.sessionDate, { 'label': 'Date'}) }}
             {{ form_row(form.sessionTeacher, { 'label': 'Formateur'}) }}
             {{ form_row(form.summary, { 'label': 'Résumé du cours', 'id' : 'summaryField' }) }}       
             {% if form.classSessionStudents is defined %}
-                {{ form_row(form.classSessionStudents, { 'label': 'Apprenants présents' }) }}           
+                {{ form_row(form.classSessionStudents, { 'label': 'Apprenants présents', 'hint': 'N\'apparaissent ici que les apprenants inscrits à votre cours' }) }}           
             {% endif %}
             {{ form_rest(form) }}
             <div class="form-actions">                                     
