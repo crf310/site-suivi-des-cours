@@ -35,7 +35,7 @@
             {{ form_row(form.course, { 'label': 'Cours concerné'}) }}
             {% if "hidden" in form.course.vars.block_prefixes %}
             <div class="control-group not-form-horizontal">
-                <label class="control-label">Cours</label>
+                <label class="control-label">Cours concerné</label>
                 <div class="not-form-horizontal controls">
                     niveau {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevel.htmlColorCode, 'classLevelLabel': course.classLevel.label } %}
                     &nbsp;le {{ course.dayOfWeek | day }} de {{ course.startTime | date('H\\hi') }} à {{ course.endTime | date('H\\hi') }}</div>
