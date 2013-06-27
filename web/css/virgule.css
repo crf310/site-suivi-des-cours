@@ -250,6 +250,13 @@ a.search {
     padding: 5px 5px 5px;
     border-bottom: 0;
 }
+#planning p.course_cell {
+    display: block;
+}
+a.course_details {
+    text-decoration: none;
+    color: #000000;
+}
   
 td.center {
     text-align: center;
