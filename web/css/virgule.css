@@ -245,10 +245,18 @@ a.search {
 }
 
 #planning td {
-    height: auto;
     font-size: 12px;
-    padding: 5px 5px 5px;
-    border-bottom: 0;
+    margin: 0;
+    padding:5px 0px 0px 0px; 
+}
+#planning p.course_cell {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+a.course_details {
+    text-decoration: none;
+    color: #000000;
 }
   
 td.center {
