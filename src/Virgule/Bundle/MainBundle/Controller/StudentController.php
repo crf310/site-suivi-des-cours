@@ -162,10 +162,11 @@ class StudentController extends AbstractVirguleController {
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
             
             $this->saveSuggestedClassLevel($entity, $em);
             
+            $entity->upload();
+            $em->persist($entity);
             $em->flush();
 
             if ($request->get('save_and_add_new')) {

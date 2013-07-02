@@ -23,7 +23,7 @@ class StudentType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                //->add('registrationDate')
+                ->add('pictureFile', 'file')
                 ->add('lastname')
                 ->add('firstname')
                 ->add('birthdate', 'date', array(
@@ -69,7 +69,6 @@ class StudentType extends AbstractType {
                     'cols_number'   => 2,                    
                     'data' => 'M'
                 ))
-                ->add('picture')
                 ->add('arrivalDate', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',

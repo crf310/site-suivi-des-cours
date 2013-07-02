@@ -3,6 +3,7 @@
 namespace Virgule\Bundle\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -117,11 +118,16 @@ class Student {
     private $comments;
 
     /**
-     * @var string $picture
+     * @var string $picturePath
      *
-     * @ORM\Column(name="picture", type="string", length=50, nullable=true)
+     * @ORM\Column(name="picturePath", type="string", length=50, nullable=true)
      */
-    private $picture;
+    private $picturePath;
+
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    private $pictureFile;
 
     /**
      * @var \DateTime $arrivalDate
@@ -342,7 +348,7 @@ class Student {
     public function getBirthdate() {
         return $this->birthdate;
     }
-    
+
     /**
      * Get age
      * Calculates and returns it in years
@@ -350,8 +356,8 @@ class Student {
      * @return \DateTime 
      */
     public function getAge() {
-       $now = new \DateTime('now');
-       return $this->birthdate->diff($now)->format('%Y');
+        $now = new \DateTime('now');
+        return $this->birthdate->diff($now)->format('%Y');
     }
 
     /**
@@ -520,27 +526,6 @@ class Student {
      */
     public function getMaritalStatus() {
         return $this->maritalStatus;
-    }
-
-    /**
-     * Set picturePath
-     *
-     * @param string picturePath
-     * @return Student
-     */
-    public function setPicture($picture) {
-        $this->picture = $picture;
-
-        return $this;
-    }
-
-    /**
-     * Get picturePath
-     *
-     * @return string 
-     */
-    public function getPicture() {
-        return $this->picture;
     }
 
     /**
@@ -1004,17 +989,15 @@ class Student {
         return $this->suggestedClassLevel;
     }
 
-
     /**
      * Add spokenLanguages
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Language $spokenLanguages
      * @return Student
      */
-    public function addSpokenLanguage(\Virgule\Bundle\MainBundle\Entity\Language $spokenLanguages)
-    {
+    public function addSpokenLanguage(\Virgule\Bundle\MainBundle\Entity\Language $spokenLanguages) {
         $this->spokenLanguages[] = $spokenLanguages;
-    
+
         return $this;
     }
 
@@ -1023,8 +1006,7 @@ class Student {
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Language $spokenLanguages
      */
-    public function removeSpokenLanguage(\Virgule\Bundle\MainBundle\Entity\Language $spokenLanguages)
-    {
+    public function removeSpokenLanguage(\Virgule\Bundle\MainBundle\Entity\Language $spokenLanguages) {
         $this->spokenLanguages->removeElement($spokenLanguages);
     }
 
@@ -1033,8 +1015,67 @@ class Student {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getSpokenLanguages()
-    {
+    public function getSpokenLanguages() {
         return $this->spokenLanguages;
     }
+
+    public function getAbsolutePath() {
+        return null === $this->picturePath ? null : $this->getUploadRootDir() . '/' . $this->picturePath;
+    }
+
+    public function getWebPath() {
+        return null === $this->picturePath ? null : $this->getUploadDir() . '/' . $this->picturePath;
+    }
+
+    protected function getUploadRootDir() {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__ . '/../../../../../web/' . $this->getUploadDir();
+    }
+
+    protected function getUploadDir() {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'uploads/student_pictures';
+    }
+
+    /**
+     * Sets pictureFile.
+     *
+     * @param UploadedPictureFile $pictureFile
+     */
+    public function setPictureFile(UploadedFile $pictureFile = null) {
+        $this->pictureFile = $pictureFile;
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getPictureFile() {
+        return $this->pictureFile;
+    }
+
+    public function upload() {
+        // the file property can be empty if the field is not required
+        if (null === $this->getPictureFile()) {
+            return;
+        }
+
+        // use the original file name here but you should
+        // sanitize it at least to avoid any security issues
+        // move takes the target directory and then the
+        // target filename to move to
+        $this->getPictureFile()->move(
+                $this->getUploadRootDir(), $this->getPictureFile()->getClientOriginalName()
+        );
+
+        // set the path property to the filename where you've saved the file
+        $this->picturePath = $this->getPictureFile()->getClientOriginalName();
+
+        // clean up the file property as you won't need it anymore
+        $this->pictureFile = null;
+    }
+
 }

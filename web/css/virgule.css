@@ -412,3 +412,9 @@ ul.no-img li.margin {
     border-radius: 3px 3px 3px 3px;
     color: #FFFFFF;
 }
+.student-profile-picture {
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 300px;
+}

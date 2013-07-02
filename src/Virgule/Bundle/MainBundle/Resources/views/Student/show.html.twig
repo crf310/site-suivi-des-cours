@@ -51,6 +51,11 @@
                             <h5>Informations personnelles</h5>
                         </div>            
                         <div class="widget-content nopadding">
+                            {% if entity.webPath is not null %}
+                                <div class="student-profile-picture">
+                                    <img src="{{ asset(entity.webPath) }}" height="300" width="300" />
+                                </div>
+                            {% endif %}
                             <div class="control-group">
                                 <label class="control-label">Prénom / Nom</label>
                                 <div class="controls">{{ entity.firstName }} {{ entity.lastName | upper }}</div>
