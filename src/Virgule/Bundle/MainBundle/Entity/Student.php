@@ -1047,6 +1047,10 @@ class Student {
     public function setPictureFile(UploadedFile $pictureFile = null) {
         $this->pictureFile = $pictureFile;
     }
+    
+    public function setPicturePath($picturePath) {
+        $this->picturePath = $picturePath;
+    }
 
     /**
      * Get file.
