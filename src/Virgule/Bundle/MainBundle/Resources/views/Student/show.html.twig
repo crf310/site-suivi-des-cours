@@ -52,9 +52,11 @@
                         </div>            
                         <div class="widget-content nopadding">
                             {% if entity.webPath is not null %}
+                            <div class="control-group">
                                 <div class="student-profile-picture">
-                                    <img src="{{ asset(entity.webPath) }}" height="300" width="300" />
+                                    <a><img src="{{ asset(entity.webPath) }}" height="200" width="150" class="img-polaroid" /></a>
                                 </div>
+                            </div>
                             {% endif %}
                             <div class="control-group">
                                 <label class="control-label">Prénom / Nom</label>

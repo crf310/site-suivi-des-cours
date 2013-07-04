@@ -416,5 +416,6 @@ ul.no-img li.margin {
     margin: auto;
     margin-top: 15px;
     margin-bottom: 15px;
-    width: 300px;
+    width: 200px;
+    height: 150px;
 }
