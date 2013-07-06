@@ -156,7 +156,6 @@ class StudentController extends AbstractVirguleController {
      */
     public function createAction(Request $request) {
         $entity = new Student();
-        $entity->setUpdated();
         $form = $this->initStudentForm($entity);
         
         $form->bind($request);
