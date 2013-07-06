@@ -412,10 +412,14 @@ ul.no-img li.margin {
     border-radius: 3px 3px 3px 3px;
     color: #FFFFFF;
 }
+.fileupload-preview {
+    width: 200px;
+    height: 200px;
+}
 .student-profile-picture {
     margin: auto;
     margin-top: 15px;
     margin-bottom: 15px;
     width: 200px;
-    height: 150px;
+    height: 200px;
 }

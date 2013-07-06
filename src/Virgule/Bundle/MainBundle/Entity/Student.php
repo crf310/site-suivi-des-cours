@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Virgule\Bundle\MainBundle\Entity\AbstractEntityFileUpload;
+use Virgule\Bundle\MainBundle\Service\SimpleImage;
 
 /**
  * Virgule\Bundle\MainBundle\Entity\Student
@@ -1074,7 +1075,9 @@ class Student {
             // clear the temp image path
             $this->temp = null;
         }
-
+    
+        $imageService = new SimpleImage();
+ 
         // you must throw an exception here if the file cannot be moved
         // so that the entity is not persisted to the database
         // which the UploadedFile move() method does
@@ -1083,9 +1086,18 @@ class Student {
         $this->getFile()->move(
                 $this->getUploadRootDir(), $fileName
         );
+        
+         $imageService->load($this->getUploadRootDir() . '/' . $fileName); 
+         $imageService->resize(400,400); 
+         $imageService->save($this->getUploadRootDir() . '/' . $fileName);
+                 
         // thumbnail
         copy($this->getUploadRootDir() . '/' . $fileName, $this->getUploadRootDir() . '/' . $thumbnailFileName);
-
+        // resize thumbnail
+         $imageService->load($this->getUploadRootDir() . '/' . $thumbnailFileName); 
+         $imageService->resize(200,200); 
+         $imageService->save($this->getUploadRootDir() . '/' . $thumbnailFileName);
+             
         $this->setFile(null);
     }
 
