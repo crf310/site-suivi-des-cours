@@ -28,9 +28,9 @@ class Student {
     /**
      * @var datetime $created
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updated;
+    private $updatedAt;
 
     /**
      * @var \DateTime $registrationDate
@@ -265,9 +265,8 @@ class Student {
         return $this->id;
     }
 
-    public function setUpdated() {
-        $this->updated = new \Datetime('now');
-
+    public function setUpdatedAt() {
+        $this->updatedAt = new \Datetime('now');
         return $this;
     }
 
@@ -1043,6 +1042,10 @@ class Student {
 
     private $picturePrefix = 'student_';
 
+    public function setPath($path) {
+        $this->path = $path;
+    }
+    
     public function getAbsolutePath() {
         return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->picturePrefix . $this->id . '.' . $this->path;
     }
