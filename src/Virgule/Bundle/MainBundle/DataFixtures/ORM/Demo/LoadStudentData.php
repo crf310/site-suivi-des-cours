@@ -45,7 +45,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
             $s->setGender($genders[rand(0, 1)]);
 
             if (rand(1,50) < 25) {
-                $s->setPicturePath('bruce.jpg');
+                $s->setPath('jpg');
             }
             
             $y = rand(1950, 1992);
