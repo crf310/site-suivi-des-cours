@@ -1041,7 +1041,7 @@ class Student {
     }
 
     private $picturePrefix = 'student_';
-
+    private $thumbnailPrefix = 'thumbnail_';
     public function setPath($path) {
         $this->path = $path;
     }
@@ -1052,6 +1052,10 @@ class Student {
 
     public function getWebPath() {
         return null === $this->path ? null : $this->getUploadDir() . '/' . $this->picturePrefix . $this->id . '.' . $this->path;
+    }
+    
+    public function getThumbnailWebPath() {
+        return null === $this->path ? null : $this->getUploadDir() . '/' . $this->thumbnailPrefix . $this->picturePrefix . $this->id . '.' . $this->path;
     }
 
     /**
@@ -1074,9 +1078,13 @@ class Student {
         // you must throw an exception here if the file cannot be moved
         // so that the entity is not persisted to the database
         // which the UploadedFile move() method does
+        $fileName = $this->picturePrefix . $this->id . '.' . $this->getFile()->guessExtension();
+        $thumbnailFileName = $this->thumbnailPrefix . $this->picturePrefix . $this->id . '.' . $this->getFile()->guessExtension();
         $this->getFile()->move(
-                $this->getUploadRootDir(),  $this->picturePrefix . $this->id . '.' . $this->getFile()->guessExtension()
+                $this->getUploadRootDir(), $fileName
         );
+        // thumbnail
+        copy($this->getUploadRootDir() . '/' . $fileName, $this->getUploadRootDir() . '/' . $thumbnailFileName);
 
         $this->setFile(null);
     }

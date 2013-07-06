@@ -53,8 +53,8 @@
                         <div class="widget-content nopadding">
                             {% if entity.webPath is not null %}
                             <div class="control-group">
-                                <div class="student-profile-picture">
-                                    <a><img src="{{ asset(entity.webPath) }}" height="200" width="150" class="img-polaroid" /></a>
+                                <div class="student-profile-picture">                                    
+                                    <a><img src="{{ asset(entity.thumbnailWebPath) }}" height="200" width="200" class="img-polaroid" /></a>
                                 </div>
                             </div>
                             {% endif %}
