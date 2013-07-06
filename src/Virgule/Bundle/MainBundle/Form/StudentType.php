@@ -23,7 +23,7 @@ class StudentType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('pictureFile', 'file')
+                ->add('file', 'file')
                 ->add('lastname')
                 ->add('firstname')
                 ->add('birthdate', 'date', array(

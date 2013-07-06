@@ -156,16 +156,17 @@ class StudentController extends AbstractVirguleController {
      */
     public function createAction(Request $request) {
         $entity = new Student();
+        $entity->setUpdated();
         $form = $this->initStudentForm($entity);
         
         $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $em->flush();
             
             $this->saveSuggestedClassLevel($entity, $em);
             
-            $entity->upload();
             $em->persist($entity);
             $em->flush();
 
@@ -227,9 +228,8 @@ class StudentController extends AbstractVirguleController {
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+            $entity->setUpdated();
             $em->persist($entity);
-            
-            $this->saveSuggestedClassLevel($entity, $em);
             
             $em->flush();
 

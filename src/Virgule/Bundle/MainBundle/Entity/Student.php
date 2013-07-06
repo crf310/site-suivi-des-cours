@@ -3,14 +3,16 @@
 namespace Virgule\Bundle\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Virgule\Bundle\MainBundle\Entity\AbstractEntityFileUpload;
 
 /**
  * Virgule\Bundle\MainBundle\Entity\Student
  *
  * @ORM\Table(name="student")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\StudentRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Student {
 
@@ -22,6 +24,13 @@ class Student {
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+    /**
+     * @var datetime $created
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $updated;
 
     /**
      * @var \DateTime $registrationDate
@@ -122,12 +131,7 @@ class Student {
      *
      * @ORM\Column(name="picturePath", type="string", length=50, nullable=true)
      */
-    private $picturePath;
-
-    /**
-     * @Assert\File(maxSize="6000000")
-     */
-    private $pictureFile;
+    protected $path = null;
 
     /**
      * @var \DateTime $arrivalDate
@@ -259,6 +263,12 @@ class Student {
      */
     public function getId() {
         return $this->id;
+    }
+
+    public function setUpdated() {
+        $this->updated = new \Datetime('now');
+
+        return $this;
     }
 
     /**
@@ -1019,37 +1029,94 @@ class Student {
         return $this->spokenLanguages;
     }
 
-    public function getAbsolutePath() {
-        return null === $this->picturePath ? null : $this->getUploadRootDir() . '/' . $this->picturePath;
-    }
-
-    public function getWebPath() {
-        return null === $this->picturePath ? null : $this->getUploadDir() . '/' . $this->picturePath;
-    }
-
-    protected function getUploadRootDir() {
+    public function getUploadRootDir() {
         // the absolute directory path where uploaded
         // documents should be saved
         return __DIR__ . '/../../../../../web/' . $this->getUploadDir();
     }
 
-    protected function getUploadDir() {
+    public function getUploadDir() {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
         return 'uploads/student_pictures';
     }
 
-    /**
-     * Sets pictureFile.
-     *
-     * @param UploadedPictureFile $pictureFile
-     */
-    public function setPictureFile(UploadedFile $pictureFile = null) {
-        $this->pictureFile = $pictureFile;
+    private $picturePrefix = 'student_';
+
+    public function getAbsolutePath() {
+        return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->picturePrefix . $this->id . '.' . $this->path;
     }
-    
-    public function setPicturePath($picturePath) {
-        $this->picturePath = $picturePath;
+
+    public function getWebPath() {
+        return null === $this->path ? null : $this->getUploadDir() . '/' . $this->picturePrefix . $this->id . '.' . $this->path;
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload() {
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // check if we have an old image
+        if (isset($this->temp)) {
+            // delete the old image
+            unlink($this->temp);
+            // clear the temp image path
+            $this->temp = null;
+        }
+
+        // you must throw an exception here if the file cannot be moved
+        // so that the entity is not persisted to the database
+        // which the UploadedFile move() method does
+        $this->getFile()->move(
+                $this->getUploadRootDir(),  $this->picturePrefix . $this->id . '.' . $this->getFile()->guessExtension()
+        );
+
+        $this->setFile(null);
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload() {
+        if (null !== $this->getFile()) {
+            $this->path = $this->getFile()->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function storeFilenameForRemove() {
+        $this->temp = $this->getAbsolutePath();
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload() {
+        if (isset($this->temp)) {
+            unlink($this->temp);
+        }
+    }
+
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    private $file;
+    private $temp;
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null) {
+        $this->file = $file;
     }
 
     /**
@@ -1057,29 +1124,8 @@ class Student {
      *
      * @return UploadedFile
      */
-    public function getPictureFile() {
-        return $this->pictureFile;
-    }
-
-    public function upload() {
-        // the file property can be empty if the field is not required
-        if (null === $this->getPictureFile()) {
-            return;
-        }
-
-        // use the original file name here but you should
-        // sanitize it at least to avoid any security issues
-        // move takes the target directory and then the
-        // target filename to move to
-        $this->getPictureFile()->move(
-                $this->getUploadRootDir(), $this->getPictureFile()->getClientOriginalName()
-        );
-
-        // set the path property to the filename where you've saved the file
-        $this->picturePath = $this->getPictureFile()->getClientOriginalName();
-
-        // clean up the file property as you won't need it anymore
-        $this->pictureFile = null;
+    public function getFile() {
+        return $this->file;
     }
 
 }
