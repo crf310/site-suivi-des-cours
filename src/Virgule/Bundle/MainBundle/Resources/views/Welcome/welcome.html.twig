@@ -43,7 +43,7 @@
           {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Mes apprenants', 'students': myStudents, 'nbColumns': 4, 'displayAllStudentButton': true }  %}
             <div class="row-fluid">
               <div class="span6">          
-                  {% include 'VirguleMainBundle:Document:mini-list.html.twig' with { 'title': 'Mes documents', 'documents': myDocuments, 'nbColumns': 4, 'displayAllDocumentButton': true }  %}
+                  {% include 'VirguleMainBundle:Document:mini-list.html.twig' with { 'title': 'Mes documents', 'documents': myDocuments, 'nbColumns': 3, 'displayAllDocumentButton': true }  %}
               </div><!--/span-->
               <div class="span6">
                 {% if latestClassSessions | length % 3 == 0 %}
