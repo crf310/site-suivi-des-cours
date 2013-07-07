@@ -28,6 +28,13 @@
 {% endspaceless %}
 {% endblock form_widget_simple %}
 
+{% block file_widget %}
+    <div class="fileupload fileupload-new" data-provides="fileupload">
+        <div class="input-append">
+            <div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Selectionner</span><span class="fileupload-exists">Modifier</span><input type="file" {{ block('widget_attributes') }} /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Supprimer</a>
+        </div>
+    </div>
+{% endblock %}
 {% block picture_widget %}
     {% spaceless %}
     <div class="fileupload fileupload-new" data-provides="fileupload">

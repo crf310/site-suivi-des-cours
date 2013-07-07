@@ -55,7 +55,8 @@ class DocumentController extends AbstractVirguleController {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('document_show', array('id' => $entity->getId())));
+            // return $this->redirect($this->generateUrl('document_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('document_index'));
         }
 
         return array(

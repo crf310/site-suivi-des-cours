@@ -14,7 +14,6 @@
                 <tr>
                     <th>Nom du document</th>
                     <th>Téléchargement</th>
-                    <th>Type de document</th>
                     <th>Enregistré par</th>
                     <th>Adapté au(x) niveau(x)</th>
                     <th>Actions</th>
@@ -24,7 +23,7 @@
                 {% for document in documents %}
                 <tr>
                     <td>{{ document.fileName }}</td>
-                    <td>{{ document.file }}</td>
+                    <td><a href="{{ document.webPath }}">{{ document.path }}</a></td>
                     <td></td>
                     <td><a  href="{{ path('teacher_show', { 'id':  document.uploader.id }) }}">{{ document.uploader }}</a></td>
                     <td></td>
