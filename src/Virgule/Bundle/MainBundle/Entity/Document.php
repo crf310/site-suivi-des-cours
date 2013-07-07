@@ -311,6 +311,10 @@ class Document {
     public function getPath() {
         return $this->path;
     }
+    public function setPath($path) {
+        $this->path = $path;
+    }
+    
     public function getAbsolutePath() {
         return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->path;
     }
