@@ -32,7 +32,7 @@ class LoadLanguageData extends AbstractFixture implements OrderedFixtureInterfac
     }
 
     public function getOrder() {
-        return 12;
+        return 3;
     }
 
 }
