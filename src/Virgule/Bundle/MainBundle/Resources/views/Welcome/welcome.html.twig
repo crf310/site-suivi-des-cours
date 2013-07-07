@@ -43,28 +43,7 @@
           {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Mes apprenants', 'students': myStudents, 'nbColumns': 4, 'displayAllStudentButton': true }  %}
             <div class="row-fluid">
               <div class="span6">          
-                  <div class="widget-box">
-                        <div class="widget-title">
-                                <span class="icon">
-                                        <i class="icon-th-list"></i>
-                                </span>
-                                <h5>Mes documents</h5>
-                        </div>
-                        <div class="widget-content">
-                            <ul>
-                                <li>Document A</li>
-                                <li>Document B</li>
-                                <li>Document C</li>
-                                <li>Document D</li>
-                                <li>Document E</li>
-                            </ul>                    
-                            <ul class="recent-posts">
-                                <li class="viewall">
-                                    <a href="#" class="tip-top" title=""> + Voir tous les documents + </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                  {% include 'VirguleMainBundle:Document:mini-list.html.twig' with { 'title': 'Mes documents', 'documents': myDocuments, 'nbColumns': 4, 'displayAllDocumentButton': true }  %}
               </div><!--/span-->
               <div class="span6">
                 {% if latestClassSessions | length % 3 == 0 %}

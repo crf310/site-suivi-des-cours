@@ -1,0 +1,40 @@
+<div class="widget-box">
+    <div class="widget-title">
+        <span class="icon">
+                <i class="icon-th-list"></i>
+        </span>
+        <h5>{{ title }}</h5>
+        <span title="{{ documents | length }} documents" class="label label-info tip-left">{{ documents | length }}</span>
+    </div>
+    <div class="widget-content">
+            {% if documents is empty %}
+                Aucun document enregistré pour le moment.
+            {% else %}
+                {% if nbColumns is not defined %}
+                    {% set nbColumns = 3 %}
+                {% endif %}
+                {% set listBreak = (documents | length) // nbColumns %}
+                {% if ((documents | length) % nbColumns) != 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
+                {% if ((documents | length) // nbColumns) < 0 %}{% set listBreak = 1 %}{% endif %}
+                {% set span_size = 12 /  nbColumns %}
+                <div class="span{{ span_size }}">
+                    <ul class="no-img">
+                    {% for document in documents %}
+                        <li><a href="{{ document.webPath }}">{{ document.fileName }}</a></li>
+                        {% if loop.index % listBreak == 0  and loop.index != loop.last %}
+                            </ul></div><div class="span{{ span_size }}"><ul class="no-img">
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                </div>          
+            {% endif %} 
+        <div class="clear_list"></div>
+        {% if displayAllClassSessionsButton is defined and displayAllClassSessionsButton == true %}                
+            <ul class="recent-posts">
+                <li class="viewall">
+                    <a href="{{ path('classsession_index') }}" class="tip-top" title=""> + Voir tous les compte-rendus + </a>
+                </li>
+            </ul>
+        {% endif %}
+    </div>
+</div>
