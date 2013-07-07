@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Virgule\Bundle\MainBundle\Repository\TeacherRepository;
 use Virgule\Bundle\MainBundle\Entity\Teacher;
+use Virgule\Bundle\MainBundle\Form\Type\PictureType;
 
 class StudentType extends AbstractType {
 
@@ -23,7 +24,7 @@ class StudentType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('file', 'file')
+                ->add('file', new PictureType())
                 ->add('lastname')
                 ->add('firstname')
                 ->add('birthdate', 'date', array(
