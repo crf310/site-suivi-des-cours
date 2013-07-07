@@ -16,6 +16,7 @@
                     <th>Téléchargement</th>
                     <th>Enregistré par</th>
                     <th>Adapté au(x) niveau(x)</th>
+                    <th>Tags</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -28,6 +29,11 @@
                     <td>
                     {% for classLevel in document.classLevel %}
                         {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel.htmlColorCode, 'classLevelLabel': classLevel.label } %} 
+                    {% endfor %}
+                    </td>
+                    <td>
+                    {% for tag in document.tags %}
+                        <span class="myTag">{{ tag.label }}</span>{% if not loop.last %}&nbsp;{% endif %}
                     {% endfor %}
                     </td>
                     <td><a  href="{{ path('document_show', { 'id':  document.id }) }}">Voir le document</a></td>

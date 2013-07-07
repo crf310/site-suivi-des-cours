@@ -35,6 +35,10 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface {
         $tag10 = new Tag();
         $tag10->setLabel("Réunion");
         
+        for($i = 1; $i <= 10; $i++) {
+            $this->addReference('tag' . $i, ${'tag' . $i});
+        }
+        
         $manager->persist($tag1);
         $manager->persist($tag2);
         $manager->persist($tag3);
