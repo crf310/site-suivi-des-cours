@@ -422,6 +422,7 @@ ul.no-img li.margin {
     margin-bottom: 15px;
     width: 200px;
     height: 200px;
+    text-align: center;
 }
 
 .masonry .item, .trombinoscope_student_name {

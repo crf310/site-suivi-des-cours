@@ -1,7 +1,11 @@
 {% extends '::main_content.html.twig' %}
 {% block head %}    
     {{ parent() }}
-    {% block javascripts %}        
+    {% block stylesheets %}
+        <link href="{{ asset('css/bootstrap-lightbox.min.css') }}" rel="stylesheet" media="screen" />
+    {% endblock %}
+    {% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/bootstrap-lightbox.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap-confirm.js') }}"></script>
         <script type='text/javascript'>
         $(function() {
@@ -54,8 +58,10 @@
                             {% if entity.webPath is not null %}
                             <div class="control-group">
                                 <div class="student-profile-picture">                                    
-                                    <a><img src="{{ asset(entity.thumbnailWebPath) }}" class="img-polaroid" /></a>
-                                </div>
+                                    <img src="{{ asset(entity.thumbnailWebPath) }}" class="img-polaroid" />
+                                    <a title="Agrandir" href="#fullSizeProfilePictureStudent{{ entity.id }}" data-toggle="lightbox">Agrandir</a>
+                                </div>                                
+                                {% include 'VirguleMainBundle:Course:fullSizeProfilePicture.html.twig' with { 'id': entity.id, 'webPath': entity.webPath, 'firstname': entity.firstname, 'lastname': entity.lastname }  %}
                             </div>
                             {% endif %}
                             <div class="control-group">

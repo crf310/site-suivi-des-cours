@@ -15,10 +15,11 @@
                     <div class="item">                
                         {% if student.webPath is not null %}
                             <img src="{{ asset(student.thumbnailWebPath) }}" class="img-polaroid"  alt="{{ student.firstname}} {{ student.lastname }}" />
-                        <div class="actions">
-                            <a title="Voir la fiche" href="{{ path('student_show', { 'id':  student.id }) }}" class="tip-top"><i class="icon-user icon-white"></i></a>
-                            <a title="Agrandir" href="#" class="tip-top"><i class="icon-search"></i></a>
-                        </div>
+                            <div class="actions">
+                                <a title="Fiche" href="{{ path('student_show', { 'id':  student.id }) }}" class="tip-top"><i class="icon-user icon-white"></i></a>
+                                <a title="Agrandir" href="#fullSizeProfilePictureStudent{{ student.id }}" class="tip-top" data-toggle="lightbox"><i class="icon-search icon-white"></i></a>
+                            </div> 
+                            {% include 'VirguleMainBundle:Course:fullSizeProfilePicture.html.twig' with { 'id': student.id, 'webPath': student.webPath, 'firstname': student.firstname, 'lastname': student.lastname }  %}
                         {% else %}
                             <img src="{{ asset('img/no_profile_picture.jpg') }}" class="img-polaroid"  alt="{{ student.firstname}} {{ student.lastname }}" />
                         {% endif %}

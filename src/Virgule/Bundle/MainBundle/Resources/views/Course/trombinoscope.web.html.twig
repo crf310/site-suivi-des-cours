@@ -1,7 +1,12 @@
-{% extends '::main_content.html.twig' %}{% block head %}    
+{% extends '::main_content.html.twig' %}
+{% block head %}    
     {{ parent() }}
+    {% block stylesheets %}
+        <link href="{{ asset('css/bootstrap-lightbox.min.css') }}" rel="stylesheet" media="screen" />
+    {% endblock %}
     {% block javascripts %}
     <script type="text/javascript" src="{{ asset('js/jquery.masonry.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap-lightbox.min.js') }}"></script>
     <script>
         $(function(){
             $('.gallery-masonry').masonry({
