@@ -20,7 +20,7 @@
                 <div class="span{{ span_size }}">
                     <ul>
                     {% for document in documents %}
-                        <li class="document"><a href="{{ document.webPath }}">{{ document.fileName }}</a></li>
+                        <li class="document"><a href="{{ path('document_download', { 'id': document.id }) }}">{{ document.fileName }}</a></li>
                         {% if loop.index % listBreak == 0  and loop.index != loop.last %}
                             </ul></div><div class="span{{ span_size }}"><ul>
                         {% endif %}
@@ -29,10 +29,10 @@
                 </div>          
             {% endif %} 
         <div class="clear_list"></div>
-        {% if displayAllClassSessionsButton is defined and displayAllClassSessionsButton == true %}                
+        {% if displayAllDocumentButton is defined and displayAllDocumentButton == true %}                
             <ul class="recent-posts">
                 <li class="viewall">
-                    <a href="{{ path('classsession_index') }}" class="tip-top" title=""> + Voir tous les compte-rendus + </a>
+                    <a href="{{ path('document_index') }}" class="tip-top" title=""> + Voir tous les documents + </a>
                 </li>
             </ul>
         {% endif %}

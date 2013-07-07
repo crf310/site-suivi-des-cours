@@ -23,10 +23,13 @@
                 {% for document in documents %}
                 <tr>
                     <td>{{ document.fileName }}</td>
-                    <td><a href="{{ document.webPath }}">{{ document.path }}</a></td>
-                    <td></td>
+                    <td><a href="{{ path('document_download', { 'id': document.id }) }}">{{ document.path }}</a></td>
                     <td><a  href="{{ path('teacher_show', { 'id':  document.uploader.id }) }}">{{ document.uploader }}</a></td>
-                    <td></td>
+                    <td>
+                    {% for classLevel in document.classLevel %}
+                        {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel.htmlColorCode, 'classLevelLabel': classLevel.label } %} 
+                    {% endfor %}
+                    </td>
                     <td><a  href="{{ path('document_show', { 'id':  document.id }) }}">Voir le document</a></td>
                 </tr>
                 {% endfor %}
