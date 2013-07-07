@@ -204,6 +204,8 @@ i.document-add {
 li.user_M { list-style-image:url('../img/icons/user.png'); }
 li.user_F { list-style-image:url('../img/icons/user_female.png'); }
 
+li.document { list-style-image:url('../img/icons/attach.png'); }
+
 /*----- Tables ----*/
 a.export_list {
     background: url('../img/icons/page_excel.png') no-repeat;

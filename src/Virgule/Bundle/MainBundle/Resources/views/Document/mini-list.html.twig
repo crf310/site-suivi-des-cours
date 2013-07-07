@@ -18,11 +18,11 @@
                 {% if ((documents | length) // nbColumns) < 0 %}{% set listBreak = 1 %}{% endif %}
                 {% set span_size = 12 /  nbColumns %}
                 <div class="span{{ span_size }}">
-                    <ul class="no-img">
+                    <ul>
                     {% for document in documents %}
-                        <li><a href="{{ document.webPath }}">{{ document.fileName }}</a></li>
+                        <li class="document"><a href="{{ document.webPath }}">{{ document.fileName }}</a></li>
                         {% if loop.index % listBreak == 0  and loop.index != loop.last %}
-                            </ul></div><div class="span{{ span_size }}"><ul class="no-img">
+                            </ul></div><div class="span{{ span_size }}"><ul>
                         {% endif %}
                     {% endfor %}
                     </ul>
