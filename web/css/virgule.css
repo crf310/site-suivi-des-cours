@@ -173,7 +173,7 @@ i.icon-export {
 i.icon-info {
     background-image: url('../img/icons/information.png');
 }
-i.icon-search {
+i.icon-search-student, i.icon-search-classsession, i.icon-search-document {
     background-image: url('../img/icons/magnifier.png');
 }
 i.icon-calendar {
