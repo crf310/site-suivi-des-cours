@@ -72,7 +72,8 @@ class StudentRepository extends EntityRepository {
 
     public function loadAllEnrolledInCourses(Array $courseIds) {
         $qb = $this->getQueryBuilderForStudentEnrolledInCourses($courseIds)
-            ->select('s.id as student_id, s.firstname as firstname, s.lastname as lastname, s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, s.registrationDate, s.nativeCountry')
+            ->select('s.id as student_id, s.firstname as firstname, s.lastname as lastname, 
+                s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, s.registrationDate, s.nativeCountry')
             ->addSelect('count(cm.id) as nb_comments')
             ->leftJoin('s.comments', 'cm')
             ->add('groupBy', 's.id');
@@ -86,6 +87,14 @@ class StudentRepository extends EntityRepository {
      */
     public function loadAllEnrolledInCourse($courseId) {
         return $this->loadAllEnrolledInCourses(Array($courseId));
+    }
+    
+    
+    public function loadAllEnrolledInCourseEntities($courseId) {
+        $qb = $this->createDefaultQueryBuilder()   
+            ->innerJoin('s.courses', 'c2', 'WITH', 'c2.id = :courseId')
+            ->setParameter('courseId', $courseId);
+        return $qb->getQuery()->execute();
     }
 
     public function loadAllPresentAtClassSession($classSessionId) {

@@ -1,6 +1,7 @@
 {% extends '::main_content.html.twig' %}
 {% block content_title %}Cours{% endblock %}
 {%block submenu %}
+    <a class="btn tip-bottom" href="{{ path('course_show_trombinoscope', { 'id': entity.id }) }}"> <i class="icon-trombinoscope"></i>Trombinoscope</a>
 {% endblock %}
 {% block main_content %}
 <div class="container-fluid">

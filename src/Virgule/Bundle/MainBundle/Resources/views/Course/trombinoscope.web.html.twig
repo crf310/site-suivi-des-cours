@@ -1,0 +1,23 @@
+{% extends '::main_content.html.twig' %}{% block head %}    
+    {{ parent() }}
+    {% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/jquery.masonry.min.js') }}"></script>
+    <script>
+        $(function(){
+            $('.gallery-masonry').masonry({
+              itemSelector: '.item',
+              isAnimated: true,
+              isFitWidth: true
+            });                    
+        });
+    </script>
+    {% endblock %}
+{% endblock %}
+{% block content_title %}Trombinoscope{% endblock %}
+{%block submenu %}
+    <a class="btn tip-bottom" href="{{ path('course_print_trombinoscope', { 'id': course.id }) }}" target="_blank"> <i class="icon-printer"></i>Imprimer</a>
+    <a class="btn tip-bottom" href="{{ path('course_show', { 'id': course.id }) }}"> <i class="icon-printer"></i>Retour au cours</a>
+{% endblock %}
+{% block main_content %}
+    {% include 'VirguleMainBundle:Course:trombinoscope.html.twig' %}
+{% endblock %}

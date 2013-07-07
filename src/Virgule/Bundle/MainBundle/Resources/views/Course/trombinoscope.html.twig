@@ -1,0 +1,33 @@
+{% block main_content %}
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-picture"></i>
+                </span>
+                <h5>{{ course.classLevel }}, le {{ course.dayOfWeek| day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }}</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <div class="gallery-masonry masonry">
+                    {% for student in enrolledStudents %}
+                    <div class="item">                
+                        {% if student.webPath is not null %}
+                            <img src="{{ asset(student.thumbnailWebPath) }}" class="img-polaroid"  alt="{{ student.firstname}} {{ student.lastname }}" />
+                        <div class="actions">
+                            <a title="Voir la fiche" href="{{ path('student_show', { 'id':  student.id }) }}" class="tip-top"><i class="icon-user icon-white"></i></a>
+                            <a title="Agrandir" href="#" class="tip-top"><i class="icon-search"></i></a>
+                        </div>
+                        {% else %}
+                            <img src="{{ asset('img/no_profile_picture.jpg') }}" class="img-polaroid"  alt="{{ student.firstname}} {{ student.lastname }}" />
+                        {% endif %}
+                        <div class="trombinoscope_student_name">{{ student.firstname}} {{ student.lastname }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

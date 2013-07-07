@@ -29,6 +29,34 @@ class CourseController extends AbstractVirguleController {
     
     /**
      *
+     * @Route("/{id}/trombi", name="course_show_trombinoscope"))
+     * @Template("VirguleMainBundle:Course:trombinoscope.web.html.twig")
+     */
+    public function showTrombinoscopeAction(Course $id) {    
+        $enrolledStudents = $this->getStudentRepository()->loadAllEnrolledInCourseEntities($id->getId());
+
+        return array(
+            'enrolledStudents' => $enrolledStudents,
+            'course' => $id,
+        );
+    }
+    
+    /**
+     *
+     * @Route("/{id}/printTrombi", name="course_print_trombinoscope"))
+     * @Template("VirguleMainBundle:Course:trombinoscope.html.twig")
+     */
+    public function printTrombinoscopeAction(Course $id) {    
+        $enrolledStudents = $this->getStudentRepository()->loadAllEnrolledInCourseEntities($id->getId());
+
+        return array(
+            'enrolledStudents' => $enrolledStudents,
+            'course' => $id,
+        );
+    }
+    
+    /**
+     *
      * @Route("/printPlanning", name="course_print_planning"))
      * @Template("VirguleMainBundle:Course:planning.print.html.twig")
      */
