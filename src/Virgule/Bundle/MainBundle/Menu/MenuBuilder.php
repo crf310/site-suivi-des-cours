@@ -73,7 +73,7 @@ class MenuBuilder extends ContainerAware {
         $menu['Administration']->addChild('Gérer les niveaux', array('route' => 'classlevel_index'));
         $menu['Administration']['Gérer les niveaux']->setLinkAttribute('class', 'class-levels');
         
-        $menu['Administration']->addChild('Gérer la délégation', array('uri' => '#'));
+        $menu['Administration']->addChild('Gérer la délégation', array('route' => 'organizationbranch'));
         $menu['Administration']['Gérer la délégation']->setLinkAttribute('class', 'red-cross');
         
         $menu['Administration']->addChild('Voir les logs', array('route' => 'admin_show_logs'));

@@ -16,13 +16,18 @@
                         {% else %}
                             {% for course in myCourses %}
                             <div class="course-quick-access">
-                                    <strong>{{ course.classLevel }}, le {{ course.dayOfWeek| day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }}</strong>
+                                    <strong>
+									{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.getClassLevel().getHtmlColorCode(), 'classLevelLabel': course.getClassLevel().getLabel() } %}
+									{{ course.dayOfWeek | day }}
+									<br />
+									({{ course.startTime | date('H:i') }} - {{ course.endTime | date('H:i') }})
+									</strong>
                                     <br />
                                     <a href="{{ path('course_show', { 'id': course.id }) }}" >Voir le cours</a>
                                     <br />
                                     <a  class="btn virgule-btn" href="{{ path('classsession_add', { 'id': course.id }) }}"><i class="icon-add"></i>Compte-rendu</a>
                                     <a  class="btn virgule-btn" href="{{ path('attendance_list', { 'id': course.id }) }}" target="_blank"><i class="icon-trombinoscope"></i>Fiche de présence</a>
-                                </div>
+                            </div>
                             {% endfor %}
                         {% endif %}
                     <ul class="recent-posts">
@@ -51,7 +56,7 @@
                 {% else %}
                     {% set listBreak = (latestClassSessions | length // 3) + 1 %}
                 {% endif %}
-                {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Les 15 derniers compte-rendus enregistrés', 'classSessions': latestClassSessions, 'nbColumns': 3, 'displayAllClassSessionsButton': true }  %}
+                {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Derniers compte-rendus', 'classSessions': latestClassSessions, 'nbColumns': 2, 'displayAllClassSessionsButton': true }  %}
               </div><!--/span-->
             </div><!--/row-->              
       </div><!--/span-->

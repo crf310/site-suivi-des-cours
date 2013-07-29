@@ -1,4 +1,4 @@
-<h1>OrganizationBranch creation</h1>
+<h1>Ajouter une délégation</h1>
 
 <form action="{{ path('organizationbranch_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
@@ -6,6 +6,58 @@
         <button type="submit">Create</button>
     </p>
 </form>
+
+
+<div class="span11">  
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon">
+                <i class="icon-th"></i>
+            </span>
+            <h5>Délégations</h5>
+        </div>
+        <div class="widget-content nopadding">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+						<th>Nom</th>
+						<th>Addresse</th>
+						<th>Président</th>
+						<th>Téléphone</th>
+						<th>Fax</th>
+						<th>Email</th>
+						<th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for entity in entities %}
+					<tr>
+						<td><a href="{{ path('organizationbranch_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+						<td>{{ entity.name }}</td>
+						<td>{{ entity.address }}</td>
+						<td>{{ entity.presidentName }}</td>
+						<td>{{ entity.phoneNumber }}</td>
+						<td>{{ entity.faxNumber }}</td>
+						<td>{{ entity.emailAddress }}</td>
+						<td>
+							<ul>
+								<li>
+									<a href="{{ path('organizationbranch_show', { 'id': entity.id }) }}">show</a>
+								</li>
+								<li>
+									<a href="{{ path('organizationbranch_edit', { 'id': entity.id }) }}">edit</a>
+								</li>
+							</ul>
+						</td>
+					</tr>
+				{% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 
 <ul class="record_actions">
     <li>
