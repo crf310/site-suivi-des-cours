@@ -59,12 +59,12 @@
                                 <h5>Cours dirigés</h5>
                         </div>
                         <div class="widget-content">
-                            <ul>
+                            <ul class="no-img">
                                 {% if teacherCourses is empty %}
                                     Aucun cours dirigé pour le moment.
                                 {% else %}
                                     {% for course in teacherCourses %}
-                                        <li><a href="{{ path('course_show', { 'id': course.id }) }}">Niveau {{ course.classLevel }} le {{ course.dayOfWeek| day }} de {{ course.startTime|date('H:i') }} à {{ course.endTime|date('H:i') }}</a> 
+                                        <li>Niveau {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevel.htmlColorCode, 'classLevelLabel': course.classLevel.label } %}  le {{ course.dayOfWeek| day }} de {{ course.startTime|date('H:i') }} à {{ course.endTime|date('H:i') }} &nbsp; <a href="{{ path('course_show', { 'id': course.id }) }}">Voir ce cours</a> 
                                         </li>
                                     {% endfor %}
                                 {% endif %}
