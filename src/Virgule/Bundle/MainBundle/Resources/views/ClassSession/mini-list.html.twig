@@ -11,7 +11,7 @@
                 Aucun compte-rendu enregistré pour le moment.
             {% else %}
                 {% if nbColumns is not defined %}
-                    {% set nbColumns = 3 %}
+                    {% set nbColumns = 2 %}
                 {% endif %}
                 {% set listBreak = (classSessions | length) // nbColumns %}
                 {% if ((classSessions | length) % nbColumns) != 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
