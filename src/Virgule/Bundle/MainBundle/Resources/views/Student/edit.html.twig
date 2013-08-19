@@ -9,7 +9,7 @@
      </script>
     {% endblock %}
 {% endblock %}
-{% block content_title %}Enregistrer un nouvel apprenant{% endblock %}
+{% block content_title %}Modifier la fiche de {{ entity.firstName }} {{ entity.lastName }}{% endblock %}
  {%block submenu %}{% endblock %}
 {% block main_content %}
 <form action="{{ path('student_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal">
