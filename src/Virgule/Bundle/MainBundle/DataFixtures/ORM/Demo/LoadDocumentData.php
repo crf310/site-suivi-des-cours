@@ -32,8 +32,16 @@ class LoadDocumentData extends AbstractFixture implements OrderedFixtureInterfac
             $document->setUploader($this->getReference('prof' . rand(1,4)));
             $document->setUploadDate(new \Datetime('now'));
             $document->setPath('document_' . $i . '.pdf');
-            $document->addClassLevel($classLevels[rand(0, count($classLevels)-1)]);
 
+            $classLevelIds = Array();
+            for ($j = 1; $j <= rand(0,3); $j++) {
+                do {
+                    $classLevelId = rand(0, count($classLevels)-1);
+                } while (in_array($classLevelId, $classLevelIds));
+                $classLevelIds[] = $classLevelId;
+                $document->addClassLevel($classLevels[$classLevelId]);
+            }
+            
             $tagIds = Array();
             for ($j = 1; $j <= rand(0,3); $j++) {
                 do {
