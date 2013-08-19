@@ -27,9 +27,15 @@ class DocumentManager extends BaseManager {
         foreach ($documents as $document) {
             if (! array_key_exists($document['id'], $mergedDocuments)) {
                 $mergedDocuments[$document['id']] = $document;
+                $mergedDocuments[$document['id']]['tags'] = Array();
+                $mergedDocuments[$document['id']]['classLevels'] = Array();
             }
-            $mergedDocuments[$document['id']]['tags'][] = $document['tag_label'];
-            $mergedDocuments[$document['id']]['classLevels'][] = Array('classLevel_label' => $document['classLevel_label'], 'classLevel_htmlColorCode' => $document['classLevel_htmlColorCode']);
+            if (! in_array($document['tag_label'], $mergedDocuments[$document['id']]['tags'])) {
+                $mergedDocuments[$document['id']]['tags'][] = $document['tag_label'];
+            }
+            if (! in_array($document['classLevel_label'], $mergedDocuments[$document['id']]['classLevels'])) {
+                $mergedDocuments[$document['id']]['classLevels'][$document['classLevel_label']] = Array('classLevel_label' => $document['classLevel_label'], 'classLevel_htmlColorCode' => $document['classLevel_htmlColorCode']);
+            }
         }
         return $mergedDocuments;
     }
