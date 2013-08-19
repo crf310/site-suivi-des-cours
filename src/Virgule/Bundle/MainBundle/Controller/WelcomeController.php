@@ -48,7 +48,7 @@ class WelcomeController extends AbstractVirguleController {
         $latestClassSessions = $classSessionRepo->loadAllForMiniList($semesterId, 15);
         $latestClassSessionsLineBreak = $this->getListBreak(count($latestClassSessions)); 
         
-        $myDocuments = $this->getDocumentRepostory()->getDocumentsUploadedBy($teacherId);
+        $myDocuments = $this->getDocumentRepository()->getDocumentsUploadedBy($teacherId);
         
         /*
         foreach ($myStudents as $student) {

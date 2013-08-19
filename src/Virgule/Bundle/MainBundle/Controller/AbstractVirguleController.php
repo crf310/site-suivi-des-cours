@@ -130,7 +130,7 @@ abstract class AbstractVirguleController extends Controller {
     protected function getTagRepository() {
         return $this->getDoctrineManager()->getRepository('VirguleMainBundle:Tag');
     }
-    protected function getLanguageRepostory() {
+    protected function getLanguageRepository() {
         return $this->getDoctrineManager()->getRepository('VirguleMainBundle:Language');
     }
     protected function getDocumentRepository() {

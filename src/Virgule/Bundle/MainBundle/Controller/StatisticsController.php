@@ -27,7 +27,7 @@ class StatisticsController extends AbstractVirguleController {
         $studentRepository = $this->getStudentRepository();
         $studentManager = $this->getStudentManager();
         
-        $languages = $this->getLanguageRepostory()->getNumberOfLanguagesSpoken($semesterId);        
+        $languages = $this->getLanguageRepository()->getNumberOfLanguagesSpoken($semesterId);        
         
         $students = $studentRepository->getStudentsInformation($semesterId);
         
