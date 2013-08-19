@@ -42,7 +42,7 @@ class WelcomeController extends AbstractVirguleController {
         }
         
         $classSessionRepo = $em->getRepository('VirguleMainBundle:ClassSession');
-        $myClassSessions = $classSessionRepo->loadAllClassSessionByTeacher($semesterId, $teacherId);
+        $myClassSessions = $classSessionRepo->loadAllClassSessionByTeacher($semesterId, $teacherId, 12);
         $myClassSessionsLineBreak = $this->getListBreak(count($myClassSessions));
 
         $latestClassSessions = $classSessionRepo->loadAllForMiniList($semesterId, 15);
