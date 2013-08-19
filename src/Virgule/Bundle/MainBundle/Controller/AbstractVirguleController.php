@@ -95,6 +95,9 @@ abstract class AbstractVirguleController extends Controller {
     protected function getStudentManager() {
         return $this->get('virgule.student_manager');
     }
+    protected function getDocumentManager() {
+        return $this->get('virgule.document_manager');
+    }
     
     /* Repositories */
     protected function getTeacherRepository() {
@@ -130,7 +133,7 @@ abstract class AbstractVirguleController extends Controller {
     protected function getLanguageRepostory() {
         return $this->getDoctrineManager()->getRepository('VirguleMainBundle:Language');
     }
-    protected function getDocumentRepostory() {
+    protected function getDocumentRepository() {
         return $this->getDoctrineManager()->getRepository('VirguleMainBundle:Document');
     }
 }

@@ -23,20 +23,20 @@
             <tbody>
                 {% for document in documents %}
                 <tr>
-                    <td>{{ document.fileName }}</td>
-                    <td><a href="{{ path('document_download', { 'id': document.id }) }}">{{ document.path }}</a></td>
-                    <td><a  href="{{ path('teacher_show', { 'id':  document.uploader.id }) }}">{{ document.uploader }}</a></td>
+                    <td>{{ document['filename'] }}</td>
+                    <td><a href="{{ path('document_download', { 'id': document['id'] }) }}">{{ document['path'] }}</a></td>
+                    <td><a  href="{{ path('teacher_show', { 'id':  document['uploader_id'] }) }}">{{ document['uploader_firstname'] }} {{ document['uploader_lastname'] }}</a></td>
                     <td>
-                    {% for classLevel in document.classLevel %}
-                        {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel.htmlColorCode, 'classLevelLabel': classLevel.label } %} 
+                    {% for classLevel in document['classLevels'] %}
+                        {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel['classLevel_htmlColorCode'], 'classLevelLabel': classLevel['classLevel_label'] } %} 
                     {% endfor %}
                     </td>
                     <td>
-                    {% for tag in document.tags %}
-                        <span class="myTag">{{ tag.label }}</span>{% if not loop.last %}&nbsp;{% endif %}
+                    {% for tag in document['tags'] %}
+                        {% if tag is not empty %}{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': '#3A87AD', 'classLevelLabel': tag } %} {% endif %}{% if not loop.last %}&nbsp;{% endif %}
                     {% endfor %}
                     </td>
-                    <td><a  href="{{ path('document_show', { 'id':  document.id }) }}">Voir le document</a></td>
+                    <td><a  href="{{ path('document_show', { 'id':  document['id'] }) }}">Voir le document</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

@@ -38,9 +38,7 @@ class DocumentController extends AbstractVirguleController {
      * @Template()
      */
     public function indexAction() {
-        $em = $this->getDoctrine()->getManager();
-
-        $documents = $em->getRepository('VirguleMainBundle:Document')->findAll();
+        $documents = $this->getDocumentManager()->getAllDocuments();
 
         return array(
             'documents' => $documents,

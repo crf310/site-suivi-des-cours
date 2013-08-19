@@ -3,6 +3,9 @@
 namespace Virgule\Bundle\MainBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query;
+use Doctrine\DBAL\Connection;
 
 /**
  * DocumentRepository
@@ -22,5 +25,17 @@ class DocumentRepository extends EntityRepository {
             ->setParameter('userId', $userId);
         
         return $qb->getQuery()->execute();
+    }
+    
+    public function getAllDocuments() {
+        $qb = $this->createDefaultQueryBuilder()
+            ->addSelect('d.id as id, d.fileName as filename, d.path as path')
+            ->addSelect('u.id as uploader_id, u.firstName as uploader_firstname, u.lastName as uploader_lastname')
+            ->addSelect('cl.label as classLevel_label, cl.htmlColorCode as classLevel_htmlColorCode')
+            ->addSelect('t.label as tag_label')
+            ->join('d.uploader', 'u')
+            ->leftJoin('d.classLevel', 'cl')
+            ->leftJoin('d.tags', 't');
+        return $qb->getQuery()->execute(array(), Query::HYDRATE_ARRAY);
     }
 }
