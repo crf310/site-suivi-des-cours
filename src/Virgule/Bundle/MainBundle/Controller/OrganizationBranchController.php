@@ -20,7 +20,7 @@ class OrganizationBranchController extends AbstractVirguleController {
     /**
      * Lists all OrganizationBranch entities.
      *
-     * @Route("/", name="organizationbranch")
+     * @Route("/", name="organizationbranch_index")
      * @Template()
      */
     public function indexAction() {
@@ -28,8 +28,12 @@ class OrganizationBranchController extends AbstractVirguleController {
 
         $entities = $em->getRepository('VirguleMainBundle:OrganizationBranch')->findAll();
 
+        $entity = new OrganizationBranch();
+        $form = $this->createForm(new OrganizationBranchType(), $entity);
+        
         return array(
-            'entities' => $entities,
+            'entities' => $entities,            
+            'form' => $form->createView(),
         );
     }
 
@@ -44,7 +48,7 @@ class OrganizationBranchController extends AbstractVirguleController {
 
         $organizationBranch = $em->getRepository('VirguleMainBundle:OrganizationBranch')->find($id);
 
-        $classRooms = $this->getClassRoomRepository()->getClassRoomsForOrganizationBranch($this->getSelectedOrganizationBranchId());
+        $classRooms = $this->getClassRoomRepository()->getClassRoomsForOrganizationBranch($organizationBranch->getId());
         
         if (!$organizationBranch) {
             throw $this->createNotFoundException('Unable to find OrganizationBranch entity.');

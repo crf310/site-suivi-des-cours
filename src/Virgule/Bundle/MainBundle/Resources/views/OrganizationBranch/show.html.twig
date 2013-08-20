@@ -1,5 +1,5 @@
 {% extends '::main_content.html.twig' %}
-{% block content_title %}Informations sur la délégation{% endblock %}
+{% block content_title %}{{ organizationBranch.name }}{% endblock %}
 {%block submenu %}
 {% endblock %}
 {% block main_content %}
@@ -29,7 +29,7 @@
                     </div>
                     <div class="control-group">
                         <label class="control-label">Fax</label>
-                        <div class="controls">{{ organizationBranch.faxNumber }}</div>
+                        <div class="controls">{{ organizationBranch.faxNumber | phoneNumber }}</div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">Adresse email</label>

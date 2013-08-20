@@ -14,14 +14,20 @@
                     <th>Commentaires</th>
                 </tr>
             </thead>
-            <tbody>
-            {% for classRoom in classRooms %}
+            <tbody>                
+            {% if classRooms is not empty %}
+                {% for classRoom in classRooms %}
+                    <tr>
+                        <td>{{ classRoom['classroom_name'] }}</td>
+                        <td>{{ classRoom['classroom_address'] }}</td>
+                        <td>{{ classRoom['classroom_comments'] }}</td>
+                    </tr>
+                {% endfor %}                    
+            {% else %}
                 <tr>
-                    <td>{{ classRoom['classroom_name'] }}</td>
-                    <td>{{ classRoom['classroom_address'] }}</td>
-                    <td>{{ classRoom['classroom_comments'] }}</td>
+                    <td colspan="3">Aucune salle n'est associée à cette délégation</td>
                 </tr>
-            {% endfor %}
+            {% endif %}
             </tbody>
         </table>
     </div>

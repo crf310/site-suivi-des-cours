@@ -20,3 +20,19 @@
         </form>
     </li>
 </ul>
+
+{% extends '::main_content.html.twig' %}
+{% block content_title %}Ajouter une délégation{% endblock %}
+{%block submenu %}
+    <a class="btn tip-bottom" href="{{ path('organizationbranch_updte') }}"> <i class="icon-list"></i>Retour à la liste des délégations</a>
+{% endblock %}
+{% block main_content %}
+<form action="{{ path('organizationbranch_create') }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal">
+    <div class="widget-box">
+        {% include 'VirguleMainBundle:OrganizationBranch:form.html.twig' with { 'form': edit_form }  %}
+        <div class="form-actions">                                     
+            <input class="btn btn-success" type="submit" value="Mettre à jour la délégation" /> 
+        </div>
+    </div>
+</form>
+{% endblock %}

@@ -1,9 +1,9 @@
-{% extends '::base.html.twig' %}
-{% block body %}
-<h1>Gestion des délégations</h1>
-
-
-<div class="span11">  
+{% extends '::main_content.html.twig' %}
+{% block content_title %}Liste des délégations{% endblock %}
+{%block submenu %}
+    <a class="btn" title="Ajouter une délégation" href="{{ path('organizationbranch_new') }}"> <i class="organization_branch-add"></i>Nouvelle délégation</a>    
+{% endblock %}
+{% block main_content %}
     <div class="widget-box">
         <div class="widget-title">
             <span class="icon">
@@ -15,47 +15,27 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Id</th>
-						<th>Nom</th>
-						<th>Addresse</th>
-						<th>Président</th>
-						<th>Téléphone</th>
-						<th>Fax</th>
-						<th>Email</th>
-						<th>Actions</th>
+                        <th>Nom</th>
+                        <th>Addresse</th>
+                        <th>Président</th>
+                        <th>Téléphone</th>
+                        <th>Fax</th>
+                        <th>Email</th>
                     </tr>
                 </thead>
                 <tbody>
-                {% for entity in entities %}
-					<tr>
-						<td><a href="{{ path('organizationbranch_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-						<td>{{ entity.name }}</td>
-						<td>{{ entity.address }}</td>
-						<td>{{ entity.presidentName }}</td>
-						<td>{{ entity.phoneNumber }}</td>
-						<td>{{ entity.faxNumber }}</td>
-						<td>{{ entity.emailAddress }}</td>
-						<td>
-							<ul>
-								<li>
-									<a href="{{ path('organizationbranch_show', { 'id': entity.id }) }}">show</a>
-								</li>
-								<li>
-									<a href="{{ path('organizationbranch_edit', { 'id': entity.id }) }}">edit</a>
-								</li>
-							</ul>
-						</td>
-					</tr>
-				{% endfor %}
+                    {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity.name }}</td>
+                        <td>{{ entity.address }}</td>
+                        <td>{{ entity.presidentName }}</td>
+                        <td>{{ entity.phoneNumber | phoneNumber }}</td>
+                        <td>{{ entity.faxNumber | phoneNumber  }}</td>
+                        <td><a href="mailto:{{ entity.emailAddress }}">{{ entity.emailAddress }}</a></td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
-</div>
-
-
-<div class="span6">
-    {% include 'VirguleMainBundle:OrganizationBranch:new.html.twig'  %}
-</div>
-
 {% endblock %}

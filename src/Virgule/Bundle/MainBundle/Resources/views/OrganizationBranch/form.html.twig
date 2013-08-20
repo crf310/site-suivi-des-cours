@@ -1,0 +1,12 @@
+<div class="widget-title">
+            <h5>Informations sur la délégation</h5>
+        </div>
+        <div class="widget-content nopadding">
+            {{ form_row(form.name, { 'label': 'Nom' }) }}
+            {{ form_row(form.address, { 'label': 'Adresse' }) }}
+            {{ form_row(form.presidentName, { 'label': 'Prénom/Nom du président' }) }}
+            {{ form_row(form.phoneNumber, { 'label': 'Téléphone' }) }}
+            {{ form_row(form.faxNumber, { 'label': 'Fax' }) }}
+            {{ form_row(form.emailAddress, { 'label': 'Adresse email' }) }}                
+            {{ form_rest(form) }}
+        </div>
