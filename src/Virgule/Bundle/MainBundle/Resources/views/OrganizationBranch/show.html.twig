@@ -40,34 +40,7 @@
         </div>
 
         <div class="span6">
-            <div class="widget-box">
-                <div class="widget-title">
-                    <span class="icon">
-                        <i class="icon-th"></i>
-                    </span>
-                    <h5>Salles disponibles dans cette délégation</h5>
-                </div>
-                <div class="widget-content nopadding">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Nom</th>
-                                <th>Adresse</th>
-                                <th>Commentaires</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for classRoom in classRooms %}
-                            <tr>
-                                <td>{{ classRoom['classroom_name'] }}</td>
-                                <td>&nbsp;</td>
-                                <td>{{ classRoom['classroom_comments'] }}</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            {% include 'VirguleMainBundle:ClassRoom:index.html.twig' with { 'classRooms': classRooms } %}
         </div>
     </div>
 </div>

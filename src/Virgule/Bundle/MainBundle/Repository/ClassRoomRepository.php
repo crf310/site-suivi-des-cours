@@ -5,7 +5,6 @@ namespace Virgule\Bundle\MainBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
-use Doctrine\DBAL\Types\Type;
 /**
  * ClassRoomRepository
  *
@@ -20,7 +19,7 @@ class ClassRoomRepository extends EntityRepository {
     
     public function getClassRoomsForOrganizationBranch($organizationBranchId) {
         $qb = $this->createDefaultQueryBuilder()
-                ->select('cr.id as classroom_id, cr.name as classroom_name, cr.comments as classroom_comments')
+                ->select('cr.id as classroom_id, cr.name as classroom_name, cr.address as classroom_address, cr.comments as classroom_comments')
                 ->innerJoin('cr.organizationBranch' , 'ob')
                 ->where('ob.id = :organizationBranchId')
                 ->setParameter('organizationBranchId', $organizationBranchId);

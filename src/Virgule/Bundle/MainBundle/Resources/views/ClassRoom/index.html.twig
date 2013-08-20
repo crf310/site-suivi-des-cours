@@ -1,41 +1,28 @@
-<h1>ClassRoom list</h1>
-
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Comments</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('classroom_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.name }}</td>
-            <td>{{ entity.address }}</td>
-            <td>{{ entity.comments }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('classroom_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('classroom_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-<ul>
-    <li>
-        <a href="{{ path('classroom_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+<div class="widget-box">
+    <div class="widget-title">
+        <span class="icon">
+            <i class="icon-th"></i>
+        </span>
+        <h5>Salles disponibles dans cette délégation</h5>
+    </div>
+    <div class="widget-content nopadding">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Adresse</th>
+                    <th>Commentaires</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for classRoom in classRooms %}
+                <tr>
+                    <td>{{ classRoom['classroom_name'] }}</td>
+                    <td>{{ classRoom['classroom_address'] }}</td>
+                    <td>{{ classRoom['classroom_comments'] }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

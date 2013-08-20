@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\ClassRoomRepository")
  */
 class ClassRoom {
-    
+
     /**
      * @var boolean
      *
@@ -36,11 +36,18 @@ class ClassRoom {
     private $comments;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=250, nullable=true)
+     */
+    private $address;
+
+    /**
      * @ORM\ManyToOne(targetEntity="OrganizationBranch", inversedBy="classRooms")
      * @ORM\JoinColumn(name="fk_organization_branch", referencedColumnName="id")
      */
     private $organizationBranch;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Course", mappedBy="classRoom")
      */
@@ -98,6 +105,27 @@ class ClassRoom {
     }
 
     /**
+     * Set address
+     *
+     * @param string $address
+     * @return Classroom
+     */
+    public function setAddress($address) {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string 
+     */
+    public function getAddress() {
+        return $this->address;
+    }
+    
+    /**
      * Set organizationBranch
      *
      * @param \Virgule\Bundle\MainBundle\Entity\organizationBranch $organizationBranch
@@ -121,21 +149,19 @@ class ClassRoom {
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->courses = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add courses
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
      * @return ClassRoom
      */
-    public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
-    {
+    public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
         $this->courses[] = $courses;
-    
+
         return $this;
     }
 
@@ -144,8 +170,7 @@ class ClassRoom {
      *
      * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
      */
-    public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
-    {
+    public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
         $this->courses->removeElement($courses);
     }
 
@@ -154,8 +179,8 @@ class ClassRoom {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getCourses()
-    {
+    public function getCourses() {
         return $this->courses;
     }
+
 }

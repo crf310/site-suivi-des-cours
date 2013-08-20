@@ -17,10 +17,13 @@ class LoadClassRoomData extends AbstractFixture implements OrderedFixtureInterfa
         $class1 = new ClassRoom();
         $class1->setName("Salle de cours");
         $class1->setOrganizationBranch($this->getReference('deleg-3-10'));
+        $class1->setAddress("10 rue Albert Thomas 75010 Paris");
+        $class1->setComments("Indisponible le 1er mardi de chaque mois (réunion secouristes)");
         
         $class2 = new ClassRoom();
         $class2->setName("Musée");
         $class2->setOrganizationBranch($this->getReference('deleg-3-10'));
+        $class2->setAddress("10 rue Albert Thomas 75010 Paris");
         
         $manager->persist($class1);
         $manager->persist($class2);
