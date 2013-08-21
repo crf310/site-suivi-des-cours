@@ -425,3 +425,12 @@ ul.no-img li.margin {
     margin-bottom: 15px;
     text-align: center;
 }
+
+/* Override Bootstrap */
+.activity-list li a span.label {
+  font-size: 11.844px;
+  font-style: normal;
+  color: #ffffff;
+}
+
+/* Override Unicorn CSS */
