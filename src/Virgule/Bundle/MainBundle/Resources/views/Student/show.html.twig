@@ -149,7 +149,7 @@
                 <div class="widget-box">
                     <div class="widget-title">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#tabLevelHistory">Historique des niveaux</a></li>
+                            <li class="active"><a data-toggle="tab" href="#tabLevelHistory">Historique des niveaux conseillés</a></li>
                             <li><a data-toggle="tab" href="#tabAttendanceHistory">Historique des présences</a></li>
                             <li ><a data-toggle="tab" href="#tabComments">Commentaires ({{ entity.comments.count }})</a></li>
                         </ul>
@@ -162,7 +162,7 @@
                                     <li>
                                         <a href="#">
                                             {% if loop.first %}<i class="icon-ok"></i>{% else %}<i class="icon-empty"></i>{% endif %}
-                                            <strong>{{ classLevel['teacher_firstName'] }} {{ classLevel['teacher_lastName'] }}</strong> l'a changé vers <strong>{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel['classLevelColorCode'], 'classLevelLabel': classLevel['classLevelLabel'] } %}</strong>
+                                            <strong>{{ classLevel['teacher_firstName'] }} {{ classLevel['teacher_lastName'] }}</strong> {% if loop.last %}l'a initialisé{% else %}l'a changé{% endif %} à <strong>{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel['classLevelColorCode'], 'classLevelLabel': classLevel['classLevelLabel'] } %}</strong>
                                             <span>le {{ classLevel['dateOfChange'] | date('d/m/Y') }}</span>
                                         </a>
                                     </li>
