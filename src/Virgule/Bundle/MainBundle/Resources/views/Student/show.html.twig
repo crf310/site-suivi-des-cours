@@ -38,7 +38,7 @@
 {% endblock %}
 {% block content_title %}Fiche apprenant: {{ entity.firstName }} {{ entity.lastName }}{% endblock %}
 {%block submenu %}
-    <button  class="btn tip-bottom" type="submit"><i class="icon-user-certificate"></i>Générer une attestation</button>
+    <a class="btn tip-bottom" href="{{ path('student_preview_certificate', { 'id': entity.id }) }}"><i class="icon-user-certificate"></i>Générer une attestation</button>
     <a class="btn tip-bottom" href="{{ path('student_edit', { 'id': entity.id }) }}"> <i class="icon-user_edit"></i>Modifier la fiche</a>
     <button id="delete-student-button" class="btn tip-bottom"><i class="icon-user_delete"></i>Supprimer la fiche</button>
     <form id="delete-student-form" action="{{ path('student_delete', { 'id': entity.id }) }}" method="post">{{ form_widget(delete_form) }}</form>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Alphabétisation - {{ app.session.get('organizationBranchName') }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- Le styles -->
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" media="screen" />
+        <style type="text/css">
+                body {
+                    padding-top: 20px;
+                    padding-bottom: 40px;
+                }
+                
+                {% if preview is defined and preview == 'true' %}
+                .certificate {
+                    padding: 30px;
+                    border: 1px solid #000000;
+                }
+                {% endif %}
+
+                #certificateHeader {
+                    margin-bottom: 130px;
+                    text-align: right;
+                }
+
+                #certificateTitle {
+                    margin-bottom: 50px;
+                    text-align: center;
+                }
+                #certificateTitle h1 {
+                    font-size: 25px;
+                }
+                #certificateBody {
+                    text-indent:20px;
+                    text-align: justify;
+                    margin-bottom: 50px;
+                }
+
+                #certificateSignature {
+                    text-align: right;
+                    margin-bottom: 140px;
+                }
+
+                /* Custom container */
+                .container-narrow {
+                    margin: 0 auto;
+                    max-width: 700px;
+                }
+                .container-narrow > hr {
+                    margin: 30px 0;
+                }
+
+                .footer {
+                    text-align: center;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container-narrow">
+                {% if preview is defined and preview == 'true' %}
+                <div id="preview_menu" class="masthead">
+                    <ul class="nav nav-pills pull-right">
+                        <li><a href="{{ path('student_show', { 'id': student.id }) }}"><i class="icon-circle-arrow-left"></i> Retour à la fiche</a></li>
+                        <li><a href="{{ path('student_generate_certificate', { 'id': student.id }) }}"><i class="icon-download"></i> Télécharger le fichier</a></li>
+                    </ul>
+                    <h3 class="muted">Prévisualisation</h3>
+                </div>                    
+                <hr>
+                    {% endif %}
+                <div class="certificate">
+                    <div id="certificateHeader">
+                        <img src="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('img/certificate/logo-croix-rouge.png') }}"/>
+                    </div>
+                    <div id="certificateTitle">
+                        <h1>ATTESTATION DE FORMATION</h1>
+                        <h1>« COURS DE FRANÇAIS »</h1>
+                        <h1>-:-:-:-:-:-:-:-:-:-:-:-:-</h1>
+                    </div>
+
+                    <div id="certificateBody" class="row-fluid body">
+                        <div class="span12">
+                            Je soussigné, {{ org_branch.presidentName }}, Président de la {{ org_branch.name }}, certifie que <br />
+                            <strong>{{ student.firstname }} {{ student.lastname }}</strong> suit des cours de « français langue étrangère » au sein de notre service de lutte contre l’illettrisme, depuis le {{ student.registrationDate|date('d/m/Y') }}.<br />
+                                        <br />
+                            La présente attestation est délivrée pour servir et valoir ce que de droit.<br />
+                                        <br />
+                            Fait à Paris, le {{ today | date("m/d/Y") }},
+                                        <br />
+                        </div>
+                    </div>
+                    <div id="certificateSignature" class="row-fluid body">
+                        <div class="span12">
+                            {{ org_branch.presidentName }}<br />
+                                Président
+                                <br /><br />                        
+                                <img src="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('img/certificate/tampon.png') }}" />
+                            </div>
+                        </div>
+                        <div id="certificateFooter" class="footer center">
+                            <p>
+                            {{ org_branch.address }} – Tél. : {{ org_branch.phoneNumber}} – Fax : {{ org_branch.faxNumber }}
+                                    <br />
+                                    Email : {{ org_branch.emailAddress }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- /container -->
+            </body>
+        </html>

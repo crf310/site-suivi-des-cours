@@ -59,3 +59,11 @@ swiftmailer:
 
 jms_security_extra:
     secure_all_services: false
+
+siphoc_pdf:
+    basepath: "%kernel.root_dir%/../web"
+    binary: "/home/test5/bin/wkhtmltopdf-amd64"
+    options:
+        'lowquality': false
+        'enable-javascript': false
+        'debug-javascript': false
