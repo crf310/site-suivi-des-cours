@@ -1,13 +1,17 @@
 <!--{% include 'VirguleMainBundle:Comment:new.html.twig' with {'commentForm': commentForm, 'target_id': entity.id, 'target_route': 'student_comment_create' }  %}        -->
 <div class="widget-content nopadding">        
     <ul class="recent-comments">
-    {% for comment in comments %}                        
-        <li>
-            <div class="comments">
-                <span class="user-info">{{ comment.teacher.firstName }}  {{ comment.teacher.lastName }} le  {{ comment.date|date("d/m/Y à H:i") }}</span>
-                <p><a href="#">{{ comment.comment|raw }}</a></p>
-            </div>
-        </li>
-    {% endfor %}
+    {% if comments.count > 0 %}
+        {% for comment in comments %}                        
+            <li>
+                <div class="comments">
+                    <span class="user-info">{{ comment.teacher.firstName }}  {{ comment.teacher.lastName }} le  {{ comment.date|date("d/m/Y à H:i") }}</span>
+                    <p><a href="#">{{ comment.comment|raw }}</a></p>
+                </div>
+            </li>
+        {% endfor %}
+    {% else %}
+        Aucun commentaire trouvé.
+    {% endif %}
     </ul>
 </div>

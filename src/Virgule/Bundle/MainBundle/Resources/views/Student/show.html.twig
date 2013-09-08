@@ -184,7 +184,7 @@
                                         {% set previousSemester = course.semester.id %}
                                     {% endif %}
                                     {% if previousSemester != course.semester.id or loop.first %}
-                                        <li><a href="#">
+                                        <li>
                                             {% if course.semester.id == app.session.get('currentSemester').id %}<i class="icon-ok"></i>{% else %}<i class="icon-empty"></i>{% endif %}
                                             Session du <strong>{{ course.semester.startDate | date('d/m/Y') }}</strong> au <strong>{{ course.semester.endDate | date('d/m/Y') }}</strong></a></li>
                                     {% endif %}
@@ -199,6 +199,7 @@
                                                     jamais présent
                                                 {% endif %}
                                             {% endif %}
+                                            </a>
                                         </li>
                                         {% set previousSemester = course.semester.id %}
                                 {% endfor %}
