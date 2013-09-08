@@ -21,6 +21,38 @@ use Virgule\Bundle\MainBundle\Form\ClassLevelSuggestedType;
  */
 class StudentController extends AbstractVirguleController {
     
+     /**
+     * Preview the certificate of attendance in a web page
+     *
+     * @Route("/{id}/previewCertificate", name="student_preview_certificate")
+     * @Template("VirguleMainBundle:Student:certificate.html.twig")
+     */
+    public function previewCertificate(Student $student) {
+        $org_branch = $this->getSelectedOrganizationBranch();
+        return Array('student' => $student, 'org_branch' => $org_branch, 'today' => new \DateTime('now'), 'preview' => 'true');
+    }
+    
+    /**
+     * 
+     *
+     * @Route("/{id}/generateCertificate", name="student_generate_certificate")
+     * @Template("VirguleMainBundle:Student:attendance.html.twig")
+     */
+    public function generateCertificate(Student $student) {
+        $org_branch = $this->getSelectedOrganizationBranch();
+        $pdfGenerator = $this->get('siphoc.pdf.generator');
+        
+        $cleanFirstName = preg_replace("/[^A-Za-z0-9]/", "", $student->getFirstname());
+        $cleanLastName = preg_replace("/[^A-Za-z0-9]/", "", $student->getLastname());
+        $fileName = 'attestation-' . $cleanFirstName . '-' . $cleanLastName . '.pdf';
+        $pdfGenerator->setName($fileName);
+        return $pdfGenerator->downloadFromView(
+            'VirguleMainBundle:Student:certificate.html.twig', 
+            array('student' => $student, 'org_branch' => $org_branch, 'today' => new \DateTime('now')
+            )
+        );
+    }
+    
     /**
      * Display a list of the students to note their attendance
      *
