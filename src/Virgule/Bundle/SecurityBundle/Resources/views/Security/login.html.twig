@@ -1,16 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
     <head>
-        {% include '::head.html.twig' %}
         <title>Alphabétisation - Croix-Rouge Française</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" media="screen" />
+        <link href="{{ asset('css/select2.css') }}" rel="stylesheet" media="screen" />
+        <link href="{{ asset('css/unicorn.login.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/virgule.css') }}" rel="stylesheet" /> 
         <style type="text/css" title="currentStyle" media="screen">          
             body {
-                padding-top: 40px;
+                padding-top: 20px;
                 padding-bottom: 40px;
-                background-color: #f5f5f5;
-            }
-            .container { max-width: 851px; }
+                background-color: #EEEEEE;
+            }        
+             .container { max-width: 851px; }
             #main-container.container {  
                 margin-top: 5px;
                 max-width: 851px;
@@ -24,67 +29,71 @@
                 -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
                 box-shadow: 0 1px 2px rgba(0,0,0,.05);  
             }
-
-            .form-signin {
-                max-width: 300px;
-                padding: 9px 19px 19px 29px;
-                margin: 120px auto 150px;
-                background-color: #fff;
+            #loginbox {
+                height: 280px;   
                 opacity: 0.92;
-                border: 1px solid #e5e5e5;
-                -webkit-border-radius: 5px;
-                -moz-border-radius: 5px;
-                border-radius: 5px;
-                -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                margin-top: 50px;
             }
-            .alert {
-                max-width: 300px;
-                margin: -140px auto 5px auto;
-            }
-            .form-signin .checkbox, 
-            .form-signin .select {
-                margin-bottom: 10px;
-                padding-left: 0px;
-            }
-            label { padding-left: 10px; display:inline-block }
         </style>
     </head>
-    <body class="login" onload="document.getElementById('username').focus();">
+    <body onload="document.getElementById('username').focus();">
         <div class="container">
             <img src="{{ asset('img/croixrouge.png') }}" alt="Croix-Rouge française" />
         </div>
-        <div class="container" id="main-container">       
-            <form class="form-signin" action="{{ path('login_check') }}" method="post"> 
-                <h2 class="form-signin-heading">Service alphabétisation</h2>
-                <input type="hidden" name="_target_path" value="/welcome" />
-                <select name="organization_branch_id" class="select">
-                    {% for organization_branch in organization_branches %}
-                    <option value="{{ organization_branch.id }}">{{ organization_branch.name }}</option>
-                    {% endfor %}
-                </select>
-                <div class="input-prepend">
-                    <span class="add-on"><i class="icon-user"></i></span>
-                    <input class="textInput" type="text" id="username" name="_username" value="{{ last_username }}"  placeholder="Nom d'utilisateur" />
-                </div>              
-                <div class="input-prepend">
-                    <span class="add-on"><i class="icon-lock"></i></span>
-                    <input type="password" id="password" name="_password"  placeholder="Mot de passe" />
-                </div>
-                <input class="btn btn-success" type="submit" name="truc" value="Connexion" />
-                <label class="checkbox">                    
-                    <input type="checkbox" id="remember_me" name="_remember_me" />Se rappeler de moi
-                </label>
-                <br />
-                <a href="#">Mot de passe perdu</a>
-            </form>     
-            {% if error %}
-                <div class="alert alert-error">
-                   {{ error.message | trans }}
-                </div>
-            {% endif %}
+        <div class="container" id="main-container">
+            <div id="loginbox">            
+                <form id="loginform" class="form-vertical" action="{{ path('login_check') }}" method="post">
+                    <h2>Service alphabétisation</h2>
+                    <input type="hidden" name="_target_path" value="/welcome" />
+                    <div class="control-group">
+                        <div class="controls">
+                            <select name="organization_branch_id" class="select">
+                                {% for organization_branch in organization_branches %}
+                                <option value="{{ organization_branch.id }}">{{ organization_branch.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on"><i class="icon-user"></i></span><input type="text" name="_username" value="{{ last_username }}"  placeholder="Nom d'utilisateur" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on"><i class="icon-lock"></i></span><input type="password" name="_password"  placeholder="Mot de passe" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <span class="pull-left"><a href="#" class="flip-link to-recover" id="to-recover">Mot de passe oublié ?</a></span>
+                        <span class="pull-right"><input type="submit" class="btn btn-success" value="Connexion" /></span>
+                    </div>
+                </form>
+                <form id="recoverform" action="#" class="form-vertical">
+                    <p>Entrez votre adresse email et vous recevrez les instructions pour réinitialiser votre mot de passe</p>
+                    <div class="control-group">
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on"><i class="icon-envelope"></i></span><input type="text" placeholder="Adresse email" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <span class="pull-left"><a href="#" class="flip-link to-login" id="to-login">&lt; Retour au formulaire de connexion</a></span>
+                        <span class="pull-right"><input type="submit" class="btn btn-success" value="Réinitialiser" /></span>
+                    </div>
+                </form>
+            </div>
         </div>
+        <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/select2.min.js') }}"></script>       
+        <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.uniform.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/unicorn.tables.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/unicorn.login.js') }}"></script> 
     </body>
 </html>
-
