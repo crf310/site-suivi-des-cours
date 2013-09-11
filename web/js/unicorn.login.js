@@ -4,30 +4,30 @@
 **/
 $(document).ready(function(){
 
-	var login = $('#loginform');
-	var recover = $('#recoverform');
+    var login = $('#loginform');
+    var recover = $('#recoverform');
     var register = $('#registerform');
     var login_recover = $('#loginform, #recoverform');
     var login_register = $('#loginform, #registerform');
     var recover_register = $('#recoverform, #registerform');
     var loginbox = $('#loginbox');
-	var speed = 300;
+    var speed = 300;
 
-	$('.flip-link.to-recover').click(function(){
-		login_register.css('z-index','100').fadeTo(speed,0.01,function(){
-            loginbox.animate({'height':'213px'},speed,function(){
-                recover.fadeTo(speed,1).css('z-index','200');
-            });
+    $('.flip-link.to-recover').click(function(){
+            login_register.css('z-index','100').fadeTo(speed,0.01,function(){
+            loginbox.animate({'height':'205px'},speed,function(){
+            recover.fadeTo(speed,1).css('z-index','200');
         });
-	});
-	$('.flip-link.to-login').click(function(){
-		recover_register.css('z-index','100').fadeTo(speed,0.01,function(){
-            loginbox.animate({'height':'280px'},speed,function(){
-                login.fadeTo(speed,1).css('z-index','200');
-            });
+    });
+    });
+    $('.flip-link.to-login').click(function(){
+            recover_register.css('z-index','100').fadeTo(speed,0.01,function(){
+            loginbox.animate({'height':'260px'},speed,function(){
+            login.fadeTo(speed,1).css('z-index','200');
         });
-	});
-    
+    });
+    });
+
     if($.browser.msie == true && $.browser.version.slice(0,3) < 10) {
         $('input[placeholder]').each(function(){ 
        
