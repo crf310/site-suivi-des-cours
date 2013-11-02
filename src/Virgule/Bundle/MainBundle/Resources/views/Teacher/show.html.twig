@@ -11,10 +11,10 @@
 {% endblock %}
 {% block main_content %}
 <div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span5">
-            <div class="row-fluid">
-                <div class="span12">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="row">
+                <div class="col-md-12">
                     <form class="form-horizontal not-form-horizontal">
                         <div class="widget-box">
                             <div class="widget-title">
@@ -49,8 +49,8 @@
                         </form>
                 </div>
             </div>
-            <div class="row-fluid">
-                <div class="span12">
+            <div class="row">
+                <div class="col-md-12">
                     <div class="widget-box">
                         <div class="widget-title">
                                 <span class="icon">
@@ -74,14 +74,14 @@
                 </div>
             </div>
         </div>
-        <div class="span7">
-           <div class="row-fluid">
-                <div class="span12">
+        <div class="col-md-7">
+           <div class="row">
+                <div class="col-md-12">
                    {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Apprenants inscrit au(x) cours', 'students': teacherStudents, 'listBreak': teacherStudentsLineBreak }  %}
                 </div>
             </div>
-            <div class="row-fluid">
-                <div class="span12">
+            <div class="row">
+                <div class="col-md-12">
                     {% set listBreak = teacherClassSessions | length // 3 %}
                     {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Compe-rendus de ce formateur', 'classSessions': teacherClassSessions, 'listBreak': listBreak }  %}
                 </div>

@@ -18,11 +18,14 @@
 {% block form_widget_simple %}
 {% spaceless %}
     {% set type = type|default('text') %}
+    {% set attr = attr|merge({'class': (attr.class|default('form-control input-sm'))|trim}) %}
     <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
     <br />
     {% if open_houses_dates is defined and open_houses_dates is not null %}
         {% for open_house_date in open_houses_dates %}
-            &nbsp;<input class="btn" type="button" value="{{ open_house_date | date('w') | day }} {{ open_house_date | date('d/m') }}" onClick="setRegistrationDate('{{ open_house_date | date('d/m/Y') }}');"/>
+            <button class="btn" onClick="setRegistrationDate('{{ open_house_date | date('d/m/Y') }}');"/>
+                <i class="icon-group"></i> {{ open_house_date | date('w') | day }} {{ open_house_date | date('d/m') }}
+            </button>&nbsp;
         {% endfor %}
     {% endif %}
 {% endspaceless %}
@@ -111,7 +114,7 @@
     {% if macro is not defined %}
         {% import ':Form:macro.html.twig' as macro %}
     {% endif %}
-    <div class="control-group {{macro.hasErrors(form)}}">
+    <div class="form-group {{macro.hasErrors(form)}}">
         {{ form_label(form, label|default(null), { 'label_attr': {'class': 'control-label'} }) }}
         <div class="controls">
             {{ form_widget(form) }}

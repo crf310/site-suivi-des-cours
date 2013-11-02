@@ -4,8 +4,8 @@
     {% include 'VirguleMainBundle:ClassSession:menu.html.twig' %}
 {% endblock %}
 {% block main_content %}
-<div class="row-fluid">
-    <div class="span12 center" style="text-align: center;">
+<div class="row">
+    <div class="col-md-12 center" style="text-align: center;">
         <ul class="quick-actions-horizontal">
         {% if currentClassLevelId is not empty %}
              <li>
@@ -26,18 +26,22 @@
         </ul>
     </div>    
 </div>
-<div class="widget-box">
-    <div class="widget-title">
-            <span class="icon">
-                    <i class="icon-th"></i>
-            </span>
-            <h5>Tous les comptes-rendus</h5>
-            <span class="label label-info tip-left" data-original-title="{{ classSessions | length }} cours">{{ classSessions | length }}</span>
-    </div>
-    <div class="widget-content nopadding">
-        {% block table %}
-            {% include 'VirguleMainBundle:ClassSession:table.html.twig' with { 'classSessions': classSessions }  %}
-        {% endblock %}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="widget-box">
+            <div class="widget-title">
+                    <span class="icon">
+                            <i class="icon-th"></i>
+                    </span>
+                    <h5>Tous les comptes-rendus</h5>
+                    <span class="label label-info tip-left" data-original-title="{{ classSessions | length }} cours">{{ classSessions | length }}</span>
+            </div>
+            <div class="widget-content nopadding">
+                {% block table %}
+                    {% include 'VirguleMainBundle:ClassSession:table.html.twig' with { 'classSessions': classSessions }  %}
+                {% endblock %}
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

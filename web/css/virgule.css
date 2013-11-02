@@ -1,4 +1,7 @@
 /* Main Application */
+#content {
+  min-height: 650px;
+}
 #header h1 {
     background: url("../img/logo-crf.png") no-repeat scroll 0 0 transparent;
     height: 60px;
@@ -9,42 +12,20 @@
     top: 6px;
     width: 215px;
 }
-h1 { font-size: 20px; }
-h2 { font-size: 16px; }
-
-#user-nav span.text {
-    font-size: 14px;
-}
-.left_list {
-    float:left;
-    margin-right: 5px;
-}
-.clear_list {
-    clear: both; float: none; height: 0;
-}
-#myCourses li:first-child {
-    margin-top: 0px;
-}
-#myCourses li {
-    margin-top: 10px;
-}
 #search .connected_branch {
     padding:4px 35px 4px 14px;
     margin-bottom:20px;
     color: #9A9A9A;
     font-size: 16px;
 }
+#content-header {
+   padding-top: 10px;
+}
+#content-header h1 {
+  font-size: 22px;
+}
+h2 { font-size: 13px; }
 
-#content .container-fluid .row-fluid:first-child {
-    margin-top: 0px;
-}
-#header_info {
-    position: absolute;
-    z-index: 25;
-    top: 6px;
-    left: 230px;
-    color: #FFFFFF;
-}
 /* Side menu */
 #sidebar i {   
     background-repeat: no-repeat;
@@ -127,71 +108,58 @@ h2 { font-size: 16px; }
 #sidebar a.class-levels i {
     background-image: url('../img/icons/medal_gold_2.png');
 }
-
-/* Actions button */
-#content-header i,.alert i, .virgule-btn i {   
-    background-repeat: no-repeat;
-    background-attachment: scroll;
-    background-position: center;
-    background-color: transparent;
-    display: inline-block;
-    margin: -2px 5px 2px 2px !important; 
-    width: 16px;
-    height: 16px;
-    vertical-align: middle;
-}
-i.icon-go {
+i.my-icon-go {
     background-image: url('../img/icons/arrow_right.png');
 }
-i.icon-add {
+i.my-icon-add {
     background-image: url('../img/icons/add.png');
 }
-i.icon-user_add {
+i.my-icon-user_add {
     background-image: url('../img/icons/user_add.png');
 }
-i.icon-user_edit {
+i.my-icon-user_edit {
     background-image: url('../img/icons/user_edit.png');
 }
-i.icon-user_delete {
+i.my-icon-user_delete {
     background-image: url('../img/icons/user_delete.png');
 }
-i.icon-user-certificate {
+i.my-icon-user-certificate {
     background-image: url('../img/icons/rosette.png');
 }
-i.icon-add {
+i.my-icon-add {
     background-image: url('../img/icons/add.png');
 }
-i.icon-user-inactive {
+i.my-icon-user-inactive {
     background-image: url('../img/icons/user_red.png');
 }
-i.icon-user-active {
+i.my-icon-user-active {
     background-image: url('../img/icons/user_green.png');
 }
-i.icon-export {
+i.my-icon-export {
     background-image: url('../img/icons/page_excel.png');
 }
-i.icon-info {
+i.my-icon-info {
     background-image: url('../img/icons/information.png');
 }
-i.icon-search-student, i.icon-search-classsession, i.icon-search-document {
+i.my-icon-search-student, i.my-icon-search-classsession, i.my-icon-search-document {
     background-image: url('../img/icons/magnifier.png');
 }
-i.icon-calendar {
+i.my-icon-calendar {
     background-image: url('../img/icons/calendar.png');
 }
-i.icon-printer {
+i.my-icon-printer {
     background-image: url('../img/icons/printer.png');
 }
-i.icon-list {
+i.my-icon-list {
     background-image: url('../img/icons/application_view_list.png');
 }
-i.icon-rss {
+i.my-icon-rss {
     background-image: url('../img/icons/feed.png');
 }
-i.icon-copy {
+i.my-icon-copy {
     background-image: url('../img/icons/page_white_paste.png');
 }
-i.icon-trombinoscope {
+i.my-icon-trombinoscope {
     background-image: url('../img/icons/vcard.png');
 }
 i.document-list {
@@ -204,122 +172,38 @@ i.organization_branch-add {
     background-image: url('../img/icons/telephone_add.png');
 }
 
-li.user_M { list-style-image:url('../img/icons/user.png'); }
-li.user_F { list-style-image:url('../img/icons/user_female.png'); }
-
-li.document { list-style-image:url('../img/icons/attach.png'); }
-
-/*----- Tables ----*/
-a.export_list {
-    background: url('../img/icons/page_excel.png') no-repeat;
-    /* top bottom right left */
-    padding: 2px 0px 0px 20px;
+/* Dashboard */
+#content-header i, .alert i, .virgule-btn i {   
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center;
+    background-color: transparent;
+    display: inline-block;
+    margin: -2px 5px 2px 2px !important; 
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
 }
-a.add_entry {
-    background: url('../img/icons/add.png') no-repeat;
-    padding: 2px 0px 0px 20px;
+.class-date {
+  color: #BBBBBB;
+  float: right;
+  margin: 4px -2px 0 0;
+  text-align: center;
+  width: 100px;
 }
-a.search {
-    background: url('../img/icons/magnifier.png') no-repeat;
-    padding: 2px 0px 0px 20px;
+.left_list {
+    float:left;
+    margin-right: 5px;
 }
-#results_actions {
-    width: 100%;
-    display: block;
-    height: 65px;
+.clear_list {
+    clear: both; float: none; height: 0;
 }
-#results_actions div.action_tab {
-    background-color: #000000;
-    color: #FFFFFF;
-    padding: 10px;
-    font-size: 12px;
-    letter-spacing: .08em;
-    float: right;
-    height: 15px;
-    margin-left: 2px;
+#myCourses li:first-child {
+    margin-top: 0px;
 }
-.data-table tbody tr:hover td {
-    background-color: #ECEDED;
+#myCourses li {
+    margin-top: 10px;
 }
-.data-table tbody ul li{
-    list-style: none; display: inline; margin-left: 0px;
-}
-
-.dataTables_length {
-    margin: 9px 55px 0 0;
-}
-
-#planning td {
-    font-size: 12px;
-    margin: 0;
-    padding:5px 0px 0px 0px; 
-}
-#planning p.course_cell {
-    display: block;
-    margin: 0;
-    padding: 0;
-}
-a.course_details {
-    text-decoration: none;
-    color: #000000;
-}
-  
-td.center {
-    text-align: center;
-}
-
-/* Administration */
-#log_file textarea {
-    width: 98%;
-    height: 650px;
-}
-
-.tiny-select {
-    width: 100px;
-}
-.small-select {
-    width: 200px;
-}
-.medium-select {
-    width: 400px;
-}
-.big-select {
-    width: 600px;
-}
-
-.required {
-    font-weight: bold;
-}
-
-.btn-group form { display: inline-block; }
-
-.form-horizontal .control-label {
-    width: 200px;
-}
-.form-horizontal .controls {
-    margin-left: 220px;
-}
-
-/* Reuse form style for presentation */
-.not-form-horizontal .controls {
-    margin-left: 220px;
-    padding-top: 15px;
-}
-/* Reuse form style for presentation */
-.not-form-horizontal label {
-    font-weight: bold;
-}
-
-div .text-block {
-    margin: 10px;
-    padding: 5px;
-    text-align : justify;
-}
-
-.alert-padding {
-    margin: 5px;
-}
-
 ul.no-img {
     list-style-type: none;
 }
@@ -330,36 +214,9 @@ ul.no-img li {
 ul.no-img li.margin {
     margin-left: 5px;
 }
-
-/* speech bubbles */
-.comment-bubble {
-    position:relative;
-    padding:15px;
-    margin: 20px 0 0.5em;
-    background:#EEEEEE;
-    /* css3 */
-    -webkit-border-radius:10px;
-    -moz-border-radius:10px;
-    border-radius:10px;
-}
-
-.comment-bubble p { line-height:1.25em;}
-
-
-/* creates the triangle */
-.comment-bubble:after {
-    content:"";
-    position:absolute;
-    top:-30px;
-    left:50px;
-    border:15px solid transparent;
-    border-bottom-color:#EEEEEE;
-    /* reduce the damage in FF3.0 */
-    display:block; 
-    width:0;
-}
-
-
+li.user_M { list-style-image:url('../img/icons/user.png'); }
+li.user_F { list-style-image:url('../img/icons/user_female.png'); }
+li.document { list-style-image:url('../img/icons/attach.png'); }
 .course-quick-access {
     background-color: #F5F5F5;
     border: 1px solid #DDDDDD;
@@ -375,6 +232,42 @@ ul.no-img li.margin {
 	margin-left: 5px;
 }
 
+/* Page menu */
+.btn-group form { display: inline-block; }
+#content-header i,.alert i, .btn i {   
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center;
+    background-color: transparent;
+    display: inline-block;
+    margin: -2px 5px 2px 2px !important; 
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+}
+#content-header > .btn-group .btn {
+  line-height: 18px;
+  font-size: 16px;
+  padding: 12px 16px;
+  color: rgba(0, 0, 0, 0.5);
+  border-width: 0 1px 0 0;
+  border-style: solid;
+  border-color: #dddddd;
+}
+
+/*Planning */
+#planning td {
+    font-size: 12px;
+    margin: 0;
+    padding:5px 0px 0px 0px; 
+}
+#planning p.course_cell {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+/* Student profile */
 .emergency {
     background-color: #7A3131;
 }
@@ -410,27 +303,18 @@ ul.no-img li.margin {
     margin: 0;
 }
 
-/* Tag manager */
-.myTag {
-    background: none repeat scroll 0 0 #3A87AD;
-    border: 1px solid #2D6886;
-    border-radius: 3px 3px 3px 3px;
-    color: #FFFFFF;
-    padding-left: 5px;
-    padding-right: 5px;
+/* Tables */
+.data-table tbody tr:hover td {
+    background-color: #ECEDED;
+}
+.data-table tbody ul li{
+    list-style: none; display: inline; margin-left: 0px;
 }
 
-.student-profile-picture {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    text-align: center;
+.dataTables_length {
+    margin: 9px 55px 0 0;
 }
 
-/* Override Bootstrap */
-.activity-list li a span.label {
-  font-size: 11.844px;
-  font-style: normal;
-  color: #ffffff;
+.col-md-* {
+    padding-left: 0px;
 }
-
-/* Override Unicorn CSS */

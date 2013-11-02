@@ -45,8 +45,8 @@
 {% endblock %}
 {% block main_content %}
 <div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span5 form-horizontal not-form-horizontal">
+    <div class="row">
+        <div class="col-md-5 form-horizontal not-form-horizontal">
             <div class="widget-box">
                 <div class="widget-title">
                     <span class="icon">
@@ -109,11 +109,11 @@
                 </div>
             </div>
         </div>
-        <div class="span7">
-            <div class="row-fluid">
+        <div class="col-md-7">
+            <div class="row">
                 {% if entity.webPath is not null %}
                 {% set emergencyPanelSize = 8 %}
-                    <div class="span4">
+                    <div class="col-md-4">
                         <div class="student-profile-picture">                                    
                             <img src="{{ asset(entity.thumbnailWebPath) }}" class="img-polaroid" />
                             <!--<br /><a title="Agrandir" href="#fullSizeProfilePictureStudent{{ entity.id }}" data-toggle="lightbox">Agrandir</a>-->
@@ -123,9 +123,12 @@
                 {% else %}
                     {% set emergencyPanelSize = 12 %}
                 {% endif %}
-                <div class="span{{ emergencyPanelSize }} form-horizontal not-form-horizontal">
+                <div class="col-md-{{ emergencyPanelSize }} form-horizontal not-form-horizontal">
                     <div class="widget-box" id="emergency_contact">
                         <div class="widget-title">
+                            <span class="icon">
+                                    <i class="icon-ambulance"></i>
+                            </span>
                             <h5>Contact d'urgence</h5>
                         </div>            
                         <div class="widget-content nopadding">                         
@@ -145,7 +148,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row-fluid">
+            <div class="row">
                 <div class="widget-box">
                     <div class="widget-title">
                         <ul class="nav nav-tabs">

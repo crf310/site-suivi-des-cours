@@ -34,12 +34,12 @@
 .gritter-item {
 	display:block;
 	background: #545454; /* Old browsers */
-	background: -moz-linear-gradient(top,  #545454 0%, #232323 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#545454), color-stop(100%,#232323)); /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(top,  #545454 0%,#232323 100%); /* Chrome10+,Safari5.1+ */
+	background: -moz-linear-gradient(top,  #545454 0%, #232323 100%); /* FF3.6+ */
 	background: -o-linear-gradient(top,  #545454 0%,#232323 100%); /* Opera 11.10+ */
 	background: -ms-linear-gradient(top,  #545454 0%,#232323 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #545454 0%,#232323 100%); /* W3C */
+	background: linear-gradient(top bottom,  #545454 0%,#232323 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#545454', endColorstr='#232323',GradientType=0 ); /* IE6-9 */
 	border-radius: 6px;
 	color:#eee;
@@ -51,6 +51,22 @@
 }
 .hover .gritter-item {
 	border: 1px solid #ffffff;
+}
+.light > .gritter-item {
+	background: #545454; /* Old browsers */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9f9f9), color-stop(100%,#EDEBF0)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #f9f9f9 0%,#EDEBF0 100%); /* Chrome10+,Safari5.1+ */
+	background: -moz-linear-gradient(top , #f8f8f8 0%, #EDEBF0 100%); /* FF3.6+ */
+	background: -o-linear-gradient(top,  #f9f9f9 0%,#EDEBF0 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #f9f9f9 0%,#EDEBF0 100%); /* IE10+ */
+	background: linear-gradient(top , #f9f9f9 0%, #EDEBF0 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#545454', endColorstr='#232323',GradientType=0 ); /* IE6-9 */
+	box-shadow: 0 1px 4px rgba(0,0,0,0.4), 0 1px 0 #ffffff inset;
+	border: 1px solid #eeeeee;
+	color: #666666;
+}
+.light.hover > .gritter-item {
+	border: 1px solid #888888;
 }
 .gritter-item p {
 	padding:0;
@@ -75,6 +91,9 @@
 	padding:0 0 7px 0;
 	display:block;
 	text-shadow:0px -1px 0 #000; /* Not supported by IE :( */
+}
+.light > .gritter-item .gritter-title {
+	text-shadow: 0 1px 0 #ffffff;
 }
 .gritter-image {
 	width:32px;

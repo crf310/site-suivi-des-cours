@@ -11,8 +11,8 @@
 {% endblock %}
 {% block main_content %}
 <div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span6 form-horizontal not-form-horizontal">
+    <div class="row">
+        <div class="col-md-6 form-horizontal not-form-horizontal">
             <div class="widget-box">
                 <div class="widget-title">
                     <span class="icon">
@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>            
-        <div class="span6">
+        <div class="col-md-6">
             {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Apprenants présents', 'students': classSessionStudents, 'nbColumns': 3 }  %}
             {% include 'VirguleMainBundle:Comment:index.html.twig' with {'comments': entity.comments, 'commentForm': commentForm, 'target_id': entity.id, 'target_route': 'classsession_comment_create' }  %}
         </div>

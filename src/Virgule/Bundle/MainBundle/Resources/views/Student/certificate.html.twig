@@ -81,8 +81,8 @@
                         <h1>-:-:-:-:-:-:-:-:-:-:-:-:-</h1>
                     </div>
 
-                    <div id="certificateBody" class="row-fluid body">
-                        <div class="span12">
+                    <div id="certificateBody" class="row body">
+                        <div class="col-md-12">
                             Je soussigné, {{ org_branch.presidentName }}, Président de la {{ org_branch.name }}, certifie que <br />
                             <strong>{{ student.firstname }} {{ student.lastname }}</strong> suit des cours de « français langue étrangère » au sein de notre service de lutte contre l’illettrisme, depuis le {{ student.registrationDate|date('d/m/Y') }}.<br />
                                         <br />
@@ -92,8 +92,8 @@
                                         <br />
                         </div>
                     </div>
-                    <div id="certificateSignature" class="row-fluid body">
-                        <div class="span12">
+                    <div id="certificateSignature" class="row body">
+                        <div class="col-md-12">
                             {{ org_branch.presidentName }}<br />
                                 Président
                                 <br /><br />                        

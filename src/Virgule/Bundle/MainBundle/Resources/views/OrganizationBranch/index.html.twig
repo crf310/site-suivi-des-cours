@@ -4,38 +4,42 @@
     <a class="btn" title="Ajouter une délégation" href="{{ path('organizationbranch_new') }}"> <i class="organization_branch-add"></i>Nouvelle délégation</a>    
 {% endblock %}
 {% block main_content %}
-    <div class="widget-box">
-        <div class="widget-title">
-            <span class="icon">
-                <i class="icon-th"></i>
-            </span>
-            <h5>Délégations</h5>
-        </div>
-        <div class="widget-content nopadding">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Addresse</th>
-                        <th>Président</th>
-                        <th>Téléphone</th>
-                        <th>Fax</th>
-                        <th>Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for entity in entities %}
-                    <tr>
-                        <td>{{ entity.name }}</td>
-                        <td>{{ entity.address }}</td>
-                        <td>{{ entity.presidentName }}</td>
-                        <td>{{ entity.phoneNumber | phoneNumber }}</td>
-                        <td>{{ entity.faxNumber | phoneNumber  }}</td>
-                        <td><a href="mailto:{{ entity.emailAddress }}">{{ entity.emailAddress }}</a></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+<div class="row">
+    <div class="col-md-12">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-plus"></i>
+                </span>
+                <h5>Délégations</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Addresse</th>
+                            <th>Président</th>
+                            <th>Téléphone</th>
+                            <th>Fax</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entity in entities %}
+                        <tr>
+                            <td>{{ entity.name }}</td>
+                            <td>{{ entity.address }}</td>
+                            <td>{{ entity.presidentName }}</td>
+                            <td>{{ entity.phoneNumber | phoneNumber }}</td>
+                            <td>{{ entity.faxNumber | phoneNumber  }}</td>
+                            <td><a href="mailto:{{ entity.emailAddress }}">{{ entity.emailAddress }}</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+</div>
 {% endblock %}

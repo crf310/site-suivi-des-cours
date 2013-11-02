@@ -1,35 +1,35 @@
 {% extends '::main_content.html.twig' %}
 {% block content_title %}{{ random(['Bienvenue', 'Salut', 'Hello', 'Bonjour']) }} {{ app.user.firstname }} !{% endblock %}
 {% block main_content %}
-    <div class="row-fluid">
-      <div class="span5">
-          <div class="widget-box" id="myCourses">
+<div class="row">  
+    <div class="col-md-3">
+        {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Mes apprenants', 'students': myStudents, 'nbColumns': 1, 'displayAllStudentButton': true }  %}
+    </div><!--/col -->      
+    <div class="col-md-9">        
+        <div class="row">
+            <div class="widget-box" id="myCourses">
                 <div class="widget-title">
-                        <span class="icon">
-                                <i class="icon-th-list"></i>
-                        </span>
-                        <h5>Mes cours</h5>
+                    <span class="icon">
+                        <i class="icon-th-list"></i>
+                    </span>
+                    <h5>Mes cours</h5>
                 </div>
-                <div class="widget-content">
-                        {% if myCourses is empty %}
-                            Vous ne dirigez aucun cours pour le moment !
-                        {% else %}
-                            {% for course in myCourses %}
-                            <div class="course-quick-access">
-                                    <strong>
-									{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.getClassLevel().getHtmlColorCode(), 'classLevelLabel': course.getClassLevel().getLabel() } %}
-									{{ course.dayOfWeek | day }}
-									<br />
-									({{ course.startTime | date('H:i') }} - {{ course.endTime | date('H:i') }})
-									</strong>
-                                    <br />
-                                    <a href="{{ path('course_show', { 'id': course.id }) }}" >Voir le cours</a>
-                                    <br />
-                                    <a  class="btn virgule-btn" href="{{ path('classsession_add', { 'id': course.id }) }}"><i class="icon-add"></i>Compte-rendu</a>
-                                    <a  class="btn virgule-btn" href="{{ path('attendance_list', { 'id': course.id }) }}" target="_blank"><i class="icon-trombinoscope"></i>Fiche de présence</a>
-                            </div>
-                            {% endfor %}
-                        {% endif %}
+                <div class="widget-content updates">
+                {% if myCourses is empty %}Vous ne dirigez aucun cours pour le moment !{% else %}
+                    {% for course in myCourses %}
+                    <div class="new-update clearfix">
+                        <div class="update-done btn-group">										
+                            <a href="{{ path('course_show', { 'id': course.id }) }}" >Voir le cours</a>
+                            <a class="btn btn-large virgule-btn" href="{{ path('classsession_add', { 'id': course.id }) }}"><i class="icon-add"></i>Compte-rendu</a>
+                            <a class="btn btn-large virgule-btn" href="{{ path('attendance_list', { 'id': course.id }) }}" target="_blank"><i class="icon-trombinoscope"></i>Fiche de présence</a>
+                        </div>
+                        <div class="class-date">
+                            {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.getClassLevel().getHtmlColorCode(), 'classLevelLabel': course.getClassLevel().getLabel() } %}
+                            <span class="update-day">{{ course.dayOfWeek | day }}</span>{{ course.startTime | date('H:i') }} - {{ course.endTime | date('H:i') }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
                     <ul class="recent-posts">
                         <li class="viewall">
                             <a href="{{ path('course_index') }}" class="tip-top" title=""> + Voir tous les cours + </a>
@@ -37,22 +37,15 @@
                     </ul>
                 </div>
             </div>              
-        </div><!--/span-->        
-        <div class="span7">
-            {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Mes apprenants', 'students': myStudents, 'nbColumns': 4, 'displayAllStudentButton': true }  %}
-        </div><!--/span-->
-    </div><!--/row-->
-    <div class="row-fluid">        
-        <div class="span5">
-          {% if myClassSessions | length % 3 == 0 %}
-              {% set listBreak = myClassSessions | length // 3 %}
-          {% else %}
-              {% set listBreak = (myClassSessions | length // 3) + 1 %}
-          {% endif %}
-          {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Mes 12 derniers compte-rendus', 'classSessions': myClassSessions, 'nbColumns': 3 }  %}
-        </div><!--/span-->        
-        <div class="span7">          
-            {% include 'VirguleMainBundle:Document:mini-list.html.twig' with { 'title': 'Mes documents', 'documents': myDocuments, 'nbColumns': 3, 'displayAllDocumentButton': true }  %}
-        </div><!--/span-->
-    </div><!--/row-->
+        </div><!--/row-->             
+        <div class="row">
+            <div class="col-md-6">
+                {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Mes 12 derniers compte-rendus', 'classSessions': myClassSessions, 'nbColumns': 1 }  %}
+            </div><!--/col -->    
+            <div class="col-md-6">
+                {% include 'VirguleMainBundle:Document:mini-list.html.twig' with { 'title': 'Mes documents', 'documents': myDocuments, 'nbColumns': 1, 'displayAllDocumentButton': true }  %}
+            </div><!--/col -->  
+        </div><!--/row -->
+    </div><!--/col --> 
+</div>
 {% endblock %}

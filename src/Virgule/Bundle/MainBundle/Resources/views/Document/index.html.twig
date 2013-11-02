@@ -4,43 +4,47 @@
     <a class="btn tip-bottom" href="{{ path('document_new') }}"> <i class="document-add"></i>Nouveau document</a>
 {% endblock %}
 {% block main_content %}
-<div class="widget-box">
-    <div class="widget-title">
-        <span class="label label-info tip-left" data-original-title="{{ documents | length }} document(s)">{{ documents | length }}</span>
-    </div>
-    <div class="widget-content nopadding">
-        <table class="table table-bordered table-striped table-hover data-table">
-            <thead>
-                <tr>
-                    <th>Nom du document</th>
-                    <th>Téléchargement</th>
-                    <th>Enregistré par</th>
-                    <th>Adapté au(x) niveau(x)</th>
-                    <th>Tags</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for document in documents %}
-                <tr>
-                    <td>{{ document['filename'] }}</td>
-                    <td><a href="{{ path('document_download', { 'id': document['id'] }) }}">{{ document['path'] }}</a></td>
-                    <td><a  href="{{ path('teacher_show', { 'id':  document['uploader_id'] }) }}">{{ document['uploader_firstname'] }} {{ document['uploader_lastname'] }}</a></td>
-                    <td>
-                    {% for classLevel in document['classLevels'] %}
-                        {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel['classLevel_htmlColorCode'], 'classLevelLabel': classLevel['classLevel_label'] } %} 
-                    {% endfor %}
-                    </td>
-                    <td>
-                    {% for tag in document['tags'] %}
-                        {% if tag is not empty %}{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': '#3A87AD', 'classLevelLabel': tag } %} {% endif %}{% if not loop.last %}&nbsp;{% endif %}
-                    {% endfor %}
-                    </td>
-                    <td><a  href="{{ path('document_show', { 'id':  document['id'] }) }}">Voir le document</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+<div class="row">
+    <div>
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="label label-info tip-left" data-original-title="{{ documents | length }} document(s)">{{ documents | length }}</span>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered table-striped table-hover data-table">
+                    <thead>
+                        <tr>
+                            <th>Nom du document</th>
+                            <th>Téléchargement</th>
+                            <th>Enregistré par</th>
+                            <th>Adapté au(x) niveau(x)</th>
+                            <th>Tags</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for document in documents %}
+                        <tr>
+                            <td>{{ document['filename'] }}</td>
+                            <td><a href="{{ path('document_download', { 'id': document['id'] }) }}">{{ document['path'] }}</a></td>
+                            <td><a  href="{{ path('teacher_show', { 'id':  document['uploader_id'] }) }}">{{ document['uploader_firstname'] }} {{ document['uploader_lastname'] }}</a></td>
+                            <td>
+                            {% for classLevel in document['classLevels'] %}
+                                {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel['classLevel_htmlColorCode'], 'classLevelLabel': classLevel['classLevel_label'] } %} 
+                            {% endfor %}
+                            </td>
+                            <td>
+                            {% for tag in document['tags'] %}
+                                {% if tag is not empty %}{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': '#3A87AD', 'classLevelLabel': tag } %} {% endif %}{% if not loop.last %}&nbsp;{% endif %}
+                            {% endfor %}
+                            </td>
+                            <td><a  href="{{ path('document_show', { 'id':  document['id'] }) }}">Voir le document</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
