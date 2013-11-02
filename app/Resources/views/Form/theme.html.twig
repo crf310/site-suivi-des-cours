@@ -32,23 +32,35 @@
 {% endblock form_widget_simple %}
 
 {% block file_widget %}
-    <div class="fileupload fileupload-new" data-provides="fileupload">
-        <div class="input-append">
-            <div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Selectionner</span><span class="fileupload-exists">Modifier</span><input type="file" {{ block('widget_attributes') }} /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Supprimer</a>
-        </div>
+    <div class="fileinput fileinput-new" data-provides="fileinput">
+      <div class="input-group">
+        <div class="form-control uneditable-input span3" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+        <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Sélectionner un fichier</span><span class="fileinput-exists">Modifier</span><input type="file" {{ block('widget_attributes') }}></span>
+        <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Supprimer</a>
+      </div>
     </div>
+
 {% endblock %}
 {% block picture_widget %}
     {% spaceless %}
-    <div class="fileupload fileupload-new" data-provides="fileupload">
-        <div class="fileupload-preview thumbnail"></div>
+    <div class="fileinput fileinput-new" data-provides="fileinput">
+        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 200px;"></div>
         <div>
-            <span class="btn btn-file"><span class="fileupload-new">Sélectionner une image</span>&nbsp;<span class="fileupload-exists">Modifier</span><input type="file" {{ block('widget_attributes') }} /></span>
-            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Supprimer</a>
+          <span class="btn btn-default btn-file"><span class="fileinput-new">Sélectionner une image</span><span class="fileinput-exists">Modifier</span><input type="file" {{ block('widget_attributes') }} ></span>
+          <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
         </div>
     </div>
     {% endspaceless %}
 {% endblock picture_widget %}
+            
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+  <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+  <div>
+    <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><input type="file" name="..."></span>
+    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+  </div>
+</div>
+
             
 {% block hidden_widget %}
 {% spaceless %}
