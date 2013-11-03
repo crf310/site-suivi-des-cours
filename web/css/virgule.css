@@ -127,7 +127,8 @@ i.my-icon-user-certificate {
     background-image: url('../img/icons/rosette.png');
 }
 i.my-icon-add {
-    background-image: url('../img/icons/add.png');
+    background-image: url('../img/icons/add.png');    
+    padding-top: 25px;
 }
 i.my-icon-user-inactive {
     background-image: url('../img/icons/user_red.png');
@@ -161,6 +162,7 @@ i.my-icon-copy {
 }
 i.my-icon-trombinoscope {
     background-image: url('../img/icons/vcard.png');
+    padding-top: 25px;
 }
 i.document-list {
     background-image: url('../img/icons/book.png');
@@ -193,7 +195,13 @@ i.organization_branch-add {
 }
 .left_list {
     float:left;
-    margin-right: 5px;
+    margin-right: 2px;
+}
+#welcome ul {
+    margin-left: -20px;
+}
+#welcome li {
+    margin-top: 2px;
 }
 .clear_list {
     clear: both; float: none; height: 0;
