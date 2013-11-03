@@ -170,24 +170,6 @@ class ClassSessionController extends AbstractVirguleController {
             $em->persist($entity);           
             $em->flush();
 
-            // Update Lucene index
-            // Request an index
-            $index = $this->get('ivory_lucene_search')->getIndex('identifier1');
-
-            // Create a new document
-            $document = new Document();
-            // $document->addField(Field::keyword('field1', 'Keyword'));
-            $document->addField(Field::text('field2', $entity->getSummary()));
-
-            // Add your document to the index
-            $index->addDocument($document);
-
-            // Commit your change
-            $index->commit();
-
-            // If you want you can optimize your index
-            $index->optimize();
-
             return $this->redirect($this->generateUrl('classsession_index'));
         }
         
