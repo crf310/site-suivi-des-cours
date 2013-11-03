@@ -2,16 +2,19 @@
 {% block head %}    
     {{ parent() }}
     {% block stylesheets %}
-        <link href="{{ asset('css/bootstrap-wysihtml5-0.0.2.css') }}" media="screen" rel="stylesheet"/>
+        <link href="{{ asset('css/bootstrap-wysihtml5.css') }}" media="screen" rel="stylesheet"/>
         <style type="text/css" media="screen">
         #summaryField {
             height: 300px;
+            width: 90%;
         }
+        
         </style>
     {% endblock %}
     {% block javascripts %}
-        <script type="text/javascript" src="{{ asset('js/wysihtml5-0.3.0_rc2.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/bootstrap-wysihtml5-0.0.2.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/wysihtml5.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/bootstrap3-wysihtml5.js') }}"></script>
+        <script src="{{ asset('js/bootstrap-wysihtml5.fr-FR.js') }}"></script>
     {% endblock %}
 {% endblock %}
 {% block content_title %}Ajouter un compte-rendu{% endblock %}
@@ -19,13 +22,7 @@
 {% block main_content %}
 <div class="row">
     <div class="col-md-12 center">
-        <form action="{{ path('classsession_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate="novalidate" >
-                    <!--
-                <div class="alert alert-error alert-block">
-                <a class="close" data-dismiss="alert" href="#">×</a>
-                <h4 class="alert-heading">Erreur dans la saisie</h4>
-                {{ form_errors(form) }}
-            </div>-->
+        <form action="{{ path('classsession_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate="novalidate" id="summary-form">
             <div class="widget-box">
                 <div class="widget-title">
                         <span class="icon">
@@ -45,7 +42,7 @@
                     {% endif %}
                     {{ form_row(form.sessionDate, { 'label': 'Date'}) }}
                     {{ form_row(form.sessionTeacher, { 'label': 'Formateur'}) }}
-                    {{ form_row(form.summary, { 'label': 'Résumé du cours', 'id' : 'summaryField' }) }}       
+                    {{ form_row(form.summary, { 'label': 'Résumé du cours', 'id' : 'summaryField', }) }}       
                     {% if form.classSessionStudents is defined %}
                         {{ form_row(form.classSessionStudents, { 'label': 'Apprenants présents', 'hint': 'N\'apparaissent ici que les apprenants inscrits à votre cours' }) }}           
                     {% endif %}
@@ -58,8 +55,10 @@
         </form>
     </div>
 </div>
-<script type="text/javascript" src="{{ asset('js/bootstrap-wysihtml5.fr-FR.js') }}"></script>
 <script type="text/javascript">
-  $('#summaryField').wysihtml5({locale: 'fr-FR'});
+  $('#summaryField').wysihtml5({
+      locale: "fr-FR",      
+      "image": true, //Button to insert an image. Default true,
+  });
 </script>
 {% endblock %}
