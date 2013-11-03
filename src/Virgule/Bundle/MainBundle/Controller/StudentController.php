@@ -259,7 +259,7 @@ class StudentController extends AbstractVirguleController {
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
-            $entity->setUpdated();
+            $entity->setUpdatedAt();
             $em->persist($entity);
             
             $em->flush();
