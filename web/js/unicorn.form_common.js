@@ -6,8 +6,8 @@
 $(document).ready(function(){
 	
 	$('input[type=checkbox],input[type=radio]').iCheck({
-    	checkboxClass: 'icheckbox_flat-blue',
-    	radioClass: 'iradio_flat-blue'
+    	checkboxClass: 'icheckbox_flat',
+    	radioClass: 'iradio_flat'
 	});
 	
 	$('select').select2();
