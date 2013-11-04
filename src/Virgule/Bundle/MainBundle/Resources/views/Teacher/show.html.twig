@@ -1,18 +1,48 @@
 {% extends '::main_content.html.twig' %}
+{% block head %}    
+    {{ parent() }}
+    {% block javascripts %}
+        <script type='text/javascript'>
+            $(function(){
+                    $('#delete-teacher').click(function(e){
+                        e.preventDefault();
+                        bootbox.dialog({
+                            message: "Vous allez supprimer le profil de <b>{{ entity.firstName }} {{ entity.lastName }}</b>, êtes-vous sûr(e) ?",
+                            title: "Suppression d'un profil utilisateur",
+                            buttons: {
+                                no: {
+                                    label: "Non",
+                                    className: "btn-default"
+                                },
+                                yes: {
+                                    label: "Oui",
+                                    className: "btn-danger",
+                                    callback: function() {
+                                        $("#delete-teacher-form").submit();
+                                    }
+                                }
+                             }
+                        });
+                    });
+                });
+        </script>
+    {% endblock %}
+{% endblock %}
 {% block content_title %}Fiche formateur{% endblock %}
 {%block submenu %}
     {% if app.user.id == entity.id %}
-        <a class="btn tip-bottom" href="{{ path('teacher_edit', { 'id': entity.id }) }}"> <i class="icon-user_edit"></i>Modifier le profil</a>
+        <a class="btn tip-bottom" href="{{ path('teacher_edit', { 'id': entity.id }) }}"> <i class="my-icon-user_edit"></i>Modifier le profil</a>
     {% endif %}
-    <!--<form action="{{ path('teacher_delete', { 'id': entity.id }) }}" method="post">
-        {{ form_widget(delete_form) }}-->
-        <button  class="btn tip-bottom" type="submit"><i class="icon-user_delete"></i>Supprimer le profil</button>
-    <!-</form>-->
+    <a class="btn" href="#" id="delete-teacher"> <i class="my-icon-user_delete"></i>Supprimer la fiche</a>
+    <form id="delete-teacher-form" action="{{ path('teacher_delete', { 'id': entity.id }) }}" method="post">{{ form_widget(delete_form) }}</form>
 {% endblock %}
 {% block main_content %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-4">
+            {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Apprenants', 'students': teacherStudents, 'nbColumns': 1 }  %}
+        </div>
+        <div class="col-md-8">
             <div class="row">
                 <div class="col-md-12">
                     <form class="form-horizontal not-form-horizontal">
@@ -73,17 +103,10 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-7">
-           <div class="row">
-                <div class="col-md-12">
-                   {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Apprenants inscrit au(x) cours', 'students': teacherStudents, 'listBreak': teacherStudentsLineBreak }  %}
-                </div>
-            </div>
             <div class="row">
                 <div class="col-md-12">
                     {% set listBreak = teacherClassSessions | length // 3 %}
-                    {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Compe-rendus de ce formateur', 'classSessions': teacherClassSessions, 'listBreak': listBreak }  %}
+                    {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Compte-rendus de ce formateur', 'classSessions': teacherClassSessions, 'listBreak': listBreak }  %}
                 </div>
             </div>
         </div>

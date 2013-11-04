@@ -197,10 +197,10 @@ i.organization_branch-add {
     float:left;
     margin-right: 2px;
 }
-#welcome ul {
+.widget-content ul {
     margin-left: -20px;
 }
-#welcome li {
+.widget-content li {
     margin-top: 2px;
 }
 .clear_list {
