@@ -3,9 +3,9 @@
 {%block submenu %}
     <a class="btn tip-bottom" href="{{ path('document_new') }}"> <i class="document-add"></i>Nouveau document</a>
 {% endblock %}
-{% block main_content %}
+{% block main_content %}    
 <div class="row">
-    <div>
+    <div class="col-md-12 center">
         <div class="widget-box">
             <div class="widget-title">
                 <span class="label label-info tip-left" data-original-title="{{ documents | length }} document(s)">{{ documents | length }}</span>
