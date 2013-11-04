@@ -75,7 +75,7 @@ class AddClassSessionStudentsFieldSubscriber implements EventSubscriberInterface
                 'multiple' => true,
                 'property_path' => 'classSessionStudents',
                 'property' => 'fullname',
-                'cols_number' => 5,
+                'cols_number' => 3,
             ));
             $form->add($field);
                     
