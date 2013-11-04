@@ -268,11 +268,19 @@ li.document { list-style-image:url('../img/icons/attach.png'); }
     font-size: 12px;
     margin: 0;
     padding:5px 0px 0px 0px; 
+    text-align: center;
 }
 #planning p.course_cell {
     display: block;
     margin: 0;
     padding: 0;
+}
+#planning span {
+    margin-bottom: 20px;
+}
+a.course_details {
+    text-decoration: none;
+    color: #000000;
 }
 
 /* Student profile */
