@@ -197,8 +197,9 @@ i.organization_branch-add {
     float:left;
     margin-right: 2px;
 }
-.widget-content ul {
-    margin-left: -20px;
+div.widget-content div.col-md-12, div.widget-content div.col-md-4 {
+    margin: 0px;
+    padding: 0px;
 }
 .widget-content li {
     margin-top: 2px;
@@ -331,16 +332,22 @@ a.course_details {
     margin: 9px 55px 0 0;
 }
 
-.col-md-* {
-    padding-left: 0px;
-}
-
 /* Class sumarry */
 .text-block {
     text-align: justify;
     padding: 0px 20px 20px 20px;
 }
-/* Override Unicorn Bootstrap */
+/* Override Unicorn & Bootstrap */
 .not-form-horizontal div.controls {
     padding-top: 15px;
+}
+.stats-plain {
+  display: inline-block;
+  list-style: none outside none;
+  margin: 0px;
+  text-align: center;
+  padding: 0;
+}
+.stats-plain li {
+  padding: 0 15px;
 }
