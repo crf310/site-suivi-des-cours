@@ -2,25 +2,27 @@
 {% block content_title %}Compte-rendu de cours{% endblock %}
 {%block submenu %}
     {% if app.user.id == entity.reportTeacher.id %}
-        <a class="btn tip-bottom" href="{{ path('classsession_edit', { 'id': entity.id }) }}"> <i class="icon-user_edit"></i>Modifier la compte-rendu</a> 
-        <!--<form action="{{ path('classsession_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}-->
-            <button  class="btn tip-bottom" type="submit"><i class="icon-user_delete"></i>Supprimer le compte-rendu</button>
-        <!-</form>-->
+        <a class="btn tip-bottom" href="{{ path('classsession_edit', { 'id': entity.id }) }}"> <i class="my-icon-user_edit"></i>Modifier le compte-rendu</a>  
     {% endif %}   
 {% endblock %}
 {% block main_content %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-6 form-horizontal not-form-horizontal">
+        <div class="col-md-8 form-horizontal not-form-horizontal">
             <div class="widget-box">
                 <div class="widget-title">
                     <span class="icon">
                             <i class="icon-align-justify"></i>
                     </span>
-                    <h5>Niveau {{ entity.course.classLevel.label }}, le {{ entity.course.dayOfWeek | day }} de {{ entity.course.startTime | date('h:m') }} à {{ entity.course.endTime | date('h:m') }} </h5>
                 </div>            
                 <div class="widget-content nopadding">
+                    <div class="control-group">
+                        <label class="control-label">Cours </label>
+                        <div class="controls">
+                            niveau {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': entity.course.classLevel.htmlColorCode, 'classLevelLabel': entity.course.classLevel.label } %}
+                            &nbsp;le {{ entity.course.dayOfWeek | day }} de {{ entity.course.startTime | date('H\\hi') }} à {{ entity.course.endTime | date('H\\hi') }}
+                        </div>
+                    </div>
                     <div class="control-group">
                         <label class="control-label">Cours du</label>
                         <div class="controls">{{ entity.sessionDate | date('d/m/Y') }}</div>
@@ -43,8 +45,8 @@
                 </div>
             </div>
         </div>            
-        <div class="col-md-6">
-            {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Apprenants présents', 'students': classSessionStudents, 'nbColumns': 3 }  %}
+        <div class="col-md-4">
+            {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Apprenants présents', 'students': classSessionStudents, 'nbColumns': 1 }  %}
             {% include 'VirguleMainBundle:Comment:index.html.twig' with {'comments': entity.comments, 'commentForm': commentForm, 'target_id': entity.id, 'target_route': 'classsession_comment_create' }  %}
         </div>
     </div>

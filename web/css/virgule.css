@@ -335,6 +335,11 @@ a.course_details {
     padding-left: 0px;
 }
 
+/* Class sumarry */
+.text-block {
+    text-align: justify;
+    padding: 0px 20px 20px 20px;
+}
 /* Override Unicorn Bootstrap */
 .not-form-horizontal div.controls {
     padding-top: 15px;
