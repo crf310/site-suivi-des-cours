@@ -334,3 +334,8 @@ a.course_details {
 .col-md-* {
     padding-left: 0px;
 }
+
+/* Override Unicorn Bootstrap */
+.not-form-horizontal div.controls {
+    padding-top: 15px;
+}
