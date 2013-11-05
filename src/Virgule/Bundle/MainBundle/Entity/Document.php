@@ -41,7 +41,9 @@ class Document {
     /**
      * @var string $fileName
      *
-     * @ORM\Column(name="file_name", type="string", length=50, nullable=false)
+     * @ORM\Column(name="file_name", type="string", length=100, nullable=false)
+     * @Assert\NotBlank(message="Merci de saisir un nom pour ce document")
+     * @Assert\NotNull()
      */
     private $fileName;
 
