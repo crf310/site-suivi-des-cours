@@ -1,9 +1,11 @@
 {% block body -%}
-    <form action="{{ path('classlevelsuggested_create') }}" method="post" {{ form_enctype(form) }}>
+    <form id="change-student-level-form" action="{{ path('classlevelsuggested_create') }}" method="post" {{ form_enctype(form) }}>
         {{ form_errors(form) }}
         {{ form_row(form.classLevel, { 'label': 'Niveau conseillé' }) }}
         {{ form_row(form.student, { 'value': studentId }) }}
-        {{ form_rest(form) }} 
+        {{ form_rest(form) }}             
+        {% if displaySubmitButton is defined and displaySubmitButton == true %}   
             <button type="submit" class="btn btn-success">Mettre le niveau à jour</button>
+        {% endif %}
     </form>
 {% endblock %}
