@@ -2,19 +2,24 @@
 {% block head %}    
     {{ parent() }}
     {% block stylesheets %}
-        <link href="{{ asset('css/bootstrap-tagmanager.css') }}" rel="stylesheet" media="screen" />
+        <link href="{{ asset('css/tagmanager.css') }}" rel="stylesheet" media="screen" />
+        <style type="text/css" media="screen">
+        #descriptionField {
+            height: 150px;
+            width: 90%;
+        }
+        
+        </style>
     {% endblock %}
     {% block javascripts %}        
-        <script type="text/javascript" src="{{ asset('js/bootstrap-tagmanager.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/tagmanager.js') }}"></script>
         <script type="text/javascript">
-        jQuery(function($) { 
-            $(".tagManager").tagsManager({
-                blinkBGColor_1: '#3A87AD',
-                blinkBGColor_2: '#A4C0E4',
+        jQuery(function($) {             
+            jQuery(".tagManager").tagsManager();
+            var existingTags = [{%for tag in existingTags %}'{{ tag.label }}',{% endfor %}];   
+            $(".tagManager").autocomplete({
+                source: existingTags
             });
-            
-             var existingTags = [{%for tag in existingTags %}'{{ tag.label }}',{% endfor %}];   
-            $('.tagManager').typeahead({source: existingTags})
         });
         </script>
     {% endblock %}
@@ -23,27 +28,31 @@
 {%block submenu %}
     <a class="btn tip-bottom" href="{{ path('document_index') }}"> <i class="document-list"></i>Retour à la liste des documents</a>
 {% endblock %}
-{% block main_content %}
-<form action="{{ path('document_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
-    <div class="widget-box">
-        <div class="widget-title">
-            <h5>Informations du document</h5>
+{% block main_content %}    
+<div class="row">
+    <div class="col-md-12 center">
+        <div class="alert alert-info">
+        Pour vos documents, privilégiez des formats ouverts et compatibles avec tous les systèmes, tels que le PDF ou les documents ODF (lisibles et éditables avec <a href="http://www.openoffice.org/fr/" title="Vers le site open Office">Open Office</a> ou <a href="https://www.libreoffice.org/" title="Vers le site Libre Office">Libre Office</a>, suites bureautiques gratuites).
         </div>
-        <div class="widget-content nopadding">
-        <div class="alert alert-info alert-padding">
-            Pour vos documents, privilégiez des formats ouverst et compatibles avec tous les systèmes, tels que le PDF ou les documents ODF (lisibles et éditables avec <a href="http://www.openoffice.org/fr/" title="Vers le site open Office">Open Office</a> ou <a href="https://www.libreoffice.org/" title="Vers le site Libre Office">Libre Office</a>, suites bureautiques gratuites).
-        </div>            
-            {{ form_errors(form) }}
-            {{ form_row(form.fileName, {'label': 'Intitulé du document' }) }}
-            {{ form_row(form.description, {'label': 'Description' }) }}
-            {{ form_row(form.file, {'label': 'Fichier' }) }}
-            {{ form_row(form.classLevel, {'label': 'Adapté au(x) niveau(x)' }) }}
-            {{ form_row(form.tags, {'label': 'Associer un ou plusieurs tags', 'hint' : 'Utiles pour retrouver le document, séparez les par une virgule' }) }}
-            {{ form_rest(form) }} 
-            <div class="form-actions">                                     
-                <input class="btn btn-success" type="submit" value="Enregistrer le document" />
+        <form action="{{ path('document_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <h5>Informations du document</h5>
+                </div>
+                <div class="widget-content nopadding">
+                    {{ form_errors(form) }}
+                    {{ form_row(form.fileName, {'label': 'Intitulé du document' }) }}
+                    {{ form_row(form.description, {'label': 'Description', 'id' : 'descriptionField' }) }}
+                    {{ form_row(form.file, {'label': 'Fichier' }) }}
+                    {{ form_row(form.classLevel, {'label': 'Adapté au(x) niveau(x)' }) }}
+                    {{ form_row(form.tags, {'label': 'Mots-clé', 'hint' : 'Utiles pour retrouver le document, séparez les par une virgule. Les mots-clé utilisés dans d\'autres documents sont proposés à la saisie.' }) }}
+                    {{ form_rest(form) }} 
+                    <div class="form-actions">                                     
+                        <input class="btn btn-success" type="submit" value="Enregistrer le document" />
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
-</form>
+</div>
 {% endblock %}

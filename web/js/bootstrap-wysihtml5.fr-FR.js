@@ -1,6 +1,6 @@
 /**
-* French translation for bootstrap-wysihtml5
-*/
+ * French translation for bootstrap-wysihtml5
+ */
 (function($){
     $.fn.wysihtml5.locale["fr-FR"] = {
         font_styles: {

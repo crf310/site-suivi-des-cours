@@ -3,31 +3,30 @@
     <link rel="icon" type="image/png" href="{{ asset('img/icons/red-cross.png') }}" />
     {% block stylesheets %}
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" media="screen" />
-        <link href="{{ asset('css/jasny-bootstrap.min.css') }}" rel="stylesheet" media="screen" />
-        <link href="{{ asset('css/bootstrap-responsive.min.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet" media="screen" />
+        <link href="{{ asset('css/colorpicker.css') }}" rel="stylesheet" media="screen" />
         <link href="{{ asset('css/datepicker.css') }}" rel="stylesheet" media="screen" />
-        <link href="{{ asset('css/uniform.css') }}" rel="stylesheet" media="screen" />        
+        <link href="{{ asset('css/icheck/flat/flat.css') }}" rel="stylesheet" media="screen" />
         <link href="{{ asset('css/select2.css') }}" rel="stylesheet" media="screen" />
-        <link href="{{ asset('css/unicorn.main.css') }}" media="screen" rel="stylesheet"/>
+        <link href="{{ asset('css/jquery-ui.css') }}" media="screen" rel="stylesheet"/>
+        <link href="{{ asset('css/unicorn.css') }}" media="screen" rel="stylesheet"/>
         <link href="{{ asset('css/unicorn.grey.css') }}" media="screen" rel="stylesheet" class="skin-color"/>
-        <link href="{{ asset('css/jquery.gritter.css') }}" media="screen" rel="stylesheet"/>      
-        <link href="{{ asset('css/virgule.css') }}" media="screen" rel="stylesheet"/>
+        <link href="{{ asset('css/virgule.css') }}" media="screen" rel="stylesheet" class="skin-color"/>
     {% endblock %}
     {% block javascripts %}
         <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/jquery.ui.custom.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/jquery.validate.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/jquery.gritter.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/jquery.uniform.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/jquery.peity.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery-ui.custom.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/jasny-bootstrap.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/bootbox.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap-colorpicker.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.js') }}"></script>            
+        <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.js') }}"></script>   
+        <script type="text/javascript" src="{{ asset('js/jquery.icheck.min.js') }}"></script>          
+        <script type="text/javascript" src="{{ asset('js/select2.min.js') }}"></script>         
+        <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>        
+        <script type="text/javascript" src="{{ asset('js/jquery.jpanelmenu.min.js') }}"></script>     
+        <script type="text/javascript" src="{{ asset('js/jquery.nicescroll.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/unicorn.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/unicorn.tables.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/unicorn.form_common.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/select2.min.js') }}"></script>        
-        <script type="text/javascript" src="{{ asset('js/prettify.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/unicorn.tables.js') }}"></script>        
+        <script type="text/javascript" src="{{ asset('js/virgule.js') }}"></script>
     {% endblock %}

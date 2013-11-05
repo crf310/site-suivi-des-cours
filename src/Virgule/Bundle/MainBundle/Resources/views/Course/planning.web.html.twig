@@ -1,9 +1,9 @@
 {% extends '::main_content.html.twig' %}
 {% block content_title %}Planning des cours{% endblock %}
 {%block submenu %}
-    <a class="btn tip-bottom" href="{{ path('course_index') }}"> <i class="icon-list"></i>Voir la liste des cours</a>
-    <a class="btn tip-bottom" href="{{ path('course_print_planning') }}" target="_blank"> <i class="icon-printer"></i>Imprimer</a>
-    <a class="btn tip-bottom" href="{{ path('course_new') }}"> <i class="icon-add"></i>Nouveau cours</a>
+    <a class="btn tip-bottom" href="{{ path('course_index') }}"> <i class="my-icon-list"></i>Voir la liste des cours</a>
+    <a class="btn tip-bottom" href="{{ path('course_print_planning') }}" target="_blank"> <i class="my-icon-printer"></i>Imprimer</a>
+    <a class="btn tip-bottom" href="{{ path('course_new') }}"> <i class="my-icon-add"></i>Nouveau cours</a>
 {% endblock %}
 {% block main_content %}
     {% include 'VirguleMainBundle:Course:planning.html.twig' %}

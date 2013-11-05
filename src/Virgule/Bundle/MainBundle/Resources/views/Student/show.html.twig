@@ -1,12 +1,7 @@
 {% extends '::main_content.html.twig' %}
 {% block head %}    
     {{ parent() }}
-    {% block stylesheets %}
-        <link href="{{ asset('css/bootstrap-lightbox.min.css') }}" rel="stylesheet" media="screen" />
-    {% endblock %}
     {% block javascripts %}
-    <script type="text/javascript" src="{{ asset('js/bootstrap-lightbox.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/bootstrap-confirm.js') }}"></script>
         <script type='text/javascript'>
         $(function() {
             $('#classlevelsuggested_form').hide();
@@ -14,39 +9,66 @@
             $('#show_classlevelsuggested_form').click(function() {
                 $('#classlevelsuggested_form').show();
                 return false;
-            });      
-        });
-        $(function () {
-            $("#delete-student-button").click(function () {
-                openConfirmModal();
+            });     
+                    
+            $('#change-student-level').click(function(e){
+                e.preventDefault();
+                bootbox.dialog({
+                    message: 
+                    title: "Changer le niveau conseillé pour {{ entity.firstName }} {{ entity.lastName }}",
+                    buttons: {
+                        no: {
+                            label: "Annuler",
+                            className: "btn-default"
+                        },
+                        yes: {
+                            label: "Mettre à jour",
+                            className: "btn-success",
+                            callback: function() {
+                                $("#change-student-level-form").submit();
+                            }
+                        }
+                     }
+                }).html;
             });
-            $("#delete-student-button").click(function () {
-                openConfirmModal();
-            });
-            function openConfirmModal() {
-                $("#confirmDiv").confirmModal({
-                    heading: 'Supprimer la fiche',
-                    body: 'Vous allez supprimer la fiche de <b>{{ entity.firstName }} {{ entity.lastName }}</b>, êtes-vous sûr(e) ?',
-                    callback: function () {
-                        $("#delete-student-form").submit();
-                    }
+            
+            
+    $(function(){
+            $('#delete-student').click(function(e){
+                e.preventDefault();
+                bootbox.dialog({
+                    message: "Vous allez supprimer la fiche de <b>{{ entity.firstName }} {{ entity.lastName }}</b>, êtes-vous sûr(e) ?",
+                    title: "Suppression d'une fiche apprenant",
+                    buttons: {
+                        no: {
+                            label: "Non",
+                            className: "btn-default"
+                        },
+                        yes: {
+                            label: "Oui",
+                            className: "btn-danger",
+                            callback: function() {
+                                $("#delete-student-form").submit();
+                            }
+                        }
+                     }
                 });
-            }
+            });
         });
         </script>
     {% endblock %}
 {% endblock %}
 {% block content_title %}Fiche apprenant: {{ entity.firstName }} {{ entity.lastName }}{% endblock %}
 {%block submenu %}
-    <a class="btn tip-bottom" href="{{ path('student_preview_certificate', { 'id': entity.id }) }}"><i class="icon-user-certificate"></i>Générer une attestation</button>
-    <a class="btn tip-bottom" href="{{ path('student_edit', { 'id': entity.id }) }}"> <i class="icon-user_edit"></i>Modifier la fiche</a>
-    <button id="delete-student-button" class="btn tip-bottom"><i class="icon-user_delete"></i>Supprimer la fiche</button>
+    <a class="btn" href="{{ path('student_preview_certificate', { 'id': entity.id }) }}"> <i class="my-icon-user-certificate"></i>Générer une attestation</button>
+    <a class="btn" href="{{ path('student_edit', { 'id': entity.id }) }}"> <i class="my-icon-user_edit"></i>Modifier la fiche</a>
+    <a class="btn" href="#" id="delete-student"> <i class="my-icon-user_delete"></i>Supprimer la fiche</a>
     <form id="delete-student-form" action="{{ path('student_delete', { 'id': entity.id }) }}" method="post">{{ form_widget(delete_form) }}</form>
 {% endblock %}
 {% block main_content %}
 <div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span5 form-horizontal not-form-horizontal">
+    <div class="row">
+        <div class="col-md-5 form-horizontal not-form-horizontal">
             <div class="widget-box">
                 <div class="widget-title">
                     <span class="icon">
@@ -89,7 +111,7 @@
                     </div>
                     <div class="control-group">
                         <label class="control-label">Profession</label>
-                        <div class="controls">{{ entity.profession }}</div>
+                        <div class="controls">{% if entity.profession != null %}{{ entity.profession }}{% else %}&nbsp;{% endif %}</div>
                     </div>
                 </div>
                 <div class="widget-title"><h5>Coordonnées</h5></div> 
@@ -109,23 +131,30 @@
                 </div>
             </div>
         </div>
-        <div class="span7">
-            <div class="row-fluid">
+        <div class="col-md-7">
+            <div class="row">
                 {% if entity.webPath is not null %}
                 {% set emergencyPanelSize = 8 %}
-                    <div class="span4">
-                        <div class="student-profile-picture">                                    
-                            <img src="{{ asset(entity.thumbnailWebPath) }}" class="img-polaroid" />
-                            <!--<br /><a title="Agrandir" href="#fullSizeProfilePictureStudent{{ entity.id }}" data-toggle="lightbox">Agrandir</a>-->
-                        </div>                                
-                        {% include 'VirguleMainBundle:Course:fullSizeProfilePicture.html.twig' with { 'id': entity.id, 'webPath': entity.webPath, 'firstname': entity.firstname, 'lastname': entity.lastname }  %}
+                    <div class="col-md-4">
+                        <div class="widget-box" >
+                            <div class="widget-title"></div>
+                            <div class="widget-content center"> 
+                                <div class="student-profile-picture">                                    
+                                    <img src="{{ asset(entity.thumbnailWebPath) }}" class="img-polaroid" width="150" height="150" />
+                                </div>                                
+                                {% include 'VirguleMainBundle:Course:fullSizeProfilePicture.html.twig' with { 'id': entity.id, 'webPath': entity.webPath, 'firstname': entity.firstname, 'lastname': entity.lastname }  %}
+                            </div>
+                        </div>
                     </div>
                 {% else %}
                     {% set emergencyPanelSize = 12 %}
                 {% endif %}
-                <div class="span{{ emergencyPanelSize }} form-horizontal not-form-horizontal">
+                <div class="col-md-{{ emergencyPanelSize }} form-horizontal not-form-horizontal">
                     <div class="widget-box" id="emergency_contact">
                         <div class="widget-title">
+                            <span class="icon">
+                                    <i class="icon-ambulance"></i>
+                            </span>
                             <h5>Contact d'urgence</h5>
                         </div>            
                         <div class="widget-content nopadding">                         
@@ -145,71 +174,78 @@
                     </div>
                 </div>
             </div>
-            <div class="row-fluid">
-                <div class="widget-box">
-                    <div class="widget-title">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#tabLevelHistory">Historique des niveaux conseillés</a></li>
-                            <li><a data-toggle="tab" href="#tabAttendanceHistory">Historique des présences</a></li>
-                            <li ><a data-toggle="tab" href="#tabComments">Commentaires ({{ entity.comments.count }})</a></li>
-                        </ul>
-                    </div>
-                    <div class="widget-content tab-content">
-                        <div id="tabLevelHistory" class="tab-pane active">
-                            <ul class="no-img">
-                            {% for classLevel in classLevels %}   
-                                <ul class="activity-list">
-                                    <li>
-                                        <a href="#">
-                                            {% if loop.first %}<i class="icon-ok"></i>{% else %}<i class="icon-empty"></i>{% endif %}
-                                            <strong>{{ classLevel['teacher_firstName'] }} {{ classLevel['teacher_lastName'] }}</strong> {% if loop.last %}l'a initialisé{% else %}l'a changé{% endif %} à <strong>{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel['classLevelColorCode'], 'classLevelLabel': classLevel['classLevelLabel'] } %}</strong>
-                                            <span>le {{ classLevel['dateOfChange'] | date('d/m/Y') }}</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            {% endfor %}    
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#tabLevelHistory">Niveau conseillé</a></li>
+                                <li><a data-toggle="tab" href="#tabAttendanceHistory">Présence</a></li>
+                                <li><a data-toggle="tab" href="#tabComments">Commentaires ({{ entity.comments.count }})</a></li>
                             </ul>
-                            <input class="btn" type="button" value="Mettre à jour le niveau de l'apprenant" id="show_classlevelsuggested_form">
-                            <div id="classlevelsuggested_form">
-                                {% include 'VirguleMainBundle:ClassLevelSuggested:new.html.twig' with { 'form': classLevelSuggestedForm, 'studentId': entity.id } %}
-                            </div>
                         </div>
-                        <div id="tabAttendanceHistory" class="tab-pane">
-                            {% if nbEnrollment == 0 %}
-                                Cet apprenant n'a été inscrit à aucun cours
-                            {% else %}                                
-                                <ul class="activity-list">
-                                {% for course in courses %}
-                                    {% if loop.first %}
-                                        {% set previousSemester = course.semester.id %}
-                                    {% endif %}
-                                    {% if previousSemester != course.semester.id or loop.first %}
+                        <div class="widget-content tab-content">
+                            <div id="tabLevelHistory" class="tab-pane active">
+                                <ul class="no-img">
+                                {% for classLevel in classLevels %}   
+                                    <ul class="activity-list">
                                         <li>
-                                            {% if course.semester.id == app.session.get('currentSemester').id %}<i class="icon-ok"></i>{% else %}<i class="icon-empty"></i>{% endif %}
-                                            Session du <strong>{{ course.semester.startDate | date('d/m/Y') }}</strong> au <strong>{{ course.semester.endDate | date('d/m/Y') }}</strong></a></li>
-                                    {% endif %}
-                                        <li><a href="#"> <i class="icon-empty"></i>
-                                            {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevel.htmlColorCode, 'classLevelLabel': course.classLevel.label } %} le {{ course.dayOfWeek | day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }} : 
-                                            {% if nbClassSessionsAttended is not null %}
-                                                {% if nbClassSessionsAttended[course.id]['nb_classsessions_attended'] > 0 %}
-                                                    {% set attendance_rate = nbClassSessionsAttended[course.id]['nb_classsessions_attended'] / nbClassSessionsAttended[course.id]['nb_classsessions'] * 100 %}
-                                                    présent{% if entity.gender =='F'%}e{% endif %} à 
-                                                    <strong>{{ nbClassSessionsAttended[course.id]['nb_classsessions_attended'] }}</strong> cours sur <strong>{{ nbClassSessionsAttended[course.id]['nb_classsessions'] }}</strong> <strong>({{ '%.0f'|format(attendance_rate) }}%)</strong>
-                                                {% else %}
-                                                    jamais présent
-                                                {% endif %}
-                                            {% endif %}
+                                            <a href="#">
+                                                <strong>{{ classLevel['teacher_firstName'] }} {{ classLevel['teacher_lastName'] }}</strong> {% if loop.last %}l'a initialisé{% else %}l'a changé{% endif %} à <strong>{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel['classLevelColorCode'], 'classLevelLabel': classLevel['classLevelLabel'] } %}</strong>
+                                                <span>le {{ classLevel['dateOfChange'] | date('d/m/Y') }}</span>
+                                                {% if loop.first %}<i class="icon-ok"></i>{% endif %}
                                             </a>
                                         </li>
-                                        {% set previousSemester = course.semester.id %}
-                                {% endfor %}
+                                    </ul>
+                                {% endfor %}    
                                 </ul>
-                            {% endif %}                        
-                        </div>
-                        <div id="tabComments" class="tab-pane">{% include 'VirguleMainBundle:Comment:index.html.twig' with {'comments': entity.comments }  %}</div>
-                    </div>                            
+                                <a class="btn btn-default" id="change-student-level">Mettre à jour le niveau de l'apprenant</a>
+                                <div id="change-student-level-content" class="hide">
+                                    <div id="modal-body">
+                                        {% include 'VirguleMainBundle:ClassLevelSuggested:new.html.twig' with { 'form': classLevelSuggestedForm, 'studentId': entity.id } %},
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tabAttendanceHistory" class="tab-pane">
+                                {% if nbEnrollment == 0 %}
+                                    Cet apprenant n'a été inscrit à aucun cours
+                                {% else %}                                
+                                    <ul class="activity-list">
+                                    {% for course in courses %}
+                                        {% if loop.first %}
+                                            {% set previousSemester = course.semester.id %}
+                                        {% endif %}
+                                        {% if previousSemester != course.semester.id or loop.first %}
+                                            <li>
+                                                Session du <strong>{{ course.semester.startDate | date('d/m/Y') }}</strong> au <strong>{{ course.semester.endDate | date('d/m/Y') }}</strong>
+                                                {% if course.semester.id == app.session.get('currentSemester').id %}<i class="icon-ok"></i>{% endif %}
+                                            </li>
+                                        {% endif %}
+                                            <li><a href="#"> <i class="icon-empty"></i>
+                                                {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevel.htmlColorCode, 'classLevelLabel': course.classLevel.label } %} le {{ course.dayOfWeek | day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }} : 
+                                                {% if nbClassSessionsAttended is not null %}
+                                                    {% if nbClassSessionsAttended[course.id]['nb_classsessions_attended'] > 0 %}
+                                                        {% set attendance_rate = nbClassSessionsAttended[course.id]['nb_classsessions_attended'] / nbClassSessionsAttended[course.id]['nb_classsessions'] * 100 %}
+                                                        présent{% if entity.gender =='F'%}e{% endif %} à 
+                                                        <strong>{{ nbClassSessionsAttended[course.id]['nb_classsessions_attended'] }}</strong> cours sur <strong>{{ nbClassSessionsAttended[course.id]['nb_classsessions'] }}</strong> <strong>({{ '%.0f'|format(attendance_rate) }}%)</strong>
+                                                    {% else %}
+                                                        jamais présent
+                                                    {% endif %}
+                                                {% endif %}
+                                                </a>
+                                            </li>
+                                            {% set previousSemester = course.semester.id %}
+                                    {% endfor %}
+                                    </ul>
+                                {% endif %}                        
+                            </div>
+                            <div id="tabComments" class="tab-pane">
+                                {% include 'VirguleMainBundle:Comment:index.html.twig' with {'comments': entity.comments }  %}                            
+                                <a class="btn btn-default" id="add-comment">Ajouter un commentaire</a>
+                            </div>
+                        </div>                            
+                    </div>
                 </div>
-                
             </div>
         </div>
     </div><!-- span -->

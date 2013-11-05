@@ -17,12 +17,12 @@
                 {% if ((documents | length) % nbColumns) != 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
                 {% if ((documents | length) // nbColumns) < 0 %}{% set listBreak = 1 %}{% endif %}
                 {% set span_size = 12 /  nbColumns %}
-                <div class="span{{ span_size }}">
+                <div class="col-md-{{ span_size }}">
                     <ul>
                     {% for document in documents %}
                         <li class="document"><a href="{{ path('document_download', { 'id': document.id }) }}">{{ document.fileName }}</a></li>
                         {% if loop.index % listBreak == 0  and loop.index != loop.last %}
-                            </ul></div><div class="span{{ span_size }}"><ul>
+                            </ul></div><div class="col-md-{{ span_size }}"><ul>
                         {% endif %}
                     {% endfor %}
                     </ul>
