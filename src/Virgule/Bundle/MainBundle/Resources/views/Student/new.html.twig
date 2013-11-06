@@ -3,9 +3,12 @@
     {{ parent() }}
     {% block javascripts %}
      <script type='text/javascript'>
-        function setRegistrationDate(date) {
-            document.getElementById('registrationDateField').value = date;
-        }
+        $(document).ready(function() {
+            $('.setopenhouse').click(function() {
+                $('#registrationDateField').val($(this).attr("value"));
+                return false;
+            });
+        });
      </script>
     {% endblock %}
 {% endblock %}
