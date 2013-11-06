@@ -22,7 +22,7 @@ class CourseType extends AbstractType {
         $builder
                 ->add('dayOfWeek', 'choice', array(
                     'expanded' => false,
-                    'choices' => array('1' => 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'),
+                    'choices' => array('1' => 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'),
                     'data' => '1',
                     'attr' => array('class' => 'tiny-select'),
                 ))
