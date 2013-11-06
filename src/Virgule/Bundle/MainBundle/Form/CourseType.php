@@ -27,13 +27,13 @@ class CourseType extends AbstractType {
                     'attr' => array('class' => 'tiny-select'),
                 ))
                 ->add('startTime', 'time', array(
-                    'input'  => 'timestamp',
+                    'input'  => 'datetime',
                     'widget' => 'choice',
                     'hours' => array(8,9,10,11,12,13,14,15,16,17,18,19,20,22),
                     'minutes' => array('00','15','30','45')
                 ))
                 ->add('endTime', 'time', array(
-                    'input'  => 'timestamp',
+                    'input'  => 'datetime',
                     'widget' => 'choice',
                     'hours' => array(8,9,10,11,12,13,14,15,16,17,18,19,20,22),
                     'minutes' => array('00','15','30','45')
