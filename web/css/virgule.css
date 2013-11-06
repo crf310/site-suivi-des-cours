@@ -352,4 +352,15 @@ a.course_details {
   padding: 0 15px;
 }
 
-/* Override Unicorn CSS */
+/* Override Bootstrap & Unicorn CSS */
+.recent-comments li,.activity-list li {
+  padding: 0px;
+}
+.recent-comments .comments {
+  margin-left: 0px;
+}
+.activity-list li a span.label {
+  font-size: 11.844px;
+  font-style: normal;
+  color: #ffffff;
+}
