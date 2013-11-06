@@ -15,6 +15,7 @@ use Virgule\Bundle\MainBundle\Validator\Constraints as VirguleAssert;
  */
 class Course {
 
+    private $dayLabels = array('1' => 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi');
     /**
      * @var integer
      *
@@ -316,7 +317,7 @@ class Course {
 
     public function __toString() {
         //return 'Niveau ' . $this->classLevel . ', le ' . $this->dayOfWeek . ' de ' . $this->startTime->format('H:i') . ' à ' . $this->endTime->format('H:i');
-		return $this->classLevel . ', ' . $this->dayOfWeek . ' ' . $this->startTime->format('H:i') . '-' . $this->endTime->format('H:i');
+		return $this->classLevel . ', ' . $this->dayLabels[$this->dayOfWeek] . ' ' . $this->startTime->format('H:i') . '-' . $this->endTime->format('H:i');
     }
 
     /**
