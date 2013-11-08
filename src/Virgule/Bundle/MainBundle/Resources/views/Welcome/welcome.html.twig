@@ -18,16 +18,16 @@
                 {% if myCourses is empty %}Vous ne dirigez aucun cours pour le moment !{% else %}
                     {% for course in myCourses %}
                     <div class="new-update clearfix">
-                        <div class="update-done btn-group">						
+                        <div class="update-done">						
                             <a class="btn btn-default" href="{{ path('classsession_add', { 'id': course.id }) }}"><i class="my-icon-add"></i>Compte-rendu</a>
                             <a class="btn btn-default" href="{{ path('attendance_list', { 'id': course.id }) }}" target="_blank"><i class="my-icon-trombinoscope"></i>Fiche de présence</a>
-                            <br />
-                            <a href="{{ path('course_show', { 'id': course.id }) }}" >Voir le cours</a>
                         </div>
-                        <div class="class-date">
-                            {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.getClassLevel().getHtmlColorCode(), 'classLevelLabel': course.getClassLevel().getLabel() } %}
-                            <span class="update-day">{{ course.dayOfWeek | day }}</span>{{ course.startTime | date('H:i') }} - {{ course.endTime | date('H:i') }}
-                        </div>
+                        <a href="{{ path('course_show', { 'id': course.id }) }}" >
+                            <div class="class-date">
+                                {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.getClassLevel().getHtmlColorCode(), 'classLevelLabel': course.getClassLevel().getLabel() } %}
+                                <span class="update-day">{{ course.dayOfWeek | day }}</span>{{ course.startTime | date('H:i') }} - {{ course.endTime | date('H:i') }}
+                            </div>
+                        </a>
                     </div>
                     {% endfor %}
                 {% endif %}
