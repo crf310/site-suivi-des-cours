@@ -22,12 +22,22 @@ class CourseType extends AbstractType {
         $builder
                 ->add('dayOfWeek', 'choice', array(
                     'expanded' => false,
-                    'choices' => array('1' => 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'),
+                    'choices' => array('1' => 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'),
                     'data' => '1',
                     'attr' => array('class' => 'tiny-select'),
                 ))
-                ->add('startTime')
-                ->add('endTime')
+                ->add('startTime', 'time', array(
+                    'input'  => 'datetime',
+                    'widget' => 'choice',
+                    'hours' => array(8,9,10,11,12,13,14,15,16,17,18,19,20,22),
+                    'minutes' => array('00','15','30','45')
+                ))
+                ->add('endTime', 'time', array(
+                    'input'  => 'datetime',
+                    'widget' => 'choice',
+                    'hours' => array(8,9,10,11,12,13,14,15,16,17,18,19,20,22),
+                    'minutes' => array('00','15','30','45')
+                ))
                 ->add('classRoom', 'entity', array(
                     'class' => 'VirguleMainBundle:ClassRoom',
                     'expanded' => false,

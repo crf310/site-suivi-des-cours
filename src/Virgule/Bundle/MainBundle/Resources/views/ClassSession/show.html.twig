@@ -47,7 +47,17 @@
         </div>            
         <div class="col-md-4">
             {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Apprenants présents', 'students': classSessionStudents, 'nbColumns': 1 }  %}
-            {% include 'VirguleMainBundle:Comment:index.html.twig' with {'comments': entity.comments, 'commentForm': commentForm, 'target_id': entity.id, 'target_route': 'classsession_comment_create' }  %}
+                
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                            <i class="icon-comments"></i>
+                    </span>
+                    <h5>Commentaires</h5>
+                </div>            
+                {% include 'VirguleMainBundle:Comment:index.html.twig' with {'comments': entity.comments, 'commentForm': commentForm, 'target_id': entity.id, 'target_route': 'classsession_comment_create' }  %}
+                <div><a class="btn btn-default" id="add-comment">Ajouter un commentaire</a></div>
+            </div>
         </div>
     </div>
 </div>                 

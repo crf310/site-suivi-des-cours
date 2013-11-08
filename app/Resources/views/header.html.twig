@@ -19,5 +19,7 @@
         <li class="btn" ><a title="" href="{{ path('teacher_show', { 'id': app.user.id }) }}"><i class="icon icon-user"></i> <span class="text">{{ app.user.firstName }} {{ app.user.lastName }}</span></a></li>
         <li class="btn"><a title="" href="#"><i class="icon icon-question-sign"></i> <span class="text">Aide</span></a></li>
         <li class="btn"><a title="" href="{{ path('logout') }}"><i class="icon icon-share-alt"></i> <span class="text">Déconnexion</span></a></li>
+        <li class="btn"><a href="#virguleInformationPanel" data-toggle="modal"><i class="icon icon-info-sign"></i></a></li>
     </ul>
 </div>
+{% include '::info.html.twig' %}
