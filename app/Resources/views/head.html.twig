@@ -12,7 +12,7 @@
         'css/unicorn.css'
         'css/unicorn.grey.css'
         'css/virgule.css'
-        filter='cssrewrite' %}
+        filter='cssrewrite, yui_css' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
     {% javascripts
@@ -30,6 +30,6 @@
         'js/unicorn.js'
         'js/unicorn.form_common.js'
         'js/unicorn.tables.js'        
-        'js/virgule.js' %}
+        'js/virgule.js'  filter='yui_js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
