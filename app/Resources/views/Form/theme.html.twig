@@ -39,8 +39,8 @@
         <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Supprimer</a>
       </div>
     </div>
-
 {% endblock %}
+            
 {% block picture_widget %}
     {% spaceless %}
     <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -51,10 +51,10 @@
           <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
         </div>
     </div>
-    {% endspaceless %}
-{% endblock picture_widget %}
+{% endspaceless %}
             
-            <div class="fileinput fileinput-new" data-provides="fileinput">
+{% endblock picture_widget %}    
+<div class="fileinput fileinput-new" data-provides="fileinput">
   <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
   <div>
     <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><input type="file" name="..."></span>
@@ -62,7 +62,6 @@
   </div>
 </div>
 
-            
 {% block hidden_widget %}
 {% spaceless %}
     {% set type = type|default('hidden') %}
@@ -112,15 +111,15 @@
 {% endspaceless %}
 {% endblock password_widget %}
     
-{% block field_rows %}
+{% block form_rows %}
 {% spaceless %}
     {% for child in form %}
         {{ form_row(child) }}
     {% endfor %}
 {% endspaceless %}
-{% endblock field_rows %}
+{% endblock form_rows %}
 
-{% block field_row %}
+{% block form_row %}
 {% spaceless %}
     {% if macro is not defined %}
         {% import ':Form:macro.html.twig' as macro %}
@@ -134,7 +133,7 @@
         </div>
     </div>
 {% endspaceless %}
-{% endblock field_row %}
+{% endblock form_row %}
 
 {% block field_errors %}
 {% spaceless %}

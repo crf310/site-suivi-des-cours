@@ -26,7 +26,6 @@ class AppKernel extends Kernel
             new Virgule\Bundle\MainBundle\VirguleMainBundle(),
             new Virgule\Bundle\SecurityBundle\VirguleSecurityBundle(),
            
-            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sonata\IntlBundle\SonataIntlBundle(),
             new Siphoc\PdfBundle\SiphocPdfBundle(),
