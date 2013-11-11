@@ -108,6 +108,9 @@ h2 { font-size: 13px; }
 #sidebar a.class-levels i {
     background-image: url('../img/icons/medal_gold_2.png');
 }
+#sidebar a.help i {
+    background-image: url('../img/icons/help.png');
+}
 i.my-icon-go {
     background-image: url('../img/icons/arrow_right.png');
 }
