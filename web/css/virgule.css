@@ -367,3 +367,9 @@ a.course_details {
   font-style: normal;
   color: #ffffff;
 }
+
+/* Password */
+#pwd-progress-bar {
+    margin-top: 5px;
+    margin-bottom: -20px;
+}

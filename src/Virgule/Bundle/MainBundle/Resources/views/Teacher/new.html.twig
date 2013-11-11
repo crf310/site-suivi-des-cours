@@ -1,21 +1,29 @@
 {% extends '::main_content.html.twig' %}
 {% block head %}    
     {{ parent() }}
-    {% block stylesheets %}
-        <link href="{{ asset('css/pwdstrength.css') }}" rel="stylesheet" media="screen" />
-    {% endblock %}
     {% block javascripts %}
         <script type="text/javascript" src="{{ asset('js/jquery.pwstrength.min.js') }}"></script>
         <script type="text/javascript">
-          jQuery(function($) { 
-                $('#virgule_bundle_mainbundle_teachertype_password_first').pwstrength(); 
+        $(document).ready(function() {
+            var options = {
+            };
+            $('#password').pwstrength(options);
+                        
+            $("#lastname").add('#firstname').keyup(function() {               
+		var firstname = $('#firstname').val();
+		var lastname = $('#lastname').val();
+		var c = firstname.substring(0,1);
+		var username = (c + lastname).toLowerCase();
+                
+                $("#username").val(username);
             });
+        });
         </script>       
     {% endblock %}
 {%endblock %}
 {% block content_title %}Créer un nouveau compte utilisateur{% endblock %}
 {%block submenu %}
-    <a class="btn tip-bottom" href="{{ path('teacher_index') }}"> <i class="icon-list"></i>Retour à la liste des utilisateurs</a>
+    <a class="btn tip-bottom" href="{{ path('teacher_index') }}"> <i class="my-icon-list"></i>Retour à la liste des utilisateurs</a>
 {% endblock %}
 {% block main_content %}
     
@@ -27,8 +35,8 @@
                     <h5>Coordonnées</h5>
                 </div>
                 <div class="widget-content nopadding">
-                    {{ form_row(form.lastName, { 'label': 'Nom' }) }}
-                    {{ form_row(form.firstName, { 'label': 'Prénom' }) }}
+                    {{ form_row(form.firstName, { 'label': 'Prénom', 'id': 'firstname' }) }}
+                    {{ form_row(form.lastName, { 'label': 'Nom', 'id': 'lastname' }) }}
                     {{ form_row(form.phoneNumber, { 'label': 'Téléphone fixe' }) }}
                     {{ form_row(form.cellphoneNumber, { 'label': 'Téléphone portable' }) }}
                     {{ form_row(form.emailAddress, { 'label': 'Adresse email' }) }}
@@ -39,8 +47,8 @@
                 <div class="widget-content nopadding">
                     {{ form_row(form.isActive, { 'checked':'checked', 'label': 'Formateur en activité', 'hint':'Cochez la case si l\'utilisateur doit être actif' }) }}                
                     {{ form_row(form.role, { 'label': 'Rôle' })  }}
-                    {{ form_row(form.username, { 'label': 'Nom d\'utilisateur' }) }}
-                    {{ form_row(form.password.first, { 'label': 'Mot de passe', 'hint':'Choisissez un mot de passe d\'au moins 8 caractères. Vous pouvez prendre une phrase, si cela est plus facile à retenir', 'attr': { 'data-indicator' : 'pwindicator' } }) }}
+                    {{ form_row(form.username, { 'label': 'Nom d\'utilisateur', 'id': 'username' }) }}
+                    {{ form_row(form.password.first, { 'label': 'Mot de passe', 'hint':'Choisissez un mot de passe d\'au moins 8 caractères. Vous pouvez prendre une phrase, si cela est plus facile à retenir', 'id': 'password' }) }}
                     {{ form_row(form.password.second, { 'label': 'Confirmez le mot de passe' }) }}
                     {{ form_rest(form) }}
                     <div class="form-actions">                                     
