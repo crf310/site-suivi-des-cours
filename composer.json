@@ -23,11 +23,11 @@
         "jms/di-extra-bundle": "1.4.0",
         "knplabs/knp-menu-bundle": "2.0.*@dev",
         "sonata-project/intl-bundle": "2.1.0",
-        "siphoc/pdf-bundle": "1.2.*"
+        "siphoc/pdf-bundle": "1.2.*",          
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
     },
     "require-dev": {
-        "doctrine/data-fixtures": "*",                
-        "doctrine/doctrine-fixtures-bundle": "dev-master",
+        "doctrine/data-fixtures": "*",              
         "phing/phing": "2.4.14",
         "pdepend/pdepend" : "1.1.0",
         "phpunit/phpunit": "3.7.28",
