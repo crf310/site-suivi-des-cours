@@ -24,7 +24,7 @@
         "knplabs/knp-menu-bundle": "2.0.*@dev",
         "sonata-project/intl-bundle": "2.1.0",
         "siphoc/pdf-bundle": "1.2.*",          
-        "doctrine/doctrine-fixtures-bundle": "dev-master",
+        "doctrine/doctrine-fixtures-bundle": "dev-master"
     },
     "require-dev": {
         "doctrine/data-fixtures": "*",              
