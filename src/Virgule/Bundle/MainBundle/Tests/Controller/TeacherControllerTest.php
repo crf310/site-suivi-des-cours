@@ -5,24 +5,33 @@ namespace Virgule\Bundle\MainBundle\Tests\Controller;
 use Virgule\Bundle\MainBundle\Tests\Controller\AbstractControllerTest;
 
 class TeacherControllerTest extends AbstractControllerTest {
-
+    
     private $FIELD_PREFIX = 'virgule_bundle_mainbundle_teachertype';
 
     public function testUserCreationSuccess() {
         // Create a new client to browse the application
-        $client = static::createClient();
-        $client->followRedirects();
-        $crawler = $client->request('GET', '/');
+        $this->client = static::createClient();
+        $this->crawler = $this->client->request('GET', '/');
         
-        $crawler = $this->login($client, $crawler, $this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
-        $crawler = goToUserCreationForm($crawler);
-        $crawler = $this->fillAndSubmitForm($crawler, "John", "Doe", "0102030405", "0504030201", "john.doe@example.com", "jdoe", "password", "password");
+        $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+        $this->goToUserCreationForm();
         
-        $this->checkValue("John");
-        $this->checkValue("Doe");
-        $this->checkValue("0102030405");
-        $this->checkValue("0504030201");
-        $this->checkValue("john.doe@example.com");        
+        $lastName =  "Doe" . time();
+        $firstName = "John" . time();        
+        $phoneNumber = "0102030405";
+        $cellPhoneNumber = "0504030201";
+        $emailAddress = "john.doe." . time() . "@example.com";
+        $userName = "jdoe" . time();
+        $passwordFirst = "password";
+        $passwordSecond = $passwordFirst;
+        $this->fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond);
+        
+        $this->assertTrue($this->crawler->filter("html")->count() > 0);
+        $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 0);
+        
+        $this->assertTrue($this->crawler->filter("td:contains('" . $firstName . " " . $lastName . "')")->count() > 0);
+        $this->assertTrue($this->crawler->filter("td:contains('01 02 03 04 05')")->count() > 0);
+        $this->assertTrue($this->crawler->filter("td:contains('05 04 03 02 01')")->count() > 0);
     }
 
     /*
@@ -61,35 +70,28 @@ class TeacherControllerTest extends AbstractControllerTest {
     }
      */
 
-    private function goToUserCreationForm($crawler) {
+    private function goToUserCreationForm() {
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/teacher/');
-        $this->assertTrue(200 === $client->getResponse()->getStatusCode());
-        $crawler = $client->click($crawler->selectLink('Nouvel utilisateur')->link());
-
-        return $crawler;
+        $this->crawler = $this->client->request('GET', '/teacher/');
+        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
+        $this->crawler = $this->client->click($this->crawler->selectLink('Nouvel utilisateur')->link());
     }
 
-    private function fillAndSubmitForm($crawler, $firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond) {
+    private function fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond) {
         // Fill in the form and submit it
-        $form = $crawler->selectButton('Créer le compte')->form(array(
-            $this->FIELD_PREFIX . '[lastName]' => $firstName,
-            $this->FIELD_PREFIX . '[firstName]' => $lastName,
+        $form = $this->crawler->selectButton('Créer le compte')->form(array(
+            $this->FIELD_PREFIX . '[lastName]' => $lastName,
+            $this->FIELD_PREFIX . '[firstName]' => $firstName,
             $this->FIELD_PREFIX . '[phoneNumber]' => $phoneNumber,
-            $this->FIELD_PREFIX . '[cellPhoneNumber]' => $cellPhoneNumber,
+            $this->FIELD_PREFIX . '[cellphoneNumber]' => $cellPhoneNumber,
             $this->FIELD_PREFIX . '[emailAddress]' => $emailAddress,
             $this->FIELD_PREFIX . '[username]' => $userName,
             $this->FIELD_PREFIX . '[password][first]' => $passwordFirst,
             $this->FIELD_PREFIX . '[password][second]' => $passwordSecond,
                 ));
 
-        $client->submit($form);
-        $crawler = $client->followRedirect();
-    }
-
-    
-    private function checkValue($crawler, $value) {
-        // Check the element contains an attribute with value equals "Foo"
-        $this->assertTrue($crawler->filter('html:contains("' . $value . '")')->count() > 0);
+        $this->client->submit($form);                
+        //echo $this->client->getResponse()->getContent();// Just add this line
+        $this->crawler = $this->client->followRedirect();
     }
 }

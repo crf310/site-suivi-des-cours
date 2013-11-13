@@ -13,6 +13,7 @@ class SecurityControllerTest extends WebTestCase {
         
         // Check default URL
         $crawler = $client->request('GET', '/');
+        
         $this->assertTrue($crawler->filter('html:contains("Service alphabétisation")')->count() == 1);
                 
         $crawler = $client->request('GET', '/login');
