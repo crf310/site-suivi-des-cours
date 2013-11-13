@@ -26,12 +26,37 @@ class TeacherControllerTest extends AbstractControllerTest {
         $passwordSecond = $passwordFirst;
         $this->fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond);
         
-        $this->assertTrue($this->crawler->filter("html")->count() > 0);
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 0);
         
         $this->assertTrue($this->crawler->filter("td:contains('" . $firstName . " " . $lastName . "')")->count() > 0);
         $this->assertTrue($this->crawler->filter("td:contains('01 02 03 04 05')")->count() > 0);
         $this->assertTrue($this->crawler->filter("td:contains('05 04 03 02 01')")->count() > 0);
+    }
+    
+     public function testUserCreationSameUsername() {
+        // Create a new client to browse the application
+        $this->client = static::createClient();
+        $this->crawler = $this->client->request('GET', '/');
+        
+        $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+        $this->goToUserCreationForm();
+        
+        $lastName =  "Doe";
+        $firstName = "John";        
+        $phoneNumber = "0102030405";
+        $cellPhoneNumber = "0504030201";
+        $emailAddress = "john.doe@example.com";
+        $userName = "jdoe";
+        $passwordFirst = "password";
+        $passwordSecond = $passwordFirst;
+        $this->fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond);
+        
+        $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 0);
+        
+        $this->goToUserCreationForm();
+        $this->fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond, false);
+        $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);
+        $this->assertTrue($this->crawler->filter("div:contains(\"Ce nom d'utilisateur est déjà pris\")")->count() == 1);
     }
 
     /*
@@ -77,7 +102,7 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->crawler = $this->client->click($this->crawler->selectLink('Nouvel utilisateur')->link());
     }
 
-    private function fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond) {
+    private function fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond, $followRedirect = true) {
         // Fill in the form and submit it
         $form = $this->crawler->selectButton('Créer le compte')->form(array(
             $this->FIELD_PREFIX . '[lastName]' => $lastName,
@@ -90,8 +115,10 @@ class TeacherControllerTest extends AbstractControllerTest {
             $this->FIELD_PREFIX . '[password][second]' => $passwordSecond,
                 ));
 
-        $this->client->submit($form);                
-        //echo $this->client->getResponse()->getContent();// Just add this line
-        $this->crawler = $this->client->followRedirect();
+        $this->client->submit($form);
+        
+        if ($followRedirect) {
+            $this->crawler = $this->client->followRedirect();
+        }
     }
 }
