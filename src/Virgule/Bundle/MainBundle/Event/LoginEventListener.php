@@ -41,7 +41,6 @@ class LoginEventListener {
             try {
                 $currentSemester = $this->entityManager->getRepository('Virgule\Bundle\MainBundle\Entity\Semester')->loadCurrent($organizationBranchId);
             } catch (NoResultException $e) {
-                echo 'no result';
                 $currentSemester =  $this->entityManager->getRepository('Virgule\Bundle\MainBundle\Entity\Semester')->loadLast($organizationBranchId);
             }
             $allSemesters = $this->entityManager->getRepository('Virgule\Bundle\MainBundle\Entity\Semester')->loadAll($organizationBranchId);
