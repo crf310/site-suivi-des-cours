@@ -1,20 +1,3 @@
-{% block form_errors %}
-{% spaceless %}
-    {% if errors|length > 0 %}
-    <div class="alert alert-error alert-padding">
-            {% for error in errors %}
-                {{
-                    error.messagePluralization is null
-                        ? error.messageTemplate|trans(error.messageParameters, 'validators')
-                        : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
-                }}<br />
-            {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
-{% endspaceless %}
-{% endblock form_errors %}
-
 {% block form_widget_simple %}
 {% spaceless %}
     {% set type = type|default('text') %}
@@ -135,15 +118,34 @@
 {% endspaceless %}
 {% endblock form_row %}
 
-{% block field_errors %}
-{% spaceless %}
-  {% if errors is defined and errors|length > 0 %}
-    {% for error in errors %}
-      <span class="help-inline error">{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</span>
-    {% endfor %}
-  {% endif %}
-{% endspaceless %}
-{% endblock field_errors %}
+{% block form_errors %}
+    {% if errors is defined and errors|length > 0 %}
+        {% if form.parent is empty %}
+            {% spaceless %}
+                {% if errors|length > 0 %}
+                <div class="alert alert-error alert-padding">
+                        {% for error in errors %}
+                            {{
+                                error.messagePluralization is null
+                                    ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                                    : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+                            }}<br />
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            {% endspaceless %}
+        {% else %}
+            {% spaceless %}
+                {% if errors is defined and errors|length > 0 %}
+                  {% for error in errors %}
+                    <span class="help-inline">{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</span>
+                  {% endfor %}
+                {% endif %}
+              {% endspaceless %}
+        {% endif %}
+    {% endif %}
+{% endblock form_errors %}
       
 {% block form_label %}
 {% spaceless %}
