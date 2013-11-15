@@ -1,5 +1,5 @@
 {% macro hasErrors(field) %}
     {% if form_errors(field)|length > 1 %}
-        {{ 'error' }}
+        {{ 'has-error' }}
     {% endif %}
 {% endmacro %}
