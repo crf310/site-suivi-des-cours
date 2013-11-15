@@ -46,7 +46,7 @@ class TeacherControllerTest extends AbstractControllerTest {
         $phoneNumber = "0102030405";
         $cellPhoneNumber = "0504030201";
         $emailAddress = "john.doe@example.com";
-        $userName = "jdoe";
+        $userName = "jdoe" . time();
         $passwordFirst = "password";
         $passwordSecond = $passwordFirst;
         $this->fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond);
@@ -55,8 +55,9 @@ class TeacherControllerTest extends AbstractControllerTest {
         
         $this->goToUserCreationForm();
         $this->fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond, false);
-        $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);
-        $this->assertTrue($this->crawler->filter("div:contains(\"Ce nom d'utilisateur est déjà pris\")")->count() == 1);
+        
+        $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);        
+        $this->assertTrue($this->crawler->filter("html:contains('utilisateur est déjà pris')")->count() >= 1);
     }
 
     /*
