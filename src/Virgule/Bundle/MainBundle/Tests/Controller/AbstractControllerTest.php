@@ -4,7 +4,7 @@ namespace Virgule\Bundle\MainBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class AbstractControllerTest extends WebTestCase {
+abstract class AbstractControllerTest extends WebTestCase {
     protected $client;
     protected $crawler;
     
