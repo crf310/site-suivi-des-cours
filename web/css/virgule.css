@@ -379,6 +379,14 @@ a.course_details {
   font-style: normal;
   color: #ffffff;
 }
+#user-nav {
+  right: 0px;
+}
+#user-nav > ul > li > a > i {
+  font-size: 13px;
+  vertical-align: top;
+  margin-right: 4px;
+}
 
 /* Password */
 #pwd-progress-bar {
