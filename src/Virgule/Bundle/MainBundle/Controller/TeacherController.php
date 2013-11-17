@@ -68,11 +68,10 @@ class TeacherController extends AbstractVirguleController {
             $courseIds[] = $course->getId();
         }
         
+        $teacherStudents = null;
+        $teacherClassSessions = null;
         if (count($courseIds) > 0) {
-            $teacherStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledInCourses($courseIds);   
-            $nbTeacherStudents = count($teacherStudents);
-            $teacherStudentsLineBreak = $this->getListBreak($nbTeacherStudents, 3);
-        
+            $teacherStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledInCourses($courseIds);         
             $teacherClassSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByTeacher($semesterId, $id);
         }
         
@@ -81,8 +80,6 @@ class TeacherController extends AbstractVirguleController {
             'delete_form' => $deleteForm->createView(),            
             'teacherCourses' => $teacherCourses,
             'teacherStudents' => $teacherStudents,
-            'nbTeacherStudents' => $nbTeacherStudents,
-            'teacherStudentsLineBreak' => $teacherStudentsLineBreak,
             'teacherClassSessions' => $teacherClassSessions
         );
     }
