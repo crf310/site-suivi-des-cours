@@ -59,6 +59,94 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);        
         $this->assertTrue($this->crawler->filter("span.help-inline:contains('utilisateur est déjà pris')")->count() >= 1);
     }
+    
+    public function testUserCreationNoLastName() {
+        // Create a new client to browse the application
+        $this->client = static::createClient();
+        $this->crawler = $this->client->request('GET', '/');
+        
+        $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+        $this->goToUserCreationForm();
+        
+        $lastName =  "";
+        $firstName = "John";        
+        $phoneNumber = "0102030405";
+        $cellPhoneNumber = "0504030201";
+        $emailAddress = "john.doe@example.com";
+        $userName = "jdoe" . time();
+        $passwordFirst = "password";
+        $passwordSecond = $passwordFirst;
+        $this->fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond, false);
+                
+        $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);        
+        $this->assertTrue($this->crawler->filter("span.help-inline:contains('Merci de saisir un nom de famille')")->count() >= 1);
+    }
+    
+    public function testUserCreationNoLastFirstName() {
+        // Create a new client to browse the application
+        $this->client = static::createClient();
+        $this->crawler = $this->client->request('GET', '/');
+        
+        $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+        $this->goToUserCreationForm();
+        
+        $lastName =  "Doe";
+        $firstName = "";        
+        $phoneNumber = "0102030405";
+        $cellPhoneNumber = "0504030201";
+        $emailAddress = "john.doe@example.com";
+        $userName = "jdoe" . time();
+        $passwordFirst = "password";
+        $passwordSecond = $passwordFirst;
+        $this->fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond, false);
+                
+        $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);        
+        $this->assertTrue($this->crawler->filter("span.help-inline:contains('Merci de saisir un prénom')")->count() >= 1);
+    }
+    
+    public function testUserCreationInvalidEmailAddress() {
+        // Create a new client to browse the application
+        $this->client = static::createClient();
+        $this->crawler = $this->client->request('GET', '/');
+        
+        $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+        $this->goToUserCreationForm();
+        
+        $lastName =  "Doe";
+        $firstName = "";        
+        $phoneNumber = "0908078060504030201";
+        $cellPhoneNumber = "01";
+        $emailAddress = "john.doe example. com";
+        $userName = "jdoe" . time();
+        $passwordFirst = "password";
+        $passwordSecond = $passwordFirst;
+        $this->fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond, false);
+                
+        $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);        
+        $this->assertTrue($this->crawler->filter("span.help-inline:contains('Cette adresse est invalide')")->count() >= 1);
+    }
+    
+    public function testUserCreationUnmatchingPasswords() {
+        // Create a new client to browse the application
+        $this->client = static::createClient();
+        $this->crawler = $this->client->request('GET', '/');
+        
+        $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+        $this->goToUserCreationForm();
+        
+        $lastName =  "Doe";
+        $firstName = "John";        
+        $phoneNumber = "0908078060504030201";
+        $cellPhoneNumber = "01";
+        $emailAddress = "john.doe example. com";
+        $userName = "jdoe" . time();
+        $passwordFirst = "password";
+        $passwordSecond = "password_different";
+        $this->fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond, false);
+                
+        $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);        
+        $this->assertTrue($this->crawler->filter("span.help-inline:contains('Les mots de passe ne correspondent pas')")->count() >= 1);
+    }
 
     /*
     public function testCompleteScenario() {
