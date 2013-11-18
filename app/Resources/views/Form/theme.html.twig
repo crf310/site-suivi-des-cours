@@ -123,7 +123,7 @@
         {% if form.parent is empty %}
             {% spaceless %}
                 {% if errors|length > 0 %}
-                <div class="alert alert-error alert-padding">
+                <div class="alert alert-danger">
                         {% for error in errors %}
                             {{
                                 error.messagePluralization is null
