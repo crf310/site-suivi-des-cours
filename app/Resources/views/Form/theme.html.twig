@@ -104,10 +104,7 @@
 
 {% block form_row %}
 {% spaceless %}
-    {% if macro is not defined %}
-        {% import ':Form:macro.html.twig' as macro %}
-    {% endif %}
-    <div class="form-group {{macro.hasErrors(form)}}">
+    <div class="form-group {% if errors is defined and errors|length > 0 %}has-error{% endif %}">
         {{ form_label(form, label|default(null), { 'label_attr': {'class': 'control-label'} }) }}
         <div class="controls">
             {{ form_widget(form) }}
