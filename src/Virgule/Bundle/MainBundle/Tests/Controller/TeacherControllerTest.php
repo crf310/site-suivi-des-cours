@@ -57,7 +57,7 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond, false);
         
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);        
-        $this->assertTrue($this->crawler->filter("html:contains('utilisateur est déjà pris')")->count() >= 1);
+        $this->assertTrue($this->crawler->filter("span.help-inline:contains('utilisateur est déjà pris')")->count() >= 1);
     }
 
     /*
@@ -120,6 +120,8 @@ class TeacherControllerTest extends AbstractControllerTest {
         
         if ($followRedirect) {
             $this->crawler = $this->client->followRedirect();
+        } else {
+            $this->crawler = $this->client->reload();
         }
     }
 }
