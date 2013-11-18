@@ -27,7 +27,7 @@
 h2 { font-size: 13px; }
 
 /* Side menu */
-#sidebar i {   
+#sidebar i.main-icon {   
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-position: center;
@@ -35,7 +35,7 @@ h2 { font-size: 13px; }
     display: inline-block;
     margin: 0px 0 0 !important; 
     padding: 10px;
-    vertical-align: middle;
+    vertical-align: bottom;
 }
 #sidebar > ul > li > a > i {
     opacity: 0.6;
@@ -51,6 +51,18 @@ h2 { font-size: 13px; }
     box-shadow: 0 2px 4px rgba(0,0,0,0.2) inset;
     opacity: 1;
 }
+#sidebar > ul ul li.current a:before,
+#jPanelMenu-menu > ul ul li.current a:before,
+#sidebar > ul ul li.current a:after,
+#jPanelMenu-menu > ul ul li.current a:after {
+  font-family: 'FontAwesome';
+  content: "\f101";
+  display: block;
+  position: absolute;
+  top: 11px;
+  left: 10px;
+}
+
 /* Sublinks */
 #sidebar > ul > li.current > a > i, #sidebar > ul > li > ul > li.current > a > i {
     opacity: 1;
@@ -63,52 +75,52 @@ h2 { font-size: 13px; }
     background: url("../img/menu-active.png") no-repeat scroll right center transparent !important;
     text-decoration: none;
 }
-#sidebar a.welcome i {
+#sidebar a.welcome i.main-icon {
     background-image: url('../img/icons/house.png');
 }
-#sidebar a.minutes i {
+#sidebar a.minutes i.main-icon {
     background-image: url('../img/icons/page.png');
 }
-#sidebar a.students i {
+#sidebar a.students i.main-icon {
     background-image: url('../img/icons/group.png');
 }
-#sidebar a.teachers i {
+#sidebar a.teachers i.main-icon {
     background-image: url('../img/icons/user_suit.png');
 }
-#sidebar a.schedule i {
+#sidebar a.schedule i.main-icon {
     background-image: url('../img/icons/calendar.png');
 }
-#sidebar a.schedule-edit i {
+#sidebar a.schedule-edit i.main-icon {
     background-image: url('../img/icons/calendar_edit.png');
 }
-#sidebar a.statistics i {
+#sidebar a.statistics i.main-icon {
     background-image: url('../img/icons/chart_bar.png');
 }
-#sidebar a.user_profile i {
+#sidebar a.user_profile i.main-icon {
     background-image: url('../img/icons/telephone.png');
 }
-#sidebar a.user_add i {
+#sidebar a.user_add i.main-icon {
     background-image: url('../img/icons/user_add.png');
 }
-#sidebar a.administration i {
+#sidebar a.administration i.main-icon {
     background-image: url('../img/icons/cog.png');
 }
-#sidebar a.schoolbag i {
+#sidebar a.schoolbag i.main-icon {
     background-image: url('../img/icons/book.png');
 }
-#sidebar a.organization_branch i {
+#sidebar a.organization_branch i.main-icon {
     background-image: url('../img/icons/telephone.png');
 }
-#sidebar a.logs i {
+#sidebar a.logs i.main-icon {
     background-image: url('../img/icons/page_white_gear.png');
 }
-#sidebar a.red-cross i {
+#sidebar a.red-cross i.main-icon {
     background-image: url('../img/icons/red-cross.png');
 }
-#sidebar a.class-levels i {
+#sidebar a.class-levels i.main-icon {
     background-image: url('../img/icons/medal_gold_2.png');
 }
-#sidebar a.help i {
+#sidebar a.help i.main-icon {
     background-image: url('../img/icons/help.png');
 }
 i.my-icon-go {
@@ -366,6 +378,14 @@ a.course_details {
   font-size: 11.844px;
   font-style: normal;
   color: #ffffff;
+}
+#user-nav {
+  right: 0px;
+}
+#user-nav > ul > li > a > i {
+  font-size: 13px;
+  vertical-align: top;
+  margin-right: 4px;
 }
 
 /* Password */
