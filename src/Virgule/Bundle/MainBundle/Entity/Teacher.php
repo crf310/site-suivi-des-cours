@@ -58,8 +58,7 @@ class Teacher implements UserInterface, EquatableInterface {
      * @Assert\Length(
      *      min = "10",
      *      max = "10",
-     *      minMessage = "Le numéro de téléphone doit comporter {{ limit }} chiffres",
-     *      maxMessage = "Le numéro de téléphone ne peut excéder {{ limit }} chiffres"
+     *      exactMessage = "Le numéro de téléphone doit comporter {{ limit }} chiffres, et seulement {{ limit }}"
      * )
      */
     protected $phoneNumber;
@@ -71,8 +70,16 @@ class Teacher implements UserInterface, EquatableInterface {
      * @Assert\Length(
      *      min = "10",
      *      max = "10",
-     *      minMessage = "Le numéro de téléphone doit comporter {{ limit }} chiffres",
-     *      maxMessage = "Le numéro de téléphone ne peut excéder {{ limit }} chiffres"
+     *      exactMessage = "Le numéro de téléphone doit comporter {{ limit }} chiffres, et seulement {{ limit }}"
+     * )
+     */
+    
+    /**
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "50",
+     *      minMessage = "Your first name must be at least {{ limit }} characters length",
+     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters length"
      * )
      */
     protected $cellphoneNumber;
