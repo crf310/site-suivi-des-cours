@@ -34,7 +34,7 @@
                                 {% if classRoomCell is not null %}
                                     <td class="center" {% if classRoomCell.rowspan > 0 %} rowspan="{{ classRoomCell.rowspan }}" {% endif %}>
                                         {% if classRoomCell.hasCourse %} 
-                                        <div class="classCell" style="border: 3px solid {{ classRoomCell.course.classLevelColorCode }}">
+                                        <div class="classCell" style="border: 2px solid {{ classRoomCell.course.classLevelColorCode }}">
                                             <a class="course_details" href="{{ path('course_show', { 'id': classRoomCell.course.id }) }}">
                                                 <p>
                                                 {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classRoomCell.course.classLevelColorCode, 'classLevelLabel': classRoomCell.course.classLevelLabel } %}
