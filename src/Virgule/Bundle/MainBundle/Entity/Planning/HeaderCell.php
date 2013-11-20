@@ -21,5 +21,9 @@ class HeaderCell {
     public function addClassRoom($classRoomId, $classRoomName)  {
         $this->classRooms[$classRoomId] = $classRoomName;
     }
+    
+    public function removeClassRoom($classRoomId)  {
+        unset($this->classRooms[$classRoomId]);
+    }
 }
 ?>

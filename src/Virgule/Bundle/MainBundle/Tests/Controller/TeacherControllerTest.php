@@ -147,7 +147,51 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);        
         $this->assertTrue($this->crawler->filter("span.help-inline:contains('Les mots de passe ne correspondent pas')")->count() >= 1);
     }
+    
+    public function testUserCreationPhoneNumbersTooShort() {
+        // Create a new client to browse the application
+        $this->client = static::createClient();
+        $this->crawler = $this->client->request('GET', '/');
+        
+        $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+        $this->goToUserCreationForm();
+        
+        $lastName =  "Doe";
+        $firstName = "John";        
+        $phoneNumber = "01";
+        $cellPhoneNumber = "01";
+        $emailAddress = "john.doe example. com";
+        $userName = "jdoe" . time();
+        $passwordFirst = "password";
+        $passwordSecond = "password";
+        $this->fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond, false);
+                
+        $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);        
+        $this->assertEquals(2, $this->crawler->filter("span.help-inline:contains('Le numéro de téléphone doit comporter 10 chiffres, et seulement 10')")->count());
+    }
 
+    public function testUserCreationPhoneNumbersTooLong() {
+        // Create a new client to browse the application
+        $this->client = static::createClient();
+        $this->crawler = $this->client->request('GET', '/');
+        
+        $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+        $this->goToUserCreationForm();
+        
+        $lastName =  "Doe";
+        $firstName = "John";        
+        $phoneNumber = "010203040506070809";
+        $cellPhoneNumber = "010203040506070809";
+        $emailAddress = "john.doe example. com";
+        $userName = "jdoe" . time();
+        $passwordFirst = "password";
+        $passwordSecond = "password";
+        $this->fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond, false);
+                
+        $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1); 
+        echo $this->client->getResponse(); die;
+        $this->assertEquals(2, $this->crawler->filter("span.help-inline:contains('Le numéro de téléphone doit comporter 10 chiffres, et seulement 10')")->count());
+    }
     /*
     public function testCompleteScenario() {
         // Create a new client to browse the application

@@ -32,34 +32,36 @@
                         {% for dayCells in row.cells %}
                             {% for classRoomCell in dayCells %}
                                 {% if classRoomCell is not null %}
-                                    <td class="center" {% if classRoomCell.rowspan > 0 %} rowspan="{{ classRoomCell.rowspan }}" style="border: 2px solid {{ classRoomCell.course.classLevelColorCode }}"{% endif %}>
-                                    {% if classRoomCell.course is not null %}
-                                        <a class="course_details" href="{{ path('course_show', { 'id': classRoomCell.course.id }) }}">
-                                            <p>
-                                            {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classRoomCell.course.classLevelColorCode, 'classLevelLabel': classRoomCell.course.classLevelLabel } %}
-                                            <br/><br />
-                                            {{ classRoomCell.course.startTime | date('H:i') }} - {{ classRoomCell.course.endTime | date('H:i') }}
-                                            <br />
-                                            {% for teacher in classRoomCell.course.teachers %}
-                                                {{ teacher['teacher_firstName'] }} {{ teacher['teacher_lastName'] }}{% if not loop.last %}<br />{% endif %}
-                                            {% endfor %}
-                                            {% if classRoomCell.course.alternateStartDate is not empty or classRoomCell.course.alternateStartDate is not empty %}
-                                                {% set currentSemester = app.session.get('currentSemester') %}
-                                                {% if classRoomCell.course.alternateStartDate is not empty %}
-                                                  <br />
-                                                  à partir du {{ classRoomCell.course.alternateStartDate | date("d/m/Y") }}
-                                                {%endif %}
+                                    <td class="center" {% if classRoomCell.rowspan > 0 %} rowspan="{{ classRoomCell.rowspan }}" {% endif %}>
+                                        {% if classRoomCell.hasCourse %} 
+                                        <div class="classCell" style="border: 2px solid {{ classRoomCell.course.classLevelColorCode }}">
+                                            <a class="course_details" href="{{ path('course_show', { 'id': classRoomCell.course.id }) }}">
+                                                <p>
+                                                {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classRoomCell.course.classLevelColorCode, 'classLevelLabel': classRoomCell.course.classLevelLabel } %}
+                                                <br/><br />
+                                                {{ classRoomCell.course.startTime | date('H:i') }} - {{ classRoomCell.course.endTime | date('H:i') }}
+                                                <br />
+                                                {% for teacher in classRoomCell.course.teachers %}
+                                                    {{ teacher['teacher_firstName'] }} {{ teacher['teacher_lastName'] }}{% if not loop.last %}<br />{% endif %}
+                                                {% endfor %}
+                                                {% if classRoomCell.course.alternateStartDate is not empty or classRoomCell.course.alternateStartDate is not empty %}
+                                                    {% set currentSemester = app.session.get('currentSemester') %}
+                                                    {% if classRoomCell.course.alternateStartDate is not empty %}
+                                                      <br />
+                                                      à partir du {{ classRoomCell.course.alternateStartDate | date("d/m/Y") }}
+                                                    {%endif %}
 
-                                                {% if classRoomCell.course.alternateEndDate is not empty %}
-                                                   <br />
-                                                   jusqu'au {{ classRoomCell.course.alternateEndDate | date("d/m/Y") }}
-                                                {%endif %}
-                                            {% endif %}
-                                            </p>
-                                        </a>
-                                    {% else %}
-                                        {{ classRoomCell.content | raw }}
-                                    {% endif %}
+                                                    {% if classRoomCell.course.alternateEndDate is not empty %}
+                                                       <br />
+                                                       jusqu'au {{ classRoomCell.course.alternateEndDate | date("d/m/Y") }}
+                                                    {%endif %}
+                                                {% endif %}
+                                                </p>
+                                            </a>
+                                        </div>
+                                        {% else %}
+                                            {{ classRoomCell.content | raw }}
+                                        {% endif %}
                                     </td>
                                 {% endif %}
                             {% endfor %}
@@ -72,3 +74,12 @@
     </div>
 </div>
 {% endblock %}
+<script type="text/javascript">
+    // Loop through all the div.thatSetsABackgroundWithAnIcon on your page
+    $('div.classCell').each(function(){
+        var $div = $(this);
+
+        // Set the div's height to its parent td's height
+        $div.height($div.closest('td').height());
+    });
+</script>

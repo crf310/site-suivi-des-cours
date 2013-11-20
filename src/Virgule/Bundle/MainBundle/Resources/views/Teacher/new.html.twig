@@ -17,6 +17,24 @@
                 
                 $("#username").val(username);
             });
+            
+            $("#password").add('#password_confirm').keyup(function() {      
+                $(".pwd-error").hide();
+                var hasError = false;
+                var passwordVal = $("#password").val();
+                var checkVal = $("#password_confirm").val();
+                if (passwordVal != checkVal ) {
+                    $("#password_confirm").parent().parent().addClass('has-error'); 
+                    $("#password_confirm").parent().parent().removeClass('has-success');
+                    $("#password_confirm").after('<span class="help-inline pwd-error">Les mots de passe ne correspondent pas</span');
+                   hasError = true;
+                } else {
+                    $("#password_confirm").parent().parent().removeClass('has-error'); 
+                    $("#password_confirm").parent().parent().addClass('has-success');
+                    $("#password_confirm").after('<span class="help-inline pwd-error">Les mots de passe correspondent</span');
+                }
+                if(hasError == true) {return false;}
+            });
         });
         </script>       
     {% endblock %}
@@ -49,7 +67,7 @@
                     {{ form_row(form.role, { 'label': 'Rôle' })  }}
                     {{ form_row(form.username, { 'label': 'Nom d\'utilisateur', 'id': 'username' }) }}
                     {{ form_row(form.password.first, { 'label': 'Mot de passe', 'hint':'Choisissez un mot de passe d\'au moins 8 caractères. Vous pouvez prendre une phrase, si cela est plus facile à retenir', 'id': 'password' }) }}
-                    {{ form_row(form.password.second, { 'label': 'Confirmez le mot de passe' }) }}
+                    {{ form_row(form.password.second, { 'label': 'Confirmez le mot de passe', 'id': 'password_confirm' }) }}
                     {{ form_rest(form) }}
                     <div class="form-actions">                                     
                         <input class="btn btn-success" type="submit" value="Créer le compte" />
