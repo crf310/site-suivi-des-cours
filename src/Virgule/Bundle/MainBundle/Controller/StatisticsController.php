@@ -47,25 +47,27 @@ class StatisticsController extends AbstractVirguleController {
             }
             
             // age calculation
-            $student_age = $student['student_birthDate']->diff($now)->format('%Y');
-            if (0 <= $student_age && $student_age <= 15) {
-                $student_ages['0-15']+=1;
-            } else if (16 <= $student_age && $student_age <= 25) {
-                $student_ages['16-25']+=1;
-            } else if (26 <= $student_age && $student_age <= 35) {
-                $student_ages['26-35']+=1;
-            } else if (36 <= $student_age && $student_age <= 45) {
-                $student_ages['36-45']++;
-            } else if (46 <= $student_age && $student_age <= 55) {
-                $student_ages['46-55']++;
-            } else if (56 <= $student_age && $student_age <= 65) {
-                $student_ages['56-65']++;
-            } else if (66 <= $student_age && $student_age <= 75) {
-                $student_ages['66-75']++;
-            } else if (76 <= $student_age && $student_age <= 85) {
-                $student_ages['76-85']++;
-            } else if (86 <= $student_age && $student_age <= 95) {
-                $student_ages['86-95']++;
+            if ($student['student_birthDate'] != null) {
+                $student_age = $student['student_birthDate']->diff($now)->format('%Y');
+                if (0 <= $student_age && $student_age <= 18) {
+                    $student_ages['0-18']+=1;
+                } else if (16 <= $student_age && $student_age <= 25) {
+                    $student_ages['19-25']+=1;
+                } else if (26 <= $student_age && $student_age <= 35) {
+                    $student_ages['26-35']+=1;
+                } else if (36 <= $student_age && $student_age <= 45) {
+                    $student_ages['36-45']++;
+                } else if (46 <= $student_age && $student_age <= 55) {
+                    $student_ages['46-55']++;
+                } else if (56 <= $student_age && $student_age <= 65) {
+                    $student_ages['56-65']++;
+                } else if (66 <= $student_age && $student_age <= 75) {
+                    $student_ages['66-75']++;
+                } else if (76 <= $student_age && $student_age <= 100) {
+                    $student_ages['76-100']++;
+                }
+            } else {
+                $student_ages['??']++;
             }
 
             $students_countries[$student['nativeCountry']] += 1;
