@@ -47,7 +47,14 @@ class ClassSessionType extends AbstractType {
                         'property_path' => 'sessionTeacher',
                         'attr' => array('class' => 'small-select'),
                         'preferred_choices' => array($this->currentTeacher))
-                    );
+                    )                
+                ->add('documents', 'entity', array(
+                    'class' => 'VirguleMainBundle:Document',
+                    'expanded' => false,
+                    'multiple' => true,
+                    'property' => 'fileName',
+                    'property_path' => 'documents'
+                ));
         
         $subscriber = new AddClassSessionStudentsFieldSubscriber($builder->getFormFactory(), $this->semesterId);
         $builder->addEventSubscriber($subscriber);

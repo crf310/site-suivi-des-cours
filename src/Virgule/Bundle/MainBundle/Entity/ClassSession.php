@@ -69,7 +69,7 @@ class ClassSession {
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="Document", mappedBy="classSession")
+     * @ORM\ManyToMany(targetEntity="Document", mappedBy="classSession")
      */
     private $documents;
 
