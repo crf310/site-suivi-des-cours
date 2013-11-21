@@ -53,7 +53,8 @@ class ClassSessionType extends AbstractType {
                     'expanded' => false,
                     'multiple' => true,
                     'property' => 'fileName',
-                    'property_path' => 'documents'
+                    'property_path' => 'documents',
+                    'attr' => array('class' => 'big-select')
                 ));
         
         $subscriber = new AddClassSessionStudentsFieldSubscriber($builder->getFormFactory(), $this->semesterId);
