@@ -68,10 +68,9 @@ class Document {
     private $uploader;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ClassSession", inversedBy="documents")
-     * @ORM\JoinColumn(name="fk_class_session", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToMany(targetEntity="ClassSession", mappedBy="documents")
      */
-    private $classSession;
+    private $classSessions;
 
     /**
      * @ORM\ManyToMany(targetEntity="ClassLevel")
@@ -158,13 +157,13 @@ class Document {
     }
 
     /**
-     * Set classSession
+     * Set classSessions
      *
      * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSession
      * @return Document
      */
-    public function setClassSession(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSession = null) {
-        $this->classSession = $classSession;
+    public function setClassSessions(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessions = null) {
+        $this->classSessions = $classSessions;
 
         return $this;
     }
@@ -174,8 +173,8 @@ class Document {
      *
      * @return \Virgule\Bundle\MainBundle\Entity\ClassSession 
      */
-    public function getClassSession() {
-        return $this->classSession;
+    public function getClassSessions() {
+        return $this->classSessions;
     }
 
     /**

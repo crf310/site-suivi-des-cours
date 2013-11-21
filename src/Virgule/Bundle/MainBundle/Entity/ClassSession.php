@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Virgule\Bundle\MainBundle\Entity\ClassSession
  *
- * @ORM\Table(name="class_session")
+ * @ORM\Table(name="classsessions")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\ClassSessionRepository")
  */
 class ClassSession {
@@ -69,13 +69,14 @@ class ClassSession {
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Document", mappedBy="classSession")
+     * @ORM\ManyToMany(targetEntity="Document", inversedBy="classSessions")     * 
+     * @ORM\JoinTable(name="classsessions_documents")
      */
     private $documents;
 
     /**
      * @ORM\ManyToMany(targetEntity="Student", inversedBy="classSessions")
-     * @ORM\JoinTable(name="class_session_students")
+     * @ORM\JoinTable(name="classsessions_students")
      * @Assert\NotNull
      */
     protected $classSessionStudents;
