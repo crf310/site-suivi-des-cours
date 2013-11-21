@@ -12,12 +12,21 @@
         <li class="btn dropdown" id="menu-session"><a href="#" data-toggle="dropdown" data-target="#menu-sessions" class="dropdown-toggle"><i class="icon icon-calendar"></i> <span class="text">Session {{ currentSemester.startDate|date("d/m/Y") }} - {{ currentSemester.endDate|date("d/m/Y") }}</span>&nbsp;&nbsp;<b class="caret"></b></a>
             <ul class="dropdown-menu">
                 {% for semester in app.session.get('allSemesters') %}
-                    <li><a class="sAdd" title="" href="#">du {{ semester.startDate|date("d/m/Y") }} au {{ semester.endDate|date("d/m/Y") }}</a></li>
+                    <li>
+                    <a class="sAdd" title="" href="#">
+                        {% if currentSemester.id == semester.id %}
+                            <i class="icon-ok"></i>
+                        {% else %}
+                            <i class="icon-empty"></i>
+                        {% endif %}
+                        du {{ semester.startDate|date("d/m/Y") }} au {{ semester.endDate|date("d/m/Y") }}
+                    </a>
+                    </li>
                 {% endfor %}
             </ul>
         </li>
-        <li class="btn" ><a title="" href="{{ path('teacher_show', { 'id': app.user.id }) }}"><i class="icon icon-user"></i> <span class="text">{{ app.user.firstName }} {{ app.user.lastName }}</span></a></li>
-        <li class="btn"><a title="" href="{{ path('logout') }}"><i class="icon icon-share-alt"></i> <span class="text">Déconnexion</span></a></li>
+        <li class="btn" ><a title="" href="{{ path('teacher_show', { 'id': app.user.id }) }}"><i class="icon-user"></i> <span class="text">{{ app.user.firstName }} {{ app.user.lastName }}</span></a></li>
+        <li class="btn"><a title="" href="{{ path('logout') }}"><i class="icon-share-alt"></i> <span class="text">Déconnexion</span></a></li>
         <li class="btn"><a href="#virguleInformationPanel" data-toggle="modal"><i class="icon-info-sign"></i></a></li>
     </ul>
 </div>

@@ -10,6 +10,7 @@
                     <h5>Planning du {{ currentSemester.startDate|date("d/m/Y") }} au {{ currentSemester.endDate|date("d/m/Y") }}</h5>
             </div>
             <div class="widget-content nopadding">
+                {% set cell_class = '' %}
                 <table id="planning" class="table table-bordered">
                     <thead>
                         <tr>
@@ -30,9 +31,10 @@
                     <tr>
                         <th>{{ row.startTime | date('H:i') }} - {{ row.endTime | date('H:i')}}</th>
                         {% for dayCells in row.cells %}
+                            {% if loop.index is divisibleby(2) %}{% set cell_class = 'left-border' %}{% else %}{% set cell_class = '' %}{% endif %}
                             {% for classRoomCell in dayCells %}
                                 {% if classRoomCell is not null %}
-                                    <td class="center" {% if classRoomCell.rowspan > 0 %} rowspan="{{ classRoomCell.rowspan }}" {% endif %}>
+                                    <td class="center {{ cell_class }}" {% if classRoomCell.rowspan > 0 %} rowspan="{{ classRoomCell.rowspan }}" {% endif %}>
                                         {% if classRoomCell.hasCourse %} 
                                         <div class="classCell" style="border: 2px solid {{ classRoomCell.course.classLevelColorCode }}">
                                             <a class="course_details" href="{{ path('course_show', { 'id': classRoomCell.course.id }) }}">

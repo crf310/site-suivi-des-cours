@@ -118,6 +118,7 @@ class Planning {
     
     private function removeRoomColsWithoutClass() {
         for ($day = $this->dayStart; $day <= $this->dayEnd; $day++) {
+            $dayHasClass = false;
             foreach ($this->classRooms as $classRoomId => $classRoomName) {
                 // if a classroom doesn't host any class this day
                 if (! $this->hasClass[$day][$classRoomId]) {
@@ -132,7 +133,13 @@ class Planning {
             
                         $startTimeCell->modify("+" . self::$cellSize . " minutes");
                     }
+                } else {
+                    $dayHasClass = true;
                 }
+            }
+            
+            if (! $dayHasClass) {
+                unset($this->header[$day]);
             }
         }
     }

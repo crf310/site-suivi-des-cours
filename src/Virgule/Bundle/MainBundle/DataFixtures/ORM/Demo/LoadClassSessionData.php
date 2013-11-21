@@ -64,6 +64,15 @@ In convallis, lacus a dapibus accumsan, sapien mauris ornare risus, sit amet dig
                 $manager->persist($cs);
                 $nbClassSessions++;
                 $this->addReference('classsession' . $nbClassSessions, $cs);
+                                
+                $documentIds = Array();
+                for ($j = 1; $j <= rand(0,3); $j++) {
+                    do {
+                        $documentId = rand(1, 50);
+                    } while (in_array($documentId, $documentIds));
+                    $documentIds[] = $documentId;
+                    $cs->addDocument($this->getReference('document' . $documentId));
+                }
             }
         }
         $manager->flush();

@@ -96,6 +96,7 @@ class AddClassSessionStudentsFieldSubscriber implements EventSubscriberInterface
                             ->add('orderBy', 'c.dayOfWeek ASC, c.startTime ASC')
                             ->setParameter('semesterId', $semesterId);
                 },
+                'auto_initialize' => false,
                 'expanded' => false,
                 'multiple' => false,
                 'property_path' => 'course',
