@@ -61,7 +61,9 @@
             var data = google.visualization.arrayToDataTable([
               ['Tranche d\'âge', 'Nombre d\'apprenants'],
               {% for age_range, nb_students in students_ages %}
-                ['{{ age_range }} ans', {{ nb_students }}]{% if loop.index != loop.last %},{% endif %}          
+                {% if nb_students > 0 %}
+                    ['{{ age_range }} ans', {{ nb_students }}]{% if loop.index != loop.last %},{% endif %}          
+                {% endif %}
               {% endfor %}
             ]);
 
