@@ -37,7 +37,7 @@ h2 { font-size: 13px; }
     padding: 10px;
     vertical-align: bottom;
 }
-#sidebar > ul > li > a > i {
+#sidebar > ul > li > a > i, #sidebar > ul > li > ul > li > a > i {
     opacity: 0.6;
 }
 #sidebar > ul > li > a:hover > i, #sidebar > ul > li > ul > li > a:hover > i {
