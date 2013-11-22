@@ -189,7 +189,6 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond, false);
                 
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1); 
-        echo $this->client->getResponse(); die;
         $this->assertEquals(2, $this->crawler->filter("span.help-inline:contains('Le numéro de téléphone doit comporter 10 chiffres, et seulement 10')")->count());
     }
     /*
