@@ -16,21 +16,39 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
         $this->goToUserCreationForm();
         
-        $lastName =  "Doe" . time();
-        $firstName = "John" . time();        
-        $phoneNumber = "0102030405";
-        $cellPhoneNumber = "0504030201";
-        $emailAddress = "john.doe." . time() . "@example.com";
-        $userName = "jdoe" . time();
+        $lastName =  "Lachance" . time();
+        $firstName = "Bob" . time();        
+        $phoneNumber = "2026770549";
+        $cellPhoneNumber = "0620518103";     
+        $phoneNumberFormatted = "20 26 77 05 49";
+        $cellPhoneNumberFormatted = "06 20 51 81 03";
+        $emailAddress = "bob.lachance." . time() . "@example.com";
+        $userName = "bob" . time();
         $passwordFirst = "password";
         $passwordSecond = $passwordFirst;
         $this->fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond);
         
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 0);
         
-        $this->assertTrue($this->crawler->filter("td:contains('" . $firstName . " " . $lastName . "')")->count() > 0);
-        $this->assertTrue($this->crawler->filter("td:contains('01 02 03 04 05')")->count() > 0);
-        $this->assertTrue($this->crawler->filter("td:contains('05 04 03 02 01')")->count() > 0);
+        $this->assertEquals(1, $this->crawler->filter("td:contains('" . $firstName . " " . $lastName . "')")->count());
+        $this->assertEquals(1, $this->crawler->filter("td:contains('" . $phoneNumberFormatted ."')")->count());
+        $this->assertEquals(1, $this->crawler->filter("td:contains('" . $cellPhoneNumberFormatted ."')")->count());
+        
+        $crawlerTeacher = $this->crawler->filter("td:contains('" . $firstName . " " . $lastName . "')")->siblings();
+        $this->crawler = $this->client->click($crawlerTeacher->selectLink('Voir le détail')->link());
+        
+        $this->assertTrue($this->crawler->filter("html:contains('Fiche formateur')")->count() == 1);
+        $this->assertTrue($this->crawler->filter("html:contains('Liste des formateurs actifs')")->count() == 0);
+        
+        $this->assertEquals(1, $this->crawler->filter("div.widget-title:contains('" . $firstName . " " . $lastName . "')")->count());
+        $this->assertEquals(1, $this->crawler->filter("div.controls:contains('" . $phoneNumberFormatted ."')")->count());
+        $this->assertEquals(1, $this->crawler->filter("div.controls:contains('" . $cellPhoneNumberFormatted ."')")->count());
+        $this->assertEquals(1, $this->crawler->filter("div.controls:contains('" . $emailAddress ."')")->count());
+        $this->assertEquals(1, $this->crawler->filter("div.controls:contains('" . date("d/m/Y") ."')")->count());
+                
+        $this->assertEquals(1, $this->crawler->filter("div.widget-content:contains('Aucun apprenant trouvé')")->count());
+        $this->assertEquals(1, $this->crawler->filter("div.widget-content:contains(' Aucun cours dirigé pour le moment')")->count());
+        $this->assertEquals(1, $this->crawler->filter("div.widget-content:contains('Aucun compte-rendu enregistré pour le moment')")->count());
     }
     
      public function testUserCreationSameUsername() {
