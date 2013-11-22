@@ -73,15 +73,6 @@ class Teacher implements UserInterface, EquatableInterface {
      *      exactMessage = "Le numéro de téléphone doit comporter {{ limit }} chiffres, et seulement {{ limit }}"
      * )
      */
-    
-    /**
-     * @Assert\Length(
-     *      min = "2",
-     *      max = "50",
-     *      minMessage = "Your first name must be at least {{ limit }} characters length",
-     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters length"
-     * )
-     */
     protected $cellphoneNumber;
 
     /**
