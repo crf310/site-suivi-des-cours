@@ -37,7 +37,7 @@ class StatisticsController extends AbstractVirguleController {
         $students_countries = Array();
         
         $now = new \DateTime('now');
-        $student_ages = Array('0-15' => 0, '16-25' => 0, '26-35' => 0, '36-45' => 0, '46-55' => 0, '56-65' => 0, '66-75' => 0, '76-85' => 0, '86-95' => 0);
+        $student_ages = Array('0-18' => 0, '19-25' => 0, '26-35' => 0, '36-45' => 0, '46-55' => 0, '56-65' => 0, '66-75' => 0, '76-100' => 0);
             
         foreach ($students as $student) {
             $students_genders[$student['student_gender']] += 1;
@@ -51,7 +51,7 @@ class StatisticsController extends AbstractVirguleController {
                 $student_age = $student['student_birthDate']->diff($now)->format('%Y');
                 if (0 <= $student_age && $student_age <= 18) {
                     $student_ages['0-18']+=1;
-                } else if (16 <= $student_age && $student_age <= 25) {
+                } else if (19 <= $student_age && $student_age <= 25) {
                     $student_ages['19-25']+=1;
                 } else if (26 <= $student_age && $student_age <= 35) {
                     $student_ages['26-35']+=1;
