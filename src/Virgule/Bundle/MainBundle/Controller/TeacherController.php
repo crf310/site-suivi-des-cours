@@ -216,7 +216,7 @@ class TeacherController extends AbstractVirguleController {
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('teacher'));
+        return $this->redirect($this->generateUrl('teacher_index'));
     }
 
     private function createDeleteForm($id) {
