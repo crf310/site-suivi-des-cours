@@ -36,7 +36,7 @@ class Student {
     /**
      * @var \DateTime $registrationDate
      *
-     * @ORM\Column(name="registration_date", type="datetime", nullable=false)
+     * @ORM\Column(name="registration_date", type="date", nullable=false)
      */
     private $registrationDate;
 
