@@ -209,42 +209,51 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1); 
         $this->assertEquals(2, $this->crawler->filter("span.help-inline:contains('Le numéro de téléphone doit comporter 10 chiffres, et seulement 10')")->count());
     }
-    /*
-    public function testCompleteScenario() {
+
+    public function testUpdateProfile() {
         // Create a new client to browse the application
-        $client = static::createClient();
-
-        $crawler = $this->login($client, $crawler, 'prof1', 'password');
-
-
-
-
-        // Check data in the show view
-        $this->assertTrue($crawler->filter('td:contains("Test")')->count() > 0);
-
-        // Edit the entity
-        $crawler = $client->click($crawler->selectLink('Edit')->link());
-
-        $form = $crawler->selectButton('Edit')->form(array(
-            'teacher[field_name]' => 'Foo',
-                // ... other fields to fill
-                ));
-
-        $client->submit($form);
-        $crawler = $client->followRedirect();
-
-        // Check the element contains an attribute with value equals "Foo"
-        $this->assertTrue($crawler->filter('[value="Foo"]')->count() > 0);
-
-        // Delete the entity
-        $client->submit($crawler->selectButton('Delete')->form());
-        $crawler = $client->followRedirect();
-
-        // Check the entity has been delete on the list
-        $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
+        $this->client = static::createClient();
+        $this->crawler = $this->client->request('GET', '/');
+        
+        $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+        
+        $this->crawler = $this->client->request('GET', '/welcome');
+        $this->assertEquals(1, $this->crawler->filter("html:contains('Accueil')")->count());
+        
+        $crawlerLinkProfile = $this->crawler->filter("span:contains('" . $this->ADMIN_FIRSTNAME . " " . $this->ADMIN_LASTNAME . "')")->parents();
+        $this->crawler = $this->client->click($crawlerLinkProfile->link());
+        
+        $this->assertEquals(1, $this->crawler->filter("h5:contains('" . $this->ADMIN_FIRSTNAME . " " . $this->ADMIN_LASTNAME . "')")->count());
+        $this->crawler = $this->client->click($this->crawler->selectLink('Modifier le profil')->link());        
+                
+        $this->assertEquals(1, $this->crawler->filter("html:contains('Modifier la fiche de " . $this->ADMIN_FIRSTNAME . " " . $this->ADMIN_LASTNAME . "')")->count());
+        
+        $lastName =  $this->ADMIN_LASTNAME . 'edited';
+        $firstName = $this->ADMIN_FIRSTNAME . 'edited';       
+        $phoneNumber = "0909090909";
+        $cellPhoneNumber = "0808080808";        
+        $phoneNumberFormatted = "09 09 09 09 09";
+        $cellPhoneNumberFormatted = "08 08 08 08 08";
+        $emailAddress = $this->ADMIN_LASTNAME . '.' . $this->ADMIN_FIRSTNAME . '.new@example.com';
+        $userName = "new_username";
+        $passwordFirst = "new_password";
+        $passwordSecond = "new_password";
+        $this->fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond, true, 'Enregistrer les modifications');  
+        
+        $this->assertEquals(1, $this->crawler->filter("div.widget-title:contains('" . $firstName . " " . $lastName . "')")->count());
+        $this->assertEquals(1, $this->crawler->filter("div.controls:contains('" . $phoneNumberFormatted ."')")->count());
+        $this->assertEquals(1, $this->crawler->filter("div.controls:contains('" . $cellPhoneNumberFormatted ."')")->count());
+        $this->assertEquals(1, $this->crawler->filter("div.controls:contains('" . $emailAddress ."')")->count());
+        $this->assertEquals(1, $this->crawler->filter("div.controls:contains('" . date("d/m/Y") ."')")->count());
+        
+        $this->logout();
+        $this->login($userName, $passwordFirst);
+        
+        $this->crawler = $this->client->request('GET', '/welcome');
+        
+        $this->assertEquals(1, $this->crawler->filter("span:contains('Accueil')")->count());
     }
-     */
-
+    
     private function goToUserCreationForm() {
         // Create a new entry in the database
         $this->crawler = $this->client->request('GET', '/teacher/');
@@ -252,9 +261,9 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->crawler = $this->client->click($this->crawler->selectLink('Nouvel utilisateur')->link());
     }
 
-    private function fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond, $followRedirect = true) {
+    private function fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond, $followRedirect = true, $buttonLabel= 'Créer le compte') {
         // Fill in the form and submit it
-        $form = $this->crawler->selectButton('Créer le compte')->form(array(
+        $form = $this->crawler->selectButton($buttonLabel)->form(array(
             $this->FIELD_PREFIX . '[lastName]' => $lastName,
             $this->FIELD_PREFIX . '[firstName]' => $firstName,
             $this->FIELD_PREFIX . '[phoneNumber]' => $phoneNumber,

@@ -11,6 +11,10 @@ abstract class AbstractControllerTest extends WebTestCase {
     protected $ADMIN_USERNAME = "prof1";
     
     protected $ADMIN_PASSWORD = "password";
+    
+    protected $ADMIN_FIRSTNAME = "Henry";
+    
+    protected $ADMIN_LASTNAME = "Jones";
 
     protected function login($username, $password) {
         $this->crawler = $this->client->request('GET', '/login');
@@ -23,6 +27,13 @@ abstract class AbstractControllerTest extends WebTestCase {
                 ));
 
         $this->crawler = $this->client->submit($form);
+        
+        $this->client->followRedirect();
+        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
+    }
+    
+    protected function logout() {        
+        $this->crawler = $this->client->request('GET', '/logout');
     }
 
 }
