@@ -184,7 +184,7 @@ class TeacherController extends AbstractVirguleController {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('teacher_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('teacher_show', array('id' => $id)));
         }
 
         return array(
