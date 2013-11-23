@@ -1,0 +1,35 @@
+        <script type="text/javascript" src="{{ asset('js/jquery.pwstrength.min.js') }}"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+            var options = {
+            };
+            $('#password').pwstrength(options);
+                        
+            $("#lastname").add('#firstname').keyup(function() {               
+		var firstname = $('#firstname').val();
+		var lastname = $('#lastname').val();
+		var c = firstname.substring(0,1);
+		var username = (c + lastname).toLowerCase();
+                
+                $("#username").val(username);
+            });
+            
+            $("#password").add('#password_confirm').keyup(function() {      
+                $(".pwd-error").hide();
+                var hasError = false;
+                var passwordVal = $("#password").val();
+                var checkVal = $("#password_confirm").val();
+                if (passwordVal != checkVal ) {
+                    $("#password_confirm").parent().parent().addClass('has-error'); 
+                    $("#password_confirm").parent().parent().removeClass('has-success');
+                    $("#password_confirm").after('<span class="help-inline pwd-error">Les mots de passe ne correspondent pas</span');
+                   hasError = true;
+                } else {
+                    $("#password_confirm").parent().parent().removeClass('has-error'); 
+                    $("#password_confirm").parent().parent().addClass('has-success');
+                    $("#password_confirm").after('<span class="help-inline pwd-error">Les mots de passe correspondent</span');
+                }
+                if(hasError == true) {return false;}
+            });
+        });
+        </script>       

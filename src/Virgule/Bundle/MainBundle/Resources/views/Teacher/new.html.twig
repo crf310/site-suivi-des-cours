@@ -2,41 +2,7 @@
 {% block head %}    
     {{ parent() }}
     {% block javascripts %}
-        <script type="text/javascript" src="{{ asset('js/jquery.pwstrength.min.js') }}"></script>
-        <script type="text/javascript">
-        $(document).ready(function() {
-            var options = {
-            };
-            $('#password').pwstrength(options);
-                        
-            $("#lastname").add('#firstname').keyup(function() {               
-		var firstname = $('#firstname').val();
-		var lastname = $('#lastname').val();
-		var c = firstname.substring(0,1);
-		var username = (c + lastname).toLowerCase();
-                
-                $("#username").val(username);
-            });
-            
-            $("#password").add('#password_confirm').keyup(function() {      
-                $(".pwd-error").hide();
-                var hasError = false;
-                var passwordVal = $("#password").val();
-                var checkVal = $("#password_confirm").val();
-                if (passwordVal != checkVal ) {
-                    $("#password_confirm").parent().parent().addClass('has-error'); 
-                    $("#password_confirm").parent().parent().removeClass('has-success');
-                    $("#password_confirm").after('<span class="help-inline pwd-error">Les mots de passe ne correspondent pas</span');
-                   hasError = true;
-                } else {
-                    $("#password_confirm").parent().parent().removeClass('has-error'); 
-                    $("#password_confirm").parent().parent().addClass('has-success');
-                    $("#password_confirm").after('<span class="help-inline pwd-error">Les mots de passe correspondent</span');
-                }
-                if(hasError == true) {return false;}
-            });
-        });
-        </script>       
+        {% include 'VirguleMainBundle:Teacher:form_header.html.twig' %}
     {% endblock %}
 {%endblock %}
 {% block content_title %}Créer un nouveau compte utilisateur{% endblock %}
@@ -44,33 +10,14 @@
     <a class="btn tip-bottom" href="{{ path('teacher_index') }}"> <i class="my-icon-list"></i>Retour à la liste des utilisateurs</a>
 {% endblock %}
 {% block main_content %}
-    
 <form action="{{ path('teacher_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
     <div class="row">
         <div class="col-md-12 center">
             <div class="widget-box">
-                <div class="widget-title">
-                    <h5>Coordonnées</h5>
-                </div>
-                <div class="widget-content nopadding">
-                    {{ form_row(form.firstName, { 'label': 'Prénom', 'id': 'firstname' }) }}
-                    {{ form_row(form.lastName, { 'label': 'Nom', 'id': 'lastname' }) }}
-                    {{ form_row(form.phoneNumber, { 'label': 'Téléphone fixe' }) }}
-                    {{ form_row(form.cellphoneNumber, { 'label': 'Téléphone portable' }) }}
-                    {{ form_row(form.emailAddress, { 'label': 'Adresse email' }) }}
-                </div>
-                <div class="widget-title">
-                    <h5>Informations de connexion</h5>
-                </div>
-                <div class="widget-content nopadding">
-                    {{ form_row(form.isActive, { 'checked':'checked', 'label': 'Formateur en activité', 'hint':'Cochez la case si l\'utilisateur doit être actif' }) }}                
-                    {{ form_row(form.role, { 'label': 'Rôle' })  }}
-                    {{ form_row(form.username, { 'label': 'Nom d\'utilisateur', 'id': 'username' }) }}
-                    {{ form_row(form.password.first, { 'label': 'Mot de passe', 'hint':'Choisissez un mot de passe d\'au moins 8 caractères. Vous pouvez prendre une phrase, si cela est plus facile à retenir', 'id': 'password' }) }}
-                    {{ form_row(form.password.second, { 'label': 'Confirmez le mot de passe', 'id': 'password_confirm' }) }}
-                    {{ form_rest(form) }}
+                    {% include 'VirguleMainBundle:Teacher:form.html.twig' with { 'form': form }  %}
                     <div class="form-actions">                                     
-                        <input class="btn btn-success" type="submit" value="Créer le compte" />
+                        <input class="btn btn-success" type="submit" value="Créer le compte" />                        
+                        <a class="btn btn-default" href="{{ path('teacher_index') }}">Annuler</a>
                     </div>
                 </div>
             </div>
