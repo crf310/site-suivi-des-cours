@@ -82,23 +82,28 @@
                         <div class="controls">{{ entity.firstName }} {{ entity.lastName | upper }}</div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Inscrit(e) le </label>
-                        <div class="controls">{{ entity.registrationDate|date('d/m/Y') }}</div>
+                        <label class="control-label">Inscrit{% if entity.gender =='F'%}e{% endif %} le </label>
+                        <div class="controls">
+                            {% if entity.registrationDate == "1970-01-à1" %}
+                                {{ entity.registrationDate|date('d/m/Y') }}
+                            {% endif %}
+                                &nbsp;
+                        </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">Sexe</label>
                         <div class="controls">
-                        {{ entity.gender | gender }}
+                        {{ entity.gender | gender }}&nbsp;
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">Date de naissance</label>
-                        <div class="controls">{{ entity.birthdate|date('d/m/Y') }} ({{ entity.age }} ans)</div>
+                        <div class="controls">{{ entity.birthdate|date('d/m/Y') }} ({{ entity.age }} ans)&nbsp;</div>
                     </div>
                     {% if entity.nativeCountry != null %}
                     <div class="control-group">
                         <label class="control-label">Pays d'origine</label>
-                        <div class="controls">{{  entity.nativeCountry | upper | country }}&nbsp;<img src="{{ asset('img/drapeaux/' ~ entity.nativeCountry ~ '.png')}}" alt="{{  entity.nativeCountry }}" title="{{  entity.nativeCountry | upper | country }}" /></div>
+                        <div class="controls">{{  entity.nativeCountry | upper | country }}&nbsp;<img src="{{ asset('img/drapeaux/' ~ entity.nativeCountry ~ '.png')}}" alt="{{  entity.nativeCountry }}" title="{{  entity.nativeCountry | upper | country }}" />&nbsp;</div>
                     </div>
                     {% endif %}
                     <div class="control-group">
@@ -106,7 +111,7 @@
                         <div class="controls">
                             {% for language in entity.spokenLanguages %}
                                 {{ language.name }}{% if not loop.last %},{% endif %}
-                            {% endfor %}
+                            {% endfor %}&nbsp;
                         </div>
                     </div>
                     <div class="control-group">
@@ -118,15 +123,15 @@
                 <div class="widget-content nopadding"> 
                     <div class="control-group">
                         <label class="control-label">Téléphone</label>
-                        <div class="controls">{{ entity.phoneNumber|phoneNumber }}</div>
+                        <div class="controls">{{ entity.phoneNumber|phoneNumber }}&nbsp;</div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">Téléphone portable</label>
-                        <div class="controls">{{ entity.cellPhoneNumber|phoneNumber }}</div>
+                        <div class="controls">{{ entity.cellPhoneNumber|phoneNumber }}&nbsp;</div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">Adresse</label>
-                        <div class="controls">{{ entity.address }} <br />{{ entity.zipcode }} {{ entity.city }}</div>
+                        <div class="controls">{{ entity.address }} <br />{{ entity.zipcode }} {{ entity.city }}&nbsp;</div>
                     </div>
                 </div>
             </div>
@@ -160,15 +165,15 @@
                         <div class="widget-content nopadding">                         
                             <div class="control-group">
                                 <label class="control-label">Personne à contacter</label>
-                                <div class="controls">{{ entity.emergencyContactFirstname }} {{ entity.emergencyContactLastname }}</div>
+                                <div class="controls">{{ entity.emergencyContactFirstname }} {{ entity.emergencyContactLastname }}&nbsp;</div>
                             </div>
                             <div class="control-group">
                                 <label class="control-label">Numéro de téléphone</label>
-                                <div class="controls">{{ entity.emergencyContactPhoneNumber | phoneNumber }}</div>
+                                <div class="controls">{{ entity.emergencyContactPhoneNumber | phoneNumber }}&nbsp;</div>
                             </div>
                             <div class="control-group">
                                 <label class="control-label">Lien avec l'apprenant</label>
-                                <div class="controls">{{ entity.emergencyContactConnectionType }}</div>
+                                <div class="controls">{{ entity.emergencyContactConnectionType }}&nbsp;</div>
                             </div>
                         </div>
                     </div>
@@ -224,12 +229,16 @@
                                             <li><a href="#"> <i class="icon-empty"></i>
                                                 {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevel.htmlColorCode, 'classLevelLabel': course.classLevel.label } %} le {{ course.dayOfWeek | day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }} : 
                                                 {% if nbClassSessionsAttended is not null %}
-                                                    {% if nbClassSessionsAttended[course.id]['nb_classsessions_attended'] > 0 %}
-                                                        {% set attendance_rate = nbClassSessionsAttended[course.id]['nb_classsessions_attended'] / nbClassSessionsAttended[course.id]['nb_classsessions'] * 100 %}
-                                                        présent{% if entity.gender =='F'%}e{% endif %} à 
-                                                        <strong>{{ nbClassSessionsAttended[course.id]['nb_classsessions_attended'] }}</strong> cours sur <strong>{{ nbClassSessionsAttended[course.id]['nb_classsessions'] }}</strong> <strong>({{ '%.0f'|format(attendance_rate) }}%)</strong>
+                                                    {% if nbClassSessionsAttended[course.id] is defined %}
+                                                        {% if nbClassSessionsAttended[course.id]['nb_classsessions_attended'] > 0 %}
+                                                            {% set attendance_rate = nbClassSessionsAttended[course.id]['nb_classsessions_attended'] / nbClassSessionsAttended[course.id]['nb_classsessions'] * 100 %}
+                                                            présent{% if entity.gender =='F'%}e{% endif %} à 
+                                                            <strong>{{ nbClassSessionsAttended[course.id]['nb_classsessions_attended'] }}</strong> cours sur <strong>{{ nbClassSessionsAttended[course.id]['nb_classsessions'] }}</strong> <strong>({{ '%.0f'|format(attendance_rate) }}%)</strong>
+                                                        {% else %}
+                                                            jamais présent
+                                                        {% endif %}
                                                     {% else %}
-                                                        jamais présent
+                                                            aucun compte-rendu trouvé.
                                                     {% endif %}
                                                 {% endif %}
                                                 </a>
