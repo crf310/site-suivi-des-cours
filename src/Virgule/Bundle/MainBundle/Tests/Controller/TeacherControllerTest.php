@@ -35,7 +35,7 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->assertEquals(1, $this->crawler->filter("td:contains('" . $cellPhoneNumberFormatted ."')")->count());
         
         $crawlerTeacher = $this->crawler->filter("td:contains('" . $firstName . " " . $lastName . "')")->siblings();
-        $this->crawler = $this->client->click($crawlerTeacher->selectLink('Voir le détail')->link());
+        $this->crawler = $this->client->click($crawlerTeacher->selectLink('Détails')->link());
         
         $this->assertTrue($this->crawler->filter("html:contains('Fiche formateur')")->count() == 1);
         $this->assertTrue($this->crawler->filter("html:contains('Liste des formateurs actifs')")->count() == 0);
