@@ -8,13 +8,13 @@ abstract class AbstractControllerTest extends WebTestCase {
     protected $client;
     protected $crawler;
     
-    protected $ADMIN_USERNAME = "prof1";
+    protected $ADMIN_USERNAME = "prof2";
     
     protected $ADMIN_PASSWORD = "password";
     
-    protected $ADMIN_FIRSTNAME = "Henry";
+    protected $ADMIN_FIRSTNAME = "John";
     
-    protected $ADMIN_LASTNAME = "Jones";
+    protected $ADMIN_LASTNAME = "Keating";
 
     protected function login($username, $password) {
         $this->crawler = $this->client->request('GET', '/login');
