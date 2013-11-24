@@ -258,7 +258,7 @@ li.document { list-style-image:url('../img/icons/attach.png'); }
 
 /* Page menu */
 .btn-group form { display: inline-block; }
-#content-header i,.alert i, .btn i {   
+#content-header i, .alert i {   
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-position: center;
