@@ -23,13 +23,20 @@ class LoadClassRoomData extends AbstractFixture implements OrderedFixtureInterfa
         $class2 = new ClassRoom();
         $class2->setName("Musée");
         $class2->setOrganizationBranch($this->getReference('deleg-3-10'));
-        $class2->setAddress("10 rue Albert Thomas 75010 Paris");
+        $class2->setAddress("10 rue Albert Thomas 75010 Paris");        
+        
+        $class3 = new ClassRoom();
+        $class3->setName("Baby Boutique");
+        $class3->setOrganizationBranch($this->getReference('deleg-3-10'));
+        $class3->setAddress("53 rue de Paradis 75010 Paris");
         
         $manager->persist($class1);
         $manager->persist($class2);
+        $manager->persist($class3);
         
         $this->addReference('salle-cours', $class1);
         $this->addReference('musee', $class2);
+        $this->addReference('baby-boutique', $class2);
         
         $manager->flush();
     }
