@@ -19,8 +19,8 @@
                     {% for course in myCourses %}
                     <div class="new-update clearfix">
                         <div class="update-done">						
-                            <a class="btn btn-default" href="{{ path('classsession_add', { 'id': course.id }) }}"><i class="my-icon-add"></i>Compte-rendu</a>
-                            <a class="btn btn-default" href="{{ path('attendance_list', { 'id': course.id }) }}" target="_blank"><i class="my-icon-trombinoscope"></i>Fiche de présence</a>
+                            <a class="btn btn-default virgule-btn" href="{{ path('classsession_add', { 'id': course.id }) }}"><i class="my-icon-add"></i>Compte-rendu</a>
+                            <a class="btn btn-default virgule-btn" href="{{ path('attendance_list', { 'id': course.id }) }}" target="_blank"><i class="my-icon-trombinoscope"></i>Fiche de présence</a>
                         </div>
                         <a href="{{ path('course_show', { 'id': course.id }) }}" >
                             <div class="class-date">
