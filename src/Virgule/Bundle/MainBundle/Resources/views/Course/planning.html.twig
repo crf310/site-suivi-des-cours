@@ -1,78 +1,74 @@
 {% block main_content %}
 {% set currentSemester = app.session.get('currentSemester') %}
-<div class="row">
-    <div class="col-xs-12">
-        <div class="widget-box">
-            <div class="widget-title">
-                    <span class="icon">
-                            <i class="icon-th"></i>
-                    </span>
-                    <h5>Planning du {{ currentSemester.startDate|date("d/m/Y") }} au {{ currentSemester.endDate|date("d/m/Y") }}</h5>
-            </div>
-            <div class="widget-content nopadding">
-                {% set cell_class = '' %}
-                <table id="planning" class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th rowspan="2">&nbsp;</th>
-                            {% for headerCell in headerCells %}
-                                <th colspan="{{ headerCell.classRooms | length }}">{{ headerCell.day | day }}</th>   
-                            {% endfor %}
-                        </tr>
-                        <tr>
-                            {% for headerCell in headerCells %}
-                                {% for classRoom in headerCell.classRooms %}
-                                    <th>{{ classRoom }}</th>     
-                                {% endfor %}
-                            {% endfor %}
-                        </tr>
-                    </thead>
-                    {% for row in planningRows %}
-                    <tr>
-                        <th>{{ row.startTime | date('H:i') }} - {{ row.endTime | date('H:i')}}</th>
-                        {% for dayCells in row.cells %}
-                            {% if loop.index is divisibleby(2) %}{% set cell_class = 'left-border' %}{% else %}{% set cell_class = '' %}{% endif %}
-                            {% for classRoomCell in dayCells %}
-                                {% if classRoomCell is not null %}
-                                    <td class="center {{ cell_class }}" {% if classRoomCell.rowspan > 0 %} rowspan="{{ classRoomCell.rowspan }}" {% endif %}>
-                                        {% if classRoomCell.hasCourse %} 
-                                        <div class="classCell" style="border: 2px solid {{ classRoomCell.course.classLevelColorCode }}">
-                                            <a class="course_details" href="{{ path('course_show', { 'id': classRoomCell.course.id }) }}">
-                                                <p>
-                                                {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classRoomCell.course.classLevelColorCode, 'classLevelLabel': classRoomCell.course.classLevelLabel } %}
-                                                <br/><br />
-                                                {{ classRoomCell.course.startTime | date('H:i') }} - {{ classRoomCell.course.endTime | date('H:i') }}
-                                                <br />
-                                                {% for teacher in classRoomCell.course.teachers %}
-                                                    {{ teacher['teacher_firstName'] }} {{ teacher['teacher_lastName'] }}{% if not loop.last %}<br />{% endif %}
-                                                {% endfor %}
-                                                {% if classRoomCell.course.alternateStartDate is not empty or classRoomCell.course.alternateStartDate is not empty %}
-                                                    {% set currentSemester = app.session.get('currentSemester') %}
-                                                    {% if classRoomCell.course.alternateStartDate is not empty %}
-                                                      <br />
-                                                      à partir du {{ classRoomCell.course.alternateStartDate | date("d/m/Y") }}
-                                                    {%endif %}
-
-                                                    {% if classRoomCell.course.alternateEndDate is not empty %}
-                                                       <br />
-                                                       jusqu'au {{ classRoomCell.course.alternateEndDate | date("d/m/Y") }}
-                                                    {%endif %}
-                                                {% endif %}
-                                                </p>
-                                            </a>
-                                        </div>
-                                        {% else %}
-                                            {{ classRoomCell.content | raw }}
-                                        {% endif %}
-                                    </td>
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
-                    </tr>
+<div class="widget-box">
+    <div class="widget-title">
+            <span class="icon">
+                    <i class="icon-th"></i>
+            </span>
+            <h5>Planning du {{ currentSemester.startDate|date("d/m/Y") }} au {{ currentSemester.endDate|date("d/m/Y") }}</h5>
+    </div>
+    <div class="widget-content nopadding">
+        {% set cell_class = '' %}
+        <table id="planning" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th rowspan="2">&nbsp;</th>
+                    {% for headerCell in headerCells %}
+                        <th colspan="{{ headerCell.classRooms | length }}">{{ headerCell.day | day }}</th>   
                     {% endfor %}
-                </table>
-            </div>
-        </div>
+                </tr>
+                <tr>
+                    {% for headerCell in headerCells %}
+                        {% for classRoom in headerCell.classRooms %}
+                            <th>{{ classRoom }}</th>     
+                        {% endfor %}
+                    {% endfor %}
+                </tr>
+            </thead>
+            {% for row in planningRows %}
+            <tr>
+                <th>{{ row.startTime | date('H:i') }} - {{ row.endTime | date('H:i')}}</th>
+                {% for dayCells in row.cells %}
+                    {% if loop.index is divisibleby(2) %}{% set cell_class = 'left-border' %}{% else %}{% set cell_class = '' %}{% endif %}
+                    {% for classRoomCell in dayCells %}
+                        {% if classRoomCell is not null %}
+                            <td class="center {{ cell_class }}" {% if classRoomCell.rowspan > 0 %} rowspan="{{ classRoomCell.rowspan }}" {% endif %}>
+                                {% if classRoomCell.hasCourse %} 
+                                <div class="classCell" style="border: 2px solid {{ classRoomCell.course.classLevelColorCode }}">
+                                    <a class="course_details" href="{{ path('course_show', { 'id': classRoomCell.course.id }) }}">
+                                        <p>
+                                        {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classRoomCell.course.classLevelColorCode, 'classLevelLabel': classRoomCell.course.classLevelLabel } %}
+                                        <br/><br />
+                                        {{ classRoomCell.course.startTime | date('H:i') }} - {{ classRoomCell.course.endTime | date('H:i') }}
+                                        <br />
+                                        {% for teacher in classRoomCell.course.teachers %}
+                                            {{ teacher['teacher_firstName'] }} {{ teacher['teacher_lastName'] }}{% if not loop.last %}<br />{% endif %}
+                                        {% endfor %}
+                                        {% if classRoomCell.course.alternateStartDate is not empty or classRoomCell.course.alternateStartDate is not empty %}
+                                            {% set currentSemester = app.session.get('currentSemester') %}
+                                            {% if classRoomCell.course.alternateStartDate is not empty %}
+                                              <br />
+                                              à partir du {{ classRoomCell.course.alternateStartDate | date("d/m/Y") }}
+                                            {%endif %}
+
+                                            {% if classRoomCell.course.alternateEndDate is not empty %}
+                                               <br />
+                                               jusqu'au {{ classRoomCell.course.alternateEndDate | date("d/m/Y") }}
+                                            {%endif %}
+                                        {% endif %}
+                                        </p>
+                                    </a>
+                                </div>
+                                {% else %}
+                                    {{ classRoomCell.content | raw }}
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
     </div>
 </div>
 {% endblock %}

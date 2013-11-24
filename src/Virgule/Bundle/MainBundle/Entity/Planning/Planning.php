@@ -22,11 +22,14 @@ class Planning {
     
     private $hasClass = Array();
     
-    public function __construct($courses) {  
+    private $displayOnlyCurrent;
+    
+    public function __construct($courses, $displayOnlyCurrent = false) {  
         $this->dayStart = 1;
         $this->dayEnd = 6;
         $this->startTime = new \DateTime('08:00');
         $this->endTime = new \DateTime('21:30');
+        $this->displayOnlyCurrent = $displayOnlyCurrent;
         
         $this->initPlanning($courses);
         // header is initialized after because we know the classrooms from the courses
@@ -89,7 +92,9 @@ class Planning {
     
     private function addCourses($courses) {
         foreach($courses as $course) {
-            $this->addCourse($course);
+            if (!$this->displayOnlyCurrent || ($this->displayOnlyCurrent && $course->isCurrent())) {
+                $this->addCourse($course);
+            }
         }
     }
     private function addCourse(CourseHydrated $course) {

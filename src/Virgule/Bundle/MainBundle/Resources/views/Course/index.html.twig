@@ -31,7 +31,11 @@
                     <tbody>
                     {% for course in courses %}
                         <tr>
-                            <td>{{ course.dayOfWeek | day }}</td>
+                            <td>{{ course.dayOfWeek | day }}
+                                {% if course.isCurrent == false %}
+                                <br /><span class="label label-danger">Cours terminé ou non démarré</span>
+                                {% endif %}
+                            </td>
                             <td>{{ course.startTime | date('H:i') }} - {{ course.endTime | date('H:i') }}</td>
                             <td class="center">
                                 {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevelColorCode, 'classLevelLabel': course.classLevelLabel } %} 

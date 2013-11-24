@@ -83,6 +83,24 @@ class CourseHydrated {
 
     public function getNbStudents() {
         return $this->nbStudents;
-    }    
+    }
+           
+    /**
+     * Returns false if alternateStartDate is not null and in the future
+     * Returns false if alternateEndDate is not null and in the past
+     * @return boolean
+     */
+    public function isCurrent() {
+        $isCurrent = true;
+        $today = new \DateTime('now');
+        
+        if ($this->getAlternateStartdate() != null && $today < $this->getAlternateStartdate()) {
+            $isCurrent = false;
+        }
+        if ($this->getAlternateEnddate() != null && $today > $this->getAlternateEnddate() ) {
+            $isCurrent = false;
+        }
+        return $isCurrent;
+    }
 }
 ?>

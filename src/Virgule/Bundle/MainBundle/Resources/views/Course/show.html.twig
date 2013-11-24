@@ -24,6 +24,10 @@
                             <div class="control-group">
                                 <label class="control-label">Horaires</label>
                                 <div class="controls">de {{ entity.startTime | date('H\\hi') }} à {{ entity.endTime | date('H\\hi') }}</div>
+                            </div>                                
+                            <div class="control-group">
+                                <label class="control-label">Salle</label>
+                                <div class="controls">{{ entity.classroom.name }}</div>
                             </div>
                             {% if entity.alternateStartdate is not empty %}
                             <div class="control-group">
