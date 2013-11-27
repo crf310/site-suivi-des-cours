@@ -80,6 +80,12 @@ class ClassSession {
      * @Assert\NotNull
      */
     protected $classSessionStudents;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Student", inversedBy="classSessionsNonEnrolled")
+     * @ORM\JoinTable(name="classsessions_students_non_enrolled")
+     */
+    protected $nonEnrolledClassSessionStudents;
 
     /**
      * Get id
@@ -159,6 +165,7 @@ class ClassSession {
     public function __construct() {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->classSessionStudents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->nonEnrolledClassSessionStudents = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -314,9 +321,31 @@ class ClassSession {
         return $this->classSessionStudents;
     }
     
-    public function setClassSessionStudents(\Doctrine\Common\Collections\ArrayCollection $students) {
-        $this->classSessionStudents = $students;
+    public function getNonEnrolledClassSessionStudents() {
+        return $this->nonEnrolledClassSessionStudents;
     }
+    
+    /**
+     * Add students
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Student $students
+     * @return ClassSession
+     */
+    public function addNonEnrolledClassSessionStudent(\Virgule\Bundle\MainBundle\Entity\Student $student) {
+        $this->nonEnrolledClassSessionStudents[] = $student;        
+        
+        return $this;
+    }   
+    
+    /**
+     * Remove students
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Student $students
+     */
+    public function removenonEnrolledClassSessionStudent(\Virgule\Bundle\MainBundle\Entity\Student $student) {
+        $this->nonEnrolledClassSessionStudents->removeElement($student);
+    }
+
 
 
     /**

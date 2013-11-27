@@ -63,7 +63,7 @@ class AddClassSessionStudentsFieldSubscriber implements EventSubscriberInterface
 
     protected function customizeForm($form, $courseId) {
         if ($courseId) {
-            $field = $this->factory->createNamed('classSessionStudents', 'entity', new ArrayCollection(), array(
+            $enrolledStudentsField = $this->factory->createNamed('classSessionStudents', 'entity', new ArrayCollection(), array(
                 'class' => 'VirguleMainBundle:Student',
                 'query_builder' => function(EntityRepository $er) use ($courseId) {
                     return $er->createQueryBuilder('s')
@@ -71,15 +71,33 @@ class AddClassSessionStudentsFieldSubscriber implements EventSubscriberInterface
                                     ->innerJoin('s.courses', 'c2', 'WITH', 'c2.id = :courseId')
                                     ->setParameter('courseId', $courseId);
                 },
-                'expanded' => true,
-                'multiple' => true,
-                'property_path' => 'classSessionStudents',
-                'property' => 'fullname',
-                'cols_number' => 3,
-                'auto_initialize' => false
+                'expanded'          => true,
+                'multiple'          => true,
+                'property_path'     => 'classSessionStudents',
+                'property'          => 'fullname',
+                'cols_number'       => 3,
+                'auto_initialize'   => false
             ));
-            $form->add($field);
+            $form->add($enrolledStudentsField);
                     
+            $nonEnrolledStudentsField = $this->factory->createNamed('nonEnrolledStudentsField', 'entity', new ArrayCollection(), array(
+                'class'              => 'VirguleMainBundle:Student',
+                'query_builder' => function(EntityRepository $er) use ($courseId) {
+                    return $er->createQueryBuilder('s')
+                                    ->add('orderBy', 's.lastname ASC, s.firstname ASC')
+                                    ->leftJoin('s.courses', 'c2', 'WITH', 'c2.id != :courseId')
+                                    ->setParameter('courseId', $courseId);
+                },
+                'expanded'          => false,
+                'multiple'          => true,
+                'property_path'     => 'nonEnrolledClassSessionStudents',
+                'property'          => 'fullname',
+                'auto_initialize'   => false,
+                'attr'              => array('class' => 'medium-select','required' => false)
+
+            ));
+            $form->add($nonEnrolledStudentsField);
+                
             $form->add('course', 'hidden', array(
                 'data' => $courseId,
                 'mapped' => false))

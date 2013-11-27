@@ -250,6 +250,11 @@ class Student {
      * @ORM\ManyToMany(targetEntity="ClassSession", mappedBy="classSessionStudents", cascade={"persist"})
      */
     private $classSessions;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="ClassSession", mappedBy="nonEnrolledClassSessionStudents", cascade={"persist"})
+     */
+    private $classSessionsNonEnrolled;
 
     /**
      * @ORM\OneToMany(targetEntity="ClassLevelSuggested", mappedBy="student", cascade={"persist", "remove"})
@@ -967,6 +972,36 @@ class Student {
      */
     public function getClassSessions() {
         return $this->classSessions;
+    }
+    
+    /**
+     * Add classSessionsNonEnrolled
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsNonEnrolled
+     * @return Student
+     */
+    public function addClassSessionNonEnrolled(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionNonEnrolled) {
+        $this->classSessionsNonEnrolled[] = $classSessionsNonEnrolled;
+
+        return $this;
+    }
+
+    /**
+     * Remove classSessionsNonEnrolled
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionsNonEnrolled
+     */
+    public function removeClassSessionNonEnrolled(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSessionNonEnrolled) {
+        $this->classSessionsNonEnrolled->removeElement($classSessionNonEnrolled);
+    }
+
+    /**
+     * Get classSessionsNonEnrolled
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getClassSessionsNonEnrolled() {
+        return $this->classSessionsNonEnrolled;
     }
 
     /**

@@ -102,13 +102,15 @@ class ClassSessionController extends AbstractVirguleController {
         $comment = new Comment();
         $commentForm = $this->createForm(new CommentType(), $comment);
         
-        $classSessionStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllPresentAtClassSession($id);
+        $classSessionEnrolledStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledPresentAtClassSession($id);
+        $classSessionNonEnrolledStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllNonEnrolledPresentAtClassSession($id);
         
         return array(
             'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
             'commentForm' => $commentForm->createView(),
-            'classSessionStudents' => $classSessionStudents,
+            'classSessionEnrolledStudents' => $classSessionEnrolledStudents,
+            'classSessionNonEnrolledStudents' => $classSessionNonEnrolledStudents,
         );
     }
     

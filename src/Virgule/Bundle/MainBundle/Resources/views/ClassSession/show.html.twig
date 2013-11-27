@@ -8,7 +8,7 @@
 {% block main_content %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-8 form-horizontal not-form-horizontal">
+        <div class="col-md-7 form-horizontal not-form-horizontal">
             <div class="widget-box">
                 <div class="widget-title">
                     <span class="icon">
@@ -56,22 +56,24 @@
                             {% endif %}                                        
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>            
-        <div class="col-md-4">
-            {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Apprenants présents', 'students': classSessionStudents, 'nbColumns': 1 }  %}
-                
+                </div>     
+            </div>      
             <div class="widget-box">
                 <div class="widget-title">
                     <span class="icon">
                             <i class="icon-comments"></i>
                     </span>
                     <h5>Commentaires</h5>
-                </div>            
+                </div>
                 {% include 'VirguleMainBundle:Comment:index.html.twig' with {'comments': entity.comments, 'commentForm': commentForm, 'target_id': entity.id, 'target_route': 'classsession_comment_create' }  %}
                 <div><a class="btn btn-default" id="add-comment">Ajouter un commentaire</a></div>
             </div>
+        </div>                           
+        <div class="col-md-5">
+            {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Apprenants inscrits présents', 'students': classSessionEnrolledStudents, 'nbColumns': 1 }  %}
+            {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Apprenants non-inscrits présents', 'students': classSessionNonEnrolledStudents, 'nbColumns': 1 }  %}
+                
+
         </div>
     </div>
 </div>                 

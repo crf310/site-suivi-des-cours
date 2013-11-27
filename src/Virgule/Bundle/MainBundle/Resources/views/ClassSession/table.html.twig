@@ -17,7 +17,7 @@
                 {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classSession['classLevelHtmlColorCode'], 'classLevelLabel': classSession['classLevelLabel'] } %} 
             </td>
             <td>{{ classSession['course_dayOfWeek'] | day }} de {{ classSession['course_startTime'] | date('H:i') }} à {{ classSession['course_endTime'] | date('H:i') }}</td>
-            <td class="center">{{ classSession['nb_students'] }}
+            <td class="center">{{ classSession['nb_students'] }}</td>
             <td>{{ classSession['sessionTeacher_firstName'] }} {{ classSession['sessionTeacher_lastName'] }}</td>
             <td class="center"><a href="{{ path('classsession_show', { 'id': classSession['id'] }) }}">Voir le compte-rendu</a></td>
         </tr>

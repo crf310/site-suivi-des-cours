@@ -27,7 +27,7 @@ In convallis, lacus a dapibus accumsan, sapien mauris ornare risus, sit amet dig
 
         $nbClassSessions = 0;
         
-        $nbStudents = 234;
+        $nbTotalStudents = 234;
         
         $nbCourses = 12;
         
@@ -61,6 +61,17 @@ In convallis, lacus a dapibus accumsan, sapien mauris ornare risus, sit amet dig
                     $cs->addClassSessionStudent($student);
                     $studentAlreadyAdded[] = $student->getId();
                 }
+                
+                for ($nbStudents = 1; $nbStudents <= rand(0, 7); $nbStudents++) {
+                    do {
+                        $studentIndex = rand(1, $nbTotalStudents-1);
+                        $student = $this->getReference('student-' . $studentIndex);
+                    } while (in_array($student->getId(), $studentAlreadyAdded));
+                    
+                    $cs->addNonEnrolledClassSessionStudent($student);
+                    $studentAlreadyAdded[] = $student->getId();
+                }
+                
                 $manager->persist($cs);
                 $nbClassSessions++;
                 $this->addReference('classsession' . $nbClassSessions, $cs);

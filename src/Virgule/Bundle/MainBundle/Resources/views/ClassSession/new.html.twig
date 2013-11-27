@@ -45,8 +45,9 @@
                     {{ form_row(form.summary, { 'label': 'Résumé du cours', 'id' : 'summaryField', }) }}       
                     {{ form_row(form.documents, { 'label': 'Document(s) utilisé(s)', 'hint': 'Lier ici les documents utilisés lors de votre cours, tels que des exercices, des corrigés, des passages de livres etc.' }) }}
                     {% if form.classSessionStudents is defined %}
-                        {{ form_row(form.classSessionStudents, { 'label': 'Apprenants présents', 'hint': 'N\'apparaissent ici que les apprenants inscrits à votre cours' }) }}           
+                        {{ form_row(form.classSessionStudents, { 'label': 'Apprenants inscrits et présents', 'hint': 'N\'apparaissent ici que les apprenants inscrits à votre cours' }) }}           
                     {% endif %}
+                    {{ form_row(form.nonEnrolledStudentsField, { 'required' : false, 'label': 'Apprenants non inscrits mais présents exceptionnellement', 'hint': 'Enregistrez ici la présence d\'aprenants non-inscrits et présents exceptionnellement. Si cela fait plusieurs fois que vous enregistrez un apprenant "exceptionnellement", peut-être est-il temps de l\'inscrire ?' }) }}           
                     {{ form_rest(form) }}
                     <div class="form-actions">                                     
                         <input class="btn btn-success" type="submit" value="Enregistrer le compte-rendu" />

@@ -47,8 +47,9 @@ class ClassSessionRepository extends EntityRepository {
     
     private function getNbStudentsQueryBuilder($semesterId, $limit = null)  {
         $qb = $this->getBasicQueryBuilder($semesterId, $limit) 
-                ->leftJoin('cs.classSessionStudents', 'st')               
-                ->addSelect('count(st.id) as nb_students');
+                ->leftJoin('cs.classSessionStudents', 'st')    
+                ->leftJoin('cs.nonEnrolledClassSessionStudents', 'st_no')
+                ->addSelect('count(distinct st.id) + count(distinct st_no.id) as nb_students');
         return $qb;
     }
     

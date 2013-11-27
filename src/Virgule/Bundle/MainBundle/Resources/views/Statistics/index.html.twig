@@ -2,10 +2,17 @@
 {% block head %}    
     {{ parent() }}
     {% block javascripts %}
-
         <script type='text/javascript' src='https://www.google.com/jsapi'></script>
         <script type='text/javascript'>
-         var bgColor = '#ECEAF3';
+        $(document).ready(function () {
+            $(window).resize(function(){
+                drawRegionsMap();
+                drawGenderChart();
+                drawAgeChart();
+                drawClassLevelsCharts();
+            });
+        });
+         var bgColor = '#FAFAFA';
 
          google.load('visualization', '1', {'packages': ['geochart', 'corechart']});
          google.setOnLoadCallback(drawGenderChart);
@@ -24,8 +31,6 @@
 
             var options = {
                 backgroundColor: bgColor, 
-                width: 869, 
-                height: 542,
                 title: 'Répartition par pays d\'origine'
             };
 
@@ -109,97 +114,97 @@ au
     <a class="btn tip-bottom" href="{{ path('classsession_new') }}"> <i class="my-icon-export"></i>Exporter les données</a>
 {% endblock %}
 {% block main_content %}
-<div id="results_actions"> 
+<div id="results_actions">
     <div class="row">
-        <div class="col-md-12">
-            <div class="widget-box widget-plain">
-                <div class="widget-content center">
-                    <ul class="stats-plain">
-                        <li>										
-                            <h4>{{ students_genders['F'] }}</h4>
-                            <span>femmes</span>
-                        </li>
-                        <li>										
-                            <h4>{{ students_genders['M'] }}</h4>
-                            <span>hommes</span>
-                        </li>
-                        <li>										
-                            <h4>{{ students_countries | length }}</h4>
-                            <span>pays représentés</span>
-                        </li>
-                        <li>										
-                            <h4>{{ languages | length }}</h4>
-                            <span>langues parlées</span>
-                        </li>
-                        <li>										
-                            <h4>{{ studentsWithManyEnrollments | length }}</h4>
-                            <span>inscrits à plus d'un cours</span>
-                        </li>
-                    </ul>
-                </div>
+        <div class="widget-box widget-plain">
+            <div class="widget-content center">
+                <ul class="stats-plain">
+                    <li>										
+                        <h4>{{ students_genders['F'] }}</h4>
+                        <span>femmes</span>
+                    </li>
+                    <li>										
+                        <h4>{{ students_genders['M'] }}</h4>
+                        <span>hommes</span>
+                    </li>
+                    <li>										
+                        <h4>{{ students_countries | length }}</h4>
+                        <span>pays représentés</span>
+                    </li>
+                    <li>										
+                        <h4>{{ languages | length }}</h4>
+                        <span>langues parlées</span>
+                    </li>
+                    <li>										
+                        <h4>{{ studentsWithManyEnrollments | length }}</h4>
+                        <span>inscrits à plus d'un cours</span>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-12 col-sm-4">        
-            <div class="row">
-                <div class="col-xs-12">
-                     <div id="gender_div"></div>
+        <div class="col-md-12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#ranges_div"><i class="icon-signal"></i> Répartitions</a></li>
+                        <li><a data-toggle="tab" href="#worldmap_div"><i class="icon-globe"></i> Carte du monde</a></li>
+                        <li><a data-toggle="tab" href="#worldlist_div"><i class="icon-flag-checkered"></i> Liste des pays</a></li>
+                        <li><a data-toggle="tab" href="#languages_div"><i class="icon-comments"></i> Liste des langues</a></li>
+                    </ul>
                 </div>
-            </div>        
-            <div class="row">
-                <div class="col-xs-12">
-                     <div id="ages_div"></div>
-                </div>
-            </div>     
-            <div class="row">
-                <div class="col-xs-12">
-                     <div id="classlevels_div"></div>
-                </div>
-            </div>        
-        </div>
-	<div class="col-xs-12 col-sm-8">           
-                            <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#worldmap_div"><i class="icon-globe"></i> Carte du monde</a></li>
-                                <li><a data-toggle="tab" href="#worldlist_div"><i class="icon-flag-checkered"></i> Liste des pays</a></li>
-                                <li><a data-toggle="tab" href="#languages_div"><i class="icon-comments"></i> Liste des langues</a></li>
+                <div class="widget-content tab-content">
+                    <div id="ranges_div" class="tab-pane active" style="width:100%; height:200px">
+                        <div class="col-md-4">
+                            <div  id="gender_div"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div  id="ages_div"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div  id="classlevels_div"></div>
+                        </div>
+                    </div>
+                    <div id="worldmap_div" class="tab-pane" style="width:100%; height:500px"></div>
+                    <div id="worldlist_div" class="tab-pane" style="width:100%; height:500px">
+                        {% set nbColumns = 3 %}
+                        {% set listBreak = (students_countries | length) // nbColumns %}
+                        {% if ((students_countries | length) // nbColumns) > 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
+                        {% set span_size = 12 /  nbColumns %}
+                        <div class="col-md-{{ span_size }}">
+                            <ul class="no-img">
+                            {% for country_code, nb_students in students_countries %}
+                                <li><img src="{{ asset('img/drapeaux/' ~ country_code ~ '.png')}}" alt="{{  country_code }}" title="{{  country_code | upper | country('fr') }}" />
+                                &nbsp;
+                                {{ country_code | upper | country }}:  {{ nb_students }}</li>
+                                {% if loop.index % listBreak == 0  and loop.index != loop.last %}
+                                    </ul></div><div class="col-md-{{ span_size }}"><ul class="no-img">
+                                {% endif %}
+                            {% endfor %}
                             </ul>
-            <div class="tab-content">
-                <div id="worldmap_div" class="tab-pane active"></div>
-                <div id="worldlist_div" class="tab-pane">
-                    {% set nbColumns = 4 %}
-                    {% set listBreak = (students_countries | length) // nbColumns %}
-                    {% if ((students_countries | length) // nbColumns) > 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
-                    {% set span_size = 12 /  nbColumns %}
-                    <div class="col-md-{{ span_size }}">
-                        <ul class="no-img">
-                        {% for country_code, nb_students in students_countries %}
-                            <li><img src="{{ asset('img/drapeaux/' ~ country_code ~ '.png')}}" alt="{{  country_code }}" title="{{  country_code | upper | country('fr') }}" />
-                            &nbsp;
-                            {{ country_code | upper | country }}:  {{ nb_students }}</li>
-                            {% if loop.index % listBreak == 0  and loop.index != loop.last %}
-                                </ul></div><div class="col-md-{{ span_size }}"><ul class="no-img">
-                            {% endif %}
-                        {% endfor %}
-                        </ul>
+                        </div> 
                     </div> 
-                </div> 
-                <div id="languages_div" class="tab-pane">
-                    {% set nbColumns = 4 %}
-                    {% set listBreak = (languages | length) // nbColumns %}
-                    {% if ((languages | length) // nbColumns) > 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
-                    {% set span_size = 12 /  nbColumns %}
-                    <div class="col-md-{{ span_size }}">
-                        <ul class="no-img">
-                        {% for language in languages %}                  
-                            <li>{{ language['language_name'] }} : {{ language['nb_students'] }}</li>
-                            {% if loop.index % listBreak == 0  and loop.index != loop.last %}
-                                </ul></div><div class="col-md-{{ span_size }}"><ul class="no-img">
-                            {% endif %}
-                        {% endfor %}
-                        </ul>
-                    </div> 
-                </div>                                  
+                    <div id="languages_div" class="tab-pane">
+                        <div class="widget-content">
+                            {% set nbColumns = 3 %}
+                            {% set listBreak = (languages | length) // nbColumns %}
+                            {% if ((languages | length) // nbColumns) > 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
+                            {% set span_size = 12 / nbColumns %}
+                            <div class="col-md-{{ span_size }}">
+                                <ul class="no-img">
+                                {% for language in languages %}                  
+                                    <li>{{ language['language_name'] }} : {{ language['nb_students'] }}</li>
+                                    {% if loop.index % listBreak == 0  and loop.index != loop.last %}
+                                        </ul></div><div class="col-md-{{ span_size }}"><ul class="no-img">
+                                    {% endif %}
+                                {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>                            
+            </div>
         </div>
     </div> 
 </div>
