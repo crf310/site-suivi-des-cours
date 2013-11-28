@@ -143,15 +143,15 @@ au
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row-fluid">
         <div class="col-md-12">
             <div class="widget-box">
                 <div class="widget-title">
                     <ul class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" href="#ranges_div"><i class="icon-signal"></i> Répartitions</a></li>
                         <li><a data-toggle="tab" href="#worldmap_div"><i class="icon-globe"></i> Carte du monde</a></li>
-                        <li><a data-toggle="tab" href="#worldlist_div"><i class="icon-flag-checkered"></i> Liste des pays</a></li>
-                        <li><a data-toggle="tab" href="#languages_div"><i class="icon-comments"></i> Liste des langues</a></li>
+                        <li><a data-toggle="tab" href="#worldlist_div"><i class="icon-flag-checkered"></i> Pays d'origine</a></li>
+                        <li><a data-toggle="tab" href="#languages_div"><i class="icon-comments"></i> Langues parlées</a></li>
                     </ul>
                 </div>
                 <div class="widget-content tab-content">
@@ -167,26 +167,28 @@ au
                         </div>
                     </div>
                     <div id="worldmap_div" class="tab-pane" style="width:100%; height:500px"></div>
-                    <div id="worldlist_div" class="tab-pane" style="width:100%; height:500px">
-                        {% set nbColumns = 3 %}
-                        {% set listBreak = (students_countries | length) // nbColumns %}
-                        {% if ((students_countries | length) // nbColumns) > 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
-                        {% set span_size = 12 /  nbColumns %}
-                        <div class="col-md-{{ span_size }}">
-                            <ul class="no-img">
-                            {% for country_code, nb_students in students_countries %}
-                                <li><img src="{{ asset('img/drapeaux/' ~ country_code ~ '.png')}}" alt="{{  country_code }}" title="{{  country_code | upper | country('fr') }}" />
-                                &nbsp;
-                                {{ country_code | upper | country }}:  {{ nb_students }}</li>
-                                {% if loop.index % listBreak == 0  and loop.index != loop.last %}
-                                    </ul></div><div class="col-md-{{ span_size }}"><ul class="no-img">
-                                {% endif %}
-                            {% endfor %}
-                            </ul>
-                        </div> 
+                    <div id="worldlist_div" class="tab-pane">                       
+                        <div class="row">
+                            {% set nbColumns = 3 %}
+                            {% set listBreak = (students_countries | length) // nbColumns %}
+                            {% if ((students_countries | length) // nbColumns) > 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
+                            {% set span_size = 12 / nbColumns %}
+                            <div class="col-md-{{ span_size }}">
+                                <ul class="no-img">
+                                {% for country_code, nb_students in students_countries %}
+                                    <li><img src="{{ asset('img/drapeaux/' ~ country_code ~ '.png')}}" alt="{{  country_code }}" title="{{  country_code | upper | country('fr') }}" />
+                                    &nbsp;
+                                    {{ country_code | upper | country }}:  {{ nb_students }}</li>
+                                    {% if loop.index % listBreak == 0  and loop.index != loop.last %}
+                                        </ul></div><div class="col-md-{{ span_size }}"><ul class="no-img">
+                                    {% endif %}
+                                {% endfor %}
+                                </ul>
+                            </div> 
+                        </div>
                     </div> 
                     <div id="languages_div" class="tab-pane">
-                        <div class="widget-content">
+                        <div class="row">
                             {% set nbColumns = 3 %}
                             {% set listBreak = (languages | length) // nbColumns %}
                             {% if ((languages | length) // nbColumns) > 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
