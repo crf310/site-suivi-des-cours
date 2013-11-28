@@ -372,7 +372,11 @@ class Student {
      */
     public function getAge() {
         $now = new \DateTime('now');
-        return $this->birthdate->diff($now)->format('%Y');
+        if ($this->birthdate != null) {
+            return $this->birthdate->diff($now)->format('%Y');
+        } else {
+            return null;
+        }
     }
 
     /**
