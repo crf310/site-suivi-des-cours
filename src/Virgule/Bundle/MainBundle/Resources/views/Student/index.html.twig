@@ -43,8 +43,20 @@
                             </td>
                             <td>{{ entity['firstname'] }}</td>
                             <td>{{ entity['lastname'] }}</td>
-                            <td class="center">{{ entity['phoneNumber']|phoneNumber }}</td>
-                            <td class="center">{{ entity['cellphoneNumber']|phoneNumber }}</td>
+                            <td class="center">
+                                {% if entity['phoneNumber'] is empty %}
+                                    {% for i in 1..14 %}&nbsp;{% endfor %}
+                                {% else %}
+                                    {{ entity['phoneNumber']|phoneNumber }}
+                                {% endif %}
+                            </td>
+                            <td class="center">
+                                {% if entity['cellphoneNumber'] is empty %}
+                                    {% for i in 1..14 %}&nbsp;{% endfor %}
+                                {% else %}
+                                    {{ entity['cellphoneNumber']|phoneNumber }}
+                                {% endif %}
+                            </td>
                             <td>
                                 {% if courses_array is defined %}
                                     {% for course in courses_array[entity['student_id']] %}
