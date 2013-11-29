@@ -133,8 +133,7 @@ class ClassSessionController extends AbstractVirguleController {
        
         return array(
             'entity' => $classSession,
-            'form' => $form->createView(),
-            'course'=> $course
+            'form' => $form->createView()
         );
     }
 
@@ -200,8 +199,12 @@ class ClassSessionController extends AbstractVirguleController {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find ClassSession entity.');
         }
-
-        $editForm = $this->createForm(new ClassSessionType(), $entity);
+        
+        $organizationBranchId = $this->getSelectedOrganizationBranchId();
+        $currentTeacher = $this->getConnectedUser();
+        $semesterId = $this->getSelectedSemesterId();
+        
+        $editForm = $this->createForm(new ClassSessionType($this->getDoctrine(), $organizationBranchId, $currentTeacher, $semesterId), $entity, array('em' => $this->getDoctrine()->getManager()));
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -267,7 +270,7 @@ class ClassSessionController extends AbstractVirguleController {
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('classsession'));
+        return $this->redirect($this->generateUrl('classsession_index'));
     }
 
     private function createDeleteForm($id) {

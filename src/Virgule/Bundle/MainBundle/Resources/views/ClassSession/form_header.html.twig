@@ -1,0 +1,15 @@
+{% block stylesheets %}
+    <link href="{{ asset('css/bootstrap-wysihtml5.css') }}" media="screen" rel="stylesheet"/>
+    <style type="text/css" media="screen">
+    #summaryField {
+        height: 300px;
+        width: 90%;
+    }
+
+    </style>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/wysihtml5.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap3-wysihtml5.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-wysihtml5.fr-FR.js') }}"></script>
+{% endblock %}

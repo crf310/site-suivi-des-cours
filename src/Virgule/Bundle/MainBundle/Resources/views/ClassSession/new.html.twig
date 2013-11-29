@@ -1,54 +1,16 @@
 {% extends '::main_content.html.twig' %}
-{% block head %}    
+{% block head %}
     {{ parent() }}
-    {% block stylesheets %}
-        <link href="{{ asset('css/bootstrap-wysihtml5.css') }}" media="screen" rel="stylesheet"/>
-        <style type="text/css" media="screen">
-        #summaryField {
-            height: 300px;
-            width: 90%;
-        }
-        
-        </style>
-    {% endblock %}
-    {% block javascripts %}
-        <script type="text/javascript" src="{{ asset('js/wysihtml5.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/bootstrap3-wysihtml5.js') }}"></script>
-        <script src="{{ asset('js/bootstrap-wysihtml5.fr-FR.js') }}"></script>
-    {% endblock %}
+    {% include 'VirguleMainBundle:ClassSession:form_header.html.twig' %}
 {% endblock %}
 {% block content_title %}Ajouter un compte-rendu{% endblock %}
- {%block submenu %}{% endblock %}
+{% block submenu %}{% endblock %}
 {% block main_content %}
 <div class="row">
     <div class="col-md-12 center">
         <form action="{{ path('classsession_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate="novalidate" id="summary-form">
             <div class="widget-box">
-                <div class="widget-title">
-                        <span class="icon">
-                                <i class="icon-align-justify"></i>									
-                        </span>
-                        <h5>Contenu du compte-rendu</h5>
-                </div>
-                <div class="widget-content nopadding">
-                    {{ form_row(form.course, { 'label': 'Cours concerné'}) }}
-                    {% if "hidden" in form.course.vars.block_prefixes %}
-                    <div class="control-group not-form-horizontal">
-                        <label class="control-label">Cours concerné</label>
-                        <div class="not-form-horizontal controls">
-                            niveau {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevel.htmlColorCode, 'classLevelLabel': course.classLevel.label } %}
-                            &nbsp;le {{ course.dayOfWeek | day }} de {{ course.startTime | date('H\\hi') }} à {{ course.endTime | date('H\\hi') }}</div>
-                    </div>
-                    {% endif %}
-                    {{ form_row(form.sessionDate, { 'label': 'Date'}) }}
-                    {{ form_row(form.sessionTeacher, { 'label': 'Formateur'}) }}
-                    {{ form_row(form.summary, { 'label': 'Résumé du cours', 'id' : 'summaryField', }) }}       
-                    {{ form_row(form.documents, { 'label': 'Document(s) utilisé(s)', 'hint': 'Lier ici les documents utilisés lors de votre cours, tels que des exercices, des corrigés, des passages de livres etc.' }) }}
-                    {% if form.classSessionStudents is defined %}
-                        {{ form_row(form.classSessionStudents, { 'label': 'Apprenants inscrits et présents', 'hint': 'N\'apparaissent ici que les apprenants inscrits à votre cours' }) }}           
-                    {% endif %}
-                    {{ form_row(form.nonEnrolledStudentsField, { 'required' : false, 'label': 'Apprenants non inscrits mais présents exceptionnellement', 'hint': 'Enregistrez ici la présence d\'aprenants non-inscrits et présents exceptionnellement. Si cela fait plusieurs fois que vous enregistrez un apprenant "exceptionnellement", peut-être est-il temps de l\'inscrire ?' }) }}           
-                    {{ form_rest(form) }}
+                    {% include 'VirguleMainBundle:ClassSession:form.html.twig' with { 'form': form }  %}
                     <div class="form-actions">                                     
                         <input class="btn btn-success" type="submit" value="Enregistrer le compte-rendu" />
                     </div>
@@ -57,10 +19,4 @@
         </form>
     </div>
 </div>
-<script type="text/javascript">
-  $('#summaryField').wysihtml5({
-      locale: "fr-FR",      
-      "image": false, //Button to insert an image. Default true,
-  });
-</script>
 {% endblock %}
