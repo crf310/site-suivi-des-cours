@@ -36,6 +36,8 @@ class MenuBuilder extends ContainerAware {
         $menu['Apprenants']->setAttribute('class', 'submenu');
         $menu['Apprenants']->setLinkAttribute('class', 'students');
         
+        $menu['Apprenants']->addChild('Mes apprenants', array('route' => 'index_my_students'));
+        $menu['Apprenants']['Mes apprenants']->setLinkAttribute('class', 'students');        
         $menu['Apprenants']->addChild('Tous les inscrits', array('route' => 'student_index'));
         $menu['Apprenants']['Tous les inscrits']->setLinkAttribute('class', 'students');        
         $menu['Apprenants']->addChild('Inscrits à plusieurs cours', array('route' => 'student_index_manyclasses'));

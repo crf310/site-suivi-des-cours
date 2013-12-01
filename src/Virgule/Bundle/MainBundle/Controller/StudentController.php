@@ -73,6 +73,29 @@ class StudentController extends AbstractVirguleController {
     public function indexAction() {
         $students_lines = $this->getStudentManager()->loadAllEnrolled($this->getSelectedSemesterId());
         return array_merge(Array('title' => 'Tous les apprenants inscrits à un cours de cette session'), $students_lines);
+    }    
+    
+    /**
+     * Lists all Student entities.
+     *
+     * @Route("/mystudents", name="index_my_students")
+     * @Template("VirguleMainBundle:Student:index.html.twig")
+     */
+    public function indexMyStudentsAction() {
+        $em = $this->getDoctrine()->getManager();
+        $teacherId = $this->getUser()->getId();
+        $semesterId = $this->getSelectedSemesterId();
+        $myCourses = $em->getRepository('VirguleMainBundle:Course')->getCoursesByTeacher($semesterId, $teacherId);
+        
+        $courseIds = Array();
+        foreach($myCourses as $course) {
+            $courseIds[] = $course->getId();
+        }
+        
+        if (count($courseIds) > 0) {
+            $myStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledInCourses($courseIds);
+        }
+        return array_merge(Array('title' => 'Mes apprenants'), Array('students_array' => $myStudents));
     }
     
     /**
