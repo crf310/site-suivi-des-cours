@@ -67,8 +67,9 @@
                                 {% endif %}
                             </td>
                             <td class="center">
-                                <a href="{{ path('student_show', { 'id':  entity['student_id'] }) }}">Détails</a>&nbsp;
-                                <a href="{{ path('student_edit', { 'id':  entity['student_id'] }) }}">Modifier</a>
+                                <a href="{{ path('student_show', { 'id': entity['student_id'] }) }}"><button class="btn btn-default btn-xs"><i class="icon-eye-open"></i> Détails</button></a>
+                                <a href="{{ path('student_edit', { 'id': entity['student_id'] }) }}"><button class="btn btn-default btn-xs"><i class="icon-pencil"></i> Modifier</button></a>
+                                <a href="{{ path('student_preview_certificate', { 'id': entity['student_id'] }) }}"><button class="btn btn-default btn-xs"><i class="icon-certificate"></i> Attestation</button></a>
                             </td>
                         </tr>
                         {% endfor %}
