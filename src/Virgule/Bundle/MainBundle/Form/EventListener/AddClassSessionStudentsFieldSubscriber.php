@@ -45,12 +45,21 @@ class AddClassSessionStudentsFieldSubscriber implements EventSubscriberInterface
         if (null === $data) {
             return;
         }
-
+        
         $courseId = null;
         if (null !== $data->getCourse()) {
             $courseId = $data->getCourse()->getId();
+        }        
+        $selectedEnrolledStudents = new ArrayCollection();
+        if (null !== $data->getClassSessionStudents()) {
+            $selectedEnrolledStudents = $data->getClassSessionStudents();
         }
-        $this->customizeForm($form, $courseId);
+        $selectedNonEnrolledStudents = new ArrayCollection();
+        if (null !== $data->getNonEnrolledClassSessionStudents()) {
+            $selectedNonEnrolledStudents = $data->getNonEnrolledClassSessionStudents();
+        }
+        
+        $this->customizeForm($form, $courseId, $selectedEnrolledStudents, $selectedNonEnrolledStudents);
     }
 
     public function preBind(FormEvent $event) {
@@ -61,9 +70,9 @@ class AddClassSessionStudentsFieldSubscriber implements EventSubscriberInterface
         $this->customizeForm($form, $course);
     }
 
-    protected function customizeForm($form, $courseId) {
+    protected function customizeForm($form, $courseId, $selectedEnrolledStudents, $selectedNonEnrolledStudents) {
         if ($courseId) {
-            $enrolledStudentsField = $this->factory->createNamed('classSessionStudents', 'entity', new ArrayCollection(), array(
+            $enrolledStudentsField = $this->factory->createNamed('classSessionStudents', 'entity', $selectedEnrolledStudents, array(
                 'class' => 'VirguleMainBundle:Student',
                 'query_builder' => function(EntityRepository $er) use ($courseId) {
                     return $er->createQueryBuilder('s')
@@ -80,7 +89,7 @@ class AddClassSessionStudentsFieldSubscriber implements EventSubscriberInterface
             ));
             $form->add($enrolledStudentsField);
                     
-            $nonEnrolledStudentsField = $this->factory->createNamed('nonEnrolledStudentsField', 'entity', new ArrayCollection(), array(
+            $nonEnrolledStudentsField = $this->factory->createNamed('nonEnrolledStudentsField', 'entity', $selectedNonEnrolledStudents, array(
                 'class'              => 'VirguleMainBundle:Student',
                 'query_builder' => function(EntityRepository $er) use ($courseId) {
                     return $er->createQueryBuilder('s')

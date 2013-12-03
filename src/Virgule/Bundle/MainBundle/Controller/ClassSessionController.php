@@ -230,15 +230,20 @@ class ClassSessionController extends AbstractVirguleController {
             throw $this->createNotFoundException('Unable to find ClassSession entity.');
         }
 
+        
+        $organizationBranchId = $this->getSelectedOrganizationBranchId();
+        $currentTeacher = $this->getConnectedUser();
+        $semesterId = $this->getSelectedSemesterId();
+        
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new ClassSessionType(), $entity);
+        $editForm = $this->createForm(new ClassSessionType($this->getDoctrine(), $organizationBranchId, $currentTeacher, $semesterId), $entity, array('em' => $this->getDoctrine()->getManager()));
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('classsession_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('classsession_show', array('id' => $id)));
         }
 
         return array(
