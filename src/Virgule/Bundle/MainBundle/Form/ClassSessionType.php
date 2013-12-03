@@ -37,7 +37,7 @@ class ClassSessionType extends AbstractType {
                 ->add('sessionDate', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
-                    'attr' => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy', 'value' => $sNow)))
+                    'attr' => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy')))
                 ->add('summary')          
                 ->add('sessionTeacher', 'entity', array(
                         'class' => 'VirguleMainBundle:Teacher', 
