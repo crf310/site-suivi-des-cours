@@ -12,7 +12,8 @@
             <div class="widget-box">
                     {% include 'VirguleMainBundle:ClassSession:form.html.twig' with { 'form': edit_form }  %}
                     <div class="form-actions">                                     
-                        <input class="btn btn-success" type="submit" value="Enregistrer les modifications" />
+                        <input class="btn btn-success" type="submit" value="Enregistrer les modifications" />                        
+                        <a class="btn btn-default" href="{{ path('classsession_show', { 'id': entity.id }) }}">Annuler</a>
                     </div>
                 </div>
             </div>        
