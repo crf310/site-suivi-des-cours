@@ -13,13 +13,13 @@
             <ul class="dropdown-menu">
                 {% for semester in app.session.get('allSemesters') %}
                     <li>
-                    <a class="sAdd" title="" href="#">
+                    <a class="sAdd" title="" href="{{ path('semester_switch', { 'id': semester.id }) }}">
+                        du {{ semester.startDate|date("d/m/Y") }} au {{ semester.endDate|date("d/m/Y") }}
                         {% if currentSemester.id == semester.id %}
                             <i class="icon-ok"></i>
                         {% else %}
-                            <i class="icon-empty"></i>
+                            <i class="icon"></i>
                         {% endif %}
-                        du {{ semester.startDate|date("d/m/Y") }} au {{ semester.endDate|date("d/m/Y") }}
                     </a>
                     </li>
                 {% endfor %}

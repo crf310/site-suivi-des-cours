@@ -36,6 +36,12 @@ class SemesterManager extends BaseManager {
         return true;
     }
     
+    public function setSelectedSemesterAsCurrent($semesterId) {
+        $semester = $this->getRepository()->find($semesterId);  
+        
+        $session = $this->request->getSession();       
+        $session->set('currentSemester', $semester);
+    }
     /**
      * Checks if newly created semester could be the current
      * if yes, sets it into session and returns true

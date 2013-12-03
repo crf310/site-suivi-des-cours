@@ -23,6 +23,19 @@ use Virgule\Bundle\MainBundle\Event\NewSemesterEvent;
  */
 class SemesterController extends AbstractVirguleController {
     
+    
+    /**
+     * Load selected semester info into session
+     *
+     * @Route("/{id}/switch", name="semester_switch")
+     * @Template()
+     */
+    public function switchAction($id) {
+        $semesters = $this->getSemesterManager()->setSelectedSemesterAsCurrent($id);
+        
+        return $this->redirect($this->generateUrl('welcome'));
+    }
+    
     /**
      * Lists all Semester entities.
      *
