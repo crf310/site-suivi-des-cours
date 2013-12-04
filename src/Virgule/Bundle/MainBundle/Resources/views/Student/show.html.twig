@@ -84,7 +84,7 @@
                     <div class="control-group">
                         <label class="control-label">Inscrit{% if entity.gender =='F'%}e{% endif %} le </label>
                         <div class="controls">
-                            {% if entity.registrationDate == "1970-01-à1" %}
+                            {% if entity.registrationDate|date('Y-m-d') != "000-00-00" %}
                                 {{ entity.registrationDate|date('d/m/Y') }}
                             {% endif %}
                                 &nbsp;
