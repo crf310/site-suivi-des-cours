@@ -83,7 +83,7 @@
                     <div id="certificateBody" class="row body">
                         <div class="col-md-12">
                             Je soussigné, {{ org_branch.presidentName }}, Président de la {{ org_branch.name }}, certifie que <br />
-                            <strong>{{ student.firstname }} {{ student.lastname }}</strong> suit des cours de « français langue étrangère » au sein de notre service de lutte contre l’illettrisme, depuis le {{ student.registrationDate|date('d/m/Y') }}.<br />
+                            <strong>{% if student.gender == 'F' %}Mme{% else %}M.{% endif %} {{ student.firstname }} {{ student.lastname }}</strong> suit des cours de « français langue étrangère » au sein de notre service de lutte contre l’illettrisme, depuis le {{ student.registrationDate|date('d/m/Y') }}.<br />
                                         <br />
                             La présente attestation est délivrée pour servir et valoir ce que de droit.<br />
                                         <br />
