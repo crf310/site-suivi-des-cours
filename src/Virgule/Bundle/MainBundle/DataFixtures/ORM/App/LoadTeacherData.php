@@ -15,12 +15,13 @@ use Virgule\Bundle\MainBundle\Entity\Teacher;
 class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface {
     public function load(ObjectManager $manager)
     {
+        $username = "root_new";
         $userAdmin = new Teacher();
-        $userAdmin->setUsername('root_new');
+        $userAdmin->setUsername($username);
         $userAdmin->setPassword('root1234');        
-        $userAdmin->setFirstName("root");
+        $userAdmin->setFirstName($username);
         $userAdmin->setLastName("");
-        $userAdmin->setEmail("root@example.com");
+        $userAdmin->setEmail($username . "@example.com");
         $userAdmin->setRegistrationDate(new \DateTime('now'));
         // $userAdmin->setFkRoleId($this->getReference('admin-role')->getId());
         $userAdmin->setRole($this->getReference('admin-role'));
