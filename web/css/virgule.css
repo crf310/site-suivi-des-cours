@@ -389,6 +389,9 @@ a.course_details {
   vertical-align: top;
   margin-right: 4px;
 }
+textarea {
+    color: #000000;
+}
 
 /* Password */
 #pwd-progress-bar {
