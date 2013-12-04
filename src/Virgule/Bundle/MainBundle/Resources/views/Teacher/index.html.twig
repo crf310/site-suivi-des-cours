@@ -6,7 +6,7 @@
     <script type='text/javascript'>
     {% set emailAddresses = "" %}
     {% for entity in entities %}
-       {% set emailAddresses = emailAddresses ~ '\"' ~ entity.firstName ~ ' ' ~ entity.lastName ~ '\" <' ~ entity.emailAddress ~ '>, ' %}
+       {% set emailAddresses = emailAddresses ~ '\"' ~ entity.firstName ~ ' ' ~ entity.lastName ~ '\" <' ~ entity.email ~ '>, ' %}
     {% endfor %}
     $(document).ready(function(){
         $('a#copy-button').zclip({
@@ -63,7 +63,7 @@
                         <td>{{ entity.firstName }} {{ entity.lastName }}</td>
                         <td>{{ entity.phoneNumber|phoneNumber }}</td>
                         <td>{{ entity.cellphoneNumber|phoneNumber }}</td>
-                        <td><a href="mailto:{{ entity.emailAddress }}">{{ entity.emailAddress }}</a></td>
+                        <td><a href="mailto:{{ entity.email }}">{{ entity.email }}</a></td>
                         <td>{{ entity.role }}</td>
                         <td class="entity_actions">
                             <a href="{{ path('teacher_show', { 'id': entity.id }) }}"><button class="btn btn-default btn-xs"><i class="icon-eye-open"></i> Détails</button></a>

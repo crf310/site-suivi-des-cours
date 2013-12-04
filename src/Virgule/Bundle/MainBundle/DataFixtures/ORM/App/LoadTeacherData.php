@@ -16,13 +16,18 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $userAdmin = new Teacher();
-        $userAdmin->setUsername('root');
+        $userAdmin->setUsername('root_new');
         $userAdmin->setPassword('root1234');        
-        $userAdmin->setFirstName("Root");
-        $userAdmin->setLastName("User");
+        $userAdmin->setFirstName("root");
+        $userAdmin->setLastName("");
+        $userAdmin->setEmail("root@example.com");
         $userAdmin->setRegistrationDate(new \DateTime('now'));
         // $userAdmin->setFkRoleId($this->getReference('admin-role')->getId());
         $userAdmin->setRole($this->getReference('admin-role'));
+        $userAdmin->setEnabled(true);
+        $userAdmin->setLocked(false);
+        $userAdmin->setExpired(false);
+        $userAdmin->setCredentialsExpired(false);
 
         $manager->persist($userAdmin);
                 

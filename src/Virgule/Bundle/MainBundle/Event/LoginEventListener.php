@@ -24,10 +24,6 @@ class LoginEventListener {
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event) {
         $token = $event->getAuthenticationToken();
         if ($token && $token->getUser() instanceof Teacher) {
-            $teacher = $token->getUser();
-            $teacher->setLastConnectionDate(new \DateTime('now'));
-            $this->entityManager->flush();
-
             $request = $event->getRequest();
             $session = $request->getSession();
 

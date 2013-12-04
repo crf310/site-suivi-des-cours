@@ -12,8 +12,8 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
-        main:
-            entity: { class: Virgule\Bundle\MainBundle\Entity\Teacher, property: username }
+        fos_userbundle:
+            id: fos_user.user_provider.username
 
     firewalls:            
         dev:

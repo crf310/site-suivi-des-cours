@@ -4,6 +4,7 @@
                 <i class="icon-user"></i>									
             </span>
             <h5>Informations personnelles et coordonnées</h5>
+            {% if not form.vars.valid %}<span class="label label-danger">{{ form.vars.errors|length > 0 }} erreur{% if form.vars.errors|length > 1 %}s{% endif %} </span>{% endif %}
         </div>
         <div class="widget-content nopadding">
             {{ form_row(form.file, { 'label': 'Photo', 'hint':'L\'image sera redimensionnée à 400x400' }) }}
@@ -12,7 +13,7 @@
             {{ form_row(form.gender, { 'label': 'Sexe' }) }}                
             {{ form_row(form.birthdate, { 'label': 'Date de naissance', 'hint':'Cliquez une ou deux fois sur l\'en-tête du calendrier pour naviguer plus vite entre les années' }) }}                
             {{ form_row(form.nativeCountry, { 'label': 'Pays d\'origine' }) }}
-            {{ form_row(form.spokenLanguages, { 'label': 'Langue(s) parlée(s)', 'hint' : 'Tapez une partie de la langue recherchée pour y accéder rapidement' }) }}
+            {{ form_row(form.spokenLanguages, { 'label': 'Langue(s) parlée(s)', 'hint' : 'Tapez une partie de la langue recherchée pour y accéder rapidement. Vous pouvez sélectionner plusieurs langues.' }) }}
             {{ form_row(form.arrivalDate, { 'label': 'Date d\'arrivée en France' }) }}
             {{ form_row(form.phoneNumber, { 'label': 'Téléphone fixe' }) }}
             {{ form_row(form.cellphoneNumber, { 'label': 'Téléphone portable' }) }}

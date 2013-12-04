@@ -3,7 +3,8 @@
     <head>
         <title>Alphabétisation - Croix-Rouge Française</title>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />    
+        <link rel="icon" type="image/png" href="{{ asset('img/icons/red-cross.png') }}" />
         {% stylesheets
             'css/bootstrap.min.css'
             'css/font-awesome.css'
@@ -20,7 +21,7 @@
             'js/jquery.jpanelmenu.min.js'     
             'js/jquery.nicescroll.min.js'
             'js/unicorn.js'
-            'js/unicorn.form_common.js'%}
+            'js/unicorn.form_common.js' %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
         <style type="text/css" title="currentStyle" media="screen">          
@@ -44,7 +45,7 @@
                 box-shadow: 0 1px 2px rgba(0,0,0,.05);  
             }
             #loginbox {
-                height: 260px;   
+                height: 290px;   
                 opacity: 0.92;
                 margin-top: 50px;
             }
@@ -57,9 +58,10 @@
         </div>
         <div class="container" id="main-container">
             <div id="loginbox">            
-                <form id="loginform" action="{{ path('login_check') }}" method="post">
+                <form id="loginform" action="{{ path("fos_user_security_check") }}" method="post">
                     <h2>Service alphabétisation</h2>
-                    <input type="hidden" name="_target_path" value="/welcome" />                    
+                    <input type="hidden" name="_target_path" value="/welcome" />
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />                    
                     <div class="input-group input-sm">
                         <select name="organization_branch_id" class="select">
                             {% for organization_branch in organization_branches %}
@@ -72,7 +74,11 @@
                     </div>
                     <div class="input-group input-sm {% if error %}has-error{% endif %}">
                         <span class="input-group-addon"><i class="icon-lock"></i></span><input class="form-control" type="password" name="_password"  placeholder="Mot de passe" />
-                    </div>         
+                    </div>
+                    <div class="input-group input-sm">
+                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                        <label for="remember_me">Se rappeler moi</label>
+                    </div>
                     <div class="form-actions clearfix">
                         <div class="pull-left">
                             <a href="#recoverform" class="flip-link to-recover grey">Mot de passe oublié ?</a>
