@@ -19,8 +19,8 @@
                             <th></th>
                             <th>&nbsp;</th>
                             <th>&nbsp;</th>
-                            <th>Prénom</th>
                             <th>Nom</th>
+                            <th>Prénom</th>
                             <th>Téléphone fixe</th>
                             <th>Téléphone portable</th>
                             <th>Inscrit en</th>
@@ -41,8 +41,8 @@
                                     <img src="{{ asset('img/icons/user.png') }}" />
                                 {% endif %}
                             </td>
-                            <td>{{ entity['firstname'] }}</td>
                             <td>{{ entity['lastname'] }}</td>
+                            <td>{{ entity['firstname'] }}</td>
                             <td class="center">
                                 {% if entity['phoneNumber'] is empty %}
                                     {% for i in 1..14 %}&nbsp;{% endfor %}
