@@ -99,7 +99,7 @@ class StudentManager extends BaseManager {
         }
         
         $courses = Array();
-        if (count($courses) > 0) {
+        if (count($courseIds) > 0) {
             $classSessionRepository = $this->em->getRepository('VirguleMainBundle:ClassSession');
             $classSessions = $classSessionRepository->getNumberOfClassSessionsPerCourse($courseIds);
             $classSessionsAttended = $classSessionRepository->getNumberOfClassSessionsPerCourseAndStudent($courseIds, $studentId);
