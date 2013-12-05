@@ -79,12 +79,12 @@
                 <div class="widget-content nopadding">
                     <div class="control-group">
                         <label class="control-label">Prénom / Nom</label>
-                        <div class="controls">{{ entity.firstName }} {{ entity.lastName | upper }}</div>
+                        <div class="controls">{{ entity.firstName }} {{ entity.lastName | upper }}&nbsp;</div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">Inscrit{% if entity.gender =='F'%}e{% endif %} le </label>
                         <div class="controls">
-                            {% if entity.registrationDate|date('Y-m-d') != "000-00-00" %}
+                            {% if entity.registrationDate|date('Y-m-d') != "1970-01-01" %}
                                 {{ entity.registrationDate|date('d/m/Y') }}
                             {% endif %}
                                 &nbsp;
