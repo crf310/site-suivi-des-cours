@@ -97,19 +97,21 @@ class StudentManager extends BaseManager {
         foreach ($courses as $course) {
             $courseIds[] = $course->getId();
         }
-        $classSessionRepository = $this->em->getRepository('VirguleMainBundle:ClassSession');
-        $classSessions = $classSessionRepository->getNumberOfClassSessionsPerCourse($courseIds);
-        $classSessionsAttended = $classSessionRepository->getNumberOfClassSessionsPerCourseAndStudent($courseIds, $studentId);
         
         $courses = Array();
-        foreach ($classSessions as $classSession) {
-            $courses[$classSession['course_id']] = Array('nb_classsessions' => $classSession['nb_classsessions'], 'nb_classsessions_attended' => 0);
-        }
+        if (count($courses) > 0) {
+            $classSessionRepository = $this->em->getRepository('VirguleMainBundle:ClassSession');
+            $classSessions = $classSessionRepository->getNumberOfClassSessionsPerCourse($courseIds);
+            $classSessionsAttended = $classSessionRepository->getNumberOfClassSessionsPerCourseAndStudent($courseIds, $studentId);
         
-        foreach ($classSessionsAttended as $classSessionAttended) {
-            $courses[$classSession['course_id']]['nb_classsessions_attended'] = $classSessionAttended['nb_classsessions'];
+            foreach ($classSessions as $classSession) {
+                $courses[$classSession['course_id']] = Array('nb_classsessions' => $classSession['nb_classsessions'], 'nb_classsessions_attended' => 0);
+            }
+
+            foreach ($classSessionsAttended as $classSessionAttended) {
+                $courses[$classSession['course_id']]['nb_classsessions_attended'] = $classSessionAttended['nb_classsessions'];
+            }
         }
-        
         return $courses;
     }
 }
