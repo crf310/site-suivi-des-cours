@@ -226,7 +226,7 @@
                                                 {% if course.semester.id == app.session.get('currentSemester').id %}<i class="icon-ok"></i>{% endif %}
                                             </li>
                                         {% endif %}
-                                            <li><a href="#"> <i class="icon-empty"></i>
+                                            <li><a href="{{ path('course_show', { 'id': course.id }) }}"> <i class="icon-empty"></i>
                                                 {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevel.htmlColorCode, 'classLevelLabel': course.classLevel.label } %} le {{ course.dayOfWeek | day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }} : 
                                                 {% if nbClassSessionsAttended is not null %}
                                                     {% if nbClassSessionsAttended[course.id] is defined %}
