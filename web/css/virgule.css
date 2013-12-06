@@ -392,6 +392,9 @@ a.course_details {
 textarea {
     color: #000000;
 }
+.checkbox-label {
+    font-weight: normal;
+}
 
 /* Password */
 #pwd-progress-bar {
