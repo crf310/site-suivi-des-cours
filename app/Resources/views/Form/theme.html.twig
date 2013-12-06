@@ -55,6 +55,7 @@
 {% block checkbox_widget %}
 {% spaceless %}
     <label class="checkbox-label"><input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />&nbsp;{{ label|trans({}, translation_domain) }}</label>
+    <br />
 {% endspaceless %}
 {% endblock checkbox_widget %}
     
@@ -67,7 +68,7 @@
 {% endblock radio_widget %}
     
 {% block choice_widget_expanded %}
-{% spaceless %}
+{% spaceless %}      
     <div class="left_list">
     {% for child in form %}
         {{ form_widget(child) }}<br />
@@ -155,6 +156,11 @@
     {% if label is empty %}
         {% set label = name|humanize %}
     {% endif %}
-    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}{% if required %} *{% endif %}</label>
+    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}{% if required %} *{% endif %}
+    <br />
+    {% if add_check_all is defined and add_check_all == true %}
+        <button type="button" class="btn btn-default btn-xs" id="checkAll" value="noneChecked" ><i class="icon-check"></i> Tout cocher</button>
+    {% endif  %}
+    </label>
 {% endspaceless %}
 {% endblock form_label %}
