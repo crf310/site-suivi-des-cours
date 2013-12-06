@@ -1,4 +1,12 @@
 /* Main Application */
+.alert-global {
+  position: fixed;
+    top: 5px;
+    left: 5%;
+    width: 90%;
+    z-index:99;
+}
+
 #content {
   min-height: 650px;
 }
@@ -394,6 +402,12 @@ textarea {
 }
 .checkbox-label {
     font-weight: normal;
+}
+
+.fade{
+    opacity:0;
+    -webkit-transition:opacity 5.25s linear;
+    transition:opacity 5.25s linear
 }
 
 /* Password */

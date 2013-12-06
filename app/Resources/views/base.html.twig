@@ -7,6 +7,14 @@
     <title>Alphabétisation - {{ app.session.get('organizationBranchName') }}</title>
   </head>
   <body>
+    <div class="alert-global">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert alert-flash alert-success fade in">
+                {{ flashMessage|raw }}
+                <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+            </div>
+        {% endfor %}
+    </div>
     {% include '::header.html.twig' %}
     {% include '::sidebar.html.twig' %}
     <div id="content">{% block body %}{% endblock %}</div>

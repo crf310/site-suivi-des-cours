@@ -171,6 +171,8 @@ class ClassSessionController extends AbstractVirguleController {
             $em->persist($entity);           
             $em->flush();
 
+            $this->addFlash('Votre compte-rendu pour le ' . $entity->getSessionDate()->format('d/m/Y') . ' a bien été enregistré : <a href="' . $this->generateUrl('classsession_show', Array('id' => $entity->getId())) . '">n°' . $entity->getId() . '</a>');
+            
             return $this->redirect($this->generateUrl('classsession_index'));
         }
         

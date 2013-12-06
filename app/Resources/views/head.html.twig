@@ -27,7 +27,12 @@
         'js/jquery.nicescroll.min.js'
         'js/unicorn.js'
         'js/unicorn.form_common.js'
-        'js/unicorn.tables.js'        
+        'js/unicorn.tables.js' 
         'js/virgule.js'  filter='yui_js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            createAutoClosingAlert(".alert-flash", 4000);
+        });
+    </script>     
