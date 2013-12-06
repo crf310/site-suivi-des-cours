@@ -67,7 +67,9 @@ class AddClassSessionStudentsFieldSubscriber implements EventSubscriberInterface
         $course = $data['course'];
         $form = $event->getForm();
 
-        $this->customizeForm($form, $course);
+        $selectedEnrolledStudents = new ArrayCollection();
+        $selectedNonEnrolledStudents = new ArrayCollection();
+        $this->customizeForm($form, $course, $selectedEnrolledStudents, $selectedNonEnrolledStudents);
     }
 
     protected function customizeForm($form, $courseId, $selectedEnrolledStudents, $selectedNonEnrolledStudents) {
