@@ -15,7 +15,7 @@ use Virgule\Bundle\MainBundle\Entity\Teacher;
 class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface {
     public function load(ObjectManager $manager)
     {
-        $username = "root_new";
+        $username = "root";
         $userAdmin = new Teacher();
         $userAdmin->setUsername($username);
         $userAdmin->setPassword('root1234');        
