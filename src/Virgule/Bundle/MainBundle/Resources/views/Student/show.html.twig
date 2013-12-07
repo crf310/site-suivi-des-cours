@@ -3,37 +3,7 @@
     {{ parent() }}
     {% block javascripts %}
         <script type='text/javascript'>
-        $(function() {
-            $('#classlevelsuggested_form').hide();
-            
-            $('#show_classlevelsuggested_form').click(function() {
-                $('#classlevelsuggested_form').show();
-                return false;
-            });     
-                    
-            $('#change-student-level').click(function(e){
-                e.preventDefault();
-                bootbox.dialog({
-                    message: 
-                    title: "Changer le niveau conseillé pour {{ entity.firstName }} {{ entity.lastName }}",
-                    buttons: {
-                        no: {
-                            label: "Annuler",
-                            className: "btn-default"
-                        },
-                        yes: {
-                            label: "Mettre à jour",
-                            className: "btn-success",
-                            callback: function() {
-                                $("#change-student-level-form").submit();
-                            }
-                        }
-                     }
-                }).html;
-            });
-            
-            
-    $(function(){
+        $(function(){
             $('#delete-student').click(function(e){
                 e.preventDefault();
                 bootbox.dialog({
@@ -249,8 +219,7 @@
                                 {% endif %}                        
                             </div>
                             <div id="tabComments" class="tab-pane">
-                                {% include 'VirguleMainBundle:Comment:index.html.twig' with {'comments': entity.comments }  %}                            
-                                <a class="btn btn-default" id="add-comment">Ajouter un commentaire</a>
+                                {% include 'VirguleMainBundle:Comment:index.html.twig' with {'comments': entity.comments, target_route: 'student_comment_create', 'target_id': entity.id }  %}  
                             </div>
                         </div>                            
                     </div>

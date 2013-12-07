@@ -152,14 +152,16 @@
     {% if required %}
         {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
     {% endif %}
-    {% if label is empty %}
-        {% set label = name|humanize %}
+    {% if label is not sameas(false) %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}{% if required %} *{% endif %}
+        {% if add_check_all is defined and add_check_all == true %}
+            <br />
+            <button type="button" class="btn btn-default btn-xs" id="checkAll" value="noneChecked" ><i class="icon-check"></i> Tout cocher</button>
+        {% endif  %}
+        </label>
     {% endif %}
-    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}{% if required %} *{% endif %}
-    {% if add_check_all is defined and add_check_all == true %}
-        <br />
-        <button type="button" class="btn btn-default btn-xs" id="checkAll" value="noneChecked" ><i class="icon-check"></i> Tout cocher</button>
-    {% endif  %}
-    </label>
 {% endspaceless %}
 {% endblock form_label %}

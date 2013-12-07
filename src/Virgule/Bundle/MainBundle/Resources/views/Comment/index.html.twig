@@ -1,4 +1,4 @@
-<!--{% include 'VirguleMainBundle:Comment:new.html.twig' with {'commentForm': commentForm, 'target_id': entity.id, 'target_route': 'student_comment_create' }  %}        -->
+{% include 'VirguleMainBundle:Comment:new.html.twig' with { target_route: target_route, 'target_id': target_id } %}
 <div class="widget-content">        
     <ul class="recent-comments">
     {% if comments.count > 0 %}
@@ -11,7 +11,8 @@
             </li>
         {% endfor %}
     {% else %}
-        Aucun commentaire trouvé.
+        <div class="center">Aucun commentaire trouvé</div>
     {% endif %}
-    </ul>
+    </ul>                              
+    <a class="btn btn-default" id="add-comment">Ajouter un commentaire</a>
 </div>

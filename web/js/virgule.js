@@ -21,3 +21,26 @@ window.setTimeout(function() {
           $(this).remove(); 
      });
 }, 5000);
+
+$(function(){
+    $('#add-comment').click(function(e){
+        e.preventDefault();
+        bootbox.dialog({
+            message: $('#comment-modal-body').html(),
+            title: "Ajouter un commentaire",
+            buttons: {
+                no: {
+                    label: "Annuler",
+                    className: "btn-default"
+                },
+                yes: {
+                    label: "Enregistrer le commentaire",
+                    className: "btn-success",
+                    callback: function() {
+                        $(".bootbox #comment-form").submit();
+                    }
+                }
+             }
+        });
+    });
+});
