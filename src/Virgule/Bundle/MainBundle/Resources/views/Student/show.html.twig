@@ -30,7 +30,7 @@
 {% endblock %}
 {% block content_title %}Fiche apprenant: {{ entity.firstName }} {{ entity.lastName }}{% endblock %}
 {%block submenu %}
-    <a class="btn" href="{{ path('student_preview_certificate', { 'id': entity.id }) }}"> <i class="my-icon-user-certificate"></i>Générer une attestation</button>
+    <a class="btn" href="{{ path('student_preview_certificate', { 'id': entity.id }) }}"> <i class="my-icon-user-certificate"></i>Générer une attestation</a>
     <a class="btn" href="{{ path('student_edit', { 'id': entity.id }) }}"> <i class="my-icon-user_edit"></i>Modifier la fiche</a>
     <a class="btn" href="#" id="delete-student"> <i class="my-icon-user_delete"></i>Supprimer la fiche</a>
     <form id="delete-student-form" action="{{ path('student_delete', { 'id': entity.id }) }}" method="post">{{ form_widget(delete_form) }}</form>
