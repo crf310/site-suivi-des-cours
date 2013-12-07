@@ -5,8 +5,7 @@
         <ul class="dropdown-menu">
             {% for course in courses %}
                 <li><a href="{{ path('classsession_add', { 'id': course.course_id }) }}">
-                    {{ course.teacher_firstName }} {{ course.teacher_lastName|first }}., 
-                    {{ course.classlevel_name }}, 
+                    {{ course.teacher_firstName }} {{ course.teacher_lastName|first }}.
                     {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classlevel_colorcode, 'classLevelLabel': course.classlevel_name } %}
                     {{ course.dayOfWeek|day }} {{ course.startTime|date('H:i') }} - {{ course.endTime|date('H:i') }}</a></li>
             {% endfor %}
