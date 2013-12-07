@@ -31,6 +31,7 @@ class ClassSessionController extends AbstractVirguleController {
      */
     public function indexAction($id = null) {
         $classLevels = $this->getClassLevelRepository()->findAll();
+        $courses = $this->getCourseRepository()->loadAll($this->getSelectedSemesterId());
         
         if ($id == null) {
             $classSessions = $this->getClassSessionRepository()->loadAll($this->getSelectedSemesterId());
@@ -38,7 +39,7 @@ class ClassSessionController extends AbstractVirguleController {
             $classSessions = $this->getClassSessionRepository()->loadAllClassSessionByClassLevel($id, $this->getSelectedSemesterId());
         }
         
-        return array('classSessions' => $classSessions, 'classLevels' => $classLevels, 'currentClassLevelId' => $id);
+        return array('classSessions' => $classSessions, 'classLevels' => $classLevels, 'currentClassLevelId' => $id, 'courses' => $courses);
     }
     
     /**
@@ -245,6 +246,7 @@ class ClassSessionController extends AbstractVirguleController {
             $em->persist($entity);
             $em->flush();
 
+            $this->addFlash('Le compte-rendu n<sup>o</sup>' . $entity->getId() . ' a bien été mis à jour.');
             return $this->redirect($this->generateUrl('classsession_show', array('id' => $id)));
         }
 
