@@ -44,3 +44,26 @@ $(function(){
         });
     });
 });
+
+$(function(){
+    $('#change-student-level').click(function(e){
+        e.preventDefault();
+        bootbox.dialog({
+            message: $('#change-student-level-modal-body').html(),
+            title: "Modifier le niveau de l\'apprenant",
+            buttons: {
+                no: {
+                    label: "Annuler",
+                    className: "btn-default"
+                },
+                yes: {
+                    label: "Mettre à jour le niveau",
+                    className: "btn-success",
+                    callback: function() {
+                        $(".bootbox #change-student-level-form").submit();
+                    }
+                }
+             }
+        });
+    });
+});
