@@ -404,12 +404,6 @@ textarea {
     font-weight: normal;
 }
 
-.fade{
-    opacity:0;
-    -webkit-transition:opacity 5.25s linear;
-    transition:opacity 5.25s linear
-}
-
 /* Password */
 #pwd-progress-bar {
     margin-top: 5px;

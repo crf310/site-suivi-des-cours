@@ -16,7 +16,8 @@ $(document).ready(function () {
     });
 });
 
-function createAutoClosingAlert(selector, delay) {
-   var alert = $(selector).alert();
-   window.setTimeout(function() { alert.alert('close') }, delay);
-}
+window.setTimeout(function() {
+     $(".alert-global").fadeTo(500, 0).slideUp(500, function(){
+          $(this).remove(); 
+     });
+}, 5000);
