@@ -15,7 +15,7 @@
                     <h5>Mes cours</h5>
                 </div>
                 <div class="widget-content updates">
-                {% if myCourses is empty %}Vous ne dirigez aucun cours pour le moment !{% else %}
+                {% if myCourses is empty %}<div class="center">Vous ne dirigez aucun cours pour le moment</div>{% else %}
                     {% for course in myCourses %}
                     <div class="new-update clearfix">
                         <div class="update-done">						
