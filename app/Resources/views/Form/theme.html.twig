@@ -1,52 +1,50 @@
-{% block form_errors %}
-{% spaceless %}
-    {% if errors|length > 0 %}
-    <div class="alert alert-error alert-padding">
-            {% for error in errors %}
-                {{
-                    error.messagePluralization is null
-                        ? error.messageTemplate|trans(error.messageParameters, 'validators')
-                        : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
-                }}<br />
-            {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
-{% endspaceless %}
-{% endblock form_errors %}
-
 {% block form_widget_simple %}
 {% spaceless %}
     {% set type = type|default('text') %}
+    {% set attr = attr|merge({'class': (attr.class|default('form-control input-sm'))|trim}) %}
     <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
     <br />
     {% if open_houses_dates is defined and open_houses_dates is not null %}
         {% for open_house_date in open_houses_dates %}
-            &nbsp;<input class="btn" type="button" value="{{ open_house_date | date('w') | day }} {{ open_house_date | date('d/m') }}" onClick="setRegistrationDate('{{ open_house_date | date('d/m/Y') }}');"/>
+            <button class="btn setopenhouse" value="{{ open_house_date | date('d/m/Y') }}"/>
+                <i class="icon-group"></i> {{ open_house_date | date('w') | day }} {{ open_house_date | date('d/m') }}
+            </button>&nbsp;
         {% endfor %}
     {% endif %}
 {% endspaceless %}
 {% endblock form_widget_simple %}
 
 {% block file_widget %}
-    <div class="fileupload fileupload-new" data-provides="fileupload">
-        <div class="input-append">
-            <div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Selectionner</span><span class="fileupload-exists">Modifier</span><input type="file" {{ block('widget_attributes') }} /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Supprimer</a>
-        </div>
+    <div class="fileinput fileinput-new" data-provides="fileinput">
+      <div class="input-group">
+        <div class="form-control uneditable-input span3" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+        <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Sélectionner un fichier</span><span class="fileinput-exists">Modifier</span><input type="file" {{ block('widget_attributes') }}></span>
+        <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Supprimer</a>
+      </div>
     </div>
 {% endblock %}
+            
 {% block picture_widget %}
     {% spaceless %}
-    <div class="fileupload fileupload-new" data-provides="fileupload">
-        <div class="fileupload-preview thumbnail"></div>
+    <div class="fileinput fileinput-new" data-provides="fileinput">
+        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 200px;">
+        </div>
         <div>
-            <span class="btn btn-file"><span class="fileupload-new">Sélectionner une image</span>&nbsp;<span class="fileupload-exists">Modifier</span><input type="file" {{ block('widget_attributes') }} /></span>
-            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Supprimer</a>
+          <span class="btn btn-default btn-file"><span class="fileinput-new">Sélectionner une image</span><span class="fileinput-exists">Modifier</span><input type="file" {{ block('widget_attributes') }} ></span>
+          <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
         </div>
     </div>
-    {% endspaceless %}
-{% endblock picture_widget %}
+{% endspaceless %}
             
+{% endblock picture_widget %}    
+<div class="fileinput fileinput-new" data-provides="fileinput">
+  <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+  <div>
+    <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><input type="file" name="..."></span>
+    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+  </div>
+</div>
+
 {% block hidden_widget %}
 {% spaceless %}
     {% set type = type|default('hidden') %}
@@ -56,9 +54,7 @@
             
 {% block checkbox_widget %}
 {% spaceless %}
-    <label>
-    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
-    {{ label|trans({}, translation_domain) }}</label>
+    <label class="checkbox-label"><input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />&nbsp;{{ label|trans({}, translation_domain) }}</label>
 {% endspaceless %}
 {% endblock checkbox_widget %}
     
@@ -66,15 +62,15 @@
 {% spaceless %}
     <label>
     <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
-    {{ label|trans({}, translation_domain) }}</label>
+    &nbsp;{{ label|trans({}, translation_domain) }}</label>
 {% endspaceless %}
 {% endblock radio_widget %}
     
 {% block choice_widget_expanded %}
-{% spaceless %}
+{% spaceless %}      
     <div class="left_list">
     {% for child in form %}
-        {{ form_widget(child) }}
+        {{ form_widget(child) }}<br />
         {% if cols_number is not defined %}
             {% set cols_number = 1 %}
         {% endif  %}
@@ -98,20 +94,17 @@
 {% endspaceless %}
 {% endblock password_widget %}
     
-{% block field_rows %}
+{% block form_rows %}
 {% spaceless %}
     {% for child in form %}
         {{ form_row(child) }}
     {% endfor %}
 {% endspaceless %}
-{% endblock field_rows %}
+{% endblock form_rows %}
 
-{% block field_row %}
+{% block form_row %}
 {% spaceless %}
-    {% if macro is not defined %}
-        {% import ':Form:macro.html.twig' as macro %}
-    {% endif %}
-    <div class="control-group {{macro.hasErrors(form)}}">
+    <div class="form-group {% if errors is defined and errors|length > 0 %}has-error{% endif %}">
         {{ form_label(form, label|default(null), { 'label_attr': {'class': 'control-label'} }) }}
         <div class="controls">
             {{ form_widget(form) }}
@@ -120,17 +113,36 @@
         </div>
     </div>
 {% endspaceless %}
-{% endblock field_row %}
+{% endblock form_row %}
 
-{% block field_errors %}
-{% spaceless %}
-  {% if errors is defined and errors|length > 0 %}
-    {% for error in errors %}
-      <span class="help-inline error">{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</span>
-    {% endfor %}
-  {% endif %}
-{% endspaceless %}
-{% endblock field_errors %}
+{% block form_errors %}
+    {% if errors is defined and errors|length > 0 %}
+        {% if form.parent is empty %}
+            {% spaceless %}
+                {% if errors|length > 0 %}
+                <div class="alert alert-danger">
+                        {% for error in errors %}
+                            {{
+                                error.messagePluralization is null
+                                    ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                                    : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+                            }}<br />
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            {% endspaceless %}
+        {% else %}
+            {% spaceless %}
+                {% if errors is defined and errors|length > 0 %}
+                  {% for error in errors %}
+                    <span class="help-inline">{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</span>
+                  {% endfor %}
+                {% endif %}
+              {% endspaceless %}
+        {% endif %}
+    {% endif %}
+{% endblock form_errors %}
       
 {% block form_label %}
 {% spaceless %}
@@ -140,9 +152,16 @@
     {% if required %}
         {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
     {% endif %}
-    {% if label is empty %}
-        {% set label = name|humanize %}
+    {% if label is not sameas(false) %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}{% if required %} *{% endif %}
+        {% if add_check_all is defined and add_check_all == true %}
+            <br />
+            <button type="button" class="btn btn-default btn-xs" id="checkAll" value="noneChecked" ><i class="icon-check"></i> Tout cocher</button>
+        {% endif  %}
+        </label>
     {% endif %}
-    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}{% if required %} *{% endif %}</label>
 {% endspaceless %}
 {% endblock form_label %}

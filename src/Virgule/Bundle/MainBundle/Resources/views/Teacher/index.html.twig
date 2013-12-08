@@ -6,7 +6,7 @@
     <script type='text/javascript'>
     {% set emailAddresses = "" %}
     {% for entity in entities %}
-       {% set emailAddresses = emailAddresses ~ '\"' ~ entity.firstName ~ ' ' ~ entity.lastName ~ '\" <' ~ entity.emailAddress ~ '>, ' %}
+       {% set emailAddresses = emailAddresses ~ '\"' ~ entity.firstName ~ ' ' ~ entity.lastName ~ '\" <' ~ entity.email ~ '>, ' %}
     {% endfor %}
     $(document).ready(function(){
         $('a#copy-button').zclip({
@@ -23,54 +23,57 @@
 {% block content_title %}Listes des formateurs {% if status == 'active' %}actifs{% else %}inactifs{% endif %}{% endblock %}
 {%block submenu %}
     {% if status == 'active' %}
-        <a class="btn" title="Voir les utilisateurs inactifs" href="{{ path('teacher_index', { 'status': 'inactive' }) }}"> <i class="icon-user-inactive"></i>Voir les utilisateurs inactifs</a>
+        <a class="btn" title="Voir les utilisateurs inactifs" href="{{ path('teacher_index', { 'status': 'inactive' }) }}"> <i class="my-icon-user-inactive"></i>Voir les utilisateurs inactifs</a>
     {% else %}
-        <a class="btn" title="Voir les utilisateurs actifs" href="{{ path('teacher_index', { 'status': 'active' }) }}"> <i class="icon-user-active"></i>Voir les utilisateurs actifs</a>
+        <a class="btn" title="Voir les utilisateurs actifs" href="{{ path('teacher_index', { 'status': 'active' }) }}"> <i class="my-icon-user-active"></i>Voir les utilisateurs actifs</a>
     {% endif %}
-    <a class="btn" id="copy-button" title="Copier les adresses emails" href="#"> <i class="icon-copy"></i>Copier les adresses emails</a>
-    <a class="btn" title="Ajouter un compte utilisateur" href="{{ path('teacher_new') }}"> <i class="icon-add"></i>Nouvel utilisateur</a>    
+    <a class="btn" id="copy-button" title="Copier les adresses emails" href="#"> <i class="my-icon-copy"></i>Copier les adresses emails</a>
+    <a class="btn" title="Ajouter un compte utilisateur" href="{{ path('teacher_new') }}"> <i class="my-icon-add"></i>Nouvel utilisateur</a>    
 {% endblock %}
-{% block main_content %}
-<div class="widget-box">
-    <div class="widget-title">
-            <span class="label label-info tip-left" data-original-title="{{ entities | length }} cours">{{ entities | length }}</span>
+{% block main_content %}    
+<div class="row">
+    <div class="col-md-12 center">
+        <div class="widget-box">
+            <div class="widget-title">
+                    <span class="label label-info tip-left" data-original-title="{{ entities | length }} cours">{{ entities | length }}</span>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered data-table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nom</th>
+                        <th>Téléphone fixe</th>
+                        <th>Téléphone portable</th>
+                        <th>Adresse email</th>
+                        <th>Rôle</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for entity in entities %}
+                   <tr>
+                        <td class="center">
+                            {% if entity.isActive %}
+                                <img src="{{ asset('img/icons/user_green.png') }}" title="Utilisateur actif" alt="Utilisateur actif" />
+                            {% else %}
+                                <img src="{{ asset('img/icons/user_red.png') }}" title="Utilisateur inactif" alt="Utilisateur inactif" />
+                            {% endif %}
+                        </td>
+                        <td>{{ entity.firstName }} {{ entity.lastName }}</td>
+                        <td>{{ entity.phoneNumber|phoneNumber }}</td>
+                        <td>{{ entity.cellphoneNumber|phoneNumber }}</td>
+                        <td><a href="mailto:{{ entity.email }}">{{ entity.email }}</a></td>
+                        <td>{{ entity.role }}</td>
+                        <td class="entity_actions">
+                            <a href="{{ path('teacher_show', { 'id': entity.id }) }}"><button class="btn btn-default btn-xs"><i class="icon-eye-open"></i> Détails</button></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
     </div>
-    <div class="widget-content nopadding">
-        <table class="table table-bordered data-table table-striped">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Nom</th>
-                <th>Téléphone fixe</th>
-                <th>Téléphone portable</th>
-                <th>Adresse email</th>
-                <th>Rôle</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-           <tr>
-                <td class="center">
-                    {% if entity.isActive %}
-                        <img src="{{ asset('img/icons/user_green.png') }}" title="Utilisateur actif" alt="Utilisateur actif" />
-                    {% else %}
-                        <img src="{{ asset('img/icons/user_red.png') }}" title="Utilisateur inactif" alt="Utilisateur inactif" />
-                    {% endif %}
-                </td>
-                <td>{{ entity.firstName }} {{ entity.lastName }}</td>
-                <td>{{ entity.phoneNumber|phoneNumber }}</td>
-                <td>{{ entity.cellphoneNumber|phoneNumber }}</td>
-                <td><a href="mailto:{{ entity.emailAddress }}">{{ entity.emailAddress }}</a></td>
-                <td>{{ entity.role }}</td>
-                <td class="entity_actions">
-                    <a href="{{ path('teacher_show', { 'id': entity.id }) }}">show</a>&nbsp;
-                    <a href="{{ path('teacher_edit', { 'id': entity.id }) }}">edit</a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    </div>
-</div>
+</div>            
 {% endblock %}

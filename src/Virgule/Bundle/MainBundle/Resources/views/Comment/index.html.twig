@@ -1,17 +1,18 @@
-<div class="widget-box">
-    <div class="widget-title">
-        <span class="icon"><i class="icon-comment"></i></span>
-        <h5>Commentaires</h5><span title="{{ comments.count }} commentaire(s)" class="label label-info tip-left">{{ comments.count }}</span>
-    </div> 
-    {% include 'VirguleMainBundle:Comment:new.html.twig' with {'commentForm': commentForm, 'target_id': entity.id, 'target_route': 'student_comment_create' }  %}        
-    <div class="widget-content">
-        {% for comment in comments %}
-                <span class="user">
-                    Par <a href="{{ path('teacher_show', { 'id': comment.teacher.id }) }}">{{ comment.teacher.firstName }}  {{ comment.teacher.lastName }}</a> le  {{ comment.date|date("d/m/Y à H:i") }}
-                </span>
-                <p class="comment-bubble">
-                    {{ comment.comment|raw }}
-                </p>
+{% include 'VirguleMainBundle:Comment:new.html.twig' with { target_route: target_route, 'target_id': target_id } %}
+<div class="widget-content">        
+    <ul class="recent-comments">
+    {% if comments.count > 0 %}
+        {% for comment in comments %}                        
+            <li>
+                <div class="comments">
+                    <span class="user-info">{{ comment.teacher.firstName }}  {{ comment.teacher.lastName }} le  {{ comment.date|date("d/m/Y") }}</span>
+                    <p>{{ comment.comment|raw }}</p>
+                </div>
+            </li>
         {% endfor %}
-    </div>
+    {% else %}
+        <div class="center">Aucun commentaire trouvé</div>
+    {% endif %}
+    </ul>                              
+    <a class="btn btn-default" id="add-comment">Ajouter un commentaire</a>
 </div>

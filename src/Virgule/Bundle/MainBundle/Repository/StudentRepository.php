@@ -97,9 +97,21 @@ class StudentRepository extends EntityRepository {
         return $qb->getQuery()->execute();
     }
 
-    public function loadAllPresentAtClassSession($classSessionId) {
+    public function loadAllEnrolledPresentAtClassSession($classSessionId) {
         $qb = $this->getBasicQueryBuilder()
                 ->innerJoin('s.classSessions', 'cs')
+                ->where('cs.id = :classSessionId')
+                ->setParameter('classSessionId', $classSessionId)
+                ->addSelect('count(cm.id) as nb_comments')
+                ->leftJoin('s.comments', 'cm')
+                ->add('groupBy', 's.id');
+        
+        return $qb->getQuery()->execute(array(), Query::HYDRATE_ARRAY);
+    }
+    
+    public function loadAllNonEnrolledPresentAtClassSession($classSessionId) {
+        $qb = $this->getBasicQueryBuilder()
+                ->innerJoin('s.classSessionsNonEnrolled', 'cs')
                 ->where('cs.id = :classSessionId')
                 ->setParameter('classSessionId', $classSessionId)
                 ->addSelect('count(cm.id) as nb_comments')

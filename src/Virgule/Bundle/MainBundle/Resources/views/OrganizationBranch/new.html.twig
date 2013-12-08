@@ -4,12 +4,16 @@
     <a class="btn tip-bottom" href="{{ path('organizationbranch_index') }}"> <i class="icon-list"></i>Retour à la liste des délégations</a>
 {% endblock %}
 {% block main_content %}
-<form action="{{ path('organizationbranch_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
-    <div class="widget-box">
-        {% include 'VirguleMainBundle:OrganizationBranch:form.html.twig' with { 'form': form }  %}
-        <div class="form-actions">                                     
-            <input class="btn btn-success" type="submit" value="Enregistrer la délégation" /> 
-        </div>
+<div class="row">
+    <div class="col-md-12 center">
+        <form action="{{ path('organizationbranch_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+            <div class="widget-box">
+                {% include 'VirguleMainBundle:OrganizationBranch:form.html.twig' with { 'form': form }  %}
+                <div class="form-actions">                                     
+                    <input class="btn btn-success" type="submit" value="Enregistrer la délégation" /> 
+                </div>
+            </div>
+        </form>
     </div>
-</form>
+</div>
 {% endblock %}

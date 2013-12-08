@@ -1,68 +1,72 @@
 {% extends '::main_content.html.twig' %}
-{% block content_title %}Cours{% endblock %}
+{% block content_title %}Cours {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': entity.classLevel.htmlColorCode, 'classLevelLabel': entity.classLevel.label } %}{% endblock %}
 {%block submenu %}
-    <a class="btn tip-bottom" href="{{ path('course_show_trombinoscope', { 'id': entity.id }) }}"> <i class="icon-trombinoscope"></i>Trombinoscope</a>
+    <a class="btn tip-bottom" href="{{ path('course_show_trombinoscope', { 'id': entity.id }) }}"> <i class="my-icon-trombinoscope"></i>Trombinoscope</a>
+    <a class="btn tip-bottom" href="{{ path('classsession_add', { 'id': entity.id }) }}"> <i class="my-icon-add"></i>Ajouter un compte-rendu</a>
 {% endblock %}
 {% block main_content %}
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span6">
-            <form class="form-horizontal not-form-horizontal">
-                <div class="widget-box">
-                    <div class="widget-title">
-                        <h5>Cours n° {{ entity.id }} </h5>
-                    </div>            
-                    <div class="widget-content nopadding">
-                        <div class="control-group">
-                            <label class="control-label">Jour</label>
-                            <div class="controls">{{ entity.dayOfWeek | day }}</div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Horaires</label>
-                            <div class="controls">de {{ entity.startTime | date('H\\hi') }} à {{ entity.endTime | date('H\\hi') }}</div>
-                        </div>
-                        {% if entity.alternateStartdate is not empty %}
-                        <div class="control-group">
-                            <label class="control-label">Date de début alternative</label>
-                            <div class="controls">{{ entity.alternateStartdate|date('d/m/Y') }}</div>
-                        </div>
-                        {% endif %}
-                        {% if entity.alternateEnddate is not empty %}
-                        <div class="control-group">
-                            <label class="control-label">Date de fin alternative</label>
-                            <div class="controls">{{ entity.alternateEnddate|date('d/m/Y') }}</div>
-                        </div>
-                        {% endif %}
-                        <div class="control-group">
-                            <label class="control-label">Niveau</label>
-                            <div class="controls">{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': entity.classLevel.htmlColorCode, 'classLevelLabel': entity.classLevel.label } %}</div>
-
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Formateur{% if entity.teachers.count > 1 %}s{% endif %}</label>
-                            <div class="controls">
-                            {% for teacher in entity.teachers %}
-                                <a href="{{ path('teacher_show', { 'id': teacher.id }) }}">{{ teacher.firstname }} {{ teacher.lastname }} </a>{% if loop.index != loop.last %},&nbsp;{% endif %}
-                            {% endfor %}
-                            </div>
-                        </div>
-                     </div>
-                </div>
-            </form>
-            {% if classSessions | length % 3 == 0 %}
-                {% set listBreak = classSessions | length // 3 %}
-            {% else %}
-                {% set listBreak = (classSessions | length // 3) + 1 %}
-            {% endif %}
-            {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Comptes-rendus de ce cours', 'classSessions': classSessions, 'listBreak': listBreak }  %}
+<div class="container-fluid">    
+    <div class="row">
+        <div class="col-md-4">
+            {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Apprenants inscrits', 'students': enrolledStudents, 'nbColumns': 1 }  %}
         </div>
-        <div class="span6">
-            {% if enrolledStudents | length % 3 == 0 %}
-                {% set listBreak = enrolledStudents | length // 3 %}
-            {% else %}
-                {% set listBreak = (enrolledStudents | length // 3) + 1 %}
-            {% endif %}
-            {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Apprenants inscrits', 'students': enrolledStudents, 'listBreak': listBreak }  %}
+        <div class="col-md-8">
+            <div class="row">
+                <form class="form-horizontal not-form-horizontal">
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <h5>Cours n° {{ entity.id }} </h5>
+                        </div>            
+                        <div class="widget-content nopadding">
+                            <div class="control-group">
+                                <label class="control-label">Jour</label>
+                                <div class="controls">{{ entity.dayOfWeek | day }}</div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Horaires</label>
+                                <div class="controls">de {{ entity.startTime | date('H\\hi') }} à {{ entity.endTime | date('H\\hi') }}</div>
+                            </div>                                
+                            <div class="control-group">
+                                <label class="control-label">Salle</label>
+                                <div class="controls">{{ entity.classroom.name }}</div>
+                            </div>
+                            {% if entity.alternateStartdate is not empty %}
+                            <div class="control-group">
+                                <label class="control-label">Date de début alternative</label>
+                                <div class="controls">{{ entity.alternateStartdate|date('d/m/Y') }}</div>
+                            </div>
+                            {% endif %}
+                            {% if entity.alternateEnddate is not empty %}
+                            <div class="control-group">
+                                <label class="control-label">Date de fin alternative</label>
+                                <div class="controls">{{ entity.alternateEnddate|date('d/m/Y') }}</div>
+                            </div>
+                            {% endif %}
+                            <div class="control-group">
+                                <label class="control-label">Niveau</label>
+                                <div class="controls">{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': entity.classLevel.htmlColorCode, 'classLevelLabel': entity.classLevel.label } %}</div>
+
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Formateur{% if entity.teachers.count > 1 %}s{% endif %}</label>
+                                <div class="controls">
+                                {% for teacher in entity.teachers %}
+                                    <a href="{{ path('teacher_show', { 'id': teacher.id }) }}">{{ teacher.firstname }} {{ teacher.lastname }} </a>{% if loop.index != loop.last %},&nbsp;{% endif %}
+                                {% endfor %}
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                {% if classSessions | length % 3 == 0 %}
+                    {% set listBreak = classSessions | length // 3 %}
+                {% else %}
+                    {% set listBreak = (classSessions | length // 3) + 1 %}
+                {% endif %}
+                {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Comptes-rendus de ce cours', 'classSessions': classSessions, 'listBreak': listBreak }  %}
+            </div>
         </div>
     </div>
 </div>

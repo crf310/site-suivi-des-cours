@@ -49,7 +49,7 @@ class VirguleExtension extends \Twig_Extension {
     
     public function phoneNumberFilter($phoneNumber) {
         $sPhoneNumber = '';
-        if (isset($phoneNumber) && !empty($phoneNumber)) {
+        if (isset($phoneNumber) && !empty($phoneNumber) && strlen($phoneNumber) >= 10) {
             $d = ' ';
             $sPhoneNumber = $phoneNumber[0] . $phoneNumber[1] . $d .$phoneNumber[2] . $phoneNumber[3] . $d .$phoneNumber[4] . $phoneNumber[5] . $d .$phoneNumber[6] . $phoneNumber[7] . $d .$phoneNumber[8] . $phoneNumber[9];
 

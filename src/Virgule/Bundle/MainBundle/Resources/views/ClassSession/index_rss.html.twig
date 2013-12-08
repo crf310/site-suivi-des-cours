@@ -1,51 +1,35 @@
 {% extends '::main_content.html.twig' %}
 {% block content_title %}Flux RSS disponibles{% endblock %}
  {%block submenu %}
-    <a class="btn tip-bottom" href="{{ path('classsession_index') }}"> <i class="icon-list"></i>Retour à la liste des comptes-rendus</a>
-    <a class="btn tip-bottom" href="#"> <i class="icon-search"></i>Rechercher dans les compte-rendus</a>
-    <a class="btn tip-bottom" href="{{ path('classsession_new') }}"> <i class="icon-add"></i>Nouveau compte-rendu</a>
+    <a class="btn" href="{{ path('classsession_index') }}"> <i class="my-icon-list"></i>Retour à la liste des comptes-rendus</a>
 {% endblock %}
 {% block main_content %}
-<p>
-Ces flux RSS vous permettront d'être prévenu automatiquement lors de l'ajout d'un nouveau compte-rendu. 
-Vous trouverez plus d'informations sur les flux RSS ainsi que sur les logiciels à utiliser sur Wikipédia: <a href="http://fr.wikipedia.org/wiki/RSS">http://fr.wikipedia.org/wiki/RSS</a>
-</p>
-Voici quelques outils que vous pouvez utiliser pour lire ces flux :<br />
-
-<div class="left_list">
-    <h4>Logiciels à installer</h4>
-    <ul>
-        <li>Mozilla Thunderbird: <a href="http://www.rssowl.org/">https://www.mozilla.org/fr/thunderbird/</a></li>
-        <li>RSSOwl: <a href="http://www.rssowl.org/">http://www.rssowl.org/</a></li>
-    </ul>
+<div class="row">
+    <div class="col-md-12 center">
+        <div class="alert alert-info">
+        Ces flux RSS vous permettront d'être prévenu automatiquement lors de l'ajout d'un nouveau compte-rendu. 
+        Vous trouverez plus d'informations sur les flux RSS ainsi que sur les logiciels à utiliser sur Wikipédia: <a href="http://fr.wikipedia.org/wiki/RSS">http://fr.wikipedia.org/wiki/RSS</a>
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Contenu du flux</th>
+                    <th>Url du flux</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="center">Tous les niveaux</td>
+                    <td><a href="{{ url('classsession_rss_feed_all') }}">{{ url('classsession_rss_feed_all') }}</a></td>
+                </tr>
+            {% for classLevel in classLevels %}
+                <tr>
+                    <td class="center">{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel.htmlColorCode, 'classLevelLabel': classLevel.label } %}</td>
+                    <td><a href="{{ url('classsession_rss_feed_classlevel', { 'id': classLevel.id }) }}">{{ url('classsession_rss_feed_classlevel', { 'id': classLevel.id }) }}</a></td>            
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    <div>
 </div>
-
-<div class="left_list">
-    <h4>Sites web</h4>
-    <ul>
-        <li>iGoogle: <a href="http://www.igoogle.org/">http://www.igoogle.org/</a></li>
-        <li>Netvibes: <a href="http://www.netvibes.com/">http://www.netvibes.com/</a></li>
-    </ul>
-</div>
-    
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Contenu du flux</th>
-            <th>Url du flux</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="center">Tous les niveaux</td>
-            <td><a href="{{ url('classsession_rss_feed_all') }}">{{ url('classsession_rss_feed_all') }}</a></td>
-        </tr>
-    {% for classLevel in classLevels %}
-        <tr>
-            <td class="center">{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel.htmlColorCode, 'classLevelLabel': classLevel.label } %}</td>
-            <td><a href="{{ url('classsession_rss_feed_classlevel', { 'id': classLevel.id }) }}">{{ url('classsession_rss_feed_classlevel', { 'id': classLevel.id }) }}</a></td>            
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
 {% endblock %}

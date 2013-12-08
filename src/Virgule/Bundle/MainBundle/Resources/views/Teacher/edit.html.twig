@@ -1,25 +1,27 @@
-{% extends '::base.html.twig' %}
-{% block body %}
-<h1>Formateurs edit</h1>
-
-<form action="{{ path('teacher_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Edit</button>
-    </p>
+{% extends '::main_content.html.twig' %}
+{% block head %}    
+    {{ parent() }}
+    {% block javascripts %}
+        {% include 'VirguleMainBundle:Teacher:form_header.html.twig' %}
+    {% endblock %}
+{%endblock %}
+{% block content_title %}Modifier la fiche de {{ entity.firstname }} {{ entity.lastname }}{% endblock %}
+{%block submenu %}
+    <a class="btn tip-bottom" href="{{ path('teacher_index') }}"> <i class="my-icon-list"></i>Retour à la liste des utilisateurs</a>
+{% endblock %}
+{% block main_content %}
+<form action="{{ path('teacher_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal">
+    <div class="row">
+        <div class="col-md-12 center">
+            <div class="widget-box">
+                    {% include 'VirguleMainBundle:Teacher:form.html.twig' with { 'form': edit_form }  %}
+                    <div class="form-actions">                                     
+                        <input class="btn btn-success" type="submit" value="Enregistrer les modifications" />
+                        <a class="btn btn-default" href="{{ path('teacher_show', { 'id': entity.id }) }}">Annuler</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('teacher_index') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('teacher_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
 {% endblock %}

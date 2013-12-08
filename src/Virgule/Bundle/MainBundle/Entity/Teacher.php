@@ -3,8 +3,7 @@
 namespace Virgule\Bundle\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\EquatableInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -14,15 +13,16 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="teacher")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\TeacherRepository")
  * @UniqueEntity(fields="username", message="Ce nom d'utilisateur est déjà pris")
- */
-class Teacher implements UserInterface, EquatableInterface {
-
+ * @UniqueEntity(fields="email", message="Cette adresse email est déjà utilisée") 
+*/
+class Teacher extends BaseUser {
+  
     /**
      * @var integer $id
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")**
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
@@ -58,8 +58,7 @@ class Teacher implements UserInterface, EquatableInterface {
      * @Assert\Length(
      *      min = "10",
      *      max = "10",
-     *      minMessage = "Le numéro de téléphone doit comporter {{ limit }} chiffres",
-     *      maxMessage = "Le numéro de téléphone ne peut excéder {{ limit }} chiffres"
+     *      exactMessage = "Le numéro de téléphone doit comporter {{ limit }} chiffres, et seulement {{ limit }}"
      * )
      */
     protected $phoneNumber;
@@ -71,43 +70,10 @@ class Teacher implements UserInterface, EquatableInterface {
      * @Assert\Length(
      *      min = "10",
      *      max = "10",
-     *      minMessage = "Le numéro de téléphone doit comporter {{ limit }} chiffres",
-     *      maxMessage = "Le numéro de téléphone ne peut excéder {{ limit }} chiffres"
+     *      exactMessage = "Le numéro de téléphone doit comporter {{ limit }} chiffres, et seulement {{ limit }}"
      * )
      */
     protected $cellphoneNumber;
-
-    /**
-     * @var string $emailAddress
-     *
-     * @ORM\Column(name="email_address", type="string", length=50, nullable=true)
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\Email(message="Cette adresse est invalide")
-     */
-    protected $emailAddress;
-
-    /**
-     * @var string $username
-     *
-     * @ORM\Column(name="username", type="string", length=50, nullable=false, unique = true)
-     * @Assert\NotBlank(message="Merci de saisir un nom d'utilisateur")
-     * @Assert\NotNull()
-     */
-    protected $username;
-
-    /**
-     * @var string $password
-     *
-     * @ORM\Column(name="password", type="string", length=50, nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\Length(
-     *      min = "8",
-     *      minMessage = "Le mot de passe doit comporter au moins {{ limit }} caractères"
-     * )
-     */
-    protected $password;
 
     /**
      * @var \DateTime $registrationDate
@@ -115,13 +81,6 @@ class Teacher implements UserInterface, EquatableInterface {
      * @ORM\Column(name="registration_date", type="datetime", nullable=false)
      */
     protected $registrationDate;
-
-    /**
-     * @var \DateTime $lastConnectionDate
-     *
-     * @ORM\Column(name="last_connection_date", type="datetime", nullable=true)
-     */
-    protected $lastConnectionDate;
 
     /**
      * @ORM\ManyToOne(targetEntity="Roles", inversedBy="teachers")
@@ -171,34 +130,18 @@ class Teacher implements UserInterface, EquatableInterface {
     }
 
     public function __construct() {
+        parent::__construct();
         $this->isActive = true;
-        $this->salt = md5(uniqid(null, true));
+        $this->setEnabled(true);
+        $this->setLocked(false);
+        $this->setExpired(false);
+        $this->setCredentialsExpired(false);
     }
 
     public function eraseCredentials() {
         
     }
-
-    public function getPassword() {
-        return $this->password;
-    }
-
-    public function getSalt() {
-        
-    }
-
-    public function getUsername() {
-        return $this->username;
-    }
-
-    public function isEqualTo(UserInterface $user) {
-        return $this->username === $user->getUsername();
-    }
-
-    public function equals(UserInterface $user) {
-        return $this->username === $user->getUsername();
-    }
-
+    
     /**
      * Set isActive
      *
@@ -305,51 +248,6 @@ class Teacher implements UserInterface, EquatableInterface {
     }
 
     /**
-     * Set emailAddress
-     *
-     * @param string $emailAddress
-     * @return Teacher
-     */
-    public function setEmailAddress($emailAddress) {
-        $this->emailAddress = $emailAddress;
-
-        return $this;
-    }
-
-    /**
-     * Get emailAddress
-     *
-     * @return string 
-     */
-    public function getEmailAddress() {
-        return $this->emailAddress;
-    }
-
-    /**
-     * Set username
-     *
-     * @param string $username
-     * @return Teacher
-     */
-    public function setUsername($username) {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    /**
-     * Set password
-     *
-     * @param string $password
-     * @return Teacher
-     */
-    public function setPassword($password) {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
      * Set registrationDate
      *
      * @param \DateTime $registrationDate
@@ -368,27 +266,6 @@ class Teacher implements UserInterface, EquatableInterface {
      */
     public function getRegistrationDate() {
         return $this->registrationDate;
-    }
-
-    /**
-     * Set lastConnectionDate
-     *
-     * @param \DateTime $lastConnectionDate
-     * @return Teacher
-     */
-    public function setLastConnectionDate($lastConnectionDate) {
-        $this->lastConnectionDate = $lastConnectionDate;
-
-        return $this;
-    }
-
-    /**
-     * Get lastConnectionDate
-     *
-     * @return \DateTime 
-     */
-    public function getLastConnectionDate() {
-        return $this->lastConnectionDate;
     }
 
     /**
@@ -623,5 +500,10 @@ class Teacher implements UserInterface, EquatableInterface {
     public function getFullName() {
         return $this->firstName . ' ' . $this->lastName;
     }
-
+    
+    // TODO: delete that and encode passwords
+    public function getSalt() {
+        return '';
+    }
+    
 }

@@ -52,6 +52,8 @@ class LoadDocumentData extends AbstractFixture implements OrderedFixtureInterfac
             }
             
             $manager->persist($document);
+            
+            $this->addReference('document' . $i, $document);
         }
         
         $manager->flush();

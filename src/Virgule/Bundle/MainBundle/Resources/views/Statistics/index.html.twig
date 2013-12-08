@@ -2,10 +2,17 @@
 {% block head %}    
     {{ parent() }}
     {% block javascripts %}
-
         <script type='text/javascript' src='https://www.google.com/jsapi'></script>
         <script type='text/javascript'>
-         var bgColor = '#EEEEEE';
+        $(document).ready(function () {
+            $(window).resize(function(){
+                drawRegionsMap();
+                drawGenderChart();
+                drawAgeChart();
+                drawClassLevelsCharts();
+            });
+        });
+         var bgColor = '#FAFAFA';
 
          google.load('visualization', '1', {'packages': ['geochart', 'corechart']});
          google.setOnLoadCallback(drawGenderChart);
@@ -24,8 +31,6 @@
 
             var options = {
                 backgroundColor: bgColor, 
-                width: 869, 
-                height: 542,
                 title: 'Répartition par pays d\'origine'
             };
 
@@ -61,7 +66,9 @@
             var data = google.visualization.arrayToDataTable([
               ['Tranche d\'âge', 'Nombre d\'apprenants'],
               {% for age_range, nb_students in students_ages %}
-                ['{{ age_range }} ans', {{ nb_students }}]{% if loop.index != loop.last %},{% endif %}          
+                {% if nb_students > 0 %}
+                    ['{{ age_range }} ans', {{ nb_students }}]{% if loop.index != loop.last %},{% endif %}          
+                {% endif %}
               {% endfor %}
             ]);
 
@@ -98,108 +105,108 @@
     {% endblock %}
 {% endblock %}
 {% set currentSemester = app.session.get('currentSemester') %}
-{% block content_title %}Statistiques de la session du 
+{% block content_title %}Session du 
 <b>{{ currentSemester.startDate | date("j") }}{% if currentSemester.startDate | date("j")  == 1 %}<sup>er</sup>{% endif %}&nbsp;{{ currentSemester.startDate | date("n") | month }}&nbsp;{{ currentSemester.startDate | date("Y") }}</b>
 au 
 <b>{{ currentSemester.endDate | date("j") }}{% if currentSemester.endDate | date("j")  == 1 %}<sup>er</sup>{% endif %}&nbsp;{{ currentSemester.endDate | date("n") | month }}&nbsp;{{ currentSemester.endDate | date("Y") }}</b>
 {% endblock %}
 {%block submenu %}
-    <a class="btn tip-bottom" href="{{ path('classsession_new') }}"> <i class="icon-export"></i>Exporter les données</a>
+    <a class="btn tip-bottom" href="{{ path('classsession_new') }}"> <i class="my-icon-export"></i>Exporter les données</a>
 {% endblock %}
 {% block main_content %}
-<div id="results_actions"> 
-    <div class="row-fluid">
-        <div class="span12">
-            <div class="widget-box widget-plain">
-                <div class="widget-content center">
-                    <ul class="stats-plain">
-                        <li>										
-                            <h4>{{ total_students }}</h4>
-                            <span>apprenants</span>
-                        </li>
-                        <li>										
-                            <h4>{{ students_genders['F'] }}</h4>
-                            <span>femmes</span>
-                        </li>
-                        <li>										
-                            <h4>{{ students_genders['M'] }}</h4>
-                            <span>hommes</span>
-                        </li>
-                        <li>										
-                            <h4>{{ students_countries | length }}</h4>
-                            <span>pays représentés</span>
-                        </li>
-                        <li>										
-                            <h4>{{ languages | length }}</h4>
-                            <span>langues parlées</span>
-                        </li>
-                        <li>										
-                            <h4>{{ studentsWithManyEnrollments | length }}</h4>
-                            <span>apprenants suivent plus d'un cours</span>
-                        </li>
-                    </ul>
-                </div>
+<div id="results_actions">
+    <div class="row">
+        <div class="widget-box widget-plain">
+            <div class="widget-content center">
+                <ul class="stats-plain">
+                    <li>										
+                        <h4>{{ students_genders['F'] }}</h4>
+                        <span>femmes</span>
+                    </li>
+                    <li>										
+                        <h4>{{ students_genders['M'] }}</h4>
+                        <span>hommes</span>
+                    </li>
+                    <li>										
+                        <h4>{{ students_countries | length }}</h4>
+                        <span>pays d'origine</span>
+                    </li>
+                    <li>										
+                        <h4>{{ languages | length }}</h4>
+                        <span>langues parlées</span>
+                    </li>
+                    <li>										
+                        <h4>{{ studentsWithManyEnrollments | length }}</h4>
+                        <span>inscrits à plus d'un cours</span>
+                    </li>
+                </ul>
             </div>
         </div>
-    </div>   
+    </div>
     <div class="row-fluid">
-        <div class="span4">        
-            <div class="row-fluid">
-                <div class="span12">
-                     <div id="gender_div"></div>
+        <div class="col-md-12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#ranges_div"><i class="icon-signal"></i> Répartitions</a></li>
+                        <li><a data-toggle="tab" href="#worldmap_div"><i class="icon-globe"></i> Carte du monde</a></li>
+                        <li><a data-toggle="tab" href="#worldlist_div"><i class="icon-flag-checkered"></i> Pays d'origine</a></li>
+                        <li><a data-toggle="tab" href="#languages_div"><i class="icon-comments"></i> Langues parlées</a></li>
+                    </ul>
                 </div>
-            </div>        
-            <div class="row-fluid">
-                <div class="span12">
-                     <div id="ages_div"></div>
-                </div>
-            </div>     
-            <div class="row-fluid">
-                <div class="span12">
-                     <div id="classlevels_div"></div>
-                </div>
-            </div>        
-        </div>
-	<div class="span8">           
-            <a data-toggle="tab" href="#worldmap_div"><button class="btn btn-mini">Carte du monde</button></a>
-            <a data-toggle="tab" href="#worldlist_div"><button class="btn btn-mini">Liste des pays</button></a>
-            <a data-toggle="tab" href="#languages_div"><button class="btn btn-mini">Liste des langues</button></a>
-            <div class="tab-content">
-                <div id="worldmap_div" class="tab-pane active"></div>
-                <div id="worldlist_div" class="tab-pane">
-                    {% set nbColumns = 4 %}
-                    {% set listBreak = (students_countries | length) // nbColumns %}
-                    {% if ((students_countries | length) // nbColumns) > 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
-                    {% set span_size = 12 /  nbColumns %}
-                    <div class="span{{ span_size }}">
-                        <ul class="no-img">
-                        {% for country_code, nb_students in students_countries %}
-                            <li><img src="{{ asset('img/drapeaux/' ~ country_code ~ '.png')}}" alt="{{  country_code }}" title="{{  country_code | upper | country('fr') }}" />
-                            &nbsp;
-                            {{ country_code | upper | country }}:  {{ nb_students }}</li>
-                            {% if loop.index % listBreak == 0  and loop.index != loop.last %}
-                                </ul></div><div class="span{{ span_size }}"><ul class="no-img">
-                            {% endif %}
-                        {% endfor %}
-                        </ul>
+                <div class="widget-content tab-content">
+                    <div id="ranges_div" class="tab-pane active" style="width:100%; height:200px">
+                        <div class="col-md-4">
+                            <div  id="gender_div"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div  id="ages_div"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div  id="classlevels_div"></div>
+                        </div>
+                    </div>
+                    <div id="worldmap_div" class="tab-pane" style="width:100%; height:500px"></div>
+                    <div id="worldlist_div" class="tab-pane">                       
+                        <div class="row">
+                            {% set nbColumns = 3 %}
+                            {% set listBreak = (students_countries | length) // nbColumns %}
+                            {% if ((students_countries | length) // nbColumns) > 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
+                            {% set span_size = 12 / nbColumns %}
+                            <div class="col-md-{{ span_size }}">
+                                <ul class="no-img">
+                                {% for country_code, nb_students in students_countries %}
+                                    <li><img src="{{ asset('img/drapeaux/' ~ country_code ~ '.png')}}" alt="{{  country_code }}" title="{{  country_code | upper | country('fr') }}" />
+                                    &nbsp;
+                                    {{ country_code | upper | country }}:  {{ nb_students }}</li>
+                                    {% if loop.index % listBreak == 0  and loop.index != loop.last %}
+                                        </ul></div><div class="col-md-{{ span_size }}"><ul class="no-img">
+                                    {% endif %}
+                                {% endfor %}
+                                </ul>
+                            </div> 
+                        </div>
                     </div> 
-                </div> 
-                <div id="languages_div" class="tab-pane">
-                    {% set nbColumns = 4 %}
-                    {% set listBreak = (languages | length) // nbColumns %}
-                    {% if ((languages | length) // nbColumns) > 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
-                    {% set span_size = 12 /  nbColumns %}
-                    <div class="span{{ span_size }}">
-                        <ul class="no-img">
-                        {% for language in languages %}                  
-                            <li>{{ language['language_name'] }} : {{ language['nb_students'] }}</li>
-                            {% if loop.index % listBreak == 0  and loop.index != loop.last %}
-                                </ul></div><div class="span{{ span_size }}"><ul class="no-img">
-                            {% endif %}
-                        {% endfor %}
-                        </ul>
-                    </div> 
-                </div>                                  
+                    <div id="languages_div" class="tab-pane">
+                        <div class="row">
+                            {% set nbColumns = 3 %}
+                            {% set listBreak = (languages | length) // nbColumns %}
+                            {% if ((languages | length) // nbColumns) > 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
+                            {% set span_size = 12 / nbColumns %}
+                            <div class="col-md-{{ span_size }}">
+                                <ul class="no-img">
+                                {% for language in languages %}                  
+                                    <li>{{ language['language_name'] }} : {{ language['nb_students'] }}</li>
+                                    {% if loop.index % listBreak == 0  and loop.index != loop.last %}
+                                        </ul></div><div class="col-md-{{ span_size }}"><ul class="no-img">
+                                    {% endif %}
+                                {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>                            
+            </div>
         </div>
     </div> 
 </div>

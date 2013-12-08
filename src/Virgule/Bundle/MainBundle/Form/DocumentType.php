@@ -11,9 +11,7 @@ class DocumentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder          
-            ->add('fileName', 'text',array(        
-                'attr' => array('class' => 'input-large'))
-                )
+            ->add('fileName', 'text')
             ->add('description')
             ->add('file', 'file')
             ->add('classLevel', 'entity', array(
@@ -21,8 +19,7 @@ class DocumentType extends AbstractType
                 'expanded' => false,
                 'multiple' => true,
                 'property' => 'label',
-                'property_path' => 'classlevel',            
-                'attr' => array('class' => 'medium-select')
+                'property_path' => 'classlevel'
              ))
             ->add('tags', 'text', array(
                 'label' => 'Tags',

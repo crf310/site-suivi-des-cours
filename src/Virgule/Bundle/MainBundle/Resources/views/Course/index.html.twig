@@ -1,53 +1,61 @@
 {% extends '::main_content.html.twig' %}
 {% block content_title %}Planning des cours{% endblock %}
 {%block submenu %}
-    <a class="btn tip-bottom" href="{{ path('course_show_planning') }}"> <i class="icon-calendar"></i>Voir le planning</a>
-    <a class="btn tip-bottom" href="{{ path('course_new') }}"> <i class="icon-add"></i>Nouveau cours</a>
+    <a class="btn tip-bottom" href="{{ path('course_show_planning') }}"> <i class="my-icon-calendar"></i>Voir le planning</a>
+    <a class="btn tip-bottom" href="{{ path('course_new') }}"> <i class="my-icon-add"></i>Nouveau cours</a>
 {% endblock %}
 {% block main_content %}
-<div class="widget-box">
-    <div class="widget-title">
-            <span class="icon">
-                    <i class="icon-th"></i>
-            </span>
-            <h5>Liste des cours de cette session</h5>
-            <span class="label label-info tip-left" data-original-title="{{ courses | length }} cours">{{ courses | length }}</span>
-    </div>
-    <div class="widget-content nopadding">
-        <table class="table table-bordered data-table">
-            <thead>
-                <tr>
-                    <th>Jour</th>
-                    <th>Horaires</th>
-                    <th>Niveau</th>
-                    <th>Formateur</th>
-                    <th>Salle</th>
-                    <th>Etudiants inscrits</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for course in courses %}
-                <tr>
-                    <td>{{ course.dayOfWeek | day }}</td>
-                    <td>{{ course.startTime | date('H:i') }} - {{ course.endTime | date('H:i') }}</td>
-                    <td class="center">
-                        {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevelColorCode, 'classLevelLabel': course.classLevelLabel } %} 
-                    </td>
-                    <td>
-                        {% for teacher in course.teachers %}
-                            <a href="{{ path('teacher_show', { 'id': teacher['teacher_id'] }) }}">{{ teacher['teacher_firstName'] }} {{ teacher['teacher_lastName'] }}</a>{% if teacher != loop.last %},&nbsp;{% endif %}
-                        {% endfor %}
-                    </td>
-                    <td>{{ course.classRoomName }}</td> 
-                    <td class="center">{{ course.nbStudents }}</td>
-                    <td class="center">
-                        <a href="{{ path('course_show', { 'id': course.id }) }}">Détails</a>&nbsp;
-                        <a href="{{ path('classsession_add', { 'id': course.id }) }}">Enregistrer un compte-rendu</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
+<div class="row">
+    <div class="col-md-12 center">
+        <div class="widget-box">
+            <div class="widget-title">
+                    <span class="icon">
+                            <i class="icon-th"></i>
+                    </span>
+                    <h5>Liste des cours de cette session</h5>
+                    <span class="label label-info tip-left" data-original-title="{{ courses | length }} cours">{{ courses | length }}</span>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered data-table">
+                    <thead>
+                        <tr>
+                            <th>Jour</th>
+                            <th>Horaires</th>
+                            <th>Niveau</th>
+                            <th>Formateur</th>
+                            <th>Salle</th>
+                            <th>Etudiants inscrits</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for course in courses %}
+                        <tr>
+                            <td>{{ course.dayOfWeek | day }}
+                                {% if course.isCurrent == false %}
+                                <br /><span class="label label-danger">Cours terminé ou non démarré</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ course.startTime | date('H:i') }} - {{ course.endTime | date('H:i') }}</td>
+                            <td class="center">
+                                {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevelColorCode, 'classLevelLabel': course.classLevelLabel } %} 
+                            </td>
+                            <td>
+                                {% for teacher in course.teachers %}
+                                    <a href="{{ path('teacher_show', { 'id': teacher['teacher_id'] }) }}">{{ teacher['teacher_firstName'] }} {{ teacher['teacher_lastName'] }}</a>{% if teacher != loop.last %},&nbsp;{% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>{{ course.classRoomName }}</td> 
+                            <td class="center">{{ course.nbStudents }}</td>
+                            <td class="center">
+                                <a href="{{ path('course_show', { 'id': course.id }) }}">Détails</a>&nbsp;
+                                <a href="{{ path('classsession_add', { 'id': course.id }) }}">Enregistrer un compte-rendu</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

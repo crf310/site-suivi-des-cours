@@ -1,72 +1,82 @@
 {% extends '::main_content.html.twig' %}
 {% block content_title %}{{ title }}{% endblock %} 
 {%block submenu %}
-    <a class="btn tip-bottom" href="#"> <i class="icon-export"></i>Exporter les données</a>
-    <a class="btn tip-bottom" href="#"> <i class="icon-search-student"></i>Rechercher un apprenant</a>
-    <a class="btn tip-bottom" href="{{ path('student_new') }}"> <i class="icon-add"></i>Nouvel apprenant</a>
+    <a class="btn" href="#"> <i class="my-icon-export"></i>Exporter les données</a>
+    <a class="btn" href="#"> <i class="my-icon-search-student"></i>Rechercher un apprenant</a>
+    <a class="btn" href="{{ path('student_new') }}"> <i class="my-icon-add"></i>Nouvel apprenant</a>
 {% endblock %}
 {% block main_content %}
-<div class="widget-box">
-    <div class="widget-title">
-        <span class="icon">
-            <input type="checkbox" id="title-checkbox" name="title-checkbox" />
-        </span>
-        <span class="label label-info tip-left" data-original-title="{{ students_array | length }} apprenant(s)">{{ students_array | length }}</span>
-    </div>
-    <div class="widget-content nopadding">
-        <table class="table table-bordered table-striped table-hover with-check data-table">
-            <thead>
-                <tr>
-                    <th><i class="icon-resize-vertical"></i></th>
-                    <th>Pays</th>
-                    <th>Sexe</th>
-                    <th>Prénom</th>
-                    <th>Nom</th>
-                    <th>Téléphone fixe</th>
-                    <th>Téléphone portable</th>
-                    <th>Date d'inscription</th>
-                    <th>Inscrit en</th>
-                    <th>Accueilli par</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for key,entity in students_array %}
-                <tr class="gradeA">
-                    <td><input type="checkbox" name="students[]" value="{{ entity['student_id'] }}"/></td>
-                    <td class="center">
-                        <img src="{{ asset('img/drapeaux/' ~ entity['nativeCountry'] ~ '.png')}}" alt="{{  entity['nativeCountry'] | upper | country }}" title="{{  entity['nativeCountry'] | upper | country }}" />
-                    </td>
-                    <td class="center">
-                        {% if entity['gender'] == 'F' %}
-                            <img src="{{ asset('img/icons/user_female.png') }}" />
-                        {% else %}
-                            <img src="{{ asset('img/icons/user.png') }}" />
-                        {% endif %}
-                    </td>
-                    <td>{{ entity['firstname'] }}</td>
-                    <td>{{ entity['lastname'] }}</td>
-                    <td class="center">{{ entity['phoneNumber']|phoneNumber }}</td>
-                    <td class="center">{{ entity['cellphoneNumber']|phoneNumber }}</td>
-                    <td class="center">{{ entity['registrationDate'] | date("d/m/Y") }}</td>
-                    <td>
-                        {% if courses_array is defined %}
-                            {% for course in courses_array[entity['student_id']] %}
-                                <a href="{{ path('course_show', { 'id': course['course_id'] }) }}">
-                                {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course['levelColorCode'], 'classLevelLabel': course['level'] } %} 
-                                </a>{% if course != loop.last %}&nbsp;{% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    </td>
-                    <td><a href="{{ path('teacher_show', { 'id': entity['teacher_id'] }) }}">{{ entity['teacher_firstName'] }} {{ entity['teacher_lastName'] }}</td>
-                    <td class="center">
-                        <a href="{{ path('student_show', { 'id':  entity['student_id'] }) }}">Détails</a>&nbsp;
-                        <a href="{{ path('student_edit', { 'id':  entity['student_id'] }) }}">Modifier</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+<div class="row">
+    <div class="col-md-12 center">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="label label-info tip-left" data-original-title="{{ students_array | length }} apprenant(s)">{{ students_array | length }}</span>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered table-striped table-hover with-check data-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Téléphone fixe</th>
+                            <th>Téléphone portable</th>
+                            <th>Inscrit en</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for key,entity in students_array %}
+                        <tr class="gradeA">
+                            <td><input type="checkbox" name="students[]" value="{{ entity['student_id'] }}"/></td>
+                            <td class="center">
+                                <img src="{{ asset('img/drapeaux/' ~ entity['nativeCountry'] ~ '.png')}}" alt="{{  entity['nativeCountry'] | upper | country }}" title="{{  entity['nativeCountry'] | upper | country }}" />
+                            </td>
+                            <td class="center">
+                                {% if entity['gender'] == 'F' %}
+                                    <img src="{{ asset('img/icons/user_female.png') }}" />
+                                {% else %}
+                                    <img src="{{ asset('img/icons/user.png') }}" />
+                                {% endif %}
+                            </td>
+                            <td>{{ entity['lastname'] }}</td>
+                            <td>{{ entity['firstname'] }}</td>
+                            <td class="center">
+                                {% if entity['phoneNumber'] is empty %}
+                                    {% for i in 1..14 %}&nbsp;{% endfor %}
+                                {% else %}
+                                    {{ entity['phoneNumber']|phoneNumber }}
+                                {% endif %}
+                            </td>
+                            <td class="center">
+                                {% if entity['cellphoneNumber'] is empty %}
+                                    {% for i in 1..14 %}&nbsp;{% endfor %}
+                                {% else %}
+                                    {{ entity['cellphoneNumber']|phoneNumber }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if courses_array is defined %}
+                                    {% for course in courses_array[entity['student_id']] %}
+                                        <a href="{{ path('course_show', { 'id': course['course_id'] }) }}">
+                                        {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course['levelColorCode'], 'classLevelLabel': course['level'] } %} 
+                                        </a>{% if course != loop.last %}&nbsp;{% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </td>
+                            <td class="center">
+                                <a href="{{ path('student_show', { 'id': entity['student_id'] }) }}"><button class="btn btn-default btn-xs"><i class="icon-eye-open"></i> Détails</button></a>
+                                <a href="{{ path('student_edit', { 'id': entity['student_id'] }) }}"><button class="btn btn-default btn-xs"><i class="icon-pencil"></i> Modifier</button></a>
+                                <a href="{{ path('student_preview_certificate', { 'id': entity['student_id'] }) }}"><button class="btn btn-default btn-xs"><i class="icon-certificate"></i> Attestation</button></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

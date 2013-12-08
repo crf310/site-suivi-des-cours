@@ -79,10 +79,7 @@ class CourseController extends AbstractVirguleController {
         
         $courses = $this->getManager()->getAllHydratedCourses($semesterId);
         
-        // $organizationBranchId = $this->getSelectedOrganizationBranchId();
-        // $classRooms = $this->getEntityManager()->getRepository('VirguleMainBundle:ClassRoom')->getClassRoomsForOrganizationBranch($organizationBranchId);
-        
-        $planning = new Planning($courses);
+        $planning = new Planning($courses, true);
         return Array('headerCells' => $planning->getHeader(), 'planningRows' => $planning->getRows());
         
     }

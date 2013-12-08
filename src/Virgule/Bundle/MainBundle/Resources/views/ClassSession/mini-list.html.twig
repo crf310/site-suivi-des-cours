@@ -8,7 +8,7 @@
     </div>
     <div class="widget-content">
             {% if classSessions is empty %}
-                Aucun compte-rendu enregistré pour le moment.
+                <div class="center">Aucun compte-rendu enregistré pour le moment</div>
             {% else %}
                 {% if nbColumns is not defined %}
                     {% set nbColumns = 2 %}
@@ -17,7 +17,7 @@
                 {% if ((classSessions | length) % nbColumns) != 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
                 {% if ((classSessions | length) // nbColumns) < 0 %}{% set listBreak = 1 %}{% endif %}
                 {% set span_size = 12 /  nbColumns %}
-                <div class="span{{ span_size }}">
+                <div class="col-md-{{ span_size }}">
                     <ul class="no-img">
                     {% for classSession in classSessions %}
                         <li>
@@ -30,7 +30,7 @@
                             {% endif %}
                         </li>
                         {% if loop.index % listBreak == 0  and loop.index != loop.last %}
-                            </ul></div><div class="span{{ span_size }}"><ul class="no-img">
+                            </ul></div><div class="col-md-{{ span_size }}"><ul class="no-img">
                         {% endif %}
                     {% endfor %}
                     </ul>

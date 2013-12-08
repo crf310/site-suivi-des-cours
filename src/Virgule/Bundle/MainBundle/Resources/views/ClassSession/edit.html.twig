@@ -1,22 +1,23 @@
-<h1>ClassSession edit</h1>
-
-<form action="{{ path('classsession_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Edit</button>
-    </p>
-</form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('classsession') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('classsession_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+{% extends '::main_content.html.twig' %}
+{% block head %}
+    {{ parent() }}
+    {% include 'VirguleMainBundle:ClassSession:form_header.html.twig' %}
+{% endblock %}
+{% block content_title %}Modifier le compte-rendu{% endblock %}
+{% block submenu %}{% endblock %}
+{% block main_content %}
+<div class="row">
+    <div class="col-md-12 center">
+        <form action="{{ path('classsession_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal" novalidate="novalidate" id="summary-form">
+            <div class="widget-box">
+                    {% include 'VirguleMainBundle:ClassSession:form.html.twig' with { 'form': edit_form }  %}
+                    <div class="form-actions">                                     
+                        <input class="btn btn-success" type="submit" value="Enregistrer les modifications" />                        
+                        <a class="btn btn-default" href="{{ path('classsession_show', { 'id': entity.id }) }}">Annuler</a>
+                    </div>
+                </div>
+            </div>        
         </form>
-    </li>
-</ul>
+    </div>
+</div>
+{% endblock %}

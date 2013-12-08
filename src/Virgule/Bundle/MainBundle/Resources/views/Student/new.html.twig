@@ -3,23 +3,29 @@
     {{ parent() }}
     {% block javascripts %}
      <script type='text/javascript'>
-        function setRegistrationDate(date) {
-            document.getElementById('registrationDateField').value = date;
-        }
+        $(document).ready(function() {
+            $('.setopenhouse').click(function() {
+                $('#registrationDateField').val($(this).attr("value"));
+                return false;
+            });
+        });
      </script>
     {% endblock %}
 {% endblock %}
 {% block content_title %}Enregistrer un nouvel apprenant{% endblock %}
  {%block submenu %}{% endblock %}
 {% block main_content %}
-<form action="{{ path('student_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
-    <div class="widget-box">
-        {% include 'VirguleMainBundle:Student:form.html.twig' with { 'form': form }  %}
-        <div class="form-actions">                                     
-            <input class="btn btn-success" type="submit" value="Enregistrer l'apprenant" /> 
-            <input class="btn btn-success" type="submit" name="save_and_add_new" value="Enregistrer et ajouter un autre" />
-        </div>
+<div class="row">
+    <div class="col-md-12 center">
+        <form action="{{ path('student_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+            <div class="widget-box">
+                {% include 'VirguleMainBundle:Student:form.html.twig' with { 'form': form }  %}
+                <div class="form-actions">                                     
+                    <input class="btn btn-success" type="submit" value="Enregistrer l'apprenant" /> 
+                    <input class="btn" type="submit" name="save_and_add_new" value="Enregistrer et ajouter un autre" />
+                </div>
+            </div>                
+        </form>
     </div>
 </div>
-</form>
 {% endblock %}

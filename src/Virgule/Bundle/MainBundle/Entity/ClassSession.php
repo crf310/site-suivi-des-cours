@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Virgule\Bundle\MainBundle\Entity\ClassSession
  *
- * @ORM\Table(name="class_session")
+ * @ORM\Table(name="classsessions")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\ClassSessionRepository")
  */
 class ClassSession {
@@ -69,16 +69,23 @@ class ClassSession {
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="Document", mappedBy="classSession")
+     * @ORM\ManyToMany(targetEntity="Document", inversedBy="classSessions")     * 
+     * @ORM\JoinTable(name="classsessions_documents")
      */
     private $documents;
 
     /**
      * @ORM\ManyToMany(targetEntity="Student", inversedBy="classSessions")
-     * @ORM\JoinTable(name="class_session_students")
+     * @ORM\JoinTable(name="classsessions_students")
      * @Assert\NotNull
      */
     protected $classSessionStudents;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Student", inversedBy="classSessionsNonEnrolled")
+     * @ORM\JoinTable(name="classsessions_students_non_enrolled")
+     */
+    protected $nonEnrolledClassSessionStudents;
 
     /**
      * Get id
@@ -158,6 +165,7 @@ class ClassSession {
     public function __construct() {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->classSessionStudents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->nonEnrolledClassSessionStudents = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -313,9 +321,31 @@ class ClassSession {
         return $this->classSessionStudents;
     }
     
-    public function setClassSessionStudents(\Doctrine\Common\Collections\ArrayCollection $students) {
-        $this->classSessionStudents = $students;
+    public function getNonEnrolledClassSessionStudents() {
+        return $this->nonEnrolledClassSessionStudents;
     }
+    
+    /**
+     * Add students
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Student $students
+     * @return ClassSession
+     */
+    public function addNonEnrolledClassSessionStudent(\Virgule\Bundle\MainBundle\Entity\Student $student) {
+        $this->nonEnrolledClassSessionStudents[] = $student;        
+        
+        return $this;
+    }   
+    
+    /**
+     * Remove students
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Student $students
+     */
+    public function removenonEnrolledClassSessionStudent(\Virgule\Bundle\MainBundle\Entity\Student $student) {
+        $this->nonEnrolledClassSessionStudents->removeElement($student);
+    }
+
 
 
     /**

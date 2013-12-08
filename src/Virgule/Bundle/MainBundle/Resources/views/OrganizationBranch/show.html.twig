@@ -3,45 +3,43 @@
 {%block submenu %}
 {% endblock %}
 {% block main_content %}
-
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span6 form-horizontal not-form-horizontal">
+    <div class="row">
+        <div class="col-md-12 form-horizontal not-form-horizontal">
             <div class="widget-box">
                 <div class="widget-title">
                     <span class="icon">
-                            <i class=""></i>
+                            <i class="icon-plus"></i>
                     </span>
                     <h5>{{ organizationBranch.name }}</h5>
                 </div>            
                 <div class="widget-content nopadding">
                     <div class="control-group">
                         <label class="control-label">Président</label>
-                        <div class="controls">{{ organizationBranch.presidentName }}</div>
+                        <div class="controls">{{ organizationBranch.presidentName }}&nbsp;</div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">Adresse</label>
-                        <div class="controls">{{ organizationBranch.address }}</div>
+                        <div class="controls">{{ organizationBranch.address }}&nbsp;</div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">Téléphone</label>
-                        <div class="controls">{{ organizationBranch.phoneNumber | phoneNumber }}</div>
+                        <div class="controls">{{ organizationBranch.phoneNumber | phoneNumber }}&nbsp;</div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">Fax</label>
-                        <div class="controls">{{ organizationBranch.faxNumber | phoneNumber }}</div>
+                        <div class="controls">{{ organizationBranch.faxNumber | phoneNumber }}&nbsp;</div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">Adresse email</label>
-                        <div class="controls"><a href="mailto:{{ organizationBranch.emailAddress }}">{{ organizationBranch.emailAddress }}</a></div>
+                        <div class="controls"><a href="mailto:{{ organizationBranch.emailAddress }}">{{ organizationBranch.emailAddress }}&nbsp;</a></div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="span6">
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             {% include 'VirguleMainBundle:ClassRoom:index.html.twig' with { 'classRooms': classRooms } %}
         </div>
     </div>
-</div>
 {% endblock %}

@@ -31,6 +31,7 @@ class ClassSessionController extends AbstractVirguleController {
      */
     public function indexAction($id = null) {
         $classLevels = $this->getClassLevelRepository()->findAll();
+        $courses = $this->getCourseRepository()->loadAll($this->getSelectedSemesterId());
         
         if ($id == null) {
             $classSessions = $this->getClassSessionRepository()->loadAll($this->getSelectedSemesterId());
@@ -38,7 +39,7 @@ class ClassSessionController extends AbstractVirguleController {
             $classSessions = $this->getClassSessionRepository()->loadAllClassSessionByClassLevel($id, $this->getSelectedSemesterId());
         }
         
-        return array('classSessions' => $classSessions, 'classLevels' => $classLevels, 'currentClassLevelId' => $id);
+        return array('classSessions' => $classSessions, 'classLevels' => $classLevels, 'currentClassLevelId' => $id, 'courses' => $courses);
     }
     
     /**
@@ -102,13 +103,15 @@ class ClassSessionController extends AbstractVirguleController {
         $comment = new Comment();
         $commentForm = $this->createForm(new CommentType(), $comment);
         
-        $classSessionStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllPresentAtClassSession($id);
+        $classSessionEnrolledStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledPresentAtClassSession($id);
+        $classSessionNonEnrolledStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllNonEnrolledPresentAtClassSession($id);
         
         return array(
             'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
             'commentForm' => $commentForm->createView(),
-            'classSessionStudents' => $classSessionStudents,
+            'classSessionEnrolledStudents' => $classSessionEnrolledStudents,
+            'classSessionNonEnrolledStudents' => $classSessionNonEnrolledStudents,
         );
     }
     
@@ -131,8 +134,7 @@ class ClassSessionController extends AbstractVirguleController {
        
         return array(
             'entity' => $classSession,
-            'form' => $form->createView(),
-            'course'=> $course
+            'form' => $form->createView()
         );
     }
 
@@ -170,24 +172,8 @@ class ClassSessionController extends AbstractVirguleController {
             $em->persist($entity);           
             $em->flush();
 
-            // Update Lucene index
-            // Request an index
-            $index = $this->get('ivory_lucene_search')->getIndex('identifier1');
-
-            // Create a new document
-            $document = new Document();
-            // $document->addField(Field::keyword('field1', 'Keyword'));
-            $document->addField(Field::text('field2', $entity->getSummary()));
-
-            // Add your document to the index
-            $index->addDocument($document);
-
-            // Commit your change
-            $index->commit();
-
-            // If you want you can optimize your index
-            $index->optimize();
-
+            $this->addFlash('Votre compte-rendu pour le ' . $entity->getSessionDate()->format('d/m/Y') . ' a bien été enregistré : <a href="' . $this->generateUrl('classsession_show', Array('id' => $entity->getId())) . '">n°' . $entity->getId() . '</a>');
+            
             return $this->redirect($this->generateUrl('classsession_index'));
         }
         
@@ -216,8 +202,12 @@ class ClassSessionController extends AbstractVirguleController {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find ClassSession entity.');
         }
-
-        $editForm = $this->createForm(new ClassSessionType(), $entity);
+        
+        $organizationBranchId = $this->getSelectedOrganizationBranchId();
+        $currentTeacher = $this->getConnectedUser();
+        $semesterId = $this->getSelectedSemesterId();
+        
+        $editForm = $this->createForm(new ClassSessionType($this->getDoctrine(), $organizationBranchId, $currentTeacher, $semesterId), $entity, array('em' => $this->getDoctrine()->getManager()));
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -243,15 +233,21 @@ class ClassSessionController extends AbstractVirguleController {
             throw $this->createNotFoundException('Unable to find ClassSession entity.');
         }
 
+        
+        $organizationBranchId = $this->getSelectedOrganizationBranchId();
+        $currentTeacher = $this->getConnectedUser();
+        $semesterId = $this->getSelectedSemesterId();
+        
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new ClassSessionType(), $entity);
+        $editForm = $this->createForm(new ClassSessionType($this->getDoctrine(), $organizationBranchId, $currentTeacher, $semesterId), $entity, array('em' => $this->getDoctrine()->getManager()));
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('classsession_edit', array('id' => $id)));
+            $this->addFlash('Le compte-rendu n<sup>o</sup>' . $entity->getId() . ' a bien été mis à jour.');
+            return $this->redirect($this->generateUrl('classsession_show', array('id' => $id)));
         }
 
         return array(
@@ -283,7 +279,7 @@ class ClassSessionController extends AbstractVirguleController {
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('classsession'));
+        return $this->redirect($this->generateUrl('classsession_index'));
     }
 
     private function createDeleteForm($id) {

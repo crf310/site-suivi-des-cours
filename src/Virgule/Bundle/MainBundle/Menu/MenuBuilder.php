@@ -19,7 +19,8 @@ class MenuBuilder extends ContainerAware {
         $menu['Compte-rendus']->setLinkAttribute('class', 'minutes');
         $menu['Compte-rendus']->addChild('Par niveau', array('route' => 'classsession_index_per_level'))->setDisplay(false);
         
-        /* Hidden children to set this menu active when we visit the pages */
+        /* Hidden children to set this menu active when we visit the pages */        
+        $menu['Compte-rendus']->addChild('NEW CLASSSESSION', array('route' => 'classsession_new'))->setDisplay(false);
         $menu['Compte-rendus']->addChild('RSS INDEX', array('route' => 'classsession_rss_index'))->setDisplay(false);
         
         $this->addNbSubLinks($menu, 'Compte-rendus');
@@ -35,6 +36,8 @@ class MenuBuilder extends ContainerAware {
         $menu['Apprenants']->setAttribute('class', 'submenu');
         $menu['Apprenants']->setLinkAttribute('class', 'students');
         
+        $menu['Apprenants']->addChild('Mes apprenants', array('route' => 'index_my_students'));
+        $menu['Apprenants']['Mes apprenants']->setLinkAttribute('class', 'students');        
         $menu['Apprenants']->addChild('Tous les inscrits', array('route' => 'student_index'));
         $menu['Apprenants']['Tous les inscrits']->setLinkAttribute('class', 'students');        
         $menu['Apprenants']->addChild('Inscrits à plusieurs cours', array('route' => 'student_index_manyclasses'));
@@ -61,6 +64,9 @@ class MenuBuilder extends ContainerAware {
         $menu->addChild('Cartable de documents', array('route' => 'document_index'));
         $menu['Cartable de documents']->setLinkAttribute('class', 'schoolbag');
         $menu['Cartable de documents']->addChild('NEW DOCUMENT', array('route' => 'document_new'))->setDisplay(false);
+                
+        $menu->addChild('Aide', array('uri' => '#'));
+        $menu['Aide']->setLinkAttribute('class', 'help');
         
         /* Administration */
         $menu->addChild('Administration', array('uri' => '#'));

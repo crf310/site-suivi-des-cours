@@ -28,6 +28,13 @@ class PlanningCell {
         return $this->course;
     }
     
+    public function hasCourse() {
+        if ($this->course == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
     public function getRowspan() {
         return $this->rowspan;
     }

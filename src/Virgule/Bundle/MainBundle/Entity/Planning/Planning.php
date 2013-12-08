@@ -20,15 +20,22 @@ class Planning {
     
     private $classRooms = Array();
     
-    public function __construct($courses) {  
+    private $hasClass = Array();
+    
+    private $displayOnlyCurrent;
+    
+    public function __construct($courses, $displayOnlyCurrent = false) {  
         $this->dayStart = 1;
         $this->dayEnd = 6;
         $this->startTime = new \DateTime('08:00');
         $this->endTime = new \DateTime('21:30');
+        $this->displayOnlyCurrent = $displayOnlyCurrent;
         
         $this->initPlanning($courses);
-        $this->initHeader();
+        // header is initialized after because we know the classrooms from the courses
+        $this->initHeader(); 
         $this->addCourses($courses);
+        $this->removeRoomColsWithoutClass();
     }
     
     public function getRows() {
@@ -60,6 +67,13 @@ class Planning {
         if (count($this->classRooms) == 0) {
             $this->storeClassRoom(0, "");
         }
+                
+        // this array will store boolean to know if a class has at least one class for each day
+        for ($day = $this->dayStart; $day <= $this->dayEnd; $day++) {
+            foreach ($this->classRooms as $classRoomId => $classRoomName) {
+                $this->hasClass[$day][$classRoomId] = false;
+            }
+        }
         
         while ($startTimeCell <= $this->endTime) {           
             $timeIndex = $startTimeCell->format('H:i');
@@ -78,7 +92,9 @@ class Planning {
     
     private function addCourses($courses) {
         foreach($courses as $course) {
-            $this->addCourse($course);
+            if (!$this->displayOnlyCurrent || ($this->displayOnlyCurrent && $course->isCurrent())) {
+                $this->addCourse($course);
+            }
         }
     }
     private function addCourse(CourseHydrated $course) {
@@ -92,22 +108,44 @@ class Planning {
                 $timeIndex = $timeCell->format('H:i');
                 $this->rows[$timeIndex]->removeCell($course->getDayOfWeek(), $course->getClassRoomId());
                 $timeCell->modify("+" . self::$cellSize . " minutes");
-            }  
-        }
-    }
-    
-    private function sortCells() {
-        foreach ($this->rows as $time => $row) {
-            $this->rows[$time] = ksort($row->getCells());
-            foreach ($row as $day => $cells) {
-                $this->rows[$time][$day] = krsort($cells);
             }
         }
+        
+        // store that this couple of day/room has at least a class
+        $this->hasClass[$course->getDayOfWeek()][$course->getClassRoomId()] = true;
     }
     
     private function storeClassRoom($classRoomId, $classRoomLabel) {
         if (! array_key_exists($classRoomId, $this->classRooms)) {
             $this->classRooms[$classRoomId] = $classRoomLabel;
+        }
+    }
+    
+    private function removeRoomColsWithoutClass() {
+        for ($day = $this->dayStart; $day <= $this->dayEnd; $day++) {
+            $dayHasClass = false;
+            foreach ($this->classRooms as $classRoomId => $classRoomName) {
+                // if a classroom doesn't host any class this day
+                if (! $this->hasClass[$day][$classRoomId]) {
+                    //echo "No class for $day in $classRoomId\n";
+                    $this->header[$day]->removeClassRoom($classRoomId);
+                    
+                    $startTimeCell = clone $this->startTime;
+                    while ($startTimeCell <= $this->endTime) {           
+                        $timeIndex = $startTimeCell->format('H:i');
+            
+                        $this->rows[$timeIndex]->removeCell($day, $classRoomId);
+            
+                        $startTimeCell->modify("+" . self::$cellSize . " minutes");
+                    }
+                } else {
+                    $dayHasClass = true;
+                }
+            }
+            
+            if (! $dayHasClass) {
+                unset($this->header[$day]);
+            }
         }
     }
 }

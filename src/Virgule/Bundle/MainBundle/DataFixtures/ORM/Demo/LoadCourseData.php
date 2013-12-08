@@ -120,6 +120,7 @@ class LoadCourseData extends AbstractFixture implements OrderedFixtureInterface 
             $courseJ->setSemester($this->getReference($semesterReference));
             $courseJ->setClassLevel($this->getReference('A2'));
             $courseJ->addTeacher($this->getReference('prof3'));
+            $courseJ->setAlternateEnddate(new \DateTime('2013-11-10'));
             
             $courseK = new Course();
             $courseK->setDayOfWeek(1);

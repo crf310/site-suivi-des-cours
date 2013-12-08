@@ -74,6 +74,9 @@
         <service id="virgule_main_bundle.many_cols_extension" class="%namespace%\Form\Extension\ManyColsBoxesTypeExtension">
             <tag name="form.type_extension" alias="choice" />
         </service>
+        <service id="virgule_main_bundle.check_all_checkboxes_extension" class="%namespace%\Form\Extension\CheckAllCheckboxesExtension">
+            <tag name="form.type_extension" alias="choice" />
+        </service>
 
         <!-- Views -->
         <service id="pagerfanta.view.tablefooter" class="Virgule\Bundle\MainBundle\View\TableFooterView" public="true">

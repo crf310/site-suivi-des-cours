@@ -33,11 +33,16 @@ class SecurityController extends Controller {
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
         
+        $csrfToken = $this->container->has('form.csrf_provider')
+            ? $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate')
+            : null;
+        
         return $this->render('VirguleSecurityBundle:Security:login.html.twig', array(
             // last username entered by the user
-            'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-            'error'         => $error,
-            'organization_branches' => $organizationBranches
+            'last_username'          => $session->get(SecurityContext::LAST_USERNAME),
+            'error'                  => $error,
+            'organization_branches'  => $organizationBranches,
+            'csrf_token'             => $csrfToken
         ));
     }
     
@@ -51,6 +56,6 @@ class SecurityController extends Controller {
         $session = $this->get('session');
         $session->clear();
 
-        return $this->render('VirguleSecurityBundle:Security:login.html.twig');
+        return $this->redirect($this->generateUrl('login'));
     }
 }

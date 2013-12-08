@@ -18,7 +18,7 @@ class TeacherType extends AbstractType {
                 ->add('firstName')
                 ->add('phoneNumber')
                 ->add('cellphoneNumber')
-                ->add('emailAddress')
+                ->add('email')
                 ->add('username')
                 ->add('password', 'repeated', array(
                     'type' => 'password',
@@ -49,6 +49,12 @@ class TeacherType extends AbstractType {
 
     public function getName() {
         return 'virgule_bundle_mainbundle_teachertype';
+    }
+    
+    public function getDefaultOptions() {
+        return array(
+            'validation_groups' => array('Registration', 'Default')
+        );
     }
 
 }

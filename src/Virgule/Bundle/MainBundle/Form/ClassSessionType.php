@@ -37,7 +37,7 @@ class ClassSessionType extends AbstractType {
                 ->add('sessionDate', 'date', array(
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy',
-                    'attr' => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy', 'value' => $sNow)))
+                    'attr' => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy')))
                 ->add('summary')          
                 ->add('sessionTeacher', 'entity', array(
                         'class' => 'VirguleMainBundle:Teacher', 
@@ -47,7 +47,15 @@ class ClassSessionType extends AbstractType {
                         'property_path' => 'sessionTeacher',
                         'attr' => array('class' => 'small-select'),
                         'preferred_choices' => array($this->currentTeacher))
-                    );
+                    )                
+                ->add('documents', 'entity', array(
+                    'class' => 'VirguleMainBundle:Document',
+                    'expanded' => false,
+                    'multiple' => true,
+                    'property' => 'fileName',
+                    'property_path' => 'documents',
+                    'attr' => array('class' => 'big-select')
+                ));
         
         $subscriber = new AddClassSessionStudentsFieldSubscriber($builder->getFormFactory(), $this->semesterId);
         $builder->addEventSubscriber($subscriber);

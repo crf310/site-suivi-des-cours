@@ -19,7 +19,7 @@
                 {% for classRoom in classRooms %}
                     <tr>
                         <td>{{ classRoom['classroom_name'] }}</td>
-                        <td>{{ classRoom['classroom_address'] }}</td>
+                        <td>{{ classRoom['classroom_address'] }} (<a href="#showGoogleMap{{ loop.index }}" data-toggle="modal">carte</a>)</td>
                         <td>{{ classRoom['classroom_comments'] }}</td>
                     </tr>
                 {% endfor %}                    
@@ -32,3 +32,8 @@
         </table>
     </div>
 </div>
+{% if classRooms is not empty %}
+    {% for classRoom in classRooms %}
+        {% include '::google_map.html.twig' with { 'mapId' : loop.index, 'address': classRoom['classroom_address'] } %}
+    {% endfor %}                    
+{% endif %}

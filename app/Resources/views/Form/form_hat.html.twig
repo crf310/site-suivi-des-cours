@@ -1,0 +1,12 @@
+        <div class="widget-title">
+            {% if icon is defined %}
+            <span class="icon">
+                    <i class="icon-align-justify"></i>									
+            </span>
+            {% endif %}
+            <h5>{{ form_title}}</h5>
+            {% if not form.vars.valid %}<span class="label label-danger">{{ form.vars.errors|length > 0 }} erreur{% if form.vars.errors|length > 1 %}s{% endif %} </span>{% endif %}
+        </div>
+        {% if not form.vars.valid %}
+            {{ form_errors(form) }}
+        {% endif %}

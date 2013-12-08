@@ -20,12 +20,13 @@ class ClassLevelSuggestedType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
         $builder->add('classLevel', 'entity', array(
-            'class' => 'VirguleMainBundle:ClassLevel',
-            'expanded' => false,
-            'multiple' => false,
-            'property' => 'label',
-            'property_path' => 'classlevel',
-            'attr' => array('class' => 'tiny-select')
+            'class'             => 'VirguleMainBundle:ClassLevel',
+            'expanded'          => true,
+            'multiple'          => false,            
+            'cols_number'       => 6,
+            'property'          => 'label',
+            'property_path'     => 'classlevel',
+            'label'             => false
             ));
         
         $transformer = new StudentToNumberTransformer($this->em);

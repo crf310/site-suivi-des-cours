@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
       {% block head %}
@@ -7,6 +7,14 @@
     <title>Alphabétisation - {{ app.session.get('organizationBranchName') }}</title>
   </head>
   <body>
+    <div class="alert-global">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert alert-flash alert-success fade in">
+                {{ flashMessage|raw }}
+                <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+            </div>
+        {% endfor %}
+    </div>
     {% include '::header.html.twig' %}
     {% include '::sidebar.html.twig' %}
     <div id="content">{% block body %}{% endblock %}</div>
