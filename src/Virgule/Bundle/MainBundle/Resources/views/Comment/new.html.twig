@@ -3,5 +3,6 @@
         <form id="comment-form" action="{{ path(target_route, { 'id': target_id }) }}" method="post" {{ form_enctype(commentForm) }} class="form-horizontal">
         {{ form_row(commentForm.comment, { 'label': false, 'attr': {'class': 'comment-textarea'} }) }}
         {{ form_rest(commentForm) }}
+        </form>
     </div>
 </div>
