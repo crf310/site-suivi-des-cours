@@ -91,7 +91,7 @@ class StudentController extends AbstractVirguleController {
         foreach($myCourses as $course) {
             $courseIds[] = $course->getId();
         }
-        
+        $myStudents = Array();
         if (count($courseIds) > 0) {
             $myStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledInCourses($courseIds);
         }
