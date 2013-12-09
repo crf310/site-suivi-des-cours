@@ -5,6 +5,7 @@
         <script type='text/javascript' src='https://www.google.com/jsapi'></script>
         <script type='text/javascript'>
         $(document).ready(function () {
+            
             $(window).resize(function(){
                 drawRegionsMap();
                 drawGenderChart();
@@ -148,25 +149,14 @@ au
             <div class="widget-box">
                 <div class="widget-title">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#ranges_div"><i class="icon-signal"></i> Répartitions</a></li>
-                        <li><a data-toggle="tab" href="#worldmap_div"><i class="icon-globe"></i> Carte du monde</a></li>
+                        <li class="active"><a data-toggle="tab" href="#worldmap_div"><i class="icon-globe"></i> Carte du monde</a></li>
                         <li><a data-toggle="tab" href="#worldlist_div"><i class="icon-flag-checkered"></i> Pays d'origine</a></li>
                         <li><a data-toggle="tab" href="#languages_div"><i class="icon-comments"></i> Langues parlées</a></li>
+                        <li><a data-toggle="tab" href="#ranges_div"><i class="icon-signal"></i> Répartitions</a></li>
                     </ul>
                 </div>
                 <div class="widget-content tab-content">
-                    <div id="ranges_div" class="tab-pane active" style="width:100%; height:200px">
-                        <div class="col-md-4">
-                            <div  id="gender_div"></div>
-                        </div>
-                        <div class="col-md-4">
-                            <div  id="ages_div"></div>
-                        </div>
-                        <div class="col-md-4">
-                            <div  id="classlevels_div"></div>
-                        </div>
-                    </div>
-                    <div id="worldmap_div" class="tab-pane" style="width:100%; height:500px"></div>
+                    <div id="worldmap_div" class="tab-pane active" style="width:100%; height:500px"></div>
                     <div id="worldlist_div" class="tab-pane">                       
                         <div class="row">
                             {% set nbColumns = 3 %}
@@ -203,6 +193,17 @@ au
                                 {% endfor %}
                                 </ul>
                             </div>
+                        </div>
+                    </div>
+                    <div id="ranges_div" class="tab-pane" style="width:100%; height:200px">
+                        <div class="col-md-4">
+                            <div  id="gender_div"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div  id="ages_div"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div  id="classlevels_div"></div>
                         </div>
                     </div>
                 </div>                            
