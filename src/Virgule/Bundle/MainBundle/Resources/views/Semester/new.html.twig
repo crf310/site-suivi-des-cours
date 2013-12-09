@@ -59,7 +59,8 @@ alert('Handler for .focus() called.');
                 {% endfor %}
             </table>
             <div class="form-actions"> 
-                <button  class="btn" type="submit">Enregistrer le semestre</button>
+                <input class="btn btn-success" type="submit" value="Enregistrer le semestre" />                        
+                <a class="btn btn-default" href="{{ path('semester_index') }}">Annuler</a>
             </div>
         </div>
     </div>
