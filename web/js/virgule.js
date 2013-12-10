@@ -1,3 +1,8 @@
+$(document).ready(function(){	
+    $('.datepicker').datepicker({
+        weekStart: 1
+    });
+});
 $(document).ready(function () {
     $('#checkAll').click(function () {
         if ($("#checkAll").attr("value") == "noneChecked") {
