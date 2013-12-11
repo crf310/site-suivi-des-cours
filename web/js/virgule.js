@@ -74,16 +74,19 @@ $(function(){
 });
 
 // Override the global checkbox in tables as we're not using the iCheck 
-$("span.icon input:checkbox, th input:checkbox").click(function() {
-		var checkedStatus = this.checked;
-		var checkbox = $(this).parents('.widget-box').find('tr td:first-child input:checkbox');		
-		checkbox.each(function() {
-			this.checked = checkedStatus;
-			if (checkedStatus == this.checked) {
-				$(this).closest('.checker > span').removeClass('checked');
-			}
-			if (this.checked) {
-				$(this).closest('.checker > span').addClass('checked');
-			}
-		});
-	});	
+
+$(document).ready(function(){
+    $("span.icon input:checkbox, th input:checkbox").click(function() {
+            var checkedStatus = this.checked;
+            var checkbox = $(this).parents('.widget-box').find('tr td:first-child input:checkbox');		
+            checkbox.each(function() {
+                    this.checked = checkedStatus;
+                    if (checkedStatus == this.checked) {
+                            $(this).closest('.checker > span').removeClass('checked');
+                    }
+                    if (this.checked) {
+                            $(this).closest('.checker > span').addClass('checked');
+                    }
+            });
+    });	
+});
