@@ -323,11 +323,6 @@ class Course {
     public function __clone() {
         if ($this->id) {
             $this->id = null;            
-            if ($this->teachers instanceof PersistentCollection) {
-                //$this->teachers = clone $this->teachers;
-                //$this->teachers->setOwner($this, $this->teachers->getMapping());
-            }
-            
             $this->classSessions = new \Doctrine\Common\Collections\ArrayCollection();
             $this->teachers = new \Doctrine\Common\Collections\ArrayCollection();
             $this->classSessions->clear();
