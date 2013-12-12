@@ -154,7 +154,8 @@ class CourseRepository extends EntityRepository {
     
     public function findByIds(array $coursesIds) {
         $q = $this
-                ->createQueryBuilder('c')                
+                ->createQueryBuilder('c')         
+                ->innerJoin('c.teachers', 't')       
                 ->where('c.id IN (:coursesIds)')
                 ->setParameter('coursesIds', $coursesIds, Connection::PARAM_INT_ARRAY)
                 ->getQuery();

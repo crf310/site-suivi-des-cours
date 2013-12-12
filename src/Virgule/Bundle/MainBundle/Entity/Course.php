@@ -319,6 +319,21 @@ class Course {
         //return 'Niveau ' . $this->classLevel . ', le ' . $this->dayOfWeek . ' de ' . $this->startTime->format('H:i') . ' à ' . $this->endTime->format('H:i');
 		return $this->classLevel . ', ' . $this->dayLabels[$this->dayOfWeek] . ' ' . $this->startTime->format('H:i') . '-' . $this->endTime->format('H:i');
     }
+    
+    public function __clone() {
+        if ($this->id) {
+            $this->id = null;            
+            if ($this->teachers instanceof PersistentCollection) {
+                //$this->teachers = clone $this->teachers;
+                //$this->teachers->setOwner($this, $this->teachers->getMapping());
+            }
+            
+            $this->classSessions = new \Doctrine\Common\Collections\ArrayCollection();
+            $this->teachers = new \Doctrine\Common\Collections\ArrayCollection();
+            $this->classSessions->clear();
+            $this->semester = null;
+        }
+    }
 
     /**
      * Add classSessions

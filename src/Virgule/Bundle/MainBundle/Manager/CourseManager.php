@@ -70,8 +70,14 @@ class CourseManager extends BaseManager {
             $newCourse = clone $course;
             $newCourse->setSemester($newSemester);
             $this->em->persist($newCourse);
+            $this->em->flush();
+            
+            foreach($course->getTeachers() as $teacher) {
+                $newCourse->addTeacher($teacher);
+            }
+            $this->em->persist($newCourse);
+            $this->em->flush();
         }
-        $this->em->flush();
     }
 }
 

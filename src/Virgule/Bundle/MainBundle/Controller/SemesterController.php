@@ -115,27 +115,39 @@ class SemesterController extends AbstractVirguleController {
         $entity->setOrganizationBranch($this->getSelectedOrganizationBranch());
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();           
-            
-            $flashMessage = 'Nouveau semestre créé avec succès !';
-            
-            if ($request->get('courses')) {
-                $coursesToCopy = $request->get('courses');
-                $nbCoursesToCopy = count($coursesToCopy);
+            $em = $this->getDoctrine()->getManager(); 
+            // suspend auto-commit
+            $em->getConnection()->beginTransaction();
+            // Try and make the transaction
+            try {
+                $em->persist($entity);
+                $em->flush();           
+
+                $flashMessage = 'Nouveau semestre créé avec succès !';
+
+                if ($request->get('courses')) {
+                    $coursesToCopy = $request->get('courses');
+                    $nbCoursesToCopy = count($coursesToCopy);
+
+                    $this->getCourseManager()->cloneCourses($coursesToCopy, $entity);
+                    $flashMessage .= "&nbsp;<strong>" . $nbCoursesToCopy . '</strong> cours copiés.';
+                }
+                // Try and commit the transaction
+                $em->getConnection()->commit();                
                 
-                $this->getCourseManager()->cloneCourses($coursesToCopy, $entity);
-                $flashMessage .= '\n' . $nbCoursesToCopy . ' cours copiés';
+                $this->getSemesterManager()->reloadAllSemestersIntoSession($this->getSelectedOrganizationBranchId());
+                if ($this->getSemesterManager()->setNewSemesterAsCurrent($entity)) {
+                    $flashMessage .= '&nbsp;Vous avez été repositionné sur ce semestre';
+                }
+                $this->addFlash($flashMessage);
+
+                return $this->redirect($this->generateUrl('semester_index'));
+            } catch (Exception $e) {
+                // Rollback the failed transaction attempt
+                $em->getConnection()->rollback();
+                $em->close();
+                throw $e;
             }
-            
-            $this->getSemesterManager()->reloadAllSemestersIntoSession($this->getSelectedOrganizationBranchId());
-            if ($this->getSemesterManager()->setNewSemesterAsCurrent($entity)) {
-                $flashMessage .= '\nVous avez été repositionné sur ce semestre';
-            }
-            $this->addFlash($flashMessage);
-             
-            return $this->redirect($this->generateUrl('semester_index', array('id' => $entity->getId())));
         }
 
         return array(
