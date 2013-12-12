@@ -91,16 +91,17 @@ class AddClassSessionStudentsFieldSubscriber implements EventSubscriberInterface
                 'auto_initialize'   => false
             ));
             $form->add($enrolledStudentsField);
-                    
+                
+            $semesterId = $this->semesterId;
             $nonEnrolledStudentsField = $this->factory->createNamed('nonEnrolledStudentsField', 'entity', $selectedNonEnrolledStudents, array(
                 'class'              => 'VirguleMainBundle:Student',
-                'query_builder' => function(EntityRepository $er) use ($courseId) {
+                'query_builder' => function(EntityRepository $er) use ($courseId, $semesterId) {
                     return $er->createQueryBuilder('s')
                                     ->add('orderBy', 's.lastname ASC, s.firstname ASC')
                                     ->innerJoin('s.courses', 'c', 'WITH', 'c.id != :courseId')
                                     ->innerJoin('c.semester', 'se', 'WITH', 'se.id = :semesterId')
                                     ->setParameter('courseId', $courseId)
-                                    ->setParameter('semesterId', $this->semesterId);
+                                    ->setParameter('semesterId', $semesterId);
                 },
                 'expanded'          => false,
                 'multiple'          => true,
