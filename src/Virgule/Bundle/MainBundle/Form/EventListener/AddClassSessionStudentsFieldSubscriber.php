@@ -97,8 +97,10 @@ class AddClassSessionStudentsFieldSubscriber implements EventSubscriberInterface
                 'query_builder' => function(EntityRepository $er) use ($courseId) {
                     return $er->createQueryBuilder('s')
                                     ->add('orderBy', 's.lastname ASC, s.firstname ASC')
-                                    ->innerJoin('s.courses', 'c2', 'WITH', 'c2.id != :courseId')
-                                    ->setParameter('courseId', $courseId);
+                                    ->innerJoin('s.courses', 'c', 'WITH', 'c.id != :courseId')
+                                    ->innerJoin('c.semester', 'se', 'WITH', 'se.id = :semesterId')
+                                    ->setParameter('courseId', $courseId)
+                                    ->setParameter('semesterId', $this->semesterId);
                 },
                 'expanded'          => false,
                 'multiple'          => true,
