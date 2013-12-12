@@ -9,8 +9,21 @@
             &nbsp;le {{ entity.course.dayOfWeek | day }} de {{ entity.course.startTime | date('H\\hi') }} à {{ entity.course.endTime | date('H\\hi') }}</div>
     </div>
     {% endif %}
+    <div class="control-group not-form-horizontal">
+        {% if entity.course.teachers.count > 1 %}
+            {% set s = "s" %}
+        {% else %}
+            {% set s = "" %}
+        {% endif %}
+        <label class="control-label">Formateur{{ s }} habituel{{ s }}</label>
+        <div class="not-form-horizontal controls">
+            {% for teacher in entity.course.teachers %}
+                <a title="" href="{{ path('teacher_show', { 'id': teacher.id }) }}">{{ teacher.firstname }} {{ teacher.lastname }}</a>{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        </div>
+    </div>
     {{ form_row(form.sessionDate, { 'label': 'Date'}) }}
-    {{ form_row(form.sessionTeacher, { 'label': 'Formateur'}) }}
+    {{ form_row(form.sessionTeacher, { 'label': 'Formateur ayant assuré le cours'}) }}
     {{ form_row(form.summary, { 'label': 'Résumé du cours', 'id' : 'summaryField', }) }}       
     {{ form_row(form.documents, { 'label': 'Document(s) utilisé(s)', 'hint': 'Lier ici les documents utilisés lors de votre cours, tels que des exercices, des corrigés, des passages de livres etc.' }) }}
     {% if form.classSessionStudents is defined %}
