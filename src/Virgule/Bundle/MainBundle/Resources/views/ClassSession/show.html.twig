@@ -50,8 +50,8 @@
                     <div class="control-group">
                         <label class="control-label">Cours </label>
                         <div class="controls">
-                            niveau {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': entity.course.classLevel.htmlColorCode, 'classLevelLabel': entity.course.classLevel.label } %}
-                            &nbsp;le {{ entity.course.dayOfWeek | day }} de {{ entity.course.startTime | date('H\\hi') }} à {{ entity.course.endTime | date('H\\hi') }}
+                            <a href="{{ path('course_show', { 'id': entity.course.id }) }}">niveau {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': entity.course.classLevel.htmlColorCode, 'classLevelLabel': entity.course.classLevel.label } %}
+                            &nbsp;le {{ entity.course.dayOfWeek | day }} de {{ entity.course.startTime | date('H\\hi') }} à {{ entity.course.endTime | date('H\\hi') }}</a>
                         </div>
                     </div>
                     <div class="control-group">
@@ -60,11 +60,11 @@
                     </div>
                     <div class="control-group">
                         <label class="control-label">Dirigé par</label>
-                        <div class="controls">{{ entity.sessionTeacher.firstName }} {{ entity.sessionTeacher.lastName }}&nbsp;</div>
+                        <div class="controls"><a href="{{ path('teacher_show', { 'id': entity.sessionTeacher.id }) }}">{{ entity.sessionTeacher.firstName }} {{ entity.sessionTeacher.lastName }}</a>&nbsp;</div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">Compte-rendu saisi par</label>
-                        <div class="controls">{{ entity.reportTeacher.firstName }} {{ entity.reportTeacher.lastName }} le {{ entity.reportDate | date('d/m/Y à h:i') }}&nbsp;</div>
+                        <div class="controls"><a href="{{ path('teacher_show', { 'id': entity.reportTeacher.id }) }}">{{ entity.reportTeacher.firstName }} {{ entity.reportTeacher.lastName }}</a> le {{ entity.reportDate | date('d/m/Y') }}&nbsp;</div>
                     </div>
                     <div class="control-group">
                         <div>
