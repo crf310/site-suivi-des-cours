@@ -278,5 +278,17 @@ class CourseController extends AbstractVirguleController {
                         ->getForm()
         ;
     }
+    
+    /**
+     * Finds and displays a Course entity.
+     *
+     * @Route("/fixPlanning", name="fix_planning")
+     * @Template()
+     */
+    public function fixPlanningAction() {
+        $this->getCourseManager()->fixCourses();
+
+        //return $this->redirect($this->generateUrl('course_show_planning'));
+    }
 
 }

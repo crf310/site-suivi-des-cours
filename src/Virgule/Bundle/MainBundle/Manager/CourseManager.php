@@ -64,20 +64,85 @@ class CourseManager extends BaseManager {
         return $coursesHydrated;
     }
     
+    private function cloneCourse($course, $newSemester) {
+        $newCourse = clone $course;
+        $newCourse->setSemester($newSemester);
+        $this->em->persist($newCourse);
+        $this->em->flush();
+
+        foreach($course->getTeachers() as $teacher) {
+            $newCourse->addTeacher($teacher);
+        }
+        $this->em->persist($newCourse);
+        $this->em->flush();
+        
+        return $newCourse->getId();
+    }
+    
     public function cloneCourses($courseIds, $newSemester) {
         $courses = $this->getRepository()->findByIds($courseIds);
         foreach($courses as $course) {
-            $newCourse = clone $course;
-            $newCourse->setSemester($newSemester);
-            $this->em->persist($newCourse);
-            $this->em->flush();
-            
-            foreach($course->getTeachers() as $teacher) {
-                $newCourse->addTeacher($teacher);
-            }
-            $this->em->persist($newCourse);
-            $this->em->flush();
+            $this->cloneCourse($course->getId(), $newSemester);
         }
+    }
+    
+    // one shot
+    public function fixCourses() {
+        
+        $semesterRepository = $this->em->getRepository('VirguleMainBundle:Semester');
+        
+        // sélectionner les cours du semestre qui ont des compte-rendus avec une date antérieure
+        $courses = $this->getRepository()->getCourseWithOldReports();
+        
+        // sélectionner le semestre correspondant
+        foreach($courses as $course) {
+            echo 'Processing course #' . $course->getId() . "<br />";
+            $semestersFound = Array();
+            $coursesCloned = Array();
+            foreach($course->getClassSessions() as $classession) {
+                
+                if (date_format($classession->getSessionDate(), 'Y-m-d') > '2008-09-22') {
+                    
+                    $sessionDate = date_format($classession->getSessionDate(), 'Y-m-d');
+                    $semesterStartDate = date_format($classession->getCourse()->getSemester()->getStartDate(), 'Y-m-d');
+                    if ($sessionDate < $semesterStartDate) {
+                        
+                        echo 'Looking for a semester containing '. date_format($classession->getSessionDate(), 'd/m/Y') . "<br />";
+                        $s = $semesterRepository->findSemesterByDateBetween($classession->getSessionDate());
+
+                        if ($s != null) {
+                            echo "Semester found : #" . $s->getId() . "<br />";
+                            // cloner le cours
+                             if (! in_array($s->getId(), $semestersFound)) {
+                                 $newCourseId = $this->cloneCourse($course, $s);
+                                 $newCourse = $this->getRepository()->find($newCourseId);
+                                 $semestersFound[] = $s->getId();
+                                 $coursesCloned[$course->getId()] = $newCourseId;
+                                 echo "Cours #" . $course->getId() . " cloned to #" . $newCourseId . ".<br />";
+                             } else {                     
+                                 $newCourse = $this->getRepository()->find($coursesCloned[$course->getId()]);
+                             }
+
+                            $classession->setCourse($newCourse);
+                            echo "Class session #" . $classession->getId() . " attached to course #" . $newCourse->getId() . ".<br />";
+                            $this->em->persist($classession);
+                            $this->em->flush();
+                        } else {
+                            echo "No semester found <br />";
+                        }
+                    }
+                }
+            }
+            echo "<br />";
+        }
+        
+        // s'ils ont aussi d'autres comptes-rendus, cloner le cours
+        
+        // sinon déplacer
+        
+        // boucler sur ces comptes-rendus et changer le cours
+        
+        // sauver cours et comptes-rendus
     }
 }
 

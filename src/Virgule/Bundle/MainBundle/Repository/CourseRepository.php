@@ -162,4 +162,14 @@ class CourseRepository extends EntityRepository {
         return $q->execute();        
     }
 
+    
+    public function getCourseWithOldReports() {
+        $q = $this
+                ->createQueryBuilder('c')         
+                ->innerJoin('c.semester', 's')       
+                ->innerJoin('c.classSessions', 'cs')   
+                ->where('cs.sessionDate < s.startDate')
+                ->getQuery();
+        return $q->execute();
+    }
 }
