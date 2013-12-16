@@ -32,7 +32,7 @@ class TeacherType extends AbstractType {
                     'attr' => array('class' => 'date')
                 ))*/
                 ->add('role', 'entity', array(
-                    'class' => 'VirguleMainBundle:Roles',
+                    'class' => 'VirguleMainBundle:Role',
                     'expanded' => false,
                     'multiple' => false,
                     'property' => 'label',
