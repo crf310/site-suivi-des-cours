@@ -4,7 +4,7 @@
     {% block javascripts %}
         <script type='text/javascript'>
             $(function(){
-                    $('#delete-teacher').click(function(e){
+                    $('#delete-class-report').click(function(e){
                         e.preventDefault();
                         bootbox.dialog({
                             message: "Vous allez supprimer le compte-rendu n°{{ entity.id }} du {{ entity.sessionDate | date('d/m/Y') }}, êtes-vous sûr(e) ?",
@@ -32,7 +32,7 @@
 {%block submenu %}
     {% if app.user.id == entity.reportTeacher.id or app.user.id == entity.sessionTeacher.id %}
         <a class="btn tip-bottom" href="{{ path('classsession_edit', { 'id': entity.id }) }}"> <i class="my-icon-user_edit"></i>Modifier le compte-rendu</a>
-        <a class="btn" href="#" id="delete-teacher"> <i class="my-icon-user_delete"></i>Supprimer le compte-rendu</a>
+        <a class="btn" href="#" id="delete-class-report"> <i class="my-icon-user_delete"></i>Supprimer le compte-rendu</a>
     <form id="delete-classsession-form" action="{{ path('classsession_delete', { 'id': entity.id }) }}" method="post">{{ form_widget(delete_form) }}</form>
     {% endif %}   
 {% endblock %}
