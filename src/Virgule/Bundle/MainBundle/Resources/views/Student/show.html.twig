@@ -28,7 +28,7 @@
         </script>
     {% endblock %}
 {% endblock %}
-{% block content_title %}Fiche apprenant: {{ entity.firstName }} {{ entity.lastName }}{% endblock %}
+{% block content_title %}{{ entity.firstName }} {{ entity.lastName | upper }}{% endblock %}
 {%block submenu %}
     <a class="btn" href="{{ path('student_preview_certificate', { 'id': entity.id }) }}"> <i class="my-icon-user-certificate"></i>Générer une attestation</a>
     <a class="btn" href="{{ path('student_edit', { 'id': entity.id }) }}"> <i class="my-icon-user_edit"></i>Modifier la fiche</a>
