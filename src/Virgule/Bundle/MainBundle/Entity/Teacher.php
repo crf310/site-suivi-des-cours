@@ -83,7 +83,7 @@ class Teacher extends BaseUser {
     protected $registrationDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Roles", inversedBy="teachers")
+     * @ORM\ManyToOne(targetEntity="Role", inversedBy="teachers")
      * @ORM\JoinColumn(name="fk_role_id", referencedColumnName="id", nullable=false)
      */
     protected $role;
@@ -271,10 +271,10 @@ class Teacher extends BaseUser {
     /**
      * Set role
      *
-     * @param \Virgule\Bundle\MainBundle\Entity\Roles $role
+     * @param \Virgule\Bundle\MainBundle\Entity\Role $role
      * @return Teacher
      */
-    public function setRole(\Virgule\Bundle\MainBundle\Entity\Roles $role = null) {
+    public function setRole(\Virgule\Bundle\MainBundle\Entity\Role $role = null) {
         $this->role = $role;
         return $this;
     }
@@ -282,14 +282,14 @@ class Teacher extends BaseUser {
     /**
      * Get role
      *
-     * @return \Virgule\Bundle\MainBundle\Entity\Roles 
+     * @return \Virgule\Bundle\MainBundle\Entity\Role 
      */
     public function getRole() {
         return $this->role;
     }
 
     public function getRoles() {
-        return Array($this->getRole()->getCode());
+        return Array($this->getRole()->getRole());
     }
 
     public function __toString() {
