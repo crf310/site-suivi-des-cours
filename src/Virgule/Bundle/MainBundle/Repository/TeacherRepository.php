@@ -11,7 +11,13 @@ use Doctrine\ORM\EntityRepository;
  * repository methods below.
  */
 class TeacherRepository extends EntityRepository {
-
+    /**
+    * @return \Doctrine\ORM\QueryBuilder
+    */
+    public function createDefaultQueryBuilder() {
+        return $this->createQueryBuilder('t');
+    }
+    
     public function getAvailableTeachersQueryBuilder($organizationBranchId, $isActive = true) {
         $q = $this->createDefaultQueryBuilder()
             ->where('t.isActive = :isActive')
