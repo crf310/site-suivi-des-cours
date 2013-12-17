@@ -125,7 +125,7 @@ class TeacherController extends AbstractVirguleController {
             $em->persist($entity);
             $em->flush();
             
-            $this->addFlash( 'Compte utilisateur "' . $entity->getUsername() . '" créé avec succès !');
+            $this->addFlash( 'Compte utilisateur <strong>' . $entity->getUsername() . '</strong> créé avec succès !');
             
             return $this->redirect($this->generateUrl('teacher_index'));
         }
