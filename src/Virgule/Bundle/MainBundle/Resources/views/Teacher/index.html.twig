@@ -28,7 +28,9 @@
         <a class="btn" title="Voir les utilisateurs actifs" href="{{ path('teacher_index', { 'status': 'active' }) }}"> <i class="my-icon-user-active"></i>Voir les utilisateurs actifs</a>
     {% endif %}
     <a class="btn" id="copy-button" title="Copier les adresses emails" href="#"> <i class="my-icon-copy"></i>Copier les adresses emails</a>
-    <a class="btn" title="Ajouter un compte utilisateur" href="{{ path('teacher_new') }}"> <i class="my-icon-add"></i>Nouvel utilisateur</a>    
+    {% if is_granted('ROLE_SECRETARY') %}
+        <a class="btn" title="Ajouter un compte utilisateur" href="{{ path('teacher_new') }}"> <i class="my-icon-add"></i>Nouvel utilisateur</a>
+    {% endif %}
 {% endblock %}
 {% block main_content %}    
 <div class="row">
