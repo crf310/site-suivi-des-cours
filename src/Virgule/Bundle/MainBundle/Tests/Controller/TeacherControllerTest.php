@@ -272,19 +272,6 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->logout();
     }
     
-    public function testUserLogout() {
-        // Create a new client to browse the application
-        $this->client = static::createClient();
-        $this->crawler = $this->client->request('GET', '/');
-        
-        $this->login($this->USER_USERNAME, $this->USER_PASSWORD); 
-        $this->crawler = $this->client->click($this->crawler->selectLink('Déconnexion')->link());
-        $this->crawler = $this->client->followRedirect();
-        $this->assertTrue($this->crawler->filter('input[placeholder="Nom d\'utilisateur"]')->count() == 1);
-        $this->assertTrue($this->crawler->filter('input[placeholder="Mot de passe"]')->count() == 1);
-        $this->assertFalse($this->crawler->filter("html:contains('" . $this->USER_FIRSTNAME . " " . $this->USER_LASTNAME . "')")->count() >= 1); 
-    }
-    
     private function goToUserCreationForm() {
         // Create a new entry in the database
         $this->crawler = $this->client->request('GET', '/teacher/');
