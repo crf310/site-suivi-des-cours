@@ -118,6 +118,7 @@ class TeacherController extends AbstractVirguleController {
         $currentBranchId = $this->getSelectedOrganizationBranch()->getId();
         $organizationBranch = $em->getRepository('VirguleMainBundle:OrganizationBranch')->find($currentBranchId);
         $entity->addOrganizationBranch($organizationBranch);
+        $entity->setPlainPassword($entity->getPassword());
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -179,6 +180,7 @@ class TeacherController extends AbstractVirguleController {
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new TeacherType(), $entity);
         $editForm->bind($request);
+        $entity->setPlainPassword($entity->getPassword());
 
         if ($editForm->isValid()) {
             $em->persist($entity);

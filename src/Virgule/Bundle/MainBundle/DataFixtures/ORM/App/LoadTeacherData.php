@@ -1,4 +1,5 @@
 <?php
+
 namespace Virgule\Bundle\MainBundle\DataFixtures\ORM\App;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -11,14 +12,12 @@ use Virgule\Bundle\MainBundle\Entity\Teacher;
  *
  * @author Guillaume Lucazeau
  */
-
 class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface {
-    public function load(ObjectManager $manager)
-    {
+    
+    public function load(ObjectManager $manager) {
         $username = "root";
         $userAdmin = new Teacher();
         $userAdmin->setUsername($username);
-        $userAdmin->setPassword('root1234');        
         $userAdmin->setFirstName($username);
         $userAdmin->setLastName("");
         $userAdmin->setEmail($username . "@example.com");
@@ -28,16 +27,18 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $userAdmin->setEnabled(true);
         $userAdmin->setLocked(false);
         $userAdmin->setExpired(false);
-        $userAdmin->setCredentialsExpired(false);
-
+        $userAdmin->setCredentialsExpired(false);     
+        $userAdmin->setPlainPassword('root1234');
+        
         $manager->persist($userAdmin);
-                
+
         $manager->flush();
     }
-    
+
     public function getOrder() {
         return 2;
     }
+
 }
 
 ?>

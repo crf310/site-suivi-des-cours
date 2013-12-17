@@ -499,11 +499,5 @@ class Teacher extends BaseUser {
     
     public function getFullName() {
         return $this->firstName . ' ' . $this->lastName;
-    }
-    
-    // TODO: delete that and encode passwords
-    public function getSalt() {
-        return '';
-    }
-    
+    }    
 }

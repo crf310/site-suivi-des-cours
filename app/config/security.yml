@@ -2,7 +2,10 @@ security:
     acl:
         connection: default
     encoders:
-        Virgule\Bundle\MainBundle\Entity\Teacher: plaintext
+        Virgule\Bundle\MainBundle\Entity\Teacher: 
+          algorithm: sha512
+          iterations: 5000
+          encode_as_base64: true
 
     role_hierarchy:
         ROLE_USER:        ROLE_GUEST
