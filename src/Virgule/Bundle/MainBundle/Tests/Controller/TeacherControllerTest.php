@@ -49,6 +49,8 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->assertEquals(1, $this->crawler->filter("div.widget-content:contains('Aucun apprenant trouvé')")->count());
         $this->assertEquals(1, $this->crawler->filter("div.widget-content:contains(' Aucun cours dirigé pour le moment')")->count());
         $this->assertEquals(1, $this->crawler->filter("div.widget-content:contains('Aucun compte-rendu enregistré pour le moment')")->count());
+        
+        $this->logout();
     }
     
      public function testUserCreationSameUsername() {
@@ -76,6 +78,8 @@ class TeacherControllerTest extends AbstractControllerTest {
         
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);        
         $this->assertTrue($this->crawler->filter("span.help-inline:contains('utilisateur est déjà pris')")->count() >= 1);
+        
+        $this->logout();
     }
     
     public function testUserCreationNoLastName() {
@@ -98,6 +102,8 @@ class TeacherControllerTest extends AbstractControllerTest {
                 
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);        
         $this->assertTrue($this->crawler->filter("span.help-inline:contains('Merci de saisir un nom de famille')")->count() >= 1);
+        
+        $this->logout();
     }
     
     public function testUserCreationNoLastFirstName() {
@@ -120,6 +126,8 @@ class TeacherControllerTest extends AbstractControllerTest {
                 
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);        
         $this->assertTrue($this->crawler->filter("span.help-inline:contains('Merci de saisir un prénom')")->count() >= 1);
+        
+        $this->logout();
     }
     
     /*
@@ -166,6 +174,8 @@ class TeacherControllerTest extends AbstractControllerTest {
                 
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);        
         $this->assertTrue($this->crawler->filter("span.help-inline:contains('Les mots de passe ne correspondent pas')")->count() >= 1);
+        
+        $this->logout();
     }
     
     public function testUserCreationPhoneNumbersTooShort() {
@@ -188,6 +198,8 @@ class TeacherControllerTest extends AbstractControllerTest {
                 
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);        
         $this->assertEquals(2, $this->crawler->filter("span.help-inline:contains('Le numéro de téléphone doit comporter 10 chiffres, et seulement 10')")->count());
+        
+        $this->logout();
     }
 
     public function testUserCreationPhoneNumbersTooLong() {
@@ -210,6 +222,8 @@ class TeacherControllerTest extends AbstractControllerTest {
                 
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1); 
         $this->assertEquals(2, $this->crawler->filter("span.help-inline:contains('Le numéro de téléphone doit comporter 10 chiffres, et seulement 10')")->count());
+        
+        $this->logout();
     }
 
     public function testUpdateProfile() {
@@ -219,7 +233,7 @@ class TeacherControllerTest extends AbstractControllerTest {
         
         $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
         
-        $this->crawler = $this->client->request('GET', '/welcome');
+        $this->goToDashboard();
         $this->assertEquals(1, $this->crawler->filter("html:contains('Accueil')")->count());
         
         $crawlerLinkProfile = $this->crawler->filter("span:contains('" . $this->ADMIN_FIRSTNAME . " " . $this->ADMIN_LASTNAME . "')")->parents();
@@ -251,9 +265,24 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->logout();
         $this->login($userName, $passwordFirst);
         
-        $this->crawler = $this->client->request('GET', '/welcome');
+        $this->goToDashboard();
         
         $this->assertEquals(1, $this->crawler->filter("span:contains('Accueil')")->count());
+        
+        $this->logout();
+    }
+    
+    public function testUserLogout() {
+        // Create a new client to browse the application
+        $this->client = static::createClient();
+        $this->crawler = $this->client->request('GET', '/');
+        
+        $this->login($this->USER_USERNAME, $this->USER_PASSWORD); 
+        $this->crawler = $this->client->click($this->crawler->selectLink('Déconnexion')->link());
+        $this->crawler = $this->client->followRedirect();
+        $this->assertTrue($this->crawler->filter('input[placeholder="Nom d\'utilisateur"]')->count() == 1);
+        $this->assertTrue($this->crawler->filter('input[placeholder="Mot de passe"]')->count() == 1);
+        $this->assertFalse($this->crawler->filter("html:contains('" . $this->USER_FIRSTNAME . " " . $this->USER_LASTNAME . "')")->count() >= 1); 
     }
     
     private function goToUserCreationForm() {
