@@ -38,7 +38,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $prof2->setCellphoneNumber("0605040302");
         $prof2->setEmail("john.keating@example.com");
         $prof2->setRegistrationDate(new \DateTime('now'));
-        $prof2->setRole($this->getReference('user-role'));
+        $prof2->setRole($this->getReference('secretary-role'));
         $prof2->addOrganizationBranch($this->getReference('deleg-3-10'));
         $prof2->setEnabled(true);
         $prof2->setLocked(false);
