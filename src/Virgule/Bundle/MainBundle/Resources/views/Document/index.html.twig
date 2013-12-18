@@ -15,7 +15,6 @@
                     <thead>
                         <tr>
                             <th>Nom du document</th>
-                            <th>Téléchargement</th>
                             <th>Enregistré par</th>
                             <th>Adapté au(x) niveau(x)</th>
                             <th>Tags</th>
@@ -26,7 +25,6 @@
                         {% for document in documents %}
                         <tr>
                             <td>{{ document['filename'] }}</td>
-                            <td><a href="{{ path('document_download', { 'id': document['id'] }) }}">{{ document['path'] }}</a></td>
                             <td><a  href="{{ path('teacher_show', { 'id':  document['uploader_id'] }) }}">{{ document['uploader_firstname'] }} {{ document['uploader_lastname'] }}</a></td>
                             <td>
                             {% for classLevel in document['classLevels'] %}
@@ -38,7 +36,10 @@
                                 {% if tag is not empty %}{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': '#3A87AD', 'classLevelLabel': tag } %} {% endif %}{% if not loop.last %}&nbsp;{% endif %}
                             {% endfor %}
                             </td>
-                            <td><a  href="{{ path('document_show', { 'id':  document['id'] }) }}">Voir le document</a></td>
+                            <td>
+                                <a href="{{ path('document_download', { 'id': document['id'] }) }}"><button class="btn btn-default btn-xs"><i class="icon-download"></i> Télécharger</button></a>
+                                <a href="{{ path('document_show', { 'id':  document['id'] }) }}"><button class="btn btn-default btn-xs"><i class="icon-eye-open"></i> Détails</button></a>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
