@@ -1,3 +1,7 @@
 		<div id="sidebar">
-                        {{ knp_menu_render('VirguleMainBundle:MenuBuilder:mainMenu', {'template': 'VirguleMainBundle:Menu:knp_menu.html.twig'}) }}
+                        {% if is_granted('ROLE_SECRETARY') %}
+                            {{ knp_menu_render('VirguleMainBundle:MenuBuilder:adminMenu', {'template': 'VirguleMainBundle:Menu:knp_menu.html.twig'}) }}
+                        {% else %}
+                            {{ knp_menu_render('VirguleMainBundle:MenuBuilder:mainMenu', {'template': 'VirguleMainBundle:Menu:knp_menu.html.twig'}) }}
+                        {% endif %}
 		</div>
