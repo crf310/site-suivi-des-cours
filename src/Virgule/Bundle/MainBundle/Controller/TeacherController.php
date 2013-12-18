@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\Teacher;
 use Virgule\Bundle\MainBundle\Form\TeacherType;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Teacher controller.
@@ -143,22 +144,29 @@ class TeacherController extends AbstractVirguleController {
      * @Template()
      */
     public function editAction($id) {
-        $em = $this->getDoctrine()->getManager();
+        $securityContext = $this->get('security.context');
 
-        $entity = $em->getRepository('VirguleMainBundle:Teacher')->find($id);
+        // check for edit access
+        if ($this->getConnectedUser()->getId() == $id || true === $securityContext->isGranted('ROLE_SECRETARY')) {
+            
+            $em = $this->getDoctrine()->getManager();
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Teacher entity.');
+            $entity = $em->getRepository('VirguleMainBundle:Teacher')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Teacher entity.');
+            }
+            $editForm = $this->createForm(new TeacherType(), $entity);
+            $deleteForm = $this->createDeleteForm($id);
+
+            return array(
+                'entity' => $entity,
+                'edit_form' => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            );
+        } else {
+            throw new AccessDeniedException();
         }
-
-        $editForm = $this->createForm(new TeacherType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
     }
 
     /**
