@@ -82,7 +82,7 @@ class CourseManager extends BaseManager {
     public function cloneCourses($courseIds, $newSemester) {
         $courses = $this->getRepository()->findByIds($courseIds);
         foreach($courses as $course) {
-            $this->cloneCourse($course->getId(), $newSemester);
+            $this->cloneCourse($course, $newSemester);
         }
     }
     
