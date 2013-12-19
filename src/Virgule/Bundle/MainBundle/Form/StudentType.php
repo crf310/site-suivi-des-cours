@@ -96,6 +96,7 @@ class StudentType extends AbstractType {
                     'query_builder' => $this->doctrine->getRepository('VirguleMainBundle:Course')->getCoursesForSemesterQB($this->semesterId),
                     'expanded'  => false,
                     'multiple'  => true,        
+                    'required'  => false,
                     'attr'      => array('class' => 'medium-select')
                  ))     
                 ->add('profession')
