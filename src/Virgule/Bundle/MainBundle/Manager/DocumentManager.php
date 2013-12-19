@@ -18,11 +18,11 @@ class DocumentManager extends BaseManager {
     }
     
     public function getAllDocuments() {
-        $documents = $this->mergeTags($this->getRepository()->getAllDocuments());
+        $documents = $this->mergeDocumentsOnTags($this->getRepository()->getAllDocuments());
         return $documents;
     }
     
-    private function mergeTags($documents) {
+    private function mergeDocumentsOnTags($documents) {
         $mergedDocuments = Array();
         foreach ($documents as $document) {
             if (! array_key_exists($document['id'], $mergedDocuments)) {
