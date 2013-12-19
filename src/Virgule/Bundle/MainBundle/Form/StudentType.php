@@ -27,7 +27,9 @@ class StudentType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('file', new PictureType())
+                ->add('file', new PictureType(), array(
+                    'required' => false
+                ))
                 ->add('lastname')
                 ->add('firstname')
                 ->add('birthdate', 'date', array(
@@ -74,9 +76,10 @@ class StudentType extends AbstractType {
                     'data' => 'M'
                 ))
                 ->add('arrivalDate', 'date', array(
-                    'widget' => 'single_text',
-                    'format' => 'dd/MM/yyyy',
-                    'attr'   => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy', 'required' => false)
+                    'widget'    => 'single_text',
+                    'format'    => 'dd/MM/yyyy',
+                    'required'  => false,
+                    'attr'      => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy', 'required' => false)
                 ))
                 ->add('emergencyContactLastname')
                 ->add('emergencyContactFirstname')
