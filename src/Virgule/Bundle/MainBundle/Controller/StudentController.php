@@ -171,8 +171,6 @@ class StudentController extends AbstractVirguleController {
         $classLevelSuggested->setChanger($this->getUser());        
         $entity->addSuggestedClassLevel($classLevelSuggested);
         
-        $teacherRepository = $this->getTeacherRepository();
-        
         $organizationBranchId = $this->getSelectedOrganizationBranchId();
         
         $semesterId = $this->getSelectedSemesterId();
@@ -181,7 +179,7 @@ class StudentController extends AbstractVirguleController {
         
         $currentTeacher = $this->getConnectedUser();
         
-        $form = $this->createForm(new StudentType($teacherRepository, $organizationBranchId, $openHousesDates, $currentTeacher), $entity, Array('em' => $this->getDoctrineManager()));
+        $form = $this->createForm(new StudentType($this->getDoctrine(), $organizationBranchId, $openHousesDates, $currentTeacher, $semesterId), $entity, Array('em' => $this->getDoctrineManager()));
 
         return $form;
     }

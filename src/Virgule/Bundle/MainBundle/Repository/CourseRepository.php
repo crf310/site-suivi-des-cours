@@ -152,6 +152,19 @@ class CourseRepository extends EntityRepository {
         return $results;
     }
     
+    public function getCoursesForSemesterQB($semesterId) {
+        $qb = $this
+                ->createQueryBuilder('c')
+                ->innerJoin('c.classLevel', 'c2')
+                ->innerJoin('c.semester', 's')
+                ->where('s.id = :semesterId')
+                ->groupBy('c.id')
+                ->add('orderBy', 'c.dayOfWeek ASC, c.startTime ASC')
+                ->setParameter('semesterId', $semesterId)
+        ;
+        return $qb;
+    }
+    
     public function findByIds(array $coursesIds) {
         $q = $this
                 ->createQueryBuilder('c')         

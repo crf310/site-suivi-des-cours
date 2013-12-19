@@ -5,21 +5,24 @@ namespace Virgule\Bundle\MainBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Virgule\Bundle\MainBundle\Repository\TeacherRepository;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Virgule\Bundle\MainBundle\Entity\Teacher;
 use Virgule\Bundle\MainBundle\Form\Type\PictureType;
 
 class StudentType extends AbstractType {
 
+    private $doctrine;
     private $teacherRepository;
     private $openHousesDates;
     private $currentTeacher;
+    private $semesterId;
 
-    public function __construct(TeacherRepository $teacherRepository = null, $organizationBranchId = null, $openHousesDates = null, Teacher $currentTeacher = null) {
-        $this->teacherRepository = $teacherRepository;
+    public function __construct(RegistryInterface $doctrine, $organizationBranchId = null, $openHousesDates = null, Teacher $currentTeacher = null, $semesterId = null) {
+        $this->doctrine = $doctrine;
         $this->organizationBranchId = $organizationBranchId;
         $this->openHousesDates = $openHousesDates;
         $this->currentTeacher = $currentTeacher;
+        $this->semesterId = $semesterId;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
@@ -50,7 +53,7 @@ class StudentType extends AbstractType {
                 ))
                 ->add('welcomedByTeacher', 'entity', array(
                     'class'             => 'VirguleMainBundle:Teacher',
-                    'query_builder'     => $this->teacherRepository->getAvailableTeachersQueryBuilder($this->organizationBranchId, true),
+                    'query_builder'     => $this->doctrine->getRepository('VirguleMainBundle:Teacher')->getAvailableTeachersQueryBuilder($this->organizationBranchId, true),
                     'expanded'          => false,
                     'multiple'          => false,
                     'property'          => 'fullname',
@@ -87,10 +90,11 @@ class StudentType extends AbstractType {
                 ))
                 ->add('courses', 'entity', array(
                     'class'     => 'VirguleMainBundle:Course',
+                    'query_builder' => $this->doctrine->getRepository('VirguleMainBundle:Course')->getCoursesForSemesterQB($this->semesterId),
                     'expanded'  => false,
                     'multiple'  => true,        
                     'attr'      => array('class' => 'medium-select')
-                 ))                
+                 ))     
                 ->add('profession')
                 ;
         
