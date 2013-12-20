@@ -27,15 +27,9 @@ class DocumentType extends AbstractType
                 'required' => false,
                 'attr' => array('class' => 'tagManager', 'placeholder' => 'Tags', 'name' => 'tags', 'data-provide' => 'typeahead'))
                 )
-            /*
-            ->add('tags', 'collection', array(
-                'type'         => new TagType(),
-                'allow_add'    => true,
-                'by_reference' => false,
-                'required' => false,
-                'label' => 'Tags',          
-                'attr' => array('class' => 'input-medium')
-            ))*/
+            ->add('tagList', 'hidden', array(
+                'mapped' => false
+                ))
         ;
     }
 

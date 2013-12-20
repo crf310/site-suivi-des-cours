@@ -15,7 +15,10 @@
         <script type="text/javascript" src="{{ asset('js/tagmanager.js') }}"></script>
         <script type="text/javascript">
         jQuery(function($) {             
-            jQuery(".tagManager").tagsManager();
+            jQuery(".tagManager").tagsManager({
+                prefilled: 'toto,bob',
+                CapitalizeFirstLetter: true
+            });
             var existingTags = [{%for tag in existingTags %}'{{ tag.label }}',{% endfor %}];   
             $(".tagManager").autocomplete({
                 source: existingTags
@@ -46,6 +49,7 @@
                     {{ form_row(form.file, {'label': 'Fichier' }) }}
                     {{ form_row(form.classLevel, {'label': 'Adapté au(x) niveau(x)' }) }}
                     {{ form_row(form.tags, {'label': 'Mots-clé', 'hint' : 'Utiles pour retrouver le document, séparez les par une virgule. Les mots-clé utilisés dans d\'autres documents sont proposés à la saisie.' }) }}
+                    {{ form_row(form.tagList, {'id': 'myHiddenTagList' }) }}
                     {{ form_rest(form) }} 
                     <div class="form-actions">                                     
                         <input class="btn btn-success" type="submit" value="Enregistrer le document" />

@@ -26,6 +26,7 @@
         <parameter key="virgule.openhouse_manager.class">%namespace%\Manager\OpenHouseManager</parameter>
         <parameter key="virgule.student_manager.class">%namespace%\Manager\StudentManager</parameter>
         <parameter key="virgule.document_manager.class">%namespace%\Manager\DocumentManager</parameter>
+        <parameter key="virgule.tag_manager.class">%namespace%\Manager\TagManager</parameter>
     </parameters>
 
     <services>
@@ -47,6 +48,9 @@
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
         <service id="virgule.document_manager" class="%virgule.document_manager.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>        
+        <service id="virgule.tag_manager" class="%virgule.tag_manager.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
         

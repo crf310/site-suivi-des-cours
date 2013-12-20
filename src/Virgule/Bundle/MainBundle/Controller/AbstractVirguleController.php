@@ -98,6 +98,9 @@ abstract class AbstractVirguleController extends Controller {
     protected function getDocumentManager() {
         return $this->get('virgule.document_manager');
     }
+    protected function getTagManager() {
+        return $this->get('virgule.tag_manager');
+    }
     
     /* Repositories */
     protected function getTeacherRepository() {
