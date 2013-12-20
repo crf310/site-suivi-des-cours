@@ -19,6 +19,7 @@ class DocumentType extends AbstractType
                 'expanded' => false,
                 'multiple' => true,
                 'property' => 'label',
+                'required' => false,
                 'property_path' => 'classlevel'
              ))
             ->add('tags', 'text', array(
