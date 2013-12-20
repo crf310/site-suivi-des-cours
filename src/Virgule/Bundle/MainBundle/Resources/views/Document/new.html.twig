@@ -14,6 +14,12 @@
     {% block javascripts %}        
         <script type="text/javascript" src="{{ asset('js/tagmanager.js') }}"></script>
         <script type="text/javascript">
+        $(document).ready(function(){	
+            $('#create-document-form').submit(function(){
+                var tagList = $('input[name="hidden-document[tags]"]').val();
+                $('#myHiddenTagList').val(tagList);
+            });
+        });
         jQuery(function($) {             
             jQuery(".tagManager").tagsManager({
                 prefilled: 'toto,bob',
@@ -37,7 +43,7 @@
         <div class="alert alert-info">
         Pour vos documents, privilégiez des formats ouverts et compatibles avec tous les systèmes, tels que le PDF ou les documents ODF (lisibles et éditables avec <a href="http://www.openoffice.org/fr/" title="Vers le site open Office">Open Office</a> ou <a href="https://www.libreoffice.org/" title="Vers le site Libre Office">Libre Office</a>, suites bureautiques gratuites).
         </div>
-        <form action="{{ path('document_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+        <form id="create-document-form" action="{{ path('document_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
             <div class="widget-box">
                 <div class="widget-title">
                     <h5>Informations du document</h5>

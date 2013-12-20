@@ -4,6 +4,7 @@ namespace Virgule\Bundle\MainBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
 use Virgule\Bundle\MainBundle\Manager\BaseManager;
+use Virgule\Bundle\MainBundle\Entity\Tag;
 
 class TagManager extends BaseManager {
 
@@ -26,14 +27,14 @@ class TagManager extends BaseManager {
         $tagsToLink = Array();
         foreach ($tagLabels as $tagLabel) {
             $tagLabel = trim($tagLabel);
-            if (! emtpy($tagLabel)) {
+            if (! empty($tagLabel)) {
                 $tag = $this->getRepository()->getTagByLabel($tagLabel);
                 if ($tag == null) {
                     $t = new Tag();
                     $t->setLabel($tagLabel);
                     $tagsToLink[] = $t;
                 } else {
-                    $tagsToLink = $tag;
+                    $tagsToLink[] = $tag;
                 }
             }
         }

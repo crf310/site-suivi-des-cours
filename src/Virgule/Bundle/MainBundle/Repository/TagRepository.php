@@ -12,14 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class TagRepository extends EntityRepository {
     private function createDefaultQueryBuilder() {
-        return $this->createQueryBuilder('t')->add('orderBy', 'd.fileName ASC');
+        return $this->createQueryBuilder('t')->add('orderBy', 't.label ASC');
     }
     
     public function getTagByLabel($tagLabel) {
         $qb = $this->createDefaultQueryBuilder()
-            ->addSelect('t.label = :tagLabel')
+            ->where('t.label = :tagLabel')
             ->setParameter('tagLabel', $tagLabel);
         
-        return $qb->getQuery()->getSingleResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 }

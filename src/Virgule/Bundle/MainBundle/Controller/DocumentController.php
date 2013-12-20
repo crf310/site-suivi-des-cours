@@ -62,12 +62,13 @@ class DocumentController extends AbstractVirguleController {
             $entity->setUploader($this->getUser());
             
             // tags
-            // 
-            $data = $form->get('hidden-document[tags]')->getData();
-            var_dump($data);
-            exit;
-            $this->getTagManager()->createOrAddTags();
-            
+            $sTags = $form->get('tagList')->getData();
+            $aTags = explode(',', $sTags);
+            $tags = $this->getTagManager()->createOrAddTags($aTags);
+            foreach ($tags as $tag) {
+                $entity->addTag($tag);
+            }
+                        
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
