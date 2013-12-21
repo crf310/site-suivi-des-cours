@@ -16,13 +16,11 @@
                 <table class="table table-bordered table-striped table-hover with-check data-table">
                     <thead>
                         <tr>
-                            <th></th>
                             <th>&nbsp;</th>
                             <th>&nbsp;</th>
                             <th>Nom</th>
                             <th>Prénom</th>
-                            <th>Téléphone fixe</th>
-                            <th>Téléphone portable</th>
+                            <th>Téléphone</th>
                             <th>Inscrit en</th>
                             <th>Actions</th>
                         </tr>
@@ -30,7 +28,6 @@
                     <tbody>
                         {% for key,entity in students_array %}
                         <tr class="gradeA">
-                            <td><input type="checkbox" name="students[]" value="{{ entity['student_id'] }}"/></td>
                             <td class="center">
                                 <img src="{{ asset('img/drapeaux/' ~ entity['nativeCountry'] ~ '.png')}}" alt="{{  entity['nativeCountry'] | upper | country }}" title="{{  entity['nativeCountry'] | upper | country }}" />
                             </td>
@@ -44,18 +41,11 @@
                             <td>{{ entity['lastname'] }}</td>
                             <td>{{ entity['firstname'] }}</td>
                             <td class="center">
-                                {% if entity['phoneNumber'] is empty %}
-                                    {% for i in 1..14 %}&nbsp;{% endfor %}
-                                {% else %}
-                                    {{ entity['phoneNumber']|phoneNumber }}
-                                {% endif %}
-                            </td>
-                            <td class="center">
                                 {% if entity['cellphoneNumber'] is empty %}
-                                    {% for i in 1..14 %}&nbsp;{% endfor %}
+                                    {{ entity['phoneNumber']|phoneNumber }}
                                 {% else %}
                                     {{ entity['cellphoneNumber']|phoneNumber }}
-                                {% endif %}
+                                {% endif %}&nbsp;
                             </td>
                             <td>
                                 {% if courses_array is defined %}
@@ -66,10 +56,21 @@
                                     {% endfor %}
                                 {% endif %}
                             </td>
-                            <td class="center">
-                                <a href="{{ path('student_show', { 'id': entity['student_id'] }) }}"><button class="btn btn-default btn-xs"><i class="icon-eye-open"></i> Détails</button></a>
-                                <a href="{{ path('student_edit', { 'id': entity['student_id'] }) }}"><button class="btn btn-default btn-xs"><i class="icon-pencil"></i> Modifier</button></a>
-                                <a href="{{ path('student_preview_certificate', { 'id': entity['student_id'] }) }}"><button class="btn btn-default btn-xs"><i class="icon-certificate"></i> Attestation</button></a>
+                            <td >                                
+                                <div class="btn-group">
+                                        <a href="#" data-toggle="dropdown" class="btn btn-default btn-xs dropdown-toggle"><i class="icon-user icon-white"></i> Actions <span class="caret"></span></a>
+                                        <ul class="dropdown-menu dropdown-primary">    
+                                            <li>
+                                                <a href="{{ path('student_show', { 'id': entity['student_id'] }) }}"><i class="icon-eye-open"></i> Détails</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('student_edit', { 'id': entity['student_id'] }) }}"><i class="icon-pencil"></i> Modifier</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('student_preview_certificate', { 'id': entity['student_id'] }) }}"><i class="icon-certificate"></i> Attestation</a>
+                                            </li>
+                                        </ul>
+                                </div>
                             </td>
                         </tr>
                         {% endfor %}
