@@ -2,29 +2,33 @@
 {% block content_title %}Enregistrer un nouveau cours{% endblock %}
  {%block submenu %}{% endblock %}
 {% block main_content %}
-<form action="{{ path('course_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
-    <div class="widget-box">
-        <div class="widget-title">
-            <span class="icon">
-                    <i class="icon-plus"></i>									
-            </span>
-            <h5>Nouveau cours</h5>
-        </div>
-        <div class="widget-content nopadding">
-            {{ form_errors(form) }}
-            {{ form_row(form.dayOfWeek, { 'label': 'Chaque' }) }}
-            {{ form_row(form.startTime, { 'label': 'De' }) }}
-            {{ form_row(form.endTime, { 'label': 'à' }) }}
-            {{ form_row(form.classRoom, { 'label': 'Salle' }) }}
-            {{ form_row(form.alternateStartdate, { 'label': 'Date de début alternative' }) }}
-            {{ form_row(form.alternateEnddate, { 'label': 'Date de fin alternative' }) }}
-            {{ form_row(form.classLevel, { 'label': 'Niveau' }) }}
-            {{ form_row(form.teachers, { 'label': 'Formateur(s)' }) }}
-            {{ form_rest(form) }}
-            <div class="form-actions">                                     
-                <input class="btn" type="submit" name="save" value="Enregistrer le cours"/> <input class="btn" type="submit" name="save_and_add_new" value="Enregistrer et ajouter un autre" />
+<div class="row">
+    <div class="col-md-12 center">
+        <form action="{{ path('course_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                            <i class="icon-plus"></i>									
+                    </span>
+                    <h5>Nouveau cours</h5>
+                </div>
+                <div class="widget-content nopadding">
+                    {{ form_errors(form) }}
+                    {{ form_row(form.dayOfWeek, { 'label': 'Chaque' }) }}
+                    {{ form_row(form.startTime, { 'label': 'De' }) }}
+                    {{ form_row(form.endTime, { 'label': 'à' }) }}
+                    {{ form_row(form.classRoom, { 'label': 'Salle' }) }}
+                    {{ form_row(form.alternateStartdate, { 'label': 'Date de début alternative' }) }}
+                    {{ form_row(form.alternateEnddate, { 'label': 'Date de fin alternative' }) }}
+                    {{ form_row(form.classLevel, { 'label': 'Niveau' }) }}
+                    {{ form_row(form.teachers, { 'label': 'Formateur(s)' }) }}
+                    {{ form_rest(form) }}
+                    <div class="form-actions">                                     
+                        <input class="btn" type="submit" name="save" value="Enregistrer le cours"/> <input class="btn" type="submit" name="save_and_add_new" value="Enregistrer et ajouter un autre" />
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
-</form>
+</div>
 {% endblock %}
