@@ -7,6 +7,9 @@
     z-index:99;
 }
 
+td.center {
+    text-align: center;
+}
 #content {
   min-height: 650px;
 }
