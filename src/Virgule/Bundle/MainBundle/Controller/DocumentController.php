@@ -117,6 +117,8 @@ class DocumentController extends AbstractVirguleController {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:Document')->find($id);
+        
+        $classSessionsUsingIt = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByDocument($entity->getId());
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Document entity.');
@@ -125,8 +127,9 @@ class DocumentController extends AbstractVirguleController {
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity' => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity'                => $entity,
+            'delete_form'           => $deleteForm->createView(),
+            'classSessionsUsingIt' => $classSessionsUsingIt
         );
     }
 

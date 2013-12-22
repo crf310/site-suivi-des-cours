@@ -90,7 +90,18 @@ class ClassSessionRepository extends EntityRepository {
         $q = $qb->getQuery();                
         $results = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $results;   
-    }    
+    }
+    
+    public function loadAllClassSessionByDocument($documentId, $limit = null) {
+        $qb = $this->getNbCommentsQueryBuilder(null, $limit)
+            ->innerJoin('cs.documents', 'd')
+            ->andWhere('d.id = :documentId')   
+            ->setParameter('documentId', $documentId)
+        ;
+        $q = $qb->getQuery();                
+        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $results;   
+    }  
     
     public function loadAll($semesterId, $limit = null) {
         $qb = $this->getNbStudentsQueryBuilder($semesterId, $limit);
