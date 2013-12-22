@@ -190,11 +190,17 @@ i.my-icon-trombinoscope {
     background-image: url('../img/icons/vcard.png');
     padding-top: 25px;
 }
-i.document-list {
+i.my-document-list {
     background-image: url('../img/icons/book.png');
 }
-i.document-add {
+i.my-document-add {
     background-image: url('../img/icons/book_add.png');
+}
+i.my-document-edit {
+    background-image: url('../img/icons/book_edit.png');
+}
+i.my-document-delete {
+    background-image: url('../img/icons/book_delete.png');
 }
 i.organization_branch-add {
     background-image: url('../img/icons/telephone_add.png');
@@ -251,7 +257,7 @@ ul.no-img li.margin {
 }
 li.user_M { list-style-image:url('../img/icons/user.png'); }
 li.user_F { list-style-image:url('../img/icons/user_female.png'); }
-li.document { list-style-image:url('../img/icons/attach.png'); }
+li.document { list-style-image:url('../img/icons/book.png'); }
 .course-quick-access {
     background-color: #F5F5F5;
     border: 1px solid #DDDDDD;
