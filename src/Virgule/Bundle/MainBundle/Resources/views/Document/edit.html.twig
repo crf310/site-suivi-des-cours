@@ -1,28 +1,26 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-    <h1>Document edit</h1>
-
-    <form action="{{ path('document_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-        <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(edit_form) }}
-        <p>
-            <button type="submit">Edit</button>
-        </p>
-    </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('document') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('document_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+{% extends '::main_content.html.twig' %}
+{% block head %}
+    {{ parent() }}
+    {% include 'VirguleMainBundle:Document:form_header.html.twig' with { 'existingTags': existingTags, 'documentTags': entity.tags } %}
+{% endblock %}
+{% block content_title %}Ajouter un document{% endblock %}
+{%block submenu %}
+    <a class="btn tip-bottom" href="{{ path('document_index') }}"> <i class="my-document-list"></i>Retour à la liste des documents</a>
+{% endblock %}
+{% block main_content %}    
+<div class="row">
+    <div class="col-md-12 center">
+        <div class="alert alert-info">
+        Pour vos documents, privilégiez des formats ouverts et compatibles avec tous les systèmes, tels que le PDF ou les documents ODF (lisibles et éditables avec <a href="http://www.openoffice.org/fr/" title="Vers le site open Office">Open Office</a> ou <a href="https://www.libreoffice.org/" title="Vers le site Libre Office">Libre Office</a>, suites bureautiques gratuites).
+        </div>
+                    {% include 'VirguleMainBundle:Document:form.html.twig' with { 'form': edit_form }  %}
+                    <input type="hidden" name="_method" value="PUT" />
+                    <div class="form-actions">                                     
+                        <input class="btn btn-success" type="submit" value="Enregistrer les modifications" />
+                    </div>
+                </div>
+            </div>
         </form>
-    </li>
-</ul>
+    </div>
+</div>
 {% endblock %}

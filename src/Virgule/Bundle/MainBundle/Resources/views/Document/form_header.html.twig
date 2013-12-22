@@ -1,0 +1,31 @@
+{% block stylesheets %}
+    <link href="{{ asset('css/tagmanager.css') }}" rel="stylesheet" media="screen" />
+    <style type="text/css" media="screen">
+    #descriptionField {
+        height: 150px;
+        width: 90%;
+    }
+
+    </style>
+{% endblock %}
+{% block javascripts %}        
+    <script type="text/javascript" src="{{ asset('js/tagmanager.js') }}"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){	
+        $('#create-document-form').submit(function(){
+            var tagList = $('input[name="hidden-document[tags]"]').val();
+            $('#myHiddenTagList').val(tagList);
+        });
+    });
+    jQuery(function($) {             
+        jQuery(".tagManager").tagsManager({
+            prefilled: '{%for tag in documentTags %}{{ tag.label }},{% endfor %}',
+            CapitalizeFirstLetter: true
+        });
+        var existingTags = [{%for tag in existingTags %}'{{ tag.label }}',{% endfor %}];   
+        $(".tagManager").autocomplete({
+            source: existingTags
+        });
+    });
+    </script>
+{% endblock %}

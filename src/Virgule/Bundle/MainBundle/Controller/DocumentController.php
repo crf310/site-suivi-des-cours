@@ -144,7 +144,9 @@ class DocumentController extends AbstractVirguleController {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:Document')->find($id);
-
+        
+        $existingTags = $this->getTagRepository()->findAll();
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Document entity.');
         }
@@ -156,6 +158,7 @@ class DocumentController extends AbstractVirguleController {
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'existingTags' => $existingTags,
         );
     }
 

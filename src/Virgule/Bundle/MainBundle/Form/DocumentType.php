@@ -14,13 +14,13 @@ class DocumentType extends AbstractType
             ->add('fileName', 'text')
             ->add('description')
             ->add('file', 'file')
-            ->add('classLevel', 'entity', array(
+            ->add('classLevels', 'entity', array(
                 'class' => 'VirguleMainBundle:ClassLevel',
                 'expanded' => false,
                 'multiple' => true,
                 'property' => 'label',
                 'required' => false,
-                'property_path' => 'classlevel'
+                'property_path' => 'classLevels'
              ))
             ->add('tags', 'text', array(
                 'label' => 'Tags',
