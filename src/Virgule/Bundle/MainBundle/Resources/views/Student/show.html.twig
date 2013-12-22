@@ -44,7 +44,13 @@
                     <span class="icon">
                             <i class="icon-user"></i>
                     </span>
-                    <h5>Informations personnelles</h5>
+                    <h5>Informations personnelles</h5>                    
+                    {% if entity.updatedAt is not null %}
+                        <span class="label label-info">Mise à jour: {{ entity.updatedAt|date('d/m/Y') }}
+                        {% if entity.updatedByteacher is not null %}
+                            par {{ entity.updatedByteacher.firstName }} {{ entity.updatedByteacher.lastName }}</span>
+                        {% endif %}
+                    {% endif %}
                 </div>            
                 <div class="widget-content nopadding">
                     <div class="control-group">

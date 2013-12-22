@@ -32,6 +32,12 @@ class Student {
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
+        
+    /**
+     * @ORM\ManyToOne(targetEntity="Teacher")
+     * @ORM\JoinColumn(name="fk_updated_by_teacher", referencedColumnName="id")
+     */
+    private $updatedBy;
 
     /**
      * @var \DateTime $registrationDate
@@ -274,6 +280,10 @@ class Student {
     public function setUpdatedAt() {
         $this->updatedAt = new \Datetime('now');
         return $this;
+    }
+    
+    public function getUpdatedAt() {
+        return $this->updatedAt;
     }
 
     /**
@@ -1189,5 +1199,25 @@ class Student {
     public function getFile() {
         return $this->file;
     }
+    
+    /**
+     * Set updatedBy
+     *
+     * @param \Virgule\Bundle\MainBundle\Entity\Teacher $updatedBy
+     * @return Student
+     */
+    public function setUpdatedByTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $updatedBy = null) {
+        $this->updatedBy = $updatedBy;
 
+        return $this;
+    }
+
+    /**
+     * Get updatedBy
+     *
+     * @return \Virgule\Bundle\MainBundle\Entity\Teacher 
+     */
+    public function getUpdatedByTeacher() {
+        return $this->updatedBy;
+    }
 }
