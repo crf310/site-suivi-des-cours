@@ -77,9 +77,11 @@ class DocumentController extends AbstractVirguleController {
             return $this->redirect($this->generateUrl('document_index'));
         }
 
+        $existingTags = $this->getTagRepository()->findAll();
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
+            'existingTags' => $existingTags,
         );
     }
 
