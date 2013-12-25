@@ -88,7 +88,8 @@ class AddClassSessionStudentsFieldSubscriber implements EventSubscriberInterface
                 'property'          => 'fullname',
                 'cols_number'       => 3,
                 'add_check_all'     => true,
-                'auto_initialize'   => false
+                'auto_initialize'   => false,
+                'required'          => false
             ));
             $form->add($enrolledStudentsField);
                 
@@ -108,6 +109,7 @@ class AddClassSessionStudentsFieldSubscriber implements EventSubscriberInterface
                 'property_path'     => 'nonEnrolledClassSessionStudents',
                 'property'          => 'fullname',
                 'auto_initialize'   => false,
+                'required'          => false,    
                 'attr'              => array('class' => 'medium-select','required' => false)
 
             ));
