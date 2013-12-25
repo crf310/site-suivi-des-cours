@@ -47,7 +47,6 @@ class ClassLevelSuggestedRepository extends EntityRepository {
                 ->setParameter('studentId', $studentId);
         
         $q = $qb->getQuery();
-        $classLevels = $q->execute(array());
-        return $classLevels[0];
+        return $q->execute()->getOneOrNullResult();
     }
 }
