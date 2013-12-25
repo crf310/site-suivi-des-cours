@@ -40,7 +40,7 @@ class ClassLevelSuggestedController extends AbstractVirguleController {
                 $em->persist($entity);
                 $em->flush();   
                 
-                $flashMessage = 'Le niveau de <strong>' . $entity->getStudent()->getFirstname() . ' ' . $entity->getStudent()->getLastname() . '</strong> a bien été passé à <strong>' . $currentClassLevel->getClassLevel()->getLabel() . '</strong>';
+                $flashMessage = 'Le niveau de <strong>' . $entity->getStudent()->getFirstname() . ' ' . $entity->getStudent()->getLastname() . '</strong> a bien été passé à <strong>' . $entity->getClassLevel()->getLabel() . '</strong>';
                 $this->addFlash($flashMessage);
             }
         }        
