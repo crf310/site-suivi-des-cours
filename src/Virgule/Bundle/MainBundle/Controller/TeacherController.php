@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\Teacher;
 use Virgule\Bundle\MainBundle\Form\TeacherType;
+use Virgule\Bundle\MainBundle\Form\TeacherChangePasswordType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -141,9 +142,10 @@ class TeacherController extends AbstractVirguleController {
      * Displays a form to edit an existing Teacher entity.
      *
      * @Route("/{id}/edit", name="teacher_edit")
+     * @Method({"GET", "POST"})
      * @Template()
      */
-    public function editAction($id) {
+    public function editAction(Request $request, $id) {
         $securityContext = $this->get('security.context');
 
         // check for edit access
@@ -156,9 +158,21 @@ class TeacherController extends AbstractVirguleController {
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Teacher entity.');
             }
-            $editForm = $this->createForm(new TeacherType(), $entity);
+            $editForm = $this->createForm(new TeacherType('edit'), $entity);
             $deleteForm = $this->createDeleteForm($id);
 
+            if ($request->isMethod('POST')) {                
+                $editForm->bind($request);
+                
+                if ($editForm->isValid()) {
+                    $em->persist($entity);
+                    $em->flush();
+
+                    $this->addFlash( 'Le profil de <strong>' . $entity->getFullName()  . '</strong> a été mis à jour.');
+                    
+                    return $this->redirect($this->generateUrl('teacher_show', array('id' => $id)));
+                }
+            }
             return array(
                 'entity' => $entity,
                 'edit_form' => $editForm->createView(),
@@ -167,41 +181,6 @@ class TeacherController extends AbstractVirguleController {
         } else {
             throw new AccessDeniedException();
         }
-    }
-
-    /**
-     * Edits an existing Teacher entity.
-     *
-     * @Route("/{id}/update", name="teacher_update")
-     * @Method("POST")
-     * @Template("VirguleMainBundle:Teacher:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id) {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('VirguleMainBundle:Teacher')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Teacher entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new TeacherType(), $entity);
-        $editForm->bind($request);
-        $entity->setPlainPassword($entity->getPassword());
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('teacher_show', array('id' => $id)));
-        }
-
-        return array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
     }
 
     /**
@@ -235,5 +214,46 @@ class TeacherController extends AbstractVirguleController {
                         ->getForm()
         ;
     }
+    
+    /**
+     * Displays a form to change the password
+     *
+     * @Route("/{id}/changePassword", name="teacher_change_password")
+     * @Method({"GET", "POST"})
+     * @Template("VirguleMainBundle:Teacher:changePassword.html.twig")
+     */
+    public function changePasswordAction(Request $request, $id) {
+        // check for edit access
+        if ($this->getConnectedUser()->getId() == $id) {
+            
+            $em = $this->getDoctrine()->getManager();
 
+            $entity = $em->getRepository('VirguleMainBundle:Teacher')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Teacher entity.');
+            }
+            $editForm = $this->createForm(new TeacherChangePasswordType(), $entity);
+
+            if ($request->isMethod('POST')) {                
+                $editForm->bind($request);
+                if ($editForm->isValid()) {
+                    $entity->setOldPassword(null);
+                    $entity->setPlainPassword($entity->getPassword());
+                    $em->persist($entity);
+                    $em->flush();
+
+                    $this->addFlash( 'Votre mot de passe a bien été changé.');
+                    
+                    return $this->redirect($this->generateUrl('teacher_show', array('id' => $id)));
+                }
+            }
+            return array(
+                'entity' => $entity,
+                'change_password_form' => $editForm->createView()
+            );
+        } else {
+            throw new AccessDeniedException();
+        }
+    }
 }

@@ -2,19 +2,25 @@
 <div class="widget-content nopadding">
     {{ form_row(form.firstName, { 'label': 'Prénom', 'id': 'firstname' }) }}
     {{ form_row(form.lastName, { 'label': 'Nom', 'id': 'lastname' }) }}
-    {{ form_row(form.phoneNumber, { 'label': 'Téléphone fixe' }) }}
-    {{ form_row(form.cellphoneNumber, { 'label': 'Téléphone portable' }) }}
+    {{ form_row(form.phoneNumber, { 'label': 'Téléphone fixe', 'hint' : '10 chiffres sans espace' }) }}
+    {{ form_row(form.cellphoneNumber, { 'label': 'Téléphone portable', 'hint' : '10 chiffres sans espace' }) }}
     {{ form_row(form.email, { 'label': 'Adresse email' }) }}
 </div>
-<div class="widget-title">
-    <h5>Informations de connexion</h5>
-</div>
-<div class="widget-content nopadding">
-    {{ form_row(form.isActive, { 'checked':'checked', 'label': 'Formateur en activité', 'hint':'Cochez la case si l\'utilisateur doit être actif' }) }}                
+{% if is_granted('ROLE_SECRETARY') or form.username is defined or form.password is defined %}
+    <div class="widget-title">
+        <h5>Informations de connexion</h5>
+    </div>
+    <div class="widget-content nopadding">
+{% endif %}
     {% if is_granted('ROLE_SECRETARY') %}
+        {{ form_row(form.isActive, { 'checked':'checked', 'label': 'Formateur en activité', 'hint':'Cochez la case si l\'utilisateur doit être actif' }) }}                
         {{ form_row(form.role, { 'label': 'Rôle' })  }}
     {% endif %}
-    {{ form_row(form.username, { 'label': 'Nom d\'utilisateur', 'id': 'username' }) }}
-    {{ form_row(form.password.first, { 'label': 'Mot de passe', 'hint':'Choisissez un mot de passe d\'au moins 8 caractères. Vous pouvez prendre une phrase, si cela est plus facile à retenir', 'id': 'password' }) }}
-    {{ form_row(form.password.second, { 'label': 'Confirmez le mot de passe', 'id': 'password_confirm' }) }}
+    {% if form.username is defined %}
+        {{ form_row(form.username, { 'label': 'Nom d\'utilisateur', 'id': 'username' }) }}
+    {% endif %}
+    {% if form.password is defined %}
+        {{ form_row(form.password.first, { 'label': 'Mot de passe', 'hint':'Choisissez un mot de passe d\'au moins 8 caractères. Vous pouvez prendre une phrase, si cela est plus facile à retenir', 'id': 'password' }) }}
+        {{ form_row(form.password.second, { 'label': 'Confirmez le mot de passe', 'id': 'password_confirm' }) }}
+    {% endif %}
     {{ form_widget(form._token) }}

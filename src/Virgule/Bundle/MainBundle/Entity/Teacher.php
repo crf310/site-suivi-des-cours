@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
+
 
 /**
  * Virgule\Bundle\MainBundle\Entity\Teacher
@@ -16,7 +18,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity(fields="email", message="Cette adresse email est déjà utilisée") 
 */
 class Teacher extends BaseUser {
-  
+           
     /**
      * @var integer $id
      *
@@ -38,7 +40,7 @@ class Teacher extends BaseUser {
      *
      * @ORM\Column(name="last_name", type="string", length=50, nullable=false)
      * @Assert\NotBlank(message="Merci de saisir un nom de famille")
-     * @Assert\NotNull()
+     * @Assert\NotNull(message="Merci de saisir un nom de famille")
      */
     protected $lastName;
 
@@ -47,7 +49,7 @@ class Teacher extends BaseUser {
      *
      * @ORM\Column(name="first_name", type="string", length=50, nullable=false)
      * @Assert\NotBlank(message="Merci de saisir un prénom")
-     * @Assert\NotNull()
+     * @Assert\NotNull(message="Merci de saisir un prénom")
      */
     protected $firstName;
 
@@ -136,10 +138,6 @@ class Teacher extends BaseUser {
         $this->setLocked(false);
         $this->setExpired(false);
         $this->setCredentialsExpired(false);
-    }
-
-    public function eraseCredentials() {
-        
     }
     
     /**
@@ -499,5 +497,6 @@ class Teacher extends BaseUser {
     
     public function getFullName() {
         return $this->firstName . ' ' . $this->lastName;
-    }    
+    }       
+
 }

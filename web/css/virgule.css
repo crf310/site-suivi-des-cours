@@ -140,6 +140,9 @@ i.my-icon-go {
 i.my-icon-add {
     background-image: url('../img/icons/add.png');
 }
+i.my-icon-user_show {
+    background-image: url('../img/icons/user_suit.png');
+}
 i.my-icon-user_add {
     background-image: url('../img/icons/user_add.png');
 }
@@ -151,6 +154,9 @@ i.my-icon-user_delete {
 }
 i.my-icon-user-certificate {
     background-image: url('../img/icons/rosette.png');
+}
+i.my-icon-edit-password {
+    background-image: url('../img/icons/lock_edit.png');
 }
 i.my-icon-add {
     background-image: url('../img/icons/add.png');    
