@@ -263,7 +263,7 @@ class Student {
     private $classSessionsNonEnrolled;
 
     /**
-     * @ORM\OneToMany(targetEntity="ClassLevelSuggested", mappedBy="student", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="ClassLevelSuggested", mappedBy="student", cascade={"persist"})
      * @ORM\OrderBy({"dateOfChange" = "DESC"}).
      */
     private $suggestedClassLevel;

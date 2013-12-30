@@ -166,10 +166,13 @@ class StudentController extends AbstractVirguleController {
     }
 
     
-    private function initStudentForm($entity) {
-        $classLevelSuggested = new ClassLevelSuggested();
-        $classLevelSuggested->setChanger($this->getUser());        
-        $entity->addSuggestedClassLevel($classLevelSuggested);
+    private function initStudentForm($entity, $intention = 'create') {
+        
+        if ($intention == 'create') {
+            $classLevelSuggested = new ClassLevelSuggested();
+            $classLevelSuggested->setChanger($this->getUser());        
+            $entity->addSuggestedClassLevel($classLevelSuggested);
+        }
         
         $organizationBranchId = $this->getSelectedOrganizationBranchId();
         
@@ -179,7 +182,7 @@ class StudentController extends AbstractVirguleController {
         
         $currentTeacher = $this->getConnectedUser();
         
-        $form = $this->createForm(new StudentType($this->getDoctrine(), $organizationBranchId, $openHousesDates, $currentTeacher, $semesterId), $entity, Array('em' => $this->getDoctrineManager()));
+        $form = $this->createForm(new StudentType($intention, $this->getDoctrine(), $organizationBranchId, $openHousesDates, $currentTeacher, $semesterId), $entity, Array('em' => $this->getDoctrineManager()));
 
         return $form;
     }
@@ -222,6 +225,8 @@ class StudentController extends AbstractVirguleController {
             $em->persist($entity);
             $em->flush();
 
+            $this->addFlash( 'La fiche de <strong>' . $entity->getFirstname() . $entity->getLastname()  . '</strong> a bien été créée.');
+            
             if ($request->get('save_and_add_new')) {
                 return $this->redirect($this->generateUrl('student_new'));
             } else {
@@ -249,7 +254,7 @@ class StudentController extends AbstractVirguleController {
             throw $this->createNotFoundException('Unable to find Student entity.');
         }
 
-        $editForm = $this->initStudentForm($entity);
+        $editForm = $this->initStudentForm($entity, 'edit');
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -276,7 +281,7 @@ class StudentController extends AbstractVirguleController {
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->initStudentForm($entity);
+        $editForm = $this->initStudentForm($entity, 'edit');
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
@@ -284,9 +289,11 @@ class StudentController extends AbstractVirguleController {
             $entity->setUpdatedByTeacher($this->getUser());
             $em->persist($entity);
             
-            $em->flush();
+            $em->flush();            
+            
+            $this->addFlash( 'La fiche de <strong>' . $entity->getFirstname() . $entity->getLastname()  . '</strong> a été mise à jour.');
 
-            return $this->redirect($this->generateUrl('student_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('student_show', array('id' => $id)));
         }
 
         return array(
