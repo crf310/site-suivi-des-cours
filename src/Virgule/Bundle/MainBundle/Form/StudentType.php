@@ -8,16 +8,18 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Virgule\Bundle\MainBundle\Entity\Teacher;
 use Virgule\Bundle\MainBundle\Form\Type\PictureType;
+use Virgule\Bundle\MainBundle\Form\EventListener\PatchSubscriber;
 
 class StudentType extends AbstractType {
 
+    private $intention;
     private $doctrine;
-    private $teacherRepository;
     private $openHousesDates;
     private $currentTeacher;
     private $semesterId;
-
-    public function __construct(RegistryInterface $doctrine, $organizationBranchId = null, $openHousesDates = null, Teacher $currentTeacher = null, $semesterId = null) {
+    
+    public function __construct($intention, RegistryInterface $doctrine, $organizationBranchId = null, $openHousesDates = null, Teacher $currentTeacher = null, $semesterId = null) {
+        $this->intention = $intention;
         $this->doctrine = $doctrine;
         $this->organizationBranchId = $organizationBranchId;
         $this->openHousesDates = $openHousesDates;
@@ -33,9 +35,10 @@ class StudentType extends AbstractType {
                 ->add('lastname')
                 ->add('firstname')
                 ->add('birthdate', 'date', array(
-                    'widget' => 'single_text',
-                    'format' => 'dd/MM/yyyy',
-                    'attr'   => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy')
+                    'widget'    => 'single_text',
+                    'format'    => 'dd/MM/yyyy',
+                    'required'  => false,
+                    'attr'      => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy')
                 ))
                 ->add('nativeCountry', 'country', array(
                     'attr' => array('class' => 'medium-select')
@@ -45,6 +48,7 @@ class StudentType extends AbstractType {
                     'expanded'          => false,
                     'multiple'          => true,
                     'property'          => 'name',
+                    'required'          => false,
                     'attr'              => array('class' => 'medium-select')
                 ))
                 ->add('registrationDate', 'date', array(
@@ -85,12 +89,6 @@ class StudentType extends AbstractType {
                 ->add('emergencyContactFirstname')
                 ->add('emergencyContactPhoneNumber')
                 ->add('emergencyContactConnectionType')
-                ->add('suggestedClassLevel', 'collection', array(
-                    'type'      => new ClassLevelSuggestedType($options['em']),
-                    'allow_add' => true,
-                    'prototype' => true,
-                    'by_reference' => false,
-                ))
                 ->add('courses', 'entity', array(
                     'class'     => 'VirguleMainBundle:Course',
                     'query_builder' => $this->doctrine->getRepository('VirguleMainBundle:Course')->getCoursesForSemesterQB($this->semesterId),
@@ -102,17 +100,17 @@ class StudentType extends AbstractType {
                 ->add('profession')
                 ;
         
+        if ($this->intention == 'create') {
+            $builder->add('suggestedClassLevel', 'collection', array(
+                    'type'      => new ClassLevelSuggestedType($options['em']),
+                    'allow_add' => true,
+                    'prototype' => true,
+                    'by_reference' => false,
+                ));
+        }        
         
-                
-                /*
-                 * 
-                ->add('maritalStatus')
-                ->add('scholarized')
-                ->add('scholarizedInTheCountry')
-                ->add('scholarizedInAForeignCountry')
-                ->add('scholarizationLevel')
-                 */
-        ;
+        $subscriber = new PatchSubscriber();
+        $builder->addEventSubscriber($subscriber);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
