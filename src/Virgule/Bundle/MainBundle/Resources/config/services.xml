@@ -59,6 +59,11 @@
             <tag name="kernel.event_listener" event="security.interactive_login" />
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
+        <service id="virgule_user.password_changing" class="%namespace%\Event\PasswordChangingListener">
+            <tag name="kernel.event_subscriber"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="service_container"/>
+        </service>
         
         <!-- Forms -->
         <!--

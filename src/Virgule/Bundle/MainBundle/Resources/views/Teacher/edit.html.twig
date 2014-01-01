@@ -8,7 +8,7 @@
 {% block content_title %}Modifier la fiche de {{ entity.firstname }} {{ entity.lastname }}{% endblock %}
 {%block submenu %}
     {% if entity.id == app.user.id %}
-        <a class="btn" href="{{ path('teacher_change_password', { 'id': entity.id }) }}"> <i class="my-icon-edit-password"></i>Changer mon mot de passe</a>
+        <a class="btn" href="{{ path('fos_user_change_password') }}"> <i class="my-icon-edit-password"></i>Changer mon mot de passe</a>
     {% endif %}
     <a class="btn" href="{{ path('teacher_show', { 'id': entity.id }) }}"> <i class="my-icon-user_show"></i>Retour à la fiche</a>
 {% endblock %}
