@@ -56,10 +56,14 @@
                 {% for entity in entities %}
                    <tr>
                         <td class="center">
-                            {% if entity.isActive %}
-                                <img src="{{ asset('img/icons/user_green.png') }}" title="Utilisateur actif" alt="Utilisateur actif" />
+                            {% if entity.locked or entity.expired or entity.credentialsExpired %}
+                                <img src="{{ asset('img/icons/user_gray.png') }}" title="Compte verrouillé ou expiré" alt="Compte verrouillé ou expiré" />
                             {% else %}
-                                <img src="{{ asset('img/icons/user_red.png') }}" title="Utilisateur inactif" alt="Utilisateur inactif" />
+                                {% if entity.isActive %}
+                                    <img src="{{ asset('img/icons/user_green.png') }}" title="Utilisateur actif" alt="Utilisateur actif" />
+                                {% else %}
+                                    <img src="{{ asset('img/icons/user_red.png') }}" title="Utilisateur inactif" alt="Utilisateur inactif" />
+                                {% endif %}
                             {% endif %}
                         </td>
                         <td>{{ entity.firstName }} {{ entity.lastName }}</td>
