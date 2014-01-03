@@ -16,6 +16,18 @@ use Doctrine\DBAL\Connection;
  */
 class CourseRepository extends EntityRepository {
 
+    public function getNumberOfCourse($semesterId) {
+        $q = $this
+                ->createQueryBuilder('c')
+                ->select('count(c.id) as nb_courses')
+                ->innerJoin('c.semester', 's')       
+                ->where('s.id = :semesterId')  
+                ->setParameter('semesterId', $semesterId)
+                ->getQuery()
+        ;
+        $nb = $q->getSingleResult();
+        return $nb;
+    }
     /**
      * Count number of courses that overlap
      * $another_meeting = ($from >= $from_compare && $from <= $to_compare) || ($from_compare >= $from && $from_compare <= $to);
