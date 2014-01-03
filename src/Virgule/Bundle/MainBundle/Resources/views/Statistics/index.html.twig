@@ -127,12 +127,8 @@ au
             <div class="widget-content center">
                 <ul class="stats-plain">
                     <li>										
-                        <h4>{{ students_genders['F'] }}</h4>
-                        <span>femmes</span>
-                    </li>
-                    <li>										
-                        <h4>{{ students_genders['M'] }}</h4>
-                        <span>hommes</span>
+                        <h4>{{ students_genders['F'] + students_genders['M'] }}</h4>
+                        <span>inscrits</span>
                     </li>
                     <li>										
                         <h4>{{ students_countries | length }}</h4>
