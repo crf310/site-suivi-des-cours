@@ -43,4 +43,18 @@ class TeacherRepository extends EntityRepository {
         $teachers = $q->execute();
         return $teachers;
     }
+    public function getNbTeachersByStatus($organizationBranchId, $isActive = true) {
+        $q = $this->createDefaultQueryBuilder()
+            ->addSelect('count(t.id) as nb_teachers')
+            ->where('t.isActive = :isActive')
+            ->andWhere('t.username <> :rootUsername')
+            ->innerJoin('t.organizationBranches', 'ob', 'WITH', 'ob.id = :organizationBranchId') 
+            ->setParameter('organizationBranchId', $organizationBranchId)
+            ->setParameter('isActive', $isActive)
+            ->setParameter('rootUsername', "root")
+            ->getQuery()
+        ;
+        $teachers = $q->getSingleResult();
+        return $teachers;
+    }
 }
