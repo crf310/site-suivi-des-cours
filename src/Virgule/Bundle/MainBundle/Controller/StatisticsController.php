@@ -83,6 +83,8 @@ class StatisticsController extends AbstractVirguleController {
         
         $nbCourses = $this->getCourseRepository()->getNumberOfCourse($this->getSelectedSemesterId());
         
+        $nbClassSessions = $this->getClassSessionRepository()->getNumberOfClassSessionsPerSemester($this->getSelectedSemesterId());
+        
         return array(
             'studentsWithManyEnrollments'   => $studentsWithManyEnrollments['students_array'],
             'students_genders'              => $students_genders, 
@@ -92,7 +94,8 @@ class StatisticsController extends AbstractVirguleController {
             'nbStudentsPerClassLevel'       => $nbStudentsPerClassLevel,
             'languages'                     => $languages,
             'nbActiveTeachers'              => $nbActiveTeachers,
-            'nbCourses'                     => $nbCourses
+            'nbCourses'                     => $nbCourses,
+            'nbClassSessions'              => $nbClassSessions
             );
     }
 }
