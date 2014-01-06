@@ -84,6 +84,12 @@
                         <div class="controls">{{  entity.nativeCountry | upper | country }}&nbsp;<img src="{{ asset('img/drapeaux/' ~ entity.nativeCountry ~ '.png')}}" alt="{{  entity.nativeCountry }}" title="{{  entity.nativeCountry | upper | country }}" />&nbsp;</div>
                     </div>
                     {% endif %}
+                    {% if entity.arrivalDate != null %}
+                    <div class="control-group">
+                        <label class="control-label">Date d'arrivée en France</label>
+                        <div class="controls">{{ entity.arrivalDate|date('d/m/Y') }}&nbsp;</div>
+                    </div>
+                    {% endif %}
                     <div class="control-group">
                         <label class="control-label">Langue(s) parlée(s)</label>
                         <div class="controls">
