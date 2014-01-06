@@ -3,7 +3,9 @@
 {%block submenu %}
     <a class="btn tip-bottom" href="{{ path('course_index') }}"> <i class="my-icon-list"></i>Voir la liste des cours</a>
     <a class="btn tip-bottom" href="{{ path('course_print_planning') }}" target="_blank"> <i class="my-icon-printer"></i>Imprimer</a>
-    <a class="btn tip-bottom" href="{{ path('course_new') }}"> <i class="my-icon-add"></i>Nouveau cours</a>
+    {% if is_granted('ROLE_SECRETARY') %}
+        <a class="btn tip-bottom" href="{{ path('course_new') }}"> <i class="my-icon-add"></i>Nouveau cours</a>
+    {% endif %}
 {% endblock %}
 {% block main_content %}    
 <div class="row">
