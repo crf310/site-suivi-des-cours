@@ -83,7 +83,7 @@ class StudentType extends AbstractType {
                     'widget'    => 'single_text',
                     'format'    => 'dd/MM/yyyy',
                     'required'  => false,
-                    'attr'      => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy', 'required' => false)
+                    'attr'      => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy')
                 ))
                 ->add('emergencyContactLastname')
                 ->add('emergencyContactFirstname')
