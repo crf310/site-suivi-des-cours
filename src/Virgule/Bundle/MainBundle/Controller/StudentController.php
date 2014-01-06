@@ -295,7 +295,7 @@ class StudentController extends AbstractVirguleController {
             
             $em->flush();            
             
-            $this->addFlash( 'La fiche de <strong>' . $entity->getFirstname() . $entity->getLastname()  . '</strong> a été mise à jour.');
+            $this->addFlash( 'La fiche de <strong>' . $entity->getFirstname() . ' ' . $entity->getLastname()  . '</strong> a été mise à jour.');
 
             return $this->redirect($this->generateUrl('student_show', array('id' => $id)));
         }
