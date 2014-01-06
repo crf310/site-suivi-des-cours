@@ -226,14 +226,46 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->logout();
     }
 
-    /*
-    public function testUpdateProfileWithPassword() {
-        $this->updateProfile(true, 'new_password');
+    public function testChangePasswordOK() {
+        // Create a new client to browse the application
+        $this->client = static::createClient();
+        $this->crawler = $this->client->request('GET', '/');
+        
+        $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+        
+        $this->goToChangePasswordForm();
+        
+        $newPassword = "password1";
+        $this->fillAndSubmitChangePasswordForm($this->ADMIN_PASSWORD, $newPassword, true);
+        
+        $this->logout();
+                
+        $this->login($this->ADMIN_USERNAME, $newPassword);
+        
+        // reinit password
+        $this->goToChangePasswordForm();
+        $this->fillAndSubmitChangePasswordForm($newPassword, $this->ADMIN_PASSWORD, true);
+                
+        $this->logout();
+                
+        $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
     }
     
-    public function testUpdateProfileWithoutPassword() {
-        $this->updateProfile(false, $this->USER_PASSWORD);
-    }*/
+    public function testChangePasswordKO() {
+        // Create a new client to browse the application
+        $this->client = static::createClient();
+        $this->crawler = $this->client->request('GET', '/');
+        
+        $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+        
+        $this->goToChangePasswordForm();
+        
+        $newPassword = "password1";
+        $this->fillAndSubmitChangePasswordForm('wrongPassword', $newPassword, false);
+                
+        $this->assertTrue($this->crawler->filter("html:contains('Changer votre mot de passe')")->count() == 1); 
+        $this->assertTrue($this->crawler->filter("html:contains('Cette valeur doit être le mot de passe actuel')")->count() == 1); 
+    }
     
     private function updateProfile($updatePassword, $password) {
         // Create a new client to browse the application
@@ -299,7 +331,28 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
         $this->crawler = $this->client->click($this->crawler->selectLink('Nouvel utilisateur')->link());
     }
+    
+    private function goToChangePasswordForm() {
+        // Create a new entry in the database
+        $this->crawler = $this->client->request('GET', '/profile/change-password');
+        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
+    }
 
+    private function fillAndSubmitChangePasswordForm($currentPassword, $newPassword, $followRedirect = true) {
+        // Fill in the form and submit it
+        $form = $this->crawler->selectButton('Mettre à jour le mot de passe')->form(array(
+            'fos_user_change_password_form[current_password]' => $currentPassword,
+            'fos_user_change_password_form[plainPassword][first]' => $newPassword,
+            'fos_user_change_password_form[plainPassword][second]' => $newPassword,
+                ));
+
+        $this->client->submit($form);
+        if ($followRedirect) {
+            $this->crawler = $this->client->followRedirect();
+        } else {
+            $this->crawler = $this->client->reload();
+        }
+    }
     private function fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond, $followRedirect = true, $buttonLabel= 'Créer le compte') {
         // Fill in the form and submit it
         $form = $this->crawler->selectButton($buttonLabel)->form(array(
