@@ -19,7 +19,7 @@ use Virgule\Bundle\MainBundle\Form\ClassLevelSuggestedType;
  *
  * @Route("/student")
  */
-class StudentController extends AbstractVirguleController {
+class cStudentController extends AbstractVirguleController {
     
      /**
      * Preview the certificate of attendance in a web page
@@ -225,7 +225,7 @@ class StudentController extends AbstractVirguleController {
             $em->persist($entity);
             $em->flush();
 
-            $this->addFlash( 'La fiche de <strong>' . $entity->getFirstname() . $entity->getLastname()  . '</strong> a bien été créée.');
+            $this->addFlash( 'La fiche de <strong>' . $entity->getFirstname() . ' ' . $entity->getLastname()  . '</strong> a bien été créée.');
             
             if ($request->get('save_and_add_new')) {
                 return $this->redirect($this->generateUrl('student_new'));
