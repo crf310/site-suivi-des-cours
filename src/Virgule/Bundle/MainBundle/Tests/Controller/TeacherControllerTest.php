@@ -264,7 +264,7 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->fillAndSubmitChangePasswordForm('wrongPassword', $newPassword, false);
                 
         $this->assertTrue($this->crawler->filter("html:contains('Changer votre mot de passe')")->count() == 1); 
-        $this->assertTrue($this->crawler->filter("html:contains('Cette valeur doit être le mot de passe actuel')")->count() == 1); 
+        $this->assertTrue($this->crawler->filter("html:contains('erreur')")->count() == 1); 
     }
     
     private function updateProfile($updatePassword, $password) {
