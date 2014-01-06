@@ -6,7 +6,7 @@
     <script type='text/javascript'>
     {% set emailAddresses = '' %}
     {% for entity in entities %}
-       {% set emailAddresses = emailAddresses ~ '\"' ~ entity.firstName ~ ' ' ~ entity.lastName ~ '\" <' ~ entity.email ~ '>, ' %}
+       {% set emailAddresses = emailAddresses ~ '\"' ~ entity.firstName|escape('js') ~ ' ' ~ entity.lastName|escape('js') ~ '\" <' ~ entity.email ~ '>, ' %}
     {% endfor %}
     $(document).ready(function () {
         var clip = new ZeroClipboard(document.getElementById("copy-button"), {
