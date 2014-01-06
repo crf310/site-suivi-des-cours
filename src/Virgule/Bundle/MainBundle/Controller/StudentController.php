@@ -19,7 +19,7 @@ use Virgule\Bundle\MainBundle\Form\ClassLevelSuggestedType;
  *
  * @Route("/student")
  */
-class cStudentController extends AbstractVirguleController {
+class StudentController extends AbstractVirguleController {
     
      /**
      * Preview the certificate of attendance in a web page
