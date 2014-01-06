@@ -60,12 +60,12 @@
                         <div class="controls">{{ entity.firstName }} {{ entity.lastName | upper }}&nbsp;</div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Inscrit{% if entity.gender =='F'%}e{% endif %} le </label>
+                        <label class="control-label">Accueilli{% if entity.gender =='F'%}e{% endif %} le </label>
                         <div class="controls">
                             {% if entity.registrationDate|date('Y-m-d') != "1970-01-01" %}
                                 {{ entity.registrationDate|date('d/m/Y') }}
                             {% endif %}
-                                &nbsp;
+                            par <a href="{{ path('teacher_show', { 'id': entity.welcomedByTeacher.id }) }}">{{ entity.welcomedByTeacher.firstname }} {{ entity.welcomedByTeacher.lastname }}</a>
                         </div>
                     </div>
                     <div class="control-group">
