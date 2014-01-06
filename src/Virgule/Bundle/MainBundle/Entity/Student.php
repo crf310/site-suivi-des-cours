@@ -766,28 +766,7 @@ class Student {
     public function getEmergencyContactConnectionType() {
         return $this->emergencyContactConnectionType;
     }
-
-    /**
-     * Set fkNativeCountry
-     *
-     * @param  $fkNativeCountry
-     * @return Student
-     */
-    public function setFkNativeCountry($fkNativeCountry = null) {
-        $this->fkNativeCountry = $fkNativeCountry;
-
-        return $this;
-    }
-
-    /**
-     * Get fkNativeCountry
-     *
-     * @return 
-     */
-    public function getFkNativeCountry() {
-        return $this->fkNativeCountry;
-    }
-
+    
     /**
      * Set fkScholarizationLanguage
      *
