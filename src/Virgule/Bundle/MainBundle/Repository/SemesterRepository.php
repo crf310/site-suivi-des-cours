@@ -71,4 +71,17 @@ class SemesterRepository extends EntityRepository {
         }
         return $semester;
     }
+    
+    public function findSemesterByDateBetween($date) {
+        $q = $this
+            ->createQueryBuilder('s')
+            //->where('s.organizationBranch = :organizationBranchId')
+            ->andWhere('s.startDate <= :date')
+            ->andWhere('s.endDate >= :date')
+            ->setParameter('date', $date)
+            ->setMaxResults(1)
+            ->getQuery()
+        ;
+        return $q->getOneOrNullResult();
+    }
 }

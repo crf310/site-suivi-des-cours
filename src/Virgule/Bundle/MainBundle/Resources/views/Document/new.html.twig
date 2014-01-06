@@ -1,32 +1,11 @@
 {% extends '::main_content.html.twig' %}
-{% block head %}    
+{% block head %}
     {{ parent() }}
-    {% block stylesheets %}
-        <link href="{{ asset('css/tagmanager.css') }}" rel="stylesheet" media="screen" />
-        <style type="text/css" media="screen">
-        #descriptionField {
-            height: 150px;
-            width: 90%;
-        }
-        
-        </style>
-    {% endblock %}
-    {% block javascripts %}        
-        <script type="text/javascript" src="{{ asset('js/tagmanager.js') }}"></script>
-        <script type="text/javascript">
-        jQuery(function($) {             
-            jQuery(".tagManager").tagsManager();
-            var existingTags = [{%for tag in existingTags %}'{{ tag.label }}',{% endfor %}];   
-            $(".tagManager").autocomplete({
-                source: existingTags
-            });
-        });
-        </script>
-    {% endblock %}
+    {% include 'VirguleMainBundle:Document:form_header.html.twig' with { 'existingTags': existingTags, 'documentTags': entity.tags } %}
 {% endblock %}
 {% block content_title %}Ajouter un document{% endblock %}
 {%block submenu %}
-    <a class="btn tip-bottom" href="{{ path('document_index') }}"> <i class="document-list"></i>Retour à la liste des documents</a>
+    <a class="btn tip-bottom" href="{{ path('document_index') }}"> <i class="my-document-list"></i>Retour à la liste des documents</a>
 {% endblock %}
 {% block main_content %}    
 <div class="row">
@@ -34,19 +13,7 @@
         <div class="alert alert-info">
         Pour vos documents, privilégiez des formats ouverts et compatibles avec tous les systèmes, tels que le PDF ou les documents ODF (lisibles et éditables avec <a href="http://www.openoffice.org/fr/" title="Vers le site open Office">Open Office</a> ou <a href="https://www.libreoffice.org/" title="Vers le site Libre Office">Libre Office</a>, suites bureautiques gratuites).
         </div>
-        <form action="{{ path('document_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
-            <div class="widget-box">
-                <div class="widget-title">
-                    <h5>Informations du document</h5>
-                </div>
-                <div class="widget-content nopadding">
-                    {{ form_errors(form) }}
-                    {{ form_row(form.fileName, {'label': 'Intitulé du document' }) }}
-                    {{ form_row(form.description, {'label': 'Description', 'id' : 'descriptionField' }) }}
-                    {{ form_row(form.file, {'label': 'Fichier' }) }}
-                    {{ form_row(form.classLevel, {'label': 'Adapté au(x) niveau(x)' }) }}
-                    {{ form_row(form.tags, {'label': 'Mots-clé', 'hint' : 'Utiles pour retrouver le document, séparez les par une virgule. Les mots-clé utilisés dans d\'autres documents sont proposés à la saisie.' }) }}
-                    {{ form_rest(form) }} 
+                    {% include 'VirguleMainBundle:Document:form.html.twig' with { 'form': form }  %}
                     <div class="form-actions">                                     
                         <input class="btn btn-success" type="submit" value="Enregistrer le document" />
                     </div>

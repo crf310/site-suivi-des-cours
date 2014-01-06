@@ -4,7 +4,7 @@ namespace Virgule\Bundle\MainBundle\DataFixtures\ORM\App;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Virgule\Bundle\MainBundle\Entity\Roles;
+use Virgule\Bundle\MainBundle\Entity\Role;
 
 /**
  * Description of LoadTeacherData
@@ -15,28 +15,28 @@ use Virgule\Bundle\MainBundle\Entity\Roles;
 class LoadRolesData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager) {
-        $roleGuest = new Roles();
-        $roleGuest->setCode("ROLE_GUEST");
+        $roleGuest = new Role();
+        $roleGuest->setRole("ROLE_GUEST");
         $roleGuest->setLabel("Invité");
         
-        $roleUser = new Roles();
-        $roleUser->setCode("ROLE_USER");
+        $roleUser = new Role();
+        $roleUser->setRole("ROLE_USER");
         $roleUser->setLabel("Formateur");
         
-        $roleSecretary = new Roles();
-        $roleSecretary->setCode("ROLE_SECRETARY");
+        $roleSecretary = new Role();
+        $roleSecretary->setRole("ROLE_SECRETARY");
         $roleSecretary->setLabel("Responsable");
         
-        $roleSuperSecretary = new Roles();
-        $roleSuperSecretary->setCode("ROLE_SUPER_SECRETARY");
+        $roleSuperSecretary = new Role();
+        $roleSuperSecretary->setRole("ROLE_SUPER_SECRETARY");
         $roleSuperSecretary->setLabel("Responsable général");        
         
-        $roleAdmin = new Roles();
-        $roleAdmin->setCode("ROLE_ADMIN");
+        $roleAdmin = new Role();
+        $roleAdmin->setRole("ROLE_ADMIN");
         $roleAdmin->setLabel("Administrateur");        
         
-        $roleSuperAdmin = new Roles();
-        $roleSuperAdmin->setCode("ROLE_SUPER_ADMIN");
+        $roleSuperAdmin = new Role();
+        $roleSuperAdmin->setRole("ROLE_SUPER_ADMIN");
         $roleSuperAdmin->setLabel("Super administrateur");
         
         $manager->persist($roleGuest);

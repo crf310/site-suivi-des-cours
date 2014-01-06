@@ -76,7 +76,7 @@ class Document {
      * @ORM\ManyToMany(targetEntity="ClassLevel")
      * @ORM\JoinTable(name="document_class_level")
      */
-    private $classLevel;
+    private $classLevels;
 
     /**
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="documents", cascade={"persist"})
@@ -181,38 +181,38 @@ class Document {
      * Constructor
      */
     public function __construct() {
-        $this->classLevel = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->classLevelss = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Add classLevel
+     * Add classLevels
      *
-     * @param \Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevel
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevels
      * @return Document
      */
-    public function addClassLevel(\Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevel) {
-        $this->classLevel[] = $classLevel;
+    public function addClassLevel(\Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevels) {
+        $this->classLevels[] = $classLevels;
 
         return $this;
     }
 
     /**
-     * Remove classLevel
+     * Remove classLevels
      *
-     * @param \Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevel
+     * @param \Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevels
      */
-    public function removeClassLevel(\Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevel) {
-        $this->classLevel->removeElement($classLevel);
+    public function removeClassLevel(\Virgule\Bundle\MainBundle\Entity\ClassLevel $classLevels) {
+        $this->classLevels->removeElement($classLevels);
     }
 
     /**
-     * Get classLevel
+     * Get classLevels
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getClassLevel() {
-        return $this->classLevel;
+    public function getClassLevels() {
+        return $this->classLevels;
     }
 
     /**

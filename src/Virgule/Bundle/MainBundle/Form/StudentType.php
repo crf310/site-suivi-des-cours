@@ -5,32 +5,40 @@ namespace Virgule\Bundle\MainBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Virgule\Bundle\MainBundle\Repository\TeacherRepository;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Virgule\Bundle\MainBundle\Entity\Teacher;
 use Virgule\Bundle\MainBundle\Form\Type\PictureType;
+use Virgule\Bundle\MainBundle\Form\EventListener\PatchSubscriber;
 
 class StudentType extends AbstractType {
 
-    private $teacherRepository;
+    private $intention;
+    private $doctrine;
     private $openHousesDates;
     private $currentTeacher;
-
-    public function __construct(TeacherRepository $teacherRepository = null, $organizationBranchId = null, $openHousesDates = null, Teacher $currentTeacher = null) {
-        $this->teacherRepository = $teacherRepository;
+    private $semesterId;
+    
+    public function __construct($intention, RegistryInterface $doctrine, $organizationBranchId = null, $openHousesDates = null, Teacher $currentTeacher = null, $semesterId = null) {
+        $this->intention = $intention;
+        $this->doctrine = $doctrine;
         $this->organizationBranchId = $organizationBranchId;
         $this->openHousesDates = $openHousesDates;
         $this->currentTeacher = $currentTeacher;
+        $this->semesterId = $semesterId;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('file', new PictureType())
+                ->add('file', new PictureType(), array(
+                    'required' => false
+                ))
                 ->add('lastname')
                 ->add('firstname')
                 ->add('birthdate', 'date', array(
-                    'widget' => 'single_text',
-                    'format' => 'dd/MM/yyyy',
-                    'attr'   => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy')
+                    'widget'    => 'single_text',
+                    'format'    => 'dd/MM/yyyy',
+                    'required'  => false,
+                    'attr'      => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy')
                 ))
                 ->add('nativeCountry', 'country', array(
                     'attr' => array('class' => 'medium-select')
@@ -40,6 +48,7 @@ class StudentType extends AbstractType {
                     'expanded'          => false,
                     'multiple'          => true,
                     'property'          => 'name',
+                    'required'          => false,
                     'attr'              => array('class' => 'medium-select')
                 ))
                 ->add('registrationDate', 'date', array(
@@ -50,7 +59,7 @@ class StudentType extends AbstractType {
                 ))
                 ->add('welcomedByTeacher', 'entity', array(
                     'class'             => 'VirguleMainBundle:Teacher',
-                    'query_builder'     => $this->teacherRepository->getAvailableTeachersQueryBuilder($this->organizationBranchId, true),
+                    'query_builder'     => $this->doctrine->getRepository('VirguleMainBundle:Teacher')->getAvailableTeachersQueryBuilder($this->organizationBranchId, true),
                     'expanded'          => false,
                     'multiple'          => false,
                     'property'          => 'fullname',
@@ -71,40 +80,37 @@ class StudentType extends AbstractType {
                     'data' => 'M'
                 ))
                 ->add('arrivalDate', 'date', array(
-                    'widget' => 'single_text',
-                    'format' => 'dd/MM/yyyy',
-                    'attr'   => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy', 'required' => false)
+                    'widget'    => 'single_text',
+                    'format'    => 'dd/MM/yyyy',
+                    'required'  => false,
+                    'attr'      => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy', 'required' => false)
                 ))
                 ->add('emergencyContactLastname')
                 ->add('emergencyContactFirstname')
                 ->add('emergencyContactPhoneNumber')
                 ->add('emergencyContactConnectionType')
-                ->add('suggestedClassLevel', 'collection', array(
+                ->add('courses', 'entity', array(
+                    'class'     => 'VirguleMainBundle:Course',
+                    'query_builder' => $this->doctrine->getRepository('VirguleMainBundle:Course')->getCoursesForSemesterQB($this->semesterId),
+                    'expanded'  => false,
+                    'multiple'  => true,        
+                    'required'  => false,
+                    'attr'      => array('class' => 'medium-select')
+                 ))     
+                ->add('profession')
+                ;
+        
+        if ($this->intention == 'create') {
+            $builder->add('suggestedClassLevel', 'collection', array(
                     'type'      => new ClassLevelSuggestedType($options['em']),
                     'allow_add' => true,
                     'prototype' => true,
                     'by_reference' => false,
-                ))
-                ->add('courses', 'entity', array(
-                    'class'     => 'VirguleMainBundle:Course',
-                    'expanded'  => false,
-                    'multiple'  => true,        
-                    'attr'      => array('class' => 'medium-select')
-                 ))                
-                ->add('profession')
-                ;
+                ));
+        }        
         
-        
-                
-                /*
-                 * 
-                ->add('maritalStatus')
-                ->add('scholarized')
-                ->add('scholarizedInTheCountry')
-                ->add('scholarizedInAForeignCountry')
-                ->add('scholarizationLevel')
-                 */
-        ;
+        $subscriber = new PatchSubscriber();
+        $builder->addEventSubscriber($subscriber);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {

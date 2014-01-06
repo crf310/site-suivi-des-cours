@@ -1,0 +1,18 @@
+{% extends '::main_content.html.twig' %}
+{% block content_title %}Erreur 403{% endblock %}
+{% block main_content %}
+    <div class="container-fluid">
+        <div class="row">
+        <div class="col-md-12 center">
+            <div class="alert alert-danger alert-block">
+                <h4>Accès interdit</h4>
+                Vous n'avez pas les permissions nécessaires pour accéder à cette page. Si vous estimez que cela est injuste, contactez votre responsable !
+            </div>
+        </div>
+        <div class="col-md-12 center" style="text-align: center;">
+            <div class="non-found">
+                <img class="error-img" src="{{ asset('img/tbservers.png') }}" alt="Matthew Inman - TheOatmeal.com" />
+            </div>
+        </div></div>
+    </div>
+{% endblock %}

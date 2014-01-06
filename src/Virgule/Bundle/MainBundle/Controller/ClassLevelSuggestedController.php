@@ -33,13 +33,15 @@ class ClassLevelSuggestedController extends AbstractVirguleController {
         $form->bind($request);
 
         if ($form->isValid()) {
-            
             // checks that we change to another class level than the current one
             $currentClassLevel = $this->getClassLevelSuggestedRepository()->getCurrentClassLevelSuggested($entity->getStudent()->getId());
-            if (null !== $currentClassLevel && $currentClassLevel->getClassLevel()->getId() != $entity->getClassLevel()->getId()) {
+            if (null === $currentClassLevel || ($currentClassLevel->getClassLevel()->getId() != $entity->getClassLevel()->getId())) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();   
+                
+                $flashMessage = 'Le niveau de <strong>' . $entity->getStudent()->getFirstname() . ' ' . $entity->getStudent()->getLastname() . '</strong> a bien été passé à <strong>' . $entity->getClassLevel()->getLabel() . '</strong>';
+                $this->addFlash($flashMessage);
             }
         }        
         

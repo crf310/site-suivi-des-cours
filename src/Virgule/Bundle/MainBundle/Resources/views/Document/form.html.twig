@@ -1,0 +1,14 @@
+        <form id="create-document-form" action="{{ path('document_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <h5>Informations du document</h5>
+                </div>
+                <div class="widget-content nopadding">
+                    {{ form_errors(form) }}
+                    {{ form_row(form.fileName, {'label': 'Intitulé du document' }) }}
+                    {{ form_row(form.description, {'label': 'Description', 'id' : 'descriptionField' }) }}
+                    {{ form_row(form.file, {'label': 'Fichier' }) }}
+                    {{ form_row(form.classLevels, {'label': 'Adapté au(x) niveau(x)' }) }}
+                    {{ form_row(form.tags, {'label': 'Mots-clé', 'hint' : 'Utiles pour retrouver le document, séparez les par une virgule. Les mots-clé utilisés dans d\'autres documents sont proposés à la saisie.' }) }}
+                    {{ form_row(form.tagList, {'id': 'myHiddenTagList' }) }}
+                    {{ form_rest(form) }} 

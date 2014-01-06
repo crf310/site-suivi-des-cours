@@ -13,6 +13,23 @@
                 
                 $("#username").val(username);
             });
+            $("#password").keyup(function() {      
+                $(".pwd-error-username").hide();
+                var hasError = false;
+                var usernameVal = $("#username").val();
+                var passwordVal = $("#password").val();
+                if (passwordVal.indexOf(usernameVal) != -1) {
+                    $("#password").parent().parent().addClass('has-error'); 
+                    $("#password").parent().parent().removeClass('has-success');
+                    $("#password").after('<span class="help-inline pwd-error-username">Le mot de passe ne peut contenir votre nom d\'utilisateur</span');
+                   hasError = true;
+                } else {
+                    $("#password").parent().parent().removeClass('has-error'); 
+                    $("#password").parent().parent().addClass('has-success'); 
+                    $(".pwd-error-username").hide();
+                }
+                if(hasError == true) {return false;}
+            });
             
             $("#password").add('#password_confirm').keyup(function() {      
                 $(".pwd-error").hide();

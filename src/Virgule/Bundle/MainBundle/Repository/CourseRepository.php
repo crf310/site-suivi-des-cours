@@ -16,6 +16,18 @@ use Doctrine\DBAL\Connection;
  */
 class CourseRepository extends EntityRepository {
 
+    public function getNumberOfCourse($semesterId) {
+        $q = $this
+                ->createQueryBuilder('c')
+                ->select('count(c.id) as nb_courses')
+                ->innerJoin('c.semester', 's')       
+                ->where('s.id = :semesterId')  
+                ->setParameter('semesterId', $semesterId)
+                ->getQuery()
+        ;
+        $nb = $q->getSingleResult();
+        return $nb;
+    }
     /**
      * Count number of courses that overlap
      * $another_meeting = ($from >= $from_compare && $from <= $to_compare) || ($from_compare >= $from && $from_compare <= $to);
@@ -152,13 +164,37 @@ class CourseRepository extends EntityRepository {
         return $results;
     }
     
+    public function getCoursesForSemesterQB($semesterId) {
+        $qb = $this
+                ->createQueryBuilder('c')
+                ->innerJoin('c.classLevel', 'c2')
+                ->innerJoin('c.semester', 's')
+                ->where('s.id = :semesterId')
+                ->groupBy('c.id')
+                ->add('orderBy', 'c.dayOfWeek ASC, c.startTime ASC')
+                ->setParameter('semesterId', $semesterId)
+        ;
+        return $qb;
+    }
+    
     public function findByIds(array $coursesIds) {
         $q = $this
-                ->createQueryBuilder('c')                
+                ->createQueryBuilder('c')         
+                ->innerJoin('c.teachers', 't')       
                 ->where('c.id IN (:coursesIds)')
                 ->setParameter('coursesIds', $coursesIds, Connection::PARAM_INT_ARRAY)
                 ->getQuery();
         return $q->execute();        
     }
 
+    
+    public function getCourseWithOldReports() {
+        $q = $this
+                ->createQueryBuilder('c')         
+                ->innerJoin('c.semester', 's')       
+                ->innerJoin('c.classSessions', 'cs')   
+                ->where('cs.sessionDate < s.startDate')
+                ->getQuery();
+        return $q->execute();
+    }
 }

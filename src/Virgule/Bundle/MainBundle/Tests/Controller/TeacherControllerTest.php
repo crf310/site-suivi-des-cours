@@ -49,6 +49,8 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->assertEquals(1, $this->crawler->filter("div.widget-content:contains('Aucun apprenant trouvé')")->count());
         $this->assertEquals(1, $this->crawler->filter("div.widget-content:contains(' Aucun cours dirigé pour le moment')")->count());
         $this->assertEquals(1, $this->crawler->filter("div.widget-content:contains('Aucun compte-rendu enregistré pour le moment')")->count());
+        
+        $this->logout();
     }
     
      public function testUserCreationSameUsername() {
@@ -76,6 +78,8 @@ class TeacherControllerTest extends AbstractControllerTest {
         
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);        
         $this->assertTrue($this->crawler->filter("span.help-inline:contains('utilisateur est déjà pris')")->count() >= 1);
+        
+        $this->logout();
     }
     
     public function testUserCreationNoLastName() {
@@ -98,6 +102,8 @@ class TeacherControllerTest extends AbstractControllerTest {
                 
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);        
         $this->assertTrue($this->crawler->filter("span.help-inline:contains('Merci de saisir un nom de famille')")->count() >= 1);
+        
+        $this->logout();
     }
     
     public function testUserCreationNoLastFirstName() {
@@ -120,6 +126,8 @@ class TeacherControllerTest extends AbstractControllerTest {
                 
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);        
         $this->assertTrue($this->crawler->filter("span.help-inline:contains('Merci de saisir un prénom')")->count() >= 1);
+        
+        $this->logout();
     }
     
     /*
@@ -166,6 +174,8 @@ class TeacherControllerTest extends AbstractControllerTest {
                 
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);        
         $this->assertTrue($this->crawler->filter("span.help-inline:contains('Les mots de passe ne correspondent pas')")->count() >= 1);
+        
+        $this->logout();
     }
     
     public function testUserCreationPhoneNumbersTooShort() {
@@ -188,6 +198,8 @@ class TeacherControllerTest extends AbstractControllerTest {
                 
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1);        
         $this->assertEquals(2, $this->crawler->filter("span.help-inline:contains('Le numéro de téléphone doit comporter 10 chiffres, et seulement 10')")->count());
+        
+        $this->logout();
     }
 
     public function testUserCreationPhoneNumbersTooLong() {
@@ -210,36 +222,84 @@ class TeacherControllerTest extends AbstractControllerTest {
                 
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1); 
         $this->assertEquals(2, $this->crawler->filter("span.help-inline:contains('Le numéro de téléphone doit comporter 10 chiffres, et seulement 10')")->count());
+        
+        $this->logout();
     }
 
-    public function testUpdateProfile() {
+    public function testChangePasswordOK() {
         // Create a new client to browse the application
         $this->client = static::createClient();
         $this->crawler = $this->client->request('GET', '/');
         
         $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
         
-        $this->crawler = $this->client->request('GET', '/welcome');
+        $this->goToChangePasswordForm();
+        
+        $newPassword = "password1";
+        $this->fillAndSubmitChangePasswordForm($this->ADMIN_PASSWORD, $newPassword, true);
+        
+        $this->logout();
+                
+        $this->login($this->ADMIN_USERNAME, $newPassword);
+        
+        // reinit password
+        $this->goToChangePasswordForm();
+        $this->fillAndSubmitChangePasswordForm($newPassword, $this->ADMIN_PASSWORD, true);
+                
+        $this->logout();
+                
+        $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+    }
+    
+    public function testChangePasswordKO() {
+        // Create a new client to browse the application
+        $this->client = static::createClient();
+        $this->crawler = $this->client->request('GET', '/');
+        
+        $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+        
+        $this->goToChangePasswordForm();
+        
+        $newPassword = "password1";
+        $this->fillAndSubmitChangePasswordForm('wrongPassword', $newPassword, false);
+                
+        $this->assertTrue($this->crawler->filter("html:contains('Changer votre mot de passe')")->count() == 1); 
+        $this->assertTrue($this->crawler->filter("html:contains('erreur')")->count() == 1); 
+    }
+    
+    private function updateProfile($updatePassword, $password) {
+        // Create a new client to browse the application
+        $this->client = static::createClient();
+        $this->crawler = $this->client->request('GET', '/');
+        
+        $this->login($this->USER_USERNAME, $this->USER_PASSWORD);
+        
+        $this->goToDashboard();
         $this->assertEquals(1, $this->crawler->filter("html:contains('Accueil')")->count());
         
-        $crawlerLinkProfile = $this->crawler->filter("span:contains('" . $this->ADMIN_FIRSTNAME . " " . $this->ADMIN_LASTNAME . "')")->parents();
+        $crawlerLinkProfile = $this->crawler->filter('#go-to-profile');
         $this->crawler = $this->client->click($crawlerLinkProfile->link());
         
-        $this->assertEquals(1, $this->crawler->filter("h5:contains('" . $this->ADMIN_FIRSTNAME . " " . $this->ADMIN_LASTNAME . "')")->count());
+        $this->assertEquals(1, $this->crawler->filter("h5:contains('" . $this->USER_FIRSTNAME . " " . $this->USER_LASTNAME . "')")->count());
         $this->crawler = $this->client->click($this->crawler->selectLink('Modifier le profil')->link());        
                 
-        $this->assertEquals(1, $this->crawler->filter("html:contains('Modifier la fiche de " . $this->ADMIN_FIRSTNAME . " " . $this->ADMIN_LASTNAME . "')")->count());
+        $this->assertEquals(1, $this->crawler->filter("html:contains('Modifier la fiche de " . $this->USER_FIRSTNAME . " " . $this->USER_LASTNAME . "')")->count());
         
-        $lastName =  $this->ADMIN_LASTNAME . 'edited';
-        $firstName = $this->ADMIN_FIRSTNAME . 'edited';       
+        $lastName =  $this->USER_LASTNAME . 'edited';
+        $firstName = $this->USER_FIRSTNAME . 'edited';       
         $phoneNumber = "0909090909";
         $cellPhoneNumber = "0808080808";        
         $phoneNumberFormatted = "09 09 09 09 09";
         $cellPhoneNumberFormatted = "08 08 08 08 08";
-        $emailAddress = $this->ADMIN_LASTNAME . '.' . $this->ADMIN_FIRSTNAME . '.new@example.com';
+        $emailAddress = $this->USER_LASTNAME . '.' . $this->USER_FIRSTNAME . '.new@example.com';
         $userName = "new_username";
-        $passwordFirst = "new_password";
-        $passwordSecond = "new_password";
+        
+        $passwordFirst = '';
+        $passwordSecond = '';
+        if ($updatePassword) {
+            $passwordFirst = $password;            
+            $passwordSecond = $password;
+        }
         $this->fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond, true, 'Enregistrer les modifications');  
         
         $this->assertEquals(1, $this->crawler->filter("div.widget-title:contains('" . $firstName . " " . $lastName . "')")->count());
@@ -249,11 +309,20 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->assertEquals(1, $this->crawler->filter("div.controls:contains('" . date("d/m/Y") ."')")->count());
         
         $this->logout();
-        $this->login($userName, $passwordFirst);
+        $this->login($userName, $password);
         
-        $this->crawler = $this->client->request('GET', '/welcome');
-        
+        $this->goToDashboard();        
         $this->assertEquals(1, $this->crawler->filter("span:contains('Accueil')")->count());
+                
+        // reset username and password
+        $crawlerLinkProfile = $this->crawler->filter('#go-to-profile');
+        $this->crawler = $this->client->click($crawlerLinkProfile->link());
+
+        $this->crawler = $this->client->click($this->crawler->selectLink('Modifier le profil')->link());        
+
+        $this->fillAndSubmitForm($this->USER_FIRSTNAME, $this->USER_LASTNAME, $phoneNumber, $cellPhoneNumber, $emailAddress, $this->USER_USERNAME, $this->USER_PASSWORD, $this->USER_PASSWORD, true, 'Enregistrer les modifications');  
+        
+        $this->logout();
     }
     
     private function goToUserCreationForm() {
@@ -262,7 +331,28 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
         $this->crawler = $this->client->click($this->crawler->selectLink('Nouvel utilisateur')->link());
     }
+    
+    private function goToChangePasswordForm() {
+        // Create a new entry in the database
+        $this->crawler = $this->client->request('GET', '/profile/change-password');
+        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
+    }
 
+    private function fillAndSubmitChangePasswordForm($currentPassword, $newPassword, $followRedirect = true) {
+        // Fill in the form and submit it
+        $form = $this->crawler->selectButton('Mettre à jour le mot de passe')->form(array(
+            'fos_user_change_password_form[current_password]' => $currentPassword,
+            'fos_user_change_password_form[plainPassword][first]' => $newPassword,
+            'fos_user_change_password_form[plainPassword][second]' => $newPassword,
+                ));
+
+        $this->client->submit($form);
+        if ($followRedirect) {
+            $this->crawler = $this->client->followRedirect();
+        } else {
+            $this->crawler = $this->client->reload();
+        }
+    }
     private function fillAndSubmitForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, $passwordFirst, $passwordSecond, $followRedirect = true, $buttonLabel= 'Créer le compte') {
         // Fill in the form and submit it
         $form = $this->crawler->selectButton($buttonLabel)->form(array(

@@ -3,20 +3,23 @@
 {%block submenu %}
 {% endblock %}
 {% block main_content %}
-    <div class="widget-box" id="log_file">
-        <div class="widget-title">
-                <span class="icon">
-                        <i class="icon-align-justify"></i>									
-                </span>
-                <h5>Fichier de log: {{ environment }}.log</h5>
-        </div>
-        <div class="widget-content nopadding">            
-            <div class="control-group">
-                    <label class="control-label"></label>
+<div class="row">
+    <div class="col-md-12 center">
+        <div class="widget-box" id="log_file">
+            <div class="widget-title">
+                    <span class="icon">
+                            <i class="icon-align-justify"></i>									
+                    </span>
+                    <h5>Fichier de log: {{ environment }}.log</h5>
+            </div>
+            <div class="widget-content nopadding">            
+                <div class="control-group">
                     <div class="controls">
-                            <textarea>{{ log_content }}</textarea>
+                        <textarea class="form-control" rows="25" >{{ log_content }}</textarea>
                     </div>
+                </div>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}

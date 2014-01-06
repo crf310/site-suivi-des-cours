@@ -19,7 +19,6 @@
                         <tr>
                             <th>Date de début</th>
                             <th>Date de fin</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,7 +26,6 @@
                               <tr>
                                   <td>{% if semester.startDate %}{{ semester.startDate | date('d/m/Y') }}{% endif %}</td>
                                   <td>{% if semester.endDate %}{{ semester.endDate|date('d/m/Y') }}{% endif %}</td>
-                                  <td><a href="{{ path('semester_show', { 'id': semester.id }) }}">Détails</a></td>
                               </tr>
                     {% endfor %}
                     </tbody>

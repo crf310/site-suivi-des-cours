@@ -65,53 +65,34 @@ class MenuBuilder extends ContainerAware {
         $menu['Cartable de documents']->setLinkAttribute('class', 'schoolbag');
         $menu['Cartable de documents']->addChild('NEW DOCUMENT', array('route' => 'document_new'))->setDisplay(false);
                 
-        $menu->addChild('Aide', array('uri' => '#'));
+        $menu->addChild('Aide', array('route' => 'help'));
         $menu['Aide']->setLinkAttribute('class', 'help');
-        
-        /* Administration */
-        $menu->addChild('Administration', array('uri' => '#'));
-        $menu['Administration']->setAttribute('class', 'submenu');
-        $menu['Administration']->setLinkAttribute('class', 'administration');        
-        
-        $menu['Administration']->addChild('Gérer les semestres', array('route' => 'semester_index'));
-        $menu['Administration']['Gérer les semestres']->setLinkAttribute('class', 'schedule-edit');
-        
-        $menu['Administration']->addChild('Gérer les niveaux', array('route' => 'classlevel_index'));
-        $menu['Administration']['Gérer les niveaux']->setLinkAttribute('class', 'class-levels');
-        
-        $menu['Administration']->addChild('Gérer les délégations', array('route' => 'organizationbranch_index'));
-        $menu['Administration']['Gérer les délégations']->setLinkAttribute('class', 'red-cross');
-        
-        $menu['Administration']->addChild('Voir les logs', array('route' => 'admin_show_logs'));
-        $menu['Administration']['Voir les logs']->setLinkAttribute('class', 'logs');
-        
-        $this->addNbSubLinks($menu, 'Administration');
-        /* End Administration */
-        
-        /*
-        $currentRoute = $this->container->get('request')->getRequestUri();
-        // Set main menu link as active if another link related is active
-        // Example: set "Teachers" active if "Create new teacher" is active
-        if (strpos($currentRoute, '/course/')) {
-            $menu['Planning des cours']->setCurrent(true);
-        }
-        if (strpos($currentRoute, '/classsession/')) {
-            $menu['Compte-rendus']->setCurrent(true);
-        }
-        if (strpos($currentRoute, '/student/')) {
-            $menu['Apprenants']->setCurrent(true);
-        }
-        if (strpos($currentRoute, '/teacher/')) {
-            $menu['Formateurs']->setCurrent(true);
-        }
-        if (strpos($currentRoute, '/student/')) {
-            $menu['Apprenants']->setCurrent(true);
-        }
-        if (strpos($currentRoute, '/student/')) {
-            $menu['Apprenants']->setCurrent(true);
-        }*/
-    
+            
         return $menu;
+    }
+    
+    public function adminMenu(FactoryInterface $factory, array $options) {
+        $adminMenu = $this->mainMenu($factory, $options);
+        /* Administration */
+        $adminMenu->addChild('Administration', array('uri' => '#'));
+        $adminMenu['Administration']->setAttribute('class', 'submenu');
+        $adminMenu['Administration']->setLinkAttribute('class', 'administration');        
+        
+        $adminMenu['Administration']->addChild('Gérer les semestres', array('route' => 'semester_index'));
+        $adminMenu['Administration']['Gérer les semestres']->setLinkAttribute('class', 'schedule-edit');
+        
+        $adminMenu['Administration']->addChild('Gérer les niveaux', array('route' => 'classlevel_index'));
+        $adminMenu['Administration']['Gérer les niveaux']->setLinkAttribute('class', 'class-levels');
+        
+        $adminMenu['Administration']->addChild('Gérer les délégations', array('route' => 'organizationbranch_index'));
+        $adminMenu['Administration']['Gérer les délégations']->setLinkAttribute('class', 'red-cross');
+        
+        $adminMenu['Administration']->addChild('Voir les logs', array('route' => 'admin_show_logs'));
+        $adminMenu['Administration']['Voir les logs']->setLinkAttribute('class', 'logs');
+        
+        $this->addNbSubLinks($adminMenu, 'Administration');
+        
+        return $adminMenu;
     }
     
     private function addNbSubLinks($menu, $index) {

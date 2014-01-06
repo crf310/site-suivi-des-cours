@@ -44,25 +44,9 @@ class WelcomeController extends AbstractVirguleController {
         $classSessionRepo = $em->getRepository('VirguleMainBundle:ClassSession');
         $myClassSessions = $classSessionRepo->loadAllClassSessionByTeacher($semesterId, $teacherId, 12);
         $myClassSessionsLineBreak = $this->getListBreak(count($myClassSessions));
-
-        $latestClassSessions = $classSessionRepo->loadAllForMiniList($semesterId, 15);
-        $latestClassSessionsLineBreak = $this->getListBreak(count($latestClassSessions)); 
         
         $myDocuments = $this->getDocumentRepository()->getDocumentsUploadedBy($teacherId);
-        
-        /*
-        foreach ($myStudents as $student) {
-            $myStudentIds[] = $student['id'];
-        }
-        
-        foreach ($myClassSessions as $classSession) {
-            $myClassSessionsIds[] = $classSession['id'];
-        }
-        
-        $latestRelatedComments = $em->getRepository('VirguleMainBundle:Comment')->loadLatestRelatedToTeacher($myClassSessionsIds, $myStudentIds);        
-        $latestRelatedCommentsLineBreak = $this->getListBreak(count($latestRelatedComments)); 
-         * */
-        
+       
         return array(
             'myCourses' => $myCourses,
             'myStudents' => $myStudents,
@@ -70,8 +54,6 @@ class WelcomeController extends AbstractVirguleController {
             'nbMyStudents' => $nbMyStudents,
             'myClassSessions' => $myClassSessions,
             'myClassSessionsLineBreak' => $myClassSessionsLineBreak,
-            'latestClassSessions' => $latestClassSessions,
-            'latestClassSessionsLineBreak' => $latestClassSessionsLineBreak,
             'myDocuments' => $myDocuments,
         );
     }

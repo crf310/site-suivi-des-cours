@@ -44,10 +44,10 @@ class ClassLevelSuggestedRepository extends EntityRepository {
                 ->innerJoin('cls.student', 's')
                 ->where('s.id = :studentId')
                 ->orderBy('cls.dateOfChange', 'DESC')
-                ->setParameter('studentId', $studentId);
+                ->setParameter('studentId', $studentId)
+                ->setMaxResults(1);
         
         $q = $qb->getQuery();
-        $classLevels = $q->execute(array());
-        return $classLevels[0];
+        return $q->getOneOrNullResult();
     }
 }

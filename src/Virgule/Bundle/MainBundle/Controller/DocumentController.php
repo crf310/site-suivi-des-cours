@@ -61,6 +61,14 @@ class DocumentController extends AbstractVirguleController {
             $entity->setUploadDate(new \Datetime('now'));
             $entity->setUploader($this->getUser());
             
+            // tags
+            $sTags = $form->get('tagList')->getData();
+            $aTags = explode(',', $sTags);
+            $tags = $this->getTagManager()->createOrAddTags($aTags);
+            foreach ($tags as $tag) {
+                $entity->addTag($tag);
+            }
+                        
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -69,9 +77,11 @@ class DocumentController extends AbstractVirguleController {
             return $this->redirect($this->generateUrl('document_index'));
         }
 
+        $existingTags = $this->getTagRepository()->findAll();
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
+            'existingTags' => $existingTags,
         );
     }
 
@@ -109,6 +119,8 @@ class DocumentController extends AbstractVirguleController {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:Document')->find($id);
+        
+        $classSessionsUsingIt = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByDocument($entity->getId());
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Document entity.');
@@ -117,8 +129,9 @@ class DocumentController extends AbstractVirguleController {
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity' => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity'                => $entity,
+            'delete_form'           => $deleteForm->createView(),
+            'classSessionsUsingIt' => $classSessionsUsingIt
         );
     }
 
@@ -133,7 +146,9 @@ class DocumentController extends AbstractVirguleController {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('VirguleMainBundle:Document')->find($id);
-
+        
+        $existingTags = $this->getTagRepository()->findAll();
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Document entity.');
         }
@@ -145,6 +160,7 @@ class DocumentController extends AbstractVirguleController {
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'existingTags' => $existingTags,
         );
     }
 

@@ -3,24 +3,31 @@
     {{ parent() }}
     {% block javascripts %}
         <script type='text/javascript' src='https://www.google.com/jsapi'></script>
-        <script type='text/javascript'>
-        $(document).ready(function () {
+        <script type='text/javascript'>        
+        
+        google.load('visualization', '1', {'packages': ['geochart', 'corechart']}); 
+        
+        $(document).ready(function () {   
+            drawGenderChart();
+            drawAgeChart();
+            drawClassLevelsCharts();
             $(window).resize(function(){
-                drawRegionsMap();
                 drawGenderChart();
                 drawAgeChart();
                 drawClassLevelsCharts();
+                drawRegionsMap();
             });
+            
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                drawGenderChart();
+                drawAgeChart();
+                drawClassLevelsCharts();
+                drawRegionsMap();
+            })
         });
-         var bgColor = '#FAFAFA';
+        var bgColor = '#FAFAFA';
 
-         google.load('visualization', '1', {'packages': ['geochart', 'corechart']});
-         google.setOnLoadCallback(drawGenderChart);
-         google.setOnLoadCallback(drawAgeChart);
-         google.setOnLoadCallback(drawRegionsMap);
-         google.setOnLoadCallback(drawClassLevelsCharts);
-
-          function drawRegionsMap() {
+        function drawRegionsMap() {
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'country-code');
             data.addColumn('number', 'Apprenants');
@@ -92,10 +99,10 @@
             var options = {
               title: 'Répartition par niveau',              
               colors:[
-              {% for classLevel in nbStudentsPerClassLevel %}
-                '{{ classLevel['classLevel_color'] }}'{% if loop.index != loop.last %},{% endif %}         
-              {% endfor %}],
-              backgroundColor: bgColor,
+                {% for classLevel in nbStudentsPerClassLevel %}
+                  '{{ classLevel['classLevel_color'] }}'{% if loop.index != loop.last %},{% endif %}         
+                {% endfor %}],
+                backgroundColor: bgColor,
             };
 
             var chart = new google.visualization.PieChart(document.getElementById('classlevels_div'));
@@ -111,7 +118,7 @@ au
 <b>{{ currentSemester.endDate | date("j") }}{% if currentSemester.endDate | date("j")  == 1 %}<sup>er</sup>{% endif %}&nbsp;{{ currentSemester.endDate | date("n") | month }}&nbsp;{{ currentSemester.endDate | date("Y") }}</b>
 {% endblock %}
 {%block submenu %}
-    <a class="btn tip-bottom" href="{{ path('classsession_new') }}"> <i class="my-icon-export"></i>Exporter les données</a>
+    <!--<a class="btn tip-bottom" href="{{ path('classsession_new') }}"> <i class="my-icon-export"></i>Exporter les données</a>-->
 {% endblock %}
 {% block main_content %}
 <div id="results_actions">
@@ -120,12 +127,8 @@ au
             <div class="widget-content center">
                 <ul class="stats-plain">
                     <li>										
-                        <h4>{{ students_genders['F'] }}</h4>
-                        <span>femmes</span>
-                    </li>
-                    <li>										
-                        <h4>{{ students_genders['M'] }}</h4>
-                        <span>hommes</span>
+                        <h4>{{ students_genders['F'] + students_genders['M'] }}</h4>
+                        <span>inscrits</span>
                     </li>
                     <li>										
                         <h4>{{ students_countries | length }}</h4>
@@ -148,25 +151,37 @@ au
             <div class="widget-box">
                 <div class="widget-title">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#ranges_div"><i class="icon-signal"></i> Répartitions</a></li>
+                        <li class="active"><a data-toggle="tab" href="#ranges_div" id="ranges_tab"><i class="icon-signal"></i> Statistiques</a></li>
                         <li><a data-toggle="tab" href="#worldmap_div"><i class="icon-globe"></i> Carte du monde</a></li>
                         <li><a data-toggle="tab" href="#worldlist_div"><i class="icon-flag-checkered"></i> Pays d'origine</a></li>
                         <li><a data-toggle="tab" href="#languages_div"><i class="icon-comments"></i> Langues parlées</a></li>
                     </ul>
                 </div>
                 <div class="widget-content tab-content">
-                    <div id="ranges_div" class="tab-pane active" style="width:100%; height:200px">
-                        <div class="col-md-4">
-                            <div  id="gender_div"></div>
-                        </div>
-                        <div class="col-md-4">
-                            <div  id="ages_div"></div>
-                        </div>
-                        <div class="col-md-4">
-                            <div  id="classlevels_div"></div>
+                    <div id="ranges_div" class="tab-pane active" style="height: 1000px;">
+                        <div class="row-fluid">
+                            <div class="col-md-4">
+                                <ul class="site-stats">
+                                    <li><div class="cc"><i class="icon-user"></i> <strong>{{ nbActiveTeachers['nb_teachers'] }}</strong><small>Formateurs actifs</small></div></li>
+                                    <li><div class="cc"><i class="icon-bullhorn"></i> <strong>{{ nbCourses['nb_courses'] }}</strong> <small>Cours</small></div></li>
+                                    <li><div class="cc"><i class="icon-book"></i> <strong>{{ nbClassSessions['nb_classsessions'] }}</strong> <small>Compte-rendus</small></div></li>
+                                    <li class="divider"></li>   
+                                    <li><div class="cc"><i class="icon-group"></i> <strong>{{ students_genders['F'] + students_genders['M'] }}</strong> <small>Apprenants</small></div></li>
+                                    <li><div class="cc"><i class="icon-female"></i> <strong>{{ students_genders['F'] }}</strong> <small>Femmes</small></div></li>
+                                    <li><div class="cc"><i class="icon-male"></i> <strong>{{ students_genders['M'] }}</strong> <small>Hommes</small></div></li>
+                                    <li><div class="cc"><i class="icon-group"></i> <strong>11</strong> <small>Nouveaux inscrits</small></div></li>
+                                    <li><div class="cc"><i class="icon-group"></i> <strong>11</strong> <small>Inscrits à 2 cours</small></div></li>
+                                    <li><div class="cc"><i class="icon-group"></i> <strong>11</strong> <small>Inscrits à 3 cours et plus</small></div></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-8">
+                                <div id="gender_div" style="width:100%; height: 300px;"></div>
+                                <div id="ages_div" style="width:100%; height: 300px;"></div>
+                                <div id="classlevels_div" style="width:100%; height: 300px;"></div>
+                            </div>
                         </div>
                     </div>
-                    <div id="worldmap_div" class="tab-pane" style="width:100%; height:500px"></div>
+                    <div id="worldmap_div" class="tab-pane" style="width:100%; height: 1000px"></div>
                     <div id="worldlist_div" class="tab-pane">                       
                         <div class="row">
                             {% set nbColumns = 3 %}
@@ -189,19 +204,23 @@ au
                     </div> 
                     <div id="languages_div" class="tab-pane">
                         <div class="row">
-                            {% set nbColumns = 3 %}
-                            {% set listBreak = (languages | length) // nbColumns %}
-                            {% if ((languages | length) // nbColumns) > 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
-                            {% set span_size = 12 / nbColumns %}
-                            <div class="col-md-{{ span_size }}">
-                                <ul class="no-img">
-                                {% for language in languages %}                  
-                                    <li>{{ language['language_name'] }} : {{ language['nb_students'] }}</li>
-                                    {% if loop.index % listBreak == 0  and loop.index != loop.last %}
-                                        </ul></div><div class="col-md-{{ span_size }}"><ul class="no-img">
-                                    {% endif %}
-                                {% endfor %}
-                                </ul>
+                            <div class="widget-content nopadding">
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Langue</th>
+                                            <th>Nombre d'apprenants</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for language in languages %}
+                                        <tr>
+                                            <td>{{ language['language_name'] }}</td>
+                                            <td>{{ language['nb_students'] }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

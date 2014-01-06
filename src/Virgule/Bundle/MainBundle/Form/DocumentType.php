@@ -14,12 +14,13 @@ class DocumentType extends AbstractType
             ->add('fileName', 'text')
             ->add('description')
             ->add('file', 'file')
-            ->add('classLevel', 'entity', array(
+            ->add('classLevels', 'entity', array(
                 'class' => 'VirguleMainBundle:ClassLevel',
                 'expanded' => false,
                 'multiple' => true,
                 'property' => 'label',
-                'property_path' => 'classlevel'
+                'required' => false,
+                'property_path' => 'classLevels'
              ))
             ->add('tags', 'text', array(
                 'label' => 'Tags',
@@ -27,15 +28,9 @@ class DocumentType extends AbstractType
                 'required' => false,
                 'attr' => array('class' => 'tagManager', 'placeholder' => 'Tags', 'name' => 'tags', 'data-provide' => 'typeahead'))
                 )
-            /*
-            ->add('tags', 'collection', array(
-                'type'         => new TagType(),
-                'allow_add'    => true,
-                'by_reference' => false,
-                'required' => false,
-                'label' => 'Tags',          
-                'attr' => array('class' => 'input-medium')
-            ))*/
+            ->add('tagList', 'hidden', array(
+                'mapped' => false
+                ))
         ;
     }
 

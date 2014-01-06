@@ -90,7 +90,18 @@ class ClassSessionRepository extends EntityRepository {
         $q = $qb->getQuery();                
         $results = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $results;   
-    }    
+    }
+    
+    public function loadAllClassSessionByDocument($documentId, $limit = null) {
+        $qb = $this->getNbCommentsQueryBuilder(null, $limit)
+            ->innerJoin('cs.documents', 'd')
+            ->andWhere('d.id = :documentId')   
+            ->setParameter('documentId', $documentId)
+        ;
+        $q = $qb->getQuery();                
+        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $results;   
+    }  
     
     public function loadAll($semesterId, $limit = null) {
         $qb = $this->getNbStudentsQueryBuilder($semesterId, $limit);
@@ -105,6 +116,19 @@ class ClassSessionRepository extends EntityRepository {
         $q = $qb->getQuery();
         $results = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $results;  
+    }
+    
+    public function getNumberOfClassSessionsPerSemester($semesterId) {        
+         $qb = $this->getDefaultQueryBuilder()
+                 ->addSelect('count(cs.id) as nb_classsessions')
+                 ->innerJoin('cs.course', 'c')
+                 ->innerJoin('c.semester', 's')
+                ->where('s.id = :semesterId')  
+                ->setParameter('semesterId', $semesterId);
+         
+        $q = $qb->getQuery();
+        $nbClassSessions = $q->getSingleResult();
+        return $nbClassSessions;  
     }
     
     public function getNumberOfClassSessionsPerCourse(Array $courseIds) {        

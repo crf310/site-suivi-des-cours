@@ -16,7 +16,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager) {       
         $prof1 = new Teacher();
         $prof1->setUsername("prof1");
-        $prof1->setPassword("password");
+        $prof1->setPlainPassword("password");
         $prof1->setFirstName("Henry");
         $prof1->setLastName("Jones");
         $prof1->setCellphoneNumber("0605040302");
@@ -32,13 +32,13 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         
         $prof2 = new Teacher();
         $prof2->setUsername("prof2");
-        $prof2->setPassword("password");
+        $prof2->setPlainPassword("password");
         $prof2->setFirstName("John");
         $prof2->setLastName("Keating");
         $prof2->setCellphoneNumber("0605040302");
         $prof2->setEmail("john.keating@example.com");
         $prof2->setRegistrationDate(new \DateTime('now'));
-        $prof2->setRole($this->getReference('user-role'));
+        $prof2->setRole($this->getReference('secretary-role'));
         $prof2->addOrganizationBranch($this->getReference('deleg-3-10'));
         $prof2->setEnabled(true);
         $prof2->setLocked(false);
@@ -47,7 +47,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         
         $prof3 = new Teacher();
         $prof3->setUsername("prof3");
-        $prof3->setPassword("password");
+        $prof3->setPlainPassword("password");
         $prof3->setFirstName("Walter");
         $prof3->setLastName("Lewin");
         $prof3->setEmail("walter.lewin@example.com");
@@ -61,7 +61,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         
         $prof4 = new Teacher();
         $prof4->setUsername("prof4");
-        $prof4->setPassword("password");
+        $prof4->setPlainPassword("password");
         $prof4->setFirstName("Philippe");
         $prof4->setLastName("Marrast");
         $prof4->setEmail("philippe.marrast@example.com");
@@ -75,7 +75,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         
         $guest = new Teacher();
         $guest->setUsername("guest");
-        $guest->setPassword("password");
+        $guest->setPlainPassword("password");
         $guest->setFirstName("Ludovic");
         $guest->setLastName("Tessier");
         $guest->setEmail("ludovic.tessier@example.com");
@@ -89,7 +89,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         
         $secretary = new Teacher();
         $secretary->setUsername("secretary");
-        $secretary->setPassword("password");
+        $secretary->setPlainPassword("password");
         $secretary->setFirstName("Safia");
         $secretary->setLastName("Slimane");
         $secretary->setEmail("safia.slimane@example.com");
@@ -104,7 +104,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $inactiveUser = new Teacher();
         $inactiveUser->setIsActive(false);
         $inactiveUser->setUsername("glucazeau");
-        $inactiveUser->setPassword("password");
+        $inactiveUser->setPlainPassword("password");
         $inactiveUser->setFirstName("Guillaume");
         $inactiveUser->setLastName("Lucazeau");
         $inactiveUser->setEmail("glucazeau@example.com");
@@ -132,7 +132,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         for ($i = 5; $i <= 50; $i++) {
             $p = new Teacher();
             $p->setUsername("prof" . $i);
-            $p->setPassword("password");
+            $p->setPlainPassword("password");
             $p->setFirstName("Jean");
             $p->setLastName("Dupont " . $i);
             $p->setEmail("jean.dupont." . $i . "@example.com");

@@ -8,6 +8,15 @@ virgule_main_bundle:
     type:     annotation
     prefix:   /
 
+help:
+    pattern: /help
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'VirguleMainBundle:Help:help.html.twig'
+        maxAge: 86400
+        sharedMaxAge: 86400
+        private: false
+        
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 fos_user_profile:

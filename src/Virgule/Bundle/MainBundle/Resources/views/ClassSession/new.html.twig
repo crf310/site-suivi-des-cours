@@ -12,7 +12,8 @@
             <div class="widget-box">
                     {% include 'VirguleMainBundle:ClassSession:form.html.twig' with { 'form': form }  %}
                     <div class="form-actions">                                     
-                        <input class="btn btn-success" type="submit" value="Enregistrer le compte-rendu" />
+                        <input class="btn btn-success" type="submit" value="Enregistrer le compte-rendu" />                                        
+                        <a class="btn btn-default" href="{{ path('classsession_index') }}">Annuler</a>
                     </div>
                 </div>
             </div>        

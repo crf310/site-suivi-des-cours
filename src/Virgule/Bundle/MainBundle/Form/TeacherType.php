@@ -5,10 +5,33 @@ namespace Virgule\Bundle\MainBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Virgule\Bundle\MainBundle\Form\EventListener\PatchSubscriber;
 
 class TeacherType extends AbstractType {
 
+    private $intention;
+    
+    public function __construct($intention = 'create') {
+        $this->intention = $intention;
+    }
+    
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        $passwordRequired = true;
+        if ($this->intention == 'edit') {
+            $passwordRequired = false;
+            $builder->setMethod('PATCH');
+        }
+        if ($this->intention == 'create') {            
+            $builder->add('username')
+                    ->add('password', 'repeated', array(
+                        'type' => 'password',
+                        'required' => $passwordRequired,
+                        'invalid_message' => 'Les mots de passe ne correspondent pas',
+                        'options' => array('label' => 'Mot de passe'),
+                        'attr'    => array('data-indicator' => 'pwindicator')
+                    ));
+        }
+                
         $builder
                 ->add('isActive', 'checkbox', array(
                     'required'  => false,
@@ -19,26 +42,17 @@ class TeacherType extends AbstractType {
                 ->add('phoneNumber')
                 ->add('cellphoneNumber')
                 ->add('email')
-                ->add('username')
-                ->add('password', 'repeated', array(
-                    'type' => 'password',
-                    'invalid_message' => 'Les mots de passe ne correspondent pas',
-                    'options' => array('label' => 'Mot de passe'),
-                    'attr'    => array('data-indicator' => 'pwindicator')
-                ))
-                /*->add('registrationDate', 'date', array(
-                    'widget' => 'single_text',
-                    'format' => 'dd/MM/yyyy',
-                    'attr' => array('class' => 'date')
-                ))*/
                 ->add('role', 'entity', array(
-                    'class' => 'VirguleMainBundle:Roles',
+                    'class' => 'VirguleMainBundle:Role',
                     'expanded' => false,
                     'multiple' => false,
                     'property' => 'label',
                     'property_path' => 'role',            
                     'attr' => array('class' => 'small-select')
                  ));
+        
+        $subscriber = new PatchSubscriber();
+        $builder->addEventSubscriber($subscriber);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {

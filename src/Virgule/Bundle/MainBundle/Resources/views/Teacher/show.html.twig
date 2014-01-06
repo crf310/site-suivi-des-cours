@@ -30,9 +30,13 @@
 {% endblock %}
 {% block content_title %}Fiche formateur{% endblock %}
 {%block submenu %}
-    <a class="btn tip-bottom" href="{{ path('teacher_edit', { 'id': entity.id }) }}"> <i class="my-icon-user_edit"></i>Modifier le profil</a>
-    <a class="btn" href="#" id="delete-teacher"> <i class="my-icon-user_delete"></i>Supprimer la fiche</a>
-    <form id="delete-teacher-form" action="{{ path('teacher_delete', { 'id': entity.id }) }}" method="post">{{ form_widget(delete_form) }}</form>
+    {% if is_granted('ROLE_SECRETARY') or entity.id == app.user.id %}
+        <a class="btn tip-bottom" href="{{ path('teacher_edit', { 'id': entity.id }) }}"> <i class="my-icon-user_edit"></i>Modifier le profil</a>
+    {% endif %}
+    {% if is_granted('ROLE_SECRETARY') %}
+        <a class="btn" href="#" id="delete-teacher"> <i class="my-icon-user_delete"></i>Supprimer la fiche</a>
+        <form id="delete-teacher-form" action="{{ path('teacher_delete', { 'id': entity.id }) }}" method="post">{{ form_widget(delete_form) }}</form>
+    {% endif %}
 {% endblock %}
 {% block main_content %}
 <div class="container-fluid">
@@ -52,6 +56,25 @@
                                     <h5>{{ entity.firstName }} {{ entity.lastName }}</h5>
                             </div>            
                             <div class="widget-content nopadding">
+                                <div class="control-group">
+                                    <label class="control-label">Statut</label>
+                                    <div class="controls">
+                                        {% if entity.isActive %}
+                                            <span class="label label-success">Formateur actif</span>
+                                        {% else %}
+                                            <span class="label label-danger">Formateur inactif</span>
+                                        {% endif %}
+                                        {% if entity.locked %}
+                                            <span class="label label-inverse">Compte verrouillé</span>
+                                        {% endif %}
+                                        {% if entity.credentialsExpired %}
+                                            <span class="label label-inverse">Identifiants de connexion expirés</span>
+                                        {% endif %}
+                                        {% if entity.expired %}
+                                            <span class="label label-inverse">Compte expiré</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
                                 <div class="control-group">
                                     <label class="control-label">Rôle</label>
                                     <div class="controls">{{ entity.role.label }}</div>
@@ -89,7 +112,7 @@
                         <div class="widget-content">
                             <ul class="no-img">
                                 {% if teacherCourses is empty %}
-                                    Aucun cours dirigé pour le moment.
+                                    <div class="none-found">Aucun cours dirigé pour le moment</div>
                                 {% else %}
                                     {% for course in teacherCourses %}
                                         <li>Niveau {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevel.htmlColorCode, 'classLevelLabel': course.classLevel.label } %}  le {{ course.dayOfWeek| day }} de {{ course.startTime|date('H:i') }} à {{ course.endTime|date('H:i') }} &nbsp; <a href="{{ path('course_show', { 'id': course.id }) }}">Voir ce cours</a> 

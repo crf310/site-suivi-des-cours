@@ -27,7 +27,12 @@ class SecurityControllerTest extends WebTestCase {
         $this->assertTrue($crawler->filter('html:contains("Service alphabétisation")')->count() == 1);
         
         $crawler = $this->fillAndSubmitLoginForm($client, $crawler, 'prof1', 'password');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());        
+        
+        $crawler = $client->click($crawler->selectLink('Déconnexion')->link());
+        $this->assertTrue($crawler->filter('input[placeholder="Nom d\'utilisateur"]')->count() == 1);
+        $this->assertTrue($crawler->filter('input[placeholder="Mot de passe"]')->count() == 1);
+        $this->assertFalse($crawler->filter("html:contains('Henry Jones')")->count() >= 1); 
     }
     
     private function fillAndSubmitLoginForm($client, $crawler, $username, $password)  {

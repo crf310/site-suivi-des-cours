@@ -7,10 +7,10 @@ use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Exception\NotValidCurrentPageException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 /**
  * Description of VirguleController
  *
@@ -97,6 +97,9 @@ abstract class AbstractVirguleController extends Controller {
     }
     protected function getDocumentManager() {
         return $this->get('virgule.document_manager');
+    }
+    protected function getTagManager() {
+        return $this->get('virgule.tag_manager');
     }
     
     /* Repositories */

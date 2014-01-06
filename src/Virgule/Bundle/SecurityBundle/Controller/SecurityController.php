@@ -45,17 +45,4 @@ class SecurityController extends Controller {
             'csrf_token'             => $csrfToken
         ));
     }
-    
-    /**
-     * Display login form
-     *
-     * @Route("/logout", name="logout")
-     * @Template()
-     */    
-    public function logoutAction() {
-        $session = $this->get('session');
-        $session->clear();
-
-        return $this->redirect($this->generateUrl('login'));
-    }
 }

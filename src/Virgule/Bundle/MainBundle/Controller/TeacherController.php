@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\Teacher;
 use Virgule\Bundle\MainBundle\Form\TeacherType;
+use Virgule\Bundle\MainBundle\Form\TeacherChangePasswordType;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Teacher controller.
@@ -118,13 +120,14 @@ class TeacherController extends AbstractVirguleController {
         $currentBranchId = $this->getSelectedOrganizationBranch()->getId();
         $organizationBranch = $em->getRepository('VirguleMainBundle:OrganizationBranch')->find($currentBranchId);
         $entity->addOrganizationBranch($organizationBranch);
+        $entity->setPlainPassword($entity->getPassword());
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
             
-            $this->addFlash( 'Compte utilisateur "' . $entity->getUsername() . '" créé avec succès !');
+            $this->addFlash( 'Compte utilisateur <strong>' . $entity->getUsername() . '</strong> créé avec succès !');
             
             return $this->redirect($this->generateUrl('teacher_index'));
         }
@@ -139,59 +142,45 @@ class TeacherController extends AbstractVirguleController {
      * Displays a form to edit an existing Teacher entity.
      *
      * @Route("/{id}/edit", name="teacher_edit")
+     * @Method({"GET", "POST"})
      * @Template()
      */
-    public function editAction($id) {
-        $em = $this->getDoctrine()->getManager();
+    public function editAction(Request $request, $id) {
+        $securityContext = $this->get('security.context');
 
-        $entity = $em->getRepository('VirguleMainBundle:Teacher')->find($id);
+        // check for edit access
+        if ($this->getConnectedUser()->getId() == $id || true === $securityContext->isGranted('ROLE_SECRETARY')) {
+            
+            $em = $this->getDoctrine()->getManager();
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Teacher entity.');
+            $entity = $em->getRepository('VirguleMainBundle:Teacher')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Teacher entity.');
+            }
+            $editForm = $this->createForm(new TeacherType('edit'), $entity);
+            $deleteForm = $this->createDeleteForm($id);
+
+            if ($request->isMethod('POST')) {                
+                $editForm->bind($request);
+                
+                if ($editForm->isValid()) {
+                    $em->persist($entity);
+                    $em->flush();
+
+                    $this->addFlash( 'Le profil de <strong>' . $entity->getFullName()  . '</strong> a été mis à jour.');
+                    
+                    return $this->redirect($this->generateUrl('teacher_show', array('id' => $id)));
+                }
+            }
+            return array(
+                'entity' => $entity,
+                'edit_form' => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            );
+        } else {
+            throw new AccessDeniedException();
         }
-
-        $editForm = $this->createForm(new TeacherType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Edits an existing Teacher entity.
-     *
-     * @Route("/{id}/update", name="teacher_update")
-     * @Method("POST")
-     * @Template("VirguleMainBundle:Teacher:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id) {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('VirguleMainBundle:Teacher')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Teacher entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new TeacherType(), $entity);
-        $editForm->bind($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('teacher_show', array('id' => $id)));
-        }
-
-        return array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
     }
 
     /**
@@ -225,5 +214,4 @@ class TeacherController extends AbstractVirguleController {
                         ->getForm()
         ;
     }
-
 }

@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
- * Virgule\Bundle\MainBundle\Entity\Roles
+ * Virgule\Bundle\MainBundle\Entity\Role
  *
  * @ORM\Table(name="roles")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\RoleRepository")
  */
-class Roles implements RoleInterface {
+class Role implements RoleInterface {
 
     /**
      * @var integer $id
@@ -32,9 +32,9 @@ class Roles implements RoleInterface {
     /**
      * @var string $code
      *
-     * @ORM\Column(name="code", type="string", length=30, nullable=true)
+     * @ORM\Column(name="role", type="string", length=30, nullable=true)
      */
-    protected $code;
+    protected $role;
 
     /**
      * @ORM\OneToMany(targetEntity="Teacher", mappedBy="role")
@@ -74,11 +74,11 @@ class Roles implements RoleInterface {
     /**
      * Set code
      *
-     * @param string $code
+     * @param string $role
      * @return Roles
      */
-    public function setCode($code) {
-        $this->code = $code;
+    public function setRole($role) {
+        $this->role = $role;
 
         return $this;
     }
@@ -88,12 +88,8 @@ class Roles implements RoleInterface {
      *
      * @return string 
      */
-    public function getCode() {
-        return $this->code;
-    }
-
     public function getRole() {
-        
+        return $this->role;
     }
 
     /**

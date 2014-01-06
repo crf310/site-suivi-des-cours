@@ -8,7 +8,7 @@
     </div>
     <div class="widget-content">
             {% if documents is empty %}
-                <div class="center">Aucun document enregistré pour le moment</div>
+                <div class="none-found">Aucun document enregistré pour le moment</div>
             {% else %}
                 {% if nbColumns is not defined %}
                     {% set nbColumns = 3 %}
@@ -20,7 +20,7 @@
                 <div class="col-md-{{ span_size }}">
                     <ul>
                     {% for document in documents %}
-                        <li class="document"><a href="{{ path('document_download', { 'id': document.id }) }}">{{ document.fileName }}</a></li>
+                        <li class="document"><a href="{{ path('document_show', { 'id': document.id }) }}">{{ document.fileName }}</a></li>
                         {% if loop.index % listBreak == 0  and loop.index != loop.last %}
                             </ul></div><div class="col-md-{{ span_size }}"><ul>
                         {% endif %}

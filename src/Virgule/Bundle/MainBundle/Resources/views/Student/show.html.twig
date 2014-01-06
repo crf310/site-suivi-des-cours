@@ -28,7 +28,7 @@
         </script>
     {% endblock %}
 {% endblock %}
-{% block content_title %}Fiche apprenant: {{ entity.firstName }} {{ entity.lastName }}{% endblock %}
+{% block content_title %}{{ entity.firstName }} {{ entity.lastName | upper }}{% endblock %}
 {%block submenu %}
     <a class="btn" href="{{ path('student_preview_certificate', { 'id': entity.id }) }}"> <i class="my-icon-user-certificate"></i>Générer une attestation</a>
     <a class="btn" href="{{ path('student_edit', { 'id': entity.id }) }}"> <i class="my-icon-user_edit"></i>Modifier la fiche</a>
@@ -44,7 +44,13 @@
                     <span class="icon">
                             <i class="icon-user"></i>
                     </span>
-                    <h5>Informations personnelles</h5>
+                    <h5>Informations personnelles</h5>                    
+                    {% if entity.updatedAt is not null %}
+                        <span class="label label-info">Mise à jour: {{ entity.updatedAt|date('d/m/Y') }}
+                        {% if entity.updatedByteacher is not null %}
+                            par {{ entity.updatedByteacher.firstName }} {{ entity.updatedByteacher.lastName }}</span>
+                        {% endif %}
+                    {% endif %}
                 </div>            
                 <div class="widget-content nopadding">
                     <div class="control-group">
@@ -174,7 +180,7 @@
                                     </ul>
                                 {% endfor %}    
                                 </ul>
-                                <a class="btn btn-default" id="change-student-level">Mettre à jour le niveau de l'apprenant</a>
+                                <a class="btn btn-default" id="change-student-level"><i class="icon-level-up"></i>  Mettre à jour le niveau de l'apprenant</a>
                                 <div id="change-student-level-content" class="hide">
                                     <div id="modal-body">
                                         {% include 'VirguleMainBundle:ClassLevelSuggested:new.html.twig' with { 'form': classLevelSuggestedForm, 'studentId': entity.id } %},

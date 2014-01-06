@@ -34,7 +34,7 @@ class DocumentRepository extends EntityRepository {
             ->addSelect('cl.label as classLevel_label, cl.htmlColorCode as classLevel_htmlColorCode')
             ->addSelect('t.label as tag_label')
             ->join('d.uploader', 'u')
-            ->leftJoin('d.classLevel', 'cl')
+            ->leftJoin('d.classLevels', 'cl')
             ->leftJoin('d.tags', 't');
         return $qb->getQuery()->execute(array(), Query::HYDRATE_ARRAY);
     }

@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
+
 
 /**
  * Virgule\Bundle\MainBundle\Entity\Teacher
@@ -16,7 +18,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity(fields="email", message="Cette adresse email est déjà utilisée") 
 */
 class Teacher extends BaseUser {
-  
+           
     /**
      * @var integer $id
      *
@@ -38,7 +40,7 @@ class Teacher extends BaseUser {
      *
      * @ORM\Column(name="last_name", type="string", length=50, nullable=false)
      * @Assert\NotBlank(message="Merci de saisir un nom de famille")
-     * @Assert\NotNull()
+     * @Assert\NotNull(message="Merci de saisir un nom de famille")
      */
     protected $lastName;
 
@@ -47,7 +49,7 @@ class Teacher extends BaseUser {
      *
      * @ORM\Column(name="first_name", type="string", length=50, nullable=false)
      * @Assert\NotBlank(message="Merci de saisir un prénom")
-     * @Assert\NotNull()
+     * @Assert\NotNull(message="Merci de saisir un prénom")
      */
     protected $firstName;
 
@@ -83,7 +85,7 @@ class Teacher extends BaseUser {
     protected $registrationDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Roles", inversedBy="teachers")
+     * @ORM\ManyToOne(targetEntity="Role", inversedBy="teachers")
      * @ORM\JoinColumn(name="fk_role_id", referencedColumnName="id", nullable=false)
      */
     protected $role;
@@ -136,10 +138,6 @@ class Teacher extends BaseUser {
         $this->setLocked(false);
         $this->setExpired(false);
         $this->setCredentialsExpired(false);
-    }
-
-    public function eraseCredentials() {
-        
     }
     
     /**
@@ -271,10 +269,10 @@ class Teacher extends BaseUser {
     /**
      * Set role
      *
-     * @param \Virgule\Bundle\MainBundle\Entity\Roles $role
+     * @param \Virgule\Bundle\MainBundle\Entity\Role $role
      * @return Teacher
      */
-    public function setRole(\Virgule\Bundle\MainBundle\Entity\Roles $role = null) {
+    public function setRole(\Virgule\Bundle\MainBundle\Entity\Role $role = null) {
         $this->role = $role;
         return $this;
     }
@@ -282,14 +280,14 @@ class Teacher extends BaseUser {
     /**
      * Get role
      *
-     * @return \Virgule\Bundle\MainBundle\Entity\Roles 
+     * @return \Virgule\Bundle\MainBundle\Entity\Role 
      */
     public function getRole() {
         return $this->role;
     }
 
     public function getRoles() {
-        return Array($this->getRole()->getCode());
+        return Array($this->getRole()->getRole());
     }
 
     public function __toString() {
@@ -499,11 +497,6 @@ class Teacher extends BaseUser {
     
     public function getFullName() {
         return $this->firstName . ' ' . $this->lastName;
-    }
-    
-    // TODO: delete that and encode passwords
-    public function getSalt() {
-        return '';
-    }
-    
+    }       
+
 }

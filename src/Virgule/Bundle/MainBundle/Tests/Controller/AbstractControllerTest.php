@@ -15,6 +15,16 @@ abstract class AbstractControllerTest extends WebTestCase {
     protected $ADMIN_FIRSTNAME = "John";
     
     protected $ADMIN_LASTNAME = "Keating";
+    
+    protected $USER_USERNAME = "prof3";
+    
+    protected $USER_PASSWORD = "password";
+    
+    protected $USER_FIRSTNAME = "Walter";
+    
+    protected $USER_LASTNAME = "Lewin";    
+    
+    protected $ORG_BRANCH_NAME = "Délégation locale de Paris III et X";
 
     protected function login($username, $password) {
         $this->crawler = $this->client->request('GET', '/login');
@@ -28,14 +38,20 @@ abstract class AbstractControllerTest extends WebTestCase {
 
         $this->crawler = $this->client->submit($form);
         
-        $this->client->followRedirect();
+        $this->crawler = $this->client->followRedirect();
         $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(1, $this->crawler->filter("div.connected_branch:contains('" . $this->ORG_BRANCH_NAME . "')")->count());
     }
     
     protected function logout() {        
         $this->crawler = $this->client->request('GET', '/logout');
+        $this->crawler = $this->client->followRedirect();
     }
-
+    
+    protected function goToDashboard() {
+        $this->crawler = $this->client->request('GET', '/welcome');
+        
+    }
 }
 
 ?>

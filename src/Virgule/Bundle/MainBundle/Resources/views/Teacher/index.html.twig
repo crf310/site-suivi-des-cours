@@ -28,7 +28,9 @@
         <a class="btn" title="Voir les utilisateurs actifs" href="{{ path('teacher_index', { 'status': 'active' }) }}"> <i class="my-icon-user-active"></i>Voir les utilisateurs actifs</a>
     {% endif %}
     <a class="btn" id="copy-button" title="Copier les adresses emails" href="#"> <i class="my-icon-copy"></i>Copier les adresses emails</a>
-    <a class="btn" title="Ajouter un compte utilisateur" href="{{ path('teacher_new') }}"> <i class="my-icon-add"></i>Nouvel utilisateur</a>    
+    {% if is_granted('ROLE_SECRETARY') %}
+        <a class="btn" title="Ajouter un compte utilisateur" href="{{ path('teacher_new') }}"> <i class="my-icon-add"></i>Nouvel utilisateur</a>
+    {% endif %}
 {% endblock %}
 {% block main_content %}    
 <div class="row">
@@ -54,10 +56,14 @@
                 {% for entity in entities %}
                    <tr>
                         <td class="center">
-                            {% if entity.isActive %}
-                                <img src="{{ asset('img/icons/user_green.png') }}" title="Utilisateur actif" alt="Utilisateur actif" />
+                            {% if entity.locked or entity.expired or entity.credentialsExpired %}
+                                <img src="{{ asset('img/icons/user_gray.png') }}" title="Compte verrouillé ou expiré" alt="Compte verrouillé ou expiré" />
                             {% else %}
-                                <img src="{{ asset('img/icons/user_red.png') }}" title="Utilisateur inactif" alt="Utilisateur inactif" />
+                                {% if entity.isActive %}
+                                    <img src="{{ asset('img/icons/user_green.png') }}" title="Utilisateur actif" alt="Utilisateur actif" />
+                                {% else %}
+                                    <img src="{{ asset('img/icons/user_red.png') }}" title="Utilisateur inactif" alt="Utilisateur inactif" />
+                                {% endif %}
                             {% endif %}
                         </td>
                         <td>{{ entity.firstName }} {{ entity.lastName }}</td>

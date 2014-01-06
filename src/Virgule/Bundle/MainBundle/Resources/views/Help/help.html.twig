@@ -1,0 +1,61 @@
+{% extends '::main_content.html.twig' %}
+{% block content_title %}Aide{% endblock %}
+{%block submenu %}
+{% endblock %}
+{% block main_content %}
+<div class="row">
+    <div class="col-md-12">
+        <div id="accordion" class="accordion">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <a href="#">
+                        <span class="icon"><i class="icon-question"></i></span><h5>Comment modifier mon profil</h5>
+                    </a>
+                </div>
+                <div class="widget-content">
+                    Cliquer sur votre nom en haut à droite, vous arriverez sur votre profil sur lequel vous trouverez un bouton pour le modifier. 
+                    Voici un lien direct : <a href="{{ path('teacher_edit', { 'id': app.user.id }) }}"><button class="btn btn-default btn-xs">Modifier votre profil</button></a>
+                </div>
+            </div> 
+            <div class="widget-box">
+                <div class="widget-title">
+                    <a href="#">
+                        <span class="icon"><i class="icon-question"></i></span><h5>Comment changer mon mot de passe</h5>
+                    </a>
+                </div>
+                <div class="widget-content">
+                    Allez sur le formulaire de modification de votre profil, vous y trouverez un bouton pour modifier votre mot de passe, en haut à droite.
+                    Voici un lien direct : <a href="{{ path('fos_user_change_password') }}"><button class="btn btn-default btn-xs">Changer votre mot de passe</button></a>
+                </div>
+            </div> 
+            <div class="widget-box">
+                <div class="widget-title">
+                    <a href="#">
+                        <span class="icon"><i class="icon-question"></i></span><h5>Comment enregistrer un compte-rendu pour mon cours</h5>
+                    </a>
+                </div>
+                <div class="widget-content">
+                    Plusieurs possibilités :
+                    <ul>
+                        <li>Rendez vous sur <a href="{{ path('welcome') }}">page d'accueil</a> vous y trouvez un bouton pour chacun de vos cours</li>
+                        <li>Allez sur <a href="{{ path('classsession_index') }}"><button class="btn btn-default btn-xs">la liste des compte-rendus</button></a> et cliquez sur le bouton <strong>Ajouter un compte-rendu</strong> puis choisissez  votre cours dans la liste</li>
+                        <li>Allez sur <a href="{{ path('course_index') }}">la liste des cours</a>, chaque cours a un bouton pour ajouter un compte-rendu pour celui-ci</li>
+                </div>
+            </div>
+            <div class="widget-box">
+                <div class="widget-title">
+                    <a href="#">
+                        <span class="icon"><i class="icon-question"></i></span><h5>Comment enregistrer un compte-rendu pour un autre cours que le mien</h5>
+                    </a>
+                </div>
+                <div class="widget-content">
+                    Plusieurs possibilités :
+                    <ul>
+                        <li>Allez sur <a href="{{ path('classsession_index') }}"><button class="btn btn-default btn-xs">la liste des compte-rendus</button></a> et cliquez sur le bouton <strong>Ajouter un compte-rendu</strong> puis choisissez  votre cours dans la liste</li>
+                        <li>Allez sur <a href="{{ path('course_index') }}">la liste des cours</a>, chaque cours a un bouton pour ajouter un compte-rendu pour celui-ci</li>
+                </div>
+            </div>
+        </div><!-- end accordion -->
+    </div><!-- end col -->
+</div><!-- end row -->
+{% endblock %}

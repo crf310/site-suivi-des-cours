@@ -88,23 +88,28 @@ class AddClassSessionStudentsFieldSubscriber implements EventSubscriberInterface
                 'property'          => 'fullname',
                 'cols_number'       => 3,
                 'add_check_all'     => true,
-                'auto_initialize'   => false
+                'auto_initialize'   => false,
+                'required'          => false
             ));
             $form->add($enrolledStudentsField);
-                    
+                
+            $semesterId = $this->semesterId;
             $nonEnrolledStudentsField = $this->factory->createNamed('nonEnrolledStudentsField', 'entity', $selectedNonEnrolledStudents, array(
                 'class'              => 'VirguleMainBundle:Student',
-                'query_builder' => function(EntityRepository $er) use ($courseId) {
+                'query_builder' => function(EntityRepository $er) use ($courseId, $semesterId) {
                     return $er->createQueryBuilder('s')
                                     ->add('orderBy', 's.lastname ASC, s.firstname ASC')
-                                    ->leftJoin('s.courses', 'c2', 'WITH', 'c2.id != :courseId')
-                                    ->setParameter('courseId', $courseId);
+                                    ->innerJoin('s.courses', 'c', 'WITH', 'c.id != :courseId')
+                                    ->innerJoin('c.semester', 'se', 'WITH', 'se.id = :semesterId')
+                                    ->setParameter('courseId', $courseId)
+                                    ->setParameter('semesterId', $semesterId);
                 },
                 'expanded'          => false,
                 'multiple'          => true,
                 'property_path'     => 'nonEnrolledClassSessionStudents',
                 'property'          => 'fullname',
                 'auto_initialize'   => false,
+                'required'          => false,    
                 'attr'              => array('class' => 'medium-select','required' => false)
 
             ));

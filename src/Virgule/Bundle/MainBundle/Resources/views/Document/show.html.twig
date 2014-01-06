@@ -1,34 +1,56 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-    <h1>Document</h1>
-
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('document_index') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('document_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('document_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+{% extends '::main_content.html.twig' %}
+{% block content_title %}{{ entity.fileName }}{% endblock %}
+{%block submenu %}
+    <a class="btn tip-bottom" href="{{ path('document_edit', { 'id': entity.id }) }}"> <i class="my-document-edit"></i>Modifier</a>
+    <a class="btn tip-bottom" href="{{ path('document_index') }}"> <i class="my-icon-list"></i>Retour à la liste des documents</a>
+{% endblock %}
+{% block main_content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-9 form-horizontal not-form-horizontal">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                            <i class="icon-file-text-alt"></i>
+                    </span>
+                    <h5>{{ entity.fileName }}</h5>
+                    <span class="label label-info">enregistré le {{ entity.uploadDate|date('d/m/Y') }} par {{ entity.uploader.firstName }} {{ entity.uploader.lastName }}</span>
+                </div>            
+                <div class="widget-content nopadding">
+                    <div class="control-group">
+                        <label class="control-label"></label>
+                        <div class="controls">
+                            <a href="{{ path('document_download', { 'id': entity.id }) }}"><button class="btn btn-default"><i class="icon-download"></i> Télécharger</button></a>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Description</label>
+                        <div class="controls">{{ entity.description|raw }}&nbsp;</div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Adapté aux niveaux</label>
+                        <div class="controls">
+                            {% for classLevel in entity.classLevels %}
+                                {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel.htmlColorCode  , 'classLevelLabel': classLevel.label } %} 
+                            {% endfor %}
+                                &nbsp;
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Mots-clé</label>
+                        <div class="controls">
+                            {% for tag in entity.tags %}
+                                {% if tag is not empty %}{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': '#3A87AD', 'classLevelLabel': tag.label } %} {% endif %}{% if not loop.last %}&nbsp;{% endif %}
+                            {% endfor %}
+                                &nbsp;
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Utilisé dans les compte-rendus', 'classSessions': classSessionsUsingIt, 'nbColumns': 1 }  %}
+        </div>
+    </div>
+</div>
 {% endblock %}
