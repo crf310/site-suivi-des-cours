@@ -57,6 +57,25 @@
                             </div>            
                             <div class="widget-content nopadding">
                                 <div class="control-group">
+                                    <label class="control-label">Statut</label>
+                                    <div class="controls">
+                                        {% if entity.isActive %}
+                                            <span class="label label-success">Formateur actif</span>
+                                        {% else %}
+                                            <span class="label label-danger">Formateur inactif</span>
+                                        {% endif %}
+                                        {% if entity.locked %}
+                                            <span class="label label-inverse">Compte verrouillé</span>
+                                        {% endif %}
+                                        {% if entity.credentialsExpired %}
+                                            <span class="label label-inverse">Identifiants de connexion expirés</span>
+                                        {% endif %}
+                                        {% if entity.expired %}
+                                            <span class="label label-inverse">Compte expiré</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="control-group">
                                     <label class="control-label">Rôle</label>
                                     <div class="controls">{{ entity.role.label }}</div>
                                 </div>
