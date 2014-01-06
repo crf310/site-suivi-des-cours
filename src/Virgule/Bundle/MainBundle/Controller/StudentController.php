@@ -79,7 +79,7 @@ class StudentController extends AbstractVirguleController {
      * Lists all Student entities.
      *
      * @Route("/mystudents", name="index_my_students")
-     * @Template("VirguleMainBundle:Student:index.html.twig")
+     * @Template("VirguleMainBundle:Student:myStudents.html.twig")
      */
     public function indexMyStudentsAction() {
         $em = $this->getDoctrine()->getManager();

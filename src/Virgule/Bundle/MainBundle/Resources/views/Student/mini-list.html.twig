@@ -41,5 +41,12 @@
             </li>
         </ul>
       {% endif %}
+      {% if displayMyStudentsButton is defined and displayMyStudentsButton == true %}
+        <ul class="recent-posts">
+            <li class="viewall">
+                <a href="{{ path('index_my_students') }}" class="tip-top" title=""> + Voir mes apprenants + </a>
+            </li>
+        </ul>
+      {% endif %}
     </div>
 </div>
