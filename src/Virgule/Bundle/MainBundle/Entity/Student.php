@@ -834,7 +834,6 @@ class Student {
      * Constructor
      */
     public function __construct() {
-        $this->registrationDate = new \DateTime('now');
         $this->courses = new \Doctrine\Common\Collections\ArrayCollection();
         $this->classSessions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->suggestedClassLevel = new \Doctrine\Common\Collections\ArrayCollection();
