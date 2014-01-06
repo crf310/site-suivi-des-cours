@@ -2,15 +2,34 @@
     <head>
         <title>Fiche de présence</title>
     </head>
+    <style>
+        table, th, td{
+            border: 1px solid #000000;
+        }
+    </style>
     <body>
         <h1>Fiche de présence</h1>
         <h2>Niveau {{ course.classLevel }}, {{ course.dayOfWeek| day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }}</h2> 
         <h3>Date du cours : </h3>
-        <h3>Apprenants présents : </h3>
-        <table>
+        <table class="attendance" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Signature</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Signature</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Signature</th>
+              </tr>
+            </thead>
             <tr>
             {% for key,entity in students_array %}
-                    <td><input type="checkbox"> {{ entity['firstname'] }} {{ entity['lastname'] }}</td>
+                    <td>{{ entity['lastname']|upper }}</td>
+                    <td>{{ entity['firstname'] }}</td>
+                    <td>&nbsp;</td>
                 {% if loop.index % 3 == 0 %}
                     </tr><tr>
                 {% endif %}
@@ -19,9 +38,5 @@
                 {% endif %}
             {% endfor %}
         </table>
-        <h3>Commentaires sur le cours</h3>
-        {% for i in 0..10 %}
-            ____________________________________________________________________<br /><br />
-        {% endfor %}
     <body>
 </html>
