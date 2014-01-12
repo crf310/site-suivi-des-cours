@@ -65,7 +65,9 @@
                             {% if entity.registrationDate|date('Y-m-d') != "1970-01-01" %}
                                 {{ entity.registrationDate|date('d/m/Y') }}
                             {% endif %}
-                            par <a href="{{ path('teacher_show', { 'id': entity.welcomedByTeacher.id }) }}">{{ entity.welcomedByTeacher.firstname }} {{ entity.welcomedByTeacher.lastname }}</a>
+                            {% if entity.welcomedByTeacher is not null %}
+                                par <a href="{{ path('teacher_show', { 'id': entity.welcomedByTeacher.id }) }}">{{ entity.welcomedByTeacher.firstname }} {{ entity.welcomedByTeacher.lastname }}</a>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="control-group">
