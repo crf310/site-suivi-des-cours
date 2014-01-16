@@ -85,11 +85,11 @@ class StudentController extends AbstractVirguleController {
         $em = $this->getDoctrine()->getManager();
         $teacherId = $this->getUser()->getId();
         $semesterId = $this->getSelectedSemesterId();
-        $myCourses = $em->getRepository('VirguleMainBundle:Course')->getCoursesByTeacher($semesterId, $teacherId);
+        $myCourses = $em->getRepository('VirguleMainBundle:Course')->getCoursesIdsByTeacher($semesterId, $teacherId);
         
         $courseIds = Array();
         foreach($myCourses as $course) {
-            $courseIds[] = $course->getId();
+            $courseIds[] = $course['id'];
         }
         $myStudents = Array();
         if (count($courseIds) > 0) {

@@ -61,9 +61,9 @@ class CourseRepository extends EntityRepository {
         $nb = $q->getSingleResult();
         return $nb;
     }
-
-    public function getCoursesByTeacher($semesterId, $teacherId) {
-        $q = $this
+    
+    private function getCoursesByTeacherQB($semesterId, $teacherId) {
+        $qb = $this
                 ->createQueryBuilder('c')
                 ->innerJoin('c.teachers', 't')
                 ->innerJoin('c.semester', 's')
@@ -72,7 +72,20 @@ class CourseRepository extends EntityRepository {
                 ->add('orderBy', 'c.dayOfWeek ASC, c.startTime ASC')
                 ->setParameter('teacherId', $teacherId)
                 ->setParameter('semesterId', $semesterId)
-                ->getQuery()
+            ;
+        ;
+        return $qb;
+    }
+    
+    public function getCoursesIdsByTeacher($semesterId, $teacherId) {
+        $q = $this->getCoursesByTeacherQB($semesterId, $teacherId)
+                ->getQuery();
+        ;
+        return $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+    }
+    
+    public function getCoursesByTeacher($semesterId, $teacherId) {
+        $q = $this->getCoursesByTeacherQB($semesterId, $teacherId)->getQuery();
         ;
         $nb = $q->execute();
         return $nb;
