@@ -90,12 +90,13 @@ class StudentType extends AbstractType {
                 ->add('emergencyContactPhoneNumber')
                 ->add('emergencyContactConnectionType')
                 ->add('courses', 'entity', array(
-                    'class'     => 'VirguleMainBundle:Course',
+                    'class'         => 'VirguleMainBundle:Course',
                     'query_builder' => $this->doctrine->getRepository('VirguleMainBundle:Course')->getCoursesForSemesterQB($this->semesterId),
-                    'expanded'  => false,
-                    'multiple'  => true,        
-                    'required'  => false,
-                    'attr'      => array('class' => 'medium-select')
+                    'group_by'      => 'classLevel.label',
+                    'expanded'      => false,
+                    'multiple'      => true,        
+                    'required'      => false,
+                    'attr'          => array('class' => 'medium-select')
                  ))     
                 ->add('profession')
                 ;
