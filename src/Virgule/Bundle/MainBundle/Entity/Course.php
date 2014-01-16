@@ -68,7 +68,7 @@ class Course {
     protected $alternateEnddate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ClassLevel", inversedBy="courses")
+     * @ORM\ManyToOne(targetEntity="ClassLevel", inversedBy="courses", fetch="EAGER")
      * @ORM\JoinColumn(name="fk_class_level", referencedColumnName="id")
      */
     protected $classLevel;
