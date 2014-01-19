@@ -182,7 +182,7 @@ class StudentController extends AbstractVirguleController {
         
         $currentTeacher = $this->getConnectedUser();
         
-        $form = $this->createForm(new StudentType($intention, $this->getDoctrine(), $organizationBranchId, $openHousesDates, $currentTeacher, $semesterId), $entity, Array('em' => $this->getDoctrineManager()));
+        $form = $this->createForm(new StudentType($intention, $this->getDoctrineManager(), $this->getDoctrine(), $organizationBranchId, $openHousesDates, $currentTeacher, $semesterId), $entity, Array('em' => $this->getDoctrineManager()));
 
         return $form;
     }

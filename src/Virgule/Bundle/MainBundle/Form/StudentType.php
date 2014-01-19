@@ -9,22 +9,27 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 use Virgule\Bundle\MainBundle\Entity\Teacher;
 use Virgule\Bundle\MainBundle\Form\Type\PictureType;
 use Virgule\Bundle\MainBundle\Form\EventListener\PatchSubscriber;
+use Virgule\Bundle\MainBundle\Form\EventListener\UpdateStudentCourseFieldSubscriber;
+use Virgule\Bundle\MainBundle\Form\DataTransformer\CoursesToNumbersTransformer;
+use Doctrine\ORM\EntityManager;
 
 class StudentType extends AbstractType {
 
+    private $em;
     private $intention;
     private $doctrine;
     private $openHousesDates;
     private $currentTeacher;
     private $semesterId;
     
-    public function __construct($intention, RegistryInterface $doctrine, $organizationBranchId = null, $openHousesDates = null, Teacher $currentTeacher = null, $semesterId = null) {
+    public function __construct($intention, EntityManager $em, RegistryInterface $doctrine, $organizationBranchId = null, $openHousesDates = null, Teacher $currentTeacher = null, $semesterId = null) {
         $this->intention = $intention;
         $this->doctrine = $doctrine;
         $this->organizationBranchId = $organizationBranchId;
         $this->openHousesDates = $openHousesDates;
         $this->currentTeacher = $currentTeacher;
         $this->semesterId = $semesterId;
+        $this->em = $em;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
@@ -89,15 +94,6 @@ class StudentType extends AbstractType {
                 ->add('emergencyContactFirstname')
                 ->add('emergencyContactPhoneNumber')
                 ->add('emergencyContactConnectionType')
-                ->add('courses', 'entity', array(
-                    'class'         => 'VirguleMainBundle:Course',
-                    'query_builder' => $this->doctrine->getRepository('VirguleMainBundle:Course')->getCoursesForSemesterQB($this->semesterId),
-                    'group_by'      => 'classLevel.label',
-                    'expanded'      => false,
-                    'multiple'      => true,        
-                    'required'      => false,
-                    'attr'          => array('class' => 'medium-select')
-                 ))     
                 ->add('profession')
                 ;
         
@@ -108,10 +104,13 @@ class StudentType extends AbstractType {
                     'prototype' => true,
                     'by_reference' => false,
                 ));
-        }        
-        
+        }
+               
         $subscriber = new PatchSubscriber();
         $builder->addEventSubscriber($subscriber);
+        
+        $coursesSubscriber = new UpdateStudentCourseFieldSubscriber($this->em, $this->doctrine, $this->semesterId);
+        $builder->addEventSubscriber($coursesSubscriber);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
