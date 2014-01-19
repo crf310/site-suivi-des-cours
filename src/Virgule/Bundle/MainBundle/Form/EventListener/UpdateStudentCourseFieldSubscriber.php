@@ -33,6 +33,8 @@ class UpdateStudentCourseFieldSubscriber implements EventSubscriberInterface {
         // we get here the enrollment for the student that belong to a different semester than the one we're on.
         $data = $event->getData();
         $form = $event->getForm();
+        
+        $otherCoursesIds = Array();
         $results = $this->doctrine->getRepository('VirguleMainBundle:Course')->getCoursesFromOtherSemesters($data->getId(), $this->semesterId);
         foreach($results as $course) {
             $otherCoursesIds[] = $course['id'];
