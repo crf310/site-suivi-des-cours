@@ -205,9 +205,24 @@ class CourseRepository extends EntityRepository {
         $q = $this
                 ->createQueryBuilder('c')         
                 ->innerJoin('c.semester', 's')       
-                ->innerJoin('c.classSessions', 'cs')   
                 ->where('cs.sessionDate < s.startDate')
                 ->getQuery();
         return $q->execute();
+    }    
+    
+    public function getCoursesFromOtherSemesters($studentId, $semesterId) {
+        $q = $this
+                ->createQueryBuilder('c')
+                ->select('c.id')
+                ->innerJoin('c.semester', 's')    
+                ->innerJoin('c.students', 'st')  
+                ->where('st.id = :studentId')
+                ->andWhere('s.id != :semesterId')
+                ->setParameter('studentId', $studentId)
+                ->setParameter('semesterId', $semesterId)
+                ->getQuery();
+        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+
+        return $results;
     }
 }
