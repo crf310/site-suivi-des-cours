@@ -217,7 +217,7 @@ class StudentController extends AbstractVirguleController {
         $form->bind($request);
 
         if ($form->isValid()) {
-            $entity->setNativeCountry(strtolower($entity->getNativeCountry()));
+            $entity->setNativeCountry($entity->getNativeCountry());
             
             $em = $this->getDoctrine()->getManager();
             $em->flush();
