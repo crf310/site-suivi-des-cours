@@ -81,8 +81,7 @@ class StudentType extends AbstractType {
                     'choices'       => array('M' => 'Masculin', 'F' => 'Féminin'),
                     'expanded'      => true,
                     'multiple'      => false,
-                    'cols_number'   => 2,                    
-                    'data' => 'M'
+                    'cols_number'   => 2
                 ))
                 ->add('arrivalDate', 'date', array(
                     'widget'    => 'single_text',
