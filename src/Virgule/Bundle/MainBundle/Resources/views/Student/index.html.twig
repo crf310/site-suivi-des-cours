@@ -1,8 +1,9 @@
 {% extends '::main_content.html.twig' %}
 {% block content_title %}{{ title }}{% endblock %} 
 {%block submenu %}
+    <!--
     <a class="btn" href="#"> <i class="my-icon-export"></i>Exporter les données</a>
-    <a class="btn" href="#"> <i class="my-icon-search-student"></i>Rechercher un apprenant</a>
+    <a class="btn" href="#"> <i class="my-icon-search-student"></i>Rechercher un apprenant</a>-->
     <a class="btn" href="{{ path('student_new') }}"> <i class="my-icon-add"></i>Nouvel apprenant</a>
 {% endblock %}
 {% block main_content %}
