@@ -287,7 +287,7 @@ class StudentController extends AbstractVirguleController {
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
-            $entity->setNativeCountry(entity->getNativeCountry());
+            $entity->setNativeCountry($entity->getNativeCountry());
             
             $entity->setUpdatedAt();
             $entity->setUpdatedByTeacher($this->getUser());
