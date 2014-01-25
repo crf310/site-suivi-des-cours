@@ -19,4 +19,7 @@
     secret = Virgule
     charset = UTF-8
 
+    wkhtmltopdf_path = 
+
     pager_nb_results = 15
+

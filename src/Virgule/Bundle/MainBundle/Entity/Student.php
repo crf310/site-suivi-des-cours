@@ -766,28 +766,7 @@ class Student {
     public function getEmergencyContactConnectionType() {
         return $this->emergencyContactConnectionType;
     }
-
-    /**
-     * Set fkNativeCountry
-     *
-     * @param  $fkNativeCountry
-     * @return Student
-     */
-    public function setFkNativeCountry($fkNativeCountry = null) {
-        $this->fkNativeCountry = $fkNativeCountry;
-
-        return $this;
-    }
-
-    /**
-     * Get fkNativeCountry
-     *
-     * @return 
-     */
-    public function getFkNativeCountry() {
-        return $this->fkNativeCountry;
-    }
-
+    
     /**
      * Set fkScholarizationLanguage
      *
@@ -855,7 +834,6 @@ class Student {
      * Constructor
      */
     public function __construct() {
-        $this->registrationDate = new \DateTime('now');
         $this->courses = new \Doctrine\Common\Collections\ArrayCollection();
         $this->classSessions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->suggestedClassLevel = new \Doctrine\Common\Collections\ArrayCollection();

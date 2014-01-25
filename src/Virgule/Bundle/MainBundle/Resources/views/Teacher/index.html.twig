@@ -2,20 +2,23 @@
 {% block head %}    
     {{ parent() }}
     {% block javascripts %}
-    <script type="text/javascript" src="{{ asset('js/jquery.zclip.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ZeroClipboard.min.js') }}"></script>
     <script type='text/javascript'>
-    {% set emailAddresses = "" %}
+    {% set emailAddresses = '' %}
     {% for entity in entities %}
-       {% set emailAddresses = emailAddresses ~ '\"' ~ entity.firstName ~ ' ' ~ entity.lastName ~ '\" <' ~ entity.email ~ '>, ' %}
+       {% set emailAddresses = emailAddresses ~ '\"' ~ entity.firstName|escape('js') ~ ' ' ~ entity.lastName|escape('js') ~ '\" <' ~ entity.email ~ '>, ' %}
     {% endfor %}
-    $(document).ready(function(){
-        $('a#copy-button').zclip({
-            path:"{{ asset('swf/ZeroClipboard.swf') }}",
-            copy:'{{ emailAddresses | raw }}',
-            afterCopy:function(){
-                alert('Les adresses emails ont été copiées avec succès');
-            },
-        });
+    $(document).ready(function () {
+        var clip = new ZeroClipboard(document.getElementById("copy-button"), {
+            moviePath: "{{ asset('swf/ZeroClipboard.swf') }}"
+          } );
+          
+        clip.on( "load", function(client) {
+            clip.setText('{{ emailAddresses|raw }}');
+            client.on( "complete", function(client, args) {
+                alert('Les adresses ont été copiées');
+            } );
+        } );
     });
     </script>
     {% endblock %}
@@ -27,7 +30,7 @@
     {% else %}
         <a class="btn" title="Voir les utilisateurs actifs" href="{{ path('teacher_index', { 'status': 'active' }) }}"> <i class="my-icon-user-active"></i>Voir les utilisateurs actifs</a>
     {% endif %}
-    <a class="btn" id="copy-button" title="Copier les adresses emails" href="#"> <i class="my-icon-copy"></i>Copier les adresses emails</a>
+    <a class="btn" id="copy-button" title="Copier les adresses emails"> <i class="my-icon-copy"></i>Copier les adresses emails</a>
     {% if is_granted('ROLE_SECRETARY') %}
         <a class="btn" title="Ajouter un compte utilisateur" href="{{ path('teacher_new') }}"> <i class="my-icon-add"></i>Nouvel utilisateur</a>
     {% endif %}

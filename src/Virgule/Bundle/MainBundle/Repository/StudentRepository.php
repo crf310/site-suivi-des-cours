@@ -74,6 +74,8 @@ class StudentRepository extends EntityRepository {
         $qb = $this->getQueryBuilderForStudentEnrolledInCourses($courseIds)
             ->select('s.id as student_id, s.firstname as firstname, s.lastname as lastname, 
                 s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, s.registrationDate, s.nativeCountry')
+            ->addSelect('s.emergencyContactFirstname, s.emergencyContactLastname,
+                      s.emergencyContactConnectionType, s.emergencyContactPhoneNumber')
             ->addSelect('count(cm.id) as nb_comments')
             ->leftJoin('s.comments', 'cm')
             ->add('groupBy', 's.id');
@@ -151,5 +153,9 @@ class StudentRepository extends EntityRepository {
         ;
         $students = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $students;
+    }
+    
+    public function getNumberOfNewStudents($semesterId) {
+        
     }
 }

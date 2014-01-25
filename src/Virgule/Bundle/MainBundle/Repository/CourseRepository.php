@@ -61,9 +61,9 @@ class CourseRepository extends EntityRepository {
         $nb = $q->getSingleResult();
         return $nb;
     }
-
-    public function getCoursesByTeacher($semesterId, $teacherId) {
-        $q = $this
+    
+    private function getCoursesByTeacherQB($semesterId, $teacherId) {
+        $qb = $this
                 ->createQueryBuilder('c')
                 ->innerJoin('c.teachers', 't')
                 ->innerJoin('c.semester', 's')
@@ -72,7 +72,20 @@ class CourseRepository extends EntityRepository {
                 ->add('orderBy', 'c.dayOfWeek ASC, c.startTime ASC')
                 ->setParameter('teacherId', $teacherId)
                 ->setParameter('semesterId', $semesterId)
-                ->getQuery()
+            ;
+        ;
+        return $qb;
+    }
+    
+    public function getCoursesIdsByTeacher($semesterId, $teacherId) {
+        $q = $this->getCoursesByTeacherQB($semesterId, $teacherId)
+                ->getQuery();
+        ;
+        return $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+    }
+    
+    public function getCoursesByTeacher($semesterId, $teacherId) {
+        $q = $this->getCoursesByTeacherQB($semesterId, $teacherId)->getQuery();
         ;
         $nb = $q->execute();
         return $nb;
@@ -191,10 +204,26 @@ class CourseRepository extends EntityRepository {
     public function getCourseWithOldReports() {
         $q = $this
                 ->createQueryBuilder('c')         
-                ->innerJoin('c.semester', 's')       
+                ->innerJoin('c.semester', 's')        
                 ->innerJoin('c.classSessions', 'cs')   
                 ->where('cs.sessionDate < s.startDate')
                 ->getQuery();
         return $q->execute();
+    }    
+    
+    public function getCoursesFromOtherSemesters($studentId, $semesterId) {
+        $q = $this
+                ->createQueryBuilder('c')
+                ->select('c.id')
+                ->innerJoin('c.semester', 's')    
+                ->innerJoin('c.students', 'st')  
+                ->where('st.id = :studentId')
+                ->andWhere('s.id != :semesterId')
+                ->setParameter('studentId', $studentId)
+                ->setParameter('semesterId', $semesterId)
+                ->getQuery();
+        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+
+        return $results;
     }
 }

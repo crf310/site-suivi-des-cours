@@ -1,9 +1,6 @@
 {% extends '::main_content.html.twig' %}
-{% block content_title %}{{ title }}{% endblock %} 
+{% block content_title %}Mes apprenants{% endblock %} 
 {%block submenu %}
-    <!--
-    <a class="btn" href="#"> <i class="my-icon-export"></i>Exporter les données</a>
-    <a class="btn" href="#"> <i class="my-icon-search-student"></i>Rechercher un apprenant</a>-->
     <a class="btn" href="{{ path('student_new') }}"> <i class="my-icon-add"></i>Nouvel apprenant</a>
 {% endblock %}
 {% block main_content %}
@@ -22,7 +19,7 @@
                             <th>Nom</th>
                             <th>Prénom</th>
                             <th>Téléphone</th>
-                            <th>Inscrit en</th>
+                            <th>Contact d'urgence</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -49,13 +46,9 @@
                                 {% endif %}&nbsp;
                             </td>
                             <td>
-                                {% if courses_array is defined %}
-                                    {% for course in courses_array[entity['student_id']] %}
-                                        <a href="{{ path('course_show', { 'id': course['course_id'] }) }}">
-                                        {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course['levelColorCode'], 'classLevelLabel': course['level'] } %} 
-                                        </a>{% if course != loop.last %}&nbsp;{% endif %}
-                                    {% endfor %}
-                                {% endif %}
+                                {{ entity['emergencyContactFirstname'] }} {{ entity['emergencyContactLastname'] }} 
+                                {% if entity['emergencyContactConnectionType'] is not empty %}({{entity['emergencyContactConnectionType'] }}){% endif %}
+                                {{ entity['emergencyContactPhoneNumber'] | phoneNumber }}
                             </td>
                             <td >                                
                                 <div class="btn-group">

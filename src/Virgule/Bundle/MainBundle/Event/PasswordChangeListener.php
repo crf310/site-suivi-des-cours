@@ -8,18 +8,21 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use FOS\UserBundle\Doctrine\UserManager;
 
 /**
  * Listener responsible to change the redirection at the end of the password resetting
  */
-class PasswordChangingListener implements EventSubscriberInterface {
+class PasswordChangeListener implements EventSubscriberInterface {
 
     private $router;
     private $container;
+    private $userManager;
 
-    public function __construct(UrlGeneratorInterface $router, ContainerInterface $container) {
+    public function __construct(UrlGeneratorInterface $router, ContainerInterface $container, UserManager $userManager) {
         $this->router = $router;
         $this->container = $container;
+        $this->userManager = $userManager;
     }
 
     /**
@@ -33,8 +36,13 @@ class PasswordChangingListener implements EventSubscriberInterface {
 
     public function onPasswordChangingSuccess(FormEvent $event) {
         $user = $this->container->get('security.context')->getToken()->getUser();
-        $url = $this->router->generate('teacher_show', array('id' => $user->getId()));
 
+        $expirationDate = new \DateTime("now");
+        $expirationDate->modify("+365 day");
+        $user->setCredentialsExpireAt($expirationDate);
+        $this->userManager->updateUser($user);
+        
+        $url = $this->router->generate('teacher_show', array('id' => $user->getId()));
         $event->setResponse(new RedirectResponse($url));
     }
 

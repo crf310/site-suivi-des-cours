@@ -72,7 +72,7 @@ jms_security_extra:
 
 siphoc_pdf:
     basepath: "%kernel.root_dir%/../web"
-    binary: "/home/guillaume/bin/wkhtmltopdf-amd64"
+    binary: "%wkhtmltopdf_path%"
     options:
         'lowquality': false
         'enable-javascript': false

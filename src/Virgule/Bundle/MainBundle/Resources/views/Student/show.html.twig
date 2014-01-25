@@ -32,8 +32,10 @@
 {%block submenu %}
     <a class="btn" href="{{ path('student_preview_certificate', { 'id': entity.id }) }}"> <i class="my-icon-user-certificate"></i>Générer une attestation</a>
     <a class="btn" href="{{ path('student_edit', { 'id': entity.id }) }}"> <i class="my-icon-user_edit"></i>Modifier la fiche</a>
-    <a class="btn" href="#" id="delete-student"> <i class="my-icon-user_delete"></i>Supprimer la fiche</a>
-    <form id="delete-student-form" action="{{ path('student_delete', { 'id': entity.id }) }}" method="post">{{ form_widget(delete_form) }}</form>
+    {% if is_granted('ROLE_SECRETARY') %}
+        <a class="btn" href="#" id="delete-student"> <i class="my-icon-user_delete"></i>Supprimer la fiche</a>
+        <form id="delete-student-form" action="{{ path('student_delete', { 'id': entity.id }) }}" method="post">{{ form_widget(delete_form) }}</form>
+    {% endif %}
 {% endblock %}
 {% block main_content %}
 <div class="container-fluid">
@@ -58,12 +60,14 @@
                         <div class="controls">{{ entity.firstName }} {{ entity.lastName | upper }}&nbsp;</div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Inscrit{% if entity.gender =='F'%}e{% endif %} le </label>
+                        <label class="control-label">Accueilli{% if entity.gender =='F'%}e{% endif %} le </label>
                         <div class="controls">
                             {% if entity.registrationDate|date('Y-m-d') != "1970-01-01" %}
                                 {{ entity.registrationDate|date('d/m/Y') }}
                             {% endif %}
-                                &nbsp;
+                            {% if entity.welcomedByTeacher is not null %}
+                                par <a href="{{ path('teacher_show', { 'id': entity.welcomedByTeacher.id }) }}">{{ entity.welcomedByTeacher.firstname }} {{ entity.welcomedByTeacher.lastname }}</a>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="control-group">
@@ -74,14 +78,28 @@
                     </div>
                     <div class="control-group">
                         <label class="control-label">Date de naissance</label>
-                        <div class="controls">{{ entity.birthdate|date('d/m/Y') }} ({{ entity.age }} ans)&nbsp;</div>
+                        <div class="controls">
+                            {% if entity.birthdate != null %}
+                                {{ entity.birthdate|date('d/m/Y') }} ({{ entity.age }} ans)
+                            {% endif %}
+                            &nbsp;
+                        </div>
                     </div>
                     {% if entity.nativeCountry != null %}
                     <div class="control-group">
                         <label class="control-label">Pays d'origine</label>
-                        <div class="controls">{{  entity.nativeCountry | upper | country }}&nbsp;<img src="{{ asset('img/drapeaux/' ~ entity.nativeCountry ~ '.png')}}" alt="{{  entity.nativeCountry }}" title="{{  entity.nativeCountry | upper | country }}" />&nbsp;</div>
+                        <div class="controls">{{  entity.nativeCountry | upper | country }}&nbsp;<img src="{{ asset('img/drapeaux/' ~ entity.nativeCountry|lower ~ '.png')}}" alt="{{  entity.nativeCountry | country  }}" title="{{  entity.nativeCountry | upper | country }}" />&nbsp;</div>
                     </div>
                     {% endif %}
+                    <div class="control-group">
+                        <label class="control-label">Date d'arrivée en France</label>
+                        <div class="controls">
+                        {% if entity.arrivalDate != null %}
+                            {{ entity.arrivalDate|date('d/m/Y') }}
+                        {% endif %}
+                        &nbsp;
+                        </div>
+                    </div>
                     <div class="control-group">
                         <label class="control-label">Langue(s) parlée(s)</label>
                         <div class="controls">

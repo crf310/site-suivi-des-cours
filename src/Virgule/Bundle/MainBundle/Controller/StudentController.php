@@ -79,17 +79,17 @@ class StudentController extends AbstractVirguleController {
      * Lists all Student entities.
      *
      * @Route("/mystudents", name="index_my_students")
-     * @Template("VirguleMainBundle:Student:index.html.twig")
+     * @Template("VirguleMainBundle:Student:myStudents.html.twig")
      */
     public function indexMyStudentsAction() {
         $em = $this->getDoctrine()->getManager();
         $teacherId = $this->getUser()->getId();
         $semesterId = $this->getSelectedSemesterId();
-        $myCourses = $em->getRepository('VirguleMainBundle:Course')->getCoursesByTeacher($semesterId, $teacherId);
+        $myCourses = $em->getRepository('VirguleMainBundle:Course')->getCoursesIdsByTeacher($semesterId, $teacherId);
         
         $courseIds = Array();
         foreach($myCourses as $course) {
-            $courseIds[] = $course->getId();
+            $courseIds[] = $course['id'];
         }
         $myStudents = Array();
         if (count($courseIds) > 0) {
@@ -182,7 +182,7 @@ class StudentController extends AbstractVirguleController {
         
         $currentTeacher = $this->getConnectedUser();
         
-        $form = $this->createForm(new StudentType($intention, $this->getDoctrine(), $organizationBranchId, $openHousesDates, $currentTeacher, $semesterId), $entity, Array('em' => $this->getDoctrineManager()));
+        $form = $this->createForm(new StudentType($intention, $this->getDoctrineManager(), $this->getDoctrine(), $organizationBranchId, $openHousesDates, $currentTeacher, $semesterId), $entity, Array('em' => $this->getDoctrineManager()));
 
         return $form;
     }
@@ -217,6 +217,8 @@ class StudentController extends AbstractVirguleController {
         $form->bind($request);
 
         if ($form->isValid()) {
+            $entity->setNativeCountry($entity->getNativeCountry());
+            
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             
@@ -225,7 +227,7 @@ class StudentController extends AbstractVirguleController {
             $em->persist($entity);
             $em->flush();
 
-            $this->addFlash( 'La fiche de <strong>' . $entity->getFirstname() . $entity->getLastname()  . '</strong> a bien été créée.');
+            $this->addFlash( 'La fiche de <strong>' . $entity->getFirstname() . ' ' . $entity->getLastname()  . '</strong> a bien été créée.');
             
             if ($request->get('save_and_add_new')) {
                 return $this->redirect($this->generateUrl('student_new'));
@@ -285,13 +287,15 @@ class StudentController extends AbstractVirguleController {
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+            $entity->setNativeCountry($entity->getNativeCountry());
+            
             $entity->setUpdatedAt();
             $entity->setUpdatedByTeacher($this->getUser());
             $em->persist($entity);
             
             $em->flush();            
             
-            $this->addFlash( 'La fiche de <strong>' . $entity->getFirstname() . $entity->getLastname()  . '</strong> a été mise à jour.');
+            $this->addFlash( 'La fiche de <strong>' . $entity->getFirstname() . ' ' . $entity->getLastname()  . '</strong> a été mise à jour.');
 
             return $this->redirect($this->generateUrl('student_show', array('id' => $id)));
         }

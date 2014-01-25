@@ -4,7 +4,16 @@
 {% endblock %}
 {% block main_content %}
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12">        
+        <div class="alert alert-info">
+        N'hésitez pas à suggérer un point manquant de l'aide. Si vous ne comprenez pas comment faire quelque chose, c'est que l'outil n'est pas assez clair et intuitif.
+        <br />
+        </div>
+        <div class="center-text">
+            <a href="#virguleInformationPanel" data-toggle="modal">
+                <button class="btn btn-primary"><i class="icon-question-sign"></i> Poser une question ou signaler un problème</button>
+            </a>
+        </div>
         <div id="accordion" class="accordion">
             <div class="widget-box">
                 <div class="widget-title">
@@ -14,7 +23,7 @@
                 </div>
                 <div class="widget-content">
                     Cliquer sur votre nom en haut à droite, vous arriverez sur votre profil sur lequel vous trouverez un bouton pour le modifier. 
-                    Voici un lien direct : <a href="{{ path('teacher_edit', { 'id': app.user.id }) }}"><button class="btn btn-default btn-xs">Modifier votre profil</button></a>
+                    Voici un lien direct : <a href="{{ path('teacher_edit', { 'id': app.user.id }) }}"><button class="btn btn-default btn-xs"><i class="icon-edit"></i> Modifier votre profil</button></a>
                 </div>
             </div> 
             <div class="widget-box">
@@ -25,7 +34,7 @@
                 </div>
                 <div class="widget-content">
                     Allez sur le formulaire de modification de votre profil, vous y trouverez un bouton pour modifier votre mot de passe, en haut à droite.
-                    Voici un lien direct : <a href="{{ path('fos_user_change_password') }}"><button class="btn btn-default btn-xs">Changer votre mot de passe</button></a>
+                    Voici un lien direct : <a href="{{ path('fos_user_change_password') }}"><button class="btn btn-default btn-xs"><i class="icon-key"></i> Changer votre mot de passe</button></a>
                 </div>
             </div> 
             <div class="widget-box">
@@ -38,7 +47,7 @@
                     Plusieurs possibilités :
                     <ul>
                         <li>Rendez vous sur <a href="{{ path('welcome') }}">page d'accueil</a> vous y trouvez un bouton pour chacun de vos cours</li>
-                        <li>Allez sur <a href="{{ path('classsession_index') }}"><button class="btn btn-default btn-xs">la liste des compte-rendus</button></a> et cliquez sur le bouton <strong>Ajouter un compte-rendu</strong> puis choisissez  votre cours dans la liste</li>
+                        <li>Allez sur <a href="{{ path('classsession_index') }}"><button class="btn btn-default btn-xs"><i class="icon-list-alt"></i> la liste des compte-rendus</button></a> et cliquez sur le bouton <strong>Ajouter un compte-rendu</strong> puis choisissez  votre cours dans la liste</li>
                         <li>Allez sur <a href="{{ path('course_index') }}">la liste des cours</a>, chaque cours a un bouton pour ajouter un compte-rendu pour celui-ci</li>
                 </div>
             </div>
@@ -51,8 +60,42 @@
                 <div class="widget-content">
                     Plusieurs possibilités :
                     <ul>
-                        <li>Allez sur <a href="{{ path('classsession_index') }}"><button class="btn btn-default btn-xs">la liste des compte-rendus</button></a> et cliquez sur le bouton <strong>Ajouter un compte-rendu</strong> puis choisissez  votre cours dans la liste</li>
+                        <li>Allez sur <a href="{{ path('classsession_index') }}"><button class="btn btn-default btn-xs"><i class="icon-list-alt"></i> la liste des compte-rendus</button></a> et cliquez sur le bouton <strong>Ajouter un compte-rendu</strong> puis choisissez  votre cours dans la liste</li>
                         <li>Allez sur <a href="{{ path('course_index') }}">la liste des cours</a>, chaque cours a un bouton pour ajouter un compte-rendu pour celui-ci</li>
+                </div>
+            </div>
+            <div class="widget-box">
+                <div class="widget-title">
+                    <a href="#">
+                        <span class="icon"><i class="icon-question"></i></span><h5>Comment changer le niveau d'un apprenant ?</h5>
+                    </a>
+                </div>
+                <div class="widget-content">
+                    Allez sur la fiche de l'apprenant, l'onglet "Niveau conseillé" est déjà affiché. Cliquez sur le bouton "Mettre à jour le niveau de l'apprenant", un formulaire apparaîtra.<br />
+                    Si vous sélectionnez le même niveau que le niveau actuel de l'apprenant, rien ne sera enregistré. Votre nom ainsi que la date seront associés au changement.
+                </div>
+            </div>
+            <div class="widget-box">
+                <div class="widget-title">
+                    <a href="#">
+                        <span class="icon"><i class="icon-question"></i></span><h5>Pourquoi y'a-t-il deux listes d'apprenants présentes dans les compte-rendus ?</h5>
+                    </a>
+                </div>
+                <div class="widget-content">
+                    Un certain nombre d'apprenants est inscrit à chaque cours. Cette liste permet de les cocher rapidement lors de la création d'un compte-rendu, afin de ne pas chercher dans la liste de tous les apprenants de la délégation.
+                    De plus, sur chaque fiche apprenant les statistiques de présence sont calculées pour les cours auxquels cet apprenant est inscrit. <br />
+                    Il arrive cependant qu'un apprenant non inscrit se présente à un cours, et l'on souhaite enregistrer sa présence. Vous avez donc le choix d'ajouter des personnes exceptionnellement présentes via la seconde liste.
+                </div>
+            </div>
+            <div class="widget-box">
+                <div class="widget-title">
+                    <a href="#">
+                        <span class="icon"><i class="icon-question"></i></span><h5>Où consulter d'anciens compte-rendus ?</h5>
+                    </a>
+                </div>
+                <div class="widget-content">
+                    Le site web fonctionne de telle sorte que seules les informations relatives à la session sélectionnée sont affichées. Cela inclu notamment le planning des cours, les compte-rendus liés à ces cours, la liste des inscrits etc.
+                    Pour consulter d'anciens compte-rendus, ou voir un ancien planning, il vous faut sélectionner une autre session dans la liste présente en haut à droite. 
                 </div>
             </div>
         </div><!-- end accordion -->
