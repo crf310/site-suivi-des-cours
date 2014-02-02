@@ -68,6 +68,7 @@
                             {% if entity.welcomedByTeacher is not null %}
                                 par <a href="{{ path('teacher_show', { 'id': entity.welcomedByTeacher.id }) }}">{{ entity.welcomedByTeacher.firstname }} {{ entity.welcomedByTeacher.lastname }}</a>
                             {% endif %}
+                            &nbsp;
                         </div>
                     </div>
                     <div class="control-group">
