@@ -2,7 +2,9 @@
 {% block content_title %}Planning des cours{% endblock %}
 {%block submenu %}
     <a class="btn tip-bottom" href="{{ path('course_show_planning') }}"> <i class="my-icon-calendar"></i>Voir le planning</a>
-    <a class="btn tip-bottom" href="{{ path('course_new') }}"> <i class="my-icon-add"></i>Nouveau cours</a>
+    {% if is_granted('ROLE_SECRETARY') %}
+        <a class="btn tip-bottom" href="{{ path('course_new') }}"> <i class="my-icon-add"></i>Nouveau cours</a>
+    {% endif %}
 {% endblock %}
 {% block main_content %}
 <div class="row">
