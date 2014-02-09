@@ -9,7 +9,7 @@ $(document).ready(function(){
 	$('.data-table').dataTable({
 		"bJQueryUI": true,
 		"sPaginationType": "full_numbers",
-		"sDom": '<""l>t<"F"fp>',
+		"sDom": '<""fl>t<"F"p>',
                        "iDisplayLength": 20,
                        "aaSorting": [],
                        "oLanguage": {
