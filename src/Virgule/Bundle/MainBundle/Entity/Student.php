@@ -213,7 +213,7 @@ class Student {
     /**
      * @var string $nativeCountry
      *
-     * @ORM\Column(name="nativeCountry", type="string", length=2, nullable=true)
+     * @ORM\Column(name="nativeCountry", type="string", length=5, nullable=true)
      */
     private $nativeCountry;
 

@@ -6,11 +6,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Intl\Intl;
 use Virgule\Bundle\MainBundle\Entity\Teacher;
 use Virgule\Bundle\MainBundle\Form\Type\PictureType;
 use Virgule\Bundle\MainBundle\Form\EventListener\PatchSubscriber;
 use Virgule\Bundle\MainBundle\Form\EventListener\UpdateStudentCourseFieldSubscriber;
-use Virgule\Bundle\MainBundle\Form\DataTransformer\CoursesToNumbersTransformer;
 use Doctrine\ORM\EntityManager;
 
 class StudentType extends AbstractType {
@@ -33,6 +33,11 @@ class StudentType extends AbstractType {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        
+        $countries = Intl::getRegionBundle()->getCountryNames();
+        $countries['CN-54'] = "Tibet";
+        asort($countries);
+        
         $builder
                 ->add('file', new PictureType(), array(
                     'required' => false
@@ -46,7 +51,8 @@ class StudentType extends AbstractType {
                     'attr'      => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy')
                 ))
                 ->add('nativeCountry', 'country', array(
-                    'attr' => array('class' => 'medium-select')
+                    'choices'   => $countries,
+                    'attr'      => array('class' => 'medium-select')
                 ))
                 ->add('spokenLanguages', 'entity', array(
                     'class'             => 'VirguleMainBundle:Language',
