@@ -4,7 +4,7 @@
                 <i class="icon-th-list"></i>
         </span>
         <h5>{{ title }}</h5>
-        <span title="{{ classSessions | length }} compte-rendus" class="label label-info tip-left">{{ classSessions | length }}</span>
+        <span title="{{ classSessions | length }} comptes rendus" class="label label-info tip-left">{{ classSessions | length }}</span>
     </div>
     <div class="widget-content">
             {% if classSessions is empty %}
@@ -40,7 +40,7 @@
         {% if displayAllClassSessionsButton is defined and displayAllClassSessionsButton == true %}                
             <ul class="recent-posts">
                 <li class="viewall">
-                    <a href="{{ path('classsession_index') }}" class="tip-top" title=""> + Voir tous les compte-rendus + </a>
+                    <a href="{{ path('classsession_index') }}" class="tip-top" title=""> + Voir tous les comptes rendus + </a>
                 </li>
             </ul>
         {% endif %}
