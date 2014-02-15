@@ -12,6 +12,10 @@ namespace Virgule\Bundle\MainBundle\Twig;
  */
 class VirguleExtension extends \Twig_Extension {
 
+    public function getName() {
+        return 'virgule_extension';
+    }
+    
     public function getFilters() {
         return array(
             'day' => new \Twig_Filter_Method($this, 'dayFilter'),
@@ -69,11 +73,6 @@ class VirguleExtension extends \Twig_Extension {
         }
         return $gender;
     }
-
-    public function getName() {
-        return 'virgule_extension';
-    }
-
 }
 
 ?>
