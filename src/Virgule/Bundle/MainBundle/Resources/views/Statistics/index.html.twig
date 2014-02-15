@@ -97,7 +97,7 @@
             ]);
 
             var options = {
-              title: 'Répartition par niveau',              
+              title: 'Répartition par niveau (inscriptions aux cours)',              
               colors:[
                 {% for classLevel in nbStudentsPerClassLevel %}
                   '{{ classLevel['classLevel_color'] }}'{% if loop.index != loop.last %},{% endif %}         
