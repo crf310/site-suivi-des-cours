@@ -1,8 +1,12 @@
 $(document).ready(function(){	
     $('.datepicker').datepicker({
         weekStart: 1
-    });
+    }).on('changeDate', function(){    
+        $(this).blur();
+    }); 
 });
+
+        
 $(document).ready(function () {
     $('#checkAll').click(function () {
         if ($("#checkAll").attr("value") == "noneChecked") {

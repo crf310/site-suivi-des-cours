@@ -97,6 +97,10 @@
         <service id="virgule.twig.virgule_extension" class="Virgule\Bundle\MainBundle\Twig\VirguleExtension">
             <tag name="twig.extension" />
         </service>
+        <service id="virgule.twig.virgule_locale_extension" class="Virgule\Bundle\MainBundle\Twig\VirguleLocaleExtension">
+            <tag name="twig.extension" />            
+            <argument type="service" id="sonata.intl.templating.helper.locale" />
+        </service>
         
         <!-- Validators -->
         <service id="validator.not_overlapping_course" class="Virgule\Bundle\MainBundle\Validator\CourseNotOverlappingValidator">

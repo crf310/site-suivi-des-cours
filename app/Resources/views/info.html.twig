@@ -1,9 +1,11 @@
+{% set githubUrl="https://github.com/glucazeau/Virgule" %}
+{% set version="2.0.1" %}
 <div id="virguleInformationPanel" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button data-dismiss="modal" class="close" type="button">×</button>
-                <h3>Outil de gestion des cours d'alphabétisation - version 2.0.0</h3>
+                <h3>Outil de gestion des cours d'alphabétisation - version <a href="{{ githubUrl }}/releases/tag/{{ version }}">{{ version }}</a></h3>
             </div>
             <div class="modal-body">
                 <h4>Signaler un problème ou émettre une suggestion</h4>
@@ -12,10 +14,10 @@
                     ainsi que de le commenter.
                 </p>
                 <div class="center-text">
-                    <a href="https://github.com/glucazeau/Virgule/issues/new" target="_blank"><button class="btn btn-default"><i class="icon-github"></i> Ouvrir un ticket</button></a>
+                    <a href="{{ githubUrl }}/issues/new" target="_blank"><button class="btn btn-default"><i class="icon-github"></i> Ouvrir un ticket</button></a>
                 </div>
                     <br />
-                    <a href="https://github.com/glucazeau/Virgule/issues/">liste des tickets ouverts</a>
+                    <a href="{{ githubUrl }}/issues/">liste des tickets ouverts</a>
                 
                 <h4>Contact</h4>
                 Guillaume Lucazeau : <a href="mailto:glucazeau@gmail.com">glucazeau@gmail.com</a>

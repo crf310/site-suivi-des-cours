@@ -213,7 +213,7 @@ class Student {
     /**
      * @var string $nativeCountry
      *
-     * @ORM\Column(name="nativeCountry", type="string", length=2, nullable=true)
+     * @ORM\Column(name="nativeCountry", type="string", length=5, nullable=true)
      */
     private $nativeCountry;
 
@@ -263,7 +263,7 @@ class Student {
     private $classSessionsNonEnrolled;
 
     /**
-     * @ORM\OneToMany(targetEntity="ClassLevelSuggested", mappedBy="student", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ClassLevelSuggested", mappedBy="student", cascade={"persist", "remove"})
      * @ORM\OrderBy({"dateOfChange" = "DESC"}).
      */
     private $suggestedClassLevel;

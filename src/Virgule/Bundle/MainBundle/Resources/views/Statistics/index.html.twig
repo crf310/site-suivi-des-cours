@@ -33,7 +33,7 @@
             data.addColumn('number', 'Apprenants');
             data.addColumn('string', 'country_label');
             {% for country_code, nb_students in students_countries %}
-                data.addRow(['{{ country_code }}', {{ nb_students }}, '{{ country_code | country }}']);
+                data.addRow(['{{ country_code }}', {{ nb_students }}, '{{ country_code | country2 }}']);
             {% endfor %}
 
             var options = {
@@ -97,7 +97,7 @@
             ]);
 
             var options = {
-              title: 'Répartition par niveau',              
+              title: 'Répartition par niveau (inscriptions aux cours)',              
               colors:[
                 {% for classLevel in nbStudentsPerClassLevel %}
                   '{{ classLevel['classLevel_color'] }}'{% if loop.index != loop.last %},{% endif %}         
@@ -191,9 +191,9 @@ au
                             <div class="col-md-{{ span_size }}">
                                 <ul class="no-img">
                                 {% for country_code, nb_students in students_countries %}
-                                    <li><img src="{{ asset('img/drapeaux/' ~ country_code | lower ~ '.png')}}" alt="{{  country_code }}" title="{{  country_code | country('fr') }}" />
+                                    <li><img src="{{ asset('img/drapeaux/' ~ country_code | lower ~ '.png')}}" alt="{{  country_code | country2 }}" title="{{  country_code | country2 }}" />
                                     &nbsp;
-                                    {{ country_code | upper | country }}:  {{ nb_students }}</li>
+                                    {{ country_code | upper | country2 }}:  {{ nb_students }}</li>
                                     {% if loop.index % listBreak == 0  and loop.index != loop.last %}
                                         </ul></div><div class="col-md-{{ span_size }}"><ul class="no-img">
                                     {% endif %}

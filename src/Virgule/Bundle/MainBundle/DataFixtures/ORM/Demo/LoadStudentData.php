@@ -22,7 +22,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
                             'km','cg','cd','kr','ci','hr','do','eg','ae','ec','er','es','et','fr','ge','gt','gn','ht','hk','in',
                             'id','ir','iq','il','it','jm','jp','kz','ke','kg','lv','lb','lr','mk','ml','ma','mu','mr','md','mn','mm',
                             'np','ne','ng','uz','pk','ps','pe','ph','pl','pt','ro','ru','rw','sn','rs','sl','sk','sd','lk','se','sy',
-                            'cz','th','tn','tr','ua','ve','vn','mg');
+                            'cz','th','tn','tr','ua','ve','vn','mg','cn-54');
         $genders = Array('F', 'M');
         $firstnames = Array('Jean', 'John', 'Juan', 'Xiao', 'Augustin', 'Dimitri', 'Sergiy', 'Ali', 'Abdel', 'Linus', 'Zinedine', 'Pol', 'Anas', 'Jean-Marc', 'Auguste', 'Zhen');
         $lastnames = Array('Dupont', 'Smith', 'Suarez', 'Lee', 'Ranaly', 'Serpov', 'Karabatic', 'Bongo', 'Serafi', 'Zidane', 'Bellaloui', 'Lopez', 'Eriksson', 'Torvalds', 'Larsson', 'Soualem');

@@ -2,17 +2,15 @@
 {% block content_title %}Planning des cours{% endblock %}
 {%block submenu %}
     <a class="btn tip-bottom" href="{{ path('course_show_planning') }}"> <i class="my-icon-calendar"></i>Voir le planning</a>
-    <a class="btn tip-bottom" href="{{ path('course_new') }}"> <i class="my-icon-add"></i>Nouveau cours</a>
+    {% if is_granted('ROLE_SECRETARY') %}
+        <a class="btn tip-bottom" href="{{ path('course_new') }}"> <i class="my-icon-add"></i>Nouveau cours</a>
+    {% endif %}
 {% endblock %}
 {% block main_content %}
 <div class="row">
     <div class="col-md-12 center">
         <div class="widget-box">
             <div class="widget-title">
-                    <span class="icon">
-                            <i class="icon-th"></i>
-                    </span>
-                    <h5>Liste des cours de cette session</h5>
                     <span class="label label-info tip-left" data-original-title="{{ courses | length }} cours">{{ courses | length }}</span>
             </div>
             <div class="widget-content nopadding">
@@ -47,9 +45,14 @@
                             </td>
                             <td>{{ course.classRoomName }}</td> 
                             <td class="center">{{ course.nbStudents }}</td>
-                            <td class="center">
-                                <a href="{{ path('course_show', { 'id': course.id }) }}">Détails</a>&nbsp;
-                                <a href="{{ path('classsession_add', { 'id': course.id }) }}">Enregistrer un compte-rendu</a>
+                            <td>                                                    
+                                <div class="btn-group">
+                                    <a href="#" data-toggle="dropdown" class="btn btn-default btn-xs dropdown-toggle">Actions <span class="caret"></span></a>
+                                    <ul class="dropdown-menu dropdown-primary">    
+                                        <li><a href="{{ path('course_show', { 'id': course.id }) }}"><i class="icon-eye-open"></i> Détails</a></li>
+                                        <li><a href="{{ path('classsession_add', { 'id': course.id }) }}"><i class="icon-book"></i> Compte-rendu</a></li>
+                                    </ul>
+                                </div>
                             </td>
                         </tr>
                     {% endfor %}
