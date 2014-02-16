@@ -12,7 +12,7 @@
     <tbody>
     {% for classSession in classSessions %}
         <tr>
-            <td class="center">{% if classSession['sessionDate'] %}{{ classSession['sessionDate'] | date('d/m/Y') }} {% endif %}</td>
+            <td class="center" data-order="{{ classSession['sessionDate'] | date('Ymd') }}">{% if classSession['sessionDate'] %}{{ classSession['sessionDate'] | date('d/m/Y') }} {% endif %}</td>
             <td class="center">
                 {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classSession['classLevelHtmlColorCode'], 'classLevelLabel': classSession['classLevelLabel'] } %} 
             </td>

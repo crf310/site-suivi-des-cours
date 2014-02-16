@@ -357,18 +357,6 @@ div .none-found {
     margin: 0;
 }
 
-/* Tables */
-.data-table tbody tr:hover td {
-    background-color: #ECEDED;
-}
-.data-table tbody ul li{
-    list-style: none; display: inline; margin-left: 0px;
-}
-
-.dataTables_length {
-    margin: 9px 55px 0 0;
-}
-
 /* Class summary */
 .big-select {
     width: 500px;
@@ -381,6 +369,22 @@ div .none-found {
     padding: 0px 20px 20px 20px;
 }
 /* Override Unicorn & Bootstrap */
+/* Tables */
+.data-table tbody tr:hover td {
+    background-color: #ECEDED;
+}
+.data-table tbody ul li{
+    list-style: none; display: inline; margin-left: 0px;
+}
+.dataTables_length {
+    margin: 6px 55px 0 0;
+}
+.dataTables_filter {
+  color: #878787;
+  font-size: 11px;
+  margin: -32px 8px 2px 10px;
+  text-align: left;
+}
 .not-form-horizontal div.controls {
     padding-top: 15px;
 }

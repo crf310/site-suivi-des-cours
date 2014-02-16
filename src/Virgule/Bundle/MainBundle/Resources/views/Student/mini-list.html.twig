@@ -8,7 +8,11 @@
     </div>
     <div class="widget-content">
             {% if students is empty %}
-                <div class="none-found">Aucun apprenant trouvé</div>
+                <div class="none-found">
+                    Aucun apprenant trouvé
+                    <br />
+                    Inscrivez un apprenant à un cours en modifiant sa fiche
+                </div>
             {% else %}
                 {% if nbColumns is not defined %}
                     {% set nbColumns = 3 %}

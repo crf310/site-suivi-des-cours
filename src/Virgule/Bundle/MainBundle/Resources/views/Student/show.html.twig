@@ -68,6 +68,7 @@
                             {% if entity.welcomedByTeacher is not null %}
                                 par <a href="{{ path('teacher_show', { 'id': entity.welcomedByTeacher.id }) }}">{{ entity.welcomedByTeacher.firstname }} {{ entity.welcomedByTeacher.lastname }}</a>
                             {% endif %}
+                            &nbsp;
                         </div>
                     </div>
                     <div class="control-group">
@@ -88,7 +89,7 @@
                     {% if entity.nativeCountry != null %}
                     <div class="control-group">
                         <label class="control-label">Pays d'origine</label>
-                        <div class="controls">{{  entity.nativeCountry | upper | country }}&nbsp;<img src="{{ asset('img/drapeaux/' ~ entity.nativeCountry|lower ~ '.png')}}" alt="{{  entity.nativeCountry | country  }}" title="{{  entity.nativeCountry | upper | country }}" />&nbsp;</div>
+                        <div class="controls">{{  entity.nativeCountry | upper | country2 }}&nbsp;<img src="{{ asset('img/drapeaux/' ~ entity.nativeCountry|lower ~ '.png')}}" alt="{{  entity.nativeCountry | country  }}" title="{{  entity.nativeCountry | upper | country }}" />&nbsp;</div>
                     </div>
                     {% endif %}
                     <div class="control-group">
