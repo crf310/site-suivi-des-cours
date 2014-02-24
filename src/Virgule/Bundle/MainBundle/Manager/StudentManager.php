@@ -114,6 +114,18 @@ class StudentManager extends BaseManager {
         }
         return $courses;
     }
+    
+    /**
+     * Get number of new student newly registered for the semester
+     */
+    public function getNumberOfNewStudents($semester) {
+        $dates = Array();
+        $dates[] = $semester->getStartDate();
+        foreach ($semester->getOpenHouses() as $openHouse) {
+            $dates[] = $openHouse->getDate();
+        }
+        return $this->getRepository()->getNumberOfStudentRegisteredAfterDates($dates);
+    }
 }
 
 ?>

@@ -155,7 +155,15 @@ class StudentRepository extends EntityRepository {
         return $students;
     }
     
-    public function getNumberOfNewStudents($semesterId) {
-        
+    public function getNumberOfStudentRegisteredAfterDates($dates) {
+        $q = $this->createQueryBuilder('s')
+                ->addSelect('count(s.id) as nb_students');
+        ;
+        foreach ($dates as $key => $date) {
+            $q->orWhere('s.registrationDate >= :date' . $key);
+            $q->setParameter('date' . $key, $date);
+        }
+        $nbStudents = $q->getQuery()->getSingleResult();
+        return $nbStudents;
     }
 }
