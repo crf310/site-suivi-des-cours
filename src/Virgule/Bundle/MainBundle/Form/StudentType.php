@@ -36,7 +36,8 @@ class StudentType extends AbstractType {
         
         $countries = Intl::getRegionBundle()->getCountryNames();
         $countries['CN-54'] = "Tibet";
-        asort($countries);
+        setlocale(LC_COLLATE, 'fr_FR.utf8');
+        asort($countries, SORT_LOCALE_STRING);
         
         $builder
                 ->add('file', new PictureType(), array(
