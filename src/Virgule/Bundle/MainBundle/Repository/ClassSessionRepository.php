@@ -32,7 +32,7 @@ class ClassSessionRepository extends EntityRepository {
             ->innerJoin('c2.semester', 's')
             ->innerJoin('cs.sessionTeacher', 't1')
             ->innerJoin('cs.reportTeacher', 't2')
-            ->add('orderBy', 'cs.reportDate DESC')
+            ->add('orderBy', 'cs.sessionDate DESC')
             ->add('groupBy', 'cs.id');
         
         if (null !== $semesterId) {
