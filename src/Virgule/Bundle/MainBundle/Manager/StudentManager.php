@@ -19,6 +19,15 @@ class StudentManager extends BaseManager {
     }
     
     /**
+     * Load all students
+     * @return type ArrayCollection
+     */
+    public function loadAll($semesterId) {
+        $students = $this->getRepository()->loadAll($semesterId);
+        return $this->mergeStudentLines($students);
+    }
+    
+    /**
      * Load all students enrolled in at least one class
      * @param type $semesterId
      * @return type
@@ -70,7 +79,7 @@ class StudentManager extends BaseManager {
         foreach ($students as $key => $student) {
             
             // store courses for each student
-            $courses_array[$student['student_id']][] = Array('course_id' => $student['course_id'], 'level' => $student['level'], 'levelColorCode' => $student['levelColorCode']);
+            $courses_array[$student['student_id']][] = Array('course_id' => $student['course_id'], 'level' => $student['level'], 'levelColorCode' => $student['levelColorCode'], 'semester_id' => $student['semester_id']);
             
             // only keep the line if the students has not been processed already
             if (! array_key_exists($student['student_id'], $students_ids)) {

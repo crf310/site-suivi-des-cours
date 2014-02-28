@@ -34,6 +34,28 @@ class StudentRepository extends EntityRepository {
     }
     
     /**
+     * Select all students
+     * @return type
+     */
+    public function loadAll($semesterId) {
+        $qb = $this->getBasicQueryBuilder()
+                ->addSelect('t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName')
+                ->addSelect('c2.id as course_id, l.label as level, s2.id as semester_id, l.htmlColorCode as levelColorCode')
+                ->addSelect('count(cm.id) as nb_comments')
+                ->leftJoin('s.courses', 'c2')
+                ->leftJoin('c2.classLevel', 'l')
+                ->leftJoin('s.welcomedByTeacher', 't')
+                ->leftJoin('s.comments', 'cm')
+                ->leftJoin('c2.semester', 's2')
+                ->add('orderBy', 's.lastname ASC, s.firstname ASC')
+                ->add('groupBy', 's.id, c2.id');
+        
+        $q = $qb->getQuery();
+        $students = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $students;
+    }
+    
+    /**
      * Select all students enrolled in one or more class of the selected semester
      * @return type
      */

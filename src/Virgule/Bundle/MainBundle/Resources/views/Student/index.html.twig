@@ -49,11 +49,14 @@
                                 {% endif %}&nbsp;
                             </td>
                             <td>
-                                {% if courses_array is defined %}
+                                {% if courses_array is defined and courses_array|length > 0 %}
                                     {% for course in courses_array[entity['student_id']] %}
-                                        <a href="{{ path('course_show', { 'id': course['course_id'] }) }}">
-                                        {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course['levelColorCode'], 'classLevelLabel': course['level'] } %} 
-                                        </a>{% if course != loop.last %}&nbsp;{% endif %}
+                                        {# This test to not display enrollments from previous semester when displaying all the students #}
+                                        {% if course['semester_id'] is defined and course['semester_id'] == app.session.get('currentSemester').id %}
+                                            <a href="{{ path('course_show', { 'id': course['course_id'] }) }}">
+                                            {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course['levelColorCode'], 'classLevelLabel': course['level'] } %} 
+                                            </a>{% if course != loop.last %}&nbsp;{% endif %}
+                                        {% endif %}
                                     {% endfor %}
                                 {% endif %}
                             </td>

@@ -65,7 +65,7 @@ class StudentController extends AbstractVirguleController {
     }
     
     /**
-     * Lists all Student entities.
+     * Lists all Student entities enrolled in at least a class
      *
      * @Route("/", name="student_index")
      * @Template()
@@ -73,8 +73,18 @@ class StudentController extends AbstractVirguleController {
     public function indexAction() {
         $students_lines = $this->getStudentManager()->loadAllEnrolled($this->getSelectedSemesterId());
         return array_merge(Array('title' => 'Tous les apprenants inscrits à un cours de cette session'), $students_lines);
-    }    
+    }   
     
+    /**
+     * Lists all Student entities.
+     *
+     * @Route("/all", name="student_index_all")
+     * @Template("VirguleMainBundle:Student:index.html.twig")
+     */
+    public function indexAllAction() {
+        $students_lines = $this->getStudentManager()->loadAll($this->getSelectedSemesterId());
+        return array_merge(Array('title' => 'Tous les apprenants'), $students_lines);
+    }  
     /**
      * Lists all Student entities.
      *
