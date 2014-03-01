@@ -66,9 +66,10 @@ class StudentRepository extends EntityRepository {
                 ->addSelect('count(cm.id) as nb_comments')
                 ->innerJoin('s.courses', 'c2')
                 ->innerJoin('c2.classLevel', 'l')
+                ->innerJoin('c2.semester', 's2')
                 ->leftJoin('s.welcomedByTeacher', 't')
                 ->leftJoin('s.comments', 'cm')
-                ->where('c2.semester = :semesterId')
+                ->where('s2 = :semesterId')
                 ->add('orderBy', 's.lastname ASC, s.firstname ASC')
                 ->add('groupBy', 's.id, c2.id')
                 ->setParameter('semesterId', $semesterId);
