@@ -82,7 +82,7 @@ class StudentController extends AbstractVirguleController {
      * @Template("VirguleMainBundle:Student:index.html.twig")
      */
     public function indexAllAction() {
-        $students_lines = $this->getStudentManager()->loadAll($this->getSelectedSemesterId());
+        $students_lines = $this->getStudentManager()->loadAll();
         return array_merge(Array('title' => 'Tous les apprenants'), $students_lines);
     }  
     /**

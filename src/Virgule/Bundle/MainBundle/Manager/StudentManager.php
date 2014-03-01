@@ -22,8 +22,8 @@ class StudentManager extends BaseManager {
      * Load all students
      * @return type ArrayCollection
      */
-    public function loadAll($semesterId) {
-        $students = $this->getRepository()->loadAll($semesterId);
+    public function loadAll() {
+        $students = $this->getRepository()->loadAll();
         return $this->mergeStudentLines($students);
     }
     
