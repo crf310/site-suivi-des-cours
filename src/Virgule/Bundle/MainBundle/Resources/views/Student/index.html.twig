@@ -30,7 +30,7 @@
                         {% for key,entity in students_array %}
                         <tr class="gradeA">
                             <td class="center">
-                                <img src="{{ asset('img/drapeaux/' ~ entity['nativeCountry'] | lower ~ '.png')}}" alt="{{  entity['nativeCountry'] | country2 }}" title="{{  entity['nativeCountry'] | country2 }}" />
+                                <img src="{{ asset('img/drapeaux/' ~ entity['nativeCountry'] ~ '.png')}}" alt="{{  entity['nativeCountry'] | upper | country2 }}" title="{{  entity['nativeCountry'] | upper | country2 }}" />
                             </td>
                             <td class="center">
                                 {% if entity['gender'] == 'F' %}
