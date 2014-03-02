@@ -107,8 +107,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
                 $s->addSpokenLanguage($this->getReference('language-' . $rsl));
                 $languagesAdded[] = $rsl;
             }
-            
-            
+                        
             if (rand(1, 10) != 1) {
                 $idCourse1 = rand(1, $nbCourses);
                 $s->addCourse($this->getReference('course' . $idCourse1));
@@ -118,6 +117,13 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
                         $idCourse2 = rand(1, $nbCourses);
                     }
                     $s->addCourse($this->getReference('course' . $idCourse2));
+                } 
+                if (rand(1, 5) % 5 == 0) {
+                    $idCourse3 = rand(1, $nbCourses);
+                    while ($idCourse3 == $idCourse1 || $idCourse3 == $idCourse2) {
+                        $idCourse3 = rand(1, $nbCourses);
+                    }
+                    $s->addCourse($this->getReference('course' . $idCourse3));
                 }
             }
                         
