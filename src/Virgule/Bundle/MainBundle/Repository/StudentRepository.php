@@ -189,4 +189,28 @@ class StudentRepository extends EntityRepository {
         $nbStudents = $q->getQuery()->getSingleResult();
         return $nbStudents;
     }
+    
+    public function getNumberOfStudentsWithNumberOfEnrollments($semesterId) {
+        $sql = "SELECT COUNT(student) AS nb_students, nb_courses FROM (
+                    SELECT 
+                      s.id as student,
+                      count(sc.course_id) as nb_courses 
+                    FROM 
+                      student s 
+                      INNER JOIN student_course sc ON s.id = sc.student_id 
+                      INNER JOIN course c ON sc.course_id = c.id 
+                      INNER JOIN semester s2 ON c.fk_semester = s2.id 
+                    WHERE 
+                      s2.id = " . $semesterId . "
+                    GROUP BY s.id
+            ) a
+            GROUP BY nb_courses
+            ORDER BY nb_courses ASC
+            ;";
+        
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->execute();
+        
+        return $stmt->fetchAll();
+    }
 }
