@@ -34,19 +34,42 @@ class StudentRepository extends EntityRepository {
     }
     
     /**
+     * Select all students
+     * @return type
+     */
+    public function loadAll() {
+        $qb = $this->getBasicQueryBuilder()
+                ->addSelect('t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName')
+                ->addSelect('c2.id as course_id, l.label as level, s2.id as semester_id, l.htmlColorCode as levelColorCode')
+                ->addSelect('count(cm.id) as nb_comments')
+                ->leftJoin('s.courses', 'c2')
+                ->leftJoin('c2.classLevel', 'l')
+                ->leftJoin('s.welcomedByTeacher', 't')
+                ->leftJoin('s.comments', 'cm')
+                ->leftJoin('c2.semester', 's2')
+                ->add('orderBy', 's.lastname ASC, s.firstname ASC')
+                ->add('groupBy', 's.id, c2.id');
+        
+        $q = $qb->getQuery();
+        $students = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $students;
+    }
+    
+    /**
      * Select all students enrolled in one or more class of the selected semester
      * @return type
      */
     public function loadAllEnrolled($semesterId) {
         $qb = $this->getBasicQueryBuilder()
                 ->addSelect('t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName')
-                ->addSelect('c2.id as course_id, l.label as level, l.htmlColorCode as levelColorCode')
+                ->addSelect('c2.id as course_id, l.label as level, s2.id as semester_id, l.htmlColorCode as levelColorCode')
                 ->addSelect('count(cm.id) as nb_comments')
                 ->innerJoin('s.courses', 'c2')
                 ->innerJoin('c2.classLevel', 'l')
+                ->innerJoin('c2.semester', 's2')
                 ->leftJoin('s.welcomedByTeacher', 't')
                 ->leftJoin('s.comments', 'cm')
-                ->where('c2.semester = :semesterId')
+                ->where('s2 = :semesterId')
                 ->add('orderBy', 's.lastname ASC, s.firstname ASC')
                 ->add('groupBy', 's.id, c2.id')
                 ->setParameter('semesterId', $semesterId);
@@ -155,7 +178,39 @@ class StudentRepository extends EntityRepository {
         return $students;
     }
     
-    public function getNumberOfNewStudents($semesterId) {
+    public function getNumberOfStudentRegisteredAfterDates($dates) {
+        $q = $this->createQueryBuilder('s')
+                ->addSelect('count(s.id) as nb_students');
+        ;
+        foreach ($dates as $key => $date) {
+            $q->orWhere('s.registrationDate >= :date' . $key);
+            $q->setParameter('date' . $key, $date);
+        }
+        $nbStudents = $q->getQuery()->getSingleResult();
+        return $nbStudents;
+    }
+    
+    public function getNumberOfStudentsWithNumberOfEnrollments($semesterId) {
+        $sql = "SELECT COUNT(student) AS nb_students, nb_courses FROM (
+                    SELECT 
+                      s.id as student,
+                      count(sc.course_id) as nb_courses 
+                    FROM 
+                      student s 
+                      INNER JOIN student_course sc ON s.id = sc.student_id 
+                      INNER JOIN course c ON sc.course_id = c.id 
+                      INNER JOIN semester s2 ON c.fk_semester = s2.id 
+                    WHERE 
+                      s2.id = " . $semesterId . "
+                    GROUP BY s.id
+            ) a
+            GROUP BY nb_courses
+            ORDER BY nb_courses ASC
+            ;";
         
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->execute();
+        
+        return $stmt->fetchAll();
     }
 }
