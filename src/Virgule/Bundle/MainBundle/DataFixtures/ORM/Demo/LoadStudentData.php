@@ -74,9 +74,9 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
             $s->setBirthdate(new \DateTime("@$timestamp"));
 
             if (in_array(substr($locale, 0, 2), $countryCodes)) {
-                $s->setNativeCountry(substr($locale, 0, 2));
+                $s->setNativeCountry(strtoupper(substr($locale, 0, 2)));
             } else {
-                $s->setNativeCountry($countryCodes[rand(0, count($countryCodes)-1)]);
+                $s->setNativeCountry(strtoupper($countryCodes[rand(0, count($countryCodes)-1)]));
             }
             
             $y = rand(2010, 2012);
@@ -111,6 +111,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
             if (rand(1, 10) != 1) {
                 $idCourse1 = rand(1, $nbCourses);
                 $s->addCourse($this->getReference('course' . $idCourse1));
+                $idCourse2 = "-1";
                 if (rand(1, 5) % 5 == 0) {
                     $idCourse2 = rand(1, $nbCourses);
                     while ($idCourse1 == $idCourse2) {
