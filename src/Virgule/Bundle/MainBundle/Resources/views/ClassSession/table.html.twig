@@ -19,7 +19,9 @@
             <td>{{ classSession['course_dayOfWeek'] | day }} de {{ classSession['course_startTime'] | date('H:i') }} à {{ classSession['course_endTime'] | date('H:i') }}</td>
             <td class="center">{{ classSession['nb_students'] }}</td>
             <td>{{ classSession['sessionTeacher_firstName'] }} {{ classSession['sessionTeacher_lastName'] }}</td>
-            <td class="center"><a href="{{ path('classsession_show', { 'id': classSession['id'] }) }}">Voir le compte-rendu</a></td>
+            <td class="entity_actions">
+                <a href="{{ path('classsession_show', { 'id': classSession['id'] }) }}"><button class="btn btn-default btn-xs"><i class="icon-eye-open"></i> Voir</button></a>
+            </td>
         </tr>
     {% endfor %}
     </tbody>
