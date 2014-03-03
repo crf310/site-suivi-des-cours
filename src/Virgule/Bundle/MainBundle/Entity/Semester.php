@@ -176,4 +176,12 @@ class Semester {
 
         return $this;
     }
+    
+    /**
+     * 
+     * @return ArrayCollection OpenHouse
+     */
+    public function getOpenHouses() {
+        return $this->openHouses;
+    }
 }

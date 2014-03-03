@@ -138,8 +138,14 @@ au
                         <h4>{{ languages | length }}</h4>
                         <span>langues parlées</span>
                     </li>
-                    <li>										
-                        <h4>{{ studentsWithManyEnrollments | length }}</h4>
+                    <li>		
+                        {% set totalStudentsWithManyEnrollments = 0 %}
+                        {% for line in studentsWithNumberOfEnrollments %}
+                            {% if line['nb_courses'] > 1 %}
+                                {% set totalStudentsWithManyEnrollments = totalStudentsWithManyEnrollments + line['nb_students'] %}
+                            {% endif %}
+                        {% endfor %}
+                        <h4>{{ totalStudentsWithManyEnrollments }}</h4>
                         <span>inscrits à plus d'un cours</span>
                     </li>
                 </ul>
@@ -169,9 +175,10 @@ au
                                     <li><div class="cc"><i class="icon-group"></i> <strong>{{ students_genders['F'] + students_genders['M'] }}</strong> <small>Apprenants</small></div></li>
                                     <li><div class="cc"><i class="icon-female"></i> <strong>{{ students_genders['F'] }}</strong> <small>Femmes</small></div></li>
                                     <li><div class="cc"><i class="icon-male"></i> <strong>{{ students_genders['M'] }}</strong> <small>Hommes</small></div></li>
-                                    <li><div class="cc"><i class="icon-group"></i> <strong>11</strong> <small>Nouveaux inscrits</small></div></li>
-                                    <li><div class="cc"><i class="icon-group"></i> <strong>11</strong> <small>Inscrits à 2 cours</small></div></li>
-                                    <li><div class="cc"><i class="icon-group"></i> <strong>11</strong> <small>Inscrits à 3 cours et plus</small></div></li>
+                                    <li><div class="cc"><i class="icon-group"></i> <strong>{{ nbNewStudents['nb_students'] }}</strong> <small>Nouveaux apprenants</small></div></li>
+                                    {% for line in studentsWithNumberOfEnrollments %}
+                                        <li><div class="cc"><i class="icon-group"></i> <strong>{{ line['nb_students'] }}</strong> <small>Inscrits à {{ line['nb_courses'] }} cours</small></div></li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                             <div class="col-md-8">
