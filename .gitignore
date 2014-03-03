@@ -6,3 +6,5 @@
 /app/config/parameters.ini
 /web/uploads/documents/
 /web/uploads/student_pictures/
+/nbproject/private/
+/nbproject
