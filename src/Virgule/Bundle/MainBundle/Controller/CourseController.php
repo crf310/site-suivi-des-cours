@@ -202,8 +202,9 @@ class CourseController extends AbstractVirguleController {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Course entity.');
         }
-
-        $editForm = $this->createForm(new CourseType(), $entity);
+                
+        $teacherRepository = $em->getRepository('VirguleMainBundle:Teacher');
+        $editForm = $this->createForm(new CourseType($teacherRepository, $this->getSelectedOrganizationBranch()->getId()), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -230,7 +231,9 @@ class CourseController extends AbstractVirguleController {
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new CourseType(), $entity);
+        
+        $teacherRepository = $em->getRepository('VirguleMainBundle:Teacher');
+        $editForm = $this->createForm(new CourseType($teacherRepository, $this->getSelectedOrganizationBranch()->getId()), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {

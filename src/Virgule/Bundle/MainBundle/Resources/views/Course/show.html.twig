@@ -2,6 +2,7 @@
 {% block content_title %}Cours {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': entity.classLevel.htmlColorCode, 'classLevelLabel': entity.classLevel.label } %}{% endblock %}
 {%block submenu %}
     <a class="btn tip-bottom" href="{{ path('course_show_trombinoscope', { 'id': entity.id }) }}"> <i class="my-icon-trombinoscope"></i>Trombinoscope</a>
+    <a class="btn tip-bottom" href="{{ path('course_edit', { 'id': entity.id }) }}"> <i class="my-icon-class_edit"></i>Modifier le cours</a>
     <a class="btn tip-bottom" href="{{ path('classsession_add', { 'id': entity.id }) }}"> <i class="my-icon-add"></i>Ajouter un compte-rendu</a>
 {% endblock %}
 {% block main_content %}
