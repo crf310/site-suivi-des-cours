@@ -20,14 +20,14 @@ class CourseManager extends BaseManager {
     }
 
     public function getNumberOfOverlappingCourses(Course $course) {
-
+        $courseId = $course->getId();
         $semesterId = $course->getSemester()->getId();
         $dayOfWeek = $course->getDayOfWeek();
         $classRoomId = $course->getClassRoom()->getId();
         $startTime = $course->getStartTime();
         $endTime = $course->getEndTime();
 
-        $result = $this->getRepository()->getNumberOfOverlappingCourses($semesterId, $dayOfWeek, $classRoomId, $startTime, $endTime);
+        $result = $this->getRepository()->getNumberOfOverlappingCourses($courseId, $semesterId, $dayOfWeek, $classRoomId, $startTime, $endTime);
         return $result['nb_courses'];
     }
 

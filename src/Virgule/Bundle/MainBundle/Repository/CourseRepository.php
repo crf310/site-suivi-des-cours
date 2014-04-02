@@ -38,19 +38,21 @@ class CourseRepository extends EntityRepository {
      * @param type $endTime
      * @return type Integer
      */
-    public function getNumberOfOverlappingCourses($semesterId, $dayOfWeek, $classRoomId, $startTime, $endTime) {
+    public function getNumberOfOverlappingCourses($courseId, $semesterId, $dayOfWeek, $classRoomId, $startTime, $endTime) {
         $q = $this
                 ->createQueryBuilder('c')
                 ->select('count(c.id) as nb_courses')
                 ->innerJoin('c.semester', 's')                
                 ->innerJoin('c.classRoom', 'c2')
-                ->where('s.id = :semesterId')
+                ->where('c.id != :courseId')
+                ->andWhere('s.id = :semesterId')
                 ->andWhere('c.dayOfWeek = :dayOfWeek')
                 ->andWhere('c2.id = :classRoomId')
                 ->andWhere('(c.startTime > :startTime AND c.startTime < :endTime) 
                     OR (:startTime > c.startTime AND :startTime < c.endTime)
                     OR (:startTime = c.startTime AND :endTime = c.endTime)'
                 )
+                ->setParameter('courseId', $courseId)
                 ->setParameter('semesterId', $semesterId)
                 ->setParameter('dayOfWeek', $dayOfWeek)
                 ->setParameter('classRoomId', $classRoomId)
