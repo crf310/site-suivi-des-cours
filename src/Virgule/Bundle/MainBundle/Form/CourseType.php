@@ -19,12 +19,14 @@ class CourseType extends AbstractType {
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        $days = Array('1' => 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi');
+                
         $builder
                 ->add('dayOfWeek', 'choice', array(
-                    'expanded' => false,
-                    'choices' => array('1' => 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'),
-                    'data' => '1',
-                    'attr' => array('class' => 'tiny-select'),
+                    'expanded'  => false,
+                    'multiple'  => false,
+                    'choices'   => $days,
+                    'attr'      => array('class' => 'tiny-select'),
                 ))
                 ->add('startTime', 'time', array(
                     'input'  => 'datetime',
