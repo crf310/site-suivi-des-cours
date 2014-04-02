@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\Course;
 use Virgule\Bundle\MainBundle\Entity\Planning\Planning;
 use Virgule\Bundle\MainBundle\Form\CourseType;
+use Virgule\Bundle\MainBundle\Form\FormConstants;
 
 /**
  * Course controller.
@@ -138,7 +139,7 @@ class CourseController extends AbstractVirguleController {
                 
         $entity = new Course();
         $organizationBranchId = $this->getSelectedOrganizationBranch()->getId();
-        $form = $this->createForm(new CourseType($teacherRepository, $organizationBranchId), $entity);
+        $form = $this->createForm(new CourseType(FormConstants::CREATE_INTENTION, $teacherRepository, $organizationBranchId), $entity);
 
         return array(
             'entity' => $entity,
@@ -163,7 +164,7 @@ class CourseController extends AbstractVirguleController {
         $em = $this->getDoctrine()->getManager();
         $teacherRepository = $em->getRepository('VirguleMainBundle:Teacher');
                
-        $form = $this->createForm(new CourseType($teacherRepository, $organizationBranch->getId()), $entity);
+        $form = $this->createForm(new CourseType(FormConstants::CREATE_INTENTION, $teacherRepository, $organizationBranch->getId()), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -204,7 +205,7 @@ class CourseController extends AbstractVirguleController {
         }
                 
         $teacherRepository = $em->getRepository('VirguleMainBundle:Teacher');
-        $editForm = $this->createForm(new CourseType($teacherRepository, $this->getSelectedOrganizationBranch()->getId()), $entity);
+        $editForm = $this->createForm(new CourseType(FormConstants::EDIT_INTENTION, $teacherRepository, $this->getSelectedOrganizationBranch()->getId()), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -233,7 +234,7 @@ class CourseController extends AbstractVirguleController {
         $deleteForm = $this->createDeleteForm($id);
         
         $teacherRepository = $em->getRepository('VirguleMainBundle:Teacher');
-        $editForm = $this->createForm(new CourseType($teacherRepository, $this->getSelectedOrganizationBranch()->getId()), $entity);
+        $editForm = $this->createForm(new CourseType(FormConstants::EDIT_INTENTION, $teacherRepository, $this->getSelectedOrganizationBranch()->getId()), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {

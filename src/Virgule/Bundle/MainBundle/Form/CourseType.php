@@ -7,13 +7,16 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Virgule\Bundle\MainBundle\Repository\TeacherRepository;
+use Virgule\Bundle\MainBundle\Form\FormConstants;
 
 class CourseType extends AbstractType {
 
+    private $intention;
     private $organizationBranchId;
     private $teacherRepository;
 
-    public function __construct(TeacherRepository $teacherRepository, $organizationBranchId) {
+    public function __construct($intention, TeacherRepository $teacherRepository, $organizationBranchId) {
+        $this->intention = $intention;
         $this->teacherRepository = $teacherRepository;
         $this->organizationBranchId = $organizationBranchId;
     }
@@ -68,16 +71,20 @@ class CourseType extends AbstractType {
                     'property_path' => 'classlevel',            
                     'attr' => array('class' => 'tiny-select')
                  ))
-                ->add('teachers', 'entity', array(
+        ;
+        
+        $teachersOptions = array(
                     'class' => 'VirguleMainBundle:Teacher',
-                    'query_builder' =>  $this->teacherRepository->getAvailableTeachersQueryBuilder($this->organizationBranchId, true),
                     'expanded' => false,
                     'multiple' => true,
                     'property' => 'fullname',
                     'property_path' => 'teachers',            
-                    'attr' => array('class' => 'big-select')
-                ))
-        ;
+                    'attr' => array('class' => 'big-select'));
+        if (FormConstants::CREATE_INTENTION == $this->intention) {
+            $teachersOptions['query_builder'] = $this->teacherRepository->getAvailableTeachersQueryBuilder($this->organizationBranchId, true);
+        }
+        
+        $builder->add('teachers', 'entity', $teachersOptions);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
