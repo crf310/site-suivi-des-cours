@@ -89,6 +89,9 @@ h2 { font-size: 13px; }
 #sidebar a.welcome i.main-icon {
     background-image: url('../img/icons/house.png');
 }
+#sidebar a.profile i.main-icon {
+    background-image: url('../img/icons/user_suit.png');
+}
 #sidebar a.minutes i.main-icon {
     background-image: url('../img/icons/page.png');
 }
