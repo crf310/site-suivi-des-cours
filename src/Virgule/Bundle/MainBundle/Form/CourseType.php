@@ -7,24 +7,29 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Virgule\Bundle\MainBundle\Repository\TeacherRepository;
+use Virgule\Bundle\MainBundle\Form\FormConstants;
 
 class CourseType extends AbstractType {
 
+    private $intention;
     private $organizationBranchId;
     private $teacherRepository;
 
-    public function __construct(TeacherRepository $teacherRepository, $organizationBranchId) {
+    public function __construct($intention, TeacherRepository $teacherRepository, $organizationBranchId) {
+        $this->intention = $intention;
         $this->teacherRepository = $teacherRepository;
         $this->organizationBranchId = $organizationBranchId;
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        $days = Array('1' => 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi');
+                
         $builder
                 ->add('dayOfWeek', 'choice', array(
-                    'expanded' => false,
-                    'choices' => array('1' => 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'),
-                    'data' => '1',
-                    'attr' => array('class' => 'tiny-select'),
+                    'expanded'  => false,
+                    'multiple'  => false,
+                    'choices'   => $days,
+                    'attr'      => array('class' => 'tiny-select'),
                 ))
                 ->add('startTime', 'time', array(
                     'input'  => 'datetime',
@@ -66,16 +71,18 @@ class CourseType extends AbstractType {
                     'property_path' => 'classlevel',            
                     'attr' => array('class' => 'tiny-select')
                  ))
-                ->add('teachers', 'entity', array(
-                    'class' => 'VirguleMainBundle:Teacher',
-                    'query_builder' =>  $this->teacherRepository->getAvailableTeachersQueryBuilder($this->organizationBranchId, true),
-                    'expanded' => false,
-                    'multiple' => true,
-                    'property' => 'fullname',
-                    'property_path' => 'teachers',            
-                    'attr' => array('class' => 'big-select')
-                ))
         ;
+        
+        $teachersOptions = array(
+                    'class'         => 'VirguleMainBundle:Teacher',
+                    'query_builder' => $this->teacherRepository->getAvailableTeachersQueryBuilder($this->organizationBranchId, true),
+                    'expanded'      => false,
+                    'multiple'      => true,
+                    'property'      => 'fullname',
+                    'property_path' => 'teachers',            
+                    'attr'          => array('class' => 'big-select'));
+        
+        $builder->add('teachers', 'entity', $teachersOptions);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {

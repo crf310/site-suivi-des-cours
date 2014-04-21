@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Virgule\Bundle\MainBundle\Form\EventListener\PatchSubscriber;
+use Virgule\Bundle\MainBundle\Form\EventListener\SetInactiveTeacherSubscriber;
 
 class TeacherType extends AbstractType {
 
@@ -33,9 +34,12 @@ class TeacherType extends AbstractType {
         }
                 
         $builder
-                ->add('isActive', 'checkbox', array(
-                    'required'  => false,
-                    'attr'      => array('checked'   => 'checked'),
+                ->add('isActive', 'choice', array(
+                    'choices'       => array('1' => 'Actif', '0' => 'Inactif'),
+                    'expanded'      => true,
+                    'multiple'      => false,
+                    'required'      => true,
+                    'cols_number'   => 2
                 ))
                 ->add('lastName')
                 ->add('firstName')
@@ -50,9 +54,11 @@ class TeacherType extends AbstractType {
                     'property_path' => 'role',            
                     'attr' => array('class' => 'small-select')
                  ));
+        //$activeStatusSubscriber = new SetInactiveTeacherSubscriber();
+        //$builder->addEventSubscriber($activeStatusSubscriber);
         
-        $subscriber = new PatchSubscriber();
-        $builder->addEventSubscriber($subscriber);
+        $patchSubscriber = new PatchSubscriber();
+        $builder->addEventSubscriber($patchSubscriber);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
