@@ -137,6 +137,9 @@ h2 { font-size: 13px; }
 #sidebar a.help i.main-icon {
     background-image: url('../img/icons/help.png');
 }
+#sidebar a.alert_issue i.main-icon {
+    background-image: url('../img/icons/bell.png');
+}
 i.my-icon-go {
     background-image: url('../img/icons/arrow_right.png');
 }
