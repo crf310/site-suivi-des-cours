@@ -74,15 +74,13 @@ class CourseType extends AbstractType {
         ;
         
         $teachersOptions = array(
-                    'class' => 'VirguleMainBundle:Teacher',
-                    'expanded' => false,
-                    'multiple' => true,
-                    'property' => 'fullname',
+                    'class'         => 'VirguleMainBundle:Teacher',
+                    'query_builder' => $this->teacherRepository->getAvailableTeachersQueryBuilder($this->organizationBranchId, true),
+                    'expanded'      => false,
+                    'multiple'      => true,
+                    'property'      => 'fullname',
                     'property_path' => 'teachers',            
-                    'attr' => array('class' => 'big-select'));
-        if (FormConstants::CREATE_INTENTION == $this->intention) {
-            $teachersOptions['query_builder'] = $this->teacherRepository->getAvailableTeachersQueryBuilder($this->organizationBranchId, true);
-        }
+                    'attr'          => array('class' => 'big-select'));
         
         $builder->add('teachers', 'entity', $teachersOptions);
     }
