@@ -69,16 +69,6 @@ class StudentType extends AbstractType {
                     'open_houses_dates' => $this->openHousesDates,
                     'attr'              => array('class' => 'datepicker', 'data-date-format' => 'dd/mm/yyyy')
                 ))
-                ->add('welcomedByTeacher', 'entity', array(
-                    'class'             => 'VirguleMainBundle:Teacher',
-                    'query_builder'     => $this->doctrine->getRepository('VirguleMainBundle:Teacher')->getAvailableTeachersQueryBuilder($this->organizationBranchId, true),
-                    'expanded'          => false,
-                    'multiple'          => false,
-                    'property'          => 'fullname',
-                    'property_path'     => 'welcomedByTeacher',
-                    'preferred_choices' => array($this->currentTeacher),
-                    'attr'              => array('class' => 'medium-select')
-                ))
                 ->add('phoneNumber')
                 ->add('cellphoneNumber')
                 ->add('address')
@@ -102,7 +92,6 @@ class StudentType extends AbstractType {
                 ->add('emergencyContactConnectionType')
                 ->add('profession')
                 ;
-        
         if ($this->intention == 'create') {
             $builder->add('suggestedClassLevel', 'collection', array(
                     'type'      => new ClassLevelSuggestedType($options['em']),
@@ -111,6 +100,20 @@ class StudentType extends AbstractType {
                     'by_reference' => false,
                 ));
         }
+        
+        $welcomedByTeacherOptions = array(
+            'class'             => 'VirguleMainBundle:Teacher',
+            'expanded'          => false,
+            'multiple'          => false,
+            'property'          => 'fullname',
+            'property_path'     => 'welcomedByTeacher',
+            'attr'              => array('class' => 'medium-select'));
+        
+        if ($this->intention == 'create') {
+            $welcomedByTeacherOptions['preferred_choices'] = array($this->currentTeacher);
+            $welcomedByTeacherOptions['query_builder'] = $this->doctrine->getRepository('VirguleMainBundle:Teacher')->getAvailableTeachersQueryBuilder($this->organizationBranchId, true);
+        }
+        $builder->add('welcomedByTeacher', 'entity', $welcomedByTeacherOptions);
                
         $subscriber = new PatchSubscriber();
         $builder->addEventSubscriber($subscriber);
