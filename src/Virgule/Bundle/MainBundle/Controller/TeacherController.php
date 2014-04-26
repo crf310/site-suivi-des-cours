@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  *
  * @Route("/teacher")
  */
-class TeacherController extends AbstractVirguleController {
+class crTeacherController extends AbstractVirguleController {
 
     private function getManager() {
         return $this->get('virgule.teacher_manager');
@@ -115,6 +115,9 @@ class TeacherController extends AbstractVirguleController {
         $form->bind($request);        
         
         $entity->setRegistrationDate(new \DateTime('now'));
+        $expirationDate = new \DateTime("now");
+        $expirationDate->modify("+30 day");
+        $entity->setExpiresAt($expirationDate);
         
         $em = $this->getDoctrine()->getManager();
         $currentBranchId = $this->getSelectedOrganizationBranch()->getId();
