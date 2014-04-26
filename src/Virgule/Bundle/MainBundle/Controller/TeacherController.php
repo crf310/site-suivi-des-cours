@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  *
  * @Route("/teacher")
  */
-class crTeacherController extends AbstractVirguleController {
+class TeacherController extends AbstractVirguleController {
 
     private function getManager() {
         return $this->get('virgule.teacher_manager');
