@@ -94,8 +94,13 @@ class CourseController extends AbstractVirguleController {
         $semesterId = $this->getSelectedSemesterId();
         
         $courses = $this->getManager()->getAllHydratedCourses($semesterId);
+        $courseIds = Array();
+        foreach ($courses as $course) {
+            $courseIds[] = $course->getId();
+        }
         
-        return Array('courses' => $courses);
+        $nbClassSessions = $this->getCourseRepository()->getNumberOfClassSessionsPerCourse($courseIds);
+        return Array('courses' => $courses, 'nbClassSessions' => $nbClassSessions);
     }
 
     /**

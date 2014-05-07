@@ -23,6 +23,7 @@
                             <th>Formateur</th>
                             <th>Salle</th>
                             <th>Etudiants inscrits</th>
+                            <th>Comptes rendus saisis</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -45,6 +46,7 @@
                             </td>
                             <td>{{ course.classRoomName }}</td> 
                             <td class="center">{{ course.nbStudents }}</td>
+                            <td class="center">{{ nbClassSessions[course.id]['nb_classsessions'] }}</td>
                             <td>                                                    
                                 <div class="btn-group">
                                     <a href="#" data-toggle="dropdown" class="btn btn-default btn-xs dropdown-toggle">Actions <span class="caret"></span></a>

@@ -131,29 +131,4 @@ class ClassSessionRepository extends EntityRepository {
         return $nbClassSessions;  
     }
     
-    public function getNumberOfClassSessionsPerCourse(Array $courseIds) {        
-         $qb = $this->getDefaultQueryBuilder()
-                 ->addSelect('c.id as course_id, count(cs.id) as nb_classsessions')
-                 ->innerJoin('cs.course', 'c', 'WITH', 'c.id IN (:coursesIds)')
-                 ->setParameter('coursesIds', $courseIds, Connection::PARAM_INT_ARRAY)
-                 ->groupBy('c.id');
-         
-        $q = $qb->getQuery();
-        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $results;  
-    }
-    
-    public function getNumberOfClassSessionsPerCourseAndStudent(Array $courseIds, $studentId) {        
-         $qb = $this->getDefaultQueryBuilder()
-                 ->addSelect('c.id as course_id, count(cs.id) as nb_classsessions')
-                 ->innerJoin('cs.course', 'c', 'WITH', 'c.id IN (:coursesIds)')
-                 ->innerJoin('cs.classSessionStudents', 's', 'WITH', 's.id = :studentId')
-                 ->setParameter('coursesIds', $courseIds, Connection::PARAM_INT_ARRAY)
-                 ->setParameter('studentId', $studentId)
-                 ->groupBy('c.id');
-         
-        $q = $qb->getQuery();
-        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $results;  
-    }
 }

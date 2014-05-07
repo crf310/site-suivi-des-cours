@@ -109,16 +109,15 @@ class StudentManager extends BaseManager {
         
         $courses = Array();
         if (count($courseIds) > 0) {
-            $classSessionRepository = $this->em->getRepository('VirguleMainBundle:ClassSession');
-            $classSessions = $classSessionRepository->getNumberOfClassSessionsPerCourse($courseIds);
-            $classSessionsAttended = $classSessionRepository->getNumberOfClassSessionsPerCourseAndStudent($courseIds, $studentId);
+            $courseRepository = $this->em->getRepository('VirguleMainBundle:Course');
+            $classSessions = $courseRepository->getNumberOfClassSessionsPerCourse($courseIds);
+            $classSessionsAttended = $courseRepository->getNumberOfClassSessionsPerCourseAndStudent($courseIds, $studentId);
         
-            foreach ($classSessions as $classSession) {
-                $courses[$classSession['course_id']] = Array('nb_classsessions' => $classSession['nb_classsessions'], 'nb_classsessions_attended' => 0);
-            }
-
-            foreach ($classSessionsAttended as $classSessionAttended) {
-                $courses[$classSession['course_id']]['nb_classsessions_attended'] = $classSessionAttended['nb_classsessions'];
+            foreach ($classSessions as $courseId => $classSession) {
+                $courses[$courseId] = Array('nb_classsessions' => $classSession['nb_classsessions'], 'nb_classsessions_attended' => 0);
+                if (array_key_exists($courseId, $classSessionsAttended)) {
+                    $courses[$courseId]['nb_classsessions_attended'] = $classSessionsAttended[$courseId]['nb_classsessions'];
+                }
             }
         }
         return $courses;
