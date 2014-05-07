@@ -29,14 +29,21 @@
                     <tbody>
                         {% for key,entity in students_array %}
                         <tr class="gradeA">
-                            <td class="center">
-                                <img src="{{ asset('img/drapeaux/' ~ entity['nativeCountry'] | lower ~ '.png')}}" alt="{{  entity['nativeCountry'] | upper | country2 }}" title="{{  entity['nativeCountry'] | upper | country2 }}" />
-                            </td>
-                            <td class="center">
-                                {% if entity['gender'] == 'F' %}
-                                    <img src="{{ asset('img/icons/user_female.png') }}" />
-                                {% else %}
-                                    <img src="{{ asset('img/icons/user.png') }}" />
+                            {% set countryName =  entity['nativeCountry'] | upper | country2 %}
+                            <td class="center" data-order="{{ countryName }}">
+                                <img src="{{ asset('img/drapeaux/' ~ entity['nativeCountry'] | lower ~ '.png')}}" alt="{{ countryName }}" title="{{ countryName }}" />
+                            </td>                            
+                            {% set gender = '' %}
+                            {% if entity['gender'] == 'F' %}
+                                {% set gender = 'Féminin' %}
+                                {% set pictureName = 'user_female.png' %}
+                            {% elseif entity['gender'] == 'M' %}
+                                {% set gender = 'Masculin' %}
+                                {% set pictureName = 'user.png' %}
+                            {% endif %}
+                            <td class="center" data-order="{{ gender }}">
+                                {% if gender is not empty %}
+                                    <img src="{{ asset('img/icons/' ~ pictureName ) }}" alt="{{ gender }}" title="{{ gender }}"  />
                                 {% endif %}
                             </td>
                             <td>{{ entity['lastname'] }}</td>
