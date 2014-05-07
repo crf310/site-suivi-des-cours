@@ -70,8 +70,8 @@ class MenuBuilder extends ContainerAware {
         $menu->addChild('Aide', array('route' => 'help'));
         $menu['Aide']->setLinkAttribute('class', 'help');
         
-        $menu->addChild('Signaler un problème', array('route' => 'alert_issue'));
-        $menu['Signaler un problème']->setLinkAttribute('class', 'alert_issue');
+        $menu->addChild('Signaler un problème', array('route' => 'report_issue'));
+        $menu['Signaler un problème']->setLinkAttribute('class', 'report_issue');
             
         return $menu;
     }
