@@ -137,7 +137,7 @@ h2 { font-size: 13px; }
 #sidebar a.help i.main-icon {
     background-image: url('../img/icons/help.png');
 }
-#sidebar a.alert_issue i.main-icon {
+#sidebar a.report_issue i.main-icon {
     background-image: url('../img/icons/bell.png');
 }
 i.my-icon-go {
@@ -201,6 +201,9 @@ i.my-icon-copy {
 i.my-icon-trombinoscope {
     background-image: url('../img/icons/vcard.png');
     padding-top: 25px;
+}
+i.my-icon-class_edit {
+    background-image: url('../img/icons/calendar_edit.png');
 }
 i.my-document-list {
     background-image: url('../img/icons/book.png');
