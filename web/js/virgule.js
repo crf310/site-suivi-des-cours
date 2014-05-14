@@ -29,7 +29,7 @@ window.setTimeout(function() {
      $(".alert-global").fadeTo(500, 0).slideUp(500, function(){
           $(this).remove(); 
      });
-}, 5000);
+}, 10000);
 
 $(function(){
     $('#add-comment').click(function(e){
