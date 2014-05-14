@@ -29,11 +29,19 @@ class AddClassSessionStudentsFieldSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents() {
         return array(
-            FormEvents::PRE_BIND => 'preBind',
-            FormEvents::PRE_SET_DATA => 'preSetData',
+            FormEvents::PRE_SET_DATA    => 'preSetData',
+            FormEvents::PRE_SUBMIT      => 'preSubmit',
+            FormEvents::SUBMIT          => 'submit',
         );
     }
 
+    /**
+     * @param \Symfony\Component\Form\FormEvent $event
+     */
+    public function submit(FormEvent $event) {
+        $data = $event->getData();
+        $form = $event->getForm();
+    }
     /**
      * @param \Symfony\Component\Form\FormEvent $event
      */
@@ -62,7 +70,7 @@ class AddClassSessionStudentsFieldSubscriber implements EventSubscriberInterface
         $this->customizeForm($form, $courseId, $selectedEnrolledStudents, $selectedNonEnrolledStudents);
     }
 
-    public function preBind(FormEvent $event) {
+    public function preSubmit(FormEvent $event) {
         $data = $event->getData();
         $course = $data['course'];
         $form = $event->getForm();
@@ -114,11 +122,6 @@ class AddClassSessionStudentsFieldSubscriber implements EventSubscriberInterface
 
             ));
             $form->add($nonEnrolledStudentsField);
-                
-            $form->add('course', 'hidden', array(
-                'data' => $courseId,
-                'mapped' => false))
-            ;
         } else {
             $semesterId = $this->semesterId;
             

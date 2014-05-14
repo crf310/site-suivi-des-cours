@@ -131,4 +131,19 @@ class ClassSessionRepository extends EntityRepository {
         return $nbClassSessions;  
     }
     
+    public function getNumberOfClassSessionsPerCourseAndDate($course, $date) {
+        $compareTo = $date->format('Y-m-d');
+         $qb = $this->getDefaultQueryBuilder()
+                 ->select('count(cs.id) as nb_classsessions')
+                 ->innerJoin('cs.course', 'c')
+                 ->where('c.id = :courseId')
+                 ->andWhere('cs.sessionDate = :date')
+                ->setParameter('courseId', $course->getId())
+                ->setParameter('date', $compareTo);
+         
+        $q = $qb->getQuery();
+        $nbClassSessions = $q->getSingleScalarResult();
+        return $nbClassSessions;  
+    }
+    
 }
