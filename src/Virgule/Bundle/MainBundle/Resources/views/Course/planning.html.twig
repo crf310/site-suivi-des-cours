@@ -36,18 +36,19 @@
                                 {% if classRoomCell.hasCourse %} 
                                 <div class="classCell" style="border: 2px solid {{ classRoomCell.course.classLevelColorCode }}">
                                     <a class="course_details" href="{{ path('course_show', { 'id': classRoomCell.course.id }) }}">
-                                        <p>
                                         {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classRoomCell.course.classLevelColorCode, 'classLevelLabel': classRoomCell.course.classLevelLabel } %}
-                                        <br/>
+                                        <p>
                                         {{ classRoomCell.course.startTime | date('H:i') }} - {{ classRoomCell.course.endTime | date('H:i') }}
                                         <br />
                                         {% for teacher in classRoomCell.course.teachers %}
                                             {% if forPrint %}
                                                 {% set teacherLastname = teacher['teacher_lastName'] | slice(0,1) ~ "." %}
+                                                {% set separator = ', ' %}
                                             {% else %}
                                                 {% set teacherLastname = teacher['teacher_lastName'] %}
+                                                {% set separator = "\n" %}
                                             {% endif %}
-                                            {{ teacher['teacher_firstName'] }} {{ teacherLastname }}{% if not loop.last %}<br />{% endif %}
+                                            {{ teacher['teacher_firstName'] }} {{ teacherLastname }}{% if not loop.last %}{{ separator|nl2br }}{% endif %}
                                         {% endfor %}
                                         {% if classRoomCell.course.alternateStartDate is not empty or classRoomCell.course.alternateStartDate is not empty %}
                                             {% set currentSemester = app.session.get('currentSemester') %}

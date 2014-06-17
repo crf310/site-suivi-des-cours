@@ -1,6 +1,7 @@
 /*Planning */
 #planning th {
-    font-size: 8px;
+    font-weight: normal;
+    font-size: 12px;
     text-align: center;
     padding: 0;
     margin: 0;
@@ -20,11 +21,11 @@ a.course_details {
     color: #000000;
 }
 #updateDate {
-    font-size: 8px;
+    font-size: 10px;
 }
 span.label {
     display:inline-block;
-    margin-bottom: 5px;
+    margin-bottom: 25px;
 }
 h5 {
     font-size: 11px;
