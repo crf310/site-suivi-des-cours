@@ -65,7 +65,7 @@ class CourseController extends AbstractVirguleController {
         $pdfGenerator = $this->get('siphoc.pdf.generator');
         $fileName = 'planning.pdf';
         $pdfGenerator->setName($fileName);
-        return $pdfGenerator->displayForView(
+        return $pdfGenerator->downloadFromView(
             'VirguleMainBundle:Course:planning.print.html.twig',
             $this->generatePlanning(true),
             array('orientation' => 'landscape')
