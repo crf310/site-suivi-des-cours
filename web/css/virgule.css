@@ -326,6 +326,10 @@ a.course_details {
     text-decoration: none;
     color: #000000;
 }
+#planning span.label {
+    display:inline-block;
+    margin-bottom: 10px;
+}
 
 /* Student profile */
 div .none-found {

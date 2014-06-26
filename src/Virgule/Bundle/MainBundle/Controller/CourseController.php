@@ -62,7 +62,15 @@ class CourseController extends AbstractVirguleController {
      * @Template("VirguleMainBundle:Course:planning.print.html.twig")
      */
     public function printPlanningAction() {
-        return $this->generatePlanning();
+        $pdfGenerator = $this->get('siphoc.pdf.generator');
+        $fileName = 'planning.pdf';
+        $pdfGenerator->setName($fileName);
+        return $pdfGenerator->downloadFromView(
+            'VirguleMainBundle:Course:planning.print.html.twig',
+            $this->generatePlanning(true),
+            array('orientation' => 'landscape')
+        );
+        
     }
     
     /**
@@ -75,15 +83,15 @@ class CourseController extends AbstractVirguleController {
         return $this->generatePlanning();
     }
     
-    private function generatePlanning() {
+    private function generatePlanning($forPrint = false) {
         $semesterId = $this->getSelectedSemesterId();
         
         $courses = $this->getManager()->getAllHydratedCourses($semesterId);
         
         $planning = new Planning($courses, true);
-        return Array('headerCells' => $planning->getHeader(), 'planningRows' => $planning->getRows());
-        
+        return Array('headerCells' => $planning->getHeader(), 'planningRows' => $planning->getRows(), 'forPrint' => $forPrint);
     }
+    
     /**
      * Lists all Course entities.
      *

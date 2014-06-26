@@ -1,0 +1,32 @@
+/*Planning */
+#planning th {
+    font-weight: normal;
+    font-size: 12px;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+#planning td {
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    height: 1px;
+}
+#planning span {
+    margin-bottom: 0px;
+}
+a.course_details {
+    text-decoration: none;
+    color: #000000;
+}
+#updateDate {
+    font-size: 10px;
+}
+span.label {
+    display:inline-block;
+    margin-bottom: 25px;
+}
+h5 {
+    font-size: 20px;
+}
