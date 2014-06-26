@@ -89,6 +89,9 @@ h2 { font-size: 13px; }
 #sidebar a.welcome i.main-icon {
     background-image: url('../img/icons/house.png');
 }
+#sidebar a.profile i.main-icon {
+    background-image: url('../img/icons/user_suit.png');
+}
 #sidebar a.minutes i.main-icon {
     background-image: url('../img/icons/page.png');
 }
@@ -133,6 +136,9 @@ h2 { font-size: 13px; }
 }
 #sidebar a.help i.main-icon {
     background-image: url('../img/icons/help.png');
+}
+#sidebar a.report_issue i.main-icon {
+    background-image: url('../img/icons/bell.png');
 }
 i.my-icon-go {
     background-image: url('../img/icons/arrow_right.png');
@@ -195,6 +201,9 @@ i.my-icon-copy {
 i.my-icon-trombinoscope {
     background-image: url('../img/icons/vcard.png');
     padding-top: 25px;
+}
+i.my-icon-class_edit {
+    background-image: url('../img/icons/calendar_edit.png');
 }
 i.my-document-list {
     background-image: url('../img/icons/book.png');
@@ -316,6 +325,10 @@ li.document { list-style-image:url('../img/icons/book.png'); }
 a.course_details {
     text-decoration: none;
     color: #000000;
+}
+#planning span.label {
+    display:inline-block;
+    margin-bottom: 10px;
 }
 
 /* Student profile */
