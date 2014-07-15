@@ -122,8 +122,8 @@ class CourseRepository extends EntityRepository {
         return $q;
     }
 
-    public function loadAll($semesterId) {
-        $q = $this
+    public function loadAll($semesterId, $classRoomIds = null) {
+        $qb = $this
                 ->createQueryBuilder('c')
                 ->addSelect('c.id as course_id, c.dayOfWeek, c.startTime, c.endTime, c.alternateStartdate, c.alternateEnddate')
                 ->addSelect('r.id as classroom_id, r.name as classroom_name')
@@ -138,8 +138,13 @@ class CourseRepository extends EntityRepository {
                 ->where('s.id = :semesterId')
                 ->groupBy('c.id, t.id')
                 ->add('orderBy', 'c.dayOfWeek ASC, c.startTime ASC')
-                ->setParameter('semesterId', $semesterId)
-                ->getQuery()
+                ->setParameter('semesterId', $semesterId);
+        if (!empty($classRoomIds)) {
+            $qb->andWhere('r.id IN (:classRoomIds)');
+            $qb->setParameter('classRoomIds', $classRoomIds, Connection::PARAM_INT_ARRAY);
+        }
+        
+        $q = $qb->getQuery();
         ;
         $results = $q->execute(array(), Query::HYDRATE_ARRAY);
 

@@ -85,12 +85,13 @@ class LoadCourseData extends AbstractFixture implements OrderedFixtureInterface 
             $courseG->setStartTime(new \DateTime('18:00'));
             $courseG->setEndTime(new \DateTime('19:30'));
             $courseG->setOrganizationBranch($this->getReference('deleg-3-10'));
-            $courseG->setClassRoom($this->getReference('musee'));
+            $courseG->setClassRoom($this->getReference('baby-boutique'));
             $courseG->setSemester($this->getReference($semesterReference));
             $courseG->setClassLevel($this->getReference('A2'));
             $courseG->addTeacher($this->getReference('prof1'));
             $courseG->addTeacher($this->getReference('prof4'));
             
+            // Samedi
             $courseH = new Course();
             $courseH->setDayOfWeek(6);
             $courseH->setStartTime(new \DateTime('9:00'));
@@ -133,11 +134,11 @@ class LoadCourseData extends AbstractFixture implements OrderedFixtureInterface 
             $courseK->addTeacher($this->getReference('prof6'));
                         
             $courseL = new Course();
-            $courseL->setDayOfWeek(3);
-            $courseL->setStartTime(new \DateTime('17:00'));
-            $courseL->setEndTime(new \DateTime('18:30'));
+            $courseL->setDayOfWeek(6);
+            $courseL->setStartTime(new \DateTime('12:00'));
+            $courseL->setEndTime(new \DateTime('13:30'));
             $courseL->setOrganizationBranch($this->getReference('deleg-3-10'));
-            $courseL->setClassRoom($this->getReference('salle-cours'));
+            $courseL->setClassRoom($this->getReference('baby-boutique'));
             $courseL->setSemester($this->getReference($semesterReference));
             $courseL->setClassLevel($this->getReference('B1/2'));
             $courseL->addTeacher($this->getReference('prof5'));

@@ -36,9 +36,9 @@ class CourseManager extends BaseManager {
      * and group teachers
      * @param type $semesterId
      */
-    public function getAllHydratedCourses($semesterId) {
+    public function getAllHydratedCourses($semesterId, $classRoomIds = null) {
         $coursesHydrated = Array();
-        $courses = $this->getRepository()->loadAll($semesterId);
+        $courses = $this->getRepository()->loadAll($semesterId, $classRoomIds);
 
         // sub array to group multiple teachers      
         $course_ids = Array();

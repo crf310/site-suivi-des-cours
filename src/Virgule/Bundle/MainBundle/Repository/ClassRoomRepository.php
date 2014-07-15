@@ -17,13 +17,19 @@ class ClassRoomRepository extends EntityRepository {
         return $this->createQueryBuilder('cr')->add('orderBy', 'cr.id');
     }
     
-    public function getClassRoomsForOrganizationBranch($organizationBranchId) {
+    public function getClassRoomsForOrganizationBranchQueryBuilder($organizationBranchId) {
         $qb = $this->createDefaultQueryBuilder()
-                ->select('cr.id as classroom_id, cr.name as classroom_name, cr.address as classroom_address, cr.comments as classroom_comments')
                 ->innerJoin('cr.organizationBranch' , 'ob')
+                ->orderBy('cr.name')
                 ->where('ob.id = :organizationBranchId')
                 ->setParameter('organizationBranchId', $organizationBranchId);
-        
+        $id = $organizationBranchId;
+        return $qb;
+    }
+    
+    public function getClassRoomsForOrganizationBranch($organizationBranchId) {
+        $qb = $this->getClassRoomsForOrganizationBranchQueryBuilder($organizationBranchId);
+        $qb->select('cr.id as classroom_id, cr.name as classroom_name, cr.address as classroom_address, cr.comments as classroom_comments');
         $q = $qb->getQuery();
         $students = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $students;

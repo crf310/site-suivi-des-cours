@@ -77,6 +77,29 @@ $(function(){
     });
 });
 
+$(function(){
+    $('#select-planning-classrooms-modal').click(function(e){
+        e.preventDefault();
+        bootbox.dialog({
+            message: $('#select-planning-classrooms-modal-body').html(),
+            title: "Choisir les salles à afficher dans le planning",
+            buttons: {
+                no: {
+                    label: "Annuler",
+                    className: "btn-default"
+                },
+                yes: {
+                    label: "Exporter le planning",
+                    className: "btn-success",
+                    callback: function() {
+                        $(".bootbox #select-planning-classrooms-form").submit();
+                    }
+                }
+             }
+        });
+    });
+});
+
 // Override the global checkbox in tables as we're not using the iCheck 
 
 $(document).ready(function(){

@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\Course;
 use Virgule\Bundle\MainBundle\Entity\Planning\Planning;
 use Virgule\Bundle\MainBundle\Form\CourseType;
+use Virgule\Bundle\MainBundle\Form\SelectClassRoomType;
 use Virgule\Bundle\MainBundle\Form\FormConstants;
 
 /**
@@ -59,15 +60,18 @@ class CourseController extends AbstractVirguleController {
     /**
      *
      * @Route("/printPlanning", name="course_print_planning"))
+     * @Method("GET")
      * @Template("VirguleMainBundle:Course:planning.print.html.twig")
      */
-    public function printPlanningAction() {
+    public function printPlanningAction(Request $request) {
+        $classRooms = $request->query->get('classRoomForm[classRoom]', null, true);
+        // get classes from request
         $pdfGenerator = $this->get('siphoc.pdf.generator');
         $fileName = 'planning.pdf';
         $pdfGenerator->setName($fileName);
         return $pdfGenerator->downloadFromView(
             'VirguleMainBundle:Course:planning.print.html.twig',
-            $this->generatePlanning(true),
+            $this->generatePlanning(true, $classRooms),
             array('orientation' => 'landscape')
         );
         
@@ -80,13 +84,17 @@ class CourseController extends AbstractVirguleController {
      * @Template("VirguleMainBundle:Course:planning.web.html.twig")
      */
     public function showPlanningAction() {
-        return $this->generatePlanning();
+        $selectClassRoomForm = $this->createForm(new SelectClassRoomType($this->getDoctrineManager(), $this->getSelectedOrganizationBranchId()));
+        return array_merge(
+                array('selectClassRoomForm' => $selectClassRoomForm->createView()),
+                $this->generatePlanning()
+                );
     }
     
-    private function generatePlanning($forPrint = false) {
+    private function generatePlanning($forPrint = false, $classRoomIds = null) {
         $semesterId = $this->getSelectedSemesterId();
         
-        $courses = $this->getManager()->getAllHydratedCourses($semesterId);
+        $courses = $this->getManager()->getAllHydratedCourses($semesterId, $classRoomIds);
         
         $planning = new Planning($courses, true);
         return Array('headerCells' => $planning->getHeader(), 'planningRows' => $planning->getRows(), 'forPrint' => $forPrint);

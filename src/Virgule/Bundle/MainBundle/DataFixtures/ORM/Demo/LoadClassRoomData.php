@@ -36,7 +36,7 @@ class LoadClassRoomData extends AbstractFixture implements OrderedFixtureInterfa
         
         $this->addReference('salle-cours', $class1);
         $this->addReference('musee', $class2);
-        $this->addReference('baby-boutique', $class2);
+        $this->addReference('baby-boutique', $class3);
         
         $manager->flush();
     }
