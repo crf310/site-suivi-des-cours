@@ -40,7 +40,7 @@
             </div>              
         </div><!--/row-->             
         <div class="row">
-            {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Mes 12 derniers comptes rendus', 'classSessions': myClassSessions, 'nbColumns': 3 }  %}
+            {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Mes 12 derniers comptes rendus', 'classSessions': myClassSessions, 'nbColumns': 3, 'displayAllClassSessionsButton': true }  %}
         </div><!--/row-->             
         <div class="row">
             {% include 'VirguleMainBundle:Document:mini-list.html.twig' with { 'title': 'Mes documents', 'documents': myDocuments, 'nbColumns': 3, 'displayAllDocumentButton': true }  %}
