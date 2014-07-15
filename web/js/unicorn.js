@@ -18,7 +18,8 @@ $(function(){
 	$("html").niceScroll({
 		hideraildelay: 1,
 		zindex: 9999,
-		horizrailenabled: false
+		horizrailenabled: false,
+                cursorwidth: 12
 	});
 	
 	// === Resize window related === //

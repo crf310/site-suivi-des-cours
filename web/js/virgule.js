@@ -100,9 +100,9 @@ $(function(){
     });
 });
 
-// Override the global checkbox in tables as we're not using the iCheck 
-
+// Override Unicorn stuff
 $(document).ready(function(){
+    // Override the global checkbox in tables as we're not using the iCheck 
     $("span.icon input:checkbox, th input:checkbox").click(function() {
             var checkedStatus = this.checked;
             var checkbox = $(this).parents('.widget-box').find('tr td:first-child input:checkbox');		
@@ -115,5 +115,5 @@ $(document).ready(function(){
                             $(this).closest('.checker > span').addClass('checked');
                     }
             });
-    });	
+    });	    
 });
