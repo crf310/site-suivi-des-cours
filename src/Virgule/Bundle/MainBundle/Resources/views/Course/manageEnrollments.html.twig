@@ -3,40 +3,48 @@
     {{ parent() }}
     {% block javascripts %}
         <script type="text/javascript">
-        $(document).ready(function () {
-            function searchStudent(studentName) {
-                var imgPath = '{{ asset('img') }}';
-                
-                var studentSearchUrl = Routing.generate('student_search_name', { 'name': studentName });
-                
-                $.get(studentSearchUrl, function(data) {
-                    students = data;
-                    $("#studentsList").empty();
-                    $.each(data, function(i, item) {
-                        var studentLastName = data[i].lastname;
-                        var studentFirstName = data[i].firstname;
-                        var studentId = data[i].id;
-                        var studentGender = data[i].gender;
-                        var studentNativeCountryCode = data[i].nativeCountryCode;
-                        var studentNativeCountryName = data[i].nativeCountryName;
-                        
-                        var genderIcon = '/icons/user.png';
-                        if (studentGender == 'F') {
-                            genderIcon = '/icons/user_female.png';
-                        }
-                        $("#studentsList").append('\
-                            <li>\
-                                <div class="article-post">\
-                                    <p><strong>' + studentFirstName + ' ' + studentLastName + '</strong>\
-                                    <img src="' + imgPath  + genderIcon + '" />\
-                                    <img src="' + imgPath + '/drapeaux/' + studentNativeCountryCode.toLowerCase() + '.png" alt="' + studentNativeCountryName + '" title="' + studentNativeCountryName + '" />\
-                                    </p>\
-                                    <a href="#" class="btn btn-success btn-xs">Inscrire</a>\
-                                </div>\
-                            </li>');
-                    });
+        function enrollStudent(courseId, studentId) {
+            var studentEnrollUrl = Routing.generate('course_enroll_student', { 'courseId': courseId, 'studentId': studentId });
+            $.get(studentEnrollUrl, function(data) {
+
+            });
+        }
+        function searchStudent(studentName) {
+            var imgPath = '{{ asset('img') }}';
+
+            var studentSearchUrl = Routing.generate('student_search_name', { 'name': studentName });
+
+            $.get(studentSearchUrl, function(data) {
+                students = data;
+                $("#studentsList").empty();
+                $.each(data, function(i, item) {
+                    var studentLastName = data[i].lastname;
+                    var studentFirstName = data[i].firstname;
+                    var studentId = data[i].id;
+                    var studentGender = data[i].gender;
+                    var studentNativeCountryCode = data[i].nativeCountryCode;
+                    var studentNativeCountryName = data[i].nativeCountryName;
+
+                    var genderIcon = '/icons/user.png';
+                    if (studentGender == 'F') {
+                        genderIcon = '/icons/user_female.png';
+                    }
+                    $("#studentsList").append('\
+                        <li>\
+                            <div class="article-post">\
+                                <p><strong>' + studentFirstName + ' ' + studentLastName + '</strong>\
+                                <img src="' + imgPath  + genderIcon + '" />\
+                                <img src="' + imgPath + '/drapeaux/' + studentNativeCountryCode.toLowerCase() + '.png" alt="' + studentNativeCountryName + '" title="' + studentNativeCountryName + '" />\
+                                </p>\
+                                <a href="#" class="btn btn-success btn-xs" onClick="enrollStudent({{ course.id }}, ' + studentId + ');">Inscrire</a>\
+                            </div>\
+                        </li>');
                 });
-            }
+            });
+        }
+
+        $(document).ready(function () {
+            
             
             $('#searchStudentName').keyup(function() {
                 searchStudent($('#searchStudentName').val());

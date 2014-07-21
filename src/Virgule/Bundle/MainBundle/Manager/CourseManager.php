@@ -5,6 +5,7 @@ namespace Virgule\Bundle\MainBundle\Manager;
 use Doctrine\ORM\EntityManager;
 use Virgule\Bundle\MainBundle\Manager\BaseManager;
 use \Virgule\Bundle\MainBundle\Entity\Course;
+use \Virgule\Bundle\MainBundle\Entity\Student;
 use \Virgule\Bundle\MainBundle\Entity\CourseHydrated;
 
 class CourseManager extends BaseManager {
@@ -19,6 +20,25 @@ class CourseManager extends BaseManager {
         return $this->em->getRepository('VirguleMainBundle:Course');
     }
 
+    /**
+     * 
+     * @param \Virgule\Bundle\MainBundle\Entity\Course $courseId
+     * @param \Virgule\Bundle\MainBundle\Manager\Student $studentId
+     * @param type $enrollment
+     */
+    public function enrollmentAction(Course $courseId, Student $studentId, $enrollment = true) {
+        if ($enrollment) {
+            $courseId->addStudent($studentId);
+        } else {
+            $courseId->removeStudent($studentId);
+        }
+        
+        $this->em->persist($courseId);
+        $this->em->flush();
+        
+        return true;
+    }
+    
     public function getNumberOfOverlappingCourses(Course $course) {
         $courseId = $course->getId();
         $semesterId = $course->getSemester()->getId();

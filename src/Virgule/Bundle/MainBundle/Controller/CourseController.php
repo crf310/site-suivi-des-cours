@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\Course;
+use Virgule\Bundle\MainBundle\Entity\Student;
 use Virgule\Bundle\MainBundle\Entity\Planning\Planning;
 use Virgule\Bundle\MainBundle\Form\CourseType;
 use Virgule\Bundle\MainBundle\Form\SelectClassRoomType;
@@ -29,18 +30,29 @@ class CourseController extends AbstractVirguleController {
         return $this->get('virgule.course_manager');
     }
     
-    
+    /**
+     * Enroll a student 
+     * @Route("/{courseId}/enroll/{studentId}", name="course_enroll_student", defaults={"_format": "json"}, options={"expose"=true})
+     */
+    public function enrollAction(Course $courseId, Student $studentId) {
+        $result = $this->getCourseManager()->enrollmentAction($courseId, $studentId, true);
+        return $result;
+    }
+            
     /**
      *
-     * @Route("/{id}/enrollments", name="course_manage_enrollments"))
+     * @Route("/{id}/enrollments", name="course_manage_enrollments")
      * @Template("VirguleMainBundle:Course:manageEnrollments.html.twig")
      */
     public function manageEnrollmentsAction(Course $id) {
+        return array(
+            'course' => $id,
+        );
     }
     
     /**
      *
-     * @Route("/{id}/trombi", name="course_show_trombinoscope"))
+     * @Route("/{id}/trombi", name="course_show_trombinoscope")
      * @Template("VirguleMainBundle:Course:trombinoscope.web.html.twig")
      */
     public function showTrombinoscopeAction(Course $id) {    

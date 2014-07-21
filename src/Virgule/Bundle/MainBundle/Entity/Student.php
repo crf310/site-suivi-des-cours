@@ -248,7 +248,7 @@ class Student {
     private $fkScholarizationLanguage;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Course", inversedBy="students")
+     * @ORM\ManyToMany(targetEntity="Course", mappedBy="students")
      */
     private $courses;
 
