@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Virgule\Bundle\SecurityBundle\VirguleSecurityBundle(),
             
             new FOS\UserBundle\FOSUserBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
            
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sonata\IntlBundle\SonataIntlBundle(),
