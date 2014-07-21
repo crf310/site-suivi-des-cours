@@ -3,7 +3,10 @@
   {
     "id": "{{ student.id }}",
     "lastname": "{{ student.lastname }}",
-    "firstname": "{{ student.firstname }}"
+    "firstname": "{{ student.firstname }}",
+    "nativeCountryCode": "{{ student.nativeCountry }}",
+    "nativeCountryName": "{{ student.nativeCountry | country2 }}",
+    "gender": "{{ student.gender }}"
   }{% if not loop.last %},{% endif %}
 {% endfor %}
 ]

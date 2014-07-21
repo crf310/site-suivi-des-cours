@@ -24,7 +24,7 @@ class StudentController extends AbstractVirguleController {
     /**
      * Search for a student on its partial name and firstname
      *
-     * @Route("/search/{name}", name="student_search_name", defaults={"_format": "json"})
+     * @Route("/search/{name}", name="student_search_name", defaults={"_format": "json"}, options={"expose"=true})
      * @Template("VirguleMainBundle:Student:searchResults.json.twig")
      */     
     public function searchAction($name) {
