@@ -168,6 +168,10 @@ i.my-icon-add {
     background-image: url('../img/icons/add.png');    
     padding-top: 25px;
 }
+i.my-icon-manage-students {
+    background-image: url('../img/icons/group_add.png');    
+    padding-top: 25px;
+}
 i.my-icon-user-inactive {
     background-image: url('../img/icons/user_red.png');
 }
