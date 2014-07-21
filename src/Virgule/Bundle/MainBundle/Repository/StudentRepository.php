@@ -213,4 +213,17 @@ class StudentRepository extends EntityRepository {
         
         return $stmt->fetchAll();
     }
+    
+    public function searchStudent($name) {
+        $q = $this
+                ->createDefaultQueryBuilder()
+                ->where('s.firstname LIKE :name')
+                ->orWhere('s.lastname LIKE :name')
+                ->setParameter('name', '%' . $name . '%')
+                ->distinct()
+                ->getQuery()
+        ;
+        $students = $q->execute(array());
+        return $students;
+    }
 }

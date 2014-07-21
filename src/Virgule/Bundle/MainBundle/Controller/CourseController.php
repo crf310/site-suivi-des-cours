@@ -29,6 +29,15 @@ class CourseController extends AbstractVirguleController {
         return $this->get('virgule.course_manager');
     }
     
+    
+    /**
+     *
+     * @Route("/{id}/enrollments", name="course_manage_enrollments"))
+     * @Template("VirguleMainBundle:Course:manageEnrollments.html.twig")
+     */
+    public function manageEnrollmentsAction(Course $id) {
+    }
+    
     /**
      *
      * @Route("/{id}/trombi", name="course_show_trombinoscope"))

@@ -1,0 +1,64 @@
+{% extends '::main_content.html.twig' %}
+{% block head %}    
+    {{ parent() }}
+    {% block javascripts %}
+        <script type="text/javascript">
+        $(document).ready(function () {
+            function searchStudent(studentName) {
+                var studentSearchUrl = '{{ path('student_search_name', { 'name': 'student_name_param' }) }}';
+                studentSearchUrl = studentSearchUrl.replace("student_name_param", studentName);
+                
+                $.get(studentSearchUrl, function(data) {
+                    students = data;
+                    $("#studentsList").empty();
+                    $.each(data, function(i, item) {
+                        var studentLastName = data[i].lastname;
+                        var studentFirstName = data[i].firstname;
+                        var studentId = data[i].id;
+                        $("#studentsList").append('<li><div class="user-thumb"></div><div class="article-post"><span class="user-info"></span><p>' + studentFirstName + ' ' + studentLastName + '</p><a href="#" class="btn btn-success btn-xs">Inscrire</a></div></li>');
+                    });
+                });
+            }
+            
+            $('#searchStudentName').keyup(function() {
+                searchStudent($('#searchStudentName').val());
+            });
+        });
+        
+        
+        </script>
+    {% endblock %}
+{% endblock %}
+{% block content_title %}Gérez les inscriptions à ce cours{% endblock %}
+{%block submenu %}
+{% endblock %}
+{% block main_content %}
+<div class="row">
+    <div class="col-md-6 center">
+        <div class="widget-box">
+            <div class="widget-title">
+                <h5>Inscrire un nouvel apprenant</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <form action="#" method="get" class="form-horizontal">
+                    <div class="form-group">
+                        <div class="controls">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group input-group-sm">
+                                        <span class="input-group-addon">
+                                            <i class="icon-search"></i>
+                                        </span>
+                                        <input class="form-control" type="text" id="searchStudentName" placeholder="Saisissiez une partie du nom de l'apprenant recherché">
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </form>
+                <ul class="recent-posts" id="studentsList">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,9 @@
+[
+{% for student in students %}
+  {
+    "id": "{{ student.id }}",
+    "lastname": "{{ student.lastname }}",
+    "firstname": "{{ student.firstname }}"
+  }{% if not loop.last %},{% endif %}
+{% endfor %}
+]

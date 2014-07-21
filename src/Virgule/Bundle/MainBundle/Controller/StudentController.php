@@ -21,6 +21,18 @@ use Virgule\Bundle\MainBundle\Form\ClassLevelSuggestedType;
  */
 class StudentController extends AbstractVirguleController {
     
+    /**
+     * Search for a student on its partial name and firstname
+     *
+     * @Route("/search/{name}", name="student_search_name", defaults={"_format": "json"})
+     * @Template("VirguleMainBundle:Student:searchResults.json.twig")
+     */     
+    public function searchAction($name) {
+        $students = $this->getStudentRepository()->searchStudent($name);
+            
+        return Array('students' => $students);
+    }
+    
      /**
      * Preview the certificate of attendance in a web page
      *
