@@ -6,17 +6,17 @@
         function enrollStudent(courseId, studentId) {
             var studentEnrollUrl = Routing.generate('course_enroll_student', { 'courseId': courseId, 'studentId': studentId });
             $.get(studentEnrollUrl, function(data) {
-                $('#enroll-c' + courseId + '-s' + studentId).hide();
-                $('#unenroll-c' + courseId + '-s' + studentId).show();
+                $('#enroll-c' + courseId + '-s' + studentId).hide(2);
+                $('#unenroll-c' + courseId + '-s' + studentId).show(2);
             });
+    
         }
         
         function unenrollStudent(courseId, studentId) {
-            alert('unenroll');
             var studentUnenrollUrl = Routing.generate('course_unenroll_student', { 'courseId': courseId, 'studentId': studentId });
             $.get(studentUnenrollUrl, function(data) {
-                $('#enroll-c' + courseId + '-s' + studentId).show();
-                $('#unenroll-c' + courseId + '-s' + studentId).hide();
+                $('#enroll-c' + courseId + '-s' + studentId).show(2)
+                $('#unenroll-c' + courseId + '-s' + studentId).hide(2);
             });
         }
         
@@ -28,14 +28,14 @@
             $.get(studentSearchUrl, function(data) {
                 students = data;
                 $("#studentsList").empty();
-                $.each(data, function(i, item) {
-                    var studentLastName = data[i].lastname;
-                    var studentFirstName = data[i].firstname;
-                    var studentId = data[i].id;
-                    var studentGender = data[i].gender;
-                    var studentNativeCountryCode = data[i].nativeCountryCode;
-                    var studentNativeCountryName = data[i].nativeCountryName;
-
+                $.each(data, function(i, student) {
+                    var studentLastName = student.lastname;
+                    var studentFirstName = student.firstname;
+                    var studentId = student.id;
+                    var studentGender = student.gender;
+                    var studentNativeCountryCode = student.nativeCountryCode;
+                    var studentNativeCountryName = student.nativeCountryName;
+                    
                     var genderIcon = '/icons/user.png';
                     if (studentGender === 'F') {
                         genderIcon = '/icons/user_female.png';
@@ -46,10 +46,18 @@
                             <td><img src="' + imgPath + '/drapeaux/' + studentNativeCountryCode.toLowerCase() + '.png" alt="' + studentNativeCountryName + '" title="' + studentNativeCountryName + '" /></td>\
                             <td><strong>' + studentFirstName + ' ' + studentLastName + '</strong></td>\
                             <td>\
-                                <a id="enroll-c{{ course.id }}-s' + studentId + ' href="#" class="btn btn-success btn-xs" onClick="enrollStudent({{ course.id }}, ' + studentId + ');">Inscrire</a>\
-                                <a id="unenroll-c{{ course.id }}-s' + studentId + '  href="#" class="btn btn-danger btn-xs" onClick="unenrollStudent({{ course.id }}, ' + studentId + ');">Désinscrire</a>\
+                                <a id="enroll-c{{ course.id }}-s' + studentId + '" href="#" class="btn btn-success btn-xs" onClick="enrollStudent({{ course.id }}, ' + studentId + ');">Inscrire</a>\
+                                <a id="unenroll-c{{ course.id }}-s' + studentId + '" href="#" class="btn btn-danger btn-xs" onClick="unenrollStudent({{ course.id }}, ' + studentId + ');">Désinscrire</a>\
                             </td>\
                         </tr>');
+                    
+                    $('#unenroll-c{{ course.id }}-s' + studentId).hide();
+                    $.each(student.courses, function(j, course) {
+                        if (course.id === {{ course.id }}) {
+                            $('#enroll-c{{ course.id }}-s' + studentId).hide();
+                            $('#unenroll-c{{ course.id }}-s' + studentId).show();
+                        }
+                    });
                 });
             });
         }

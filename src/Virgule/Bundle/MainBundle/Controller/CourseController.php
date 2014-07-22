@@ -4,6 +4,7 @@ namespace Virgule\Bundle\MainBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -32,20 +33,20 @@ class CourseController extends AbstractVirguleController {
     
     /**
      * Enroll a student 
-     * @Route("/{courseId}/enroll/{studentId}", name="course_enroll_student", defaults={"_format": "json"}, options={"expose"=true})
+     * @Route("/{courseId}/enroll/{studentId}", name="course_enroll_student", options={"expose"=true})
      */
     public function enrollAction(Course $courseId, Student $studentId) {
         $result = $this->getCourseManager()->enrollmentAction($courseId, $studentId, true);
-        return $result;
+        return new Response();
     }    
     
     /**
      * Enroll a student 
-     * @Route("/{courseId}/unenroll/{studentId}", name="course_unenroll_student", defaults={"_format": "json"}, options={"expose"=true})
+     * @Route("/{courseId}/unenroll/{studentId}", name="course_unenroll_student", options={"expose"=true})
      */
     public function unenrollAction(Course $courseId, Student $studentId) {
         $result = $this->getCourseManager()->enrollmentAction($courseId, $studentId, false);
-        return $result;
+        return new Response();
     }
             
     /**

@@ -6,7 +6,14 @@
     "firstname": "{{ student.firstname }}",
     "nativeCountryCode": "{{ student.nativeCountry }}",
     "nativeCountryName": "{{ student.nativeCountry | country2 }}",
-    "gender": "{{ student.gender }}"
+    "gender": "{{ student.gender }}",
+    "courses": [
+      {% for course in student.courses %}
+      {
+        "id": {{ course.id }}
+      }{% if not loop.last %},{% endif %}
+      {% endfor %}
+    ]
   }{% if not loop.last %},{% endif %}
 {% endfor %}
 ]
