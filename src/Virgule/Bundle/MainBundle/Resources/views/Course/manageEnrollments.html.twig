@@ -3,11 +3,13 @@
     {{ parent() }}
     {% block javascripts %}
         <script type="text/javascript">
+        var fadeTime = 500;
         function enrollStudent(courseId, studentId) {
             var studentEnrollUrl = Routing.generate('course_enroll_student', { 'courseId': courseId, 'studentId': studentId });
             $.get(studentEnrollUrl, function(data) {
-                $('#enroll-c' + courseId + '-s' + studentId).hide(2);
-                $('#unenroll-c' + courseId + '-s' + studentId).show(2);
+                $('#enroll-c' + courseId + '-s' + studentId).fadeOut(fadeTime, function(){
+                    $('#unenroll-c' + courseId + '-s' + studentId).fadeIn(fadeTime);
+                });
             });
     
         }
@@ -15,8 +17,9 @@
         function unenrollStudent(courseId, studentId) {
             var studentUnenrollUrl = Routing.generate('course_unenroll_student', { 'courseId': courseId, 'studentId': studentId });
             $.get(studentUnenrollUrl, function(data) {
-                $('#enroll-c' + courseId + '-s' + studentId).show(2)
-                $('#unenroll-c' + courseId + '-s' + studentId).hide(2);
+                $('#unenroll-c' + courseId + '-s' + studentId).fadeOut(fadeTime, function(){
+                    $('#enroll-c' + courseId + '-s' + studentId).fadeIn(fadeTime);
+                });
             });
         }
         
