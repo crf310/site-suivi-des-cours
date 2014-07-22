@@ -6,9 +6,20 @@
         function enrollStudent(courseId, studentId) {
             var studentEnrollUrl = Routing.generate('course_enroll_student', { 'courseId': courseId, 'studentId': studentId });
             $.get(studentEnrollUrl, function(data) {
-
+                $('#enroll-c' + courseId + '-s' + studentId).hide();
+                $('#unenroll-c' + courseId + '-s' + studentId).show();
             });
         }
+        
+        function unenrollStudent(courseId, studentId) {
+            alert('unenroll');
+            var studentUnenrollUrl = Routing.generate('course_unenroll_student', { 'courseId': courseId, 'studentId': studentId });
+            $.get(studentUnenrollUrl, function(data) {
+                $('#enroll-c' + courseId + '-s' + studentId).show();
+                $('#unenroll-c' + courseId + '-s' + studentId).hide();
+            });
+        }
+        
         function searchStudent(studentName) {
             var imgPath = '{{ asset('img') }}';
 
@@ -26,26 +37,24 @@
                     var studentNativeCountryName = data[i].nativeCountryName;
 
                     var genderIcon = '/icons/user.png';
-                    if (studentGender == 'F') {
+                    if (studentGender === 'F') {
                         genderIcon = '/icons/user_female.png';
                     }
                     $("#studentsList").append('\
-                        <li>\
-                            <div class="article-post">\
-                                <p><strong>' + studentFirstName + ' ' + studentLastName + '</strong>\
-                                <img src="' + imgPath  + genderIcon + '" />\
-                                <img src="' + imgPath + '/drapeaux/' + studentNativeCountryCode.toLowerCase() + '.png" alt="' + studentNativeCountryName + '" title="' + studentNativeCountryName + '" />\
-                                </p>\
-                                <a href="#" class="btn btn-success btn-xs" onClick="enrollStudent({{ course.id }}, ' + studentId + ');">Inscrire</a>\
-                            </div>\
-                        </li>');
+                        <tr>\
+                            <td><img src="' + imgPath  + genderIcon + '" /></td>\
+                            <td><img src="' + imgPath + '/drapeaux/' + studentNativeCountryCode.toLowerCase() + '.png" alt="' + studentNativeCountryName + '" title="' + studentNativeCountryName + '" /></td>\
+                            <td><strong>' + studentFirstName + ' ' + studentLastName + '</strong></td>\
+                            <td>\
+                                <a id="enroll-c{{ course.id }}-s' + studentId + ' href="#" class="btn btn-success btn-xs" onClick="enrollStudent({{ course.id }}, ' + studentId + ');">Inscrire</a>\
+                                <a id="unenroll-c{{ course.id }}-s' + studentId + '  href="#" class="btn btn-danger btn-xs" onClick="unenrollStudent({{ course.id }}, ' + studentId + ');">Désinscrire</a>\
+                            </td>\
+                        </tr>');
                 });
             });
         }
 
         $(document).ready(function () {
-            
-            
             $('#searchStudentName').keyup(function() {
                 searchStudent($('#searchStudentName').val());
             });
@@ -55,7 +64,7 @@
         </script>
     {% endblock %}
 {% endblock %}
-{% block content_title %}Gérez les inscriptions à ce cours{% endblock %}
+{% block content_title %}Gérez les inscriptions à ce cours : niveau {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevel.htmlColorCode, 'classLevelLabel': course.classLevel.label } %} le {{ course.dayOfWeek | day }} de {{ course.startTime | date('H\\hi') }} à {{ course.endTime | date('H\\hi') }}{% endblock %}
 {%block submenu %}
 {% endblock %}
 {% block main_content %}
@@ -81,8 +90,18 @@
                             </div>
                     </div>
                 </form>
-                <ul class="recent-posts" id="studentsList">
-                </ul>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>Nom</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentsList">
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -37,6 +37,15 @@ class CourseController extends AbstractVirguleController {
     public function enrollAction(Course $courseId, Student $studentId) {
         $result = $this->getCourseManager()->enrollmentAction($courseId, $studentId, true);
         return $result;
+    }    
+    
+    /**
+     * Enroll a student 
+     * @Route("/{courseId}/unenroll/{studentId}", name="course_unenroll_student", defaults={"_format": "json"}, options={"expose"=true})
+     */
+    public function unenrollAction(Course $courseId, Student $studentId) {
+        $result = $this->getCourseManager()->enrollmentAction($courseId, $studentId, false);
+        return $result;
     }
             
     /**
