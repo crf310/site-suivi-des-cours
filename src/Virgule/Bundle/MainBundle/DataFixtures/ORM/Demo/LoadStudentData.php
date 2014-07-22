@@ -110,21 +110,21 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
                         
             if (rand(1, 10) != 1) {
                 $idCourse1 = rand(1, $nbCourses);
-                $s->addCourse($this->getReference('course' . $idCourse1));
+                $this->getReference('course' . $idCourse1)->addStudent($s);
                 $idCourse2 = "-1";
                 if (rand(1, 5) % 5 == 0) {
                     $idCourse2 = rand(1, $nbCourses);
                     while ($idCourse1 == $idCourse2) {
                         $idCourse2 = rand(1, $nbCourses);
                     }
-                    $s->addCourse($this->getReference('course' . $idCourse2));
+                    $this->getReference('course' . $idCourse2)->addStudent($s);
                 } 
                 if (rand(1, 5) % 5 == 0) {
                     $idCourse3 = rand(1, $nbCourses);
                     while ($idCourse3 == $idCourse1 || $idCourse3 == $idCourse2) {
                         $idCourse3 = rand(1, $nbCourses);
                     }
-                    $s->addCourse($this->getReference('course' . $idCourse3));
+                    $this->getReference('course' . $idCourse3)->addStudent($s);
                 }
             }
                         
