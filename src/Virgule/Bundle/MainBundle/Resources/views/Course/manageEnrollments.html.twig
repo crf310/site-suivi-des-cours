@@ -1,6 +1,11 @@
 {% extends '::main_content.html.twig' %}
 {% block head %}    
     {{ parent() }}
+    {% block stylesheets %}
+    #loading {
+        display:none;
+    }
+    {% endblock %}
     {% block javascripts %}
         <script type="text/javascript">
         var fadeTime = 500;
@@ -23,17 +28,14 @@
             });
         }
         
-        function searchStudent(studentName) {
+        function searchStudent(studentName) {            
             $("#studentsList").empty();
-            
             if (studentName === "") {
-                alert('empty');
                 return;
             }
-            var imgPath = '{{ asset('img') }}';
-
+            $('#loadingIcon').switchClass('icons-search', 'icon-refresh icon-spin');
             var studentSearchUrl = Routing.generate('student_search_name', { 'name': studentName });
-            
+            var imgPath = '{{ asset('img') }}';
             $.get(studentSearchUrl, function(data) {
                 students = data;
                 $('#nbStudents').text(data.length);
@@ -51,8 +53,8 @@
                     }
                     $("#studentsList").append('\
                         <tr>\
-                            <td><img src="' + imgPath  + genderIcon + '" /></td>\
-                            <td><img src="' + imgPath + '/drapeaux/' + studentNativeCountryCode.toLowerCase() + '.png" alt="' + studentNativeCountryName + '" title="' + studentNativeCountryName + '" /></td>\
+                            <td class="center"><img src="' + imgPath  + genderIcon + '" /></td>\
+                            <td class="center"><img src="' + imgPath + '/drapeaux/' + studentNativeCountryCode.toLowerCase() + '.png" alt="' + studentNativeCountryName + '" title="' + studentNativeCountryName + '" /></td>\
                             <td><strong>' + studentFirstName + ' ' + studentLastName + '</strong></td>\
                             <td>\
                                 <a id="enroll-c{{ course.id }}-s' + studentId + '" href="#" class="btn btn-success btn-xs" onClick="enrollStudent({{ course.id }}, ' + studentId + ');">Inscrire</a>\
@@ -67,7 +69,8 @@
                             $('#unenroll-c{{ course.id }}-s' + studentId).show();
                         }
                     });
-                });
+                });                
+                $('#loadingIcon').switchClass('icon-refresh icon-spin', 'icons-search');
             });
         }
 
@@ -100,7 +103,7 @@
                                 <div class="col-md-12">
                                     <div class="input-group input-group-sm">
                                         <span class="input-group-addon">
-                                            <i class="icon-search"></i>
+                                            <i id="loadingIcon" class="icon-search"></i>
                                         </span>
                                         <input class="form-control" type="text" id="searchStudentName" placeholder="Saisissiez une partie du nom de l'apprenant recherché">
                                     </div>
