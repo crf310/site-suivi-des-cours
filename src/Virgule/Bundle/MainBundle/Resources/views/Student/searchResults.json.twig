@@ -1,18 +1,22 @@
 [
-{% for student in students %}
+{% for student in students_array %}
   {
-    "id": "{{ student.id }}",
-    "lastname": "{{ student.lastname }}",
-    "firstname": "{{ student.firstname }}",
-    "nativeCountryCode": "{{ student.nativeCountry }}",
-    "nativeCountryName": "{{ student.nativeCountry | country2 }}",
-    "gender": "{{ student.gender }}",
+    "id": "{{ student['student_id'] }}",
+    "lastname": "{{ student['lastname'] }}",
+    "firstname": "{{ student['firstname'] }}",
+    "nativeCountryCode": "{{ student['nativeCountry'] }}",
+    "nativeCountryName": "{{ student['nativeCountry'] | country2 }}",
+    "gender": "{{ student['gender'] }}",
     "courses": [
-      {% for course in student.courses %}
+    {% if courses_array is defined and courses_array|length > 0 %}
+      {% for course in courses_array[student['student_id']] %}
+        {% if course|length > 0 %}
       {
-        "id": {{ course.id }}
+        "id": {{ course['course_id'] }}
       }{% if not loop.last %},{% endif %}
+        {% endif %}
       {% endfor %}
+    {% endif %}
     ]
   }{% if not loop.last %},{% endif %}
 {% endfor %}

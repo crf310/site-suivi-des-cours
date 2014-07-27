@@ -28,9 +28,8 @@ class StudentController extends AbstractVirguleController {
      * @Template("VirguleMainBundle:Student:searchResults.json.twig")
      */     
     public function searchAction($name) {
-        $students = $this->getStudentRepository()->searchStudent($name);
-            
-        return Array('students' => $students);
+        $students = $this->getStudentManager()->searchStudent($name);
+        return $students;
     }
     
      /**

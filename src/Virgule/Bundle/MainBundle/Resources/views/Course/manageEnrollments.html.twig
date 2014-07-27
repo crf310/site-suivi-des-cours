@@ -27,7 +27,7 @@
             var imgPath = '{{ asset('img') }}';
 
             var studentSearchUrl = Routing.generate('student_search_name', { 'name': studentName });
-
+            
             $.get(studentSearchUrl, function(data) {
                 students = data;
                 $("#studentsList").empty();
