@@ -126,6 +126,9 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
                     }
                     $this->getReference('course' . $idCourse3)->addStudent($s);
                 }
+                
+                // subscribe to one course from the previous semester
+                $this->getReference('course' . rand($nbCourses+1, $nbCourses + $nbCourses))->addStudent($s);
             }
                         
             $manager->persist($s);

@@ -4,12 +4,21 @@
     {% block javascripts %}
         <script type="text/javascript">
         var fadeTime = 500;
+        function toggleButton(idToHide, idToShow) {
+            if ($(idToHide).length > 0) {
+                $(idToHide).fadeOut(fadeTime, function(){
+                    $(idToShow).fadeIn(fadeTime);
+                });
+            }
+        }
+        
         function enrollStudent(courseId, studentId) {
             var studentEnrollUrl = Routing.generate('course_enroll_student', { 'courseId': courseId, 'studentId': studentId });
             $.get(studentEnrollUrl, function(data) {
-                $('#enroll-c' + courseId + '-s' + studentId).fadeOut(fadeTime, function(){
-                    $('#unenroll-c' + courseId + '-s' + studentId).fadeIn(fadeTime);
-                });
+                var id = 'enroll-c' + courseId + '-s' + studentId; 
+                toggleButton('#' + id, '#un' + id);
+                id = 'enroll-c' + courseId + '-s' + studentId + '-2'; 
+                toggleButton('#' + id, '#un' + id);
             });
     
         }
@@ -17,9 +26,10 @@
         function unenrollStudent(courseId, studentId) {
             var studentUnenrollUrl = Routing.generate('course_unenroll_student', { 'courseId': courseId, 'studentId': studentId });
             $.get(studentUnenrollUrl, function(data) {
-                $('#unenroll-c' + courseId + '-s' + studentId).fadeOut(fadeTime, function(){
-                    $('#enroll-c' + courseId + '-s' + studentId).fadeIn(fadeTime);
-                });
+                var id = 'enroll-c' + courseId + '-s' + studentId; 
+                toggleButton('#un' + id, '#' + id);
+                id = 'enroll-c' + courseId + '-s' + studentId + '-2';
+                toggleButton('#un' + id, '#' + id);
             });
         }
         
@@ -125,6 +135,81 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+    <div class="col-md-6 center">
+        <div class="widget-box">
+            <div class="widget-title">
+                <h5>Retrouvez des apprenants d'un cours de la session précédente</h5>
+            </div>
+            <div id="accordion" class="accordion">
+            {% if previousCourses|length == 0 %}
+                    <div class="none-found">Aucun cours n'a été trouvé pour vous dans la session précédente</div>
+            {% else %}
+                {% for previousCourse in previousCourses %}
+                <div class="widget-box">
+                    <div class="widget-title">
+                        <a href="#">
+                            {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': previousCourse.getClassLevel().getHtmlColorCode(), 'classLevelLabel': previousCourse.getClassLevel().getLabel() } %}
+                            <h5>                                
+                                le {{ previousCourse.dayOfWeek | day }}&nbsp; de {{ previousCourse.startTime | date('H:i') }} à {{ previousCourse.endTime | date('H:i') }}
+                            </h5>
+                        </a>
+                    </div>
+                    <div class="widget-content nopadding">
+                        {% if studentsPerCourse[previousCourse.id]|length == 0 %}
+                                <div class="none-found">Aucun apprenant trouvé pour ce cours: {{ course.id }}</div>
+                        {% else %}
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Nom</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for student in studentsPerCourse[previousCourse.id] %}
+                                    <tr>
+                                        <td class="center">
+                                            {% set gender = '' %}
+                                            {% if student.gender == 'F' %}
+                                                {% set gender = 'Féminin' %}
+                                                {% set pictureName = 'user_female.png' %}
+                                            {% elseif student.gender == 'M' %}
+                                                {% set gender = 'Masculin' %}
+                                                {% set pictureName = 'user.png' %}
+                                            {% endif %}
+                                            {% if gender is not empty %}
+                                                <img src="{{ asset('img/icons/' ~ pictureName ) }}" alt="{{ gender }}" title="{{ gender }}"  />
+                                            {% endif %}
+                                        </td>
+                                        <td class="center">
+                                            <img src="{{ asset('img/drapeaux/' ~ student.nativeCountry | lower ~ '.png')}}" alt="{{ student.nativeCountry }}" title="{{ student.nativeCountry }}" />
+                                        </td>
+                                        <td><strong>{{ student.firstname }} {{ student.lastname }}</strong></td>
+                                        <td>
+                                            {% if student.student_id in currentEnrolledStudentsIds|keys %}
+                                                {% set styleUnenroll = "inline-block" %}
+                                                {% set styleEnroll = "none" %}
+                                            {% else %}
+                                                {% set styleUnenroll = "none" %}
+                                                {% set styleEnroll = "inline-block" %}
+                                            {% endif %}
+                                            <a id="enroll-c{{ course.id }}-s{{ student.student_id }}-2" class="btn btn-success btn-xs" style="display: {{ styleEnroll }};" onClick="enrollStudent({{ course.id }},{{ student.student_id }});">Inscrire</a>
+                                            <a id="unenroll-c{{ course.id }}-s{{ student.student_id }}-2" class="btn btn-danger btn-xs" style="display: {{ styleUnenroll }};" onClick="unenrollStudent({{ course.id }}, {{ student.student_id }});">Désinscrire</a>
+                                        </td>
+                                    </tr>
+                            {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>

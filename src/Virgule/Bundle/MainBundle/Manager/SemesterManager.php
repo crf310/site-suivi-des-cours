@@ -57,6 +57,10 @@ class SemesterManager extends BaseManager {
             return false;
         }
     }
+    
+    public function getPreviousSemester(Semester $currentSemester) {
+        return $this->getRepository()->getPreviousSemester($currentSemester->getStartDate());
+    }
 }
 
 ?>

@@ -55,8 +55,28 @@ class CourseController extends AbstractVirguleController {
      * @Template("VirguleMainBundle:Course:manageEnrollments.html.twig")
      */
     public function manageEnrollmentsAction(Course $id) {
+        $previousSemester = $this->getSemesterManager()->getPreviousSemester($this->getSelectedSemester());
+        
+        $teacherId = $this->getUser()->getId();
+        $semesterId = $previousSemester->getId();
+        $previousCourses = $this->getCourseRepository()->getCoursesByTeacher($semesterId, $teacherId);
+        
+        $studentsPerCourse = array();
+        foreach ($previousCourses as $course) {
+            $studentsPerCourse[$course->getId()] = $this->getStudentRepository()->loadAllEnrolledInCourse(array($course->getId()));
+        }
+        
+        $currentEnrolledStudents = $this->getStudentRepository()->loadAllEnrolledInCourse(array($id));
+        foreach ($currentEnrolledStudents as $currentStudent) {
+            $currentEnrolledStudentsIds[$currentStudent['student_id']] = $currentStudent['student_id'];
+        }
+        
         return array(
-            'course' => $id,
+            'course'                        => $id,
+            'previousCourses'               => $previousCourses,
+            'studentsPerCourse'             => $studentsPerCourse,
+            'currentEnrolledStudentsIds'    => $currentEnrolledStudentsIds,
+            'previousSemester'             => $previousSemester
         );
     }
     
