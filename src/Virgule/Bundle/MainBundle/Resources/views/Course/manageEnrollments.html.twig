@@ -83,6 +83,7 @@
                     });
                 });                
                 $('#loadingIcon').toggleClass('icons-search').toggleClass('icon-refresh').toggleClass('icon-spin');
+                $("html").getNiceScroll().resize();
             });
         }
 
@@ -93,6 +94,11 @@
                 timer = setTimeout(function(){
                     searchStudent($('#searchStudentName').val());
                 },500);
+            });
+            
+            $('.accordion').accordion({
+                active: false,
+                collapsible: true            
             });
         });
         
@@ -158,8 +164,9 @@
                         <a href="#">
                             {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': previousCourse.getClassLevel().getHtmlColorCode(), 'classLevelLabel': previousCourse.getClassLevel().getLabel() } %}
                             <h5>                                
-                                le {{ previousCourse.dayOfWeek | day }}&nbsp; de {{ previousCourse.startTime | date('H:i') }} à {{ previousCourse.endTime | date('H:i') }}
+                                le {{ previousCourse.dayOfWeek | day }}&nbsp; de {{ previousCourse.startTime | date('H:i') }} à {{ previousCourse.endTime | date('H:i') }} (cliquez pour ouvrir)
                             </h5>
+                                
                         </a>
                     </div>
                     <div class="widget-content nopadding">
