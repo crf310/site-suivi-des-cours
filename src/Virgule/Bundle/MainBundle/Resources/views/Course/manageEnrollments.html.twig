@@ -4,11 +4,21 @@
     {% block javascripts %}
         <script type="text/javascript">
         var fadeTime = 500;
-        function toggleButton(idToHide, idToShow) {
-            if ($(idToHide).length > 0) {
-                $(idToHide).fadeOut(fadeTime, function(){
-                    $(idToShow).fadeIn(fadeTime);
+                
+        function toggleButton(idToHide, idToShow, index) {
+            if ($(idToHide + '-' + index).length > 0) {
+                $(idToHide + '-' + index).fadeOut(fadeTime, function(){
+                    $(idToShow + '-' + index).fadeIn(fadeTime);
                 });
+            }
+        }
+        
+        // This function is because the fadeIn callback in toggleButton would always use the last value of i
+        function toggleButtons(idToHide, idToShow) {
+            var i = 0;
+            while ( i <= {{ previousCourses|length }} ) {
+                toggleButton(idToHide, idToShow, i);
+                i++;
             }
         }
         
@@ -16,9 +26,7 @@
             var studentEnrollUrl = Routing.generate('course_enroll_student', { 'courseId': courseId, 'studentId': studentId });
             $.get(studentEnrollUrl, function(data) {
                 var id = 'enroll-c' + courseId + '-s' + studentId; 
-                toggleButton('#' + id, '#un' + id);
-                id = 'enroll-c' + courseId + '-s' + studentId + '-2'; 
-                toggleButton('#' + id, '#un' + id);
+                toggleButtons('#' + id, '#un' + id);
             });
     
         }
@@ -27,9 +35,7 @@
             var studentUnenrollUrl = Routing.generate('course_unenroll_student', { 'courseId': courseId, 'studentId': studentId });
             $.get(studentUnenrollUrl, function(data) {
                 var id = 'enroll-c' + courseId + '-s' + studentId; 
-                toggleButton('#un' + id, '#' + id);
-                id = 'enroll-c' + courseId + '-s' + studentId + '-2';
-                toggleButton('#un' + id, '#' + id);
+                toggleButtons('#un' + id, '#' + id);
             });
         }
         
@@ -63,16 +69,16 @@
                             <td class="center"><img src="' + imgPath + '/drapeaux/' + studentNativeCountryCode.toLowerCase() + '.png" alt="' + studentNativeCountryName + '" title="' + studentNativeCountryName + '" /></td>\
                             <td><strong>' + studentFirstName + ' ' + studentLastName + '</strong></td>\
                             <td>\
-                                <a id="enroll-c{{ course.id }}-s' + studentId + '" class="btn btn-success btn-xs" onClick="enrollStudent({{ course.id }}, ' + studentId + ');">Inscrire</a>\
-                                <a id="unenroll-c{{ course.id }}-s' + studentId + '" class="btn btn-danger btn-xs" onClick="unenrollStudent({{ course.id }}, ' + studentId + ');">Désinscrire</a>\
+                                <a id="enroll-c{{ course.id }}-s' + studentId + '-0" class="btn btn-success btn-xs" onClick="enrollStudent({{ course.id }}, ' + studentId + ');">Inscrire</a>\
+                                <a id="unenroll-c{{ course.id }}-s' + studentId + '-0" class="btn btn-danger btn-xs" onClick="unenrollStudent({{ course.id }}, ' + studentId + ');">Désinscrire</a>\
                             </td>\
                         </tr>');
                     
-                    $('#unenroll-c{{ course.id }}-s' + studentId).hide();
+                    $('#unenroll-c{{ course.id }}-s' + studentId + '-0').hide();
                     $.each(student.courses, function(j, course) {
                         if (course.id === {{ course.id }}) {
-                            $('#enroll-c{{ course.id }}-s' + studentId).hide();
-                            $('#unenroll-c{{ course.id }}-s' + studentId).show();
+                            $('#enroll-c{{ course.id }}-s' + studentId + '-0').hide();
+                            $('#unenroll-c{{ course.id }}-s' + studentId + '-0').show();
                         }
                     });
                 });                
@@ -197,8 +203,8 @@
                                                 {% set styleUnenroll = "none" %}
                                                 {% set styleEnroll = "inline-block" %}
                                             {% endif %}
-                                            <a id="enroll-c{{ course.id }}-s{{ student.student_id }}-2" class="btn btn-success btn-xs" style="display: {{ styleEnroll }};" onClick="enrollStudent({{ course.id }},{{ student.student_id }});">Inscrire</a>
-                                            <a id="unenroll-c{{ course.id }}-s{{ student.student_id }}-2" class="btn btn-danger btn-xs" style="display: {{ styleUnenroll }};" onClick="unenrollStudent({{ course.id }}, {{ student.student_id }});">Désinscrire</a>
+                                            <a id="enroll-c{{ course.id }}-s{{ student.student_id }}-{{ loop.parent.loop.index }}" class="btn btn-success btn-xs" style="display: {{ styleEnroll }};" onClick="enrollStudent({{ course.id }},{{ student.student_id }});">Inscrire</a>
+                                            <a id="unenroll-c{{ course.id }}-s{{ student.student_id }}-{{ loop.parent.loop.index }}" class="btn btn-danger btn-xs" style="display: {{ styleUnenroll }};" onClick="unenrollStudent({{ course.id }}, {{ student.student_id }});">Désinscrire</a>
                                         </td>
                                     </tr>
                             {% endfor %}
