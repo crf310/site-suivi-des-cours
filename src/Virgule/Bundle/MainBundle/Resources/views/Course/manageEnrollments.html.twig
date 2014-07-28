@@ -53,10 +53,10 @@
                             <td class="center"><img src="' + imgPath + '/drapeaux/' + studentNativeCountryCode.toLowerCase() + '.png" alt="' + studentNativeCountryName + '" title="' + studentNativeCountryName + '" /></td>\
                             <td><strong>' + studentFirstName + ' ' + studentLastName + '</strong></td>\
                             <td>\
-                                <a id="enroll-c{{ course.id }}-s' + studentId + '" href="#" class="btn btn-success btn-xs" onClick="enrollStudent({{ course.id }}, ' + studentId + ');">Inscrire</a>\
-                                <a id="unenroll-c{{ course.id }}-s' + studentId + '" href="#" class="btn btn-danger btn-xs" onClick="unenrollStudent({{ course.id }}, ' + studentId + ');">Désinscrire</a>\
+                                <a id="enroll-c{{ course.id }}-s' + studentId + '" class="btn btn-success btn-xs" onClick="enrollStudent({{ course.id }}, ' + studentId + ');">Inscrire</a>\
+                                <a id="unenroll-c{{ course.id }}-s' + studentId + '" class="btn btn-danger btn-xs" onClick="unenrollStudent({{ course.id }}, ' + studentId + ');">Désinscrire</a>\
                             </td>\
-                        </tr>').fadeIn(1000);
+                        </tr>').hide().fadeIn(500);
                     
                     $('#unenroll-c{{ course.id }}-s' + studentId).hide();
                     $.each(student.courses, function(j, course) {
