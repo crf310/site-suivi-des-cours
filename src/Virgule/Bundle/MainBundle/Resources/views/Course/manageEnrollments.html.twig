@@ -137,6 +137,7 @@
 {% endblock %}
 {% block content_title %}Gérez les inscriptions à ce cours : niveau {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': course.classLevel.htmlColorCode, 'classLevelLabel': course.classLevel.label } %} le {{ course.dayOfWeek | day }} de {{ course.startTime | date('H\\hi') }} à {{ course.endTime | date('H\\hi') }}{% endblock %}
 {%block submenu %}
+<a class="btn tip-bottom" href="{{ path('course_show', { 'id': course.id }) }}"> <i class="my-icon-calendar"></i>Voir le cours</a>
 {% endblock %}
 {% block main_content %} 
 <div class="row">
@@ -159,7 +160,7 @@
         <br />
         La liste de gauche vous permet de retrouver n'importe quel apprenant disposant d'une fiche sur le site. Celle de droite a pour but de retrouver et réinscrire rapidement les apprenants d'un de vos cours de la session précédente, les personnes revenant souvent au même cours d'une session à l'autre.
         <br />
-        Si vous ne trouvez pas un apprenant, assurez-vous que celui-ci possède une fiche. Si ce n'est pas le cas, <a href="{{ path('student_new') }}">vous pouvez la créer dès à présent</a>.
+        Si vous ne trouvez pas un apprenant, assurez-vous que celui-ci possède une fiche. Si ce n'est pas le cas, <a href="{{ path('student_new') }}">vous pouvez la créer dès à présent en cliquant ici.</a>
         </div>
     </div>
 </div>
