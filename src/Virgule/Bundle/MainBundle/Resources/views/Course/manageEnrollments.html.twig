@@ -80,37 +80,42 @@
             $.get(studentSearchUrl, function(data) {
                 students = data;
                 $('#nbStudents').text(data.length);
-                $.each(data, function(i, student) {
-                    var studentLastName = student.lastname;
-                    var studentFirstName = student.firstname;
-                    var studentId = student.id;
-                    var studentGender = student.gender;
-                    var studentNativeCountryCode = student.nativeCountryCode;
-                    var studentNativeCountryName = student.nativeCountryName;
-                    
-                    var genderIcon = '/icons/user.png';
-                    if (studentGender === 'F') {
-                        genderIcon = '/icons/user_female.png';
-                    }
+                if (data.length === 0) {
                     $("#studentsList").append('\
-                        <tr>\
-                            <td class="center"><img src="' + imgPath  + genderIcon + '" /></td>\
-                            <td class="center"><img src="' + imgPath + '/drapeaux/' + studentNativeCountryCode.toLowerCase() + '.png" alt="' + studentNativeCountryName + '" title="' + studentNativeCountryName + '" /></td>\
-                            <td><strong>' + studentFirstName + ' ' + studentLastName + '</strong></td>\
-                            <td>\
-                                <a id="enroll-c{{ course.id }}-s' + studentId + '-0" class="btn btn-success btn-xs" onClick="enrollStudent({{ course.id }}, ' + studentId + ', true);">Inscrire</a>\
-                                <a id="unenroll-c{{ course.id }}-s' + studentId + '-0" class="btn btn-danger btn-xs" onClick="unenrollStudent({{ course.id }}, ' + studentId + ', true);">Désinscrire</a>\
-                            </td>\
-                        </tr>');
-                    
-                    $('#unenroll-c{{ course.id }}-s' + studentId + '-0').hide();
-                    $.each(student.courses, function(j, course) {
-                        if (course.id === {{ course.id }}) {
-                            $('#enroll-c{{ course.id }}-s' + studentId + '-0').hide();
-                            $('#unenroll-c{{ course.id }}-s' + studentId + '-0').show();
+                        <tr><td class="center" colspan="4">Aucun apprenant trouvé.</td>');
+                } else {
+                    $.each(data, function(i, student) {
+                        var studentLastName = student.lastname;
+                        var studentFirstName = student.firstname;
+                        var studentId = student.id;
+                        var studentGender = student.gender;
+                        var studentNativeCountryCode = student.nativeCountryCode;
+                        var studentNativeCountryName = student.nativeCountryName;
+
+                        var genderIcon = '/icons/user.png';
+                        if (studentGender === 'F') {
+                            genderIcon = '/icons/user_female.png';
                         }
+                        $("#studentsList").append('\
+                            <tr>\
+                                <td class="center"><img src="' + imgPath  + genderIcon + '" /></td>\
+                                <td class="center"><img src="' + imgPath + '/drapeaux/' + studentNativeCountryCode.toLowerCase() + '.png" alt="' + studentNativeCountryName + '" title="' + studentNativeCountryName + '" /></td>\
+                                <td><strong>' + studentFirstName + ' ' + studentLastName + '</strong></td>\
+                                <td>\
+                                    <a id="enroll-c{{ course.id }}-s' + studentId + '-0" class="btn btn-success btn-xs" onClick="enrollStudent({{ course.id }}, ' + studentId + ', true);">Inscrire</a>\
+                                    <a id="unenroll-c{{ course.id }}-s' + studentId + '-0" class="btn btn-danger btn-xs" onClick="unenrollStudent({{ course.id }}, ' + studentId + ', true);">Désinscrire</a>\
+                                </td>\
+                            </tr>');
+
+                        $('#unenroll-c{{ course.id }}-s' + studentId + '-0').hide();
+                        $.each(student.courses, function(j, course) {
+                            if (course.id === {{ course.id }}) {
+                                $('#enroll-c{{ course.id }}-s' + studentId + '-0').hide();
+                                $('#unenroll-c{{ course.id }}-s' + studentId + '-0').show();
+                            }
+                        });
                     });
-                });                
+                }
                 $('#loadingIcon').toggleClass('icons-search').toggleClass('icon-refresh').toggleClass('icon-spin');
                 $("html").getNiceScroll().resize();
             });
