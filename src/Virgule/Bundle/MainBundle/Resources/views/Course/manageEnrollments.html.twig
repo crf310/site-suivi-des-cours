@@ -140,28 +140,26 @@
 {% endblock %}
 {% block main_content %} 
 <div class="row">
-    <div class="col-md-12 center">
-        <div class="alert alert-info">
-        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        Cette page vous permet de gérer les inscriptions à ce cours, c'est à dire la liste des apprenants censés venir régulièrement et que vous souhaitez retrouver dans le formulaire de compte rendu afin de saisir les présences.
-        <br />
-        La liste de gauche vous permet de retrouver n'importe quel apprenant disposant d'une fiche sur le site. Celle de droite a pour but de retrouver et réinscrire rapidement les apprenants d'un de vos cours de la session précédente, les personnes revenant souvent au même cours d'une session à l'autre.
-        <br />
-        Si vous ne trouvez pas un apprenant, assurez-vous que celui-ci possède une fiche. Si ce n'est pas le cas, <a href="{{ path('student_new') }}">vous pouvez la créer dès à présent</a>.
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
+    <div class="col-md-2">
         <div class="widget-box widget-plain">
             <div class="widget-content center">
                 <ul class="stats-plain">
                     <li>										
                         <h4 id="nbEnrolledStudents">{{ course.students|length }}</h4>
-                        <span>inscrits</span>
+                        <span>inscrits actuellement</span>
                     </li>
                 </ul>
             </div>
+        </div>
+    </div>
+    <div class="col-md-10 center">
+        <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        Cette page vous permet de gérer les inscriptions à ce cours, c'est-à-dire la liste des apprenants censés venir régulièrement et que vous souhaitez retrouver dans le formulaire de compte rendu afin de saisir les présences.
+        <br />
+        La liste de gauche vous permet de retrouver n'importe quel apprenant disposant d'une fiche sur le site. Celle de droite a pour but de retrouver et réinscrire rapidement les apprenants d'un de vos cours de la session précédente, les personnes revenant souvent au même cours d'une session à l'autre.
+        <br />
+        Si vous ne trouvez pas un apprenant, assurez-vous que celui-ci possède une fiche. Si ce n'est pas le cas, <a href="{{ path('student_new') }}">vous pouvez la créer dès à présent</a>.
         </div>
     </div>
 </div>
