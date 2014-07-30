@@ -5,6 +5,17 @@
         <script type="text/javascript">
         var fadeTime = 500;
                 
+        function displayNbEnrolledStudents() {            
+            var nbEnrolledStudent = Routing.generate('course_get_nb_enrolledStudents', { 'courseId': {{ course.id }} });
+            $.get(nbEnrolledStudent, function(data) {
+                $.each(data, function(i, course) {
+                    var nbStudents = course.nb_students;
+                    $("#nbEnrolledStudents").fadeOut(function() {
+                        $(this).text(nbStudents);
+                    }).fadeIn();
+                });
+            });
+        }
         function toggleButton(idToHide, idToShow, index) {
             if ($(idToHide + '-' + index).length > 0) {
                 $(idToHide + '-' + index).fadeOut(fadeTime, function(){
@@ -25,30 +36,36 @@
         function enrollAll(ids, courseId, enroll) {
             if (enroll) {
                 $.each(ids, function(index, studentId) {
-                    enrollStudent(courseId, studentId);
+                    enrollStudent(courseId, studentId, false);
                 });
             } else {
                 $.each(ids, function(index, studentId) {
-                    unenrollStudent(courseId, studentId);
+                    unenrollStudent(courseId, studentId, false);
                 });
             }
+            displayNbEnrolledStudents();
         }
         
-        function enrollStudent(courseId, studentId) {
+        function enrollStudent(courseId, studentId, directCall) {
             var studentEnrollUrl = Routing.generate('course_enroll_student', { 'courseId': courseId, 'studentId': studentId });
             $.get(studentEnrollUrl, function(data) {
                 var id = 'enroll-c' + courseId + '-s' + studentId; 
                 toggleButtons('#' + id, '#un' + id);
+                if (directCall) {
+                    displayNbEnrolledStudents();
+                }
             });
-    
         }
         
-        function unenrollStudent(courseId, studentId) {
+        function unenrollStudent(courseId, studentId, directCall) {
             var studentUnenrollUrl = Routing.generate('course_unenroll_student', { 'courseId': courseId, 'studentId': studentId });
             $.get(studentUnenrollUrl, function(data) {
                 var id = 'enroll-c' + courseId + '-s' + studentId; 
-                toggleButtons('#un' + id, '#' + id);
-            });
+                toggleButtons('#un' + id, '#' + id);          
+                if (directCall) {
+                    displayNbEnrolledStudents();
+                }
+            });  
         }
         
         function searchStudent(studentName) {            
@@ -81,8 +98,8 @@
                             <td class="center"><img src="' + imgPath + '/drapeaux/' + studentNativeCountryCode.toLowerCase() + '.png" alt="' + studentNativeCountryName + '" title="' + studentNativeCountryName + '" /></td>\
                             <td><strong>' + studentFirstName + ' ' + studentLastName + '</strong></td>\
                             <td>\
-                                <a id="enroll-c{{ course.id }}-s' + studentId + '-0" class="btn btn-success btn-xs" onClick="enrollStudent({{ course.id }}, ' + studentId + ');">Inscrire</a>\
-                                <a id="unenroll-c{{ course.id }}-s' + studentId + '-0" class="btn btn-danger btn-xs" onClick="unenrollStudent({{ course.id }}, ' + studentId + ');">Désinscrire</a>\
+                                <a id="enroll-c{{ course.id }}-s' + studentId + '-0" class="btn btn-success btn-xs" onClick="enrollStudent({{ course.id }}, ' + studentId + ', true);">Inscrire</a>\
+                                <a id="unenroll-c{{ course.id }}-s' + studentId + '-0" class="btn btn-danger btn-xs" onClick="unenrollStudent({{ course.id }}, ' + studentId + ', true);">Désinscrire</a>\
                             </td>\
                         </tr>');
                     
@@ -131,6 +148,20 @@
         La liste de gauche vous permet de retrouver n'importe quel apprenant disposant d'une fiche sur le site. Celle de droite a pour but de retrouver et réinscrire rapidement les apprenants d'un de vos cours de la session précédente, les personnes revenant souvent au même cours d'une session à l'autre.
         <br />
         Si vous ne trouvez pas un apprenant, assurez-vous que celui-ci possède une fiche. Si ce n'est pas le cas, <a href="{{ path('student_new') }}">vous pouvez la créer dès à présent</a>.
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="widget-box widget-plain">
+            <div class="widget-content center">
+                <ul class="stats-plain">
+                    <li>										
+                        <h4 id="nbEnrolledStudents">{{ course.students|length }}</h4>
+                        <span>inscrits</span>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
@@ -240,8 +271,8 @@
                                                 {% set styleUnenroll = "none" %}
                                                 {% set styleEnroll = "inline-block" %}
                                             {% endif %}
-                                            <a id="enroll-c{{ course.id }}-s{{ student.student_id }}-{{ loop.parent.loop.index }}" class="btn btn-success btn-xs" style="display: {{ styleEnroll }};" onClick="enrollStudent({{ course.id }},{{ student.student_id }});">Inscrire</a>
-                                            <a id="unenroll-c{{ course.id }}-s{{ student.student_id }}-{{ loop.parent.loop.index }}" class="btn btn-danger btn-xs" style="display: {{ styleUnenroll }};" onClick="unenrollStudent({{ course.id }}, {{ student.student_id }});">Désinscrire</a>
+                                            <a id="enroll-c{{ course.id }}-s{{ student.student_id }}-{{ loop.parent.loop.index }}" class="btn btn-success btn-xs" style="display: {{ styleEnroll }};" onClick="enrollStudent({{ course.id }},{{ student.student_id }}, true);">Inscrire</a>
+                                            <a id="unenroll-c{{ course.id }}-s{{ student.student_id }}-{{ loop.parent.loop.index }}" class="btn btn-danger btn-xs" style="display: {{ styleUnenroll }};" onClick="unenrollStudent({{ course.id }}, {{ student.student_id }}, true);">Désinscrire</a>
                                         </td>
                                     </tr>
                             {% endfor %}

@@ -105,6 +105,10 @@ class CourseManager extends BaseManager {
             $this->cloneCourse($course, $newSemester);
         }
     }
+    
+    public function getNumberOfEnrolledStudents($courseIds) {
+        return $courses = $this->getRepository()->getNumberOfEnrolledStudents($courseIds);
+    }
 }
 
 ?>

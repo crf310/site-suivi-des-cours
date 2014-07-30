@@ -30,6 +30,16 @@ class CourseController extends AbstractVirguleController {
     private function getManager() {
         return $this->get('virgule.course_manager');
     }
+        
+    /**
+     * Get number of students enrolled for each courses
+     * @Route("/{courseId}/nbEnrolledStudents", name="course_get_nb_enrolledStudents", defaults={"_format": "json"}, options={"expose"=true})
+     * * @Template("VirguleMainBundle:Course:numberOfEnrolledStudents.json.twig")
+     */
+    public function getNbEnrolledStudentsAction($courseId) {
+        $courses = $this->getCourseManager()->getNumberOfEnrolledStudents(Array($courseId));
+        return Array('courses' => $courses);
+    }    
     
     /**
      * Enroll a student 

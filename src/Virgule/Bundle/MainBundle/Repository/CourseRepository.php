@@ -263,4 +263,18 @@ class CourseRepository extends EntityRepository {
         $results = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $results;  
     }
+    
+    public function getNumberOfEnrolledStudents(Array $courseIds) {
+        $qb = $this->_em->createQueryBuilder()
+                 ->select('c.id as course_id, count(s.id) as nb_students')
+                 ->from($this->getClassName(), 'c', 'c.id')
+                 ->innerJoin('c.students', 's')
+                 ->where('c.id IN (:coursesIds)')
+                 ->setParameter('coursesIds', $courseIds, Connection::PARAM_INT_ARRAY)
+                 ->groupBy('c.id');
+         
+        $q = $qb->getQuery();
+        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+        return $results;  
+    }
 }
