@@ -140,6 +140,12 @@
                 active: false,
                 collapsible: true            
             });
+            
+            $(".accordion").accordion({ 
+                activate: function(event, ui) {
+                    $("html").getNiceScroll().resize();
+                }
+            });
         });
         
         
