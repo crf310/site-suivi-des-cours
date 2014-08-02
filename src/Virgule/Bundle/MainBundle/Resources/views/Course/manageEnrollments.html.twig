@@ -33,14 +33,20 @@
             }
         }
         
-        function enrollAll(ids, courseId, enroll) {
+        function enrollAll(ids, courseId, enroll, courseIndex) {
             if (enroll) {
                 $.each(ids, function(index, studentId) {
-                    enrollStudent(courseId, studentId, false);
+                    var buttonId = '#enroll-c' + courseId + '-s' + studentId + '-' + courseIndex; 
+                    if($(buttonId).is(":visible")) {
+                        enrollStudent(courseId, studentId, false);
+                    }
                 });
             } else {
                 $.each(ids, function(index, studentId) {
-                    unenrollStudent(courseId, studentId, false);
+                    var buttonId = '#unenroll-c' + courseId + '-s' + studentId + '-' + courseIndex; 
+                    if($(buttonId).is(":visible")) {
+                        unenrollStudent(courseId, studentId, false);
+                    }
                 });
             }
             displayNbEnrolledStudents();
@@ -244,8 +250,8 @@
                                 <tbody>
                                     <tr>
                                         <td class="center" colspan="4">
-                                            <a id="enrollAll-c{{ previousCourse.id }}" class="btn btn-success btn-xs" onClick="enrollAll(new Array({% for student in studentsPerCourse[previousCourse.id] %}{{ student.student_id}}{%if not loop.last %},{% endif%}{% endfor %}), {{ course.id }}, true);">Inscrire tous</a>
-                                            <a id="enrollAll-c{{ previousCourse.id }}" class="btn btn-danger btn-xs" onClick="enrollAll(new Array({% for student in studentsPerCourse[previousCourse.id] %}{{ student.student_id}}{%if not loop.last %},{% endif%}{% endfor %}), {{ course.id }}, false);">Désinscrire tous</a>                           
+                                            <a id="enrollAll-c{{ previousCourse.id }}" class="btn btn-success btn-xs" onClick="enrollAll(new Array({% for student in studentsPerCourse[previousCourse.id] %}{{ student.student_id}}{%if not loop.last %},{% endif%}{% endfor %}), {{ course.id }}, true, {{ loop.index }});">Inscrire tous</a>
+                                            <a id="enrollAll-c{{ previousCourse.id }}" class="btn btn-danger btn-xs" onClick="enrollAll(new Array({% for student in studentsPerCourse[previousCourse.id] %}{{ student.student_id}}{%if not loop.last %},{% endif%}{% endfor %}), {{ course.id }}, false, {{ loop.index }});">Désinscrire tous</a>                           
                                         </td>
                                     </tr>
                                 {% for student in studentsPerCourse[previousCourse.id] %}
