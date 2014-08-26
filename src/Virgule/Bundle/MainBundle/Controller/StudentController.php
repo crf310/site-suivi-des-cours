@@ -244,6 +244,7 @@ class StudentController extends AbstractVirguleController {
             $em->flush();
             
             $this->saveSuggestedClassLevel($entity, $em);
+            $this->saveCoursesEnrolledIn($entity, $em);
             
             $em->persist($entity);
             $em->flush();
@@ -336,6 +337,16 @@ class StudentController extends AbstractVirguleController {
             $em->persist($suggestedClassLevel);
         }
     }
+    
+    private function saveCoursesEnrolledIn($entity, $em) {
+        // manual persist as we're dealing with the inversed side
+        $courses = $entity->getCourses();
+        foreach($courses as $course) {
+            $course->addStudent($entity);
+            $em->persist($course);
+        }
+    }
+    
     /**
      * Deletes a Student entity.
      *

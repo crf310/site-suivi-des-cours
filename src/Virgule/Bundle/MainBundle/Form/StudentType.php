@@ -112,14 +112,21 @@ class StudentType extends AbstractType {
         if ($this->intention == 'create') {
             $welcomedByTeacherOptions['preferred_choices'] = array($this->currentTeacher);
             $welcomedByTeacherOptions['query_builder'] = $this->doctrine->getRepository('VirguleMainBundle:Teacher')->getAvailableTeachersQueryBuilder($this->organizationBranchId, true);
+            
+            // we can enroll a student from only at the creation, after there is a dedicated page (on course)
+            $builder->add('courses', 'entity', array(
+                'class' => 'VirguleMainBundle:Course',
+                'query_builder' => $this->doctrine->getRepository('VirguleMainBundle:Course')->getCoursesForSemesterQB($this->semesterId),
+                'expanded' => false,
+                'multiple' => true,
+                'required' => false,
+                'attr' => array('class' => 'medium-select')
+                ));
         }
         $builder->add('welcomedByTeacher', 'entity', $welcomedByTeacherOptions);
                
         $subscriber = new PatchSubscriber();
         $builder->addEventSubscriber($subscriber);
-        
-        $coursesSubscriber = new UpdateStudentCourseFieldSubscriber($this->em, $this->doctrine, $this->semesterId);
-        $builder->addEventSubscriber($coursesSubscriber);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {

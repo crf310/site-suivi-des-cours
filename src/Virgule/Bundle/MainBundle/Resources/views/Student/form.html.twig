@@ -46,5 +46,16 @@
             {% if form.suggestedClassLevel is defined %}
                 {{ form_row(form.suggestedClassLevel[0].classLevel, { 'label': 'Niveau conseillé' }) }}
             {% endif %}
-            {{ form_row(form.courses, { 'label': 'Inscrire aux cours' }) }} 
+            {% if form.courses is defined %}
+                {{ form_row(form.courses, { 'label': 'Inscrire aux cours' }) }} 
+            {% else %}
+                <div class="form-group ">
+                    <label class="control-label" for="virgule_bundle_mainbundle_studenttype_emergencyContactPhoneNumber">Inscriptions aux cours </label>
+                    <div class="controls">
+                        <div class="alert alert-info">
+                            Pour inscrire ou désinscrire cet apprenant d'un cours, rendez-vous sur la page "Gérer les inscriptions" du cours en question.
+                        </div>
+                    </div>
+                </div>                
+            {% endif %}
             {{ form_widget(form._token) }}
