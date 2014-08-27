@@ -4,12 +4,15 @@ namespace Virgule\Bundle\MainBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\Course;
+use Virgule\Bundle\MainBundle\Entity\Student;
 use Virgule\Bundle\MainBundle\Entity\Planning\Planning;
 use Virgule\Bundle\MainBundle\Form\CourseType;
+use Virgule\Bundle\MainBundle\Form\SelectClassRoomType;
 use Virgule\Bundle\MainBundle\Form\FormConstants;
 
 /**
@@ -27,10 +30,69 @@ class CourseController extends AbstractVirguleController {
     private function getManager() {
         return $this->get('virgule.course_manager');
     }
+        
+    /**
+     * Get number of students enrolled for each courses
+     * @Route("/{courseId}/nbEnrolledStudents", name="course_get_nb_enrolledStudents", defaults={"_format": "json"}, options={"expose"=true})
+     * * @Template("VirguleMainBundle:Course:numberOfEnrolledStudents.json.twig")
+     */
+    public function getNbEnrolledStudentsAction($courseId) {
+        $courses = $this->getCourseManager()->getNumberOfEnrolledStudents(Array($courseId));
+        return Array('courses' => $courses);
+    }    
+    
+    /**
+     * Enroll a student 
+     * @Route("/{courseId}/enroll/{studentId}", name="course_enroll_student", options={"expose"=true})
+     */
+    public function enrollAction(Course $courseId, Student $studentId) {
+        $result = $this->getCourseManager()->enrollmentAction($courseId, $studentId, true);
+        return new Response();
+    }    
+    
+    /**
+     * Enroll a student 
+     * @Route("/{courseId}/unenroll/{studentId}", name="course_unenroll_student", options={"expose"=true})
+     */
+    public function unenrollAction(Course $courseId, Student $studentId) {
+        $result = $this->getCourseManager()->enrollmentAction($courseId, $studentId, false);
+        return new Response();
+    }
+            
+    /**
+     *
+     * @Route("/{id}/enrollments", name="course_manage_enrollments")
+     * @Template("VirguleMainBundle:Course:manageEnrollments.html.twig")
+     */
+    public function manageEnrollmentsAction(Course $id) {
+        $previousSemester = $this->getSemesterManager()->getPreviousSemester($this->getSelectedSemester());
+        
+        $teacherId = $this->getUser()->getId();
+        $semesterId = $previousSemester->getId();
+        $previousCourses = $this->getCourseRepository()->getCoursesByTeacher($semesterId, $teacherId);
+        
+        $studentsPerCourse = array();
+        foreach ($previousCourses as $course) {
+            $studentsPerCourse[$course->getId()] = $this->getStudentRepository()->loadAllEnrolledInCourse(array($course->getId()));
+        }
+        
+        $currentEnrolledStudents = $this->getStudentRepository()->loadAllEnrolledInCourse(array($id));
+        foreach ($currentEnrolledStudents as $currentStudent) {
+            $currentEnrolledStudentsIds[$currentStudent['student_id']] = $currentStudent['student_id'];
+        }
+        
+        return array(
+            'course'                        => $id,
+            'previousCourses'               => $previousCourses,
+            'studentsPerCourse'             => $studentsPerCourse,
+            'currentEnrolledStudentsIds'    => $currentEnrolledStudentsIds,
+            'previousSemester'             => $previousSemester
+        );
+    }
     
     /**
      *
-     * @Route("/{id}/trombi", name="course_show_trombinoscope"))
+     * @Route("/{id}/trombi", name="course_show_trombinoscope")
      * @Template("VirguleMainBundle:Course:trombinoscope.web.html.twig")
      */
     public function showTrombinoscopeAction(Course $id) {    
@@ -59,15 +121,18 @@ class CourseController extends AbstractVirguleController {
     /**
      *
      * @Route("/printPlanning", name="course_print_planning"))
+     * @Method("GET")
      * @Template("VirguleMainBundle:Course:planning.print.html.twig")
      */
-    public function printPlanningAction() {
+    public function printPlanningAction(Request $request) {
+        $classRooms = $request->query->get('classRoomForm[classRoom]', null, true);
+        // get classes from request
         $pdfGenerator = $this->get('siphoc.pdf.generator');
         $fileName = 'planning.pdf';
         $pdfGenerator->setName($fileName);
         return $pdfGenerator->downloadFromView(
             'VirguleMainBundle:Course:planning.print.html.twig',
-            $this->generatePlanning(true),
+            $this->generatePlanning(true, $classRooms),
             array('orientation' => 'landscape')
         );
         
@@ -80,13 +145,17 @@ class CourseController extends AbstractVirguleController {
      * @Template("VirguleMainBundle:Course:planning.web.html.twig")
      */
     public function showPlanningAction() {
-        return $this->generatePlanning();
+        $selectClassRoomForm = $this->createForm(new SelectClassRoomType($this->getDoctrineManager(), $this->getSelectedOrganizationBranchId()));
+        return array_merge(
+                array('selectClassRoomForm' => $selectClassRoomForm->createView()),
+                $this->generatePlanning()
+                );
     }
     
-    private function generatePlanning($forPrint = false) {
+    private function generatePlanning($forPrint = false, $classRoomIds = null) {
         $semesterId = $this->getSelectedSemesterId();
         
-        $courses = $this->getManager()->getAllHydratedCourses($semesterId);
+        $courses = $this->getManager()->getAllHydratedCourses($semesterId, $classRoomIds);
         
         $planning = new Planning($courses, true);
         return Array('headerCells' => $planning->getHeader(), 'planningRows' => $planning->getRows(), 'forPrint' => $forPrint);

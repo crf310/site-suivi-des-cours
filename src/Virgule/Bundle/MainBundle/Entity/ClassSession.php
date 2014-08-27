@@ -4,12 +4,14 @@ namespace Virgule\Bundle\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Virgule\Bundle\MainBundle\Validator\Constraints as VirguleAssert;
 
 /**
  * Virgule\Bundle\MainBundle\Entity\ClassSession
  *
  * @ORM\Table(name="classsessions")
- * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\ClassSessionRepository")
+ * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\ClassSessionRepository") * 
+ * @VirguleAssert\ClassSessionAlreadyExisting
  */
 class ClassSession {
 
@@ -30,7 +32,7 @@ class ClassSession {
     private $reportDate;
 
     /**
-     * @var \DateTime $sessionDate
+     * @var \Date $sessionDate
      *
      * @ORM\Column(name="session_date", type="date", nullable=false)
      */

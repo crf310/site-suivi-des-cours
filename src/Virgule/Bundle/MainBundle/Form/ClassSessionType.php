@@ -11,10 +11,11 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 use Virgule\Bundle\MainBundle\Entity\Teacher;
 use Virgule\Bundle\MainBundle\Form\EventListener\AddClassSessionStudentsFieldSubscriber;
+use Virgule\Bundle\MainBundle\Form\DataTransformer\CourseToNumberTransformer;
 
 class ClassSessionType extends AbstractType {
         
-    private $doctrine;
+    private $em;
     
     private $organizationBranchId;
         
@@ -22,17 +23,14 @@ class ClassSessionType extends AbstractType {
 
     private $semesterId;
 
-    public function __construct(RegistryInterface $doctrine, $organizationBranchId = null, Teacher $currentTeacher = null, $semesterId) {
-        $this->doctrine = $doctrine;
+    public function __construct(EntityManager $em, $organizationBranchId = null, Teacher $currentTeacher = null, $semesterId) {
+        $this->em = $em;
         $this->organizationBranchId = $organizationBranchId;
         $this->currentTeacher = $currentTeacher;
         $this->semesterId = $semesterId;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options) {    
-        $now = new \DateTime('now');
-        $sNow = $now->format('d/m/Y');
-        
+    public function buildForm(FormBuilderInterface $builder, array $options) {         
         $builder
                 ->add('sessionDate', 'date', array(
                     'widget' => 'single_text',
@@ -57,18 +55,17 @@ class ClassSessionType extends AbstractType {
                     'required'      => false,    
                     'attr'          => array('class' => 'big-select')
                 ));
-        
+                    
+            $transformer = new CourseToNumberTransformer($this->em);
+            $builder->add(
+                $builder->create('course', 'hidden')->addModelTransformer($transformer)
+            );
         $subscriber = new AddClassSessionStudentsFieldSubscriber($builder->getFormFactory(), $this->semesterId);
         $builder->addEventSubscriber($subscriber);
     }
     
     private function getTeachers($organizationBranchId) {
-        $qb = $this->doctrine->getRepository('VirguleMainBundle:Teacher')->getAvailableTeachersQueryBuilder($organizationBranchId);
-        return $qb;
-    }
-    
-    private function getStudents($courseId) {
-        $qb = $this->doctrine->getRepository('VirguleMainBundle:Student')->getQueryBuilderForStudentEnrolledInCourses(Array($courseId));
+        $qb = $this->em->getRepository('VirguleMainBundle:Teacher')->getAvailableTeachersQueryBuilder($organizationBranchId);
         return $qb;
     }
     

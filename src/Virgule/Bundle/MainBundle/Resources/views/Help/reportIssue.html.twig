@@ -1,0 +1,27 @@
+{% extends '::main_content.html.twig' %}
+{% block content_title %}Signaler un problème{% endblock %}
+{%block submenu %}
+{% endblock %}
+{% block main_content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon"><i class="icon-plus"></i></span><h5>Ajouter une journée d'accueil</h5>
+            </div>                        
+            <div class="widget-content nopadding">
+                <div class="alert alert-info alert-padding">
+                    Ce formulaire crée un ticket sur Github.
+                </div>
+                <form action="{{ path('report_issue') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+                    {{ form_row(form.title, { 'label': 'Titre' }) }}
+                    {{ form_row(form.summary, { 'label': 'Résumé' }) }}
+                    <div class="form-actions"> 
+                        <button  class="btn btn-success" type="submit">Envoyer le signalement</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div><!-- end col -->
+</div><!-- end row -->
+{% endblock %}

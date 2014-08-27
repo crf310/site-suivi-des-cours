@@ -21,6 +21,17 @@ use Virgule\Bundle\MainBundle\Form\ClassLevelSuggestedType;
  */
 class StudentController extends AbstractVirguleController {
     
+    /**
+     * Search for a student on its partial name and firstname
+     *
+     * @Route("/search/{name}", name="student_search_name", defaults={"_format": "json"}, options={"expose"=true})
+     * @Template("VirguleMainBundle:Student:searchResults.json.twig")
+     */     
+    public function searchAction($name) {
+        $students = $this->getStudentManager()->searchStudent($name);
+        return $students;
+    }
+    
      /**
      * Preview the certificate of attendance in a web page
      *
@@ -133,7 +144,7 @@ class StudentController extends AbstractVirguleController {
     /**
      * Finds and displays a Student entity.
      *
-     * @Route("/{id}/show", name="student_show")
+     * @Route("/{id}/show", name="student_show", options={"expose"=true})
      * @Template()
      */
     public function showAction($id) {
@@ -233,6 +244,7 @@ class StudentController extends AbstractVirguleController {
             $em->flush();
             
             $this->saveSuggestedClassLevel($entity, $em);
+            $this->saveCoursesEnrolledIn($entity, $em);
             
             $em->persist($entity);
             $em->flush();
@@ -325,6 +337,16 @@ class StudentController extends AbstractVirguleController {
             $em->persist($suggestedClassLevel);
         }
     }
+    
+    private function saveCoursesEnrolledIn($entity, $em) {
+        // manual persist as we're dealing with the inversed side
+        $courses = $entity->getCourses();
+        foreach($courses as $course) {
+            $course->addStudent($entity);
+            $em->persist($course);
+        }
+    }
+    
     /**
      * Deletes a Student entity.
      *

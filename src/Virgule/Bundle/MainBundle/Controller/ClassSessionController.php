@@ -130,7 +130,7 @@ class ClassSessionController extends AbstractVirguleController {
         $currentTeacher = $this->getConnectedUser();
         $semesterId = $this->getSelectedSemesterId();
         
-        $form = $this->createForm(new ClassSessionType($this->getDoctrine(), $organizationBranchId, $currentTeacher, $semesterId), $classSession, array('em' => $this->getDoctrine()->getManager()));
+        $form = $this->createForm(new ClassSessionType($this->getDoctrineManager(), $organizationBranchId, $currentTeacher, $semesterId), $classSession, array('em' => $this->getDoctrine()->getManager()));
        
         return array(
             'entity' => $classSession,
@@ -152,7 +152,7 @@ class ClassSessionController extends AbstractVirguleController {
         $currentTeacher = $this->getConnectedUser();
         $semesterId = $this->getSelectedSemesterId();
                 
-        $form = $this->createForm(new ClassSessionType($this->getDoctrine(), $organizationBranchId, $currentTeacher, $semesterId), $entity, array('em' => $this->getDoctrine()->getManager()));
+        $form = $this->createForm(new ClassSessionType($this->getDoctrineManager(), $organizationBranchId, $currentTeacher, $semesterId), $entity, array('em' => $this->getDoctrine()->getManager()));
         $form->bind($request);   
         
         $entity->setReportDate(new \Datetime('now'));
@@ -207,7 +207,7 @@ class ClassSessionController extends AbstractVirguleController {
         $currentTeacher = $this->getConnectedUser();
         $semesterId = $this->getSelectedSemesterId();
         
-        $editForm = $this->createForm(new ClassSessionType($this->getDoctrine(), $organizationBranchId, $currentTeacher, $semesterId), $entity, array('em' => $this->getDoctrine()->getManager()));
+        $editForm = $this->createForm(new ClassSessionType($this->getDoctrineManager(), $organizationBranchId, $currentTeacher, $semesterId), $entity, array('em' => $this->getDoctrine()->getManager()));
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -239,7 +239,7 @@ class ClassSessionController extends AbstractVirguleController {
         $semesterId = $this->getSelectedSemesterId();
         
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new ClassSessionType($this->getDoctrine(), $organizationBranchId, $currentTeacher, $semesterId), $entity, array('em' => $this->getDoctrine()->getManager()));
+        $editForm = $this->createForm(new ClassSessionType($this->getDoctrineManager(), $organizationBranchId, $currentTeacher, $semesterId), $entity, array('em' => $this->getDoctrine()->getManager()));
         $editForm->bind($request);
 
         if ($editForm->isValid()) {

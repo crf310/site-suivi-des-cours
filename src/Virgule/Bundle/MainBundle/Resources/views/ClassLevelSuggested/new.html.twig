@@ -1,9 +1,9 @@
 <div id="modal-content" class="hide">
     <div id="change-student-level-modal-body">
-        <form id="change-student-level-form" action="{{ path('classlevelsuggested_create') }}" method="post" {{ form_enctype(commentForm) }} class="form-horizontal">
-        {{ form_row(form.classLevel) }}
-        {{ form_widget(form._token, { 'data': 2 }) }}
-        {{ form_row(form.student, { 'value': studentId }) }}
+        <form id="change-student-level-form" action="{{ path('classlevelsuggested_create') }}" method="post" {{ form_enctype(classLevelSuggestedForm) }} class="form-horizontal">
+        {{ form_row(classLevelSuggestedForm.classLevel) }}
+        {{ form_widget(classLevelSuggestedForm._token, { 'data': 2 }) }}
+        {{ form_row(classLevelSuggestedForm.student, { 'value': studentId }) }}
         </form>
     </div>
 </div>

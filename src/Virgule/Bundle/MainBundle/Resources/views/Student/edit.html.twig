@@ -12,13 +12,17 @@
 {% block content_title %}Modifier la fiche de {{ entity.firstName }} {{ entity.lastName }}{% endblock %}
  {%block submenu %}{% endblock %}
 {% block main_content %}
-<form action="{{ path('student_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal">
-    <div class="widget-box">
-        {% include 'VirguleMainBundle:Student:form.html.twig' with { 'form': edit_form }  %}
-        {{ form_row(edit_form.otherCourses) }} 
-        <div class="form-actions">                                     
-            <input class="btn btn-success" type="submit" value="Mettre à jour l'apprenant" /> 
-        </div>
+<div class="row">
+    <div class="col-md-12 center">
+        <form action="{{ path('student_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal">
+            <div class="widget-box">
+                {% include 'VirguleMainBundle:Student:form.html.twig' with { 'form': edit_form }  %}
+                <div class="form-actions">                                     
+                    <input class="btn btn-success" type="submit" value="Mettre à jour l'apprenant" /> 
+                </div>
+            </div>
+        </form>
     </div>
 </div>
+        
 {% endblock %}

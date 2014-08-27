@@ -14,6 +14,10 @@ class MenuBuilder extends ContainerAware {
         $menu->addChild('Accueil', array('route' => 'welcome'));
         $menu['Accueil']->setLinkAttribute('class', 'welcome');
         
+        $userId = $this->container->get('security.context')->getToken()->getUser()->getId();
+        $menu->addChild('Mon profil', array('route' => 'teacher_show', 'routeParameters' => array('id' => $userId)));
+        $menu['Mon profil']->setLinkAttribute('class', 'profile');
+                
         /* Class reports */
         $menu->addChild('Compte-rendus', array('route' => 'classsession_index'));
         $menu['Compte-rendus']->setLinkAttribute('class', 'minutes');
@@ -65,6 +69,9 @@ class MenuBuilder extends ContainerAware {
                 
         $menu->addChild('Aide', array('route' => 'help'));
         $menu['Aide']->setLinkAttribute('class', 'help');
+        
+        //$menu->addChild('Signaler un problème', array('route' => 'report_issue'));
+        //$menu['Signaler un problème']->setLinkAttribute('class', 'report_issue');
             
         return $menu;
     }

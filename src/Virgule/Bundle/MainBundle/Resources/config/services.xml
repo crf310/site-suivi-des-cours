@@ -27,6 +27,8 @@
         <parameter key="virgule.student_manager.class">%namespace%\Manager\StudentManager</parameter>
         <parameter key="virgule.document_manager.class">%namespace%\Manager\DocumentManager</parameter>
         <parameter key="virgule.tag_manager.class">%namespace%\Manager\TagManager</parameter>
+        <parameter key="virgule.help_manager.class">%namespace%\Manager\HelpManager</parameter>
+        <parameter key="virgule.classsession_manager.class">%namespace%\Manager\ClassSessionManager</parameter>
     </parameters>
 
     <services>
@@ -51,6 +53,12 @@
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>        
         <service id="virgule.tag_manager" class="%virgule.tag_manager.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+        <service id="virgule.help_manager" class="%virgule.help_manager.class%">
+            <argument type="service" id="service_container" />
+        </service>
+        <service id="virgule.classsession_manager" class="%virgule.classsession_manager.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
                
@@ -106,6 +114,10 @@
         <service id="validator.not_overlapping_course" class="Virgule\Bundle\MainBundle\Validator\CourseNotOverlappingValidator">
             <argument type="service" id="virgule.course_manager" />
             <tag name="validator.constraint_validator" alias="course_not_overlapping" />
+        </service>
+        <service id="validator.already_existing_classsession" class="Virgule\Bundle\MainBundle\Validator\ClassSessionAlreadyExistingValidator">
+            <argument type="service" id="virgule.classsession_manager" />
+            <tag name="validator.constraint_validator" alias="classsession_already_existing" />
         </service>
     </services>
 

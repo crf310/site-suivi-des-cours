@@ -71,7 +71,7 @@
     <div class="left_list">
     {% for child in form %}
         {{ form_widget(child) }}<br />
-        {% if cols_number is not defined or loop.length <= cols_number %}
+        {% if cols_number is not defined or loop.length < cols_number %}
             {% set cols_number = 1 %}
         {% endif  %}
         {% if loop.index % (loop.length // cols_number) == 0  and loop.index != loop.last %}

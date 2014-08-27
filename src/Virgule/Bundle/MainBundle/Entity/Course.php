@@ -104,7 +104,7 @@ class Course {
     protected $classSessions;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Student", mappedBy="courses")
+     * @ORM\ManyToMany(targetEntity="Student", inversedBy="courses")
      * @ORM\JoinTable(name="student_course")
      */
     protected $students;

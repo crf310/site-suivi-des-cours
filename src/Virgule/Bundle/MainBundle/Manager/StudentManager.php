@@ -79,7 +79,12 @@ class StudentManager extends BaseManager {
         foreach ($students as $key => $student) {
             
             // store courses for each student
-            $courses_array[$student['student_id']][] = Array('course_id' => $student['course_id'], 'level' => $student['level'], 'levelColorCode' => $student['levelColorCode'], 'semester_id' => $student['semester_id']);
+            if (! key_exists($student['student_id'], $courses_array)) {
+                $courses_array[$student['student_id']] = Array();
+            }
+            if (! empty($student['course_id'])) {
+                $courses_array[$student['student_id']][] = Array('course_id' => $student['course_id'], 'level' => $student['level'], 'levelColorCode' => $student['levelColorCode'], 'semester_id' => $student['semester_id']);
+            }
             
             // only keep the line if the students has not been processed already
             if (! array_key_exists($student['student_id'], $students_ids)) {
@@ -109,16 +114,15 @@ class StudentManager extends BaseManager {
         
         $courses = Array();
         if (count($courseIds) > 0) {
-            $classSessionRepository = $this->em->getRepository('VirguleMainBundle:ClassSession');
-            $classSessions = $classSessionRepository->getNumberOfClassSessionsPerCourse($courseIds);
-            $classSessionsAttended = $classSessionRepository->getNumberOfClassSessionsPerCourseAndStudent($courseIds, $studentId);
+            $courseRepository = $this->em->getRepository('VirguleMainBundle:Course');
+            $classSessions = $courseRepository->getNumberOfClassSessionsPerCourse($courseIds);
+            $classSessionsAttended = $courseRepository->getNumberOfClassSessionsPerCourseAndStudent($courseIds, $studentId);
         
-            foreach ($classSessions as $classSession) {
-                $courses[$classSession['course_id']] = Array('nb_classsessions' => $classSession['nb_classsessions'], 'nb_classsessions_attended' => 0);
-            }
-
-            foreach ($classSessionsAttended as $classSessionAttended) {
-                $courses[$classSession['course_id']]['nb_classsessions_attended'] = $classSessionAttended['nb_classsessions'];
+            foreach ($classSessions as $courseId => $classSession) {
+                $courses[$courseId] = Array('nb_classsessions' => $classSession['nb_classsessions'], 'nb_classsessions_attended' => 0);
+                if (array_key_exists($courseId, $classSessionsAttended)) {
+                    $courses[$courseId]['nb_classsessions_attended'] = $classSessionsAttended[$courseId]['nb_classsessions'];
+                }
             }
         }
         return $courses;
@@ -134,6 +138,12 @@ class StudentManager extends BaseManager {
             $dates[] = $openHouse->getDate();
         }
         return $this->getRepository()->getNumberOfStudentRegisteredAfterDates($dates);
+    }
+    
+    public function searchStudent($name) {
+        $students = $this->getRepository()->search($name);
+        $students_merged = $this->mergeStudentLines($students);
+        return $students_merged;
     }
 }
 

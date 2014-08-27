@@ -1,0 +1,8 @@
+<div id="modal-content" class="hide">
+    <div id="select-planning-classrooms-modal-body">
+        <form id="select-planning-classrooms-form" action="{{ path('course_print_planning') }}" method="get" {{ form_enctype(selectClassRoomForm) }} class="form-horizontal">
+        {{ form_row(selectClassRoomForm.classRoom) }}
+        {{ form_widget(selectClassRoomForm._token, { 'data': 2 }) }}
+        </form>
+    </div>
+</div>

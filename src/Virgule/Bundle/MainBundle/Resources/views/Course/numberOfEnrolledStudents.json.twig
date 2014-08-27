@@ -1,0 +1,8 @@
+[
+{% for course in courses %}
+  {
+    "course_id": "{{ course['course_id'] }}",
+    "nb_students": "{{ course['nb_students'] }}"
+  }{% if not loop.last %},{% endif %}
+{% endfor %}
+]

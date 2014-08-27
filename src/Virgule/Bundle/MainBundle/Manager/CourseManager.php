@@ -5,6 +5,7 @@ namespace Virgule\Bundle\MainBundle\Manager;
 use Doctrine\ORM\EntityManager;
 use Virgule\Bundle\MainBundle\Manager\BaseManager;
 use \Virgule\Bundle\MainBundle\Entity\Course;
+use \Virgule\Bundle\MainBundle\Entity\Student;
 use \Virgule\Bundle\MainBundle\Entity\CourseHydrated;
 
 class CourseManager extends BaseManager {
@@ -19,6 +20,25 @@ class CourseManager extends BaseManager {
         return $this->em->getRepository('VirguleMainBundle:Course');
     }
 
+    /**
+     * 
+     * @param \Virgule\Bundle\MainBundle\Entity\Course $courseId
+     * @param \Virgule\Bundle\MainBundle\Manager\Student $studentId
+     * @param type $enrollment
+     */
+    public function enrollmentAction(Course $courseId, Student $studentId, $enrollment = true) {
+        if ($enrollment) {
+            $courseId->addStudent($studentId);
+        } else {
+            $courseId->removeStudent($studentId);
+        }
+        
+        $this->em->persist($courseId);
+        $this->em->flush();
+        
+        return true;
+    }
+    
     public function getNumberOfOverlappingCourses(Course $course) {
         $courseId = $course->getId();
         $semesterId = $course->getSemester()->getId();
@@ -36,9 +56,9 @@ class CourseManager extends BaseManager {
      * and group teachers
      * @param type $semesterId
      */
-    public function getAllHydratedCourses($semesterId) {
+    public function getAllHydratedCourses($semesterId, $classRoomIds = null) {
         $coursesHydrated = Array();
-        $courses = $this->getRepository()->loadAll($semesterId);
+        $courses = $this->getRepository()->loadAll($semesterId, $classRoomIds);
 
         // sub array to group multiple teachers      
         $course_ids = Array();
@@ -84,6 +104,10 @@ class CourseManager extends BaseManager {
         foreach($courses as $course) {
             $this->cloneCourse($course, $newSemester);
         }
+    }
+    
+    public function getNumberOfEnrolledStudents($courseIds) {
+        return $courses = $this->getRepository()->getNumberOfEnrolledStudents($courseIds);
     }
 }
 
