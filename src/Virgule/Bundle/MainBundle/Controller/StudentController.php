@@ -144,7 +144,7 @@ class StudentController extends AbstractVirguleController {
     /**
      * Finds and displays a Student entity.
      *
-     * @Route("/{id}/show", name="student_show")
+     * @Route("/{id}/show", name="student_show", options={"expose"=true})
      * @Template()
      */
     public function showAction($id) {

@@ -74,7 +74,8 @@
             });  
         }
         
-        function searchStudent(studentName) {            
+        function searchStudent(studentName) {   
+            
             $("#studentsList").empty();
             if (studentName === "") {                
                 $('#nbStudents').text('');
@@ -102,12 +103,17 @@
                         if (studentGender === 'F') {
                             genderIcon = '/icons/user_female.png';
                         }
+                        
+                        var showStudentRoute = Routing.generate('student_show', { 'id': studentId });
                         $("#studentsList").append('\
                             <tr>\
                                 <td class="center"><img src="' + imgPath  + genderIcon + '" /></td>\
                                 <td class="center"><img src="' + imgPath + '/drapeaux/' + studentNativeCountryCode.toLowerCase() + '.png" alt="' + studentNativeCountryName + '" title="' + studentNativeCountryName + '" /></td>\
                                 <td><strong>' + studentFirstName + ' ' + studentLastName + '</strong></td>\
                                 <td>\
+                                    <a class="btn btn-xs" href="' + showStudentRoute + '">\
+                                        <button class="btn btn-default btn-xs">Voir</button>\
+                                    </a>\
                                     <a id="enroll-c{{ course.id }}-s' + studentId + '-0" class="btn btn-success btn-xs" onClick="enrollStudent({{ course.id }}, ' + studentId + ', true);">Inscrire</a>\
                                     <a id="unenroll-c{{ course.id }}-s' + studentId + '-0" class="btn btn-danger btn-xs" onClick="unenrollStudent({{ course.id }}, ' + studentId + ', true);">Désinscrire</a>\
                                 </td>\
@@ -287,6 +293,9 @@
                                                 {% set styleUnenroll = "none" %}
                                                 {% set styleEnroll = "inline-block" %}
                                             {% endif %}
+                                                <a class="btn btn-xs" href="{{ path('student_show', { 'id':student.student_id }) }}">
+                                                    <button class="btn btn-default btn-xs">Voir</button>
+                                                </a>
                                             <a id="enroll-c{{ course.id }}-s{{ student.student_id }}-{{ loop.parent.loop.index }}" class="btn btn-success btn-xs" style="display: {{ styleEnroll }};" onClick="enrollStudent({{ course.id }},{{ student.student_id }}, true);">Inscrire</a>
                                             <a id="unenroll-c{{ course.id }}-s{{ student.student_id }}-{{ loop.parent.loop.index }}" class="btn btn-danger btn-xs" style="display: {{ styleUnenroll }};" onClick="unenrollStudent({{ course.id }}, {{ student.student_id }}, true);">Désinscrire</a>
                                         </td>
