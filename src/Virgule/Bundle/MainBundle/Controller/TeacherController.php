@@ -117,7 +117,7 @@ class TeacherController extends AbstractVirguleController {
         $entity->setRegistrationDate(new \DateTime('now'));
         $expirationDate = new \DateTime("now");
         $expirationDate->modify("+30 day");
-        $entity->setExpiresAt($expirationDate);
+        $entity->setCredentialsExpireAt($expirationDate);
         
         $em = $this->getDoctrine()->getManager();
         $currentBranchId = $this->getSelectedOrganizationBranch()->getId();
