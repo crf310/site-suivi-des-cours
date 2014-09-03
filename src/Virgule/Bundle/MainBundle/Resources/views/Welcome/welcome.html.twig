@@ -2,7 +2,7 @@
 {% block content_title %}{{ random(['Bienvenue', 'Salut', 'Hello', 'Bonjour']) }} {{ app.user.firstname }} !{% endblock %}
 {% block main_content %}
 <div id="welcome" class="row">    
-    <div class="col-md-12">   
+    <div class="col-xs-12 col-md-12 col-lg-8">
         <div class="row">
             <div class="widget-box" id="myCourses">
                 <div class="widget-title">
@@ -16,9 +16,9 @@
                     {% for course in myCourses %}
                     <div class="new-update clearfix">
                         <div class="update-done">						
-                            <a class="btn btn-default virgule-btn" href="{{ path('classsession_add', { 'id': course.id }) }}"><i class="my-icon-add"></i>Compte-rendu</a>
+                            <a class="btn btn-default virgule-btn" href="{{ path('classsession_add', { 'id': course.id }) }}"><i class="my-icon-add"></i>Compte rendu</a>
                             <a class="btn btn-default virgule-btn" href="{{ path('course_manage_enrollments', { 'id': course.id }) }}"><i class="my-icon-manage-students"></i>Gérer les inscriptions</a>
-                            <a class="btn btn-default virgule-btn" href="{{ path('attendance_list', { 'id': course.id }) }}" target="_blank"><i class="my-icon-trombinoscope"></i>Fiche de présence</a>
+                            <a class="btn btn-default virgule-btn" href="{{ path('attendance_list', { 'id': course.id }) }}" target="_blank"><i class="my-icon-trombinoscope"></i>Fiche présence</a>
                         </div>
                         <a href="{{ path('course_show', { 'id': course.id }) }}" >
                             <div class="class-date">
@@ -35,19 +35,19 @@
                         </li>
                     </ul>
                 </div>
-            </div>  
+            </div>
         </div>
-    </div><!--/row-->       
-    <div class="col-md-4">
-        {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Mes apprenants', 'students': myStudents, 'nbColumns': 1, 'displayMyStudentsButton': true }  %}
-    </div><!--/col -->      
-    <div class="col-md-8">           
         <div class="row">
-            {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Mes 12 derniers comptes rendus', 'classSessions': myClassSessions, 'nbColumns': 3, 'displayAllClassSessionsButton': true }  %}
-        </div><!--/row-->             
+            {% include 'VirguleMainBundle:Student:mini-list.html.twig' with { 'title': 'Mes apprenants', 'students': myStudents, 'nbColumns': 3, 'displayMyStudentsButton': true }  %}
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-12 col-lg-4">
         <div class="row">
-            {% include 'VirguleMainBundle:Document:mini-list.html.twig' with { 'title': 'Mes documents', 'documents': myDocuments, 'nbColumns': 3, 'displayAllDocumentButton': true }  %}
-        </div><!--/row -->
-    </div><!--/col --> 
+            {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Mes 12 derniers comptes rendus', 'classSessions': myClassSessions, 'nbColumns': 2, 'displayAllClassSessionsButton': true }  %}
+        </div>
+        <div class="row">
+        {% include 'VirguleMainBundle:Document:mini-list.html.twig' with { 'title': 'Mes documents', 'documents': myDocuments, 'nbColumns': 2, 'displayAllDocumentButton': true }  %}
+        </div>
+    </div>
 </div>
 {% endblock %}

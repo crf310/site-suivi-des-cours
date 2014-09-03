@@ -2,7 +2,15 @@
 {% spaceless %}
     {% set type = type|default('text') %}
     {% set attr = attr|merge({'class': (attr.class|default('form-control input-sm'))|trim}) %}
-    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    <div class="input-group input-sm ">
+
+<input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>    
+    {% if attr.class == 'datepicker' %}
+    <span class="input-group-addon" onClick="clearDateField('{{ id }}');">
+        <i class="icon-remove"></i>
+    </span>
+    {% endif %}
+</div>
     <br />
     {% if open_houses_dates is defined and open_houses_dates is not null %}
         {% for open_house_date in open_houses_dates %}

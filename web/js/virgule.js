@@ -117,3 +117,8 @@ $(document).ready(function(){
             });
     });	    
 });
+
+function clearDateField(id) {
+    var field = $('#' + id);
+    field.val('');
+}
