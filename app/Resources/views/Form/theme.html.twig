@@ -1,24 +1,24 @@
 {% block form_widget_simple %}
 {% spaceless %}
     {% set type = type|default('text') %}
-    {% set attr = attr|merge({'class': (attr.class|default('form-control input-sm'))|trim}) %}
-    <div class="input-group input-sm ">
-
-<input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>    
-    {% if attr.class == 'datepicker' %}
-    <span class="input-group-addon" onClick="clearDateField('{{ id }}');">
-        <i class="icon-remove"></i>
-    </span>
-    {% endif %}
-</div>
-    <br />
-    {% if open_houses_dates is defined and open_houses_dates is not null %}
-        {% for open_house_date in open_houses_dates %}
-            <button class="btn setopenhouse" value="{{ open_house_date | date('d/m/Y') }}"/>
-                <i class="icon-group"></i> {{ open_house_date | date('w') | day }} {{ open_house_date | date('d/m') }}
-            </button>&nbsp;
-        {% endfor %}
-    {% endif %}
+    {% set attr = attr|merge({'class': attr.class|default('form-control input-sm') ~ ' form-control input-sm' }) %}
+            {% if 'datepicker' in attr.class %}
+            <div class="input-group input-group-sm ">
+                <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/> 
+                <span class="input-group-btn">
+                    <a class="btn btn-inverse" onClick="clearDateField('{{ id }}');"><i class="icon-remove"></i></a>
+                </span>   
+            </div>
+            {% else %}
+                <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>    
+            {% endif %}
+            {% if open_houses_dates is defined and open_houses_dates is not null %}
+                {% for open_house_date in open_houses_dates %}
+                    <button class="btn setopenhouse" value="{{ open_house_date | date('d/m/Y') }}"/>
+                        <i class="icon-group"></i> {{ open_house_date | date('w') | day }} {{ open_house_date | date('d/m') }}
+                    </button>&nbsp;
+                {% endfor %}
+            {% endif %}
 {% endspaceless %}
 {% endblock form_widget_simple %}
 
@@ -116,7 +116,9 @@
         {{ form_label(form, label|default(null), { 'label_attr': {'class': 'control-label'} }) }}
         <div class="controls">
             {{ form_widget(form) }}
-            <span class="help-block">{{ hint|default('') }}</span>
+            {% if hint is defined %}
+                <span class="help-block">{{ hint|default('') }}</span>
+            {% endif %}
             {{ form_errors(form) }}
         </div>
     </div>
