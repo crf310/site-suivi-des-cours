@@ -34,6 +34,13 @@ class ClassLevel {
      * @ORM\Column(name="html_color_code", type="string", length=7, nullable=false)
      */
     private $htmlColorCode;
+        
+    /**
+     * @var string $position
+     *
+     * @ORM\Column(name="position", type="integer", length=2, nullable=false)
+     */
+    private $position;
 
     /**
      * @ORM\OneToMany(targetEntity="Course", mappedBy="classLevel")
@@ -89,6 +96,27 @@ class ClassLevel {
      */
     public function getHtmlColorCode() {
         return $this->htmlColorCode;
+    }
+    
+    /**
+     * Set position
+     *
+     * @param string $position
+     * @return ClassLevel
+     */
+    public function setPosition($position) {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return string 
+     */
+    public function getPosition() {
+        return $this->position;
     }
 
     /**

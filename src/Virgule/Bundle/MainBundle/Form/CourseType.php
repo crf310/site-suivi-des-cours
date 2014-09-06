@@ -12,13 +12,13 @@ use Virgule\Bundle\MainBundle\Form\FormConstants;
 class CourseType extends AbstractType {
 
     private $intention;
+    private $em;
     private $organizationBranchId;
-    private $teacherRepository;
 
-    public function __construct($intention, TeacherRepository $teacherRepository, $organizationBranchId) {
+    public function __construct($intention, $organizationBranchId, EntityManager $em) {
         $this->intention = $intention;
-        $this->teacherRepository = $teacherRepository;
         $this->organizationBranchId = $organizationBranchId;
+        $this->em = $em;
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options) {
@@ -68,14 +68,15 @@ class CourseType extends AbstractType {
                     'expanded' => false,
                     'multiple' => false,
                     'property' => 'label',
-                    'property_path' => 'classlevel',            
+                    'property_path' => 'classlevel',
+                    'query_builder'     => $this->em->getRepository('VirguleMainBundle:ClassLevel')->getDefaultQueryBuilder(),
                     'attr' => array('class' => 'tiny-select')
                  ))
         ;
         
         $teachersOptions = array(
                     'class'         => 'VirguleMainBundle:Teacher',
-                    'query_builder' => $this->teacherRepository->getAvailableTeachersQueryBuilder($this->organizationBranchId, true),
+                    'query_builder' => $this->em->getRepository('VirguleMainBundle:Teacher')->getAvailableTeachersQueryBuilder($this->organizationBranchId, true),
                     'expanded'      => false,
                     'multiple'      => true,
                     'property'      => 'fullname',

@@ -99,7 +99,7 @@ class LoadCourseData extends AbstractFixture implements OrderedFixtureInterface 
             $courseH->setOrganizationBranch($this->getReference('deleg-3-10'));
             $courseH->setClassRoom($this->getReference('salle-cours'));
             $courseH->setSemester($this->getReference($semesterReference));
-            $courseH->setClassLevel($this->getReference('B3'));
+            $courseH->setClassLevel($this->getReference('C3'));
             $courseH->addTeacher($this->getReference('prof2'));
             
             $courseI = new Course();
