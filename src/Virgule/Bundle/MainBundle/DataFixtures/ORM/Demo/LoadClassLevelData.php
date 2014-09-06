@@ -21,7 +21,7 @@ class LoadClassLevelData extends AbstractFixture implements OrderedFixtureInterf
         $classLevels[] = Array("label" => "B1/1", "html_color_code" => "#FF8000");
         $classLevels[] = Array("label" => "B1/2", "html_color_code" => "#FFD0A0");
         $classLevels[] = Array("label" => "B2", "html_color_code" => "#800080");
-        $classLevels[] = Array("label" => "C3", "html_color_code" => "#C080C0");
+        $classLevels[] = Array("label" => "C1", "html_color_code" => "#C080C0");
         
         foreach ($classLevels as $key => $classLevel) {
             $level = new ClassLevel();
