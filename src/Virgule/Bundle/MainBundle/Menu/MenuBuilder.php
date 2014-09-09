@@ -67,7 +67,7 @@ class MenuBuilder extends ContainerAware {
         $menu['Cartable de documents']->setLinkAttribute('class', 'schoolbag');
         $menu['Cartable de documents']->addChild('NEW DOCUMENT', array('route' => 'document_new'))->setDisplay(false);
                 
-        $menu->addChild('Aide', array('route' => 'help'));
+        $menu->addChild('Aide', array('route' => 'help_faq'));
         $menu['Aide']->setLinkAttribute('class', 'help');
         
         //$menu->addChild('Signaler un problème', array('route' => 'report_issue'));

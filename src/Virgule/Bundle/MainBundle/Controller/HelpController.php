@@ -15,7 +15,21 @@ use Virgule\Bundle\MainBundle\Form\ReportIssueType;
  * @Route("/help")
  */
 class HelpController extends AbstractVirguleController {
-
+    
+    /**
+     * Show help page
+     *
+     * @Route("/faq", name="help_faq")
+     * @Method({"GET"})
+     * @Template
+     */
+    public function helpAction() {
+        $user_manual_url = $this->container->getParameter('user_manual_url');
+        return array(
+            'user_manual_url' => $user_manual_url,
+        );
+    }
+    
     /**
      * Display the form and send the issue to github
      *
