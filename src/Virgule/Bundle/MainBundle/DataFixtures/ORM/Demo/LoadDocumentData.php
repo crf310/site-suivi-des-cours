@@ -22,7 +22,7 @@ class LoadDocumentData extends AbstractFixture implements OrderedFixtureInterfac
             $this->getReference('B1/1'),
             $this->getReference('B1/2'),
             $this->getReference('B2'),
-            $this->getReference('C3'),
+            $this->getReference('C1'),
         );
         
         for ($i = 1; $i <= 50; $i++) {
