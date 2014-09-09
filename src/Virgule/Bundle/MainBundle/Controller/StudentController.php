@@ -334,7 +334,13 @@ class StudentController extends AbstractVirguleController {
         $suggestedClassLevels = $entity->getSuggestedClassLevel();
         foreach($suggestedClassLevels as $suggestedClassLevel) {
             $suggestedClassLevel->setStudent($entity);
-            $em->persist($suggestedClassLevel);
+            // shouldn't happen but it did...
+            if ($suggestedClassLevel->getClassLevel() != null) {
+                $em->persist($suggestedClassLevel);
+            } else {
+                logError("Attempt to save a class level suggested with a null class level");
+                logError('$suggestedClassLevels contains ' . count($suggestedClassLevels) . ' entries');
+            }
         }
     }
     
