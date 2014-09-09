@@ -1,10 +1,43 @@
 {% extends '::main_content.html.twig' %}
+{% block head %}    
+    {{ parent() }}
+    {% block javascripts %}
+        <script type='text/javascript'>
+        $(function(){
+            $('#delete-course').click(function(e){
+                e.preventDefault();
+                bootbox.dialog({
+                    message: "Vous allez supprimer le cours de {{ entity.classLevel.label }} le {{ entity.dayOfWeek | day }} de {{ entity.startTime | date('H\\hi') }} à {{ entity.endTime | date('H\\hi') }}, êtes-vous sûr(e) ?",
+                    title: "Suppression d'un cours",
+                    buttons: {
+                        no: {
+                            label: "Non",
+                            className: "btn-default"
+                        },
+                        yes: {
+                            label: "Oui",
+                            className: "btn-danger",
+                            callback: function() {
+                                $("#delete-course-form").submit();
+                            }
+                        }
+                     }
+                });
+            });
+        });
+        </script>
+    {% endblock %}
+{% endblock %}
 {% block content_title %}Cours {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': entity.classLevel.htmlColorCode, 'classLevelLabel': entity.classLevel.label } %}{% endblock %}
 {%block submenu %}
     <a class="btn tip-bottom" href="{{ path('course_show_trombinoscope', { 'id': entity.id }) }}"> <i class="my-icon-trombinoscope"></i>Trombinoscope</a>
-    <a class="btn tip-bottom" href="{{ path('course_edit', { 'id': entity.id }) }}"> <i class="my-icon-class_edit"></i>Modifier le cours</a>
     <a class="btn tip-bottom" href="{{ path('course_manage_enrollments', { 'id': entity.id }) }}"> <i class="my-icon-manage-students"></i>Gérer les inscriptions</a>
-    <a class="btn tip-bottom" href="{{ path('classsession_add', { 'id': entity.id }) }}"> <i class="my-icon-add"></i>Ajouter un compte-rendu</a>
+    <a class="btn tip-bottom" href="{{ path('classsession_add', { 'id': entity.id }) }}"> <i class="my-icon-add"></i>Ajouter un compte-rendu</a>    
+    {% if is_granted('ROLE_SECRETARY') %}
+        <a class="btn tip-bottom" href="{{ path('course_edit', { 'id': entity.id }) }}"> <i class="my-icon-class_edit"></i>Modifier le cours</a>
+        <a class="btn" href="#" id="delete-course"> <i class="my-icon-calendar-delete"></i>Supprimer le cours</a>
+        <form id="delete-course-form" action="{{ path('course_delete', { 'id': entity.id }) }}" method="post">{{ form_widget(delete_form) }}</form>
+    {% endif %}
 {% endblock %}
 {% block main_content %}
 <div class="container-fluid">    

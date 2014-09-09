@@ -190,6 +190,9 @@ i.my-icon-search-student, i.my-icon-search-classsession, i.my-icon-search-docume
 i.my-icon-calendar {
     background-image: url('../img/icons/calendar.png');
 }
+i.my-icon-calendar-delete {
+    background-image: url('../img/icons/calendar_delete.png');
+}
 i.my-icon-printer {
     background-image: url('../img/icons/printer.png');
 }
