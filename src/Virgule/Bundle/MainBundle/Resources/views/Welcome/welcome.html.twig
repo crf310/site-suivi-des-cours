@@ -16,7 +16,7 @@
                     {% for course in myCourses %}
                     <div class="new-update clearfix">
                         <div class="update-done">						
-                            <a class="btn btn-default virgule-btn" href="{{ path('classsession_add', { 'id': course.id }) }}"><i class="my-icon-add"></i>Compte rendu</a>
+                            <a class="btn btn-default virgule-btn" href="{{ path('classsession_add', { 'id': course.id }) }}"><i class="my-icon-add"></i>Compte-rendu</a>
                             <a class="btn btn-default virgule-btn" href="{{ path('course_manage_enrollments', { 'id': course.id }) }}"><i class="my-icon-manage-students"></i>Gérer les inscriptions</a>
                             <a class="btn btn-default virgule-btn" href="{{ path('attendance_list', { 'id': course.id }) }}" target="_blank"><i class="my-icon-trombinoscope"></i>Fiche présence</a>
                         </div>
@@ -43,7 +43,7 @@
     </div>
     <div class="col-xs-12 col-md-12 col-lg-4">
         <div class="row">
-            {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Mes 12 derniers comptes rendus', 'classSessions': myClassSessions, 'nbColumns': 2, 'displayAllClassSessionsButton': true }  %}
+            {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Mes 12 derniers comptes-rendus', 'classSessions': myClassSessions, 'nbColumns': 2, 'displayAllClassSessionsButton': true }  %}
         </div>
         <div class="row">
         {% include 'VirguleMainBundle:Document:mini-list.html.twig' with { 'title': 'Mes documents', 'documents': myDocuments, 'nbColumns': 2, 'displayAllDocumentButton': true }  %}

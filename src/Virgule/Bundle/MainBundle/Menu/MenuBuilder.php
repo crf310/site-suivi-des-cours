@@ -22,15 +22,15 @@ class MenuBuilder extends ContainerAware {
         }
                 
         /* Class reports */
-        $menu->addChild('Compte-rendus', array('route' => 'classsession_index'));
-        $menu['Compte-rendus']->setLinkAttribute('class', 'minutes');
-        $menu['Compte-rendus']->addChild('Par niveau', array('route' => 'classsession_index_per_level'))->setDisplay(false);
+        $menu->addChild('Comptes-rendus', array('route' => 'classsession_index'));
+        $menu['Comptes-rendus']->setLinkAttribute('class', 'minutes');
+        $menu['Comptes-rendus']->addChild('Par niveau', array('route' => 'classsession_index_per_level'))->setDisplay(false);
         
         /* Hidden children to set this menu active when we visit the pages */        
-        $menu['Compte-rendus']->addChild('NEW CLASSSESSION', array('route' => 'classsession_new'))->setDisplay(false);
-        $menu['Compte-rendus']->addChild('RSS INDEX', array('route' => 'classsession_rss_index'))->setDisplay(false);
+        $menu['Comptes-rendus']->addChild('NEW CLASSSESSION', array('route' => 'classsession_new'))->setDisplay(false);
+        $menu['Comptes-rendus']->addChild('RSS INDEX', array('route' => 'classsession_rss_index'))->setDisplay(false);
         
-        $this->addNbSubLinks($menu, 'Compte-rendus');
+        $this->addNbSubLinks($menu, 'Comptes-rendus');
         /* End class reports */
         
         $menu->addChild('Planning des cours', array('route' => 'course_show_planning'));
