@@ -4,14 +4,15 @@ namespace Virgule\Bundle\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Virgule\Bundle\MainBundle\Validator\Constraints as VirguleAssert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Virgule\Bundle\MainBundle\Entity\ClassSession
  *
  * @ORM\Table(name="classsessions")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\ClassSessionRepository") * 
- * @VirguleAssert\ClassSessionAlreadyExisting
+ * @UniqueEntity(fields={"course", "sessionDate"}, message="Un compte rendu est déjà enregistré pour ce cours à cette date")
+ *
  */
 class ClassSession {
 
