@@ -14,9 +14,12 @@ class MenuBuilder extends ContainerAware {
         $menu->addChild('Accueil', array('route' => 'welcome'));
         $menu['Accueil']->setLinkAttribute('class', 'welcome');
         
-        $userId = $this->container->get('security.context')->getToken()->getUser()->getId();
-        $menu->addChild('Mon profil', array('route' => 'teacher_show', 'routeParameters' => array('id' => $userId)));
-        $menu['Mon profil']->setLinkAttribute('class', 'profile');
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        if (! empty($user)) {
+            $userId = $user->getId();
+            $menu->addChild('Mon profil', array('route' => 'teacher_show', 'routeParameters' => array('id' => $userId)));
+            $menu['Mon profil']->setLinkAttribute('class', 'profile');
+        }
                 
         /* Class reports */
         $menu->addChild('Compte-rendus', array('route' => 'classsession_index'));
