@@ -191,18 +191,18 @@ au
                     <div id="worldmap_div" class="tab-pane" style="width:100%; height: 1000px"></div>
                     <div id="worldlist_div" class="tab-pane">                       
                         <div class="row">
-                            {% set nbColumns = 3 %}
+                            {% set nbColumns = 4 %}
                             {% set listBreak = (students_countries | length) // nbColumns %}
                             {% if ((students_countries | length) // nbColumns) > 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
                             {% set span_size = 12 / nbColumns %}
-                            <div class="col-md-{{ span_size }}">
+                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <ul class="no-img">
                                 {% for country_code, nb_students in students_countries %}
                                     <li><img src="{{ asset('img/drapeaux/' ~ country_code | lower ~ '.png')}}" alt="{{  country_code | country2 }}" title="{{  country_code | country2 }}" />
                                     &nbsp;
                                     {{ country_code | upper | country2 }}:  {{ nb_students }}</li>
                                     {% if loop.index % listBreak == 0  and loop.index != loop.last %}
-                                        </ul></div><div class="col-md-{{ span_size }}"><ul class="no-img">
+                                        </ul></div><div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><ul class="no-img">
                                     {% endif %}
                                 {% endfor %}
                                 </ul>
