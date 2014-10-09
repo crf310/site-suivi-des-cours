@@ -84,6 +84,10 @@
             <tag name="form.type" />
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
+        <service id="form.course" class="%namespace%\Form\CourseType" public="true">
+            <tag name="form.type" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
         
         <!-- Form Extensions -->
         <service id="virgule_main_bundle.welcome_date_extension" class="%namespace%\Form\Extension\WelcomeDateTypeExtension">

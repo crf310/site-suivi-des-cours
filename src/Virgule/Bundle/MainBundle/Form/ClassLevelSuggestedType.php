@@ -26,7 +26,8 @@ class ClassLevelSuggestedType extends AbstractType {
             'cols_number'       => 6,
             'property'          => 'label',
             'property_path'     => 'classlevel',
-            'label'             => false
+            'label'             => false,
+            'query_builder'     => $this->em->getRepository('VirguleMainBundle:ClassLevel')->getDefaultQueryBuilder()
             ));
         
         $transformer = new StudentToNumberTransformer($this->em);

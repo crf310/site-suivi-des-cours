@@ -5,7 +5,23 @@
         <link href="{{ asset('css/colorpicker.css') }}" rel="stylesheet" media="screen" />
     {% endblock %}
     {% block javascripts %}
-        <script type="text/javascript" src="{{ asset('js/bootstrap-colorpicker.js') }}"></script> 
+        <script type="text/javascript" src="{{ asset('js/bootstrap-colorpicker.js') }}"></script>  
+        <script>
+        function saveLevelsPositions() {            
+            $( "#levels-list li" ).each(function(i) {         
+                var classLevelUpdatePositionUrl = Routing.generate('class_level_update_position', { 'classLevelId': $( this ).attr("class-level-id"), 'position': (i+1) });
+                $.get(classLevelUpdatePositionUrl, function(data) {
+                });
+            });
+        }
+        $(function() {
+            $('#levels-list').sortable({
+                update: function(event, ui) {
+                    saveLevelsPositions();
+                }
+            });
+        });
+    </script>
     {% endblock %}
 {% endblock %}
 {% block content_title %}Niveaux de cours{% endblock %}
@@ -22,24 +38,14 @@
         </div>
         <div class="widget-content nopadding">
             <div class="alert alert-info alert-padding">
-                Les niveaux de cours sont partagés par toutes les délégations.
+                Les niveaux de cours sont partagés par toutes les délégations. 
+                Ils seront affichés dans chaque formulaire dans l'ordre utilisé ci-dessous, faites-les glisser pour les réorganiser. 
             </div>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Label</th>
-                        <th>Couleur associée</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <ol id="levels-list">
                 {% for classLevel in classLevels %}
-                    <tr>
-                        <td class="center">{{ classLevel.label }}</td>
-                        <td class="center"><span class="label" style="background-color: {{ classLevel.htmlColorCode }};">{{  classLevel.htmlColorCode }}</span></td>
-                    </tr>
+                <li class-level-id="{{ classLevel.id }}"><div class="alert class-level" style="background-color: {{ classLevel.htmlColorCode }};">{{  classLevel.label }}</div></li>
                 {% endfor %}
-                </tbody>
-            </table>
+            </ol>
         </div>
     </div>
 </div>

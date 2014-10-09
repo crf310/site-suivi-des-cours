@@ -32,7 +32,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
         $genders = Array('F', 'M');
         $nbCourses = 12;
 
-        $classLevels = Array('A1', 'A2', 'B1/1', 'B1/2', 'B2', 'B3');
+        $classLevels = Array('A1', 'A2', 'B1/1', 'B1/2', 'B2', 'C1');
         
         $commentContent = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";

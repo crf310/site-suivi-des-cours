@@ -14,20 +14,23 @@ class MenuBuilder extends ContainerAware {
         $menu->addChild('Accueil', array('route' => 'welcome'));
         $menu['Accueil']->setLinkAttribute('class', 'welcome');
         
-        $userId = $this->container->get('security.context')->getToken()->getUser()->getId();
-        $menu->addChild('Mon profil', array('route' => 'teacher_show', 'routeParameters' => array('id' => $userId)));
-        $menu['Mon profil']->setLinkAttribute('class', 'profile');
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        if (! empty($user)) {
+            $userId = $user->getId();
+            $menu->addChild('Mon profil', array('route' => 'teacher_show', 'routeParameters' => array('id' => $userId)));
+            $menu['Mon profil']->setLinkAttribute('class', 'profile');
+        }
                 
         /* Class reports */
-        $menu->addChild('Compte-rendus', array('route' => 'classsession_index'));
-        $menu['Compte-rendus']->setLinkAttribute('class', 'minutes');
-        $menu['Compte-rendus']->addChild('Par niveau', array('route' => 'classsession_index_per_level'))->setDisplay(false);
+        $menu->addChild('Comptes-rendus', array('route' => 'classsession_index'));
+        $menu['Comptes-rendus']->setLinkAttribute('class', 'minutes');
+        $menu['Comptes-rendus']->addChild('Par niveau', array('route' => 'classsession_index_per_level'))->setDisplay(false);
         
         /* Hidden children to set this menu active when we visit the pages */        
-        $menu['Compte-rendus']->addChild('NEW CLASSSESSION', array('route' => 'classsession_new'))->setDisplay(false);
-        $menu['Compte-rendus']->addChild('RSS INDEX', array('route' => 'classsession_rss_index'))->setDisplay(false);
+        $menu['Comptes-rendus']->addChild('NEW CLASSSESSION', array('route' => 'classsession_new'))->setDisplay(false);
+        $menu['Comptes-rendus']->addChild('RSS INDEX', array('route' => 'classsession_rss_index'))->setDisplay(false);
         
-        $this->addNbSubLinks($menu, 'Compte-rendus');
+        $this->addNbSubLinks($menu, 'Comptes-rendus');
         /* End class reports */
         
         $menu->addChild('Planning des cours', array('route' => 'course_show_planning'));
@@ -67,7 +70,7 @@ class MenuBuilder extends ContainerAware {
         $menu['Cartable de documents']->setLinkAttribute('class', 'schoolbag');
         $menu['Cartable de documents']->addChild('NEW DOCUMENT', array('route' => 'document_new'))->setDisplay(false);
                 
-        $menu->addChild('Aide', array('route' => 'help'));
+        $menu->addChild('Aide', array('route' => 'help_faq'));
         $menu['Aide']->setLinkAttribute('class', 'help');
         
         //$menu->addChild('Signaler un problème', array('route' => 'report_issue'));

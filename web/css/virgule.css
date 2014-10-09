@@ -190,6 +190,9 @@ i.my-icon-search-student, i.my-icon-search-classsession, i.my-icon-search-docume
 i.my-icon-calendar {
     background-image: url('../img/icons/calendar.png');
 }
+i.my-icon-calendar-delete {
+    background-image: url('../img/icons/calendar_delete.png');
+}
 i.my-icon-printer {
     background-image: url('../img/icons/printer.png');
 }
@@ -451,4 +454,15 @@ textarea {
 #pwd-progress-bar {
     margin-top: 5px;
     margin-bottom: -20px;
+}
+
+/* Levels */
+.class-level {
+    padding: 5px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: bold;
 }

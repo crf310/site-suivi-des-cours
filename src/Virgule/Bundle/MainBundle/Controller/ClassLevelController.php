@@ -158,6 +158,21 @@ class ClassLevelController extends AbstractVirguleController {
             'delete_form' => $deleteForm->createView(),
         );
     }
+    
+    /**
+     * Update a class level with a new position when reorganizing them
+     * @Route("/{classLevelId}/position/{position}", name="class_level_update_position", options={"expose"=true})
+     */
+    public function updatePositionAction($classLevelId, $position) {        
+        $em = $this->getDoctrine()->getManager();
+        $classLevel = $this->getClassLevelRepository()->find($classLevelId);
+        if ($classLevel->getPosition() != $position) {
+            $classLevel->setPosition($position);
+            $em->persist($classLevel);
+            $em->flush();
+        }
+        return new Response();
+    }    
 
     /**
      * Deletes a ClassLevel entity.

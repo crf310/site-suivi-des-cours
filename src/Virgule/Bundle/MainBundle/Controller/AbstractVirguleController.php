@@ -31,6 +31,10 @@ abstract class AbstractVirguleController extends Controller {
         $logger = $this->get('logger');
         $logger->debug($message);
     }
+    protected function logError($message) {
+        $logger = $this->get('logger');
+        $logger->error($message);
+    }
     
     protected function paginate($entities, $page=1) {
         $pagerfanta = new Pagerfanta(new ArrayAdapter($entities));

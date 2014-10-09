@@ -21,7 +21,7 @@
                 {% if ((students | length) // nbColumns) > 0 %}{% set listBreak = listBreak + 1 %}{% endif %}
                 {% if listBreak == 0 %}{% set listBreak = 1 %}{% endif %}
                 {% set span_size = 12 /  nbColumns %}
-                <div class="col-md-{{ span_size }}">
+                <div class="col-xs-12 col-md-{{ span_size }} col-lg-{{ span_size }}">
                     <ul>                    
                     {% for student in students %}
                         <li class="user_{{ student['gender'] }}">

@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="classsessions")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\ClassSessionRepository") * 
- * @UniqueEntity(fields={"course", "sessionDate"}, message="Un compte rendu est déjà enregistré pour ce cours à cette date")
+ * @UniqueEntity(fields={"course", "sessionDate"}, message="Un compte-rendu est déjà enregistré pour ce cours à cette date")
  *
  */
 class ClassSession {
