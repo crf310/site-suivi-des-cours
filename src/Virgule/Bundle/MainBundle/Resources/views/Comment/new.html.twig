@@ -1,5 +1,10 @@
 <div id="modal-content" class="hide">
-    <div id="comment-modal-body">
+    <div id="comment-modal-body">        
+        <div class="alert alert-warning" id="cnil-alert">
+        Pour rester en conformation avec la déclaration <a href="http://www.cnil.fr">CNIL</a>, merci de ne saisir que des commentaires en lien avec l'apprentissage de l'apprenant.<br />
+        Des informations sur <strong>ses origines raciales ou ethniques, opinions philosophiques, politiques, syndicales, religieuses, vie sexuelle ou sa santé</strong> sont considérées comme sensibles et sont par conséquent proscrites.<br />
+        Il en va de même pour les <strong>appréciations</strong> (commentaires, observations) sur les éventuelles <strong>difficultés sociales</strong> de l'apprenant.
+        </div>
         <form id="comment-form" action="{{ path(target_route, { 'id': target_id }) }}" method="post" {{ form_enctype(commentForm) }} class="form-horizontal">
         {{ form_row(commentForm.comment, { 'label': false, 'attr': {'class': 'comment-textarea'} }) }}
         {{ form_rest(commentForm) }}
