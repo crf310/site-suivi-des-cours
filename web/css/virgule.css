@@ -466,3 +466,7 @@ textarea {
     font-size: 15px;
     font-weight: bold;
 }
+
+#cnil-alert {    
+    text-align: justify;
+}
