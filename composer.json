@@ -23,7 +23,7 @@
         "jms/di-extra-bundle": "1.4.0",
         "knplabs/knp-menu-bundle": "2.0.*@dev",
         "sonata-project/intl-bundle": "2.1.0",
-        "siphoc/pdf-bundle": "1.2.*",          
+        "siphoc/pdf-bundle": "1.2.3",          
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "friendsofsymfony/user-bundle": "dev-master",
         "friendsofsymfony/jsrouting-bundle": "1.5.3"
