@@ -23,8 +23,10 @@ abstract class AbstractVirguleController extends Controller {
     }
     
     protected function logInfo($message) {
+        $user = $this->getConnectedUser();
         $logger = $this->get('logger');
-        $logger->info($message);
+        $logMsg = $user->getFirstname() . ' ' . $user->getLastname() . ' - ' . $message;
+        $logger->info($logMsg);
     }
     
     protected function logDebug($message) {
