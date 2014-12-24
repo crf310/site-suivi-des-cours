@@ -8,7 +8,7 @@
         <meta name="author" content="">
 
         <!-- Le styles -->
-        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" media="screen" />
+        <link href="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('css/bootstrap.min.css') }}" rel="stylesheet" media="screen" />
         <style type="text/css">
                 body {
                     padding-top: 20px;

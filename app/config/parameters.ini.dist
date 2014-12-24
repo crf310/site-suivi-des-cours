@@ -20,6 +20,8 @@
     charset = UTF-8
 
     wkhtmltopdf_path = 
+    uglifyjs2_path =
+    uglifycss_path =
 
     pager_nb_results = 15
 

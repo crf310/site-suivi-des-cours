@@ -153,6 +153,7 @@ class StudentController extends AbstractVirguleController {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Student entity.');
         }
+        $this->logInfo('Consultation de la fiche de l\'apprenant n°' . $entity->getId());
 
         $deleteForm = $this->createDeleteForm($id);
 
