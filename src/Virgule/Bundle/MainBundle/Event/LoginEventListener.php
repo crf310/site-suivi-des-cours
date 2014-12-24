@@ -6,13 +6,17 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Virgule\Bundle\MainBundle\Entity\Teacher as Teacher;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
+use Symfony\Bridge\Monolog\Logger;
 
 class LoginEventListener {
 
     protected $entityManager;
+    
+    private $logger;
 
-    public function __construct(EntityManager $em) {
-        $this->entityManager = $em;
+    public function __construct(EntityManager $em, Logger $logger) {
+        $this->entityManager    = $em;
+        $this->logger           = $logger;
     }
 
     /**
@@ -24,6 +28,9 @@ class LoginEventListener {
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event) {
         $token = $event->getAuthenticationToken();
         if ($token && $token->getUser() instanceof Teacher) {
+            $user = $token->getUser();
+            $this->logger->info($user->getFirstName() . ' ' . $user->getLastName() . ' s\'est connecté');
+            
             $request = $event->getRequest();
             $session = $request->getSession();
 
