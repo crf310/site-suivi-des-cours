@@ -24,3 +24,7 @@
     pager_nb_results = 15
 
     user_manual_url = 
+
+    temporary_credentials_days = 30
+
+    contact_email_address =

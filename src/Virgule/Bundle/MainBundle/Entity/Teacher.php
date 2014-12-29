@@ -497,6 +497,13 @@ class Teacher extends BaseUser {
     
     public function getFullName() {
         return $this->firstName . ' ' . $this->lastName;
-    }       
+    }
+    
+    public function isCredentialsExpired() {
+        parent::isCredentialsExpired();
+    }
+    public function isUnlockable() {
+        return (parent::isLocked() || parent::isCredentialsExpired() || parent::isExpired());
+    }
 
 }

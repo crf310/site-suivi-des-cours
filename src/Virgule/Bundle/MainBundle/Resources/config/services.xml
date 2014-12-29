@@ -34,7 +34,8 @@
     <services>
         <!-- Managers -->
         <service id="virgule.teacher_manager" class="%virgule.teacher_manager.class%">
-            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="doctrine.orm.entity_manager" />            
+            <argument type="service" id="service_container" />
         </service>
         <service id="virgule.course_manager" class="%virgule.course_manager.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />

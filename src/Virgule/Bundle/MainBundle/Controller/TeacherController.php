@@ -116,7 +116,8 @@ class TeacherController extends AbstractVirguleController {
         
         $entity->setRegistrationDate(new \DateTime('now'));
         $expirationDate = new \DateTime("now");
-        $expirationDate->modify("+30 day");
+        $tempCredentialsDays = $this->container->getParameter('temporary_credentials_days');
+        $expirationDate->modify('+' . $tempCredentialsDays . ' day');
         $entity->setCredentialsExpireAt($expirationDate);
         
         $em = $this->getDoctrine()->getManager();
@@ -217,4 +218,32 @@ class TeacherController extends AbstractVirguleController {
                         ->getForm()
         ;
     }
+    
+    /**
+     * Unlock an account, and reset credentials
+     * @Route("/{id}/unlock", name="teacher_unlock")
+     *@Template("VirguleMainBundle:Teacher:show.html.twig")
+     */
+    public function unlockAction(Teacher $teacherId) {
+        $temporary_password = $this->getTeacherManager()->reactivateAccount($teacherId);
+                
+        $tempCredentialsDays = $this->container->getParameter('temporary_credentials_days');
+        
+        $contactEmailAdress = $this->container->getParameter('contact_email_address');
+        $message = \Swift_Message::newInstance()
+                ->setSubject("Compte réactivé")
+                ->setFrom($contactEmailAdress)
+                ->setTo($teacherId->getEmail())
+                ->setBody($this->renderView('VirguleMainBundle:Teacher:temporary_pwd.mail.twig', 
+                        array('firstname'                   => $teacherId->getFirstName(), 
+                            'username'                      => $teacherId->getUsername(),
+                            'temporary_password'            => $temporary_password, 
+                            'temporary_credentials_days'    => $tempCredentialsDays)));
+                
+        $this->get('mailer')->send($message);
+        
+        $this->addFlash( 'Le profil de <strong>' . $teacherId->getFullName()  . '</strong> a été débloqué etun mot de passe temporaire lui a été attribué.');
+            
+        return $this->redirect($this->generateUrl('teacher_show', array('id' => $teacherId)));
+    }   
 }

@@ -30,6 +30,9 @@
 {% endblock %}
 {% block content_title %}Fiche formateur{% endblock %}
 {%block submenu %}
+    {% if is_granted('ROLE_SECRETARY') and entity.isUnlockable %}
+        <a class="btn" href="{{ path('teacher_unlock', { 'id': entity.id }) }}" id="unlock-teacher"> <i class="my-icon-user_unlock"></i>Réactiver le compte</a>
+    {% endif %}
     {% if is_granted('ROLE_SECRETARY') or entity.id == app.user.id %}
         <a class="btn tip-bottom" href="{{ path('teacher_edit', { 'id': entity.id }) }}"> <i class="my-icon-user_edit"></i>Modifier le profil</a>
     {% endif %}
