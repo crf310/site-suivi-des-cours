@@ -45,10 +45,8 @@ class TeacherManager extends BaseManager {
         $teacherId->setLocked(false);
         $teacherId->setCredentialsExpired(false);
         $teacherId->setEnabled(true);
-        
-        // generate password
-        $tokenGenerator = $this->container->get('fos_user.util.token_generator');
-        $temporary_password = substr($tokenGenerator->generateToken(), 0, 6);
+                     
+        $temporary_password = $this->generatePassword();
         $teacherId->setPlainPassword($temporary_password);
         
         $expirationDate = new \DateTime("now");
@@ -57,6 +55,12 @@ class TeacherManager extends BaseManager {
         $teacherId->setCredentialsExpireAt($expirationDate);
         parent::persistAndFlush($teacherId);
         
+        return $temporary_password;
+    }
+    
+    public function generatePassword() {
+        $tokenGenerator = $this->container->get('fos_user.util.token_generator');
+        $temporary_password = substr($tokenGenerator->generateToken(), 0, 8);
         return $temporary_password;
     }
 }

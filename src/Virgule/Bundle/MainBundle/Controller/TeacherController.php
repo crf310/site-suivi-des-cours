@@ -114,6 +114,8 @@ class TeacherController extends AbstractVirguleController {
         $form = $this->createForm(new TeacherType(), $entity);
         $form->bind($request);        
         
+        $temporary_password = $this->getTeacherManager()->generatePassword();
+        $entity->setPlainPassword($temporary_password);
         $entity->setRegistrationDate(new \DateTime('now'));
         $expirationDate = new \DateTime("now");
         $tempCredentialsDays = $this->container->getParameter('temporary_credentials_days');
@@ -124,7 +126,6 @@ class TeacherController extends AbstractVirguleController {
         $currentBranchId = $this->getSelectedOrganizationBranch()->getId();
         $organizationBranch = $em->getRepository('VirguleMainBundle:OrganizationBranch')->find($currentBranchId);
         $entity->addOrganizationBranch($organizationBranch);
-        $entity->setPlainPassword($entity->getPassword());
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
