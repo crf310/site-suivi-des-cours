@@ -27,4 +27,5 @@
 
     temporary_credentials_days = 30
 
+    site_adress =
     contact_email_address =
