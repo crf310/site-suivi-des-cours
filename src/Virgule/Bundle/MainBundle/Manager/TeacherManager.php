@@ -30,11 +30,6 @@ class TeacherManager extends BaseManager {
         return $this->getRepository()->getTeachersByStatus(false);
     }
     
-    static public function updateLastConnectionDate(Teacher $teacher) {
-        $teacher->setLastConnectionDate(time());
-        parent::persistAndFlush($teacher);
-    }
-    
     /**
      * This method is used whenever an account is locked, disabled, or with expired credentials
      * to reactive it
