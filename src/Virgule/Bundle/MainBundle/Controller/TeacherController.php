@@ -225,26 +225,31 @@ class TeacherController extends AbstractVirguleController {
      * @Route("/{id}/unlock", name="teacher_unlock")
      *@Template("VirguleMainBundle:Teacher:show.html.twig")
      */
-    public function unlockAction(Teacher $teacherId) {
-        $temporary_password = $this->getTeacherManager()->reactivateAccount($teacherId);
+    public function unlockAction(Teacher $teacher) {
+        $temporary_password = $this->getTeacherManager()->reactivateAccount($teacher);
                 
         $tempCredentialsDays = $this->container->getParameter('temporary_credentials_days');
+                
+        $parameters = array('firstname'                   => $teacher->getFirstName(), 
+            'username'                      => $teacher->getUsername(),
+            'temporary_password'            => $temporary_password, 
+            'temporary_credentials_days'    => $tempCredentialsDays);
+        $this->sendMessage($teacher->getEmail(), 'CRf 03/10 - AALF : compte réactivé', 'VirguleMainBundle:Teacher:temporary_pwd.mail.twig', $parameters);
         
+        $this->addFlash( 'Le profil de <strong>' . $teacher->getFullName()  . '</strong> a été débloqué etun mot de passe temporaire lui a été attribué.');
+            
+        return $this->redirect($this->generateUrl('teacher_show', array('id' => $teacher->getId())));
+    }   
+    
+    private function sendMessage($to, $subject, $template, $parameters) {
         $contactEmailAdress = $this->container->getParameter('contact_email_address');
+        
         $message = \Swift_Message::newInstance()
-                ->setSubject("Compte réactivé")
+                ->setSubject($subject)
                 ->setFrom($contactEmailAdress)
-                ->setTo($teacherId->getEmail())
-                ->setBody($this->renderView('VirguleMainBundle:Teacher:temporary_pwd.mail.twig', 
-                        array('firstname'                   => $teacherId->getFirstName(), 
-                            'username'                      => $teacherId->getUsername(),
-                            'temporary_password'            => $temporary_password, 
-                            'temporary_credentials_days'    => $tempCredentialsDays)));
+                ->setTo($to)
+                ->setBody($this->renderView($template, $parameters));
                 
         $this->get('mailer')->send($message);
-        
-        $this->addFlash( 'Le profil de <strong>' . $teacherId->getFullName()  . '</strong> a été débloqué etun mot de passe temporaire lui a été attribué.');
-            
-        return $this->redirect($this->generateUrl('teacher_show', array('id' => $teacherId)));
-    }   
+    }
 }
