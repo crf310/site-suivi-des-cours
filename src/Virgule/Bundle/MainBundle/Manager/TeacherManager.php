@@ -36,19 +36,19 @@ class TeacherManager extends BaseManager {
      * It sets a generated temporary password
      * @param \Virgule\Bundle\MainBundle\Entity\Teacher $teacherId
      */
-    public function reactivateAccount(Teacher $teacherId) {
-        $teacherId->setLocked(false);
-        $teacherId->setCredentialsExpired(false);
-        $teacherId->setEnabled(true);
+    public function reactivateAccount(Teacher $teacher) {
+        $teacher->setLocked(false);
+        $teacher->setCredentialsExpired(false);
+        $teacher->setEnabled(true);
                      
         $temporary_password = $this->generatePassword();
-        $teacherId->setPlainPassword($temporary_password);
+        $teacher->setPlainPassword($temporary_password);
         
         $expirationDate = new \DateTime("now");
         $tempCredentialsDays = $this->container->getParameter('temporary_credentials_days');
         $expirationDate->modify('+' . $tempCredentialsDays . ' day');
-        $teacherId->setCredentialsExpireAt($expirationDate);
-        parent::persistAndFlush($teacherId);
+        $teacher->setCredentialsExpireAt($expirationDate);
+        parent::persistAndFlush($teacher);
         
         return $temporary_password;
     }

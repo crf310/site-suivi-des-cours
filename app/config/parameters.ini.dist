@@ -25,7 +25,8 @@
 
     user_manual_url = 
 
-    temporary_credentials_days = 30
+    temporary_credentials_days = 
+    permanent_credentials_days = 
 
     site_adress =
     contact_email_address =

@@ -37,8 +37,9 @@ class PasswordChangeListener implements EventSubscriberInterface {
     public function onPasswordChangingSuccess(FormEvent $event) {
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $expirationDate = new \DateTime("now");
-        $expirationDate->modify("+365 day");
+        $expirationDate = new \DateTime("now");        
+        $permanentCredentialsDays = $this->container->getParameter('permanent_credentials_days');
+        $expirationDate->modify("+" . $permanentCredentialsDays . " day");
         $user->setCredentialsExpireAt($expirationDate);
         $this->userManager->updateUser($user);
         
