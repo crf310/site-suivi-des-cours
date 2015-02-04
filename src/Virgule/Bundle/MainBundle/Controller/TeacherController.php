@@ -142,7 +142,7 @@ class TeacherController extends AbstractVirguleController {
             
             $this->sendMessage($entity->getEmail(), 'CRf 03/10 - AALF : compte créé', 'VirguleMainBundle:Teacher:new.mail.twig', $parameters);
 
-            $this->addFlash( 'Compte utilisateur <strong>' . $entity->getUsername() . '</strong> créé avec succès !');
+            $this->addFlash( 'Compte utilisateur <strong>' . $entity->getUsername() . '</strong> créé avec succès ! Les informations de connexion ont été envoyées à <strong>' . $entity->getEmail() . '</strong>');
             
             return $this->redirect($this->generateUrl('teacher_index'));
         }
