@@ -31,12 +31,14 @@ class LoginEventListener {
             $session = $request->getSession();
             
             $user = $token->getUser();
-            $expirationDate = new \DateTime("now");
-            $daysBeforeExpiration = $this->container->getParameter('user_account_days_before_expiration');
-            $expirationDate->modify('+' . $daysBeforeExpiration . ' day');
-            $user->setExpiresAt($expirationDate);
-            $this->entityManager->persist($user);
-            $this->entityManager->flush();
+            if ($user->getUsername() != 'root') {
+                $expirationDate = new \DateTime("now");
+                $daysBeforeExpiration = $this->container->getParameter('user_account_days_before_expiration');
+                $expirationDate->modify('+' . $daysBeforeExpiration . ' day');
+                $user->setExpiresAt($expirationDate);
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
+            }
         
             $organizationBranchId = $request->get('organization_branch_id');
             $organizationBranch = $this->entityManager->getRepository('Virgule\Bundle\MainBundle\Entity\OrganizationBranch')->loadOne($organizationBranchId);
