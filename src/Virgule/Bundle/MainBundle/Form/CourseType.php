@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Virgule\Bundle\MainBundle\Repository\TeacherRepository;
 use Virgule\Bundle\MainBundle\Form\FormConstants;
+use Doctrine\ORM\EntityManager;
 
 class CourseType extends AbstractType {
 
