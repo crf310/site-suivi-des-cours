@@ -217,11 +217,10 @@ class CourseController extends AbstractVirguleController {
      */
     public function newAction() {        
         $em = $this->getDoctrine()->getManager();
-        $teacherRepository = $em->getRepository('VirguleMainBundle:Teacher');
                 
         $entity = new Course();
         $organizationBranchId = $this->getSelectedOrganizationBranch()->getId();
-        $form = $this->createForm(new CourseType(FormConstants::CREATE_INTENTION, $organizationBranchId), $entity);
+        $form = $this->createForm(new CourseType(FormConstants::CREATE_INTENTION, $organizationBranchId, $em), $entity);
 
         return array(
             'entity' => $entity,
@@ -244,9 +243,8 @@ class CourseController extends AbstractVirguleController {
         $entity->setSemester($this->getSelectedSemester());
                         
         $em = $this->getDoctrine()->getManager();
-        $teacherRepository = $em->getRepository('VirguleMainBundle:Teacher');
                
-        $form = $this->createForm(new CourseType(FormConstants::CREATE_INTENTION, $organizationBranch->getId()), $entity);
+        $form = $this->createForm(new CourseType(FormConstants::CREATE_INTENTION, $organizationBranch->getId(), $em), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -286,8 +284,7 @@ class CourseController extends AbstractVirguleController {
             throw $this->createNotFoundException('Unable to find Course entity.');
         }
                 
-        $teacherRepository = $em->getRepository('VirguleMainBundle:Teacher');
-        $editForm = $this->createForm(new CourseType(FormConstants::EDIT_INTENTION, $this->getSelectedOrganizationBranch()->getId()), $entity);
+        $editForm = $this->createForm(new CourseType(FormConstants::EDIT_INTENTION, $this->getSelectedOrganizationBranch()->getId(), $em), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -315,15 +312,14 @@ class CourseController extends AbstractVirguleController {
 
         $deleteForm = $this->createDeleteForm($id);
         
-        $teacherRepository = $em->getRepository('VirguleMainBundle:Teacher');
-        $editForm = $this->createForm(new CourseType(FormConstants::EDIT_INTENTION, $this->getSelectedOrganizationBranch()->getId()), $entity);
+        $editForm = $this->createForm(new CourseType(FormConstants::EDIT_INTENTION, $this->getSelectedOrganizationBranch()->getId(), $em), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('course_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('course_show', array('id' => $id)));
         }
 
         return array(
@@ -355,7 +351,7 @@ class CourseController extends AbstractVirguleController {
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('course'));
+        return $this->redirect($this->generateUrl('course_show_planning'));
     }
 
     private function createDeleteForm($id) {
