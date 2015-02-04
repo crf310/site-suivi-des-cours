@@ -3,6 +3,7 @@
 namespace Virgule\Bundle\MainBundle\Event;
 
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Virgule\Bundle\MainBundle\Entity\Teacher as Teacher;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
@@ -10,9 +11,11 @@ use Doctrine\ORM\NoResultException;
 class LoginEventListener {
 
     protected $entityManager;
+    private $container;
 
-    public function __construct(EntityManager $em) {
+    public function __construct(EntityManager $em, ContainerInterface $container) {
         $this->entityManager = $em;
+        $this->container = $container;
     }
 
     /**
@@ -26,7 +29,15 @@ class LoginEventListener {
         if ($token && $token->getUser() instanceof Teacher) {
             $request = $event->getRequest();
             $session = $request->getSession();
-
+            
+            $user = $token->getUser();
+            $expirationDate = new \DateTime("now");
+            $daysBeforeExpiration = $this->container->getParameter('user_account_days_before_expiration');
+            $expirationDate->modify('+' . $daysBeforeExpiration . ' day');
+            $user->setExpiresAt($expirationDate);
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+        
             $organizationBranchId = $request->get('organization_branch_id');
             $organizationBranch = $this->entityManager->getRepository('Virgule\Bundle\MainBundle\Entity\OrganizationBranch')->loadOne($organizationBranchId);
 
