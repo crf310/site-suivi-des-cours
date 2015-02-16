@@ -21,7 +21,8 @@
                             <th>&nbsp;</th>
                             <th>Nom</th>
                             <th>Prénom</th>
-                            <th>Téléphone</th>
+                            <th>Téléphone</th>                            
+                            <th>Contact d'urgence</th>
                             <th>Inscrit en</th>
                             <th>Actions</th>
                         </tr>
@@ -54,6 +55,11 @@
                                 {% else %}
                                     {{ entity['cellphoneNumber']|phoneNumber }}
                                 {% endif %}&nbsp;
+                            </td>
+                            <td>
+                                {{ entity['emergencyContactFirstname'] }} {{ entity['emergencyContactLastname'] }} 
+                                {% if entity['emergencyContactConnectionType'] is not empty %}({{entity['emergencyContactConnectionType'] }}){% endif %}
+                                {{ entity['emergencyContactPhoneNumber'] | phoneNumber }}
                             </td>
                             <td>
                                 {% if courses_array is defined and courses_array|length > 0 %}

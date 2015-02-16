@@ -22,7 +22,8 @@ class StudentRepository extends EntityRepository {
     private function getBasicQueryBuilder() {
         $qb = $this
             ->createDefaultQueryBuilder()
-            ->select('s.id as student_id, s.firstname as firstname, s.lastname as lastname, s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, s.registrationDate, s.nativeCountry');
+            ->select('s.id as student_id, s.firstname as firstname, s.lastname as lastname, s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, s.registrationDate, s.nativeCountry')
+            ->addSelect('s.emergencyContactFirstname, s.emergencyContactLastname, s.emergencyContactConnectionType, s.emergencyContactPhoneNumber');
         return $qb;
     }
     
