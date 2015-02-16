@@ -8,11 +8,13 @@
   </head>
   <body>
     <div class="alert-global">
-        {% for flashMessage in app.session.flashbag.get('notice') %}
-            <div class="alert alert-flash alert-success fade in">
-                {{ flashMessage|raw }}
-                <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
-            </div>
+        {% for type, flashMessages in app.session.flashbag.all %}
+            {% for flashMessage in flashMessages %}
+                <div class="alert alert-flash alert-{{ type }} fade in">
+                    {{ flashMessage|raw }}
+                    <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+                </div>
+            {% endfor %}
         {% endfor %}
     </div>
     {% include '::header.html.twig' %}

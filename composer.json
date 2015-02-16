@@ -26,7 +26,7 @@
         "siphoc/pdf-bundle": "1.2.3",          
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "friendsofsymfony/user-bundle": "dev-master",
-        "friendsofsymfony/jsrouting-bundle": "1.5.3"
+        "friendsofsymfony/jsrouting-bundle": "1.5.3",
     },
     "require-dev": {
         "doctrine/data-fixtures": "*",              

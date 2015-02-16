@@ -158,6 +158,9 @@ i.my-icon-user_edit {
 i.my-icon-user_delete {
     background-image: url('../img/icons/user_delete.png');
 }
+i.my-icon-user_unlock {
+    background-image: url('../img/icons/key.png');
+}
 i.my-icon-user-certificate {
     background-image: url('../img/icons/rosette.png');
 }

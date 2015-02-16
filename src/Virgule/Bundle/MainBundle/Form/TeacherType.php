@@ -23,14 +23,7 @@ class TeacherType extends AbstractType {
             $builder->setMethod('PATCH');
         }
         if ($this->intention == 'create') {            
-            $builder->add('username')
-                    ->add('password', 'repeated', array(
-                        'type' => 'password',
-                        'required' => $passwordRequired,
-                        'invalid_message' => 'Les mots de passe ne correspondent pas',
-                        'options' => array('label' => 'Mot de passe'),
-                        'attr'    => array('data-indicator' => 'pwindicator')
-                    ));
+            $builder->add('username');
         }
                 
         $builder

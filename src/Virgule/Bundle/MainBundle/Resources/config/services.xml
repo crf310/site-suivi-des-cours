@@ -34,7 +34,8 @@
     <services>
         <!-- Managers -->
         <service id="virgule.teacher_manager" class="%virgule.teacher_manager.class%">
-            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="doctrine.orm.entity_manager" />            
+            <argument type="service" id="service_container" />
         </service>
         <service id="virgule.course_manager" class="%virgule.course_manager.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
@@ -63,11 +64,6 @@
         </service>
                
         <!-- Listeners -->
-        <service id="my.login.listener" class="Virgule\Bundle\MainBundle\Event\LoginEventListener">
-            <tag name="kernel.event_listener" event="security.interactive_login" />
-            <argument type="service" id="doctrine.orm.entity_manager" />
-            <argument type="service" id="monolog.logger" />
-        </service>
         <service id="virgule_user.password_change" class="%namespace%\Event\PasswordChangeListener">
             <tag name="kernel.event_subscriber"/>
             <argument type="service" id="router"/>
@@ -124,6 +120,16 @@
             <argument type="service" id="virgule.classsession_manager" />
             <tag name="validator.constraint_validator" alias="classsession_already_existing" />
         </service>
+        
+        <!-- Handlers -->
+        <service id="virgule.handler.login_success_handler" class="Virgule\Bundle\SecurityBundle\Handler\LoginSuccessHandler">
+            <tag name="monolog.logger" channel="security" />
+            <argument type="service" id="router" />
+            <argument type="service" id="security.context" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="service_container"/>
+        </service>
+        
     </services>
 
 </container>

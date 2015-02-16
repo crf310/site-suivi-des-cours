@@ -26,3 +26,10 @@
     pager_nb_results = 15
 
     user_manual_url = 
+
+    temporary_credentials_days = 
+    permanent_credentials_days = 
+    user_account_days_before_expiration = 
+
+    site_adress =
+    contact_email_address =

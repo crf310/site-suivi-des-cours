@@ -31,9 +31,11 @@ security:
         secured_area:
             pattern:    /
             anonymous: false
-            form_login:
-                login_path:  /login
-                check_path:  /login_check
+            form_login:                    
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check             
+                use_referer : true
+                success_handler: virgule.handler.login_success_handler
             logout:
                 path:   /logout
                 target: /login
