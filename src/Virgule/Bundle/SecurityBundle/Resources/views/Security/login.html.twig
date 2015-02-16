@@ -63,7 +63,7 @@
             <div id="loginbox">            
                 <form id="loginform" action="{{ path("fos_user_security_check") }}" method="post">
                     <h2>Service AALF</h2>
-                    <input type="hidden" name="_target_path" value="/welcome" />
+                    <!--<input type="hidden" name="_target_path" value="/welcome" />-->
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />                    
                     <div class="input-group input-sm">
                         <select name="organization_branch_id" class="select">
