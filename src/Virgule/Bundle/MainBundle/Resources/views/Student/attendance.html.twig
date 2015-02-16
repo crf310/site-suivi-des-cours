@@ -16,26 +16,21 @@
               <tr>
                 <th>Nom</th>
                 <th>Prénom</th>
-                <th>Signature</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Signature</th>
-                <th>Nom</th>
-                <th>Prénom</th>
+                <th>Contact d'urgence</th>
                 <th>Signature</th>
               </tr>
             </thead>
-            <tr>
             {% for key,entity in students_array %}
-                    <td>{{ entity['lastname']|upper }}</td>
-                    <td>{{ entity['firstname'] }}</td>
-                    <td>&nbsp;</td>
-                {% if loop.index % 3 == 0 %}
-                    </tr><tr>
-                {% endif %}
-                {% if loop.last == true %}
-                    </tr>
-                {% endif %}
+            <tr>
+                <td>{{ entity['lastname']|upper }}</td>
+                <td>{{ entity['firstname'] }}</td>
+                <td>
+                    {{ entity['emergencyContactFirstname'] }} {{ entity['emergencyContactLastname'] }} 
+                    {% if entity['emergencyContactConnectionType'] is not empty %}({{entity['emergencyContactConnectionType'] }}){% endif %}
+                    {{ entity['emergencyContactPhoneNumber'] | phoneNumber }}
+                </td>
+                <td>&nbsp;</td>
+            </tr>
             {% endfor %}
         </table>
     <body>
