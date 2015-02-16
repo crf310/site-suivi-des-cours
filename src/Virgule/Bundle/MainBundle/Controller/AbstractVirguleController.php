@@ -18,7 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 abstract class AbstractVirguleController extends Controller {
      
-    protected function addFlash($message, $type='notice') {
+    protected function addFlash($message, $type='success') {
          $this->get('session')->getFlashBag()->add($type, $message);
     }
     

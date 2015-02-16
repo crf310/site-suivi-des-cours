@@ -81,6 +81,7 @@ class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface {
             $now = new \DateTime("now");        
             $temporaryCredentialsDays = $this->container->getParameter('temporary_credentials_days');
             if (!empty($user->getCredentialsExpireAt()) && $now->diff($user->getCredentialsExpireAt())->format('%R%a') < $temporaryCredentialsDays) {
+                $session->getFlashBag()->add('info', 'Votre mot de passe expire dans moins de ' . $temporaryCredentialsDays . ' jours, veuillez le changer dès maintenant.');
                 $response = new RedirectResponse($this->router->generate('fos_user_change_password'));
             }
             return $response;
