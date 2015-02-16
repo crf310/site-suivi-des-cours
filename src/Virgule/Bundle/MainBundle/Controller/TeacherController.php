@@ -116,11 +116,18 @@ class TeacherController extends AbstractVirguleController {
         
         $temporary_password = $this->getTeacherManager()->generatePassword();
         $entity->setPlainPassword($temporary_password);
-        $entity->setRegistrationDate(new \DateTime('now'));
-        $expirationDate = new \DateTime("now");
+        
+        $now = new \DateTime('now');
+        $entity->setRegistrationDate($now);
+        $credentialsExpirationDate = $now;
         $tempCredentialsDays = $this->container->getParameter('temporary_credentials_days');
-        $expirationDate->modify('+' . $tempCredentialsDays . ' day');
-        $entity->setCredentialsExpireAt($expirationDate);
+        $credentialsExpirationDate->modify('+' . $tempCredentialsDays . ' day');
+        $entity->setCredentialsExpireAt($credentialsExpirationDate);
+        
+        $expirationDate = $now;
+        $daysBeforeExpiration = $this->container->getParameter('user_account_days_before_expiration');
+        $expirationDate->modify('+' . $daysBeforeExpiration . ' day');
+        $entity->setExpiresAt($expirationDate);
         
         $em = $this->getDoctrine()->getManager();
         $currentBranchId = $this->getSelectedOrganizationBranch()->getId();
