@@ -263,7 +263,7 @@ class TeacherController extends AbstractVirguleController {
         
         $message = \Swift_Message::newInstance()
                 ->setSubject($subject)
-                ->setFrom($contactEmailAdress)
+                ->setFrom($this->getUser()->getEmail())
                 ->setTo($to)
                 ->setBody($this->renderView($template, $parameters));
                 
