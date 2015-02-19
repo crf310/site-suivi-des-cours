@@ -265,7 +265,7 @@ class TeacherController extends AbstractVirguleController {
                 ->setSubject($subject)
                 ->setFrom($this->getUser()->getEmail())
                 ->setTo($to)
-                ->setCc($this->getUser()->getEmail())
+                ->setCc($contactEmailAdress)
                 ->setBody($this->renderView($template, $parameters));
                 
         $this->get('mailer')->send($message);
