@@ -45,9 +45,12 @@
                 box-shadow: 0 1px 2px rgba(0,0,0,.05);  
             }
             #loginbox {
-                height: 230px;   
+                height: 260px;   
                 opacity: 0.92;
                 margin-top: 50px;
+            }
+            #loginerror {
+                color: #AA4A47;
             }
         </style>
         
@@ -60,7 +63,7 @@
             <div id="loginbox">            
                 <form id="loginform" action="{{ path("fos_user_security_check") }}" method="post">
                     <h2>Service AALF</h2>
-                    <input type="hidden" name="_target_path" value="/welcome" />
+                    <!--<input type="hidden" name="_target_path" value="/welcome" />-->
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />                    
                     <div class="input-group input-sm">
                         <select name="organization_branch_id" class="select">
@@ -74,13 +77,16 @@
                     </div>
                     <div class="input-group input-sm {% if error %}has-error{% endif %}">
                         <span class="input-group-addon"><i class="icon-lock"></i></span><input class="form-control" type="password" name="_password"  placeholder="Mot de passe" />
-                    </div>
+                    </div> 
                     <div class="form-actions clearfix">
                         <div class="pull-left">
                             <!--<a href="#recoverform" class="flip-link to-recover grey">Mot de passe oublié ?</a>-->
                         </div>
                         <input type="submit" class="btn btn-block btn-primary btn-default btn-success" value="Connexion" />
                     </div>
+                    {% if error %}
+                        <div id="loginerror"><strong>{{ error.messageKey|trans(error.messageData, 'security') }}</strong></div>
+                    {% endif %}
                 </form>
                 <form id="recoverform" action="#" class="form-vertical">
                     <p>Entrez votre adresse email et vous recevrez des instructions pour réinitialiser votre mot de passe</p>
@@ -91,8 +97,8 @@
                         <span class="pull-left"><a href="#" class="flip-link to-login" id="to-login">&lt; Retour au formulaire de connexion</a></span>
                         <span class="pull-right"><input type="submit" class="btn btn-success" value="Réinitialiser" /></span>
                     </div>
-                </form>
-            </div>
+                </form>       
+            </div>        
         </div>
     </body>
 </html>

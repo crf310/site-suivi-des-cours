@@ -114,23 +114,42 @@ class TeacherController extends AbstractVirguleController {
         $form = $this->createForm(new TeacherType(), $entity);
         $form->bind($request);        
         
-        $entity->setRegistrationDate(new \DateTime('now'));
-        $expirationDate = new \DateTime("now");
-        $expirationDate->modify("+30 day");
-        $entity->setCredentialsExpireAt($expirationDate);
+        $temporary_password = $this->getTeacherManager()->generatePassword();
+        $entity->setPlainPassword($temporary_password);
+        
+        $now = new \DateTime('now');
+        $entity->setRegistrationDate($now);
+        $credentialsExpirationDate = $now;
+        $tempCredentialsDays = $this->container->getParameter('temporary_credentials_days');
+        $credentialsExpirationDate->modify('+' . $tempCredentialsDays . ' day');
+        $entity->setCredentialsExpireAt($credentialsExpirationDate);
+        
+        $expirationDate = $now;
+        $daysBeforeExpiration = $this->container->getParameter('user_account_days_before_expiration');
+        $expirationDate->modify('+' . $daysBeforeExpiration . ' day');
+        $entity->setExpiresAt($expirationDate);
         
         $em = $this->getDoctrine()->getManager();
         $currentBranchId = $this->getSelectedOrganizationBranch()->getId();
         $organizationBranch = $em->getRepository('VirguleMainBundle:OrganizationBranch')->find($currentBranchId);
         $entity->addOrganizationBranch($organizationBranch);
-        $entity->setPlainPassword($entity->getPassword());
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+                            
+            $site_adress = $this->container->getParameter('site_adress');
+        
+            $parameters = array('firstname'     => $entity->getFirstName(), 
+                'username'                      => $entity->getUsername(),
+                'temporary_password'            => $temporary_password, 
+                'temporary_credentials_days'    => $tempCredentialsDays,
+                'site_adress'                   => $site_adress);
             
-            $this->addFlash( 'Compte utilisateur <strong>' . $entity->getUsername() . '</strong> créé avec succès !');
+            $this->sendMessage($entity->getEmail(), 'CRf 03/10 - AALF : compte créé', 'VirguleMainBundle:Teacher:new.mail.twig', $parameters);
+
+            $this->addFlash( 'Compte utilisateur <strong>' . $entity->getUsername() . '</strong> créé avec succès ! Les informations de connexion ont été envoyées à <strong>' . $entity->getEmail() . '</strong>');
             
             return $this->redirect($this->generateUrl('teacher_index'));
         }
@@ -216,5 +235,39 @@ class TeacherController extends AbstractVirguleController {
                         ->add('id', 'hidden')
                         ->getForm()
         ;
+    }
+    
+    /**
+     * Unlock an account, and reset credentials
+     * @Route("/{id}/unlock", name="teacher_unlock")
+     *@Template("VirguleMainBundle:Teacher:show.html.twig")
+     */
+    public function unlockAction(Teacher $teacher) {
+        $temporary_password = $this->getTeacherManager()->reactivateAccount($teacher);
+                
+        $tempCredentialsDays = $this->container->getParameter('temporary_credentials_days');
+                
+        $parameters = array('firstname'                   => $teacher->getFirstName(), 
+            'username'                      => $teacher->getUsername(),
+            'temporary_password'            => $temporary_password, 
+            'temporary_credentials_days'    => $tempCredentialsDays);
+        $this->sendMessage($teacher->getEmail(), 'CRf 03/10 - AALF : compte réactivé', 'VirguleMainBundle:Teacher:temporary_pwd.mail.twig', $parameters);
+        
+        $this->addFlash( 'Le profil de <strong>' . $teacher->getFullName()  . '</strong> a été débloqué et un mot de passe temporaire lui a été attribué.');
+            
+        return $this->redirect($this->generateUrl('teacher_show', array('id' => $teacher->getId())));
+    }   
+    
+    private function sendMessage($to, $subject, $template, $parameters) {
+        $contactEmailAdress = $this->container->getParameter('contact_email_address');
+        
+        $message = \Swift_Message::newInstance()
+                ->setSubject($subject)
+                ->setFrom($this->getUser()->getEmail())
+                ->setTo($to)
+                ->setCc($contactEmailAdress)
+                ->setBody($this->renderView($template, $parameters));
+                
+        $this->get('mailer')->send($message);
     }
 }

@@ -4,7 +4,7 @@
     {{ form_row(form.lastName, { 'label': 'Nom', 'id': 'lastname' }) }}
     {{ form_row(form.phoneNumber, { 'label': 'Téléphone fixe', 'hint' : '10 chiffres sans espace' }) }}
     {{ form_row(form.cellphoneNumber, { 'label': 'Téléphone portable', 'hint' : '10 chiffres sans espace' }) }}
-    {{ form_row(form.email, { 'label': 'Adresse email' }) }}
+    {{ form_row(form.email, { 'label': 'Adresse email', 'hint' : 'Cette adresse sera utilisée pour communiquer les infos de connexion, elle doit être valide' }) }}
 </div>
 {% if is_granted('ROLE_SECRETARY') or form.username is defined or form.password is defined %}
     <div class="widget-title">

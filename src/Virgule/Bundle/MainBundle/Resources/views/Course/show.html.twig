@@ -30,6 +30,7 @@
 {% endblock %}
 {% block content_title %}Cours {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': entity.classLevel.htmlColorCode, 'classLevelLabel': entity.classLevel.label } %}{% endblock %}
 {%block submenu %}
+    <a class="btn tip-bottom" href="{{ path('attendance_list', { 'id': entity.id }) }}" target="_blank"><i class="my-icon-trombinoscope"></i>Fiche de présence</a>
     <a class="btn tip-bottom" href="{{ path('course_show_trombinoscope', { 'id': entity.id }) }}"> <i class="my-icon-trombinoscope"></i>Trombinoscope</a>
     <a class="btn tip-bottom" href="{{ path('course_manage_enrollments', { 'id': entity.id }) }}"> <i class="my-icon-manage-students"></i>Gérer les inscriptions</a>
     <a class="btn tip-bottom" href="{{ path('classsession_add', { 'id': entity.id }) }}"> <i class="my-icon-add"></i>Ajouter un compte-rendu</a>    

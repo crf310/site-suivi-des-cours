@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SecurityControllerTest extends WebTestCase {
 
+    private $SITE_NAME = "Service AALF";
+    
     public function testCompleteScenario() {
         // Create a new client to browse the application
         $client = static::createClient();
@@ -14,17 +16,17 @@ class SecurityControllerTest extends WebTestCase {
         // Check default URL
         $crawler = $client->request('GET', '/');
         
-        $this->assertTrue($crawler->filter('html:contains("Service alphabétisation")')->count() == 1);
+        $this->assertTrue($crawler->filter('html:contains("'.$this->SITE_NAME.'")')->count() == 1);
                 
         $crawler = $client->request('GET', '/login');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertTrue($crawler->filter('html:contains("Service alphabétisation")')->count() == 1);
+        $this->assertTrue($crawler->filter('html:contains("'.$this->SITE_NAME.'")')->count() == 1);
         
         // Test wrong credentials
         $crawler = $this->fillAndSubmitLoginForm($client, $crawler, 'Toto', 'Toto');
         
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertTrue($crawler->filter('html:contains("Service alphabétisation")')->count() == 1);
+        $this->assertTrue($crawler->filter('html:contains("'.$this->SITE_NAME.'")')->count() == 1);
         
         $crawler = $this->fillAndSubmitLoginForm($client, $crawler, 'prof1', 'password');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());        

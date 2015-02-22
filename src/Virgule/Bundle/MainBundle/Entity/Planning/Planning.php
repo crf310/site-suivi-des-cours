@@ -28,7 +28,7 @@ class Planning {
         $this->dayStart = 1;
         $this->dayEnd = 6;
         $this->startTime = new \DateTime('08:00');
-        $this->endTime = new \DateTime('21:30');
+        $this->endTime = new \DateTime('22:30');
         $this->displayOnlyCurrent = $displayOnlyCurrent;
         
         $this->initPlanning($courses);

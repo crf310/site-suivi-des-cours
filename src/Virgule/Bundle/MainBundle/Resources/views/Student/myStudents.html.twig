@@ -1,6 +1,8 @@
 {% extends '::main_content.html.twig' %}
 {% block content_title %}Mes apprenants{% endblock %} 
 {%block submenu %}
+    {% set foo = courses_ids|split(',') %}
+    <a class="btn" href="{{ path('many_courses_attendance_list', { 'courses_ids': courses_ids }) }}" target="_blank"><i class="my-icon-trombinoscope"></i>Fiche présence</a>
     <a class="btn" href="{{ path('student_new') }}"> <i class="my-icon-add"></i>Nouvel apprenant</a>
 {% endblock %}
 {% block main_content %}
