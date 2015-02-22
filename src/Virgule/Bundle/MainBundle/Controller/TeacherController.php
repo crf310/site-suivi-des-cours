@@ -253,7 +253,7 @@ class TeacherController extends AbstractVirguleController {
             'temporary_credentials_days'    => $tempCredentialsDays);
         $this->sendMessage($teacher->getEmail(), 'CRf 03/10 - AALF : compte réactivé', 'VirguleMainBundle:Teacher:temporary_pwd.mail.twig', $parameters);
         
-        $this->addFlash( 'Le profil de <strong>' . $teacher->getFullName()  . '</strong> a été débloqué etun mot de passe temporaire lui a été attribué.');
+        $this->addFlash( 'Le profil de <strong>' . $teacher->getFullName()  . '</strong> a été débloqué et un mot de passe temporaire lui a été attribué.');
             
         return $this->redirect($this->generateUrl('teacher_show', array('id' => $teacher->getId())));
     }   
