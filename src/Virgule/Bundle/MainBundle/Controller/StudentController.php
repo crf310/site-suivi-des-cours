@@ -67,12 +67,32 @@ class StudentController extends AbstractVirguleController {
     /**
      * Display a list of the students to note their attendance
      *
+     * @Route("/{courses_ids}/attendListManyCourses", name="many_courses_attendance_list")
+     * @Template("VirguleMainBundle:Student:attendance.html.twig")
+     */
+    public function attendanceManyCoursesSlipAction($courses_ids) {
+        $courses = $this->getCourseRepository()->findBy(array('id' => explode(',', $courses_ids)));
+        return $this->getStudentsList($courses);
+    }
+    
+    /**
+     * Display a list of the students to note their attendance
+     *
      * @Route("/{id}/attendList", name="attendance_list")
      * @Template("VirguleMainBundle:Student:attendance.html.twig")
      */
     public function attendanceSlipAction(Course $id) {
-        $students = $this->getStudentRepository()->loadAllEnrolledInCourse($id);
-        return Array('course' => $id, 'students_array' => $students);
+        return $this->getStudentsList(Array($id));
+    }
+    
+    private function getStudentsList(Array $courseIds) {        
+        $students = $this->getStudentRepository()->loadAllEnrolledInCourses($courseIds);
+        // only if we asked for one course, we pass it to the view
+        // otherwise it's annoying to know which student belongs to which course
+        if (count($courseIds) > 1) {
+            $courseIds = Array();
+        }
+        return Array('course' => $courseIds, 'students_array' => $students);
     }
     
     /**
@@ -116,7 +136,7 @@ class StudentController extends AbstractVirguleController {
         if (count($courseIds) > 0) {
             $myStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledInCourses($courseIds);
         }
-        return array_merge(Array('title' => 'Mes apprenants'), Array('students_array' => $myStudents));
+        return array_merge(Array('title' => 'Mes apprenants'), Array('students_array' => $myStudents), Array('courses_ids' => implode(',', $courseIds)));
     }
     
     /**

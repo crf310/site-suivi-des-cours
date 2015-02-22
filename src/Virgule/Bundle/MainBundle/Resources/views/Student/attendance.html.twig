@@ -9,7 +9,9 @@
     </style>
     <body>
         <h1>Fiche de présence</h1>
-        <h2>Niveau {{ course.classLevel }}, {{ course.dayOfWeek| day }} de {{ course.startTime | date('H:i') }} à {{ course.endTime | date('H:i') }}</h2> 
+        {% if course is not empty %}
+            <h2>Niveau {{ course[0].classLevel }}, {{ course[0].dayOfWeek| day }} de {{ course[0].startTime | date('H:i') }} à {{ course[0].endTime | date('H:i') }}</h2> 
+        {% endif %}
         <h3>Date du cours : </h3>
         <table class="attendance" cellspacing="0">
             <thead>
