@@ -117,14 +117,13 @@ class TeacherController extends AbstractVirguleController {
         $temporary_password = $this->getTeacherManager()->generatePassword();
         $entity->setPlainPassword($temporary_password);
         
-        $now = new \DateTime('now');
-        $entity->setRegistrationDate($now);
-        $credentialsExpirationDate = $now;
+        $entity->setRegistrationDate(new \DateTime('now'));
+        $credentialsExpirationDate = new \DateTime('now');
         $tempCredentialsDays = $this->container->getParameter('temporary_credentials_days');
         $credentialsExpirationDate->modify('+' . $tempCredentialsDays . ' day');
         $entity->setCredentialsExpireAt($credentialsExpirationDate);
         
-        $expirationDate = $now;
+        $expirationDate = new \DateTime("now");
         $daysBeforeExpiration = $this->container->getParameter('user_account_days_before_expiration');
         $expirationDate->modify('+' . $daysBeforeExpiration . ' day');
         $entity->setExpiresAt($expirationDate);
