@@ -44,10 +44,17 @@ class TeacherManager extends BaseManager {
         $temporary_password = $this->generatePassword();
         $teacher->setPlainPassword($temporary_password);
         
-        $expirationDate = new \DateTime("now");
+        $now = new \DateTime("now");
+        $credentialsExpirationDate = $now;
         $tempCredentialsDays = $this->container->getParameter('temporary_credentials_days');
-        $expirationDate->modify('+' . $tempCredentialsDays . ' day');
-        $teacher->setCredentialsExpireAt($expirationDate);
+        $credentialsExpirationDate->modify('+' . $tempCredentialsDays . ' day');
+        $teacher->setCredentialsExpireAt($credentialsExpirationDate);        
+        
+        $expirationDate = $now;
+        $daysBeforeExpiration = $this->container->getParameter('user_account_days_before_expiration');
+        $expirationDate->modify('+' . $daysBeforeExpiration . ' day');
+        $teacher->setExpiresAt($expirationDate);        
+        
         parent::persistAndFlush($teacher);
         
         return $temporary_password;
