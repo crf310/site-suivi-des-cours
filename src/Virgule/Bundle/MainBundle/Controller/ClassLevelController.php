@@ -81,6 +81,7 @@ class ClassLevelController extends AbstractVirguleController {
      */
     public function createAction(Request $request) {
         $entity = new ClassLevel();
+        $entity->setPosition(0);
         $form = $this->createForm(new ClassLevelType(), $entity);
         $form->bind($request);
 
