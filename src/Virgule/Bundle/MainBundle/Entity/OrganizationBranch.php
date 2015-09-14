@@ -354,4 +354,8 @@ class OrganizationBranch {
     {
         return $this->teachers;
     }
+    
+    public function __toString() {
+        return $this->getName();
+    }
 }

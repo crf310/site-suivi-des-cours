@@ -72,3 +72,19 @@ siphoc_pdf:
         'lowquality': false
         'enable-javascript': false
         'debug-javascript': false
+
+easy_admin:
+    entities:
+        - Virgule\Bundle\MainBundle\Entity\Teacher
+        - Virgule\Bundle\MainBundle\Entity\Student
+        - Virgule\Bundle\MainBundle\Entity\Course
+        - Virgule\Bundle\MainBundle\Entity\Semester
+        - Virgule\Bundle\MainBundle\Entity\ClassSession
+        - Virgule\Bundle\MainBundle\Entity\Comment
+        - Virgule\Bundle\MainBundle\Entity\Language
+        - Virgule\Bundle\MainBundle\Entity\OpenHouse
+        - Virgule\Bundle\MainBundle\Entity\ClassRoom
+        - Virgule\Bundle\MainBundle\Entity\ClassLevel
+        - Virgule\Bundle\MainBundle\Entity\ClassLevelSuggested
+        - Virgule\Bundle\MainBundle\Entity\OrganizationBranch
+        - Virgule\Bundle\MainBundle\Entity\Role

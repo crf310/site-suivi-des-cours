@@ -162,7 +162,7 @@ class Semester {
     }
     
     public function __toString() {
-        return 'du ' . $this->getStartDate() . ' au ' . $this->getEndDate();
+        return 'du ' . $this->getStartDate()->format('d/m/Y') . ' au ' . $this->getEndDate()->format('d/m/Y');
     }
     
    /**

@@ -379,8 +379,11 @@ class ClassSession {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getDocuments()
-    {
+    public function getDocuments() {
         return $this->documents;
+    }
+    
+    public function __toString() {
+        return (string) $this->getId();
     }
 }

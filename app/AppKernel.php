@@ -31,7 +31,9 @@ class AppKernel extends Kernel
            
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sonata\IntlBundle\SonataIntlBundle(),
-            new Siphoc\PdfBundle\SiphocPdfBundle(),
+            new Siphoc\PdfBundle\SiphocPdfBundle(),            
+            
+            new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
