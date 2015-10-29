@@ -8,5 +8,7 @@
 /web/uploads/student_pictures/
 /nbproject/private/
 /nbproject
-
+/build
+app/sqlite.db.cache
+app/phpunit.xml
 .DS_Store
