@@ -54,10 +54,8 @@
     <!-- Unit tests -->
     <target name="test:unit" description="Executes unit tests.">
         <echo msg="Creating PHPUnit configuration file..." />
-        <echo msg="Running unit tests ..." />
         <copy file="${dir.app}/phpunit.xml.dist" tofile="${dir.app}/phpunit.xml" overwrite="true"/>
         <echo msg="Running unit tests ..." />
-        <echo msg="php ${project.basedir}/vendor/bin/phpunit --log-junit ${dir.reports}/phpunit-results.xml --coverage-clover ${dir.reports.coverage}/clover.xml --coverage-html ${dir.reports.coverage}/ -c ${dir.app}" />
         <exec command="php ${project.basedir}/vendor/bin/phpunit --log-junit ${dir.reports}/phpunit-results.xml --coverage-clover ${dir.reports.coverage}/clover.xml --coverage-html ${dir.reports.coverage}/ -c ${dir.app}"/>
     </target>
 
