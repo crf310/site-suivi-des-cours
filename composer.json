@@ -33,7 +33,7 @@
         "phing/phing": "2.4.14",
         "pdepend/pdepend" : "1.1.0",
         "phpunit/phpunit": "4.8.16",
-        "phpunit/php-code-coverage": "1.2.9",
+        "phpunit/php-code-coverage": "2.1",
         "phpmd/phpmd" : "1.4.0",
         "atoum/atoum-bundle": "dev-master"
     },
