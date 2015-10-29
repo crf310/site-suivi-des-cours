@@ -16,7 +16,8 @@ class TeacherRepositoryTest extends AbstractRepositoryTest {
         $this->assertEquals(6, count($results));
         foreach ($results as $teacher) {
             $this->assertTrue($teacher->getIsActive());
-            $this->assertEquals($this->ORG_BRANCH_ID, $teacher->getOrganizationBranches()[0]->getId());
+            $org_branches = $teacher->getOrganizationBranches();
+            $this->assertEquals($this->ORG_BRANCH_ID, $org_branches[0]->getId());
         }
     }
 
@@ -29,7 +30,8 @@ class TeacherRepositoryTest extends AbstractRepositoryTest {
         $this->assertEquals(1, count($results));
         foreach ($results as $teacher) {
             $this->assertFalse($teacher->getIsActive());
-            $this->assertEquals($this->ORG_BRANCH_ID, $teacher->getOrganizationBranches()[0]->getId());
+            $org_branches = $teacher->getOrganizationBranches();
+            $this->assertEquals($this->ORG_BRANCH_ID, $org_branches[0]->getId());
         }
     }
 
