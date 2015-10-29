@@ -2,15 +2,17 @@
 
 <project name="Virgule" basedir="." default="build:main">
     <!-- Properties -->
+    <property name="dir.fixtures" value="src/Virgule/Bundle/MainBundle/DataFixtures/ORM" />
     <property name="dir.app" value="${project.basedir}/app" />
     <property name="dir.src" value="${project.basedir}/src" />
-    <property name="dir.build" value="${project.basedir}/app/build" />
-    <property name="dir.docs" value="${dir.build}/docs" />
-    <property name="dir.docs.phpdoc" value="${dir.docs}/phpdoc" />
-    <property name="dir.docs.docblox" value="${dir.docs}/docblox" />
-    <property name="dir.reports" value="${dir.build}/logs" />
-    <property name="dir.reports.pdepend" value="${dir.reports}/pdepend" />
+    <property name="dir.build" value="${project.basedir}/build" />
+    <property name="dir.reports" value="${dir.build}/reports" />
     <property name="dir.reports.coverage" value="${dir.reports}/coverage" />
+
+    <!-- Command line properties -->
+    <property name="resources.path" value="" />
+    <property name="symfony.env" value="test" />
+    <property name="demo.path" value="~/www/demo" />
 
     <!-- Filesets -->
     <fileset id="sourcecode" dir="${dir.src}">
@@ -19,13 +21,21 @@
 
     <!-- Default target -->
     <target name="build:main"
-            depends="build:clean, build:prepare, build:test, build:data"
-            description="Run all test and build everything" />
-      
+            depends="build:clean, build:configure, build:composer"
+            description="" />
+
+    <target name="build:demo"
+            depends="build:main, demo:main, data:demo, sf:main" />
+
     <!-- Test target -->
     <target name="build:test"
-            depends="test:unit"
+            depends="build:main, build:prepare, data:test, test:unit"
             description="Executes all tests.." />
+
+    <!-- Project build configure -->
+    <target name="build:configure" description="Copy resources">
+        <copy file="${resources.path}/parameters.ini" tofile="${dir.app}/config" overwrite="true"/>
+    </target>
 
     <!-- Project build clean -->
     <target name="build:clean" description="Clean up build directories.">
@@ -37,37 +47,95 @@
     <target name="build:prepare" description="Create build directories.">
         <echo msg="Creating build directories ..." />
         <mkdir dir="${dir.build}" />
-        <mkdir dir="${dir.docs}" />
-        <mkdir dir="${dir.docs.phpdoc}" />
-        <mkdir dir="${dir.docs.docblox}" />
         <mkdir dir="${dir.reports}" />
         <mkdir dir="${dir.reports.coverage}" />
-        <mkdir dir="${dir.reports.pdepend}" />
     </target>
- 
+
     <!-- Unit tests -->
     <target name="test:unit" description="Executes unit tests.">
         <echo msg="Running unit tests ..." />
+        <copy file="${dir.app}/phpunit.xml.dist" tofile="${dir.app}/phpunit.xml" overwrite="true"/>
         <exec command="php ${project.basedir}/vendor/bin/phpunit --log-junit ${dir.reports}/phpunit.xml --coverage-clover ${dir.reports.coverage}/clover.xml --coverage-html ${dir.reports.coverage}/ -c ${dir.app}"/>
     </target>
-    
+
     <!-- Data -->
-    <target name="build:data"
-           depends="data:clean, data:create"
-           description="Clean and load data" />
-   
+    <target name="data:test" depends="data:clean, data:create, data:load:test" description="Clean and load data for test environment" />
+    <target name="data:demo" depends="data:clean, data:create, data:load:demo" description="Clean and load data for test environment" />
+
     <target name="data:clean" description="Droping database schema">
-        <echo msg="Droping database schema ..." />
-        <exec command="php ${dir.app}/console doctrine:schema:drop --force" />
+        <echo msg="Droping database schema in ${symfony.env} environment  ..." />
+        <exec command="php ${dir.app}/console doctrine:schema:drop --force --env=${symfony.env}" />
     </target>
-    
+
     <target name="data:create" description="Creating database schema">
-        <echo msg="Creating database schema ..." />
-        <exec command="php ${dir.app}/console doctrine:schema:create" />
+        <echo msg="Creating database schema in ${symfony.env} environment ..." />
+        <exec command="php ${dir.app}/console doctrine:schema:create --env=${symfony.env}" />
     </target>
-    
-    <target name="data:load" description="Loading application data">
-        <echo msg="Loading application data ..." />
-        <exec command="php ${dir.app}/console doctrine:fixtures:load" />
-    </target>    
+
+    <target name="data:load:test" description="Loading application demo data">
+        <echo msg="Loading application data in ${symfony.env} environment  ..." />
+        <exec command="php ${dir.app}/console doctrine:fixtures:load --no-interaction --env=${symfony.env} --fixtures=${dir.fixtures}/App --fixtures=${dir.fixtures}/Demo " />
+    </target>
+    <target name="data:load:test" description="Loading application demo data">
+        <echo msg="Loading application data in ${symfony.env} environment  ..." />
+        <exec command="php ${dir.app}/console doctrine:fixtures:load --no-interaction --env=${symfony.env} --fixtures=${dir.fixtures}/App --fixtures=${dir.fixtures}/Demo " />
+    </target>
+
+    <!-- Composer -->
+    <target name="build:composer"
+           depends="composer:self-update, composer:update"
+           description="Clean and load data" />
+
+    <target name="composer:self-update" description="Composer: self-update">
+        <echo msg="Composer: updating composer.phar ..." />
+        <exec command="php composer.phar self-update"/>
+    </target>
+
+    <target name="composer:update" description="Composer: install dependencies">
+        <echo msg="Composer: installing dependencies ..." />
+        <exec command="php composer.phar update"/>
+    </target>
+
+    <!-- Symfony -->
+    <target name="sf:main" depends="sf:assetic:dump, sf:cache:warmup" />
+    <target name="sf:assetic:dump" description="Assetic dump">
+        <echo msg="Dumping assets in ${symfony.env} environment  ..." />
+        <exec command="php ${dir.app}/console assetic:dump --env=${symfony.env} --no-debug" />
+    </target>
+    <target name="sf:cache:warmup" description="Loading application demo data">
+        <echo msg="Warming up cache in ${symfony.env} environment  ..." />
+        <exec command="php ${dir.app}/console cache:warmup --env={symfony.env}" />
+    </target>
+
+    <!-- Demo -->
+    <target name="demo:main" depends="demo:clean, demo:copy-resources" />
+    <target name="demo:clean">
+        <echo msg="Cleaning demo directory ..." />
+        <delete dir="${demo.path}/*" verbose="true" />
+    </target>
+    <target name="demo:install" >
+        <echo msg="Copying demo app to wwww directory..." />
+        <copy todir="${demo.path}/" >
+          <fileset dir="${resources.path}/student_pictures">
+            <include name="**/*.*" />
+          </fileset>
+        </copy>
+    </target>
+    <target name="demo:copy-resources" >
+        <echo msg="Copying .htaccess file..." />
+        <copy file="${resources.path}/file.htaccess" tofile="${demo.path}/web/.htaccess" overwrite="true"/>
+        <chmod file="${demo.path}/web/uploads" mode="0777" />
+        <echo msg="Copying student pictures..." />
+        <copy todir="${demo.path}/web/uploads/student_pictures/" >
+          <fileset dir="${resources.path}/student_pictures">
+            <include name="**/*.*" />
+          </fileset>
+        </copy>
+        <echo msg="Copying documents..." />
+        <copy todir="${demo.path}/web/uploads/documents/" >
+          <fileset dir="${resources.path}/documents">
+            <include name="**/*.*" />
+          </fileset>
+        </copy>
+    </target>
 </project>
