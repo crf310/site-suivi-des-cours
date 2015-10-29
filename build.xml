@@ -34,7 +34,7 @@
 
     <!-- Project build configure -->
     <target name="build:configure" description="Copy resources">
-        <copy file="${resources.path}/parameters.ini" tofile="${dir.app}/config" overwrite="true"/>
+        <copy file="${resources.path}/parameters.ini" tofile="${dir.app}/config/parameters.ini" overwrite="true"/>
     </target>
 
     <!-- Project build clean -->
@@ -53,9 +53,12 @@
 
     <!-- Unit tests -->
     <target name="test:unit" description="Executes unit tests.">
+        <echo msg="Creating PHPUnit configuration file..." />
         <echo msg="Running unit tests ..." />
         <copy file="${dir.app}/phpunit.xml.dist" tofile="${dir.app}/phpunit.xml" overwrite="true"/>
-        <exec command="php ${project.basedir}/vendor/bin/phpunit --log-junit ${dir.reports}/phpunit.xml --coverage-clover ${dir.reports.coverage}/clover.xml --coverage-html ${dir.reports.coverage}/ -c ${dir.app}"/>
+        <echo msg="Running unit tests ..." />
+        <echo msg="php ${project.basedir}/vendor/bin/phpunit --log-junit ${dir.reports}/phpunit-results.xml --coverage-clover ${dir.reports.coverage}/clover.xml --coverage-html ${dir.reports.coverage}/ -c ${dir.app}" />
+        <exec command="php ${project.basedir}/vendor/bin/phpunit --log-junit ${dir.reports}/phpunit-results.xml --coverage-clover ${dir.reports.coverage}/clover.xml --coverage-html ${dir.reports.coverage}/ -c ${dir.app}"/>
     </target>
 
     <!-- Data -->
@@ -76,7 +79,7 @@
         <echo msg="Loading application data in ${symfony.env} environment  ..." />
         <exec command="php ${dir.app}/console doctrine:fixtures:load --no-interaction --env=${symfony.env} --fixtures=${dir.fixtures}/App --fixtures=${dir.fixtures}/Demo " />
     </target>
-    <target name="data:load:test" description="Loading application demo data">
+    <target name="data:load:demo" description="Loading application demo data">
         <echo msg="Loading application data in ${symfony.env} environment  ..." />
         <exec command="php ${dir.app}/console doctrine:fixtures:load --no-interaction --env=${symfony.env} --fixtures=${dir.fixtures}/App --fixtures=${dir.fixtures}/Demo " />
     </target>
