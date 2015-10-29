@@ -23,16 +23,16 @@
         "jms/di-extra-bundle": "1.4.0",
         "knplabs/knp-menu-bundle": "2.0.*@dev",
         "sonata-project/intl-bundle": "2.1.0",
-        "siphoc/pdf-bundle": "1.2.3",          
+        "siphoc/pdf-bundle": "1.2.3",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "friendsofsymfony/user-bundle": "dev-master",
         "friendsofsymfony/jsrouting-bundle": "1.5.3"
     },
     "require-dev": {
-        "doctrine/data-fixtures": "*",              
+        "doctrine/data-fixtures": "*",
         "phing/phing": "2.4.14",
         "pdepend/pdepend" : "1.1.0",
-        "phpunit/phpunit": "3.7.28",
+        "phpunit/phpunit": "4.8.16",
         "phpunit/php-code-coverage": "1.2.9",
         "phpmd/phpmd" : "1.4.0",
         "atoum/atoum-bundle": "dev-master"
