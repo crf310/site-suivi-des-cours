@@ -14,7 +14,7 @@ use Virgule\Bundle\MainBundle\Entity\Teacher;
  */
 class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface {
     
-    public function load(ObjectManager $manager) {
+    public function load(ObjectManager $manager) {  
         for ($i = 1; $i <= 5; $i++) {
           $this->createTeacher($manager, $i, true);
         }
