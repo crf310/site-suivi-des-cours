@@ -48,7 +48,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($user);
     }
     public function getOrder() {
-        return 5;
+        return 3;
     }
 
 }
