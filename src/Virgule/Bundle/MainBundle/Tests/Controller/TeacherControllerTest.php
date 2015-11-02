@@ -253,7 +253,7 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->assertEquals(1, $this->crawler->filter("div.controls:contains('" . date("d/m/Y") ."')")->count());
 
         $this->logout();
-        $this->login($userName, $password);
+        $this->login($this->USER_USERNAME, $this->USER_PASSWORD);
 
         $this->goToDashboard();
         $this->assertEquals(1, $this->crawler->filter("span:contains('Accueil')")->count());
