@@ -2,6 +2,7 @@
 /app/bootstrap*
 /app/cache/*
 /app/logs/*
+app/SymfonyRequirements.php
 /vendor/
 /app/config/parameters.ini
 /web/uploads/documents/
@@ -12,3 +13,4 @@
 app/sqlite.db.cache
 app/phpunit.xml
 .DS_Store
+coverage/*
