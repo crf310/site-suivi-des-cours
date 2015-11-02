@@ -8,23 +8,15 @@ abstract class AbstractControllerTest extends WebTestCase {
     protected $client;
     protected $crawler;
     
-    protected $ADMIN_USERNAME = "prof2";
+    protected $ADMIN_USERNAME = "root";
     
-    protected $ADMIN_PASSWORD = "password";
+    protected $ADMIN_PASSWORD = "root1234";
     
-    protected $ADMIN_FIRSTNAME = "John";
+    protected $USER_USERNAME = "user1";
     
-    protected $ADMIN_LASTNAME = "Keating";
+    protected $USER_PASSWORD = "user1";
     
-    protected $USER_USERNAME = "prof3";
-    
-    protected $USER_PASSWORD = "password";
-    
-    protected $USER_FIRSTNAME = "Walter";
-    
-    protected $USER_LASTNAME = "Lewin";    
-    
-    protected $ORG_BRANCH_NAME = "Délégation locale de Paris III et X";
+    protected $ORG_BRANCH_NAME = "Delegation 1";
 
     protected function login($username, $password) {
         $this->crawler = $this->client->request('GET', '/login');
@@ -40,7 +32,8 @@ abstract class AbstractControllerTest extends WebTestCase {
         
         $this->crawler = $this->client->followRedirect();
         $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $this->crawler->filter("div.connected_branch:contains('" . $this->ORG_BRANCH_NAME . "')")->count());
+        $this->assertTrue($this->crawler->filter("div#loginerror:contains('droits invalides')")->count() == 0, "Login: droits invalides");
+        $this->assertTrue($this->crawler->filter("span:contains('Accueil')")->count() == 1, "Accueil link not found");
     }
     
     protected function logout() {        
