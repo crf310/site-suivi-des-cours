@@ -75,7 +75,7 @@
 
     <target name="data:load:test" description="Loading application demo data">
         <echo msg="Loading application data in ${symfony.env} environment  ..." />
-        <exec command="php ${dir.app}/console doctrine:fixtures:load --no-interaction --env=${symfony.env} --fixtures=${dir.fixtures}/App --fixtures=${dir.fixtures}/Demo " />
+        <exec command="php ${dir.app}/console doctrine:fixtures:load --no-interaction --env=${symfony.env} --fixtures=${dir.fixtures}/App --fixtures=${dir.fixtures}/Test " />
     </target>
     <target name="data:load:demo" description="Loading application demo data">
         <echo msg="Loading application data in ${symfony.env} environment  ..." />
