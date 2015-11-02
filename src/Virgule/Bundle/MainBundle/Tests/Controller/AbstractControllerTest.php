@@ -16,6 +16,10 @@ abstract class AbstractControllerTest extends WebTestCase {
     
     protected $USER_PASSWORD = "user1";
     
+    protected $USER_FIRSTNAME = 'User';
+    
+    protected $USER_LASTNAME = 'Active 1';
+    
     protected $ORG_BRANCH_NAME = "Delegation 1";
 
     protected function login($username, $password) {
