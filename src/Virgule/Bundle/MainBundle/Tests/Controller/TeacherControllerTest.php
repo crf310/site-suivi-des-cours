@@ -228,10 +228,10 @@ class TeacherControllerTest extends AbstractControllerTest {
         $crawlerLinkProfile = $this->crawler->filter('#go-to-profile');
         $this->crawler = $this->client->click($crawlerLinkProfile->link());
 
-        $this->assertEquals(1, $this->crawler->filter("h5:contains('" . $this->USER_FIRSTNAME . " " . $this->USER_LASTNAME . "')")->count());
+        $this->assertTrue($this->crawler->filter("h5:contains('" . $this->USER_FIRSTNAME . " " . $this->USER_LASTNAME . "')")->count() == 1, "le nom de l'utilisateur n'a pas été trouvé dans le titre");
         $this->crawler = $this->client->click($this->crawler->selectLink('Modifier le profil')->link());
 
-        $this->assertEquals(1, $this->crawler->filter("html:contains('Modifier la fiche de " . $this->USER_FIRSTNAME . " " . $this->USER_LASTNAME . "')")->count());
+        $this->assertTrue($this->crawler->filter("html:contains('Modifier la fiche de " . $this->USER_FIRSTNAME . " " . $this->USER_LASTNAME . "')")->count() == 1, "le lien de modification de la fiche n'a pas été trouvé");
 
         $lastName =  $this->USER_LASTNAME . 'edited';
         $firstName = $this->USER_FIRSTNAME . 'edited';
@@ -243,25 +243,11 @@ class TeacherControllerTest extends AbstractControllerTest {
 
         $this->fillAndSubmitModificationForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, true, 'Enregistrer les modifications');
 
-        $this->assertTrue($this->crawler->filter("div.widget-title:contains('" . $firstName . " " . $lastName . "')")->count() == 1);
-        $this->assertTrue($this->crawler->filter("div.controls:contains('" . $phoneNumberFormatted ."')")->count() == 1);
-        $this->assertTrue($this->crawler->filter("div.controls:contains('" . $cellPhoneNumberFormatted ."')")->count() == 1);
-        $this->assertTrue($this->crawler->filter("div.controls:contains('" . $emailAddress ."')")->count() == 1);
-        $this->assertTrue($this->crawler->filter("div.controls:contains('" . date("d/m/Y") ."')")->count() == 1);
-
-        $this->logout();
-        $this->login($this->USER_USERNAME, $this->USER_PASSWORD);
-
-        $this->goToDashboard();
-        $this->assertEquals(1, $this->crawler->filter("span:contains('Accueil')")->count());
-
-        // reset username and password
-        $crawlerLinkProfile = $this->crawler->filter('#go-to-profile');
-        $this->crawler = $this->client->click($crawlerLinkProfile->link());
-
-        $this->crawler = $this->client->click($this->crawler->selectLink('Modifier le profil')->link());
-
-        $this->fillAndSubmitCreationForm($this->USER_FIRSTNAME, $this->USER_LASTNAME, $phoneNumber, $cellPhoneNumber, $emailAddress, $this->USER_USERNAME, $this->USER_PASSWORD, $this->USER_PASSWORD, true, 'Enregistrer les modifications');
+        $this->assertTrue($this->crawler->filter("h5:contains('" . $firstName . " " . $lastName . "')")->count() == 1, "le nom ou le prénom ne sont pas affichés");
+        $this->assertTrue($this->crawler->filter("div.controls:contains('" . $phoneNumberFormatted ."')")->count() == 1, "le n° de tél formaté n'est pas affiché");
+        $this->assertTrue($this->crawler->filter("div.controls:contains('" . $cellPhoneNumberFormatted ."')")->count() == 1, "le n° de mobile formaté n'est pas affiché");
+        $this->assertTrue($this->crawler->filter("div.controls:contains('" . $emailAddress ."')")->count() == 1, "l'adresse email n'est pas affichée");
+        $this->assertTrue($this->crawler->filter("div.controls:contains('" . date("d/m/Y") ."')")->count() == 1, "la date n'est pas affichée");
 
         $this->logout();
     }
@@ -315,7 +301,7 @@ class TeacherControllerTest extends AbstractControllerTest {
         }
     }
 
-    private function fillAndSubmitModificationForm($lastName, $firstName, $phoneNumber, $cellphoneNumber, $emailAddress,  $followRedirect = true, $buttonLabel= 'Créer le compte') {
+    private function fillAndSubmitModificationForm($firstName, $lastName, $phoneNumber, $cellphoneNumber, $emailAddress,  $followRedirect = true, $buttonLabel= 'Créer le compte') {
         // Fill in the form and submit it
         $form = $this->crawler->selectButton($buttonLabel)->form(array(
             $this->FIELD_PREFIX . '[lastName]' => $lastName,
