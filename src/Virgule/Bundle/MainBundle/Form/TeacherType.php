@@ -62,7 +62,7 @@ class TeacherType extends AbstractType {
 
     $resolver->setDefaults(array(
         'data_class' => 'Virgule\Bundle\MainBundle\Entity\Teacher',
-        'validation_groups' => array($validationGroup)
+        'validation_groups' => array($validationGroup, 'Default')
     ));
   }
 
