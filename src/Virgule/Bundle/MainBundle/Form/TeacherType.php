@@ -56,18 +56,13 @@ class TeacherType extends AbstractType {
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Virgule\Bundle\MainBundle\Entity\Teacher'
+            'data_class' => 'Virgule\Bundle\MainBundle\Entity\Teacher',
+            'validation_groups' => array('Registration', 'Default')
         ));
     }
 
     public function getName() {
         return 'virgule_bundle_mainbundle_teachertype';
-    }
-    
-    public function getDefaultOptions() {
-        return array(
-            'validation_groups' => array('Registration', 'Default')
-        );
     }
 
 }

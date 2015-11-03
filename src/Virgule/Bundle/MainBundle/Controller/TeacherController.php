@@ -114,6 +114,9 @@ class TeacherController extends AbstractVirguleController {
         $form = $this->createForm(new TeacherType(), $entity);
         $form->bind($request);        
         
+        $entity->setEmailCanonical($entity->getEmail());
+        $entity->setUsernameCanonical($entity->getUsername());
+        
         $temporary_password = $this->getTeacherManager()->generatePassword();
         $entity->setPlainPassword($temporary_password);
         

@@ -152,13 +152,13 @@ class TeacherControllerTest extends AbstractControllerTest {
         $firstName = "John";
         $phoneNumber = "0102030405";
         $cellPhoneNumber = "0504030201";
-        $emailAddress = "glucazeau@gmail_com";
-        $userName = "jdoe-wrong-email";
+        $emailAddress = "jdoe_example_com_" . time();
+        $userName = "jdoe-wrong-email" . time();
 
         $this->fillAndSubmitCreationForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, false);
-
+        
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1, "Crawler should have stayed on user creation form");
-        $this->assertTrue($this->crawler->filter("span.help-inline:contains('Cette adresse est invalide')")->count() >= 1, "Warning message should be displayed");
+        $this->assertTrue($this->crawler->filter("span.help-inline:contains('adresse e-mail est invalide')")->count() == 1, "Warning message should be displayed");
 
     }
 
