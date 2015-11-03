@@ -6,7 +6,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "v2.3.6",
+        "symfony/symfony": "v2.3.34",
         "symfony/assetic-bundle": "2.1.*",
         "symfony/swiftmailer-bundle": "2.2.6",
         "symfony/doctrine-bridge": "2.3.6",
