@@ -70,8 +70,7 @@ class TeacherControllerTest extends AbstractControllerTest {
         $firstName = "John";
         $phoneNumber = "0102030405";
         $cellPhoneNumber = "0504030201";
-        $emailAddress = "john.doe@example.com";
-        $userName = "jdoe" . time();
+        $userName = "jdoe-same-username";
 
         $this->fillAndSubmitCreationForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, "john.doe.1@example.com", $userName);
 
