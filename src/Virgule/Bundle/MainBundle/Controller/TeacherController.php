@@ -111,14 +111,16 @@ class TeacherController extends AbstractVirguleController {
      */
     public function createAction(Request $request) {
         $entity = new Teacher();
+        
+        $temporary_password = $this->getTeacherManager()->generatePassword();
+        $entity->setPlainPassword($temporary_password);
+        
         $form = $this->createForm(new TeacherType(), $entity);
         $form->bind($request);        
         
         $entity->setEmailCanonical($entity->getEmail());
         $entity->setUsernameCanonical($entity->getUsername());
         
-        $temporary_password = $this->getTeacherManager()->generatePassword();
-        $entity->setPlainPassword($temporary_password);
         
         $entity->setRegistrationDate(new \DateTime('now'));
         $credentialsExpirationDate = new \DateTime('now');
