@@ -28,7 +28,7 @@ class SecurityControllerTest extends WebTestCase {
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertTrue($crawler->filter('html:contains("'.$this->SITE_NAME.'")')->count() == 1);
         
-        $crawler = $this->fillAndSubmitLoginForm($client, $crawler, 'prof1', 'password');
+        $crawler = $this->fillAndSubmitLoginForm($client, $crawler, 'user1', 'user1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());        
         
         $crawler = $client->click($crawler->selectLink('Déconnexion')->link());
