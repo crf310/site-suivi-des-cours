@@ -31,10 +31,9 @@ class TeacherControllerTest extends AbstractControllerTest {
         $this->fillAndSubmitCreationForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName);
 
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 0, "Crawler should not have stayed on user creation form");
-        $this->assertEquals(1, $this->crawler->filter("td:contains('" . $firstName . " " . $lastName . "')")->count(), "User page should display first and last names (" . $firstName . " " . $lastName . ")");
-
-        $this->assertEquals(1, $this->crawler->filter("td:contains('" . $phoneNumberFormatted ."')")->count(), "User page should display the phone number");
-        $this->assertEquals(1, $this->crawler->filter("td:contains('" . $cellPhoneNumberFormatted ."')")->count(), "User page should display the mobile phone");
+        $this->assertTrue($this->crawler->filter("td:contains('" . $firstName . " " . $lastName . "')")->count() == 1, "User page should display first and last names (" . $firstName . " " . $lastName . ")");
+        $this->assertTrue($this->crawler->filter("td:contains('" . $phoneNumberFormatted ."')")->count() == 1, "User page should display the phone number");
+        $this->assertTrue($this->crawler->filter("td:contains('" . $cellPhoneNumberFormatted ."')")->count() == 1, "User page should display the mobile phone");
 
         $crawlerTeacher = $this->crawler->filter("td:contains('" . $firstName . " " . $lastName . "')")->siblings();
         $this->crawler = $this->client->click($crawlerTeacher->selectLink('Détails')->link());
@@ -181,9 +180,8 @@ class TeacherControllerTest extends AbstractControllerTest {
         $userName = "jdoe" . time();
 
         $this->fillAndSubmitCreationForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, false);
-
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1, "Crawler should have stayed on user creation form");
-        $this->assertEquals(2, $this->crawler->filter("span.help-inline:contains('Le numéro de téléphone doit comporter 10 chiffres, et seulement 10')")->count(), "Warning message should be displayed");
+        $this->assertTrue($this->crawler->filter("span.help-inline:contains('Le numéro de téléphone doit comporter 10 chiffres, et seulement 10')")->count() == 2, "Warning message should be displayed");
 
         $this->logout();
     }
@@ -203,13 +201,13 @@ class TeacherControllerTest extends AbstractControllerTest {
         $firstName = "John";
         $phoneNumber = "010203040506070809";
         $cellPhoneNumber = "010203040506070809";
-        $emailAddress = "john.doe&example.com";
+        $emailAddress = "john.doe@example.com";
         $userName = "jdoe" . time();
 
         $this->fillAndSubmitCreationForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName, false);
 
         $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 1, "Crawler should have stayed on user creation form");
-        $this->assertEquals(2, $this->crawler->filter("span.help-inline:contains('Le numéro de téléphone doit comporter 10 chiffres, et seulement 10')")->count(), "Warning message should be displayed");
+        $this->assertTrue($this->crawler->filter("span.help-inline:contains('Le numéro de téléphone doit comporter 10 chiffres, et seulement 10')")->count() == 2, "Warning message should be displayed");
 
         $this->logout();
     }
@@ -241,15 +239,15 @@ class TeacherControllerTest extends AbstractControllerTest {
         $cellPhoneNumber = "0808080808";
         $phoneNumberFormatted = "09 09 09 09 09";
         $cellPhoneNumberFormatted = "08 08 08 08 08";
-        $emailAddress = $this->USER_LASTNAME . '.' . $this->USER_FIRSTNAME . '.new@example.com';
+        $emailAddress = 'email-new@example.com';
 
         $this->fillAndSubmitModificationForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, true, 'Enregistrer les modifications');
 
-        $this->assertEquals(1, $this->crawler->filter("div.widget-title:contains('" . $firstName . " " . $lastName . "')")->count());
-        $this->assertEquals(1, $this->crawler->filter("div.controls:contains('" . $phoneNumberFormatted ."')")->count());
-        $this->assertEquals(1, $this->crawler->filter("div.controls:contains('" . $cellPhoneNumberFormatted ."')")->count());
-        $this->assertEquals(1, $this->crawler->filter("div.controls:contains('" . $emailAddress ."')")->count());
-        $this->assertEquals(1, $this->crawler->filter("div.controls:contains('" . date("d/m/Y") ."')")->count());
+        $this->assertTrue($this->crawler->filter("div.widget-title:contains('" . $firstName . " " . $lastName . "')")->count() == 1);
+        $this->assertTrue($this->crawler->filter("div.controls:contains('" . $phoneNumberFormatted ."')")->count() == 1);
+        $this->assertTrue($this->crawler->filter("div.controls:contains('" . $cellPhoneNumberFormatted ."')")->count() == 1);
+        $this->assertTrue($this->crawler->filter("div.controls:contains('" . $emailAddress ."')")->count() == 1);
+        $this->assertTrue($this->crawler->filter("div.controls:contains('" . date("d/m/Y") ."')")->count() == 1);
 
         $this->logout();
         $this->login($this->USER_USERNAME, $this->USER_PASSWORD);
@@ -309,6 +307,7 @@ class TeacherControllerTest extends AbstractControllerTest {
         ));
 
         $this->client->submit($form);
+        
         if ($followRedirect) {
             $this->crawler = $this->client->followRedirect();
         } else {
