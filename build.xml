@@ -105,7 +105,7 @@
     </target>
     <target name="sf:cache:warmup" description="Loading application demo data">
         <echo msg="Warming up cache in ${symfony.env} environment  ..." />
-        <exec command="php ${dir.app}/console cache:warmup --env={symfony.env}" />
+        <exec command="php ${dir.app}/console cache:warmup --env=${symfony.env}" />
     </target>
 
     <!-- Demo -->
