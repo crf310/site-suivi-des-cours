@@ -72,11 +72,12 @@ class SemesterRepository extends EntityRepository {
         return $semester;
     }
 
-    public function getPreviousSemester($currentSemesterStartDate) {
+    public function getPreviousSemester($organizationBranchId, $currentSemesterStartDate) {
         $q = $this
             ->createQueryBuilder('s')
-            //->where('s.organizationBranch = :organizationBranchId
+            ->where('s.organizationBranch = :organizationBranchId')
             ->andWhere('s.endDate < :date')
+            ->setParameter('organizationBranchId', $organizationBranchId)
             ->setParameter('date', $currentSemesterStartDate)
             ->add('orderBy', 's.startDate DESC')
             ->setMaxResults(1)
