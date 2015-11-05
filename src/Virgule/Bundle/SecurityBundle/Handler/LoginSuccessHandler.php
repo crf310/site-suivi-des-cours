@@ -15,15 +15,15 @@ use Doctrine\ORM\NoResultException;
 use Virgule\Bundle\MainBundle\Entity\Teacher as Teacher;
 
 /**
- * 
+ *
  */
 class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface {
-    
+
     protected $router;
     protected $security;
     protected $entityManager;
     protected $container;
- 
+
     public function __construct(Router $router, SecurityContext $security, EntityManager $entityManager, ContainerInterface $container) {
         $this->router = $router;
         $this->security = $security;
@@ -41,7 +41,7 @@ class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface {
     public function onAuthenticationSuccess(Request $request, TokenInterface $token) {
         if ($token && $token->getUser() instanceof Teacher) {
             $session = $request->getSession();
-            
+
             $user = $token->getUser();
             if ($user->getUsername() != 'root') {
                 $expirationDate = new \DateTime("now");
@@ -51,24 +51,24 @@ class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface {
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
             }
-        
+
             $organizationBranchId = $request->get('organization_branch_id');
             $organizationBranch = $this->entityManager->getRepository('Virgule\Bundle\MainBundle\Entity\OrganizationBranch')->loadOne($organizationBranchId);
 
             $session->set('organizationBranch', $organizationBranch);
             $session->set('organizationBranchId', $organizationBranchId);
             $session->set('organizationBranchName', $organizationBranch->getName());
-            
+
             try {
                 $currentSemester = $this->entityManager->getRepository('Virgule\Bundle\MainBundle\Entity\Semester')->loadCurrent($organizationBranchId);
             } catch (NoResultException $e) {
-                $currentSemester =  $this->entityManager->getRepository('Virgule\Bundle\MainBundle\Entity\Semester')->loadLast($organizationBranchId);
+                $currentSemester =  $this->entityManager->getRepository('Virgule\Bundle\MainBundle\Entity\Semester')->loadLatest($organizationBranchId);
             }
             $allSemesters = $this->entityManager->getRepository('Virgule\Bundle\MainBundle\Entity\Semester')->loadAll($organizationBranchId);
-            
+
             $session->set('currentSemester', $currentSemester);
             $session->set('allSemesters', $allSemesters);
-                
+
             // redirect the user to where they were before the login process begun.
             $referer_url = $request->headers->get('referer');
             if (! empty($referer_url) && (strpos($referer_url,'login') === false)) {
@@ -76,9 +76,9 @@ class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface {
             } else {
                 $response = new RedirectResponse($this->router->generate('welcome'));
             }
-            
+
             // if credentials expire before 30 days, redirect to password change
-            $now = new \DateTime("now");        
+            $now = new \DateTime("now");
             $temporaryCredentialsDays = $this->container->getParameter('temporary_credentials_days');
             $userCredentialsExpireAt = $user->getCredentialsExpireAt();
             if (!empty($userCredentialsExpireAt) && $now->diff($userCredentialsExpireAt)->format('%R%a') < $temporaryCredentialsDays) {

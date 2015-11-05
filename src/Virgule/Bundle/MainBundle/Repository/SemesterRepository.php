@@ -55,7 +55,7 @@ class SemesterRepository extends EntityRepository {
         return $semesters;
     }
 
-    public function loadLast($organizationBranchId) {
+    public function loadLatest($organizationBranchId) {
         $q = $this
             ->createQueryBuilder('s')
             ->where('s.organizationBranch = :organizationBranchId')
