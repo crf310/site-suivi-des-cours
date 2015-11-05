@@ -12,7 +12,7 @@ use \Doctrine\ORM\NoResultException;
  * repository methods below.
  */
 class SemesterRepository extends EntityRepository {
-     
+
     /**
      * Returns the current semester for the chosen org branch
      * @param type $organizationBranch
@@ -22,7 +22,7 @@ class SemesterRepository extends EntityRepository {
     public function loadCurrent($organizationBranchId) {
         $now = new \DateTime('now');
         $now = $now->format("Y-m-d");
-        
+
         $q = $this
             ->createQueryBuilder('s')
             ->where('s.organizationBranch = :organizationBranchId')
@@ -41,7 +41,7 @@ class SemesterRepository extends EntityRepository {
         }
         return $semester;
     }
-    
+
     public function loadAll($organizationBranchId) {
         $q = $this
             ->createQueryBuilder('s')
@@ -54,7 +54,7 @@ class SemesterRepository extends EntityRepository {
         $semesters = $q->execute();
         return $semesters;
     }
-    
+
     public function loadLast($organizationBranchId) {
         $q = $this
             ->createQueryBuilder('s')
@@ -71,20 +71,7 @@ class SemesterRepository extends EntityRepository {
         }
         return $semester;
     }
-    
-    public function findSemesterByDateBetween($date) {
-        $q = $this
-            ->createQueryBuilder('s')
-            //->where('s.organizationBranch = :organizationBranchId')
-            ->andWhere('s.startDate <= :date')
-            ->andWhere('s.endDate >= :date')
-            ->setParameter('date', $date)
-            ->setMaxResults(1)
-            ->getQuery()
-        ;
-        return $q->getOneOrNullResult();
-    }
-    
+
     public function getPreviousSemester($currentSemesterStartDate) {
         $q = $this
             ->createQueryBuilder('s')
