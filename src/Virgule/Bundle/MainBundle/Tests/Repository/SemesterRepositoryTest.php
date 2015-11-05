@@ -19,6 +19,15 @@ class SemesterRepositoryTest extends AbstractRepositoryTest {
 
     /**
      * @test
+     * @ expectedException NoResultException
+     */
+    public function loadCurrent_organizationBranchWithoutSemester_noResultExceptionThrown() {
+        $result = $this->getRepository()->loadCurrent(time());
+        $this->assertEquals(0, count($result), "A semester has been found");
+    }
+
+    /**
+     * @test
      */
     public function loadCurrent_currentDateBetweenStartAndEndDates_currentSemesterReturned() {
         $result = $this->getRepository()->loadCurrent($this->ORG_BRANCH_ID);
@@ -82,7 +91,7 @@ class SemesterRepositoryTest extends AbstractRepositoryTest {
     /**
      * @test
      */
-    public function loadLatest_lastSemesterIsCurrentSemester_currentAndLatestAreEquals() {
+    public function loadLatest_latestSemesterIsCurrentSemester_currentAndLatestAreEquals() {
         $currentSemester = $this->getRepository()->loadCurrent($this->ORG_BRANCH_ID);
 
         $result = $this->getRepository()->loadLatest($this->ORG_BRANCH_ID);
@@ -90,6 +99,15 @@ class SemesterRepositoryTest extends AbstractRepositoryTest {
 
         $this->assertEquals($this->ORG_BRANCH_ID, $result->getOrganizationBranch()->getId(), "Returned semester is from the wrong organization branch");
         $this->assertEquals($currentSemester, $result);
+    }
+
+    /**
+     * @test
+     * @ expectedException NoResultException
+     */
+    public function loadLatest_organizationBranchWithoutSemester_noResultExceptionThrown() {
+        $result = $this->getRepository()->loadLatest(time());
+        $this->assertEquals(0, count($result), "A semester has been found");
     }
 }
 ?>
