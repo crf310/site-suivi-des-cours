@@ -19,7 +19,7 @@ class SemesterRepositoryTest extends AbstractRepositoryTest {
 
     /**
      * @test
-     * @ expectedException NoResultException
+     * @expectedException \Doctrine\ORM\NoResultException
      */
     public function loadCurrent_organizationBranchWithoutSemester_noResultExceptionThrown() {
         $result = $this->getRepository()->loadCurrent(time());
@@ -103,7 +103,7 @@ class SemesterRepositoryTest extends AbstractRepositoryTest {
 
     /**
      * @test
-     * @ expectedException NoResultException
+     * @expectedException \Doctrine\ORM\NoResultException
      */
     public function loadLatest_organizationBranchWithoutSemester_noResultExceptionThrown() {
         $result = $this->getRepository()->loadLatest(time());
