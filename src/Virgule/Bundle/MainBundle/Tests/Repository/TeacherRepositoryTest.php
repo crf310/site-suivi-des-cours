@@ -1,5 +1,4 @@
 <?php
-// src/Acme/ProductBundle/Tests/Entity/ProductRepositoryFunctionalTest.php
 namespace Virgule\Bundle\MainBundle\Tests\Repository;
 
 use Virgule\Bundle\MainBundle\Tests\Repository\AbstractRepositoryTest;
@@ -7,18 +6,22 @@ use Virgule\Bundle\MainBundle\Tests\Repository\AbstractRepositoryTest;
 class TeacherRepositoryTest extends AbstractRepositoryTest {
 
     private $NB_ACTIVE_TEACHERS = 5;
-    
+
     private $NB_INACTIVE_TEACHERS = 2;
-    
+
     private $ORG_BRANCH_ID = 1;
+
+    private function getRepository() {
+        return $this->_em->getRepository('VirguleMainBundle:Teacher');
+    }
 
     /**
      * @test
      */
     public function getTeacherByStatus_activeIsFalse_inactiveTeachersFound() {
-        $results = $this->_em->getRepository('VirguleMainBundle:Teacher')->getTeachersByStatus($this->ORG_BRANCH_ID, false);
+        $results = $this->getRepository()->getTeachersByStatus($this->ORG_BRANCH_ID, false);
         $this->assertEquals($this->NB_INACTIVE_TEACHERS, count($results));
-        
+
         foreach ($results as $teacher) {
             $this->assertFalse($teacher->getIsActive());
             $org_branches = $teacher->getOrganizationBranches();
@@ -30,7 +33,7 @@ class TeacherRepositoryTest extends AbstractRepositoryTest {
      * @test
      */
     public function getTeacherByStatus_activeIsTrue_activeTeachersFound() {
-        $results = $this->_em->getRepository('VirguleMainBundle:Teacher')->getTeachersByStatus($this->ORG_BRANCH_ID, true);
+        $results = $this->getRepository()->getTeachersByStatus($this->ORG_BRANCH_ID, true);
 
         $this->assertEquals($this->NB_ACTIVE_TEACHERS, count($results));
         foreach ($results as $teacher) {
@@ -44,7 +47,7 @@ class TeacherRepositoryTest extends AbstractRepositoryTest {
      * @test
      */
     public function getNbTeacherByStatus_activeIsFalse_numberOfInactiveTeachersFound() {
-        $result = $this->_em->getRepository('VirguleMainBundle:Teacher')->getNbTeachersByStatus($this->ORG_BRANCH_ID, false);
+        $result = $this->getRepository()->getNbTeachersByStatus($this->ORG_BRANCH_ID, false);
 
         $this->assertEquals($this->NB_INACTIVE_TEACHERS, $result['nb_teachers']);
     }
@@ -53,7 +56,7 @@ class TeacherRepositoryTest extends AbstractRepositoryTest {
      * @test
      */
     public function getNbTeacherByStatus_activeIsTrue_numberOfActiveTeachersFound() {
-        $result = $this->_em->getRepository('VirguleMainBundle:Teacher')->getNbTeachersByStatus($this->ORG_BRANCH_ID, true);
+        $result = $this->getRepository()->getNbTeachersByStatus($this->ORG_BRANCH_ID, true);
 
         $this->assertEquals($this->NB_ACTIVE_TEACHERS, $result['nb_teachers']);
     }
