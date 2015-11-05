@@ -9,7 +9,6 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
  * Virgule\Bundle\MainBundle\Entity\Role
  *
  * @ORM\Table(name="roles")
- * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\RoleRepository")
  */
 class Role implements RoleInterface {
 
@@ -44,7 +43,7 @@ class Role implements RoleInterface {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId() {
         return $this->id;
@@ -65,7 +64,7 @@ class Role implements RoleInterface {
     /**
      * Get label
      *
-     * @return string 
+     * @return string
      */
     public function getLabel() {
         return $this->label;
@@ -86,7 +85,7 @@ class Role implements RoleInterface {
     /**
      * Get code
      *
-     * @return string 
+     * @return string
      */
     public function getRole() {
         return $this->role;
@@ -122,7 +121,7 @@ class Role implements RoleInterface {
     /**
      * Get teachers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTeachers() {
         return $this->teachers;
