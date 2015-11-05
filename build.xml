@@ -84,7 +84,7 @@
 
     <!-- Composer -->
     <target name="build:composer"
-           depends="composer:self-update, composer:update"
+           depends="composer:self-update, composer:install"
            description="Clean and load data" />
 
     <target name="composer:self-update" description="Composer: self-update">
@@ -92,9 +92,9 @@
         <exec command="php composer.phar self-update"/>
     </target>
 
-    <target name="composer:update" description="Composer: install dependencies">
+    <target name="composer:install" description="Composer: install dependencies">
         <echo msg="Composer: installing dependencies ..." />
-        <exec command="php composer.phar update"/>
+        <exec command="php composer.phar install"/>
     </target>
 
     <!-- Symfony -->
