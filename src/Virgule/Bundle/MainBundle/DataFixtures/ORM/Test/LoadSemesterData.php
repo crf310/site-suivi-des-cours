@@ -60,6 +60,9 @@ class LoadSemesterData extends AbstractFixture implements OrderedFixtureInterfac
         $manager->persist($currentSemesterOrg3);
         $manager->persist($previousSemesterOrg2);
 
+        $this->addReference('semester-11', $currentSemester);
+        $this->addReference('semester-12', $previousSemester);
+
         $manager->flush();
 
 

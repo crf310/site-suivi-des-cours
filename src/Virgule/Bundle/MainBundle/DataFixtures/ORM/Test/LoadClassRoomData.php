@@ -35,6 +35,9 @@ class LoadClassRoomData extends AbstractFixture implements OrderedFixtureInterfa
 
         $manager->persist($classRoom11);
         $manager->persist($classRoom12);
+        $this->addReference('classroom-11', $classRoom11);
+        $this->addReference('classroom-12', $classRoom12);
+
         $manager->persist($classRoom21);
         $manager->persist($classRoom22);
         $manager->persist($classRoom23);
