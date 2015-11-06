@@ -13,7 +13,6 @@ class LoadClassLevelData extends AbstractFixture implements OrderedFixtureInterf
         $classLevel1->setPosition(1);
         $classLevel1->setHtmlColorCode('#FF0000');
 
-
         $classLevel2 = new ClassLevel();
         $classLevel2->setLabel('Class level 2');
         $classLevel2->setPosition(2);
