@@ -12,5 +12,4 @@ app/SymfonyRequirements.php
 /build
 app/sqlite.db.cache
 app/phpunit.xml
-.DS_Store
 coverage/*
