@@ -1,12 +1,13 @@
 {
-    "name": "symfony/framework-standard-edition",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "name": "crf310/site-aalf",
+    "description": "Site web de suivi des cours et des apprenants AALF",
+    "license": "GPL-2.0",
     "autoload": {
         "psr-0": { "": "src/" }
     },
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "v2.3.34",
+        "symfony/symfony": "2.6.11",
         "symfony/assetic-bundle": "2.1.*",
         "symfony/swiftmailer-bundle": "2.2.6",
         "symfony/doctrine-bridge": "2.3.6",
@@ -22,10 +23,10 @@
         "twig/extensions": "1.1.0",
         "jms/security-extra-bundle": "1.5.1",
         "jms/di-extra-bundle": "1.4.0",
-        "knplabs/knp-menu-bundle": "2.0.*@dev",
+        "knplabs/knp-menu-bundle": "2.1.0",
         "sonata-project/intl-bundle": "2.1.0",
         "siphoc/pdf-bundle": "1.2.3",
-        "friendsofsymfony/user-bundle": "dev-master",
+        "friendsofsymfony/user-bundle": "2.0.0-alpha3",
         "friendsofsymfony/jsrouting-bundle": "1.5.3"
     },
     "require-dev": {
