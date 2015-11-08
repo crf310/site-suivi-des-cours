@@ -184,6 +184,7 @@ abstract class AbstractVirguleController extends Controller {
     return $this->getDoctrineRepository('Semester');
   }
 
+  
 }
 
 ?>
