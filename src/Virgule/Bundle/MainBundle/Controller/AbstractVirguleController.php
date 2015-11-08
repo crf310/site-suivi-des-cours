@@ -129,59 +129,59 @@ abstract class AbstractVirguleController extends Controller {
   }
 
   protected function getTeacherRepository() {
-    $this->getDoctrineRepository('Teacher');
+    return $this->getDoctrineRepository('Teacher');
   }
 
   protected function getStudentRepository() {
-    $this->getDoctrineRepository('Student');
+    return $this->getDoctrineRepository('Student');
   }
 
   protected function getCourseRepository() {
-    $this->getDoctrineRepository('Course');
+    return $this->getDoctrineRepository('Course');
   }
 
   protected function getOpenHouseRepository() {
-    $this->getDoctrineRepository('OpenHouse');
+    return $this->getDoctrineRepository('OpenHouse');
   }
 
   protected function getCountryRepository() {
-    $this->getDoctrineRepository('Country');
+    return $this->getDoctrineRepository('Country');
   }
 
   protected function getClassRoomRepository() {
-    $this->getDoctrineRepository('ClassRoom');
+    return $this->getDoctrineRepository('ClassRoom');
   }
 
   protected function getClassLevelRepository() {
-    $this->getDoctrineRepository('ClassLevel');
+    return $this->getDoctrineRepository('ClassLevel');
   }
 
   protected function getClassLevelSuggestedRepository() {
-    $this->getDoctrineRepository('ClassLevelSuggested');
+    return $this->getDoctrineRepository('ClassLevelSuggested');
   }
 
   protected function getClassSessionRepository() {
-    $this->getDoctrineRepository('ClassSession');
+    return $this->getDoctrineRepository('ClassSession');
   }
 
   protected function getTagRepository() {
-    $this->getDoctrineRepository('Tag');
+    return $this->getDoctrineRepository('Tag');
   }
 
   protected function getLanguageRepository() {
-    $this->getDoctrineRepository('Language');
+    return $this->getDoctrineRepository('Language');
   }
 
   protected function getDocumentRepository() {
-    $this->getDoctrineRepository('Document');
+    return $this->getDoctrineRepository('Document');
   }
   
   protected function getOrganizationBranchRepository() {
-    $this->getDoctrineRepository('OrganizationBranch');
+    return $this->getDoctrineRepository('OrganizationBranch');
   }
   
   protected function getSemesterRepository() {
-    $this->getDoctrineRepository('Semester');
+    return $this->getDoctrineRepository('Semester');
   }
 
 }
