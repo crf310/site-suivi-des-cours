@@ -45,6 +45,9 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
         $user->setPlainPassword('user' . $i);
         $user->setIsActive($active);
         $user->addOrganizationBranch($this->getReference("organization-1"));
+        
+        $this->addReference('user-' . $i, $user);
+        
         $manager->persist($user);
     }
     public function getOrder() {
