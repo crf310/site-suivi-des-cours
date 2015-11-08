@@ -89,12 +89,12 @@
 
     <target name="composer:self-update" description="Composer: self-update">
         <echo msg="Composer: updating composer.phar ..." />
-        <exec command="php composer.phar self-update"/>
+        <exec command="composer self-update"/>
     </target>
 
     <target name="composer:install" description="Composer: install dependencies">
         <echo msg="Composer: installing dependencies ..." />
-        <exec command="php composer.phar install"/>
+        <exec command="composer install"/>
     </target>
 
     <!-- Symfony -->
