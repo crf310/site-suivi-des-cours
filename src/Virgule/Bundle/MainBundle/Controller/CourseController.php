@@ -22,11 +22,6 @@ use Virgule\Bundle\MainBundle\Form\FormConstants;
  */
 class CourseController extends AbstractVirguleController {
 
-    private function getRepository() {
-        $em = $this->getDoctrineManager();
-        return $em->getRepository('VirguleMainBundle:Course');
-    }
-    
     private function getManager() {
         return $this->get('virgule.course_manager');
     }
@@ -155,7 +150,7 @@ class CourseController extends AbstractVirguleController {
     private function generatePlanning($forPrint = false, $classRoomIds = null) {
         $semesterId = $this->getSelectedSemesterId();
         
-        $courses = $this->getManager()->getAllHydratedCourses($semesterId, $classRoomIds);
+        $courses = $this->getCourseManager()->getAllHydratedCourses($semesterId, $classRoomIds);
         
         $planning = new Planning($courses, true);
         return Array('headerCells' => $planning->getHeader(), 'planningRows' => $planning->getRows(), 'forPrint' => $forPrint);
@@ -170,7 +165,7 @@ class CourseController extends AbstractVirguleController {
     public function indexAction() {
         $semesterId = $this->getSelectedSemesterId();
         
-        $courses = $this->getManager()->getAllHydratedCourses($semesterId);
+        $courses = $this->getCourseManager()->getAllHydratedCourses($semesterId);
         $courseIds = Array();
         foreach ($courses as $course) {
             $courseIds[] = $course->getId();
@@ -187,9 +182,7 @@ class CourseController extends AbstractVirguleController {
      * @Template()
      */
     public function showAction($id) {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('VirguleMainBundle:Course')->find($id);
+        $entity = $this->getCourseRepository()->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Course entity.');
@@ -197,9 +190,9 @@ class CourseController extends AbstractVirguleController {
 
         $deleteForm = $this->createDeleteForm($id);
         
-        $enrolledStudents = $em->getRepository('VirguleMainBundle:Student')->loadAllEnrolledInCourse($id);
+        $enrolledStudents = $this->getStudentRepository()->loadAllEnrolledInCourse($id);
         
-        $classSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByCourse($id);
+        $classSessions = $this->getClassSessionRepository()->loadAllClassSessionByCourse($id);
 
         return array(
             'classSessions' => $classSessions,
@@ -276,9 +269,7 @@ class CourseController extends AbstractVirguleController {
      * @Template()
      */
     public function editAction($id) {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('VirguleMainBundle:Course')->find($id);
+        $entity = $this->getCourseRepository()->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Course entity.');
@@ -302,9 +293,7 @@ class CourseController extends AbstractVirguleController {
      * @Template("VirguleMainBundle:Course:edit.html.twig")
      */
     public function updateAction(Request $request, $id) {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('VirguleMainBundle:Course')->find($id);
+        $entity = $this->getCourseRepository()->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Course entity.');
@@ -341,7 +330,7 @@ class CourseController extends AbstractVirguleController {
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('VirguleMainBundle:Course')->find($id);
+            $entity = $this->getCourseRepository()->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Course entity.');
