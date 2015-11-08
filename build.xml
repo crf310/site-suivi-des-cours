@@ -114,14 +114,6 @@
         <echo msg="Cleaning demo directory ..." />
         <delete dir="${demo.path}/*" verbose="true" />
     </target>
-    <target name="demo:install" >
-        <echo msg="Copying demo app to wwww directory..." />
-        <copy todir="${demo.path}/" >
-          <fileset dir="${resources.path}/student_pictures">
-            <include name="**/*.*" />
-          </fileset>
-        </copy>
-    </target>
     <target name="demo:copy-resources" >
         <echo msg="Copying .htaccess file..." />
         <copy file="${resources.path}/file.htaccess" tofile="${demo.path}/web/.htaccess" overwrite="true"/>
