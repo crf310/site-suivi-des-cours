@@ -12,11 +12,11 @@ class TeacherControllerTest extends AbstractControllerTest {
      * @test
      */
     public function createUser_allInformationOK_userIsSuccessfullyCreated() {
-        // Create a new client to browse the application
-        $this->client = static::createClient();
-        $this->crawler = $this->client->request('GET', '/');
+    // Create a new client to browse the application
+    $this->client = static::createClient();
+    $this->crawler = $this->client->request('GET', '/');
 
-        $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+    $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
         $this->goToUserCreationForm();
 
         $lastName =  "Lachance" . time();
