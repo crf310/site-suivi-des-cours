@@ -25,6 +25,7 @@ class StudentController extends AbstractVirguleController {
      * Search for a student on its partial name and firstname
      *
      * @Route("/search/{name}", name="student_search_name", defaults={"_format": "json"}, options={"expose"=true})
+     * @Method("GET")
      * @Template("VirguleMainBundle:Student:searchResults.json.twig")
      */     
     public function searchAction($name) {
@@ -36,6 +37,7 @@ class StudentController extends AbstractVirguleController {
      * Preview the certificate of attendance in a web page
      *
      * @Route("/{id}/previewCertificate", name="student_preview_certificate")
+     * @Method("GET")
      * @Template("VirguleMainBundle:Student:certificate.html.twig")
      */
     public function previewCertificateAction(Student $student) {
@@ -47,6 +49,7 @@ class StudentController extends AbstractVirguleController {
      * 
      *
      * @Route("/{id}/generateCertificate", name="student_generate_certificate")
+     * @Method("GET")
      * @Template("VirguleMainBundle:Student:attendance.html.twig")
      */
     public function generateCertificateAction(Student $student) {
@@ -68,6 +71,7 @@ class StudentController extends AbstractVirguleController {
      * Display a list of the students to note their attendance
      *
      * @Route("/{courses_ids}/attendListManyCourses", name="many_courses_attendance_list")
+     * @Method("GET")
      * @Template("VirguleMainBundle:Student:attendance.html.twig")
      */
     public function attendanceManyCoursesSlipAction($courses_ids) {
@@ -79,6 +83,7 @@ class StudentController extends AbstractVirguleController {
      * Display a list of the students to note their attendance
      *
      * @Route("/{id}/attendList", name="attendance_list")
+     * @Method("GET")
      * @Template("VirguleMainBundle:Student:attendance.html.twig")
      */
     public function attendanceSlipAction(Course $id) {
@@ -99,6 +104,7 @@ class StudentController extends AbstractVirguleController {
      * Lists all Student entities enrolled in at least a class
      *
      * @Route("/", name="student_index")
+     * @Method("GET")
      * @Template()
      */
     public function indexAction() {
@@ -110,6 +116,7 @@ class StudentController extends AbstractVirguleController {
      * Lists all Student entities.
      *
      * @Route("/all", name="student_index_all")
+     * @Method("GET")
      * @Template("VirguleMainBundle:Student:index.html.twig")
      */
     public function indexAllAction() {
@@ -120,6 +127,7 @@ class StudentController extends AbstractVirguleController {
      * Lists all Student entities.
      *
      * @Route("/mystudents", name="index_my_students")
+     * @Method("GET")
      * @Template("VirguleMainBundle:Student:myStudents.html.twig")
      */
     public function indexMyStudentsAction() {
@@ -143,6 +151,7 @@ class StudentController extends AbstractVirguleController {
      * Lists all Student entities.
      *     * 
      * @Route("/manyClasses", name="student_index_manyclasses"))
+     * @Method("GET")
      * @Template("VirguleMainBundle:Student:index.html.twig")
      */
     public function indexManyClassesAction() {
@@ -154,6 +163,7 @@ class StudentController extends AbstractVirguleController {
      * Lists all Student entities.
      *     * 
      * @Route("/noClass", name="student_index_noclass"))
+     * @Method("GET")
      * @Template("VirguleMainBundle:Student:index.html.twig")
      */
     public function indexNoClassAction() {
@@ -165,6 +175,7 @@ class StudentController extends AbstractVirguleController {
      * Finds and displays a Student entity.
      *
      * @Route("/{id}/show", name="student_show", options={"expose"=true})
+     * @Method("GET")
      * @Template()
      */
     public function showAction($id) {
@@ -233,6 +244,7 @@ class StudentController extends AbstractVirguleController {
      * Displays a form to create a new Student entity.
      *
      * @Route("/new", name="student_new")
+     * @Method("GET")
      * @Template()
      */
     public function newAction() {
@@ -289,6 +301,7 @@ class StudentController extends AbstractVirguleController {
      * Displays a form to edit an existing Student entity.
      *
      * @Route("/{id}/edit", name="student_edit")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function editAction($id) {
@@ -356,7 +369,7 @@ class StudentController extends AbstractVirguleController {
         foreach($suggestedClassLevels as $suggestedClassLevel) {
             $suggestedClassLevel->setStudent($entity);
             // shouldn't happen but it did...
-            if ($suggestedClassLevel->getClassLevel() != null) {
+            if ($suggestedClassLevel->getClassLevel() !== null) {
                 $em->persist($suggestedClassLevel);
             } else {
                 logError("Attempt to save a class level suggested with a null class level");
