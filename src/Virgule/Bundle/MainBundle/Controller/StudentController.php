@@ -38,7 +38,7 @@ class StudentController extends AbstractVirguleController {
      * @Route("/{id}/previewCertificate", name="student_preview_certificate")
      * @Template("VirguleMainBundle:Student:certificate.html.twig")
      */
-    public function previewCertificate(Student $student) {
+    public function previewCertificateAction(Student $student) {
         $org_branch = $this->getSelectedOrganizationBranch();
         return Array('student' => $student, 'org_branch' => $org_branch, 'today' => new \DateTime('now'), 'preview' => 'true');
     }
@@ -49,7 +49,7 @@ class StudentController extends AbstractVirguleController {
      * @Route("/{id}/generateCertificate", name="student_generate_certificate")
      * @Template("VirguleMainBundle:Student:attendance.html.twig")
      */
-    public function generateCertificate(Student $student) {
+    public function generateCertificateAction(Student $student) {
         $org_branch = $this->getSelectedOrganizationBranch();
         $pdfGenerator = $this->get('siphoc.pdf.generator');
         
