@@ -192,19 +192,4 @@ class TagController extends Controller
 
         return $this->redirect($this->generateUrl('tag'));
     }
-
-    /**
-     * Creates a form to delete a Tag entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
-    }
 }

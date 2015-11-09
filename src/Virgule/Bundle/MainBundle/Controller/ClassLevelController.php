@@ -202,11 +202,4 @@ class ClassLevelController extends AbstractVirguleController {
         return $this->redirect($this->generateUrl('classlevel'));
     }
 
-    private function createDeleteForm($id) {
-        return $this->createFormBuilder(array('id' => $id))
-                        ->add('id', 'hidden')
-                        ->getForm()
-        ;
-    }
-
 }

@@ -282,11 +282,4 @@ class ClassSessionController extends AbstractVirguleController {
         return $this->redirect($this->generateUrl('classsession_index'));
     }
 
-    private function createDeleteForm($id) {
-        return $this->createFormBuilder(array('id' => $id))
-                        ->add('id', 'hidden')
-                        ->getForm()
-        ;
-    }
-
 }

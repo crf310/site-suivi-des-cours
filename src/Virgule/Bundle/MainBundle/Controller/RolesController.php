@@ -188,12 +188,5 @@ class RolesController extends Controller
 
         return $this->redirect($this->generateUrl('roles'));
     }
-
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
-    }
+    
 }

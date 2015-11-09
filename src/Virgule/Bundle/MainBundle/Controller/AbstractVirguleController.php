@@ -162,6 +162,11 @@ abstract class AbstractVirguleController extends Controller {
     return $this->getDoctrineRepository('Semester');
   }
 
+  protected function createDeleteForm($id) {
+    return $this->createFormBuilder(array('id' => $id))
+                    ->add('id', 'hidden')
+                    ->getForm()
+    ;
+  }
+
 }
-
-

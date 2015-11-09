@@ -240,11 +240,4 @@ class SemesterController extends AbstractVirguleController {
         return $this->redirect($this->generateUrl('semester'));
     }
 
-    private function createDeleteForm($id) {
-        return $this->createFormBuilder(array('id' => $id))
-                        ->add('id', 'hidden')
-                        ->getForm()
-        ;
-    }
-
 }

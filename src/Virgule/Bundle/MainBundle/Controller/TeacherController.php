@@ -233,13 +233,6 @@ class TeacherController extends AbstractVirguleController {
 
         return $this->redirect($this->generateUrl('teacher_index'));
     }
-
-    private function createDeleteForm($id) {
-        return $this->createFormBuilder(array('id' => $id))
-                        ->add('id', 'hidden')
-                        ->getForm()
-        ;
-    }
     
     /**
      * Unlock an account, and reset credentials

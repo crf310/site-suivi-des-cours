@@ -182,11 +182,4 @@ class ClassRoomController extends Controller {
         return $this->redirect($this->generateUrl('classroom'));
     }
 
-    private function createDeleteForm($id) {
-        return $this->createFormBuilder(array('id' => $id))
-                        ->add('id', 'hidden')
-                        ->getForm()
-        ;
-    }
-
 }

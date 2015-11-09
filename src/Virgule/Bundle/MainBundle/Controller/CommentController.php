@@ -225,11 +225,4 @@ class CommentController extends AbstractVirguleController {
         return $this->redirect($this->generateUrl('comment'));
     }
 
-    private function createDeleteForm($id) {
-        return $this->createFormBuilder(array('id' => $id))
-                        ->add('id', 'hidden')
-                        ->getForm()
-        ;
-    }
-
 }

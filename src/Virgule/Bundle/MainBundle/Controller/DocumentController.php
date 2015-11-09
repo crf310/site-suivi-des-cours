@@ -222,19 +222,5 @@ class DocumentController extends AbstractVirguleController {
 
         return $this->redirect($this->generateUrl('document'));
     }
-
-    /**
-     * Creates a form to delete a Document entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id) {
-        return $this->createFormBuilder(array('id' => $id))
-                        ->add('id', 'hidden')
-                        ->getForm()
-        ;
-    }
-
+    
 }
