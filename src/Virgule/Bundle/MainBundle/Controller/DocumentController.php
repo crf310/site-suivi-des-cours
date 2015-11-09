@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\Document;
 use Virgule\Bundle\MainBundle\Entity\Tag;
-use Virgule\Bundle\MainBundle\Form\DocumentType;
+use Virgule\Bundle\MainBundle\Form\Type\DocumentType;
 
 /**
  * Document controller.

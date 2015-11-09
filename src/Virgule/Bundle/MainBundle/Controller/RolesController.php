@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\Roles;
-use Virgule\Bundle\MainBundle\Form\RolesType;
+use Virgule\Bundle\MainBundle\Form\Type\RolesType;
 
 /**
  * Roles controller.

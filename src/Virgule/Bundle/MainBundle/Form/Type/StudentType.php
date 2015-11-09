@@ -1,6 +1,6 @@
 <?php
 
-namespace Virgule\Bundle\MainBundle\Form;
+namespace Virgule\Bundle\MainBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Intl\Intl;
 use Virgule\Bundle\MainBundle\Entity\Teacher;
-use Virgule\Bundle\MainBundle\Form\Type\PictureType;
+use Virgule\Bundle\MainBundle\Form\Type\Type\PictureType;
 use Virgule\Bundle\MainBundle\Form\EventListener\PatchSubscriber;
 use Virgule\Bundle\MainBundle\Form\EventListener\UpdateStudentCourseFieldSubscriber;
 use Doctrine\ORM\EntityManager;

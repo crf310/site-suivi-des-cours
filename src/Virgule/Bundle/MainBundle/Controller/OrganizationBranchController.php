@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\OrganizationBranch;
-use Virgule\Bundle\MainBundle\Form\OrganizationBranchType;
+use Virgule\Bundle\MainBundle\Form\Type\OrganizationBranchType;
 
 /**
  * OrganizationBranch controller.

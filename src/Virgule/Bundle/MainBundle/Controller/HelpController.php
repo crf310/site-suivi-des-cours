@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Virgule\Bundle\MainBundle\Form\ReportIssueType;
+use Virgule\Bundle\MainBundle\Form\Type\ReportIssueType;
 
 /**
  * Admin controller.

@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\ClassRoom;
-use Virgule\Bundle\MainBundle\Form\ClassRoomType;
+use Virgule\Bundle\MainBundle\Form\Type\ClassRoomType;
 
 /**
  * ClassRoom controller.

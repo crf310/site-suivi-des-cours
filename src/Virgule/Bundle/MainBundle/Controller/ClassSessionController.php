@@ -11,8 +11,8 @@ use Virgule\Bundle\MainBundle\Entity\ClassSession;
 use Virgule\Bundle\MainBundle\Entity\Comment;
 use Virgule\Bundle\MainBundle\Entity\Course;
 use Virgule\Bundle\MainBundle\Entity\ClassLevel;
-use Virgule\Bundle\MainBundle\Form\ClassSessionType;
-use Virgule\Bundle\MainBundle\Form\CommentType;
+use Virgule\Bundle\MainBundle\Form\Type\ClassSessionType;
+use Virgule\Bundle\MainBundle\Form\Type\CommentType;
 
 use Ivory\LuceneSearchBundle\Model\Document;
 use Ivory\LuceneSearchBundle\Model\Field;

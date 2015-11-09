@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\ClassLevelSuggested;
-use Virgule\Bundle\MainBundle\Form\ClassLevelSuggestedType;
+use Virgule\Bundle\MainBundle\Form\Type\ClassLevelSuggestedType;
 
 /**
  * ClassLevelSuggested controller.

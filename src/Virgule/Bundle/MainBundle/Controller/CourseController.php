@@ -11,8 +11,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\Course;
 use Virgule\Bundle\MainBundle\Entity\Student;
 use Virgule\Bundle\MainBundle\Entity\Planning\Planning;
-use Virgule\Bundle\MainBundle\Form\CourseType;
-use Virgule\Bundle\MainBundle\Form\SelectClassRoomType;
+use Virgule\Bundle\MainBundle\Form\Type\CourseType;
+use Virgule\Bundle\MainBundle\Form\Type\SelectClassRoomType;
 use Virgule\Bundle\MainBundle\Form\FormConstants;
 
 /**

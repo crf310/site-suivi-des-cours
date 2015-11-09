@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\OpenHouse;
-use Virgule\Bundle\MainBundle\Form\OpenHouseType;
+use Virgule\Bundle\MainBundle\Form\Type\OpenHouseType;
 
 /**
  * OpenHouse controller.

@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\Tag;
-use Virgule\Bundle\MainBundle\Form\TagType;
+use Virgule\Bundle\MainBundle\Form\Type\TagType;
 
 /**
  * Tag controller.

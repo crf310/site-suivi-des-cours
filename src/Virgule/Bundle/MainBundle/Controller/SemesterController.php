@@ -9,8 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\Semester;
 use Virgule\Bundle\MainBundle\Entity\OpenHouse;
-use Virgule\Bundle\MainBundle\Form\SemesterType;
-use Virgule\Bundle\MainBundle\Form\OpenHouseType;
+use Virgule\Bundle\MainBundle\Form\Type\SemesterType;
+use Virgule\Bundle\MainBundle\Form\Type\OpenHouseType;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Virgule\Bundle\MainBundle\StoreEvents;

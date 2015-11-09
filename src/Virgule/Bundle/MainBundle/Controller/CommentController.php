@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Controller\AbstractVirguleController;
 use Virgule\Bundle\MainBundle\Entity\Comment;
-use Virgule\Bundle\MainBundle\Form\CommentType;
+use Virgule\Bundle\MainBundle\Form\Type\CommentType;
 
 /**
  * Comment controller.

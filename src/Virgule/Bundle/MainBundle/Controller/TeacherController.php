@@ -8,8 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Virgule\Bundle\MainBundle\Entity\Teacher;
-use Virgule\Bundle\MainBundle\Form\TeacherType;
-use Virgule\Bundle\MainBundle\Form\TeacherChangePasswordType;
+use Virgule\Bundle\MainBundle\Form\Type\TeacherType;
+use Virgule\Bundle\MainBundle\Form\Type\TeacherChangePasswordType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**

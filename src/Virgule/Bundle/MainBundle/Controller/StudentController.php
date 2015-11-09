@@ -10,9 +10,9 @@ use Virgule\Bundle\MainBundle\Entity\Student;
 use Virgule\Bundle\MainBundle\Entity\Comment;
 use Virgule\Bundle\MainBundle\Entity\Course;
 use Virgule\Bundle\MainBundle\Entity\ClassLevelSuggested;
-use Virgule\Bundle\MainBundle\Form\StudentType;
-use Virgule\Bundle\MainBundle\Form\CommentType;
-use Virgule\Bundle\MainBundle\Form\ClassLevelSuggestedType;
+use Virgule\Bundle\MainBundle\Form\Type\StudentType;
+use Virgule\Bundle\MainBundle\Form\Type\CommentType;
+use Virgule\Bundle\MainBundle\Form\Type\ClassLevelSuggestedType;
 
 /**
  * Student controller.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Virgule\Bundle\MainBundle\Form;
+namespace Virgule\Bundle\MainBundle\Form\Type;
 use Doctrine\ORM\EntityRepository;
 
 use Symfony\Component\Form\AbstractType;

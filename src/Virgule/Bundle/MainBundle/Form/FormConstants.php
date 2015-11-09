@@ -1,5 +1,5 @@
 <?php
-namespace Virgule\Bundle\MainBundle\Form;
+namespace Virgule\Bundle\MainBundle\Form\Type;
 
 /**
  * Description of FormConstants
