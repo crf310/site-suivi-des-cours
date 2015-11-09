@@ -2,22 +2,12 @@
 
 namespace Virgule\Bundle\MainBundle\Controller;
 
-use Pagerfanta\Pagerfanta;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Adapter\ArrayAdapter;
-use Pagerfanta\Exception\NotValidCurrentPageException;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * Description of VirguleController
+ * Class parentes des controllers
  *
- * @author guillaume
+ * @author Guillaume Lucazeau
  */
 abstract class AbstractVirguleController extends Controller {
 
@@ -42,21 +32,8 @@ abstract class AbstractVirguleController extends Controller {
     $logger->error($message);
   }
 
-  protected function paginate($entities, $page = 1) {
-    $pagerfanta = new Pagerfanta(new ArrayAdapter($entities));
-    $pagerfanta->setMaxPerPage($this->container->parameters['pager_nb_results']);
-
-    try {
-      $pagerfanta->setCurrentPage($page);
-    } catch (NotValidCurrentPageException $e) {
-      throw new NotFoundHttpException();
-    }
-
-    return array('entities' => $pagerfanta);
-  }
-
   protected function getDoctrineManager() {
-    return $em = $this->getDoctrine()->getManager();
+    return $this->getDoctrine()->getManager();
   }
 
   protected function getConnectedUser() {
@@ -90,6 +67,7 @@ abstract class AbstractVirguleController extends Controller {
   }
 
   /* Managers */
+
   protected function getCourseManager() {
     return $this->get('virgule.course_manager');
   }
@@ -175,16 +153,15 @@ abstract class AbstractVirguleController extends Controller {
   protected function getDocumentRepository() {
     return $this->getDoctrineRepository('Document');
   }
-  
+
   protected function getOrganizationBranchRepository() {
     return $this->getDoctrineRepository('OrganizationBranch');
   }
-  
+
   protected function getSemesterRepository() {
     return $this->getDoctrineRepository('Semester');
   }
 
-  
 }
 
-?>
+

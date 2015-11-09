@@ -28,7 +28,7 @@ class CommentController extends AbstractVirguleController {
 
         $entities = $em->getRepository('VirguleMainBundle:Comment')->findAll();
 
-        return super . paginate($entities);
+        return $entities;
     }
 
     /**
