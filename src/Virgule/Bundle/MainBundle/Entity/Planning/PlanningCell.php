@@ -39,7 +39,7 @@ class PlanningCell {
         return $this->rowspan;
     }
     
-    private function calculateRowspan($startTime, $endTime) {
+    private function calculateRowspan(\Datetime $startTime, \Datetime $endTime) {
         $t1 = strtotime($startTime->format('H:i'));
         $t2 = strtotime($endTime->format('H:i'));
         $minutes = ($t2 - $t1)/60; 
