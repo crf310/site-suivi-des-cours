@@ -21,10 +21,6 @@ use Virgule\Bundle\MainBundle\Form\FormConstants;
  * @Route("/course")
  */
 class CourseController extends AbstractVirguleController {
-
-    private function getManager() {
-        return $this->get('virgule.course_manager');
-    }
         
     /**
      * Get number of students enrolled for each courses
@@ -41,7 +37,7 @@ class CourseController extends AbstractVirguleController {
      * @Route("/{courseId}/enroll/{studentId}", name="course_enroll_student", options={"expose"=true})
      */
     public function enrollAction(Course $courseId, Student $studentId) {
-        $result = $this->getCourseManager()->enrollmentAction($courseId, $studentId, true);
+        $this->getCourseManager()->enrollmentAction($courseId, $studentId, true);
         return new Response();
     }    
     
@@ -50,7 +46,7 @@ class CourseController extends AbstractVirguleController {
      * @Route("/{courseId}/unenroll/{studentId}", name="course_unenroll_student", options={"expose"=true})
      */
     public function unenrollAction(Course $courseId, Student $studentId) {
-        $result = $this->getCourseManager()->enrollmentAction($courseId, $studentId, false);
+        $this->getCourseManager()->enrollmentAction($courseId, $studentId, false);
         return new Response();
     }
             
