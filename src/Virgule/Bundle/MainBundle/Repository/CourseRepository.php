@@ -20,8 +20,8 @@ class CourseRepository extends EntityRepository {
         $q = $this
                 ->createQueryBuilder('c')
                 ->select('count(c.id) as nb_courses')
-                ->innerJoin('c.semester', 's')       
-                ->where('s.id = :semesterId')  
+                ->innerJoin('c.semester', 's')
+                ->where('s.id = :semesterId')
                 ->setParameter('semesterId', $semesterId)
                 ->getQuery()
         ;
@@ -42,15 +42,15 @@ class CourseRepository extends EntityRepository {
         $q = $this
                 ->createQueryBuilder('c')
                 ->select('count(c.id) as nb_courses')
-                ->innerJoin('c.semester', 's')                
+                ->innerJoin('c.semester', 's')
                 ->innerJoin('c.classRoom', 'c2')
                 ->where('c.id != :courseId')
                 ->andWhere('s.id = :semesterId')
                 ->andWhere('c.dayOfWeek = :dayOfWeek')
                 ->andWhere('c2.id = :classRoomId')
-                ->andWhere('(c.startTime > :startTime AND c.startTime < :endTime) 
-                    OR (:startTime > c.startTime AND :startTime < c.endTime)
-                    OR (:startTime = c.startTime AND :endTime = c.endTime)'
+                ->andWhere('(c.startTime >= :startTime AND c.startTime < :endTime)
+                    OR (c.startTime < :startTime AND c.endTime > :startTime)
+                    OR (c.startTime = :startTime AND c.endTime= :endTime)'
                 )
                 ->setParameter('courseId', $courseId)
                 ->setParameter('semesterId', $semesterId)
@@ -63,7 +63,7 @@ class CourseRepository extends EntityRepository {
         $nb = $q->getSingleResult();
         return $nb;
     }
-    
+
     private function getCoursesByTeacherQB($semesterId, $teacherId) {
         $qb = $this
                 ->createQueryBuilder('c')
@@ -78,14 +78,14 @@ class CourseRepository extends EntityRepository {
         ;
         return $qb;
     }
-    
+
     public function getCoursesIdsByTeacher($semesterId, $teacherId) {
         $q = $this->getCoursesByTeacherQB($semesterId, $teacherId)
                 ->getQuery();
         ;
         return $results = $q->execute(array(), Query::HYDRATE_ARRAY);
     }
-    
+
     public function getCoursesByTeacher($semesterId, $teacherId) {
         $q = $this->getCoursesByTeacherQB($semesterId, $teacherId)->getQuery();
         ;
@@ -143,14 +143,14 @@ class CourseRepository extends EntityRepository {
             $qb->andWhere('r.id IN (:classRoomIds)');
             $qb->setParameter('classRoomIds', $classRoomIds, Connection::PARAM_INT_ARRAY);
         }
-        
+
         $q = $qb->getQuery();
         ;
         $results = $q->execute(array(), Query::HYDRATE_ARRAY);
 
         return $results;
     }
-    
+
     public function loadAllIdsForSemester($semesterId) {
         $q = $this
                 ->createQueryBuilder('c')
@@ -164,8 +164,8 @@ class CourseRepository extends EntityRepository {
 
         return $results;
     }
-    
-    
+
+
     public function loadAllObjects($semesterId) {
         $q = $this
                 ->createQueryBuilder('c')
@@ -183,7 +183,7 @@ class CourseRepository extends EntityRepository {
         $results = $q->execute(array());
         return $results;
     }
-    
+
     public function getCoursesForSemesterQB($semesterId) {
         $qb = $this
                 ->createQueryBuilder('c')
@@ -196,34 +196,34 @@ class CourseRepository extends EntityRepository {
         ;
         return $qb;
     }
-    
+
     public function findByIds(array $coursesIds) {
         $q = $this
-                ->createQueryBuilder('c')         
-                ->innerJoin('c.teachers', 't')       
+                ->createQueryBuilder('c')
+                ->innerJoin('c.teachers', 't')
                 ->where('c.id IN (:coursesIds)')
                 ->setParameter('coursesIds', $coursesIds, Connection::PARAM_INT_ARRAY)
                 ->getQuery();
-        return $q->execute();        
+        return $q->execute();
     }
 
-    
+
     public function getCourseWithOldReports() {
         $q = $this
-                ->createQueryBuilder('c')         
-                ->innerJoin('c.semester', 's')        
-                ->innerJoin('c.classSessions', 'cs')   
+                ->createQueryBuilder('c')
+                ->innerJoin('c.semester', 's')
+                ->innerJoin('c.classSessions', 'cs')
                 ->where('cs.sessionDate < s.startDate')
                 ->getQuery();
         return $q->execute();
-    }    
-    
+    }
+
     public function getCoursesFromOtherSemesters($studentId, $semesterId) {
         $q = $this
                 ->createQueryBuilder('c')
                 ->select('c.id')
-                ->innerJoin('c.semester', 's')    
-                ->innerJoin('c.students', 'st')  
+                ->innerJoin('c.semester', 's')
+                ->innerJoin('c.students', 'st')
                 ->where('st.id = :studentId')
                 ->andWhere('s.id != :semesterId')
                 ->setParameter('studentId', $studentId)
@@ -232,8 +232,8 @@ class CourseRepository extends EntityRepository {
         $results = $q->execute(array(), Query::HYDRATE_ARRAY);
 
         return $results;
-    }   
-    
+    }
+
     public function getNumberOfClassSessionsPerCourse(Array $courseIds) {
          $qb = $this->_em->createQueryBuilder()
                  ->select('c.id as course_id, count(cs.id) as nb_classsessions')
@@ -242,13 +242,13 @@ class CourseRepository extends EntityRepository {
                  ->where('c.id IN (:coursesIds)')
                  ->setParameter('coursesIds', $courseIds, Connection::PARAM_INT_ARRAY)
                  ->groupBy('c.id');
-         
+
         $q = $qb->getQuery();
         $results = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $results;  
-    }   
-    
-    public function getNumberOfClassSessionsPerCourseAndStudent(Array $courseIds, $studentId) {        
+        return $results;
+    }
+
+    public function getNumberOfClassSessionsPerCourseAndStudent(Array $courseIds, $studentId) {
          $qb = $this->_em->createQueryBuilder()
                  ->select('c.id as course_id, count(cs.id) as nb_classsessions')
                  ->from($this->getClassName(), 'c', 'c.id')
@@ -258,12 +258,12 @@ class CourseRepository extends EntityRepository {
                  ->setParameter('coursesIds', $courseIds, Connection::PARAM_INT_ARRAY)
                  ->setParameter('studentId', $studentId)
                  ->groupBy('c.id');
-         
+
         $q = $qb->getQuery();
         $results = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $results;  
+        return $results;
     }
-    
+
     public function getNumberOfEnrolledStudents(Array $courseIds) {
         $qb = $this->_em->createQueryBuilder()
                  ->select('c.id as course_id, count(s.id) as nb_students')
@@ -272,9 +272,9 @@ class CourseRepository extends EntityRepository {
                  ->where('c.id IN (:coursesIds)')
                  ->setParameter('coursesIds', $courseIds, Connection::PARAM_INT_ARRAY)
                  ->groupBy('c.id');
-         
+
         $q = $qb->getQuery();
         $results = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $results;  
+        return $results;
     }
 }
