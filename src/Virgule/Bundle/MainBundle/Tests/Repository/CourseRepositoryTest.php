@@ -18,7 +18,7 @@ class CourseRoomRepositoryTest extends AbstractRepositoryTest {
    */
   public function getNumberOfCourse_semesterHasThreeCourses_threeCourseReturned() {
     $result = $this->getRepository()->getNumberOfCourse(1);
-    $this->assertEquals(3, $result['nb_courses'], "Incorrect number of courses found");
+    $this->assertEquals(4, $result['nb_courses'], "Incorrect number of courses found");
   }
 
   /**
