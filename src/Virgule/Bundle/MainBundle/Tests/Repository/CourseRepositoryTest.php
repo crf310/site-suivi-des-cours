@@ -265,5 +265,53 @@ class CourseRoomRepositoryTest extends AbstractRepositoryTest {
     }
   }
 
-}
+  /**
+   * @test
+   */
+  public function loadAllIdsForSemester_semesterHasCourses_expectedCourseIdsLoaded() {
+    $semesterId = 1;
+    $expectedIds = Array('1', '2', '3', '4');
 
+    $results = $this->getRepository()->loadAllIdsForSemester($semesterId);
+    $this->assertEquals(4, count($results));
+    foreach ($results as $courseId) {
+      $this->assertTrue(in_array($courseId['course_id'], $expectedIds), 'Course ID #' . $courseId . ' was not expected');
+    }
+  }
+
+  /**
+   * @test
+   */
+  public function loadAllIdsForSemester_semesterHasNoCourse_noCourseLoaded() {
+    $semesterId = 222222;
+
+    $results = $this->getRepository()->loadAllIdsForSemester($semesterId);
+    $this->assertEquals(0, count($results), 'Semester should have no courses');
+  }
+
+  /**
+   * @test
+   */
+  public function loadAllObjects_semesterHasCourses_expectedCoursesLoaded() {
+    $semesterId = 1;
+    $expectedIds = Array('1', '2', '3', '4');
+
+    $results = $this->getRepository()->loadAllObjects($semesterId);
+    $this->assertEquals(4, count($results));
+    foreach ($results as $course) {
+      $this->assertNotNull($course);
+      $this->assertTrue($course instanceof \Virgule\Bundle\MainBundle\Entity\Course, "Object is of the wrong type");
+      $this->assertTrue(in_array($course->getId(), $expectedIds), 'Course ID #' . $course->getId() . ' was not expected');
+    }
+  }
+
+  /**
+   * @test
+   */
+  public function loadAllObjects_semesterHasNoCourse_noCourseLoaded() {
+    $semesterId = 222222;
+
+    $results = $this->getRepository()->loadAllObjects($semesterId);
+    $this->assertEquals(0, count($results), 'Semester should have no courses');
+  }
+}
