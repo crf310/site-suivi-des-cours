@@ -96,16 +96,6 @@ class CourseRepository extends EntityRepository {
     return $results;
   }
 
-  public function getCoursesByStudentAndSemester($studentId, $semesterId) {
-    $q = $this->getCoursesByStudentQuery($studentId)
-            ->andWhere('s2.id = :semesterId')
-            ->setParameter('semesterId', $semesterId)
-            ->getQuery()
-    ;
-    $results = $q->execute();
-    return $results;
-  }
-
   private function getCoursesByStudentQuery($studentId) {
     $q = $this
             ->createQueryBuilder('c')
