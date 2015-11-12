@@ -314,4 +314,34 @@ class CourseRoomRepositoryTest extends AbstractRepositoryTest {
     $results = $this->getRepository()->loadAllObjects($semesterId);
     $this->assertEquals(0, count($results), 'Semester should have no courses');
   }
+
+  /**
+   * @test
+   */
+  public function findByIds_coursesExist_expectedCoursesLoaded() {
+    $courseIds = Array('3', '4');
+
+    $results = $this->getRepository()->findByIds($courseIds);
+    $this->assertEquals(2, count($results), 'Two courses should have been found');
+    foreach ($results as $course) {
+      $this->assertNotNull($course);
+      $this->assertTrue($course instanceof \Virgule\Bundle\MainBundle\Entity\Course, "Object is of the wrong type");
+      $this->assertTrue(in_array($course->getId(), $courseIds), 'Course ID #' . $course->getId() . ' was not expected');
+      $this->assertEquals(1, $course->getSemester()->getId(), 'Course belongs to the wrong semester');
+      $this->assertEquals(1, $course->getOrganizationBranch()->getId(), 'Course belongs to the wrong organization branch');
+      $this->assertEquals(new \DateTime('1000'), $course->getStartTime());
+      $this->assertEquals(new \DateTime('1130'), $course->getEndTime());
+    }
+  }
+
+  /**
+   * @test
+   */
+  public function findByIds_coursesDoesntExist_noCourseLoaded() {
+    $courseIds = Array('222222', '333333');
+
+    $results = $this->getRepository()->findByIds($courseIds);
+    $this->assertEquals(0, count($results), 'No course should have been found');
+  }
+
 }
