@@ -1,5 +1,5 @@
 <?php
-namespace Virgule\Bundle\MainBundle\DataFixtures\ORM\Demo;
+namespace Virgule\Bundle\MainBundle\DataFixtures\ORM\App;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
