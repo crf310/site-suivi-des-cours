@@ -91,22 +91,14 @@ class CourseRepository extends EntityRepository {
   }
 
   public function getCoursesByStudent($studentId) {
-    $q = $this->getCoursesByStudentQuery($studentId);
-    $results = $q->execute();
+    $results = $this->createQueryBuilder('c')
+              ->innerJoin('c.students', 's')
+              ->innerJoin('c.semester', 's2')
+              ->where('s.id = :studentId')
+              ->add('orderBy', 's2.startDate DESC, c.dayOfWeek ASC, c.startTime ASC')
+              ->setParameter('studentId', $studentId)
+              ->getQuery()->execute();
     return $results;
-  }
-
-  private function getCoursesByStudentQuery($studentId) {
-    $q = $this
-            ->createQueryBuilder('c')
-            ->innerJoin('c.students', 's')
-            ->innerJoin('c.semester', 's2')
-            ->where('s.id = :studentId')
-            ->add('orderBy', 's2.startDate DESC, c.dayOfWeek ASC, c.startTime ASC')
-            ->setParameter('studentId', $studentId)
-            ->getQuery()
-    ;
-    return $q;
   }
 
   public function loadAll($semesterId, $classRoomIds = null) {
@@ -132,7 +124,7 @@ class CourseRepository extends EntityRepository {
     }
 
     $q = $qb->getQuery();
-    
+
     $results = $q->execute(array(), Query::HYDRATE_ARRAY);
 
     return $results;
