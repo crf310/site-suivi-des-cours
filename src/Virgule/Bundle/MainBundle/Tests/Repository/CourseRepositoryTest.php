@@ -274,8 +274,8 @@ class CourseRoomRepositoryTest extends AbstractRepositoryTest {
 
     $results = $this->getRepository()->loadAllIdsForSemester($semesterId);
     $this->assertEquals(4, count($results));
-    foreach ($results as $courseId) {
-      $this->assertTrue(in_array($courseId['course_id'], $expectedIds), 'Course ID #' . $courseId . ' was not expected');
+    foreach ($results as $course) {
+      $this->assertTrue(in_array($course['course_id'], $expectedIds), 'Course ID #' . $course['course_id'] . ' was not expected');
     }
   }
 
