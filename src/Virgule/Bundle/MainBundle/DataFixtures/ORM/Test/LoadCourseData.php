@@ -62,7 +62,8 @@ class LoadCourseData extends AbstractFixture implements OrderedFixtureInterface 
         $course5->setClassLevel($this->getReference('classlevel-1'));
         $course5->setOrganizationBranch($this->getReference('organization-1'));
         $course5->setClassRoom($this->getReference('classroom-12'));
-        $course5->addTeacher($this->getReference('user-2'));
+        $course5->addTeacher($this->getReference('user-2'));        
+        $course5->addStudent($this->getReference('student-1'));
         
         $this->addReference('org-1-semester-1-course-1', $course1);
         $this->addReference('org-1-semester-1-course-2', $course2);
@@ -74,6 +75,7 @@ class LoadCourseData extends AbstractFixture implements OrderedFixtureInterface 
         $manager->persist($course2);
         $manager->persist($course3);
         $manager->persist($course4);
+        $manager->persist($course5);
         
         $manager->flush();
     }
