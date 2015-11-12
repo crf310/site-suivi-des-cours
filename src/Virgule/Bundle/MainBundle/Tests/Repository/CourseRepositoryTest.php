@@ -344,4 +344,14 @@ class CourseRoomRepositoryTest extends AbstractRepositoryTest {
     $this->assertEquals(0, count($results), 'No course should have been found');
   }
 
+  /**
+   * @test
+   */
+  public function getCoursesByStudent_studentHasCoursesOnDifferentSemesters_allCoursesAreLoaded() {
+    $studentId = 1;
+
+    $results = $this->getRepository()->getCoursesByStudent($studentId);
+    $this->assertEquals(3, count($results), 'No course have been found');
+  }
+  
 }
