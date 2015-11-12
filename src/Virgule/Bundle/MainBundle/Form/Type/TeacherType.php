@@ -46,9 +46,6 @@ class TeacherType extends AbstractType {
                 'property_path' => 'role',
                 'attr' => array('class' => 'small-select')
     ));
-    //$activeStatusSubscriber = new SetInactiveTeacherSubscriber();
-    //$builder->addEventSubscriber($activeStatusSubscriber);
-
     $patchSubscriber = new PatchSubscriber();
     $builder->addEventSubscriber($patchSubscriber);
   }

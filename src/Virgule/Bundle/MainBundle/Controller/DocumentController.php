@@ -18,209 +18,208 @@ use Virgule\Bundle\MainBundle\Form\Type\DocumentType;
  */
 class DocumentController extends AbstractVirguleController {
 
-    /**
-     * Returns document file
-     *
-     * @Route("/download/{id}", name="document_download")
-     * @Method("GET")
-     */
-    public function downloadAction(Document $id) {
-        $file = $id->getAbsolutePath();
-        $response = new BinaryFileResponse($file);
-        return $response;
-    }
-    
-    /**
-     * Lists all Document entities.
-     *
-     * @Route("/", name="document_index")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexAction() {
-        $documents = $this->getDocumentManager()->getAllDocuments();
+  /**
+   * Returns document file
+   *
+   * @Route("/download/{id}", name="document_download")
+   * @Method("GET")
+   */
+  public function downloadAction(Document $id) {
+    $file = $id->getAbsolutePath();
+    $response = new BinaryFileResponse($file);
+    return $response;
+  }
 
-        return array(
-            'documents' => $documents,
-        );
-    }
+  /**
+   * Lists all Document entities.
+   *
+   * @Route("/", name="document_index")
+   * @Method("GET")
+   * @Template()
+   */
+  public function indexAction() {
+    $documents = $this->getDocumentManager()->getAllDocuments();
 
-    /**
-     * Creates a new Document entity.
-     *
-     * @Route("/", name="document_create")
-     * @Method("POST")
-     * @Template("VirguleMainBundle:Document:new.html.twig")
-     */
-    public function createAction(Request $request) {
-        $entity = new Document();
-        $form = $this->createForm(new DocumentType(), $entity);
-        $form->bind($request);
+    return array(
+        'documents' => $documents,
+    );
+  }
 
-        if ($form->isValid()) {
-            $entity->setUploadDate(new \Datetime('now'));
-            $entity->setUploader($this->getUser());
-            
-            // tags
-            $sTags = $form->get('tagList')->getData();
-            $aTags = explode(',', $sTags);
-            $tags = $this->getTagManager()->createOrAddTags($aTags);
-            foreach ($tags as $tag) {
-                $entity->addTag($tag);
-            }
-                        
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+  /**
+   * Creates a new Document entity.
+   *
+   * @Route("/", name="document_create")
+   * @Method("POST")
+   * @Template("VirguleMainBundle:Document:new.html.twig")
+   */
+  public function createAction(Request $request) {
+    $entity = new Document();
+    $form = $this->createForm(new DocumentType(), $entity);
+    $form->bind($request);
 
-            // return $this->redirect($this->generateUrl('document_show', array('id' => $entity->getId())));
-            return $this->redirect($this->generateUrl('document_index'));
-        }
+    if ($form->isValid()) {
+      $entity->setUploadDate(new \Datetime('now'));
+      $entity->setUploader($this->getUser());
 
-        $existingTags = $this->getTagRepository()->findAll();
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-            'existingTags' => $existingTags,
-        );
+      // tags
+      $sTags = $form->get('tagList')->getData();
+      $aTags = explode(',', $sTags);
+      $tags = $this->getTagManager()->createOrAddTags($aTags);
+      foreach ($tags as $tag) {
+        $entity->addTag($tag);
+      }
+
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($entity);
+      $em->flush();
+
+      return $this->redirect($this->generateUrl('document_index'));
     }
 
-    /**
-     * Displays a form to create a new Document entity.
-     *
-     * @Route("/new", name="document_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction() {
-        $entity = new Document();
-        $tag1 = new Tag();
-        $entity->addTag($tag1);
-        
-        $existingTags = $this->getTagRepository()->findAll();
-        
-        $form = $this->createForm(new DocumentType(), $entity);
-        
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-            'existingTags' => $existingTags,
-        );
+    $existingTags = $this->getTagRepository()->findAll();
+    return array(
+        'entity' => $entity,
+        'form' => $form->createView(),
+        'existingTags' => $existingTags,
+    );
+  }
+
+  /**
+   * Displays a form to create a new Document entity.
+   *
+   * @Route("/new", name="document_new")
+   * @Method("GET")
+   * @Template()
+   */
+  public function newAction() {
+    $entity = new Document();
+    $tag1 = new Tag();
+    $entity->addTag($tag1);
+
+    $existingTags = $this->getTagRepository()->findAll();
+
+    $form = $this->createForm(new DocumentType(), $entity);
+
+    return array(
+        'entity' => $entity,
+        'form' => $form->createView(),
+        'existingTags' => $existingTags,
+    );
+  }
+
+  /**
+   * Finds and displays a Document entity.
+   *
+   * @Route("/{id}", name="document_show")
+   * @Method("GET")
+   * @Template()
+   */
+  public function showAction($id) {
+    $em = $this->getDoctrine()->getManager();
+
+    $entity = $em->getRepository('VirguleMainBundle:Document')->find($id);
+
+    $classSessionsUsingIt = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByDocument($entity->getId());
+
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find Document entity.');
     }
 
-    /**
-     * Finds and displays a Document entity.
-     *
-     * @Route("/{id}", name="document_show")
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction($id) {
-        $em = $this->getDoctrine()->getManager();
+    $deleteForm = $this->createDeleteForm($id);
 
-        $entity = $em->getRepository('VirguleMainBundle:Document')->find($id);
-        
-        $classSessionsUsingIt = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByDocument($entity->getId());
+    return array(
+        'entity' => $entity,
+        'delete_form' => $deleteForm->createView(),
+        'classSessionsUsingIt' => $classSessionsUsingIt
+    );
+  }
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Document entity.');
-        }
+  /**
+   * Displays a form to edit an existing Document entity.
+   *
+   * @Route("/{id}/edit", name="document_edit")
+   * @Method("GET")
+   * @Template()
+   */
+  public function editAction($id) {
+    $em = $this->getDoctrine()->getManager();
 
-        $deleteForm = $this->createDeleteForm($id);
+    $entity = $em->getRepository('VirguleMainBundle:Document')->find($id);
 
-        return array(
-            'entity'                => $entity,
-            'delete_form'           => $deleteForm->createView(),
-            'classSessionsUsingIt' => $classSessionsUsingIt
-        );
+    $existingTags = $this->getTagRepository()->findAll();
+
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find Document entity.');
     }
 
-    /**
-     * Displays a form to edit an existing Document entity.
-     *
-     * @Route("/{id}/edit", name="document_edit")
-     * @Method("GET")
-     * @Template()
-     */
-    public function editAction($id) {
-        $em = $this->getDoctrine()->getManager();
+    $editForm = $this->createForm(new DocumentType(), $entity);
+    $deleteForm = $this->createDeleteForm($id);
 
-        $entity = $em->getRepository('VirguleMainBundle:Document')->find($id);
-        
-        $existingTags = $this->getTagRepository()->findAll();
-        
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Document entity.');
-        }
+    return array(
+        'entity' => $entity,
+        'edit_form' => $editForm->createView(),
+        'delete_form' => $deleteForm->createView(),
+        'existingTags' => $existingTags,
+    );
+  }
 
-        $editForm = $this->createForm(new DocumentType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+  /**
+   * Edits an existing Document entity.
+   *
+   * @Route("/{id}", name="document_update")
+   * @Method("PUT")
+   * @Template("VirguleMainBundle:Document:edit.html.twig")
+   */
+  public function updateAction(Request $request, $id) {
+    $em = $this->getDoctrine()->getManager();
 
-        return array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-            'existingTags' => $existingTags,
-        );
+    $entity = $em->getRepository('VirguleMainBundle:Document')->find($id);
+
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find Document entity.');
     }
 
-    /**
-     * Edits an existing Document entity.
-     *
-     * @Route("/{id}", name="document_update")
-     * @Method("PUT")
-     * @Template("VirguleMainBundle:Document:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id) {
-        $em = $this->getDoctrine()->getManager();
+    $deleteForm = $this->createDeleteForm($id);
+    $editForm = $this->createForm(new DocumentType(), $entity);
+    $editForm->bind($request);
 
-        $entity = $em->getRepository('VirguleMainBundle:Document')->find($id);
+    if ($editForm->isValid()) {
+      $em->persist($entity);
+      $em->flush();
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Document entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new DocumentType(), $entity);
-        $editForm->bind($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('document_edit', array('id' => $id)));
-        }
-
-        return array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+      return $this->redirect($this->generateUrl('document_edit', array('id' => $id)));
     }
 
-    /**
-     * Deletes a Document entity.
-     *
-     * @Route("/{id}", name="document_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, $id) {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
+    return array(
+        'entity' => $entity,
+        'edit_form' => $editForm->createView(),
+        'delete_form' => $deleteForm->createView(),
+    );
+  }
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('VirguleMainBundle:Document')->find($id);
+  /**
+   * Deletes a Document entity.
+   *
+   * @Route("/{id}", name="document_delete")
+   * @Method("DELETE")
+   */
+  public function deleteAction(Request $request, $id) {
+    $form = $this->createDeleteForm($id);
+    $form->bind($request);
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Document entity.');
-            }
+    if ($form->isValid()) {
+      $em = $this->getDoctrine()->getManager();
+      $entity = $em->getRepository('VirguleMainBundle:Document')->find($id);
 
-            $em->remove($entity);
-            $em->flush();
-        }
+      if (!$entity) {
+        throw $this->createNotFoundException('Unable to find Document entity.');
+      }
 
-        return $this->redirect($this->generateUrl('document'));
+      $em->remove($entity);
+      $em->flush();
     }
-    
+
+    return $this->redirect($this->generateUrl('document'));
+  }
+
 }
