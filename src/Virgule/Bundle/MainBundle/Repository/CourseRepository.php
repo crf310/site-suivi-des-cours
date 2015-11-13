@@ -185,32 +185,6 @@ class CourseRepository extends EntityRepository {
     return $q->execute();
   }
 
-  public function getCourseWithOldReports() {
-    $q = $this
-            ->createQueryBuilder('c')
-            ->innerJoin('c.semester', 's')
-            ->innerJoin('c.classSessions', 'cs')
-            ->where('cs.sessionDate < s.startDate')
-            ->getQuery();
-    return $q->execute();
-  }
-
-  public function getCoursesFromOtherSemesters($studentId, $semesterId) {
-    $q = $this
-            ->createQueryBuilder('c')
-            ->select('c.id')
-            ->innerJoin('c.semester', 's')
-            ->innerJoin('c.students', 'st')
-            ->where('st.id = :studentId')
-            ->andWhere('s.id != :semesterId')
-            ->setParameter('studentId', $studentId)
-            ->setParameter('semesterId', $semesterId)
-            ->getQuery();
-    $results = $q->execute(array(), Query::HYDRATE_ARRAY);
-
-    return $results;
-  }
-
   public function getNumberOfClassSessionsPerCourse(Array $courseIds) {
     $qb = $this->_em->createQueryBuilder()
             ->select('c.id as course_id, count(cs.id) as nb_classsessions')
