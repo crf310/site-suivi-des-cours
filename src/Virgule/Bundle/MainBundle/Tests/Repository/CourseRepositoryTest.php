@@ -353,5 +353,38 @@ class CourseRoomRepositoryTest extends AbstractRepositoryTest {
     $results = $this->getRepository()->getCoursesByStudent($studentId);
     $this->assertEquals(3, count($results), 'No course have been found');
   }
-  
+
+  /**
+   * @test
+   */
+  public function getNumberOfEnrolledStudents_oneCourseGivenWithTwoStudents_twoReturned() {
+    $courseIds = Array(1);
+
+    $results = $this->getRepository()->getNumberOfEnrolledStudents($courseIds);
+    $this->assertEquals(1, count($results), 'Wrong number of courses returned');
+    $this->assertEquals(2, $results[1]['nb_students'], 'Wrong number of students found');
+  }
+
+  /**
+   * @test
+   */
+  public function getNumberOfEnrolledStudents_twoCourseGivenWithThreeStudentsTotal_threeReturned() {
+    $courseIds = Array(1, 2);
+
+    $results = $this->getRepository()->getNumberOfEnrolledStudents($courseIds);
+    $this->assertEquals(2, count($results), 'Wrong number of courses returned');
+    $this->assertEquals(2, $results[1]['nb_students'], 'Wrong number of students found for course #1');
+    $this->assertEquals(1, $results[2]['nb_students'], 'Wrong number of students found for course #2');
+  }
+
+  /**
+   * @test
+   */
+  public function getNumberOfEnrolledStudents_oneCourseGivenWithNoStudents_zeroReturned() {
+    $courseIds = Array(3);
+
+    $results = $this->getRepository()->getNumberOfEnrolledStudents($courseIds);
+    $this->assertEquals(0, count($results), 'Wrong number of courses returned');
+  }
+
 }
