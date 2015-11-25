@@ -18,10 +18,26 @@ class StudentControllerTest extends AbstractControllerTest {
     $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
 
     $this->goToRoute('/student/mystudents');
-    
+
     $this->assertPageContainsTitle('Mes apprenants');
     $this->assertTrue($this->crawler->filter("span.label:contains('0')")->count() == 1, 'Students table should be empty');
-    
+
+    $this->logout();
+  }
+
+  /**
+   * @test
+   */
+  public function newAction_userCallsTheForm_newStudentFormIsDisplayed() {
+    $this->client = static::createClient();
+    $this->crawler = $this->client->request('GET', '/');
+
+    $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+
+    $this->goToRoute('/student/new');
+
+    $this->assertPageContainsTitle('Enregistrer un nouvel apprenant', 'Form has not been correctly displayed');
+
     $this->logout();
   }
 
