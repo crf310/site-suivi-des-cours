@@ -20,19 +20,19 @@ use Virgule\Bundle\MainBundle\Form\Type\ClassLevelSuggestedType;
  * @Route("/student")
  */
 class StudentController extends AbstractVirguleController {
-    
+
     /**
      * Search for a student on its partial name and firstname
      *
      * @Route("/search/{name}", name="student_search_name", defaults={"_format": "json"}, options={"expose"=true})
      * @Method("GET")
      * @Template("VirguleMainBundle:Student:searchResults.json.twig")
-     */     
+     */
     public function searchAction($name) {
         $students = $this->getStudentManager()->searchStudent($name);
         return $students;
     }
-    
+
      /**
      * Preview the certificate of attendance in a web page
      *
@@ -44,9 +44,9 @@ class StudentController extends AbstractVirguleController {
         $org_branch = $this->getSelectedOrganizationBranch();
         return Array('student' => $student, 'org_branch' => $org_branch, 'today' => new \DateTime('now'), 'preview' => 'true');
     }
-    
+
     /**
-     * 
+     *
      *
      * @Route("/{id}/generateCertificate", name="student_generate_certificate")
      * @Method("GET")
@@ -55,18 +55,18 @@ class StudentController extends AbstractVirguleController {
     public function generateCertificateAction(Student $student) {
         $org_branch = $this->getSelectedOrganizationBranch();
         $pdfGenerator = $this->get('siphoc.pdf.generator');
-        
+
         $cleanFirstName = preg_replace("/[^A-Za-z0-9]/", "", $student->getFirstname());
         $cleanLastName = preg_replace("/[^A-Za-z0-9]/", "", $student->getLastname());
         $fileName = 'attestation-' . $cleanFirstName . '-' . $cleanLastName . '.pdf';
         $pdfGenerator->setName($fileName);
         return $pdfGenerator->downloadFromView(
-            'VirguleMainBundle:Student:certificate.html.twig', 
+            'VirguleMainBundle:Student:certificate.html.twig',
             array('student' => $student, 'org_branch' => $org_branch, 'today' => new \DateTime('now')
             )
         );
     }
-    
+
     /**
      * Display a list of the students to note their attendance
      *
@@ -78,7 +78,7 @@ class StudentController extends AbstractVirguleController {
         $courses = $this->getCourseRepository()->findBy(array('id' => explode(',', $courses_ids)));
         return $this->getStudentsList($courses);
     }
-    
+
     /**
      * Display a list of the students to note their attendance
      *
@@ -89,8 +89,8 @@ class StudentController extends AbstractVirguleController {
     public function attendanceSlipAction(Course $id) {
         return $this->getStudentsList(Array($id));
     }
-    
-    private function getStudentsList(Array $courseIds) {        
+
+    private function getStudentsList(Array $courseIds) {
         $students = $this->getStudentRepository()->loadAllEnrolledInCourses($courseIds);
         // only if we asked for one course, we pass it to the view
         // otherwise it's annoying to know which student belongs to which course
@@ -99,7 +99,7 @@ class StudentController extends AbstractVirguleController {
         }
         return Array('course' => $courseIds, 'students_array' => $students);
     }
-    
+
     /**
      * Lists all Student entities enrolled in at least a class
      *
@@ -110,8 +110,8 @@ class StudentController extends AbstractVirguleController {
     public function indexAction() {
         $students_lines = $this->getStudentManager()->loadAllEnrolled($this->getSelectedSemesterId());
         return array_merge(Array('title' => 'Tous les apprenants inscrits à un cours de cette session'), $students_lines);
-    }   
-    
+    }
+
     /**
      * Lists all Student entities.
      *
@@ -122,7 +122,7 @@ class StudentController extends AbstractVirguleController {
     public function indexAllAction() {
         $students_lines = $this->getStudentManager()->loadAll();
         return array_merge(Array('title' => 'Tous les apprenants'), $students_lines);
-    }  
+    }
     /**
      * Lists all Student entities.
      *
@@ -135,7 +135,7 @@ class StudentController extends AbstractVirguleController {
         $teacherId = $this->getUser()->getId();
         $semesterId = $this->getSelectedSemesterId();
         $myCourses = $em->getRepository('VirguleMainBundle:Course')->getCoursesIdsByTeacher($semesterId, $teacherId);
-        
+
         $courseIds = Array();
         foreach($myCourses as $course) {
             $courseIds[] = $course['id'];
@@ -146,10 +146,10 @@ class StudentController extends AbstractVirguleController {
         }
         return array_merge(Array('title' => 'Mes apprenants'), Array('students_array' => $myStudents), Array('courses_ids' => implode(',', $courseIds)));
     }
-    
+
     /**
      * Lists all Student entities.
-     *     * 
+     *     *
      * @Route("/manyClasses", name="student_index_manyclasses"))
      * @Method("GET")
      * @Template("VirguleMainBundle:Student:index.html.twig")
@@ -158,10 +158,10 @@ class StudentController extends AbstractVirguleController {
         $students_lines = $this->getStudentManager()->loadAllEnrolledTwice($this->getSelectedSemesterId());
         return array_merge(Array('title' => 'Tous les apprenants inscrits à plus d\'un cours de cette session'), $students_lines);
     }
-    
+
     /**
      * Lists all Student entities.
-     *     * 
+     *     *
      * @Route("/noClass", name="student_index_noclass"))
      * @Method("GET")
      * @Template("VirguleMainBundle:Student:index.html.twig")
@@ -191,17 +191,17 @@ class StudentController extends AbstractVirguleController {
         // coment form
         $comment = new Comment();
         $commentForm = $this->createForm(new CommentType(), $comment);
-        
+
         $courses = $this->getCourseRepository()->getCoursesByStudent($id);
-        
+
         $nbClassSessionsAttended = $this->getStudentManager()->getAttendanceRate($courses, $id);
-        
+
         $previousSemester = null;
         $nbEnrollment = count($courses);
         if ($nbEnrollment > 0) {
            $previousSemester = $courses[0]->getSemester()->getId();
         }
-        
+
         $classLevels = $this->getClassLevelSuggestedRepository()->getClassLevelsHistoryPerStudent($id);
         $classLevelSuggested = new ClassLevelSuggested();
         $classLevelSuggestedForm = $this->createForm(new ClassLevelSuggestedType($this->getDoctrineManager()), $classLevelSuggested);
@@ -218,28 +218,28 @@ class StudentController extends AbstractVirguleController {
         );
     }
 
-    
+
     private function initStudentForm($entity, $intention = 'create') {
-        
+
         if ($intention == 'create') {
             $classLevelSuggested = new ClassLevelSuggested();
-            $classLevelSuggested->setChanger($this->getUser());        
+            $classLevelSuggested->setChanger($this->getUser());
             $entity->addSuggestedClassLevel($classLevelSuggested);
         }
-        
+
         $organizationBranchId = $this->getSelectedOrganizationBranchId();
-        
+
         $semesterId = $this->getSelectedSemesterId();
-        
+
         $openHousesDates = $this->getOpenHouseManager()->getOpenHousesDates($semesterId);
-        
+
         $currentTeacher = $this->getConnectedUser();
-        
+
         $form = $this->createForm(new StudentType($intention, $this->getDoctrineManager(), $this->getDoctrine(), $organizationBranchId, $openHousesDates, $currentTeacher, $semesterId), $entity, Array('em' => $this->getDoctrineManager()));
 
         return $form;
     }
-    
+
     /**
      * Displays a form to create a new Student entity.
      *
@@ -250,7 +250,7 @@ class StudentController extends AbstractVirguleController {
     public function newAction() {
         $entity = new Student();
         $form = $this->initStudentForm($entity);
-        
+
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
@@ -267,23 +267,23 @@ class StudentController extends AbstractVirguleController {
     public function createAction(Request $request) {
         $entity = new Student();
         $form = $this->initStudentForm($entity);
-        
+
         $form->bind($request);
 
         if ($form->isValid()) {
             $entity->setNativeCountry($entity->getNativeCountry());
-            
+
             $em = $this->getDoctrine()->getManager();
             $em->flush();
-            
+
             $this->saveSuggestedClassLevel($entity, $em);
             $this->saveCoursesEnrolledIn($entity, $em);
-            
+
             $em->persist($entity);
             $em->flush();
 
             $this->addFlash( 'La fiche de <strong>' . $entity->getFirstname() . ' ' . $entity->getLastname()  . '</strong> a bien été créée.');
-            
+
             if ($request->get('save_and_add_new')) {
                 return $this->redirect($this->generateUrl('student_new'));
             } else {
@@ -301,7 +301,7 @@ class StudentController extends AbstractVirguleController {
      * Displays a form to edit an existing Student entity.
      *
      * @Route("/{id}/edit", name="student_edit")
-     * @Method({"GET", "POST"})
+     * @Method("GET")
      * @Template()
      */
     public function editAction($id) {
@@ -344,13 +344,13 @@ class StudentController extends AbstractVirguleController {
 
         if ($editForm->isValid()) {
             $entity->setNativeCountry($entity->getNativeCountry());
-            
+
             $entity->setUpdatedAt();
             $entity->setUpdatedByTeacher($this->getUser());
             $em->persist($entity);
-            
-            $em->flush();            
-            
+
+            $em->flush();
+
             $this->addFlash( 'La fiche de <strong>' . $entity->getFirstname() . ' ' . $entity->getLastname()  . '</strong> a été mise à jour.');
 
             return $this->redirect($this->generateUrl('student_show', array('id' => $id)));
@@ -377,7 +377,7 @@ class StudentController extends AbstractVirguleController {
             }
         }
     }
-    
+
     private function saveCoursesEnrolledIn($entity, $em) {
         // manual persist as we're dealing with the inversed side
         $courses = $entity->getCourses();
@@ -386,7 +386,7 @@ class StudentController extends AbstractVirguleController {
             $em->persist($course);
         }
     }
-    
+
     /**
      * Deletes a Student entity.
      *
