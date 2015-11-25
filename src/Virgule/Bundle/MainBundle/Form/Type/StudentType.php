@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Intl\Intl;
 use Virgule\Bundle\MainBundle\Entity\Teacher;
-use Virgule\Bundle\MainBundle\Form\Type\Type\PictureType;
+use Virgule\Bundle\MainBundle\Form\Type\PictureType;
 use Virgule\Bundle\MainBundle\Form\EventListener\PatchSubscriber;
 use Virgule\Bundle\MainBundle\Form\EventListener\UpdateStudentCourseFieldSubscriber;
 use Doctrine\ORM\EntityManager;
@@ -21,7 +21,7 @@ class StudentType extends AbstractType {
     private $openHousesDates;
     private $currentTeacher;
     private $semesterId;
-    
+
     public function __construct($intention, EntityManager $em, RegistryInterface $doctrine, $organizationBranchId = null, $openHousesDates = null, Teacher $currentTeacher = null, $semesterId = null) {
         $this->intention = $intention;
         $this->doctrine = $doctrine;
@@ -33,12 +33,12 @@ class StudentType extends AbstractType {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        
+
         $countries = Intl::getRegionBundle()->getCountryNames();
         $countries['CN-54'] = "Tibet";
         setlocale(LC_COLLATE, 'fr_FR.utf8');
         asort($countries, SORT_LOCALE_STRING);
-        
+
         $builder
                 ->add('file', new PictureType(), array(
                     'required' => false
@@ -100,7 +100,7 @@ class StudentType extends AbstractType {
                     'by_reference' => false,
                 ));
         }
-        
+
         $welcomedByTeacherOptions = array(
             'class'             => 'VirguleMainBundle:Teacher',
             'expanded'          => false,
@@ -108,11 +108,11 @@ class StudentType extends AbstractType {
             'property'          => 'fullname',
             'property_path'     => 'welcomedByTeacher',
             'attr'              => array('class' => 'medium-select'));
-        
+
         if ($this->intention == 'create') {
             $welcomedByTeacherOptions['preferred_choices'] = array($this->currentTeacher);
             $welcomedByTeacherOptions['query_builder'] = $this->doctrine->getRepository('VirguleMainBundle:Teacher')->getAvailableTeachersQueryBuilder($this->organizationBranchId, true);
-            
+
             // we can enroll a student from only at the creation, after there is a dedicated page (on course)
             $builder->add('courses', 'entity', array(
                 'class' => 'VirguleMainBundle:Course',
@@ -124,7 +124,7 @@ class StudentType extends AbstractType {
                 ));
         }
         $builder->add('welcomedByTeacher', 'entity', $welcomedByTeacherOptions);
-               
+
         $subscriber = new PatchSubscriber();
         $builder->addEventSubscriber($subscriber);
     }
@@ -133,7 +133,7 @@ class StudentType extends AbstractType {
         $resolver->setDefaults(array(
             'data_class' => 'Virgule\Bundle\MainBundle\Entity\Student'
         ));
-        
+
         $resolver->setRequired(array(
             'em',
         ));
