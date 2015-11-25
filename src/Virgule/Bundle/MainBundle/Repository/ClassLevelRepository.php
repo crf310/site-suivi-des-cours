@@ -9,7 +9,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class ClassLevelRepository extends EntityRepository {
 
-    public function findAll() {
-      return $this->findBy(array(), array('position' => 'ASC'));
-    }
+  public function getDefaultQueryBuilder() {
+    return $this->createQueryBuilder('cl')->add('orderBy', 'cl.position');
+  }
+
+  public function findAll() {
+    return $this->findBy(array(), array('position' => 'ASC'));
+  }
 }
