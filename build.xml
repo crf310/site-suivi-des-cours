@@ -31,6 +31,9 @@
     <target name="build:test"
             depends="build:main, build:prepare, data:test, test:unit"
             description="Executes all tests.." />
+    <target name="build:test-coverage"
+            depends="build:main, build:prepare, data:test, test:unit-coverage"
+            description="Executes all tests with code coverage.." />
 
     <!-- Project build configure -->
     <target name="build:configure" description="Copy resources">
@@ -52,11 +55,17 @@
     </target>
 
     <!-- Unit tests -->
-    <target name="test:unit" description="Executes unit tests.">
+    <target name="test:unit-coverage" description="Executes unit tests with code coverage">
         <echo msg="Creating PHPUnit configuration file..." />
         <copy file="${dir.app}/phpunit.xml.dist" tofile="${dir.app}/phpunit.xml" overwrite="true"/>
         <echo msg="Running unit tests ..." />
-        <exec command="php ${project.basedir}/vendor/bin/phpunit --log-junit ${dir.reports}/phpunit-results.xml --coverage-clover ${dir.reports.coverage}/clover.xml --coverage-html ${dir.reports.coverage}/ -c ${dir.app}"/>
+        <exec command="php ${project.basedir}/vendor/bin/phpunit -c ${dir.app} --log-junit ${dir.reports}/phpunit-results.xml --coverage-clover ${dir.reports.coverage}/clover.xml --coverage-html ${dir.reports.coverage}/ "/>
+    </target>
+    <target name="test:unit" description="Executes unit tests">
+        <echo msg="Creating PHPUnit configuration file..." />
+        <copy file="${dir.app}/phpunit.xml.dist" tofile="${dir.app}/phpunit.xml" overwrite="true"/>
+        <echo msg="Running unit tests ..." />
+        <exec command="php ${project.basedir}/vendor/bin/phpunit -c ${dir.app} --log-junit ${dir.reports}/phpunit-results.xml"/>
     </target>
 
     <!-- Data -->
