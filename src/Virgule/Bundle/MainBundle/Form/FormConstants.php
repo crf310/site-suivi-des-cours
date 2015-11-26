@@ -1,5 +1,5 @@
 <?php
-namespace Virgule\Bundle\MainBundle\Form\Type;
+namespace Virgule\Bundle\MainBundle\Form;
 
 /**
  * Description of FormConstants
@@ -8,6 +8,6 @@ namespace Virgule\Bundle\MainBundle\Form\Type;
  */
 class FormConstants {
     const CREATE_INTENTION = 'CREATE';
-    
+
     const EDIT_INTENTION = 'EDIT';
 }
