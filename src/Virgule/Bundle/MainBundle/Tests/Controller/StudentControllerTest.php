@@ -36,7 +36,7 @@ class StudentControllerTest extends AbstractControllerTest {
 
     $this->goToRoute('/student/new');
 
-    $this->assertPageContainsTitle('Enregistrer un nouvel apprenant', 'Form has not been correctly displayed');
+    $this->assertPageContainsTitle('Enregistrer un nouvel apprenant');
 
     $this->logout();
   }

@@ -19,7 +19,7 @@ class ClassSessionControllerTest extends AbstractControllerTest {
 
     $this->goToRoute('classsession/add/course/1');
 
-    $this->assertPageContainsTitle('Ajouter un compte-rendu', 'Form has not been correctly displayed');
+    $this->assertPageContainsTitle('Ajouter un compte-rendu');
 
     $this->logout();
   }

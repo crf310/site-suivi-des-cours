@@ -19,7 +19,7 @@ class CourseControllerTest extends AbstractControllerTest {
 
     $this->goToRoute('/course/new');
 
-    $this->assertPageContainsTitle('Enregistrer un nouveau cours', 'Form has not been correctly displayed');
+    $this->assertPageContainsTitle('Enregistrer un nouveau cours');
 
     $this->logout();
   }
