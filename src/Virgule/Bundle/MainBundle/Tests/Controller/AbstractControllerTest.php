@@ -42,14 +42,14 @@ abstract class AbstractControllerTest extends WebTestCase {
   protected function goToDashboard() {
     $this->crawler = $this->client->request('GET', '/welcome');
   }
-  
+
   protected function goToRoute($route) {
     $this->crawler = $this->client->request('GET', $route);
     $this->assertTrue(200 === $this->client->getResponse()->getStatusCode(), 'route: ' . $route . ' returned ' . $this->client->getResponse()->getStatusCode() . ' , expected 200');
   }
-  
-  protected function assertPageContainsTitle($title) {
-    $this->assertTrue($this->crawler->filter("h1:contains('" . $title . "')")->count() == 1, $title . " not found in h1 bloc");
+
+  protected function assertPageContainsTitle($title, $titleLevel = 'h1') {
+    $this->assertTrue($this->crawler->filter($titleLevel . ":contains('" . $title . "')")->count() == 1, $title . ' not found in ' . $titleLevel . ' bloc');
   }
 }
 
