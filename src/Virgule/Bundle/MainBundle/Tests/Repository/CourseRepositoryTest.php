@@ -10,7 +10,7 @@ class CourseRoomRepositoryTest extends AbstractRepositoryTest {
   var $TEACHER_ID = 2;
 
   private function getRepository() {
-    return $this->_em->getRepository('VirguleMainBundle:Course');
+    return self::$_em->getRepository('VirguleMainBundle:Course');
   }
 
   /**

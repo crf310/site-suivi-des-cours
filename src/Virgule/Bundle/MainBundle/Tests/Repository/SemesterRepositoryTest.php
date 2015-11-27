@@ -14,7 +14,7 @@ class SemesterRepositoryTest extends AbstractRepositoryTest {
     }
 
     private function getRepository() {
-        return $this->_em->getRepository('VirguleMainBundle:Semester');
+        return self::$_em->getRepository('VirguleMainBundle:Semester');
     }
 
     /**

@@ -6,7 +6,7 @@ use Virgule\Bundle\MainBundle\Tests\Repository\AbstractRepositoryTest;
 class ClassLevelRepositoryTest extends AbstractRepositoryTest {
 
     private function getRepository() {
-        return $this->_em->getRepository('VirguleMainBundle:ClassLevel');
+        return self::$_em->getRepository('VirguleMainBundle:ClassLevel');
     }
 
     /**

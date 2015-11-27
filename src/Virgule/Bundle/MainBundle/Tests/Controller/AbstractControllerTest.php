@@ -2,9 +2,9 @@
 
 namespace Virgule\Bundle\MainBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Virgule\Bundle\MainBundle\Tests\AbstractTest;
 
-abstract class AbstractControllerTest extends WebTestCase {
+abstract class AbstractControllerTest extends AbstractTest {
 
   protected $client;
   protected $crawler;
@@ -22,9 +22,9 @@ abstract class AbstractControllerTest extends WebTestCase {
 
     // Fill in the form and submit it
     $form = $this->crawler->selectButton('Connexion')->form(array(
-        '_username' => $username,
-        '_password' => $password
-    ));
+      '_username' => $username,
+      '_password' => $password
+      ));
 
     $this->crawler = $this->client->submit($form);
 

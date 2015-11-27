@@ -12,7 +12,7 @@ class TeacherRepositoryTest extends AbstractRepositoryTest {
     private $ORG_BRANCH_ID = 1;
 
     private function getRepository() {
-        return $this->_em->getRepository('VirguleMainBundle:Teacher');
+        return self::$_em->getRepository('VirguleMainBundle:Teacher');
     }
 
     /**
