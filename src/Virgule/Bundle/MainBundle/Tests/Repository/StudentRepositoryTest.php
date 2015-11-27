@@ -67,5 +67,17 @@ class StudentRepositoryTest extends AbstractRepositoryTest {
         }
     }
 
+    /**
+     * @test
+     */
+    public function loadAllEnrolledInCourseEntities_studentsAreEnrolled_expectedStudentsReturned() {
+        $results = $this->getRepository()->loadAllEnrolledInCourseEntities(1);
+        $this->assertTrue(count($results) == 2, 'Expected 2 results, got ' . count($results));
+        foreach ($results as $student) {
+            $this->assertTrue($student instanceof \Virgule\Bundle\MainBundle\Entity\Student, '$student is not an instance of Student entity');
+            $lastname = $student->getLastname();
+            $this->assertTrue(in_array($lastname, Array('Lastname 1', 'Lastname 2')), 'Wrong lastname: ' . $lastname);
+        }
+    }
 }
 ?>
