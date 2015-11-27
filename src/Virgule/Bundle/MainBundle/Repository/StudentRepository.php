@@ -18,7 +18,7 @@ class StudentRepository extends EntityRepository {
     private function createDefaultQueryBuilder() {
         return $this->createQueryBuilder('s')->add('orderBy', 's.lastname ASC, s.firstname ASC');
     }
-    
+
     private function getBasicQueryBuilder() {
         $qb = $this
             ->createDefaultQueryBuilder()
@@ -26,14 +26,14 @@ class StudentRepository extends EntityRepository {
             ->addSelect('s.emergencyContactFirstname, s.emergencyContactLastname, s.emergencyContactConnectionType, s.emergencyContactPhoneNumber');
         return $qb;
     }
-    
+
     public function getQueryBuilderForStudentEnrolledInCourses(Array $courseIds) {
         $qb = $this->createDefaultQueryBuilder()
             ->innerJoin('s.courses', 'c2', 'WITH', 'c2.id IN (:coursesIds)')
             ->setParameter('coursesIds', $courseIds, Connection::PARAM_INT_ARRAY);
         return $qb;
     }
-    
+
     public function getQueryBuilderForLists() {
         $qb = $this->getBasicQueryBuilder()
                 ->addSelect('t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName')
@@ -58,7 +58,7 @@ class StudentRepository extends EntityRepository {
         $students = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $students;
     }
-    
+
     /**
      * Select all students enrolled in one or more class of the selected semester
      * @return type
@@ -67,12 +67,12 @@ class StudentRepository extends EntityRepository {
         $qb = $this->getQueryBuilderForLists()
                 ->where('s2 = :semesterId')
                 ->setParameter('semesterId', $semesterId);
-        
+
         $q = $qb->getQuery();
         $students = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $students;
     }
-    
+
     public function loadNotEnrolledInCourses(Array $courseIds) {
         $qb = $this->getBasicQueryBuilder()
             ->addSelect('t.id as teacher_id, t.firstName as teacher_firstName, t.lastName as teacher_lastName')
@@ -82,14 +82,13 @@ class StudentRepository extends EntityRepository {
             ->leftJoin('s.courses', 'c2')
             ->where('c2.id IS NULL')
             ->orWhere('c2.id NOT IN (:coursesIds)')
-            ->add('groupBy', 's.id')
             ->setParameter('coursesIds', $courseIds, Connection::PARAM_INT_ARRAY);
         return $qb->getQuery()->execute(array(), Query::HYDRATE_ARRAY);
     }
 
     public function loadAllEnrolledInCourses(Array $courseIds) {
         $qb = $this->getQueryBuilderForStudentEnrolledInCourses($courseIds)
-            ->select('s.id as student_id, s.firstname as firstname, s.lastname as lastname, 
+            ->select('s.id as student_id, s.firstname as firstname, s.lastname as lastname,
                 s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, s.registrationDate, s.nativeCountry')
             ->addSelect('s.emergencyContactFirstname, s.emergencyContactLastname,
                       s.emergencyContactConnectionType, s.emergencyContactPhoneNumber')
@@ -98,19 +97,19 @@ class StudentRepository extends EntityRepository {
             ->add('groupBy', 's.id');
         return $qb->getQuery()->execute(array(), Query::HYDRATE_ARRAY);
     }
-    
+
     /**
-     * 
+     *
      * @param array $courseIds
      * @return type
      */
     public function loadAllEnrolledInCourse($courseId) {
         return $this->loadAllEnrolledInCourses(Array($courseId));
     }
-    
-    
+
+
     public function loadAllEnrolledInCourseEntities($courseId) {
-        $qb = $this->createDefaultQueryBuilder()   
+        $qb = $this->createDefaultQueryBuilder()
             ->innerJoin('s.courses', 'c2', 'WITH', 'c2.id = :courseId')
             ->setParameter('courseId', $courseId);
         return $qb->getQuery()->execute();
@@ -124,10 +123,10 @@ class StudentRepository extends EntityRepository {
                 ->addSelect('count(cm.id) as nb_comments')
                 ->leftJoin('s.comments', 'cm')
                 ->add('groupBy', 's.id');
-        
+
         return $qb->getQuery()->execute(array(), Query::HYDRATE_ARRAY);
     }
-    
+
     public function loadAllNonEnrolledPresentAtClassSession($classSessionId) {
         $qb = $this->getBasicQueryBuilder()
                 ->innerJoin('s.classSessionsNonEnrolled', 'cs')
@@ -136,10 +135,10 @@ class StudentRepository extends EntityRepository {
                 ->addSelect('count(cm.id) as nb_comments')
                 ->leftJoin('s.comments', 'cm')
                 ->add('groupBy', 's.id');
-        
+
         return $qb->getQuery()->execute(array(), Query::HYDRATE_ARRAY);
     }
-    
+
     public function getStudentsInformation($semesterId) {
         $q = $this
                 ->createDefaultQueryBuilder()
@@ -154,7 +153,7 @@ class StudentRepository extends EntityRepository {
         $students = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $students;
     }
-    
+
     public function getNumberOfStudentsPerClassLevel($semesterId) {
         $q = $this
                 ->getBasicQueryBuilder()
@@ -171,7 +170,7 @@ class StudentRepository extends EntityRepository {
         $students = $q->execute(array(), Query::HYDRATE_ARRAY);
         return $students;
     }
-    
+
     public function getNumberOfStudentRegisteredAfterDates($dates) {
         $q = $this->createQueryBuilder('s')
                 ->addSelect('count(s.id) as nb_students');
@@ -183,31 +182,31 @@ class StudentRepository extends EntityRepository {
         $nbStudents = $q->getQuery()->getSingleResult();
         return $nbStudents;
     }
-    
+
     public function getNumberOfStudentsWithNumberOfEnrollments($semesterId) {
         $sql = "SELECT COUNT(student) AS nb_students, nb_courses FROM (
-                    SELECT 
+                    SELECT
                       s.id as student,
-                      count(sc.course_id) as nb_courses 
-                    FROM 
-                      student s 
-                      INNER JOIN student_course sc ON s.id = sc.student_id 
-                      INNER JOIN course c ON sc.course_id = c.id 
-                      INNER JOIN semester s2 ON c.fk_semester = s2.id 
-                    WHERE 
+                      count(sc.course_id) as nb_courses
+                    FROM
+                      student s
+                      INNER JOIN student_course sc ON s.id = sc.student_id
+                      INNER JOIN course c ON sc.course_id = c.id
+                      INNER JOIN semester s2 ON c.fk_semester = s2.id
+                    WHERE
                       s2.id = " . $semesterId . "
                     GROUP BY s.id
             ) a
             GROUP BY nb_courses
             ORDER BY nb_courses ASC
             ;";
-        
+
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->execute();
-        
+
         return $stmt->fetchAll();
     }
-    
+
     public function search($name) {
         $q = $this->getQueryBuilderForLists()
                 ->where('s.firstname LIKE :name')
