@@ -16,8 +16,12 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
     $s1 = $this->createStudent(1);
     $s2 = $this->createStudent(2);
 
+    // student in no class
+    $s3 = $this->createStudent(3);
+
     $manager->persist($s1);
     $manager->persist($s2);
+    $manager->persist($s3);
 
     $manager->flush();
   }
@@ -25,11 +29,11 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
   private function createStudent($studentId) {
     $student = new Student();
     $student->setFirstname('Firstname ' . $studentId);
-    $student->setLastname('Lastname 1' . $studentId);
+    $student->setLastname('Lastname ' . $studentId);
     $student->setRegistrationDate(new \DateTime('01-01-1970'));
-    
+
     $this->addReference('student-' . $studentId, $student);
-    
+
     return $student;
   }
 
