@@ -20,6 +20,9 @@ class StudentRepositoryTest extends AbstractRepositoryTest {
     public function loadAllEnrolled_studentsAreEnrolled_expectedStudentsReturned() {
         $results = $this->getRepository()->loadAllEnrolled($this->semesterId);
         $this->assertTrue(count($results) == 3, 'Expected 3 results, got ' . count($results));
+        foreach ($results as $student) {
+            $this->assertTrue(in_array($student['student_id'], Array(1, 2)), 'Wrong id : ' . $student['student_id']);
+        }
     }
 
     /**
@@ -39,5 +42,30 @@ class StudentRepositoryTest extends AbstractRepositoryTest {
         $lastname = $results[0]['lastname'];
         $this->assertEquals('Lastname 3', $lastname, 'Wrong lastname: ' . $lastname);
     }
+
+    /**
+     * @test
+     */
+    public function loadAllEnrolledInCourse_studentsAreEnrolled_expectedStudentsReturned() {
+        $results = $this->getRepository()->loadAllEnrolledInCourse(1);
+        $this->assertTrue(count($results) == 2, 'Expected 2 results, got ' . count($results));
+        foreach ($results as $student) {
+            $lastname = $student['lastname'];
+            $this->assertTrue(in_array($lastname, Array('Lastname 1', 'Lastname 2')), 'Wrong lastname: ' . $lastname);
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function loadAllEnrolledInCourses_studentsAreEnrolled_expectedStudentsReturned() {
+        $results = $this->getRepository()->loadAllEnrolledInCourses(Array(1));
+        $this->assertTrue(count($results) == 2, 'Expected 2 results, got ' . count($results));
+        foreach ($results as $student) {
+            $lastname = $student['lastname'];
+            $this->assertTrue(in_array($lastname, Array('Lastname 1', 'Lastname 2')), 'Wrong lastname: ' . $lastname);
+        }
+    }
+
 }
 ?>
