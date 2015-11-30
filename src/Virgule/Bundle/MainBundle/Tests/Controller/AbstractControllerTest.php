@@ -51,6 +51,14 @@ abstract class AbstractControllerTest extends AbstractTest {
   protected function assertPageContainsTitle($title, $titleLevel = 'h1') {
     $this->assertTrue($this->crawler->filter($titleLevel . ":contains('" . $title . "')")->count() == 1, $title . ' not found in ' . $titleLevel . ' bloc');
   }
+
+  protected function assertFormContainsError($errorMessage) {
+    $this->assertTrue($this->crawler->filter("div.alert-danger:contains('" . $errorMessage . "')")->count() >= 1, "Error message should be displayed on the form");
+  }
+
+  protected function assertFormFieldContainsError($errorMessage) {
+    $this->assertTrue($this->crawler->filter("span.help-inline:contains('" . $errorMessage . "')")->count() >= 1, "Error message should be displayed on a field");
+  }
 }
 
 ?>
