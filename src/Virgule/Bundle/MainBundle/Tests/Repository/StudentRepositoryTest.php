@@ -17,6 +17,34 @@ class StudentRepositoryTest extends AbstractRepositoryTest {
     /**
      * @test
      */
+    public function getBasicQueryBuilder_queryBuilderIsCalled_queryIsCorrectlyGenerated() {
+        $queryBuilder = $this->getRepository()->getBasicQueryBuilder();
+
+        $expectedSelect1 = 's.id as student_id, s.firstname as firstname, s.lastname as lastname, s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, ';
+        $expectedSelect1 .= 's.registrationDate, s.nativeCountry';
+        $expectedSelect2 = 's.emergencyContactFirstname, s.emergencyContactLastname, s.emergencyContactConnectionType, s.emergencyContactPhoneNumber';
+
+        $dqlSelectParts = $queryBuilder->getDqlPart('select');
+        $this->assertTrue($dqlSelectParts[0] instanceof \Doctrine\ORM\Query\Expr\Select, 'SELECT part is not an instance of Doctrine\ORM\Query\Expr\Select');
+
+        $dqlSelectPart1 = $dqlSelectParts[0]->getParts();
+        $this->assertEquals($expectedSelect1, $dqlSelectPart1[0], 'SELECT entity part 1 is wrong');
+
+        $dqlSelectPart2 = $dqlSelectParts[1]->getParts();
+        $this->assertEquals($expectedSelect2, $dqlSelectPart2[0], 'SELECT entity part 2 is wrong');
+
+        $dqlFromPart = $queryBuilder->getDqlPart('from');
+        $this->assertTrue($dqlFromPart[0] instanceof \Doctrine\ORM\Query\Expr\From, 'FROM part is not an instance of Doctrine\ORM\Query\Expr\From');
+        $this->assertEquals('Virgule\Bundle\MainBundle\Entity\Student', $dqlFromPart[0]->getFrom(), 'FROM entity part is wrong');
+        $this->assertEquals('s', $dqlFromPart[0]->getAlias(), 'FROM alias part is wrong');
+
+        $dqlOrderByPart = $queryBuilder->getDqlPart('orderBy');
+        $this->assertEquals('s.lastname ASC, s.firstname ASC', $dqlOrderByPart[0] , 'ORDER BY part is wrong');
+    }
+
+    /**
+     * @test
+     */
     public function loadAllEnrolled_studentsAreEnrolled_expectedStudentsReturned() {
         $results = $this->getRepository()->loadAllEnrolled($this->semesterId);
         $this->assertTrue(count($results) == 3, 'Expected 3 results, got ' . count($results));
