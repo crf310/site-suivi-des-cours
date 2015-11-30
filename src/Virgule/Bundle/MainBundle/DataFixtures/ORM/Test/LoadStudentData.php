@@ -16,8 +16,11 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
     $s1 = $this->createStudent(1);
     $s2 = $this->createStudent(2);
 
-    // student in no class
+    // student in no class and registered after today
     $s3 = $this->createStudent(3);
+    $studentRegistrationDate = new \DateTime('now');
+    $studentRegistrationDate->modify('+5 day');
+    $s3->setRegistrationDate($studentRegistrationDate);
 
     $manager->persist($s1);
     $manager->persist($s2);
