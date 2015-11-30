@@ -394,21 +394,6 @@ class StudentController extends AbstractVirguleController {
      * @Method("POST")
      */
     public function deleteAction(Request $request, $id) {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrineManager();
-            $entity = $this->getStudentRepository()->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Student entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('student_index'));
+      return parent::abstractDeleteAction($request, $id, 'Student', $this->getStudentRepository(), 'student_index');
     }
 }

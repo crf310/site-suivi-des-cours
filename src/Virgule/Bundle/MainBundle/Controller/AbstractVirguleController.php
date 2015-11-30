@@ -3,7 +3,7 @@
 namespace Virgule\Bundle\MainBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Symfony\Component\HttpFoundation\Request;
 /**
  * Class parentes des controllers
  *
@@ -18,7 +18,7 @@ abstract class AbstractVirguleController extends Controller {
   protected function logInfo($message) {
     $user = $this->getConnectedUser();
     $logger = $this->get('logger');
-    $logMsg = $user->getFirstname() . ' ' . $user->getLastname() . ' - ' . $message;
+    $logMsg = 'USER ' . $user->getFullname() . ' - ' . $message;
     $logger->info($logMsg);
   }
 
@@ -167,6 +167,26 @@ abstract class AbstractVirguleController extends Controller {
                     ->add('id', 'hidden')
                     ->getForm()
     ;
+  }
+
+  protected function abstractDeleteAction(Request $request, $entityId, $entityType, $entityRepository, $urlToRedirect) {
+    $form = $this->createDeleteForm($entityId);
+    $form->bind($request);
+
+    if ($form->isValid()) {
+      $em = $this->getDoctrineManager();
+      $entity = $entityRepository->find($entityId);
+
+      if (!$entity) {
+        throw $this->createNotFoundException('Unable to find ' . $entityType . ' entity.');
+      }
+
+      $em->remove($entity);
+      $em->flush();
+    }
+
+    $this->logInfo('DELETE - ' . $entityType . ' #' . $entityId);
+    return $this->redirect($this->generateUrl($urlToRedirect));
   }
 
 }
