@@ -107,5 +107,34 @@ class StudentRepositoryTest extends AbstractRepositoryTest {
             $this->assertTrue(in_array($lastname, Array('Lastname 1', 'Lastname 2')), 'Wrong lastname: ' . $lastname);
         }
     }
+
+    /**
+     * @test
+     */
+    public function getNumberOfStudentRegisteredAfterDates_oneDateProvidedAndOneStudentRegisteredAfter_numberOneReturned() {
+        $pDate1 = new \DateTime('now');
+        $result = $this->getRepository()->getNumberOfStudentRegisteredAfterDates(Array('pDate1' => $pDate1));
+        $this->assertEquals(1, $result['nb_students'], 'Expected 1, got ' . $result['nb_students']);
+    }
+
+    /**
+     * @test
+     */
+    public function getNumberOfStudentRegisteredAfterDates_twoDatesProvidedAndThreeStudentsRegisteredAfter_numberThreeReturned() {
+        $pDate1 = new \DateTime('01-01-1969');
+        $pDate2 = new \DateTime('now');
+        $result = $this->getRepository()->getNumberOfStudentRegisteredAfterDates(Array('pDate1' => $pDate1, 'pDate2' => $pDate2));
+        $this->assertEquals(3, $result['nb_students'], 'Expected 3, got ' . $result['nb_students']);
+    }
+
+    /**
+     * @test
+     */
+    public function getNumberOfStudentRegisteredAfterDates_oneDateProvidedAndNoStudentRegisteredAfter_numberZeroReturned() {
+        $pDate1 = new \DateTime('now');
+        $pDate1->modify('+365 day');
+        $result = $this->getRepository()->getNumberOfStudentRegisteredAfterDates(Array('pDate1' => $pDate1));
+        $this->assertEquals(0, $result['nb_students'], 'Expected 0, got ' . $result['nb_students']);
+    }
 }
 ?>
