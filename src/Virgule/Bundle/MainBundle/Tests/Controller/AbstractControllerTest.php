@@ -43,9 +43,9 @@ abstract class AbstractControllerTest extends AbstractTest {
     $this->crawler = $this->client->request('GET', '/welcome');
   }
 
-  protected function goToRoute($route) {
+  protected function goToRoute($route, $expectedHttpCode = 200) {
     $this->crawler = $this->client->request('GET', $route);
-    $this->assertTrue(200 === $this->client->getResponse()->getStatusCode(), 'route: ' . $route . ' returned ' . $this->client->getResponse()->getStatusCode() . ' , expected 200');
+    $this->assertTrue($expectedHttpCode === $this->client->getResponse()->getStatusCode(), 'route: ' . $route . ' returned ' . $this->client->getResponse()->getStatusCode() . ' , expected 200');
   }
 
   protected function assertPageContainsTitle($title, $titleLevel = 'h1') {
@@ -59,6 +59,18 @@ abstract class AbstractControllerTest extends AbstractTest {
   protected function assertFormFieldContainsError($errorMessage) {
     $this->assertTrue($this->crawler->filter("span.help-inline:contains('" . $errorMessage . "')")->count() >= 1, "Error message should be displayed on a field");
   }
+
+  protected function submitFormById($formId, $followRedirect = true) {
+    $form = $this->crawler->filterXPath('//form[@id="' . $formId . '"]')->form();
+    $this->client->submit($form);
+
+    if ($followRedirect) {
+      $this->crawler = $this->client->followRedirect();
+    } else {
+      $this->crawler = $this->client->reload();
+    }
+  }
+
 }
 
 ?>
