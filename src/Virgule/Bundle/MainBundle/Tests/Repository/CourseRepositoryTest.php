@@ -4,7 +4,7 @@ namespace Virgule\Bundle\MainBundle\Tests\Repository;
 
 use Virgule\Bundle\MainBundle\Tests\Repository\AbstractRepositoryTest;
 
-class CourseRoomRepositoryTest extends AbstractRepositoryTest {
+class CourseRepositoryTest extends AbstractRepositoryTest {
 
   // user avec cours
   var $TEACHER_ID = 2;
