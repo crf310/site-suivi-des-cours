@@ -19,7 +19,7 @@ class StudentRepository extends EntityRepository {
         return $this->createQueryBuilder('s')->add('orderBy', 's.lastname ASC, s.firstname ASC');
     }
 
-    private function getBasicQueryBuilder() {
+    public function getBasicQueryBuilder() {
         $qb = $this
             ->createDefaultQueryBuilder()
             ->select('s.id as student_id, s.firstname as firstname, s.lastname as lastname, s.gender as gender, s.phoneNumber as phoneNumber, s.cellphoneNumber, s.registrationDate, s.nativeCountry')
