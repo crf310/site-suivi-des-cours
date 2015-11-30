@@ -136,5 +136,23 @@ class StudentRepositoryTest extends AbstractRepositoryTest {
         $result = $this->getRepository()->getNumberOfStudentRegisteredAfterDates(Array('pDate1' => $pDate1));
         $this->assertEquals(0, $result['nb_students'], 'Expected 0, got ' . $result['nb_students']);
     }
+
+    /**
+     * @test
+     */
+    public function search_partialNameProvided_studentWithCorrespondingFirstNameFound() {
+        $results = $this->getRepository()->search('irstname 2');
+        $this->assertEquals(1, count($results), 'Expected 1, got ' . count($results));
+        $this->assertEquals('Firstname 2', $results[0]['firstname'], 'Wrong firstname');
+    }
+
+    /**
+     * @test
+     */
+    public function search_partialNameProvided_studentWithCorrespondingLastNameFound() {
+        $results = $this->getRepository()->search('astname 2');
+        $this->assertEquals(1, count($results), 'Expected 1, got ' . count($results));
+        $this->assertEquals('Lastname 2', $results[0]['lastname'], 'Wrong lastname');
+    }
 }
 ?>
