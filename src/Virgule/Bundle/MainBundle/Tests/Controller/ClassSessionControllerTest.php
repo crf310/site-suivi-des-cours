@@ -27,8 +27,65 @@ class ClassSessionControllerTest extends AbstractControllerTest {
   /**
    * @test
    */
+  public function newAction_reportDateIsEmpty_errorIsThrownAndClassSessionIsNotSaved() {
+    $this->client = static::createClient();
+    $this->crawler = $this->client->request('GET', '/');
+
+    $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+
+    $this->goToRoute('classsession/add/course/1');
+    $this->fillAndSubmitModificationForm('', 'blablabla', false);
+    $this->assertNotEquals(500, $this->client->getResponse()->getStatusCode());
+    $this->assertFormFieldContainsError('Merci de saisir une date pour ce compte rendu');
+
+    $this->logout();
+  }
+
+  /**
+   * @test
+   */
+  public function newAction_summaryIsEmpty_errorIsThrownAndClassSessionIsNotSaved() {
+    $date = new \DateTime('now');
+    $sDate = $date->format("d/m/Y");
+
+    $this->client = static::createClient();
+    $this->crawler = $this->client->request('GET', '/');
+
+    $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+
+    $this->goToRoute('classsession/add/course/2');
+    $this->fillAndSubmitModificationForm($sDate, '', false);
+
+    $this->assertNotEquals(500, $this->client->getResponse()->getStatusCode());
+    $this->assertFormFieldContainsError('Merci de saisir un résumé du cours');
+
+    $this->logout();
+  }
+
+  /**
+   * @test
+   */
+  public function newAction_reportDateAndsummaryAreEmpty_errorAreThrownAndClassSessionIsNotSaved() {
+    $this->client = static::createClient();
+    $this->crawler = $this->client->request('GET', '/');
+
+    $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+
+    $this->goToRoute('classsession/add/course/1');
+    $this->fillAndSubmitModificationForm('', '', false);
+
+    $this->assertNotEquals(500, $this->client->getResponse()->getStatusCode());
+    $this->assertFormFieldContainsError('Merci de saisir une date pour ce compte rendu');
+    $this->assertFormFieldContainsError('Merci de saisir un résumé du cours');
+
+    $this->logout();
+  }
+
+  /**
+   * @test
+   */
   public function newAction_allMandatoryInformationProvided_classSessionIsSavedWithCorrectInformation() {
-    $date = new \DateTime('1985-05-10T06:00:00');
+    $date = new \DateTime('now');
     $sDate = $date->format("d/m/Y");
     $summary = "blablabla";
 
@@ -41,12 +98,6 @@ class ClassSessionControllerTest extends AbstractControllerTest {
 
     $this->assertPageContainsTitle('Ajouter un compte-rendu');
     $this->fillAndSubmitModificationForm($sDate, $summary);
-
-    $this->assertTrue($this->crawler->filter("div.alert-flash:contains('Votre compte-rendu pour le " . $sDate . " a bien été enregistré')")->count() == 1, "la date n'est pas affichée");
-
-    $this->assertPageContainsTitle('Compte-rendu de cours');
-    $this->assertTrue($this->crawler->filter("div.controls:contains('" . $sDate . "')")->count() == 1, "la date n'est pas affichée");
-    $this->assertTrue($this->crawler->filter("div.text-block:contains('" . $summary . "')")->count() == 1, "le résumé n'est pas correctement affiché");
 
     $this->logout();
   }
