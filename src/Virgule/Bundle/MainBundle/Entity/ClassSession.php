@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Virgule\Bundle\MainBundle\Entity\ClassSession
  *
  * @ORM\Table(name="classsessions")
- * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\ClassSessionRepository") * 
+ * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\ClassSessionRepository") *
  * @UniqueEntity(fields={"course", "sessionDate"}, message="Un compte-rendu est déjà enregistré pour ce cours à cette date")
  *
  */
@@ -36,6 +36,7 @@ class ClassSession {
      * @var \Date $sessionDate
      *
      * @ORM\Column(name="session_date", type="date", nullable=false)
+     * @Assert\NotBlank(message="Merci de saisir une date pour ce compte rendu")
      */
     private $sessionDate;
 
@@ -43,6 +44,7 @@ class ClassSession {
      * @var string $summary
      *
      * @ORM\Column(name="summary", type="text", nullable=false)
+     * @Assert\NotBlank(message="Merci de saisir un résumé du cours")
      */
     private $summary;
 
@@ -72,7 +74,7 @@ class ClassSession {
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Document", inversedBy="classSessions")     * 
+     * @ORM\ManyToMany(targetEntity="Document", inversedBy="classSessions")     *
      * @ORM\JoinTable(name="classsessions_documents")
      */
     private $documents;
@@ -83,7 +85,7 @@ class ClassSession {
      * @Assert\NotNull
      */
     protected $classSessionStudents;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="Student", inversedBy="classSessionsNonEnrolled")
      * @ORM\JoinTable(name="classsessions_students_non_enrolled")
@@ -93,7 +95,7 @@ class ClassSession {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId() {
         return $this->id;
@@ -114,7 +116,7 @@ class ClassSession {
     /**
      * Get report date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getReportDate() {
         return $this->reportDate;
@@ -135,7 +137,7 @@ class ClassSession {
     /**
      * Get session date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getSessionDate() {
         return $this->sessionDate;
@@ -156,7 +158,7 @@ class ClassSession {
     /**
      * Get summary
      *
-     * @return string 
+     * @return string
      */
     public function getSummary() {
         return $this->summary;
@@ -186,7 +188,7 @@ class ClassSession {
     /**
      * Get course
      *
-     * @return \Virgule\Bundle\MainBundle\Entity\Course 
+     * @return \Virgule\Bundle\MainBundle\Entity\Course
      */
     public function getCourse() {
         return $this->course;
@@ -207,7 +209,7 @@ class ClassSession {
     /**
      * Get sessionTeacher
      *
-     * @return \Virgule\Bundle\MainBundle\Entity\Teacher 
+     * @return \Virgule\Bundle\MainBundle\Entity\Teacher
      */
     public function getSessionTeacher() {
         return $this->sessionTeacher;
@@ -228,7 +230,7 @@ class ClassSession {
     /**
      * Get reportTeacher
      *
-     * @return \Virgule\Bundle\MainBundle\Entity\Teacher 
+     * @return \Virgule\Bundle\MainBundle\Entity\Teacher
      */
     public function getReportTeacher() {
         return $this->reportTeacher;
@@ -258,7 +260,7 @@ class ClassSession {
     /**
      * Get comments
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getComments() {
         return $this->comments;
@@ -288,7 +290,7 @@ class ClassSession {
     /**
      * Get attachments
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAttachments() {
         return $this->attachments;
@@ -301,11 +303,11 @@ class ClassSession {
      * @return ClassSession
      */
     public function addClassSessionStudent(\Virgule\Bundle\MainBundle\Entity\Student $student) {
-        $this->classSessionStudents[] = $student;        
-        
+        $this->classSessionStudents[] = $student;
+
         return $this;
     }
-    
+
     /**
      * Remove students
      *
@@ -318,16 +320,16 @@ class ClassSession {
     /**
      * Get students
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getClassSessionStudents() {
         return $this->classSessionStudents;
     }
-    
+
     public function getNonEnrolledClassSessionStudents() {
         return $this->nonEnrolledClassSessionStudents;
     }
-    
+
     /**
      * Add students
      *
@@ -335,11 +337,11 @@ class ClassSession {
      * @return ClassSession
      */
     public function addNonEnrolledClassSessionStudent(\Virgule\Bundle\MainBundle\Entity\Student $student) {
-        $this->nonEnrolledClassSessionStudents[] = $student;        
-        
+        $this->nonEnrolledClassSessionStudents[] = $student;
+
         return $this;
-    }   
-    
+    }
+
     /**
      * Remove students
      *
@@ -360,7 +362,7 @@ class ClassSession {
     public function addDocument(\Virgule\Bundle\MainBundle\Entity\Document $documents)
     {
         $this->documents[] = $documents;
-    
+
         return $this;
     }
 
@@ -377,7 +379,7 @@ class ClassSession {
     /**
      * Get documents
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDocuments()
     {
