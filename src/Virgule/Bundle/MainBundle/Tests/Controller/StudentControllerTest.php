@@ -79,6 +79,35 @@ class StudentControllerTest extends AbstractControllerTest {
   /**
    * @test
    */
+  public function newAction_registrationDateIsNotProvided_errorIsThrownAndStudentIsNotRegistered() {
+    $firstName = 'Nouvel';
+    $lastName = 'Apprenant';
+    $gender = 'M';
+    $registrationDate = '';
+    $welcomedByTeacher = '2'; // User Active 1
+    $suggestedClassLevel = '2'; // Class level 2';
+    $nativeCountry = 'ID'; // Indonésie';
+
+    $this->client = static::createClient();
+    $this->crawler = $this->client->request('GET', '/');
+
+    $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+
+    $this->goToRoute('/student/new');
+
+    $this->assertPageContainsTitle('Enregistrer un nouvel apprenant');
+
+    $this->fillAndSubmitCreationForm($firstName, $lastName, $gender, $nativeCountry, $registrationDate, $welcomedByTeacher, $suggestedClassLevel, false);
+
+    $this->assertPageContainsTitle('Enregistrer un nouvel apprenant');
+    $this->assertFormFieldContainsError('Merci de saisir une date d\'\'accueil');
+
+    $this->logout();
+  }
+
+  /**
+   * @test
+   */
   public function deleteAction_studentExists_studentIsDeleted() {
     $newStudent = new Student();
     $newStudent->setFirstname('Bob');
