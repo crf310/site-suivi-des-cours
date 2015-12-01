@@ -9,6 +9,9 @@ class StudentControllerTest extends AbstractControllerTest {
 
   private $FIELD_PREFIX = 'virgule_bundle_mainbundle_studenttype';
 
+  private $OPTION_MALE_GENDER = 'M';
+  private $OPTION_FEMALE_GENDER = 'F';
+
   /**
    * @test
    */
@@ -45,6 +48,37 @@ class StudentControllerTest extends AbstractControllerTest {
   /**
    * @test
    */
+  public function newAction_allMandatoryInformationProvided_newStudentIsRegistered() {
+    $firstName = 'Nouvel';
+    $lastName = 'Apprenant';
+    $gender = 'M';
+    $registrationDate = '10/01/1985';
+    $welcomedByTeacher = '2'; // User Active 1
+    $suggestedClassLevel = '2'; // Class level 2';
+    $nativeCountry = 'ID'; // Indonésie';
+
+    $this->client = static::createClient();
+    $this->crawler = $this->client->request('GET', '/');
+
+    $this->login($this->ADMIN_USERNAME, $this->ADMIN_PASSWORD);
+
+    $this->goToRoute('/student/new');
+
+    $this->fillAndSubmitCreationForm($firstName, $lastName, $gender, $nativeCountry, $registrationDate, $welcomedByTeacher, $suggestedClassLevel);
+
+    $this->assertPageContainsTitle($firstName . ' ' . strtoupper($lastName));
+    $this->assertStudentProfileContainsInfo('Masculin');
+    $this->assertStudentProfileContainsInfo($registrationDate);
+    $this->assertStudentProfileContainsInfo('User Active 1');
+    $this->assertStudentProfileContainsInfo('Class level 2');
+    $this->assertStudentProfileContainsInfo('Indonésie');
+
+    $this->logout();
+  }
+
+  /**
+   * @test
+   */
   public function deleteAction_studentExists_studentIsDeleted() {
     $newStudent = new Student();
     $newStudent->setFirstname('Bob');
@@ -69,6 +103,32 @@ class StudentControllerTest extends AbstractControllerTest {
     $this->goToRoute('/student/' . $newStudentId . '/show', 404);
 
     $this->logout();
+  }
+
+  private function fillAndSubmitCreationForm($firstName, $lastName, $gender, $nativeCountry, $registrationDate, $welcomedByTeacher, $suggestedClassLevel, $followRedirect = true, $buttonLabel = "Enregistrer l'apprenant") {
+    // Fill in the form and submit it
+    $form = $this->crawler->selectButton($buttonLabel)->form(array(
+        $this->FIELD_PREFIX . '[lastname]' => $lastName,
+        $this->FIELD_PREFIX . '[firstname]' => $firstName,
+        $this->FIELD_PREFIX . '[registrationDate]' => $registrationDate
+    ));
+
+    $form[$this->FIELD_PREFIX . '[gender]']->select($gender);
+    $form[$this->FIELD_PREFIX . '[welcomedByTeacher]']->select($welcomedByTeacher);
+    $form[$this->FIELD_PREFIX . '[suggestedClassLevel][0][classLevel]']->select($suggestedClassLevel);
+    $form[$this->FIELD_PREFIX . '[nativeCountry]']->select($nativeCountry);
+
+    $this->client->submit($form);
+
+    if ($followRedirect) {
+      $this->crawler = $this->client->followRedirect();
+    } else {
+      $this->crawler = $this->client->reload();
+    }
+  }
+
+  private function assertStudentProfileContainsInfo($info) {
+    $this->assertTrue($this->crawler->filter("div.controls:contains('" . $info . "')")->count() >= 1, "Info not found in profile: " . $info);
   }
 
 }
