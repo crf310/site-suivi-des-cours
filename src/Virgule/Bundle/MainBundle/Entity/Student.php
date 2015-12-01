@@ -32,7 +32,7 @@ class Student {
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
-        
+
     /**
      * @ORM\ManyToOne(targetEntity="Teacher")
      * @ORM\JoinColumn(name="fk_updated_by_teacher", referencedColumnName="id")
@@ -43,6 +43,7 @@ class Student {
      * @var \DateTime $registrationDate
      *
      * @ORM\Column(name="registration_date", type="date", nullable=false)
+     * @Assert\NotBlank(message="Merci de saisir une date d'accueil")
      */
     private $registrationDate;
 
@@ -256,7 +257,7 @@ class Student {
      * @ORM\ManyToMany(targetEntity="ClassSession", mappedBy="classSessionStudents", cascade={"persist"})
      */
     private $classSessions;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="ClassSession", mappedBy="nonEnrolledClassSessionStudents", cascade={"persist"})
      */
@@ -271,7 +272,7 @@ class Student {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId() {
         return $this->id;
@@ -281,7 +282,7 @@ class Student {
         $this->updatedAt = new \Datetime('now');
         return $this;
     }
-    
+
     public function getUpdatedAt() {
         return $this->updatedAt;
     }
@@ -301,7 +302,7 @@ class Student {
     /**
      * Get registrationDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getRegistrationDate() {
         return $this->registrationDate;
@@ -322,7 +323,7 @@ class Student {
     /**
      * Get lastname
      *
-     * @return string 
+     * @return string
      */
     public function getLastname() {
         return $this->lastname;
@@ -343,7 +344,7 @@ class Student {
     /**
      * Get firstname
      *
-     * @return string 
+     * @return string
      */
     public function getFirstname() {
         return $this->firstname;
@@ -368,7 +369,7 @@ class Student {
     /**
      * Get birthdate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getBirthdate() {
         return $this->birthdate;
@@ -378,7 +379,7 @@ class Student {
      * Get age
      * Calculates and returns it in years
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getAge() {
         $now = new \DateTime('now');
@@ -404,7 +405,7 @@ class Student {
     /**
      * Get phoneNumber
      *
-     * @return string 
+     * @return string
      */
     public function getPhoneNumber() {
         return $this->phoneNumber;
@@ -425,7 +426,7 @@ class Student {
     /**
      * Get cellphoneNumber
      *
-     * @return string 
+     * @return string
      */
     public function getCellphoneNumber() {
         return $this->cellphoneNumber;
@@ -446,7 +447,7 @@ class Student {
     /**
      * Get address
      *
-     * @return string 
+     * @return string
      */
     public function getAddress() {
         return $this->address;
@@ -467,7 +468,7 @@ class Student {
     /**
      * Get zipcode
      *
-     * @return string 
+     * @return string
      */
     public function getZipcode() {
         return $this->zipcode;
@@ -488,7 +489,7 @@ class Student {
     /**
      * Get city
      *
-     * @return string 
+     * @return string
      */
     public function getCity() {
         return $this->city;
@@ -509,7 +510,7 @@ class Student {
     /**
      * Get gender
      *
-     * @return string 
+     * @return string
      */
     public function getGender() {
         return $this->gender;
@@ -530,7 +531,7 @@ class Student {
     /**
      * Get nationality
      *
-     * @return string 
+     * @return string
      */
     public function getNationality() {
         return $this->nationality;
@@ -551,7 +552,7 @@ class Student {
     /**
      * Get maritalStatus
      *
-     * @return string 
+     * @return string
      */
     public function getMaritalStatus() {
         return $this->maritalStatus;
@@ -572,7 +573,7 @@ class Student {
     /**
      * Get arrivalDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getArrivalDate() {
         return $this->arrivalDate;
@@ -593,7 +594,7 @@ class Student {
     /**
      * Get scholarized
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getScholarized() {
         return $this->scholarized;
@@ -614,7 +615,7 @@ class Student {
     /**
      * Get profession
      *
-     * @return string 
+     * @return string
      */
     public function getProfession() {
         return $this->profession;
@@ -635,7 +636,7 @@ class Student {
     /**
      * Get scholarizedInTheCountry
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getScholarizedInTheCountry() {
         return $this->scholarizedInTheCountry;
@@ -656,7 +657,7 @@ class Student {
     /**
      * Get scholarizedInAForeignCountry
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getScholarizedInAForeignCountry() {
         return $this->scholarizedInAForeignCountry;
@@ -677,7 +678,7 @@ class Student {
     /**
      * Get scholarizationLevel
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getScholarizationLevel() {
         return $this->scholarizationLevel;
@@ -698,7 +699,7 @@ class Student {
     /**
      * Get emergencyContactLastname
      *
-     * @return string 
+     * @return string
      */
     public function getEmergencyContactLastname() {
         return $this->emergencyContactLastname;
@@ -719,7 +720,7 @@ class Student {
     /**
      * Get emergencyContactFirstname
      *
-     * @return string 
+     * @return string
      */
     public function getEmergencyContactFirstname() {
         return $this->emergencyContactFirstname;
@@ -740,7 +741,7 @@ class Student {
     /**
      * Get emergencyContactPhoneNumber
      *
-     * @return string 
+     * @return string
      */
     public function getEmergencyContactPhoneNumber() {
         return $this->emergencyContactPhoneNumber;
@@ -761,12 +762,12 @@ class Student {
     /**
      * Get emergencyContactConnectionType
      *
-     * @return string 
+     * @return string
      */
     public function getEmergencyContactConnectionType() {
         return $this->emergencyContactConnectionType;
     }
-    
+
     /**
      * Set fkScholarizationLanguage
      *
@@ -782,7 +783,7 @@ class Student {
     /**
      * Get fkScholarizationLanguage
      *
-     * @return Virgule\Bundle\MainBundle\Entity\Language 
+     * @return Virgule\Bundle\MainBundle\Entity\Language
      */
     public function getFkScholarizationLanguage() {
         return $this->fkScholarizationLanguage;
@@ -824,7 +825,7 @@ class Student {
     /**
      * Get welcomedByTeacher
      *
-     * @return \Virgule\Bundle\MainBundle\Entity\Teacher 
+     * @return \Virgule\Bundle\MainBundle\Entity\Teacher
      */
     public function getWelcomedByTeacher() {
         return $this->welcomedByTeacher;
@@ -879,7 +880,7 @@ class Student {
     /**
      * Get comments
      *
-     * @return string 
+     * @return string
      */
     public function getComments() {
         return $this->comments;
@@ -909,7 +910,7 @@ class Student {
     /**
      * Get courses
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCourses() {
         return $this->courses;
@@ -930,7 +931,7 @@ class Student {
     /**
      * Get welcomedInOrganizationBranch
      *
-     * @return \Virgule\Bundle\MainBundle\Entity\OrganizationBranch 
+     * @return \Virgule\Bundle\MainBundle\Entity\OrganizationBranch
      */
     public function getWelcomedInOrganizationBranch() {
         return $this->welcomedInOrganizationBranch;
@@ -960,12 +961,12 @@ class Student {
     /**
      * Get classSessions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getClassSessions() {
         return $this->classSessions;
     }
-    
+
     /**
      * Add classSessionsNonEnrolled
      *
@@ -990,7 +991,7 @@ class Student {
     /**
      * Get classSessionsNonEnrolled
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getClassSessionsNonEnrolled() {
         return $this->classSessionsNonEnrolled;
@@ -1020,7 +1021,7 @@ class Student {
     /**
      * Get suggestedClassLevel
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSuggestedClassLevel() {
         return $this->suggestedClassLevel;
@@ -1050,7 +1051,7 @@ class Student {
     /**
      * Get spokenLanguages
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSpokenLanguages() {
         return $this->spokenLanguages;
@@ -1073,7 +1074,7 @@ class Student {
     public function setPath($path) {
         $this->path = $path;
     }
-    
+
     public function getAbsolutePath() {
         return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->picturePrefix . $this->id . '.' . $this->path;
     }
@@ -1081,7 +1082,7 @@ class Student {
     public function getWebPath() {
         return null === $this->path ? null : $this->getUploadDir() . '/' . $this->picturePrefix . $this->id . '.' . $this->path;
     }
-    
+
     public function getThumbnailWebPath() {
         return null === $this->path ? null : $this->getUploadDir() . '/' . $this->thumbnailPrefix . $this->picturePrefix . $this->id . '.' . $this->path;
     }
@@ -1102,9 +1103,9 @@ class Student {
             // clear the temp image path
             $this->temp = null;
         }
-    
+
         $imageService = new SimpleImage();
- 
+
         // you must throw an exception here if the file cannot be moved
         // so that the entity is not persisted to the database
         // which the UploadedFile move() method does
@@ -1113,18 +1114,18 @@ class Student {
         $this->getFile()->move(
                 $this->getUploadRootDir(), $fileName
         );
-        
-         $imageService->load($this->getUploadRootDir() . '/' . $fileName); 
-         $imageService->resize(400,400); 
+
+         $imageService->load($this->getUploadRootDir() . '/' . $fileName);
+         $imageService->resize(400,400);
          $imageService->save($this->getUploadRootDir() . '/' . $fileName);
-                 
+
         // thumbnail
         copy($this->getUploadRootDir() . '/' . $fileName, $this->getUploadRootDir() . '/' . $thumbnailFileName);
         // resize thumbnail
-         $imageService->load($this->getUploadRootDir() . '/' . $thumbnailFileName); 
-         $imageService->resize(200,200); 
+         $imageService->load($this->getUploadRootDir() . '/' . $thumbnailFileName);
+         $imageService->resize(200,200);
          $imageService->save($this->getUploadRootDir() . '/' . $thumbnailFileName);
-             
+
         $this->setFile(null);
     }
 
@@ -1177,7 +1178,7 @@ class Student {
     public function getFile() {
         return $this->file;
     }
-    
+
     /**
      * Set updatedBy
      *
@@ -1193,7 +1194,7 @@ class Student {
     /**
      * Get updatedBy
      *
-     * @return \Virgule\Bundle\MainBundle\Entity\Teacher 
+     * @return \Virgule\Bundle\MainBundle\Entity\Teacher
      */
     public function getUpdatedByTeacher() {
         return $this->updatedBy;
