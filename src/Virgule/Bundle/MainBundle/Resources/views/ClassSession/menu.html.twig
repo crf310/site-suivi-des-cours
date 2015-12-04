@@ -1,7 +1,7 @@
     <a class="btn btn-large" href="{{ path('classsession_rss_index') }}"> <i class="my-icon-rss"></i>S'abonner à un flux RSS</a>
     <a class="btn btn-large" href="#"> <i class="my-icon-search-classsession"></i>Rechercher</a>
     <div class="btn-group">
-        <a data-toggle="dropdown" class="btn btn-large"> <i class="my-icon-add"></i>Ajouter un compte-rendu <span class="caret"></span></a>
+        <a data-toggle="dropdown" class="btn btn-large"> <i class="my-icon-add"></i>Ajouter un compte rendu <span class="caret"></span></a>
         <ul class="dropdown-menu">
             {% for course in courses %}
                 <li><a href="{{ path('classsession_add', { 'id': course.course_id }) }}">

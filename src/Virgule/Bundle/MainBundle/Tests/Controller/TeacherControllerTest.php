@@ -49,7 +49,7 @@ class TeacherControllerTest extends AbstractControllerTest {
 
     $this->assertEquals(1, $this->crawler->filter("div.widget-content:contains('Aucun apprenant trouvé')")->count());
     $this->assertEquals(1, $this->crawler->filter("div.widget-content:contains(' Aucun cours dirigé pour le moment')")->count());
-    $this->assertEquals(1, $this->crawler->filter("div.widget-content:contains('Aucun compte-rendu enregistré pour le moment')")->count());
+    $this->assertEquals(1, $this->crawler->filter("div.widget-content:contains('Aucun compte rendu enregistré pour le moment')")->count());
 
     $this->logout();
   }

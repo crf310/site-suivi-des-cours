@@ -33,7 +33,7 @@
     <a class="btn tip-bottom" href="{{ path('attendance_list', { 'id': entity.id }) }}" target="_blank"><i class="my-icon-trombinoscope"></i>Fiche de présence</a>
     <a class="btn tip-bottom" href="{{ path('course_show_trombinoscope', { 'id': entity.id }) }}"> <i class="my-icon-trombinoscope"></i>Trombinoscope</a>
     <a class="btn tip-bottom" href="{{ path('course_manage_enrollments', { 'id': entity.id }) }}"> <i class="my-icon-manage-students"></i>Gérer les inscriptions</a>
-    <a class="btn tip-bottom" href="{{ path('classsession_add', { 'id': entity.id }) }}"> <i class="my-icon-add"></i>Ajouter un compte-rendu</a>    
+    <a class="btn tip-bottom" href="{{ path('classsession_add', { 'id': entity.id }) }}"> <i class="my-icon-add"></i>Ajouter un compte rendu</a>    
     {% if is_granted('ROLE_SECRETARY') %}
         <a class="btn tip-bottom" href="{{ path('course_edit', { 'id': entity.id }) }}"> <i class="my-icon-class_edit"></i>Modifier le cours</a>
         <a class="btn" href="#" id="delete-course"> <i class="my-icon-calendar-delete"></i>Supprimer le cours</a>
@@ -101,7 +101,7 @@
                 {% else %}
                     {% set listBreak = (classSessions | length // 3) + 1 %}
                 {% endif %}
-                {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Comptes-rendus de ce cours', 'classSessions': classSessions, 'listBreak': listBreak }  %}
+                {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Comptes rendus de ce cours', 'classSessions': classSessions, 'listBreak': listBreak }  %}
             </div>
         </div>
     </div>

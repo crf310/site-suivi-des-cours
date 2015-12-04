@@ -1,4 +1,4 @@
-{% include ':Form:form_hat.html.twig' with { 'form': form, 'form_title': 'Contenu du compte-rendu', 'icon': 'icon-align-justify' }  %}
+{% include ':Form:form_hat.html.twig' with { 'form': form, 'form_title': 'Contenu du compte rendu', 'icon': 'icon-align-justify' }  %}
 <div class="widget-content nopadding">
     {{ form_row(form.course, { 'label': 'Cours concerné'}) }}
     {% if "hidden" in form.course.vars.block_prefixes %}
