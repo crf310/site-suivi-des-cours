@@ -58,6 +58,9 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
     $student->setFirstname('Firstname ' . $studentId);
     $student->setLastname('Lastname ' . $studentId);
     $student->setRegistrationDate(new \DateTime('01-01-1970'));
+    $student->setBirthDate(new \DateTime('0' . $studentId . '-01-1970'));
+    $student->setGender('M');
+    $student->setNativeCountry('FR');
 
     $this->addReference('student-' . $studentId, $student);
 
