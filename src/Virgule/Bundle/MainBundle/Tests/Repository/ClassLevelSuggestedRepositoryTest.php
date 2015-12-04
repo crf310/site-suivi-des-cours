@@ -3,7 +3,7 @@ namespace Virgule\Bundle\MainBundle\Tests\Repository;
 
 use Virgule\Bundle\MainBundle\Tests\Repository\AbstractRepositoryTest;
 
-class ClassLevelRepositoryTest extends AbstractRepositoryTest {
+class ClassLevelSuggestedRepositoryTest extends AbstractRepositoryTest {
 
     private function getRepository() {
         return self::$_em->getRepository('VirguleMainBundle:ClassLevelSuggested');
