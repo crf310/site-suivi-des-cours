@@ -6,6 +6,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Virgule\Bundle\MainBundle\Entity\Student;
+use Virgule\Bundle\MainBundle\Entity\ClassLevelSuggested;
 
 /**
  * @author Guillaume Lucazeau
@@ -25,6 +26,29 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
     $manager->persist($s1);
     $manager->persist($s2);
     $manager->persist($s3);
+
+    // class levels suggested for Student 3
+    $classLevelSuggested1 = new ClassLevelSuggested();
+    $classLevelSuggested1->setChanger($this->getReference('user-1'));
+    $classLevelSuggested1->setClassLevel($this->getReference('classlevel-2'));
+    $classLevelSuggested1->setDateOfChange(new \DateTime('01-05-1982'));
+    $classLevelSuggested1->setStudent($s3);
+
+    $classLevelSuggested2 = new ClassLevelSuggested();
+    $classLevelSuggested2->setChanger($this->getReference('user-3'));
+    $classLevelSuggested2->setClassLevel($this->getReference('classlevel-3'));
+    $classLevelSuggested2->setDateOfChange(new \DateTime('10-01-1985'));
+    $classLevelSuggested2->setStudent($s3);
+
+    $classLevelSuggested3 = new ClassLevelSuggested();
+    $classLevelSuggested3->setChanger($this->getReference('user-1'));
+    $classLevelSuggested3->setClassLevel($this->getReference('classlevel-1'));
+    $classLevelSuggested3->setDateOfChange(new \DateTime('08-01-2014'));
+    $classLevelSuggested3->setStudent($s3);
+
+    $manager->persist($classLevelSuggested1);
+    $manager->persist($classLevelSuggested2);
+    $manager->persist($classLevelSuggested3);
 
     $manager->flush();
   }
