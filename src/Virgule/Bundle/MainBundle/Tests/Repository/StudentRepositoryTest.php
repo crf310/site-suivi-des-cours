@@ -154,5 +154,23 @@ class StudentRepositoryTest extends AbstractRepositoryTest {
         $this->assertEquals(1, count($results), 'Expected 1, got ' . count($results));
         $this->assertEquals('Lastname 2', $results[0]['lastname'], 'Wrong lastname');
     }
+
+    /**
+     * @test
+     */
+    public function getStudentsInformation_twoStudentsInThreeCourses_twoStudentsReturnedWithCorrectInformation() {
+        $results = $this->getRepository()->getStudentsInformation(1);
+        $expectedNbResults = 2;
+        $this->assertEquals($expectedNbResults, count($results), 'Expected ' . $expectedNbResults . ', got ' . count($results));
+
+        foreach ($results as $student) {
+            $studentId = $student['student_id'];
+            $this->assertEquals(new \DateTime('0' . $studentId . '-01-1970'), $student['student_birthDate'], 'Birthdate is wrong');
+            $this->assertEquals('M', $student['student_gender'], 'Gender is wrong');
+            $this->assertEquals('FR', $student['nativeCountry'], 'Country is wrong');
+        }
+    }
+
+
 }
 ?>
