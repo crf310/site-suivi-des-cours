@@ -24,8 +24,11 @@ class LanguageRepository extends EntityRepository {
     }
 
     public function getNumberOfLanguagesSpoken($semesterId) {
-        $qb = $this->createDefaultQueryBuilder()
-                ->addSelect('sl.name as language_name, count(sl.id) as nb_students')
+        $qb = $this->createDefaultQueryBuilder();
+        
+        $qb     
+                ->select($qb->expr()->countDistinct('s.id'). ' AS nb_students')
+                ->addSelect('sl.name as language_name')
                 ->innerJoin('sl.students', 's')
                 ->innerJoin('s.courses', 'c')
                 ->where('c.semester = :semesterId')
