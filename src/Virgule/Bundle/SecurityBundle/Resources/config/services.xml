@@ -9,12 +9,12 @@
         <parameter key="virgule_security.example.class">Virgule\Bundle\SecurityBundle\Example</parameter>
     </parameters>
 
-    <services>
-        <service id="virgule_security.example" class="%virgule_security.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
-        </service>
-    </services>
-    -->
+  <services>
+      <service id="virgule_security.example" class="%virgule_security.example.class%">
+          <argument type="service" id="service_id" />
+          <argument>plain_value</argument>
+          <argument>%parameter_name%</argument>
+      </service>
+  </services>
+  -->
 </container>
