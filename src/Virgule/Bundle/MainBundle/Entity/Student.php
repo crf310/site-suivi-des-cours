@@ -233,7 +233,7 @@ class Student {
     /**
      * @var Spoken Languages
      *
-     * @ORM\ManyToMany(targetEntity="Language", inversedBy="students")
+     * @ORM\ManyToMany(targetEntity="Language", inversedBy="students",cascade={"persist"})
      * @ORM\OrderBy({"name" = "ASC"})
      */
     private $spokenLanguages;
