@@ -22,9 +22,9 @@ abstract class AbstractControllerTest extends AbstractTest {
 
     // Fill in the form and submit it
     $form = $this->crawler->selectButton('Connexion')->form(array(
-      '_username' => $username,
-      '_password' => $password
-      ));
+        '_username' => $username,
+        '_password' => $password
+    ));
 
     $this->crawler = $this->client->submit($form);
 

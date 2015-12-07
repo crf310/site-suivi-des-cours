@@ -102,7 +102,7 @@ class ClassSessionControllerTest extends AbstractControllerTest {
     $this->logout();
   }
 
-    private function fillAndSubmitModificationForm($sessionDate, $sessionSummary, $followRedirect = true, $buttonLabel = 'Enregistrer le compte rendu') {
+  private function fillAndSubmitModificationForm($sessionDate, $sessionSummary, $followRedirect = true, $buttonLabel = 'Enregistrer le compte rendu') {
     // Fill in the form and submit it
     $form = $this->crawler->selectButton($buttonLabel)->form(array(
         $this->FIELD_PREFIX . '[sessionDate]' => $sessionDate,
@@ -117,4 +117,5 @@ class ClassSessionControllerTest extends AbstractControllerTest {
       $this->crawler = $this->client->reload();
     }
   }
+
 }

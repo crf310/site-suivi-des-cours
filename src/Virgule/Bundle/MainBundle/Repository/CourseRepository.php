@@ -92,12 +92,12 @@ class CourseRepository extends EntityRepository {
 
   public function getCoursesByStudent($studentId) {
     $results = $this->createQueryBuilder('c')
-              ->innerJoin('c.students', 's')
-              ->innerJoin('c.semester', 's2')
-              ->where('s.id = :studentId')
-              ->add('orderBy', 's2.startDate DESC, c.dayOfWeek ASC, c.startTime ASC')
-              ->setParameter('studentId', $studentId)
-              ->getQuery()->execute();
+                    ->innerJoin('c.students', 's')
+                    ->innerJoin('c.semester', 's2')
+                    ->where('s.id = :studentId')
+                    ->add('orderBy', 's2.startDate DESC, c.dayOfWeek ASC, c.startTime ASC')
+                    ->setParameter('studentId', $studentId)
+                    ->getQuery()->execute();
     return $results;
   }
 

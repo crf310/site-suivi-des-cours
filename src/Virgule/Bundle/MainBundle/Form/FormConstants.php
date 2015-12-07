@@ -1,4 +1,5 @@
 <?php
+
 namespace Virgule\Bundle\MainBundle\Form;
 
 /**
@@ -7,7 +8,8 @@ namespace Virgule\Bundle\MainBundle\Form;
  * @author guillaume
  */
 class FormConstants {
-    const CREATE_INTENTION = 'CREATE';
 
-    const EDIT_INTENTION = 'EDIT';
+  const CREATE_INTENTION = 'CREATE';
+  const EDIT_INTENTION = 'EDIT';
+
 }

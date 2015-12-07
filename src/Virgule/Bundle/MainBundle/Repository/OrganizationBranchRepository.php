@@ -1,6 +1,7 @@
 <?php
 
 namespace Virgule\Bundle\MainBundle\Repository;
+
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 
@@ -12,14 +13,14 @@ use Doctrine\ORM\NoResultException;
  */
 class OrganizationBranchRepository extends EntityRepository {
 
-    public function loadOne($id) {
-        $og = $this->findOneBy(array('id' => $id));
-        if ($og == null) {
-            throw new NoResultException("Can't find the Organization Branch");
-        } else {
-            return $og;
-        }
+  public function loadOne($id) {
+    $og = $this->findOneBy(array('id' => $id));
+    if ($og == null) {
+      throw new NoResultException("Can't find the Organization Branch");
+    } else {
+      return $og;
     }
+  }
 
 }
 

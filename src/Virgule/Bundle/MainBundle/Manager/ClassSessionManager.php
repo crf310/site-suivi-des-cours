@@ -8,25 +8,26 @@ use \Virgule\Bundle\MainBundle\Entity\ClassSession;
 
 class ClassSessionManager extends BaseManager {
 
-    protected $em;
+  protected $em;
 
-    public function __construct(EntityManager $em) {
-        $this->em = $em;
-    }
+  public function __construct(EntityManager $em) {
+    $this->em = $em;
+  }
 
-    public function getRepository() {
-        return $this->em->getRepository('VirguleMainBundle:ClassSession');
-    }
-    
-    public function isClassSessionAlreadyExisting($classSession) {
+  public function getRepository() {
+    return $this->em->getRepository('VirguleMainBundle:ClassSession');
+  }
 
-        if ($this->getRepository()->getNumberOfClassSessionsPerCourseAndDate($classSession->getCourse(), $classSession->getSessionDate()) > 0) {
-            $classSessionExists = true;
-        } else {
-            $classSessionExists = false;
-        }
-        return $classSessionExists;
+  public function isClassSessionAlreadyExisting($classSession) {
+
+    if ($this->getRepository()->getNumberOfClassSessionsPerCourseAndDate($classSession->getCourse(), $classSession->getSessionDate()) > 0) {
+      $classSessionExists = true;
+    } else {
+      $classSessionExists = false;
     }
+    return $classSessionExists;
+  }
+
 }
 
 ?>

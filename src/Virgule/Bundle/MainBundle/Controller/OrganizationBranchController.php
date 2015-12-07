@@ -17,173 +17,173 @@ use Virgule\Bundle\MainBundle\Form\Type\OrganizationBranchType;
  */
 class OrganizationBranchController extends AbstractVirguleController {
 
-    /**
-     * Lists all OrganizationBranch entities.
-     *
-     * @Route("/", name="organizationbranch_index")
-     * @Template()
-     */
-    public function indexAction() {
-        $em = $this->getDoctrine()->getManager();
+  /**
+   * Lists all OrganizationBranch entities.
+   *
+   * @Route("/", name="organizationbranch_index")
+   * @Template()
+   */
+  public function indexAction() {
+    $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('VirguleMainBundle:OrganizationBranch')->findAll();
+    $entities = $em->getRepository('VirguleMainBundle:OrganizationBranch')->findAll();
 
-        $entity = new OrganizationBranch();
-        $form = $this->createForm(new OrganizationBranchType(), $entity);
-        
-        return array(
-            'entities' => $entities,            
-            'form' => $form->createView(),
-        );
+    $entity = new OrganizationBranch();
+    $form = $this->createForm(new OrganizationBranchType(), $entity);
+
+    return array(
+        'entities' => $entities,
+        'form' => $form->createView(),
+    );
+  }
+
+  /**
+   * Finds and displays a OrganizationBranch entity.
+   *
+   * @Route("/{id}/show", name="organizationbranch_show")
+   * @Template()
+   */
+  public function showAction($id) {
+    $em = $this->getDoctrine()->getManager();
+
+    $organizationBranch = $em->getRepository('VirguleMainBundle:OrganizationBranch')->find($id);
+
+    $classRooms = $this->getClassRoomRepository()->getClassRoomsForOrganizationBranch($organizationBranch->getId());
+
+    if (!$organizationBranch) {
+      throw $this->createNotFoundException('Unable to find OrganizationBranch entity.');
     }
 
-    /**
-     * Finds and displays a OrganizationBranch entity.
-     *
-     * @Route("/{id}/show", name="organizationbranch_show")
-     * @Template()
-     */
-    public function showAction($id) {
-        $em = $this->getDoctrine()->getManager();
+    return array(
+        'organizationBranch' => $organizationBranch,
+        'classRooms' => $classRooms
+    );
+  }
 
-        $organizationBranch = $em->getRepository('VirguleMainBundle:OrganizationBranch')->find($id);
+  /**
+   * Displays a form to create a new OrganizationBranch entity.
+   *
+   * @Route("/new", name="organizationbranch_new")
+   * @Template()
+   */
+  public function newAction() {
+    $entity = new OrganizationBranch();
+    $form = $this->createForm(new OrganizationBranchType(), $entity);
 
-        $classRooms = $this->getClassRoomRepository()->getClassRoomsForOrganizationBranch($organizationBranch->getId());
-        
-        if (!$organizationBranch) {
-            throw $this->createNotFoundException('Unable to find OrganizationBranch entity.');
-        }
+    return array(
+        'entity' => $entity,
+        'form' => $form->createView(),
+    );
+  }
 
-        return array(
-            'organizationBranch' => $organizationBranch,
-            'classRooms' => $classRooms
-        );
+  /**
+   * Creates a new OrganizationBranch entity.
+   *
+   * @Route("/create", name="organizationbranch_create")
+   * @Method("POST")
+   * @Template("VirguleMainBundle:OrganizationBranch:new.html.twig")
+   */
+  public function createAction(Request $request) {
+    $entity = new OrganizationBranch();
+    $form = $this->createForm(new OrganizationBranchType(), $entity);
+    $form->bind($request);
+
+    if ($form->isValid()) {
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($entity);
+      $em->flush();
+
+      return $this->redirect($this->generateUrl('organizationbranch_show', array('id' => $entity->getId())));
     }
 
-    /**
-     * Displays a form to create a new OrganizationBranch entity.
-     *
-     * @Route("/new", name="organizationbranch_new")
-     * @Template()
-     */
-    public function newAction() {
-        $entity = new OrganizationBranch();
-        $form = $this->createForm(new OrganizationBranchType(), $entity);
+    return array(
+        'entity' => $entity,
+        'form' => $form->createView(),
+    );
+  }
 
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-        );
+  /**
+   * Displays a form to edit an existing OrganizationBranch entity.
+   *
+   * @Route("/{id}/edit", name="organizationbranch_edit")
+   * @Template()
+   */
+  public function editAction($id) {
+    $em = $this->getDoctrine()->getManager();
+
+    $entity = $em->getRepository('VirguleMainBundle:OrganizationBranch')->find($id);
+
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find OrganizationBranch entity.');
     }
 
-    /**
-     * Creates a new OrganizationBranch entity.
-     *
-     * @Route("/create", name="organizationbranch_create")
-     * @Method("POST")
-     * @Template("VirguleMainBundle:OrganizationBranch:new.html.twig")
-     */
-    public function createAction(Request $request) {
-        $entity = new OrganizationBranch();
-        $form = $this->createForm(new OrganizationBranchType(), $entity);
-        $form->bind($request);
+    $editForm = $this->createForm(new OrganizationBranchType(), $entity);
+    $deleteForm = $this->createDeleteForm($id);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+    return array(
+        'entity' => $entity,
+        'edit_form' => $editForm->createView(),
+        'delete_form' => $deleteForm->createView(),
+    );
+  }
 
-            return $this->redirect($this->generateUrl('organizationbranch_show', array('id' => $entity->getId())));
-        }
+  /**
+   * Edits an existing OrganizationBranch entity.
+   *
+   * @Route("/{id}/update", name="organizationbranch_update")
+   * @Method("POST")
+   * @Template("VirguleMainBundle:OrganizationBranch:edit.html.twig")
+   */
+  public function updateAction(Request $request, $id) {
+    $em = $this->getDoctrine()->getManager();
 
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-        );
+    $entity = $em->getRepository('VirguleMainBundle:OrganizationBranch')->find($id);
+
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find OrganizationBranch entity.');
     }
 
-    /**
-     * Displays a form to edit an existing OrganizationBranch entity.
-     *
-     * @Route("/{id}/edit", name="organizationbranch_edit")
-     * @Template()
-     */
-    public function editAction($id) {
-        $em = $this->getDoctrine()->getManager();
+    $deleteForm = $this->createDeleteForm($id);
+    $editForm = $this->createForm(new OrganizationBranchType(), $entity);
+    $editForm->bind($request);
 
-        $entity = $em->getRepository('VirguleMainBundle:OrganizationBranch')->find($id);
+    if ($editForm->isValid()) {
+      $em->persist($entity);
+      $em->flush();
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find OrganizationBranch entity.');
-        }
-
-        $editForm = $this->createForm(new OrganizationBranchType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+      return $this->redirect($this->generateUrl('organizationbranch_edit', array('id' => $id)));
     }
 
-    /**
-     * Edits an existing OrganizationBranch entity.
-     *
-     * @Route("/{id}/update", name="organizationbranch_update")
-     * @Method("POST")
-     * @Template("VirguleMainBundle:OrganizationBranch:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id) {
-        $em = $this->getDoctrine()->getManager();
+    return array(
+        'entity' => $entity,
+        'edit_form' => $editForm->createView(),
+        'delete_form' => $deleteForm->createView(),
+    );
+  }
 
-        $entity = $em->getRepository('VirguleMainBundle:OrganizationBranch')->find($id);
+  /**
+   * Deletes a OrganizationBranch entity.
+   *
+   * @Route("/{id}/delete", name="organizationbranch_delete")
+   * @Method("POST")
+   */
+  public function deleteAction(Request $request, $id) {
+    $form = $this->createDeleteForm($id);
+    $form->bind($request);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find OrganizationBranch entity.');
-        }
+    if ($form->isValid()) {
+      $em = $this->getDoctrine()->getManager();
+      $entity = $em->getRepository('VirguleMainBundle:OrganizationBranch')->find($id);
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new OrganizationBranchType(), $entity);
-        $editForm->bind($request);
+      if (!$entity) {
+        throw $this->createNotFoundException('Unable to find OrganizationBranch entity.');
+      }
 
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('organizationbranch_edit', array('id' => $id)));
-        }
-
-        return array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+      $em->remove($entity);
+      $em->flush();
     }
 
-    /**
-     * Deletes a OrganizationBranch entity.
-     *
-     * @Route("/{id}/delete", name="organizationbranch_delete")
-     * @Method("POST")
-     */
-    public function deleteAction(Request $request, $id) {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('VirguleMainBundle:OrganizationBranch')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find OrganizationBranch entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('organizationbranch'));
-    }
+    return $this->redirect($this->generateUrl('organizationbranch'));
+  }
 
 }

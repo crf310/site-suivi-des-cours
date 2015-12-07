@@ -13,22 +13,22 @@ use Virgule\Bundle\MainBundle\Entity\Language;
  * @author Guillaume Lucazeau
  */
 class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface {
-   
+
   var $french;
   var $english;
-  
+
   public function load(ObjectManager $manager) {
     $this->french = new Language();
     $this->french->setName('Français');
-    
+
     $this->english = new Language();
     $this->english->setName('Anglais');
-    
+
     $s1 = $this->createStudent(1);
     $s2 = $this->createStudent(2);
 
     $s2->addSpokenLanguage($this->english);
-    
+
     // student in no class and registered after today
     $s3 = $this->createStudent(3);
     $studentRegistrationDate = new \DateTime('now');
@@ -66,7 +66,7 @@ class LoadStudentData extends AbstractFixture implements OrderedFixtureInterface
   }
 
   private function createStudent($studentId) {
-    
+
     $student = new Student();
     $student->setFirstname('Firstname ' . $studentId);
     $student->setLastname('Lastname ' . $studentId);

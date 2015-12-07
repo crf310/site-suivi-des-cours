@@ -12,7 +12,6 @@ abstract class AbstractTest extends WebTestCase {
    * @var \Doctrine\ORM\EntityManager
    */
   protected static $_em;
-
   protected static $application;
 
   /**

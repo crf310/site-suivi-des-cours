@@ -17,169 +17,169 @@ use Virgule\Bundle\MainBundle\Form\Type\ClassRoomType;
  */
 class ClassRoomController extends Controller {
 
-    /**
-     * Lists all ClassRoom entities.
-     *
-     * @Route("/", name="classroom")
-     * @Template()
-     */
-    public function indexAction() {
-        $em = $this->getDoctrine()->getManager();
+  /**
+   * Lists all ClassRoom entities.
+   *
+   * @Route("/", name="classroom")
+   * @Template()
+   */
+  public function indexAction() {
+    $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('VirguleMainBundle:ClassRoom')->findAll();
+    $entities = $em->getRepository('VirguleMainBundle:ClassRoom')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+    return array(
+        'entities' => $entities,
+    );
+  }
+
+  /**
+   * Finds and displays a ClassRoom entity.
+   *
+   * @Route("/{id}/show", name="classroom_show")
+   * @Template()
+   */
+  public function showAction($id) {
+    $em = $this->getDoctrine()->getManager();
+
+    $entity = $em->getRepository('VirguleMainBundle:ClassRoom')->find($id);
+
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find ClassRoom entity.');
     }
 
-    /**
-     * Finds and displays a ClassRoom entity.
-     *
-     * @Route("/{id}/show", name="classroom_show")
-     * @Template()
-     */
-    public function showAction($id) {
-        $em = $this->getDoctrine()->getManager();
+    $deleteForm = $this->createDeleteForm($id);
 
-        $entity = $em->getRepository('VirguleMainBundle:ClassRoom')->find($id);
+    return array(
+        'entity' => $entity,
+        'delete_form' => $deleteForm->createView(),
+    );
+  }
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find ClassRoom entity.');
-        }
+  /**
+   * Displays a form to create a new ClassRoom entity.
+   *
+   * @Route("/new", name="classroom_new")
+   * @Template()
+   */
+  public function newAction() {
+    $entity = new ClassRoom();
+    $form = $this->createForm(new ClassRoomType(), $entity);
 
-        $deleteForm = $this->createDeleteForm($id);
+    return array(
+        'entity' => $entity,
+        'form' => $form->createView(),
+    );
+  }
 
-        return array(
-            'entity' => $entity,
-            'delete_form' => $deleteForm->createView(),
-        );
+  /**
+   * Creates a new ClassRoom entity.
+   *
+   * @Route("/create", name="classroom_create")
+   * @Method("POST")
+   * @Template("VirguleMainBundle:ClassRoom:new.html.twig")
+   */
+  public function createAction(Request $request) {
+    $entity = new ClassRoom();
+    $form = $this->createForm(new ClassRoomType(), $entity);
+    $form->bind($request);
+
+    if ($form->isValid()) {
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($entity);
+      $em->flush();
+
+      return $this->redirect($this->generateUrl('classroom_show', array('id' => $entity->getId())));
     }
 
-    /**
-     * Displays a form to create a new ClassRoom entity.
-     *
-     * @Route("/new", name="classroom_new")
-     * @Template()
-     */
-    public function newAction() {
-        $entity = new ClassRoom();
-        $form = $this->createForm(new ClassRoomType(), $entity);
+    return array(
+        'entity' => $entity,
+        'form' => $form->createView(),
+    );
+  }
 
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-        );
+  /**
+   * Displays a form to edit an existing ClassRoom entity.
+   *
+   * @Route("/{id}/edit", name="classroom_edit")
+   * @Template()
+   */
+  public function editAction($id) {
+    $em = $this->getDoctrine()->getManager();
+
+    $entity = $em->getRepository('VirguleMainBundle:ClassRoom')->find($id);
+
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find ClassRoom entity.');
     }
 
-    /**
-     * Creates a new ClassRoom entity.
-     *
-     * @Route("/create", name="classroom_create")
-     * @Method("POST")
-     * @Template("VirguleMainBundle:ClassRoom:new.html.twig")
-     */
-    public function createAction(Request $request) {
-        $entity = new ClassRoom();
-        $form = $this->createForm(new ClassRoomType(), $entity);
-        $form->bind($request);
+    $editForm = $this->createForm(new ClassRoomType(), $entity);
+    $deleteForm = $this->createDeleteForm($id);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+    return array(
+        'entity' => $entity,
+        'edit_form' => $editForm->createView(),
+        'delete_form' => $deleteForm->createView(),
+    );
+  }
 
-            return $this->redirect($this->generateUrl('classroom_show', array('id' => $entity->getId())));
-        }
+  /**
+   * Edits an existing ClassRoom entity.
+   *
+   * @Route("/{id}/update", name="classroom_update")
+   * @Method("POST")
+   * @Template("VirguleMainBundle:ClassRoom:edit.html.twig")
+   */
+  public function updateAction(Request $request, $id) {
+    $em = $this->getDoctrine()->getManager();
 
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-        );
+    $entity = $em->getRepository('VirguleMainBundle:ClassRoom')->find($id);
+
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find ClassRoom entity.');
     }
 
-    /**
-     * Displays a form to edit an existing ClassRoom entity.
-     *
-     * @Route("/{id}/edit", name="classroom_edit")
-     * @Template()
-     */
-    public function editAction($id) {
-        $em = $this->getDoctrine()->getManager();
+    $deleteForm = $this->createDeleteForm($id);
+    $editForm = $this->createForm(new ClassRoomType(), $entity);
+    $editForm->bind($request);
 
-        $entity = $em->getRepository('VirguleMainBundle:ClassRoom')->find($id);
+    if ($editForm->isValid()) {
+      $em->persist($entity);
+      $em->flush();
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find ClassRoom entity.');
-        }
-
-        $editForm = $this->createForm(new ClassRoomType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+      return $this->redirect($this->generateUrl('classroom_edit', array('id' => $id)));
     }
 
-    /**
-     * Edits an existing ClassRoom entity.
-     *
-     * @Route("/{id}/update", name="classroom_update")
-     * @Method("POST")
-     * @Template("VirguleMainBundle:ClassRoom:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id) {
-        $em = $this->getDoctrine()->getManager();
+    return array(
+        'entity' => $entity,
+        'edit_form' => $editForm->createView(),
+        'delete_form' => $deleteForm->createView(),
+    );
+  }
 
-        $entity = $em->getRepository('VirguleMainBundle:ClassRoom')->find($id);
+  /**
+   * Deletes a ClassRoom entity.
+   *
+   * @Route("/{id}/delete", name="classroom_delete")
+   * @Method("POST")
+   */
+  public function deleteAction(Request $request, $id) {
+    $form = $this->createDeleteForm($id);
+    $form->bind($request);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find ClassRoom entity.');
-        }
+    if ($form->isValid()) {
+      $em = $this->getDoctrine()->getManager();
+      $entity = $em->getRepository('VirguleMainBundle:ClassRoom')->find($id);
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new ClassRoomType(), $entity);
-        $editForm->bind($request);
+      if (!$entity) {
+        throw $this->createNotFoundException('Unable to find ClassRoom entity.');
+      }
 
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('classroom_edit', array('id' => $id)));
-        }
-
-        return array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+      $em->remove($entity);
+      $em->flush();
     }
 
-    /**
-     * Deletes a ClassRoom entity.
-     *
-     * @Route("/{id}/delete", name="classroom_delete")
-     * @Method("POST")
-     */
-    public function deleteAction(Request $request, $id) {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('VirguleMainBundle:ClassRoom')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find ClassRoom entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('classroom'));
-    }
+    return $this->redirect($this->generateUrl('classroom'));
+  }
 
 }

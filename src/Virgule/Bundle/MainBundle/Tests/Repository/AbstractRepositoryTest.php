@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\StringInput;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 
 abstract class AbstractRepositoryTest extends AbstractTest {
-
+  
 }
 
 ?>

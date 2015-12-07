@@ -14,58 +14,58 @@ use Virgule\Bundle\MainBundle\Entity\Student;
  */
 class StudentToNumberTransformer implements DataTransformerInterface {
 
-    /**
-     * @var ObjectManager
-     */
-    private $om;
+  /**
+   * @var ObjectManager
+   */
+  private $om;
 
-    /**
-     * @param ObjectManager $om
-     */
-    public function __construct(ObjectManager $om) {
-        $this->om = $om;
+  /**
+   * @param ObjectManager $om
+   */
+  public function __construct(ObjectManager $om) {
+    $this->om = $om;
+  }
+
+  /**
+   * Transforms an object (student) to a string (number).
+   *
+   * @param  Student|null $issue
+   * @return string
+   */
+  public function transform($student) {
+    if (null === $student) {
+      return "";
     }
 
-    /**
-     * Transforms an object (student) to a string (number).
-     *
-     * @param  Student|null $issue
-     * @return string
-     */
-    public function transform($student) {
-        if (null === $student) {
-            return "";
-        }
+    return $student->getId();
+  }
 
-        return $student->getId();
+  /**
+   * Transforms a string (number) to an object (student).
+   *
+   * @param  string $number
+   *
+   * @return Student|null
+   *
+   * @throws TransformationFailedException if object (student) is not found.
+   */
+  public function reverseTransform($number) {
+    if (!$number) {
+      return null;
     }
 
-    /**
-     * Transforms a string (number) to an object (student).
-     *
-     * @param  string $number
-     *
-     * @return Student|null
-     *
-     * @throws TransformationFailedException if object (student) is not found.
-     */
-    public function reverseTransform($number) {
-        if (!$number) {
-            return null;
-        }
+    $student = $this->om
+            ->getRepository('VirguleMainBundle:Student')
+            ->findOneBy(array('id' => $number))
+    ;
 
-        $student = $this->om
-                ->getRepository('VirguleMainBundle:Student')
-                ->findOneBy(array('id' => $number))
-        ;
-
-        if (null === $student) {
-            throw new TransformationFailedException(sprintf(
-                            'A student with ID "%s" does not exist!', $number
-            ));
-        }
-
-        return $student;
+    if (null === $student) {
+      throw new TransformationFailedException(sprintf(
+              'A student with ID "%s" does not exist!', $number
+      ));
     }
+
+    return $student;
+  }
 
 }

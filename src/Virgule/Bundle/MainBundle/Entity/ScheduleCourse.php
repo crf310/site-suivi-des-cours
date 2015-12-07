@@ -8,11 +8,13 @@ namespace Virgule\Bundle\MainBundle\Entity;
  * @author Guillaume Lucazeau
  */
 class ScheduleCourse {
-    private $course;
-    
-    function __construct($course) {
-        $this->$course = $course;
-    }
+
+  private $course;
+
+  function __construct($course) {
+    $this->$course = $course;
+  }
+
 }
 
 ?>

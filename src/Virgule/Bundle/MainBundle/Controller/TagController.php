@@ -15,181 +15,175 @@ use Virgule\Bundle\MainBundle\Form\Type\TagType;
  *
  * @Route("/tag")
  */
-class TagController extends Controller
-{
-    /**
-     * Lists all Tag entities.
-     *
-     * @Route("/", name="tag")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
+class TagController extends Controller {
 
-        $entities = $em->getRepository('VirguleMainBundle:Tag')->findAll();
+  /**
+   * Lists all Tag entities.
+   *
+   * @Route("/", name="tag")
+   * @Method("GET")
+   * @Template()
+   */
+  public function indexAction() {
+    $em = $this->getDoctrine()->getManager();
 
-        return array(
-            'entities' => $entities,
-        );
+    $entities = $em->getRepository('VirguleMainBundle:Tag')->findAll();
+
+    return array(
+        'entities' => $entities,
+    );
+  }
+
+  /**
+   * Creates a new Tag entity.
+   *
+   * @Route("/", name="tag_create")
+   * @Method("POST")
+   * @Template("VirguleMainBundle:Tag:new.html.twig")
+   */
+  public function createAction(Request $request) {
+    $entity = new Tag();
+    $form = $this->createForm(new TagType(), $entity);
+    $form->bind($request);
+
+    if ($form->isValid()) {
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($entity);
+      $em->flush();
+
+      return $this->redirect($this->generateUrl('tag_show', array('id' => $entity->getId())));
     }
 
-    /**
-     * Creates a new Tag entity.
-     *
-     * @Route("/", name="tag_create")
-     * @Method("POST")
-     * @Template("VirguleMainBundle:Tag:new.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        $entity  = new Tag();
-        $form = $this->createForm(new TagType(), $entity);
-        $form->bind($request);
+    return array(
+        'entity' => $entity,
+        'form' => $form->createView(),
+    );
+  }
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+  /**
+   * Displays a form to create a new Tag entity.
+   *
+   * @Route("/new", name="tag_new")
+   * @Method("GET")
+   * @Template()
+   */
+  public function newAction() {
+    $entity = new Tag();
+    $form = $this->createForm(new TagType(), $entity);
 
-            return $this->redirect($this->generateUrl('tag_show', array('id' => $entity->getId())));
-        }
+    return array(
+        'entity' => $entity,
+        'form' => $form->createView(),
+    );
+  }
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+  /**
+   * Finds and displays a Tag entity.
+   *
+   * @Route("/{id}", name="tag_show")
+   * @Method("GET")
+   * @Template()
+   */
+  public function showAction($id) {
+    $em = $this->getDoctrine()->getManager();
+
+    $entity = $em->getRepository('VirguleMainBundle:Tag')->find($id);
+
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find Tag entity.');
     }
 
-    /**
-     * Displays a form to create a new Tag entity.
-     *
-     * @Route("/new", name="tag_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new Tag();
-        $form   = $this->createForm(new TagType(), $entity);
+    $deleteForm = $this->createDeleteForm($id);
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+    return array(
+        'entity' => $entity,
+        'delete_form' => $deleteForm->createView(),
+    );
+  }
+
+  /**
+   * Displays a form to edit an existing Tag entity.
+   *
+   * @Route("/{id}/edit", name="tag_edit")
+   * @Method("GET")
+   * @Template()
+   */
+  public function editAction($id) {
+    $em = $this->getDoctrine()->getManager();
+
+    $entity = $em->getRepository('VirguleMainBundle:Tag')->find($id);
+
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find Tag entity.');
     }
 
-    /**
-     * Finds and displays a Tag entity.
-     *
-     * @Route("/{id}", name="tag_show")
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
+    $editForm = $this->createForm(new TagType(), $entity);
+    $deleteForm = $this->createDeleteForm($id);
 
-        $entity = $em->getRepository('VirguleMainBundle:Tag')->find($id);
+    return array(
+        'entity' => $entity,
+        'edit_form' => $editForm->createView(),
+        'delete_form' => $deleteForm->createView(),
+    );
+  }
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Tag entity.');
-        }
+  /**
+   * Edits an existing Tag entity.
+   *
+   * @Route("/{id}", name="tag_update")
+   * @Method("PUT")
+   * @Template("VirguleMainBundle:Tag:edit.html.twig")
+   */
+  public function updateAction(Request $request, $id) {
+    $em = $this->getDoctrine()->getManager();
 
-        $deleteForm = $this->createDeleteForm($id);
+    $entity = $em->getRepository('VirguleMainBundle:Tag')->find($id);
 
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        );
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find Tag entity.');
     }
 
-    /**
-     * Displays a form to edit an existing Tag entity.
-     *
-     * @Route("/{id}/edit", name="tag_edit")
-     * @Method("GET")
-     * @Template()
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
+    $deleteForm = $this->createDeleteForm($id);
+    $editForm = $this->createForm(new TagType(), $entity);
+    $editForm->bind($request);
 
-        $entity = $em->getRepository('VirguleMainBundle:Tag')->find($id);
+    if ($editForm->isValid()) {
+      $em->persist($entity);
+      $em->flush();
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Tag entity.');
-        }
-
-        $editForm = $this->createForm(new TagType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+      return $this->redirect($this->generateUrl('tag_edit', array('id' => $id)));
     }
 
-    /**
-     * Edits an existing Tag entity.
-     *
-     * @Route("/{id}", name="tag_update")
-     * @Method("PUT")
-     * @Template("VirguleMainBundle:Tag:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
+    return array(
+        'entity' => $entity,
+        'edit_form' => $editForm->createView(),
+        'delete_form' => $deleteForm->createView(),
+    );
+  }
 
-        $entity = $em->getRepository('VirguleMainBundle:Tag')->find($id);
+  /**
+   * Deletes a Tag entity.
+   *
+   * @Route("/{id}", name="tag_delete")
+   * @Method("DELETE")
+   */
+  public function deleteAction(Request $request, $id) {
+    $form = $this->createDeleteForm($id);
+    $form->bind($request);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Tag entity.');
-        }
+    if ($form->isValid()) {
+      $em = $this->getDoctrine()->getManager();
+      $entity = $em->getRepository('VirguleMainBundle:Tag')->find($id);
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new TagType(), $entity);
-        $editForm->bind($request);
+      if (!$entity) {
+        throw $this->createNotFoundException('Unable to find Tag entity.');
+      }
 
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('tag_edit', array('id' => $id)));
-        }
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+      $em->remove($entity);
+      $em->flush();
     }
 
-    /**
-     * Deletes a Tag entity.
-     *
-     * @Route("/{id}", name="tag_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
+    return $this->redirect($this->generateUrl('tag'));
+  }
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('VirguleMainBundle:Tag')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Tag entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('tag'));
-    }
 }

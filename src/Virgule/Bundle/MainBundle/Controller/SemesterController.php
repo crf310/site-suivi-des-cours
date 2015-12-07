@@ -11,7 +11,6 @@ use Virgule\Bundle\MainBundle\Entity\Semester;
 use Virgule\Bundle\MainBundle\Entity\OpenHouse;
 use Virgule\Bundle\MainBundle\Form\Type\SemesterType;
 use Virgule\Bundle\MainBundle\Form\Type\OpenHouseType;
-
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Virgule\Bundle\MainBundle\StoreEvents;
 use Virgule\Bundle\MainBundle\Event\NewSemesterEvent;
@@ -22,222 +21,221 @@ use Virgule\Bundle\MainBundle\Event\NewSemesterEvent;
  * @Route("/semester")
  */
 class SemesterController extends AbstractVirguleController {
-    
-    
-    /**
-     * Load selected semester info into session
-     *
-     * @Route("/{id}/switch", name="semester_switch")
-     * @Template()
-     */
-    public function switchAction($id) {
-        $semesters = $this->getSemesterManager()->setSelectedSemesterAsCurrent($id);
-        
-        return $this->redirect($this->generateUrl('welcome'));
+
+  /**
+   * Load selected semester info into session
+   *
+   * @Route("/{id}/switch", name="semester_switch")
+   * @Template()
+   */
+  public function switchAction($id) {
+    $semesters = $this->getSemesterManager()->setSelectedSemesterAsCurrent($id);
+
+    return $this->redirect($this->generateUrl('welcome'));
+  }
+
+  /**
+   * Lists all Semester entities.
+   *
+   * @Route("/", name="semester_index")
+   * @Template()
+   */
+  public function indexAction() {
+    $semesters = $this->getSemesterManager()->loadAllSemestersForBranch($this->getSelectedOrganizationBranchId());
+
+    $openHouses = $this->getOpenHouseManager()->getOpenHouses($this->getSelectedSemesterId());
+
+    $openHouseEntity = new OpenHouse();
+    $openHouseForm = $this->createForm(new OpenHouseType(), $openHouseEntity);
+
+    return array_merge(array(
+        'semesters' => $semesters,
+        'openHouses' => $openHouses,
+        'openHouseEntity' => $openHouseEntity,
+        'openHouseForm' => $openHouseForm->createView(),
+            ), $this->newAction());
+  }
+
+  /**
+   * Finds and displays a Semester entity.
+   *
+   * @Route("/{id}/show", name="semester_show")
+   * @Template()
+   */
+  public function showAction($id) {
+    $em = $this->getDoctrine()->getManager();
+
+    $entity = $em->getRepository('VirguleMainBundle:Semester')->find($id);
+
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find Semester entity.');
     }
-    
-    /**
-     * Lists all Semester entities.
-     *
-     * @Route("/", name="semester_index")
-     * @Template()
-     */
-    public function indexAction() {
-        $semesters = $this->getSemesterManager()->loadAllSemestersForBranch($this->getSelectedOrganizationBranchId());
 
-        $openHouses = $this->getOpenHouseManager()->getOpenHouses($this->getSelectedSemesterId());
-        
-        $openHouseEntity = new OpenHouse();
-        $openHouseForm   = $this->createForm(new OpenHouseType(), $openHouseEntity);
-                
-        return array_merge(array(
-            'semesters' => $semesters,
-            'openHouses' => $openHouses,
-            'openHouseEntity' => $openHouseEntity,
-            'openHouseForm'   => $openHouseForm->createView(),
-        ), $this->newAction());
-    }
+    $deleteForm = $this->createDeleteForm($id);
 
-    /**
-     * Finds and displays a Semester entity.
-     *
-     * @Route("/{id}/show", name="semester_show")
-     * @Template()
-     */
-    public function showAction($id) {
-        $em = $this->getDoctrine()->getManager();
+    return array(
+        'entity' => $entity,
+        'delete_form' => $deleteForm->createView(),
+    );
+  }
 
-        $entity = $em->getRepository('VirguleMainBundle:Semester')->find($id);
+  /**
+   * Displays a form to create a new Semester entity.
+   *
+   * @Route("/new", name="semester_new")
+   * @Template()
+   */
+  public function newAction() {
+    $entity = new Semester();
+    $form = $this->createForm(new SemesterType(), $entity);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Semester entity.');
+    $courses = $this->getCourseManager()->getAllHydratedCourses($this->getSelectedSemesterId());
+
+    return array(
+        'courses' => $courses,
+        'semesterEntity' => $entity,
+        'semesterForm' => $form->createView(),
+    );
+  }
+
+  /**
+   * Creates a new Semester entity.
+   *
+   * @Route("/create", name="semester_create")
+   * @Method("POST")
+   * @Template("VirguleMainBundle:Semester:new.html.twig")
+   */
+  public function createAction(Request $request) {
+    $entity = new Semester();
+    $form = $this->createForm(new SemesterType(), $entity);
+    $form->bind($request);
+
+    $entity->setOrganizationBranch($this->getSelectedOrganizationBranch());
+
+    if ($form->isValid()) {
+      $em = $this->getDoctrine()->getManager();
+      // suspend auto-commit
+      $em->getConnection()->beginTransaction();
+      // Try and make the transaction
+      try {
+        $em->persist($entity);
+        $em->flush();
+
+        $flashMessage = 'Nouveau semestre créé avec succès !';
+
+        if ($request->get('courses')) {
+          $coursesToCopy = $request->get('courses');
+          $nbCoursesToCopy = count($coursesToCopy);
+
+          $this->getCourseManager()->cloneCourses($coursesToCopy, $entity);
+          $flashMessage .= "&nbsp;<strong>" . $nbCoursesToCopy . '</strong> cours copiés.';
         }
+        // Try and commit the transaction
+        $em->getConnection()->commit();
 
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity' => $entity,
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Displays a form to create a new Semester entity.
-     *
-     * @Route("/new", name="semester_new")
-     * @Template()
-     */
-    public function newAction() {
-        $entity = new Semester();
-        $form = $this->createForm(new SemesterType(), $entity);
-
-        $courses = $this->getCourseManager()->getAllHydratedCourses($this->getSelectedSemesterId());
-        
-        return array(
-            'courses' => $courses,
-            'semesterEntity' => $entity,
-            'semesterForm' => $form->createView(),
-        );
-    }
-
-    /**
-     * Creates a new Semester entity.
-     *
-     * @Route("/create", name="semester_create")
-     * @Method("POST")
-     * @Template("VirguleMainBundle:Semester:new.html.twig")
-     */
-    public function createAction(Request $request) {
-        $entity = new Semester();
-        $form = $this->createForm(new SemesterType(), $entity);
-        $form->bind($request);
-        
-        $entity->setOrganizationBranch($this->getSelectedOrganizationBranch());
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager(); 
-            // suspend auto-commit
-            $em->getConnection()->beginTransaction();
-            // Try and make the transaction
-            try {
-                $em->persist($entity);
-                $em->flush();           
-
-                $flashMessage = 'Nouveau semestre créé avec succès !';
-
-                if ($request->get('courses')) {
-                    $coursesToCopy = $request->get('courses');
-                    $nbCoursesToCopy = count($coursesToCopy);
-
-                    $this->getCourseManager()->cloneCourses($coursesToCopy, $entity);
-                    $flashMessage .= "&nbsp;<strong>" . $nbCoursesToCopy . '</strong> cours copiés.';
-                }
-                // Try and commit the transaction
-                $em->getConnection()->commit();                
-                
-                $this->getSemesterManager()->reloadAllSemestersIntoSession($this->getSelectedOrganizationBranchId());
-                if ($this->getSemesterManager()->setNewSemesterAsCurrent($entity)) {
-                    $flashMessage .= '&nbsp;Vous avez été repositionné sur ce semestre';
-                }
-                $this->addFlash($flashMessage);
-
-                return $this->redirect($this->generateUrl('semester_index'));
-            } catch (Exception $e) {
-                // Rollback the failed transaction attempt
-                $em->getConnection()->rollback();
-                $em->close();
-                throw $e;
-            }
+        $this->getSemesterManager()->reloadAllSemestersIntoSession($this->getSelectedOrganizationBranchId());
+        if ($this->getSemesterManager()->setNewSemesterAsCurrent($entity)) {
+          $flashMessage .= '&nbsp;Vous avez été repositionné sur ce semestre';
         }
+        $this->addFlash($flashMessage);
 
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-        );
+        return $this->redirect($this->generateUrl('semester_index'));
+      } catch (Exception $e) {
+        // Rollback the failed transaction attempt
+        $em->getConnection()->rollback();
+        $em->close();
+        throw $e;
+      }
     }
 
-    /**
-     * Displays a form to edit an existing Semester entity.
-     *
-     * @Route("/{id}/edit", name="semester_edit")
-     * @Template()
-     */
-    public function editAction($id) {
-        $em = $this->getDoctrine()->getManager();
+    return array(
+        'entity' => $entity,
+        'form' => $form->createView(),
+    );
+  }
 
-        $entity = $em->getRepository('VirguleMainBundle:Semester')->find($id);
+  /**
+   * Displays a form to edit an existing Semester entity.
+   *
+   * @Route("/{id}/edit", name="semester_edit")
+   * @Template()
+   */
+  public function editAction($id) {
+    $em = $this->getDoctrine()->getManager();
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Semester entity.');
-        }
+    $entity = $em->getRepository('VirguleMainBundle:Semester')->find($id);
 
-        $editForm = $this->createForm(new SemesterType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find Semester entity.');
     }
 
-    /**
-     * Edits an existing Semester entity.
-     *
-     * @Route("/{id}/update", name="semester_update")
-     * @Method("POST")
-     * @Template("VirguleMainBundle:Semester:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id) {
-        $em = $this->getDoctrine()->getManager();
+    $editForm = $this->createForm(new SemesterType(), $entity);
+    $deleteForm = $this->createDeleteForm($id);
 
-        $entity = $em->getRepository('VirguleMainBundle:Semester')->find($id);
+    return array(
+        'entity' => $entity,
+        'edit_form' => $editForm->createView(),
+        'delete_form' => $deleteForm->createView(),
+    );
+  }
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Semester entity.');
-        }
+  /**
+   * Edits an existing Semester entity.
+   *
+   * @Route("/{id}/update", name="semester_update")
+   * @Method("POST")
+   * @Template("VirguleMainBundle:Semester:edit.html.twig")
+   */
+  public function updateAction(Request $request, $id) {
+    $em = $this->getDoctrine()->getManager();
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new SemesterType(), $entity);
-        $editForm->bind($request);
+    $entity = $em->getRepository('VirguleMainBundle:Semester')->find($id);
 
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('semester_edit', array('id' => $id)));
-        }
-
-        return array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find Semester entity.');
     }
 
-    /**
-     * Deletes a Semester entity.
-     *
-     * @Route("/{id}/delete", name="semester_delete")
-     * @Method("POST")
-     */
-    public function deleteAction(Request $request, $id) {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
+    $deleteForm = $this->createDeleteForm($id);
+    $editForm = $this->createForm(new SemesterType(), $entity);
+    $editForm->bind($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('VirguleMainBundle:Semester')->find($id);
+    if ($editForm->isValid()) {
+      $em->persist($entity);
+      $em->flush();
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Semester entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('semester'));
+      return $this->redirect($this->generateUrl('semester_edit', array('id' => $id)));
     }
+
+    return array(
+        'entity' => $entity,
+        'edit_form' => $editForm->createView(),
+        'delete_form' => $deleteForm->createView(),
+    );
+  }
+
+  /**
+   * Deletes a Semester entity.
+   *
+   * @Route("/{id}/delete", name="semester_delete")
+   * @Method("POST")
+   */
+  public function deleteAction(Request $request, $id) {
+    $form = $this->createDeleteForm($id);
+    $form->bind($request);
+
+    if ($form->isValid()) {
+      $em = $this->getDoctrine()->getManager();
+      $entity = $em->getRepository('VirguleMainBundle:Semester')->find($id);
+
+      if (!$entity) {
+        throw $this->createNotFoundException('Unable to find Semester entity.');
+      }
+
+      $em->remove($entity);
+      $em->flush();
+    }
+
+    return $this->redirect($this->generateUrl('semester'));
+  }
 
 }

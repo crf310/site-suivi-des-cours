@@ -15,30 +15,30 @@ use Doctrine\DBAL\Connection;
  */
 class LanguageRepository extends EntityRepository {
 
-    private function createDefaultQueryBuilder() {
-        return $this->createQueryBuilder('sl')->add('orderBy', 'sl.name ASC');
-    }
+  private function createDefaultQueryBuilder() {
+    return $this->createQueryBuilder('sl')->add('orderBy', 'sl.name ASC');
+  }
 
-    public function findAll() {
-        return $this->findBy(array(), array('name' => 'asc'));
-    }
+  public function findAll() {
+    return $this->findBy(array(), array('name' => 'asc'));
+  }
 
-    public function getNumberOfLanguagesSpoken($semesterId) {
-        $qb = $this->createDefaultQueryBuilder();
-        
-        $qb     
-                ->select($qb->expr()->countDistinct('s.id'). ' AS nb_students')
-                ->addSelect('sl.name as language_name')
-                ->innerJoin('sl.students', 's')
-                ->innerJoin('s.courses', 'c')
-                ->where('c.semester = :semesterId')
-                ->groupBy('sl.id')
-                ->orderby('nb_students', 'DESC')
-                ->setParameter('semesterId', $semesterId);
+  public function getNumberOfLanguagesSpoken($semesterId) {
+    $qb = $this->createDefaultQueryBuilder();
 
-        $q = $qb->getQuery();
-        $languages = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $languages;
-    }
+    $qb
+            ->select($qb->expr()->countDistinct('s.id') . ' AS nb_students')
+            ->addSelect('sl.name as language_name')
+            ->innerJoin('sl.students', 's')
+            ->innerJoin('s.courses', 'c')
+            ->where('c.semester = :semesterId')
+            ->groupBy('sl.id')
+            ->orderby('nb_students', 'DESC')
+            ->setParameter('semesterId', $semesterId);
+
+    $q = $qb->getQuery();
+    $languages = $q->execute(array(), Query::HYDRATE_ARRAY);
+    return $languages;
+  }
 
 }

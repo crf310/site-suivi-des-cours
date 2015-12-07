@@ -12,151 +12,152 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ClassLevel {
 
-    /**
-     * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+  /**
+   * @var integer $id
+   *
+   * @ORM\Column(name="id", type="integer", nullable=false)
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="IDENTITY")
+   */
+  private $id;
 
-    /**
-     * @var string $label
-     *
-     * @ORM\Column(name="label", type="string", length=20, nullable=false)
-     */
-    private $label;
+  /**
+   * @var string $label
+   *
+   * @ORM\Column(name="label", type="string", length=20, nullable=false)
+   */
+  private $label;
 
-    /**
-     * @var string $htmlColorCode
-     *
-     * @ORM\Column(name="html_color_code", type="string", length=7, nullable=false)
-     */
-    private $htmlColorCode;
-        
-    /**
-     * @var string $position
-     *
-     * @ORM\Column(name="position", type="integer", length=2, nullable=false)
-     */
-    private $position;
+  /**
+   * @var string $htmlColorCode
+   *
+   * @ORM\Column(name="html_color_code", type="string", length=7, nullable=false)
+   */
+  private $htmlColorCode;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Course", mappedBy="classLevel")
-     */
-    private $courses;
+  /**
+   * @var string $position
+   *
+   * @ORM\Column(name="position", type="integer", length=2, nullable=false)
+   */
+  private $position;
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId() {
-        return $this->id;
-    }
+  /**
+   * @ORM\OneToMany(targetEntity="Course", mappedBy="classLevel")
+   */
+  private $courses;
 
-    /**
-     * Set label
-     *
-     * @param string $label
-     * @return ClassLevel
-     */
-    public function setLabel($label) {
-        $this->label = $label;
+  /**
+   * Get id
+   *
+   * @return integer 
+   */
+  public function getId() {
+    return $this->id;
+  }
 
-        return $this;
-    }
+  /**
+   * Set label
+   *
+   * @param string $label
+   * @return ClassLevel
+   */
+  public function setLabel($label) {
+    $this->label = $label;
 
-    /**
-     * Get label
-     *
-     * @return string 
-     */
-    public function getLabel() {
-        return $this->label;
-    }
+    return $this;
+  }
 
-    /**
-     * Set htmlColorCode
-     *
-     * @param string $htmlColorCode
-     * @return ClassLevel
-     */
-    public function setHtmlColorCode($htmlColorCode) {
-        $this->htmlColorCode = $htmlColorCode;
+  /**
+   * Get label
+   *
+   * @return string 
+   */
+  public function getLabel() {
+    return $this->label;
+  }
 
-        return $this;
-    }
+  /**
+   * Set htmlColorCode
+   *
+   * @param string $htmlColorCode
+   * @return ClassLevel
+   */
+  public function setHtmlColorCode($htmlColorCode) {
+    $this->htmlColorCode = $htmlColorCode;
 
-    /**
-     * Get htmlColorCode
-     *
-     * @return string 
-     */
-    public function getHtmlColorCode() {
-        return $this->htmlColorCode;
-    }
-    
-    /**
-     * Set position
-     *
-     * @param string $position
-     * @return ClassLevel
-     */
-    public function setPosition($position) {
-        $this->position = $position;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get htmlColorCode
+   *
+   * @return string 
+   */
+  public function getHtmlColorCode() {
+    return $this->htmlColorCode;
+  }
 
-    /**
-     * Get position
-     *
-     * @return string 
-     */
-    public function getPosition() {
-        return $this->position;
-    }
+  /**
+   * Set position
+   *
+   * @param string $position
+   * @return ClassLevel
+   */
+  public function setPosition($position) {
+    $this->position = $position;
 
-    /**
-     * Constructor
-     */
-    public function __construct() {
-        $this->courses = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    return $this;
+  }
 
-    /**
-     * Add courses
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
-     * @return ClassLevel
-     */
-    public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
-        $this->courses[] = $courses;
+  /**
+   * Get position
+   *
+   * @return string 
+   */
+  public function getPosition() {
+    return $this->position;
+  }
 
-        return $this;
-    }
+  /**
+   * Constructor
+   */
+  public function __construct() {
+    $this->courses = new \Doctrine\Common\Collections\ArrayCollection();
+  }
 
-    /**
-     * Remove courses
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
-     */
-    public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
-        $this->courses->removeElement($courses);
-    }
+  /**
+   * Add courses
+   *
+   * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
+   * @return ClassLevel
+   */
+  public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
+    $this->courses[] = $courses;
 
-    /**
-     * Get courses
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCourses() {
-        return $this->courses;
-    }
+    return $this;
+  }
 
-    public function __toString() {
-        return $this->getLabel();
-    }
+  /**
+   * Remove courses
+   *
+   * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
+   */
+  public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
+    $this->courses->removeElement($courses);
+  }
+
+  /**
+   * Get courses
+   *
+   * @return \Doctrine\Common\Collections\Collection 
+   */
+  public function getCourses() {
+    return $this->courses;
+  }
+
+  public function __toString() {
+    return $this->getLabel();
+  }
+
 }

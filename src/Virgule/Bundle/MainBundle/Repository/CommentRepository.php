@@ -13,12 +13,12 @@ use Doctrine\ORM\Query;
  * repository methods below.
  */
 class CommentRepository extends EntityRepository {
-    
-    public function loadLatestRelatedToTeacher(Array $classSessionIds, Array $studentIds) {
-        $classSessionIds = implode(',',$classSessionIds);
-        $studentIds = implode(',',$studentIds);
-        
-        $q = $this
+
+  public function loadLatestRelatedToTeacher(Array $classSessionIds, Array $studentIds) {
+    $classSessionIds = implode(',', $classSessionIds);
+    $studentIds = implode(',', $studentIds);
+
+    $q = $this
             ->createQueryBuilder('c')
             ->addSelect('c.id, c.date')
             ->leftJoin('c.student', 's', 'WITH', 's.id IN (:studentIds)')
@@ -29,8 +29,9 @@ class CommentRepository extends EntityRepository {
             ->setParameter('classSessionIds', $classSessionIds)
             ->setParameter('studentIds', $studentIds)
             ->getQuery()
-        ;
-        $comments = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $comments;   
-    }
+    ;
+    $comments = $q->execute(array(), Query::HYDRATE_ARRAY);
+    return $comments;
+  }
+
 }

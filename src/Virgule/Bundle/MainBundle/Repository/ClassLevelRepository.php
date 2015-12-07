@@ -16,4 +16,5 @@ class ClassLevelRepository extends EntityRepository {
   public function findAll() {
     return $this->findBy(array(), array('position' => 'ASC'));
   }
+
 }

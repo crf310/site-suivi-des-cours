@@ -8,7 +8,6 @@ use Virgule\Bundle\MainBundle\Entity\Student;
 class StudentControllerTest extends AbstractControllerTest {
 
   private $FIELD_PREFIX = 'virgule_bundle_mainbundle_studenttype';
-
   private $OPTION_MALE_GENDER = 'M';
   private $OPTION_FEMALE_GENDER = 'F';
 

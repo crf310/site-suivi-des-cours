@@ -17,212 +17,212 @@ use Virgule\Bundle\MainBundle\Form\Type\CommentType;
  */
 class CommentController extends AbstractVirguleController {
 
-    /**
-     * Lists all Comment entities.
-     *
-     * @Route("/", name="comment")
-     * @Template()
-     */
-    public function indexAction() {
-        $em = $this->getDoctrine()->getManager();
+  /**
+   * Lists all Comment entities.
+   *
+   * @Route("/", name="comment")
+   * @Template()
+   */
+  public function indexAction() {
+    $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('VirguleMainBundle:Comment')->findAll();
+    $entities = $em->getRepository('VirguleMainBundle:Comment')->findAll();
 
-        return $entities;
+    return $entities;
+  }
+
+  /**
+   * Finds and displays a Comment entity.
+   *
+   * @Route("/{id}/show", name="comment_show")
+   * @Template()
+   */
+  public function showAction($id) {
+    $em = $this->getDoctrine()->getManager();
+
+    $entity = $em->getRepository('VirguleMainBundle:Comment')->find($id);
+
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find Comment entity.');
     }
 
-    /**
-     * Finds and displays a Comment entity.
-     *
-     * @Route("/{id}/show", name="comment_show")
-     * @Template()
-     */
-    public function showAction($id) {
-        $em = $this->getDoctrine()->getManager();
+    $deleteForm = $this->createDeleteForm($id);
 
-        $entity = $em->getRepository('VirguleMainBundle:Comment')->find($id);
+    return array(
+        'entity' => $entity,
+        'delete_form' => $deleteForm->createView(),
+    );
+  }
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Comment entity.');
-        }
+  /**
+   * Displays a form to create a new Comment entity.
+   *
+   * @Route("/new", name="comment_new")
+   * @Template()
+   */
+  public function newAction() {
+    $entity = new Comment();
+    $form = $this->createForm(new CommentType(), $entity);
 
-        $deleteForm = $this->createDeleteForm($id);
+    return array(
+        'entity' => $entity,
+        'form' => $form->createView(),
+    );
+  }
 
-        return array(
-            'entity' => $entity,
-            'delete_form' => $deleteForm->createView(),
-        );
+  private function createComment(Request $request, Comment $comment) {
+    $comment->setDate(new \DateTime('now'));
+    $form = $this->createForm(new CommentType(), $comment);
+    $form->bind($request);
+
+    $teacher = $this->getUser();
+    if (!$teacher) {
+      throw $this->createNotFoundException('Unable to find Teacher entity.');
+    }
+    $comment->setTeacher($teacher);
+
+    if ($form->isValid()) {
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($comment);
+      $em->flush();
+
+      $this->addFlash('Votre commentaire a bien été enregistré');
+
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Creates a new Comment entity
+   * related to a Student
+   *
+   * @Route("/create/student/{id}", name="student_comment_create")
+   * @Method("POST")
+   * @Template("VirguleMainBundle:Comment:new.html.twig")
+   */
+  public function createStudentCommentAction(Request $request, $id) {
+    $em = $this->getDoctrine()->getManager();
+    $student = $em->getRepository('VirguleMainBundle:Student')->find($id);
+
+    if (!$student) {
+      throw $this->createNotFoundException('Unable to find Student entity.');
     }
 
-    /**
-     * Displays a form to create a new Comment entity.
-     *
-     * @Route("/new", name="comment_new")
-     * @Template()
-     */
-    public function newAction() {
-        $entity = new Comment();
-        $form = $this->createForm(new CommentType(), $entity);
+    $comment = new Comment();
+    $comment->setStudent($student);
 
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-        );
+    if ($this->createComment($request, $comment)) {
+      return $this->redirect($this->generateUrl('student_show', array('id' => $id)));
+    }
+  }
+
+  /**
+   * Creates a new Comment entity
+   * related to a Student
+   *
+   * @Route("/create/classsession/{id}", name="classsession_comment_create")
+   * @Method("POST")
+   * @Template("VirguleMainBundle:Comment:new.html.twig")
+   */
+  public function createClassSessionCommentAction(Request $request, $id) {
+    $em = $this->getDoctrine()->getManager();
+    $classSession = $em->getRepository('VirguleMainBundle:ClassSession')->find($id);
+
+    if (!$classSession) {
+      throw $this->createNotFoundException('Unable to find ClassSession entity.');
     }
 
-    private function createComment(Request $request, Comment $comment) {
-        $comment->setDate(new \DateTime('now'));
-        $form = $this->createForm(new CommentType(), $comment);
-        $form->bind($request);
+    $comment = new Comment();
+    $comment->setClassSession($classSession);
 
-        $teacher = $this->getUser();
-        if (!$teacher) {
-            throw $this->createNotFoundException('Unable to find Teacher entity.');
-        }
-        $comment->setTeacher($teacher);
+    if ($this->createComment($request, $comment)) {
+      return $this->redirect($this->generateUrl('classsession_show', array('id' => $id)));
+    }
+  }
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($comment);
-            $em->flush();
+  /**
+   * Displays a form to edit an existing Comment entity.
+   *
+   * @Route("/{id}/edit", name="comment_edit")
+   * @Template()
+   */
+  public function editAction($id) {
+    $em = $this->getDoctrine()->getManager();
 
-            $this->addFlash('Votre commentaire a bien été enregistré');
-            
-            return true;
-        }
-        return false;
+    $entity = $em->getRepository('VirguleMainBundle:Comment')->find($id);
+
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find Comment entity.');
     }
 
-    /**
-     * Creates a new Comment entity
-     * related to a Student
-     *
-     * @Route("/create/student/{id}", name="student_comment_create")
-     * @Method("POST")
-     * @Template("VirguleMainBundle:Comment:new.html.twig")
-     */
-    public function createStudentCommentAction(Request $request, $id) {
-        $em = $this->getDoctrine()->getManager();
-        $student = $em->getRepository('VirguleMainBundle:Student')->find($id);
+    $editForm = $this->createForm(new CommentType(), $entity);
+    $deleteForm = $this->createDeleteForm($id);
 
-        if (!$student) {
-            throw $this->createNotFoundException('Unable to find Student entity.');
-        }
+    return array(
+        'entity' => $entity,
+        'edit_form' => $editForm->createView(),
+        'delete_form' => $deleteForm->createView(),
+    );
+  }
 
-        $comment = new Comment();
-        $comment->setStudent($student);
+  /**
+   * Edits an existing Comment entity.
+   *
+   * @Route("/{id}/update", name="comment_update")
+   * @Method("POST")
+   * @Template("VirguleMainBundle:Comment:edit.html.twig")
+   */
+  public function updateAction(Request $request, $id) {
+    $em = $this->getDoctrine()->getManager();
 
-        if ($this->createComment($request, $comment)) {
-            return $this->redirect($this->generateUrl('student_show', array('id' => $id)));
-        }
+    $entity = $em->getRepository('VirguleMainBundle:Comment')->find($id);
+
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find Comment entity.');
     }
 
-    /**
-     * Creates a new Comment entity
-     * related to a Student
-     *
-     * @Route("/create/classsession/{id}", name="classsession_comment_create")
-     * @Method("POST")
-     * @Template("VirguleMainBundle:Comment:new.html.twig")
-     */
-    public function createClassSessionCommentAction(Request $request, $id) {
-        $em = $this->getDoctrine()->getManager();
-        $classSession = $em->getRepository('VirguleMainBundle:ClassSession')->find($id);
+    $deleteForm = $this->createDeleteForm($id);
+    $editForm = $this->createForm(new CommentType(), $entity);
+    $editForm->bind($request);
 
-        if (!$classSession) {
-            throw $this->createNotFoundException('Unable to find ClassSession entity.');
-        }
+    if ($editForm->isValid()) {
+      $em->persist($entity);
+      $em->flush();
 
-        $comment = new Comment();
-        $comment->setClassSession($classSession);
-
-        if ($this->createComment($request, $comment)) {
-            return $this->redirect($this->generateUrl('classsession_show', array('id' => $id)));
-        }
+      return $this->redirect($this->generateUrl('comment_edit', array('id' => $id)));
     }
 
-    /**
-     * Displays a form to edit an existing Comment entity.
-     *
-     * @Route("/{id}/edit", name="comment_edit")
-     * @Template()
-     */
-    public function editAction($id) {
-        $em = $this->getDoctrine()->getManager();
+    return array(
+        'entity' => $entity,
+        'edit_form' => $editForm->createView(),
+        'delete_form' => $deleteForm->createView(),
+    );
+  }
 
-        $entity = $em->getRepository('VirguleMainBundle:Comment')->find($id);
+  /**
+   * Deletes a Comment entity.
+   *
+   * @Route("/{id}/delete", name="comment_delete")
+   * @Method("POST")
+   */
+  public function deleteAction(Request $request, $id) {
+    $form = $this->createDeleteForm($id);
+    $form->bind($request);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Comment entity.');
-        }
+    if ($form->isValid()) {
+      $em = $this->getDoctrine()->getManager();
+      $entity = $em->getRepository('VirguleMainBundle:Comment')->find($id);
 
-        $editForm = $this->createForm(new CommentType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+      if (!$entity) {
+        throw $this->createNotFoundException('Unable to find Comment entity.');
+      }
 
-        return array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+      $em->remove($entity);
+      $em->flush();
     }
 
-    /**
-     * Edits an existing Comment entity.
-     *
-     * @Route("/{id}/update", name="comment_update")
-     * @Method("POST")
-     * @Template("VirguleMainBundle:Comment:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id) {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('VirguleMainBundle:Comment')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Comment entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new CommentType(), $entity);
-        $editForm->bind($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('comment_edit', array('id' => $id)));
-        }
-
-        return array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Deletes a Comment entity.
-     *
-     * @Route("/{id}/delete", name="comment_delete")
-     * @Method("POST")
-     */
-    public function deleteAction(Request $request, $id) {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('VirguleMainBundle:Comment')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Comment entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('comment'));
-    }
+    return $this->redirect($this->generateUrl('comment'));
+  }
 
 }

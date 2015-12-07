@@ -15,186 +15,179 @@ use Virgule\Bundle\MainBundle\Form\Type\OpenHouseType;
  *
  * @Route("/openhouse")
  */
-class OpenHouseController extends AbstractVirguleController
-{
-    /**
-     * Lists all OpenHouse entities.
-     *
-     * @Route("/", name="openhouse")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
+class OpenHouseController extends AbstractVirguleController {
 
-        $entities = $em->getRepository('VirguleMainBundle:OpenHouse')->findAll();
+  /**
+   * Lists all OpenHouse entities.
+   *
+   * @Route("/", name="openhouse")
+   * @Method("GET")
+   * @Template()
+   */
+  public function indexAction() {
+    $em = $this->getDoctrine()->getManager();
 
-        return array(
-            'entities' => $entities,
-        );
+    $entities = $em->getRepository('VirguleMainBundle:OpenHouse')->findAll();
+
+    return array(
+        'entities' => $entities,
+    );
+  }
+
+  /**
+   * Creates a new OpenHouse entity.
+   *
+   * @Route("/", name="openhouse_create")
+   * @Method("POST")
+   * @Template("VirguleMainBundle:OpenHouse:new.html.twig")
+   */
+  public function createAction(Request $request) {
+    $entity = new OpenHouse();
+    $form = $this->createForm(new OpenHouseType(), $entity);
+    $form->bind($request);
+
+    $entity->setSemester($this->getSelectedSemester());
+
+    if ($form->isValid()) {
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($entity);
+      $em->flush();
+
+      $this->addFlash('Journée d\'accueil créée avec succès !');
+
+      return $this->redirect($this->generateUrl('semester_index'));
     }
 
-    /**
-     * Creates a new OpenHouse entity.
-     *
-     * @Route("/", name="openhouse_create")
-     * @Method("POST")
-     * @Template("VirguleMainBundle:OpenHouse:new.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        $entity  = new OpenHouse();
-        $form = $this->createForm(new OpenHouseType(), $entity);
-        $form->bind($request);
-        
-        $entity->setSemester($this->getSelectedSemester());
+    return array(
+        'entity' => $entity,
+        'form' => $form->createView(),
+    );
+  }
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-            
-            $this->addFlash('Journée d\'accueil créée avec succès !');
-             
-            return $this->redirect($this->generateUrl('semester_index'));
-        }
+  /**
+   * Displays a form to create a new OpenHouse entity.
+   *
+   * @Route("/new", name="openhouse_new")
+   * @Method("GET")
+   * @Template()
+   */
+  public function newAction() {
+    $entity = new OpenHouse();
+    $form = $this->createForm(new OpenHouseType(), $entity);
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+    return array(
+        'entity' => $entity,
+        'form' => $form->createView(),
+    );
+  }
+
+  /**
+   * Finds and displays a OpenHouse entity.
+   *
+   * @Route("/{id}", name="openhouse_show")
+   * @Method("GET")
+   * @Template()
+   */
+  public function showAction($id) {
+    $em = $this->getDoctrine()->getManager();
+
+    $entity = $em->getRepository('VirguleMainBundle:OpenHouse')->find($id);
+
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find OpenHouse entity.');
     }
 
-    /**
-     * Displays a form to create a new OpenHouse entity.
-     *
-     * @Route("/new", name="openhouse_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new OpenHouse();
-        $form   = $this->createForm(new OpenHouseType(), $entity);
+    $deleteForm = $this->createDeleteForm($id);
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+    return array(
+        'entity' => $entity,
+        'delete_form' => $deleteForm->createView(),
+    );
+  }
+
+  /**
+   * Displays a form to edit an existing OpenHouse entity.
+   *
+   * @Route("/{id}/edit", name="openhouse_edit")
+   * @Method("GET")
+   * @Template()
+   */
+  public function editAction($id) {
+    $em = $this->getDoctrine()->getManager();
+
+    $entity = $em->getRepository('VirguleMainBundle:OpenHouse')->find($id);
+
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find OpenHouse entity.');
     }
 
-    /**
-     * Finds and displays a OpenHouse entity.
-     *
-     * @Route("/{id}", name="openhouse_show")
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
+    $editForm = $this->createForm(new OpenHouseType(), $entity);
+    $deleteForm = $this->createDeleteForm($id);
 
-        $entity = $em->getRepository('VirguleMainBundle:OpenHouse')->find($id);
+    return array(
+        'entity' => $entity,
+        'edit_form' => $editForm->createView(),
+        'delete_form' => $deleteForm->createView(),
+    );
+  }
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find OpenHouse entity.');
-        }
+  /**
+   * Edits an existing OpenHouse entity.
+   *
+   * @Route("/{id}", name="openhouse_update")
+   * @Method("PUT")
+   * @Template("VirguleMainBundle:OpenHouse:edit.html.twig")
+   */
+  public function updateAction(Request $request, $id) {
+    $em = $this->getDoctrine()->getManager();
 
-        $deleteForm = $this->createDeleteForm($id);
+    $entity = $em->getRepository('VirguleMainBundle:OpenHouse')->find($id);
 
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        );
+    if (!$entity) {
+      throw $this->createNotFoundException('Unable to find OpenHouse entity.');
     }
 
-    /**
-     * Displays a form to edit an existing OpenHouse entity.
-     *
-     * @Route("/{id}/edit", name="openhouse_edit")
-     * @Method("GET")
-     * @Template()
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
+    $deleteForm = $this->createDeleteForm($id);
+    $editForm = $this->createForm(new OpenHouseType(), $entity);
+    $editForm->bind($request);
 
-        $entity = $em->getRepository('VirguleMainBundle:OpenHouse')->find($id);
+    if ($editForm->isValid()) {
+      $em->persist($entity);
+      $em->flush();
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find OpenHouse entity.');
-        }
-
-        $editForm = $this->createForm(new OpenHouseType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+      return $this->redirect($this->generateUrl('openhouse_edit', array('id' => $id)));
     }
 
-    /**
-     * Edits an existing OpenHouse entity.
-     *
-     * @Route("/{id}", name="openhouse_update")
-     * @Method("PUT")
-     * @Template("VirguleMainBundle:OpenHouse:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
+    return array(
+        'entity' => $entity,
+        'edit_form' => $editForm->createView(),
+        'delete_form' => $deleteForm->createView(),
+    );
+  }
 
-        $entity = $em->getRepository('VirguleMainBundle:OpenHouse')->find($id);
+  /**
+   * Deletes a OpenHouse entity.
+   *
+   * @Route("/{id}", name="openhouse_delete")
+   * @Method("DELETE")
+   */
+  public function deleteAction(Request $request, $id) {
+    $form = $this->createDeleteForm($id);
+    $form->bind($request);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find OpenHouse entity.');
-        }
+    if ($form->isValid()) {
+      $em = $this->getDoctrine()->getManager();
+      $entity = $em->getRepository('VirguleMainBundle:OpenHouse')->find($id);
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new OpenHouseType(), $entity);
-        $editForm->bind($request);
+      if (!$entity) {
+        throw $this->createNotFoundException('Unable to find OpenHouse entity.');
+      }
 
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('openhouse_edit', array('id' => $id)));
-        }
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+      $em->remove($entity);
+      $em->flush();
     }
 
-    /**
-     * Deletes a OpenHouse entity.
-     *
-     * @Route("/{id}", name="openhouse_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('VirguleMainBundle:OpenHouse')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find OpenHouse entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('openhouse'));
-    }
+    return $this->redirect($this->generateUrl('openhouse'));
+  }
 
 }

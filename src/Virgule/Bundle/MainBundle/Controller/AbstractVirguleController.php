@@ -4,6 +4,7 @@ namespace Virgule\Bundle\MainBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+
 /**
  * Class parentes des controllers
  *

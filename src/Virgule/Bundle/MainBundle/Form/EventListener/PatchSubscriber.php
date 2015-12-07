@@ -16,32 +16,32 @@ use Symfony\Component\Form\FormEvent;
  */
 class PatchSubscriber implements EventSubscriberInterface {
 
-    public function onPreSubmit(FormEvent $event) {
-        $form = $event->getForm();
-        $clientData = $event->getData();
-        $clientData = array_replace($this->prepareData($form), $clientData ? : array());
-        $event->setData($clientData);
-    }
+  public function onPreSubmit(FormEvent $event) {
+    $form = $event->getForm();
+    $clientData = $event->getData();
+    $clientData = array_replace($this->prepareData($form), $clientData ? : array());
+    $event->setData($clientData);
+  }
 
-    /**
-     * Returns the form's data like $form->submit() expects it
-     */
-    protected function prepareData($form) {
-        if ($form->count()) {
-            $data = array();
-            foreach ($form->all() as $name => $child) {
-                $data[$name] = $this->prepareData($child);
-            }
-            return $data;
-        } else {
-            return $form->getViewData();
-        }
+  /**
+   * Returns the form's data like $form->submit() expects it
+   */
+  protected function prepareData($form) {
+    if ($form->count()) {
+      $data = array();
+      foreach ($form->all() as $name => $child) {
+        $data[$name] = $this->prepareData($child);
+      }
+      return $data;
+    } else {
+      return $form->getViewData();
     }
+  }
 
-    static public function getSubscribedEvents() {
-        return array(
-            FormEvents::PRE_SUBMIT => 'onPreSubmit',
-        );
-    }
+  static public function getSubscribedEvents() {
+    return array(
+        FormEvents::PRE_SUBMIT => 'onPreSubmit',
+    );
+  }
 
 }

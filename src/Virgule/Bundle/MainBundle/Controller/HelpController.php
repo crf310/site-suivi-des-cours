@@ -15,39 +15,39 @@ use Virgule\Bundle\MainBundle\Form\Type\ReportIssueType;
  * @Route("/help")
  */
 class HelpController extends AbstractVirguleController {
-    
-    /**
-     * Show help page
-     *
-     * @Route("/faq", name="help_faq")
-     * @Method({"GET"})
-     * @Template
-     */
-    public function helpAction() {
-        $user_manual_url = $this->container->getParameter('user_manual_url');
-        return array(
-            'user_manual_url' => $user_manual_url,
-        );
+
+  /**
+   * Show help page
+   *
+   * @Route("/faq", name="help_faq")
+   * @Method({"GET"})
+   * @Template
+   */
+  public function helpAction() {
+    $user_manual_url = $this->container->getParameter('user_manual_url');
+    return array(
+        'user_manual_url' => $user_manual_url,
+    );
+  }
+
+  /**
+   * Display the form and send the issue to github
+   *
+   * @Route("/reportIssue", name="report_issue")
+   * @Method({"GET", "POST"})
+   * @Template
+   */
+  public function reportIssueAction(Request $request) {
+    $form = $this->createForm(new ReportIssueType());
+
+    $this->getHelpManager()->reportIssue();
+
+    if ($request->getMethod() == 'POST') {
+      
     }
-    
-    /**
-     * Display the form and send the issue to github
-     *
-     * @Route("/reportIssue", name="report_issue")
-     * @Method({"GET", "POST"})
-     * @Template
-     */
-    public function reportIssueAction(Request $request) {
-        $form = $this->createForm(new ReportIssueType());
-        
-        $this->getHelpManager()->reportIssue();
-        
-        if ($request->getMethod() == 'POST') {
-            
-        }
-        return Array(
-            'form' => $form->createView(),
-        );
-    }
+    return Array(
+        'form' => $form->createView(),
+    );
+  }
 
 }

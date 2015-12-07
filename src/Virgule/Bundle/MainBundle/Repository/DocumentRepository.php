@@ -14,21 +14,21 @@ use Doctrine\DBAL\Connection;
  * repository methods below.
  */
 class DocumentRepository extends EntityRepository {
-    
-    private function createDefaultQueryBuilder() {
-        return $this->createQueryBuilder('d')->add('orderBy', 'd.fileName ASC');
-    }
-    
-    public function getDocumentsUploadedBy($userId) {
-        $qb = $this->createDefaultQueryBuilder()
+
+  private function createDefaultQueryBuilder() {
+    return $this->createQueryBuilder('d')->add('orderBy', 'd.fileName ASC');
+  }
+
+  public function getDocumentsUploadedBy($userId) {
+    $qb = $this->createDefaultQueryBuilder()
             ->innerJoin('d.uploader', 'u', 'WITH', 'u.id = :userId')
             ->setParameter('userId', $userId);
-        
-        return $qb->getQuery()->execute();
-    }
-    
-    public function getAllDocuments() {
-        $qb = $this->createDefaultQueryBuilder()
+
+    return $qb->getQuery()->execute();
+  }
+
+  public function getAllDocuments() {
+    $qb = $this->createDefaultQueryBuilder()
             ->addSelect('d.id as id, d.fileName as filename, d.path as path')
             ->addSelect('u.id as uploader_id, u.firstName as uploader_firstname, u.lastName as uploader_lastname')
             ->addSelect('cl.label as classLevel_label, cl.htmlColorCode as classLevel_htmlColorCode')
@@ -36,6 +36,7 @@ class DocumentRepository extends EntityRepository {
             ->join('d.uploader', 'u')
             ->leftJoin('d.classLevels', 'cl')
             ->leftJoin('d.tags', 't');
-        return $qb->getQuery()->execute(array(), Query::HYDRATE_ARRAY);
-    }
+    return $qb->getQuery()->execute(array(), Query::HYDRATE_ARRAY);
+  }
+
 }
