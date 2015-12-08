@@ -3,7 +3,6 @@
 namespace Virgule\Bundle\MainBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -160,22 +159,7 @@ class ClassLevelController extends AbstractVirguleController {
    * @Method("POST")
    */
   public function deleteAction(Request $request, $id) {
-    $form = $this->createDeleteForm($id);
-    $form->bind($request);
-
-    if ($form->isValid()) {
-      $em = $this->getDoctrine()->getManager();
-      $entity = $em->getRepository('VirguleMainBundle:ClassLevel')->find($id);
-
-      if (!$entity) {
-        throw $this->createNotFoundException('Unable to find ClassLevel entity.');
-      }
-
-      $em->remove($entity);
-      $em->flush();
-    }
-
-    return $this->redirect($this->generateUrl('classlevel'));
+    return parent::abstractDeleteAction($request, $id, 'ClassLevel', $this->getClassLevelRepository(), 'classlevel_index');
   }
 
 }
