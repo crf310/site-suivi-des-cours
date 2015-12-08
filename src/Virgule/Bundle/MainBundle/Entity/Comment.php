@@ -48,12 +48,6 @@ class Comment {
   private $student;
 
   /**
-   * @ORM\ManyToMany(targetEntity="Teacher", inversedBy="commentsRead")
-   * @ORM\JoinTable(name="teachers_comments_read")
-   */
-  private $readByTeachers;
-
-  /**
    * Constructor
    */
   public function __construct() {
@@ -151,36 +145,6 @@ class Comment {
    */
   public function getStudent() {
     return $this->student;
-  }
-
-  /**
-   * Add readByTeachers
-   *
-   * @param \Virgule\Bundle\MainBundle\Entity\Teacher $readByTeachers
-   * @return Comment
-   */
-  public function addReadByTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $readByTeachers) {
-    $this->readByTeachers[] = $readByTeachers;
-
-    return $this;
-  }
-
-  /**
-   * Remove readByTeachers
-   *
-   * @param \Virgule\Bundle\MainBundle\Entity\Teacher $readByTeachers
-   */
-  public function removeReadByTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $readByTeachers) {
-    $this->readByTeachers->removeElement($readByTeachers);
-  }
-
-  /**
-   * Get readByTeachers
-   *
-   * @return \Doctrine\Common\Collections\Collection 
-   */
-  public function getReadByTeachers() {
-    return $this->readByTeachers;
   }
 
 }
