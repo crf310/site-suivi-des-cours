@@ -35,29 +35,6 @@ class ClassLevelController extends AbstractVirguleController {
   }
 
   /**
-   * Finds and displays a ClassLevel entity.
-   *
-   * @Route("/{id}/show", name="classlevel_show")
-   * @Template()
-   */
-  public function showAction($id) {
-    $em = $this->getDoctrine()->getManager();
-
-    $entity = $em->getRepository('VirguleMainBundle:ClassLevel')->find($id);
-
-    if (!$entity) {
-      throw $this->createNotFoundException('Unable to find ClassLevel entity.');
-    }
-
-    $deleteForm = $this->createDeleteForm($id);
-
-    return array(
-        'entity' => $entity,
-        'delete_form' => $deleteForm->createView(),
-    );
-  }
-
-  /**
    * Displays a form to create a new ClassLevel entity.
    *
    * @Route("/new", name="classlevel_new")
