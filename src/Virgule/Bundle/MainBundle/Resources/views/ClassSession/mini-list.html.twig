@@ -25,9 +25,6 @@
                                 {% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classSession.classLevelHtmlColorCode, 'classLevelLabel': classSession.classLevelLabel } %} 
                             {% endif %}
                             <a href="{{ path('classsession_show', { 'id': classSession.id }) }}">{{ classSession.sessionDate | date("d/m/Y") }}</a>
-                            {% if classSession.nb_comments > 0 %}
-                                <img src="{{ asset('img/icons/comment.png') }}" title="{{ classSession.nb_comments }} commentaire(s)" alt="{{ classSession.nb_comments }} commentaire(s)" />
-                            {% endif %}
                         </li>
                         {% if loop.index % listBreak == 0  and loop.index != loop.last %}
                             </ul></div><div class="col-md-{{ span_size }}"><ul class="no-img">

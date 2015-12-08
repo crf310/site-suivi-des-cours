@@ -48,12 +48,6 @@ class Comment {
   private $student;
 
   /**
-   * @ORM\ManyToOne(targetEntity="ClassSession", inversedBy="comments")
-   * @ORM\JoinColumn(name="fk_class_session", referencedColumnName="id")
-   */
-  private $classSession;
-
-  /**
    * @ORM\ManyToMany(targetEntity="Teacher", inversedBy="commentsRead")
    * @ORM\JoinTable(name="teachers_comments_read")
    */
@@ -157,27 +151,6 @@ class Comment {
    */
   public function getStudent() {
     return $this->student;
-  }
-
-  /**
-   * Set classSession
-   *
-   * @param \Virgule\Bundle\MainBundle\Entity\ClassSession $classSession
-   * @return Comment
-   */
-  public function setClassSession(\Virgule\Bundle\MainBundle\Entity\ClassSession $classSession = null) {
-    $this->classSession = $classSession;
-
-    return $this;
-  }
-
-  /**
-   * Get classSession
-   *
-   * @return \Virgule\Bundle\MainBundle\Entity\ClassSession 
-   */
-  public function getClassSession() {
-    return $this->classSession;
   }
 
   /**

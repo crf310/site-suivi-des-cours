@@ -54,15 +54,8 @@ class ClassSessionRepository extends EntityRepository {
     return $qb;
   }
 
-  private function getNbCommentsQueryBuilder($semesterId, $limit = null) {
-    $qb = $this->getBasicQueryBuilder($semesterId, $limit)
-            ->leftJoin('cs.comments', 'cm')
-            ->addSelect('count(cm.id) as nb_comments');
-    return $qb;
-  }
-
   public function loadAllClassSessionByTeacher($semesterId, $teacherId, $limit = null) {
-    $qb = $this->getNbCommentsQueryBuilder($semesterId, $limit)
+    $qb = $this->getBasicQueryBuilder($semesterId, $limit)
             ->andwhere('t1.id = :teacherId')
             ->setParameter('teacherId', $teacherId)
     ;

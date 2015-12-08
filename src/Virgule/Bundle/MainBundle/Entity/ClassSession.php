@@ -69,11 +69,6 @@ class ClassSession {
   private $reportTeacher;
 
   /**
-   * @ORM\OneToMany(targetEntity="Comment", mappedBy="classSession")
-   */
-  private $comments;
-
-  /**
    * @ORM\ManyToMany(targetEntity="Document", inversedBy="classSessions")     *
    * @ORM\JoinTable(name="classsessions_documents")
    */
@@ -168,7 +163,6 @@ class ClassSession {
    * Constructor
    */
   public function __construct() {
-    $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
     $this->classSessionStudents = new \Doctrine\Common\Collections\ArrayCollection();
     $this->nonEnrolledClassSessionStudents = new \Doctrine\Common\Collections\ArrayCollection();
   }
@@ -234,36 +228,6 @@ class ClassSession {
    */
   public function getReportTeacher() {
     return $this->reportTeacher;
-  }
-
-  /**
-   * Add comments
-   *
-   * @param \Virgule\Bundle\MainBundle\Entity\Comment $comments
-   * @return ClassSession
-   */
-  public function addComment(\Virgule\Bundle\MainBundle\Entity\Comment $comments) {
-    $this->comments[] = $comments;
-
-    return $this;
-  }
-
-  /**
-   * Remove comments
-   *
-   * @param \Virgule\Bundle\MainBundle\Entity\Comment $comments
-   */
-  public function removeComment(\Virgule\Bundle\MainBundle\Entity\Comment $comments) {
-    $this->comments->removeElement($comments);
-  }
-
-  /**
-   * Get comments
-   *
-   * @return \Doctrine\Common\Collections\Collection
-   */
-  public function getComments() {
-    return $this->comments;
   }
 
   /**
