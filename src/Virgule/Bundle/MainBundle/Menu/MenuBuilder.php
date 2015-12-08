@@ -91,9 +91,6 @@ class MenuBuilder extends ContainerAware {
     $adminMenu['Administration']->addChild('Gérer les délégations', array('route' => 'organizationbranch_index'));
     $adminMenu['Administration']['Gérer les délégations']->setLinkAttribute('class', 'red-cross');
 
-    $adminMenu['Administration']->addChild('Voir les logs', array('route' => 'admin_show_logs'));
-    $adminMenu['Administration']['Voir les logs']->setLinkAttribute('class', 'logs');
-
     $this->addNbSubLinks($adminMenu, 'Administration');
 
     return $adminMenu;
