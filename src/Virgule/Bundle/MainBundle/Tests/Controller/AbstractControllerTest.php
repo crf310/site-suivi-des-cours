@@ -60,8 +60,12 @@ abstract class AbstractControllerTest extends AbstractTest {
     $this->assertTrue($this->crawler->filter("span.help-inline:contains('" . $errorMessage . "')")->count() >= 1, "Error message should be displayed on a field");
   }
 
+  protected function getFormById($formId) {
+    return $this->crawler->filterXPath('//form[@id="' . $formId . '"]')->form();
+  }
+  
   protected function submitFormById($formId, $followRedirect = true) {
-    $form = $this->crawler->filterXPath('//form[@id="' . $formId . '"]')->form();
+    $form = $this->getFormById($formId);
     $this->client->submit($form);
 
     if ($followRedirect) {
