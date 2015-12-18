@@ -41,12 +41,6 @@
         <service id="virgule.tag_manager" class="%virgule.tag_manager.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
-        <service id="virgule.help_manager" class="%virgule.help_manager.class%">
-            <argument type="service" id="service_container" />
-        </service>
-        <service id="virgule.classsession_manager" class="%virgule.classsession_manager.class%">
-            <argument type="service" id="doctrine.orm.entity_manager" />
-        </service>
                
         <!-- Listeners -->
         <service id="virgule_user.password_change" class="%namespace%\Event\PasswordChangeListener">
@@ -95,10 +89,6 @@
         <service id="validator.not_overlapping_course" class="Virgule\Bundle\MainBundle\Validator\CourseNotOverlappingValidator">
             <argument type="service" id="virgule.course_manager" />
             <tag name="validator.constraint_validator" alias="course_not_overlapping" />
-        </service>
-        <service id="validator.already_existing_classsession" class="Virgule\Bundle\MainBundle\Validator\ClassSessionAlreadyExistingValidator">
-            <argument type="service" id="virgule.classsession_manager" />
-            <tag name="validator.constraint_validator" alias="classsession_already_existing" />
         </service>
         
         <!-- Handlers -->
