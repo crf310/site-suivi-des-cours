@@ -22,22 +22,42 @@ class TeacherManager extends BaseManager {
     return $this->em->getRepository('VirguleMainBundle:Teacher');
   }
 
-  public function getActiveTeachers($organizationBranchId, $semesterId) {
+  public function getTeachersWithCoursesQueryBuilder($organizationBranchId, $semesterId) {
     $qb = $this->getRepository()
             ->getTeachers($organizationBranchId)
             ->innerJoin('t.courses', 'c')
             ->innerJoin('c.semester', 's', 'WITH', 's.id = :semesterId')
             ->setParameter('semesterId', $semesterId);
-    return $qb->getQuery()->execute();
+    return $qb;
   }
 
-  public function getInactiveTeachers($organizationBranchId, $semesterId) {
+  public function getTeachersWithCourses($organizationBranchId, $semesterId) {
+    return $this->getTeachersWithCoursesQueryBuilder($organizationBranchId, $semesterId)->getQuery()->execute();
+  }
+
+  public function getNumberOfTeachersWithCourses($organizationBranchId, $semesterId) {
+    $qb = $this->getTeachersWithCoursesQueryBuilder($organizationBranchId, $semesterId);
+    $qb->select('count(t.id)');
+    return $qb->getQuery()->getSingleScalarResult();
+  }
+
+  public function getTeachersWithoutCoursesQueryBuilder($organizationBranchId, $semesterId) {
     $qb = $this->getRepository()
             ->getTeachers($organizationBranchId)
             ->leftJoin('t.courses', 'c')
             ->innerJoin('c.semester', 's', 'WITH', 's.id = :semesterId')
             ->setParameter('semesterId', $semesterId);
-    return $qb->getQuery()->execute();
+    return $qb;
+  }
+
+  public function getTeachersWithoutCourses($organizationBranchId, $semesterId) {
+    return $this->getTeachersWithoutCoursesQueryBuilder($organizationBranchId, $semesterId)->getQuery()->execute();
+  }
+
+  public function getNumberOfTeachersWithoutCourses($organizationBranchId, $semesterId) {
+    $qb = $this->getTeachersWithoutCoursesQueryBuilder($organizationBranchId, $semesterId);
+    $qb->select('count(t.id)');
+    return $qb->getQuery()->getSingleScalarResult();
   }
 
   /**

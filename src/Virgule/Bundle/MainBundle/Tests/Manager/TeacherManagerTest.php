@@ -6,8 +6,8 @@ use Virgule\Bundle\MainBundle\Tests\AbstractTest;
 
 class TeacherManagerTest extends AbstractTest {
 
-  private $NB_ACTIVE_TEACHERS = 5;
-  private $NB_INACTIVE_TEACHERS = 2;
+  private $NB_ACTIVE_TEACHERS = 2;
+  private $NB_INACTIVE_TEACHERS = 1;
   private $ORG_BRANCH_ID = 1;
   private $SEMESTER_ID = 1;
 
@@ -18,8 +18,8 @@ class TeacherManagerTest extends AbstractTest {
   /**
    * @test
    */
-  public function getInactiveTeachers_activeIsFalse_inactiveTeachersFound() {
-    $results = $this->getManager()->getInactiveTeachers($this->ORG_BRANCH_ID, $this->SEMESTER_ID);
+  public function getInactiveTeachers_someTeachersHaveNoCourse_teachersWithoutCoursesAreReturned() {
+    $results = $this->getManager()->getTeachersWithoutCourses($this->ORG_BRANCH_ID, $this->SEMESTER_ID);
     $this->assertEquals($this->NB_INACTIVE_TEACHERS, count($results));
 
     foreach ($results as $teacher) {
@@ -32,8 +32,8 @@ class TeacherManagerTest extends AbstractTest {
   /**
    * @test
    */
-  public function getTeacherByStatus_activeIsTrue_activeTeachersFound() {
-    $results = $this->getManager()->getActiveTeachers($this->ORG_BRANCH_ID, $this->SEMESTER_ID);
+  public function getTeachersWithCourses_someTeachersHaveCourses_teachersWithCoursesAreReturned() {
+    $results = $this->getManager()->getTeachersWithCourses($this->ORG_BRANCH_ID, $this->SEMESTER_ID);
 
     $this->assertEquals($this->NB_ACTIVE_TEACHERS, count($results));
     foreach ($results as $teacher) {
@@ -46,8 +46,8 @@ class TeacherManagerTest extends AbstractTest {
   /**
    * @test
    */
-  public function getNbTeacherByStatus_activeIsFalse_numberOfInactiveTeachersFound() {
-    $result = $this->getManager()->getInactiveTeachers($this->ORG_BRANCH_ID, $this->SEMESTER_ID);
+  public function getNumberOfTeachersWithoutCourses() {
+    $result = $this->getManager()->getNumberOfTeachersWithoutCourses($this->ORG_BRANCH_ID, $this->SEMESTER_ID);
 
     $this->assertEquals($this->NB_INACTIVE_TEACHERS, $result);
   }
@@ -55,8 +55,8 @@ class TeacherManagerTest extends AbstractTest {
   /**
    * @test
    */
-  public function getNbTeacherByStatus_activeIsTrue_numberOfActiveTeachersFound() {
-    $result = $this->getManager()->getActiveTeachers($this->ORG_BRANCH_ID, $this->SEMESTER_ID);
+  public function getNumberOfTeachersWithCourses() {
+    $result = $this->getManager()->getNumberOfTeachersWithCourses($this->ORG_BRANCH_ID, $this->SEMESTER_ID);
 
     $this->assertEquals($this->NB_ACTIVE_TEACHERS, $result);
   }
