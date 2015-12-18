@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Virgule\Bundle\MainBundle\Manager\BaseManager;
 use \Virgule\Bundle\MainBundle\Entity\Teacher;
+use \ Virgule\Bundle\MainBundle\Repository\TeacherRepository;
 
 class TeacherManager extends BaseManager {
 
@@ -18,15 +19,25 @@ class TeacherManager extends BaseManager {
   }
 
   public function getRepository() {
-    return $this->em->getRepository('VirguleMainBundle:TeacherRepository');
+    return $this->em->getRepository('VirguleMainBundle:Teacher');
   }
 
-  public function getActiveTeachers() {
-    return $this->getRepository()->getTeacherByStatus(true);
+  public function getActiveTeachers($organizationBranchId, $semesterId) {
+    $qb = $this->getRepository()
+            ->getTeachers($organizationBranchId)
+            ->innerJoin('t.courses', 'c')
+            ->innerJoin('c.semester', 's', 'WITH', 's.id = :semesterId')
+            ->setParameter('semesterId', $semesterId);
+    return $qb->getQuery()->execute();
   }
 
-  public function getNonActiveTeachers() {
-    return $this->getRepository()->getTeachersByStatus(false);
+  public function getInactiveTeachers($organizationBranchId, $semesterId) {
+    $qb = $this->getRepository()
+            ->getTeachers($organizationBranchId)
+            ->leftJoin('t.courses', 'c')
+            ->innerJoin('c.semester', 's', 'WITH', 's.id = :semesterId')
+            ->setParameter('semesterId', $semesterId);
+    return $qb->getQuery()->execute();
   }
 
   /**
