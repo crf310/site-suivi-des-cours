@@ -19,6 +19,20 @@ class TeacherRepository extends EntityRepository {
     return $this->createQueryBuilder('t');
   }
 
+  /**
+   * Returns a query builder to select all teachers
+   * registered with the provided organization branch
+   * @param type $organizationBranchId
+   */
+  public function getTeachers($organizationBranchId) {
+    return $this->createDefaultQueryBuilder()
+            ->andWhere('t.username <> :rootUsername')
+            ->innerJoin('t.organizationBranches', 'ob', 'WITH', 'ob.id = :organizationBranchId')
+            ->add('orderBy', 't.lastName ASC, t.firstName ASC')
+            ->setParameter('organizationBranchId', $organizationBranchId)
+            ->setParameter('rootUsername', "root");
+  }
+
   public function getAvailableTeachersQueryBuilder($organizationBranchId, $isActive = true) {
     $q = $this->createDefaultQueryBuilder()
             ->where('t.isActive = :isActive')
