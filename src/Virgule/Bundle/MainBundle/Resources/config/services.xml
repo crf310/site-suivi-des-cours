@@ -14,8 +14,6 @@
         <parameter key="virgule.student_manager.class">%namespace%\Manager\StudentManager</parameter>
         <parameter key="virgule.document_manager.class">%namespace%\Manager\DocumentManager</parameter>
         <parameter key="virgule.tag_manager.class">%namespace%\Manager\TagManager</parameter>
-        <parameter key="virgule.help_manager.class">%namespace%\Manager\HelpManager</parameter>
-        <parameter key="virgule.classsession_manager.class">%namespace%\Manager\ClassSessionManager</parameter>
     </parameters>
 
     <services>
