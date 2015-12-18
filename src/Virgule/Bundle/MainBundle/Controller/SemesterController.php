@@ -213,29 +213,4 @@ class SemesterController extends AbstractVirguleController {
     );
   }
 
-  /**
-   * Deletes a Semester entity.
-   *
-   * @Route("/{id}/delete", name="semester_delete")
-   * @Method("POST")
-   */
-  public function deleteAction(Request $request, $id) {
-    $form = $this->createDeleteForm($id);
-    $form->bind($request);
-
-    if ($form->isValid()) {
-      $em = $this->getDoctrine()->getManager();
-      $entity = $em->getRepository('VirguleMainBundle:Semester')->find($id);
-
-      if (!$entity) {
-        throw $this->createNotFoundException('Unable to find Semester entity.');
-      }
-
-      $em->remove($entity);
-      $em->flush();
-    }
-
-    return $this->redirect($this->generateUrl('semester'));
-  }
-
 }

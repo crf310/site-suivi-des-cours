@@ -317,22 +317,7 @@ class CourseController extends AbstractVirguleController {
    * @Method("POST")
    */
   public function deleteAction(Request $request, $id) {
-    $form = $this->createDeleteForm($id);
-    $form->bind($request);
-
-    if ($form->isValid()) {
-      $em = $this->getDoctrine()->getManager();
-      $entity = $this->getCourseRepository()->find($id);
-
-      if (!$entity) {
-        throw $this->createNotFoundException('Unable to find Course entity.');
-      }
-
-      $em->remove($entity);
-      $em->flush();
-    }
-
-    return $this->redirect($this->generateUrl('course_show_planning'));
+    return parent::abstractDeleteAction($request, $id, 'Course', $this->getStudentRepository(), 'course_show_planning');
   }
 
 }

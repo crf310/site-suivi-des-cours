@@ -204,22 +204,6 @@ class DocumentController extends AbstractVirguleController {
    * @Method("DELETE")
    */
   public function deleteAction(Request $request, $id) {
-    $form = $this->createDeleteForm($id);
-    $form->bind($request);
-
-    if ($form->isValid()) {
-      $em = $this->getDoctrine()->getManager();
-      $entity = $em->getRepository('VirguleMainBundle:Document')->find($id);
-
-      if (!$entity) {
-        throw $this->createNotFoundException('Unable to find Document entity.');
-      }
-
-      $em->remove($entity);
-      $em->flush();
-    }
-
-    return $this->redirect($this->generateUrl('document'));
+    return parent::abstractDeleteAction($request, $id, 'Document', $this->getStudentRepository(), 'document_index');
   }
-
 }
