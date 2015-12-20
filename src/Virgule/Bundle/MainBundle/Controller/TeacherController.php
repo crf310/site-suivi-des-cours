@@ -18,11 +18,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  * @Route("/teacher")
  */
 class TeacherController extends AbstractVirguleController {
-
-  private function getManager() {
-    return $this->get('virgule.teacher_manager');
-  }
-
+  
   /**
    * Lists all Teacher entities.
    *
@@ -31,17 +27,14 @@ class TeacherController extends AbstractVirguleController {
    * @Template()
    */
   public function indexAction($status = "active") {
-    if ($status == 'active' && $status != 'inactive') {
-      $entities = $em->getManager()->getTeachersWithCourses($organizationBranchId, $semesterId);
-    } else {
-      $entities = $em->getManager()->getTeachersWithoutCourses($organizationBranchId, $semesterId);
-    }
-
-    $em = $this->getDoctrine()->getManager();
-
     $organizationBranchId = $this->getSelectedOrganizationBranchId();
     $semesterId = $this->getSelectedSemester();
-
+    
+    if ($status == 'active' && $status != 'inactive') {
+      $entities = $this->getTeacherManager()->getTeachersWithCourses($organizationBranchId, $semesterId);
+    } else {
+      $entities = $this->getTeacherManager()->getTeachersWithoutCourses($organizationBranchId, $semesterId);
+    }
     return Array('entities' => $entities, 'status' => $status);
   }
 
