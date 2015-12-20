@@ -254,7 +254,7 @@ class TeacherControllerTest extends AbstractControllerTest {
   private function goToUserCreationForm() {
     // Create a new entry in the database
     $this->crawler = $this->client->request('GET', '/teacher/');
-    $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
+    $this->assertTrue(200 === $this->client->getResponse()->getStatusCode(), 'Returned code is ' . $this->client->getResponse()->getStatusCode());
     $this->crawler = $this->client->click($this->crawler->selectLink('Nouvel utilisateur')->link());
   }
 
