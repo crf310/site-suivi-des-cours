@@ -77,7 +77,7 @@ class CourseType extends AbstractType {
 
     $teachersOptions = array(
         'class' => 'VirguleMainBundle:Teacher',
-        'query_builder' => $this->em->getRepository('VirguleMainBundle:Teacher')->getAvailableTeachersQueryBuilder($this->organizationBranchId, true),
+        'query_builder' => $this->em->getRepository('VirguleMainBundle:Teacher')->getTeachers($this->organizationBranchId, true),
         'expanded' => false,
         'multiple' => true,
         'property' => 'fullname',

@@ -31,15 +31,16 @@ class TeacherController extends AbstractVirguleController {
    * @Template()
    */
   public function indexAction($status = "active") {
-    $isActive = false;
     if ($status == 'active' && $status != 'inactive') {
-      $isActive = true;
+      $entities = $em->getManager()->getTeachersWithCourses($organizationBranchId, $semesterId);
+    } else {
+      $entities = $em->getManager()->getTeachersWithoutCourses($organizationBranchId, $semesterId);
     }
 
     $em = $this->getDoctrine()->getManager();
 
-    $organizationBranchId = $this->getRequest()->getSession()->get('organizationBranchId');
-    $entities = $em->getRepository('VirguleMainBundle:Teacher')->getTeachersByStatus($organizationBranchId, $isActive);
+    $organizationBranchId = $this->getSelectedOrganizationBranchId();
+    $semesterId = $this->getSelectedSemester();
 
     return Array('entities' => $entities, 'status' => $status);
   }

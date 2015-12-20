@@ -60,7 +60,7 @@ class ClassSessionType extends AbstractType {
   }
 
   private function getTeachers($organizationBranchId) {
-    $qb = $this->em->getRepository('VirguleMainBundle:Teacher')->getAvailableTeachersQueryBuilder($organizationBranchId);
+    $qb = $this->em->getRepository('VirguleMainBundle:Teacher')->getTeachers($organizationBranchId);
     return $qb;
   }
 

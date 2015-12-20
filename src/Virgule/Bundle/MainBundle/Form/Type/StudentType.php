@@ -111,7 +111,7 @@ class StudentType extends AbstractType {
 
     if ($this->intention == 'create') {
       $welcomedByTeacherOptions['preferred_choices'] = array($this->currentTeacher);
-      $welcomedByTeacherOptions['query_builder'] = $this->doctrine->getRepository('VirguleMainBundle:Teacher')->getAvailableTeachersQueryBuilder($this->organizationBranchId, true);
+      $welcomedByTeacherOptions['query_builder'] = $this->doctrine->getRepository('VirguleMainBundle:Teacher')->getTeachers($this->organizationBranchId, true);
 
       // we can enroll a student from only at the creation, after there is a dedicated page (on course)
       $builder->add('courses', 'entity', array(
