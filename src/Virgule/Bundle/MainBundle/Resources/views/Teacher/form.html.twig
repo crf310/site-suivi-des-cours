@@ -13,8 +13,7 @@
     <div class="widget-content nopadding">
 {% endif %}
     {% if is_granted('ROLE_SECRETARY') %}
-        {{ form_row(form.isActive, { 'label': 'Formateur en activité', 'hint':'Cochez la case si l\'utilisateur doit être actif. Seuls les utilisateurs actifs sont proposés dans les listes de création de cours et d\'enregistrement d\'apprenant.' }) }}                
-        {{ form_row(form.role, { 'label': 'Rôle' })  }}
+      {{ form_row(form.role, { 'label': 'Rôle' })  }}
     {% endif %}
     {% if form.username is defined %}
         {{ form_row(form.username, { 'label': 'Nom d\'utilisateur', 'id': 'username' }) }}

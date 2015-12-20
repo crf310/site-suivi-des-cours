@@ -62,12 +62,6 @@
                             {% if entity.locked or entity.expired or entity.isCredentialsExpired %}
                                 <img src="{{ asset('img/icons/user_gray.png') }}" title="Compte verrouillé ou expiré" alt="Compte verrouillé ou expiré" />
                             {% else %}
-                                {% if entity.isActive %}
-                                    <img src="{{ asset('img/icons/user_green.png') }}" title="Utilisateur actif" alt="Utilisateur actif" />
-                                {% else %}
-                                    <img src="{{ asset('img/icons/user_red.png') }}" title="Utilisateur inactif" alt="Utilisateur inactif" />
-                                {% endif %}
-                            {% endif %}
                         </td>
                         <td>{{ entity.firstName }} {{ entity.lastName }}</td>
                         <td>{{ entity.phoneNumber|phoneNumber }}</td>
