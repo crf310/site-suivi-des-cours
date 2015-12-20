@@ -13,7 +13,7 @@ abstract class AbstractControllerTest extends AbstractTest {
   protected $USER_USERNAME = "user1";
   protected $USER_PASSWORD = "user1";
   protected $USER_FIRSTNAME = 'User';
-  protected $USER_LASTNAME = 'Active 1';
+  protected $USER_LASTNAME = 'Lastname 1';
   protected $ORG_BRANCH_NAME = "Delegation 1";
 
   protected function login($username, $password) {
