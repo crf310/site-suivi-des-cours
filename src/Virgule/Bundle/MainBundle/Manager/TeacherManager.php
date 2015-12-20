@@ -37,16 +37,16 @@ class TeacherManager extends BaseManager {
 
   public function getNumberOfTeachersWithCourses($organizationBranchId, $semesterId) {
     $qb = $this->getTeachersWithCoursesQueryBuilder($organizationBranchId, $semesterId);
-    $qb->select('count(t.id)');
+    $qb->select($qb->expr()->countDistinct('t.id'));
     return $qb->getQuery()->getSingleScalarResult();
   }
 
   public function getTeachersWithoutCoursesQueryBuilder($organizationBranchId, $semesterId) {
-    $qb = $this->getRepository()
-            ->getTeachers($organizationBranchId)
-            ->leftJoin('t.courses', 'c')
-            ->innerJoin('c.semester', 's', 'WITH', 's.id = :semesterId')
-            ->setParameter('semesterId', $semesterId);
+    $qb = $this->getRepository()->getTeachers($organizationBranchId);
+    $qb->leftJoin('t.courses', 'c')
+        ->leftJoin('c.semester', 's', 'WITH', 's.id = :semesterId')
+        ->andWhere('c.id IS NULL')
+        ->setParameter('semesterId', $semesterId);
     return $qb;
   }
 
@@ -56,7 +56,7 @@ class TeacherManager extends BaseManager {
 
   public function getNumberOfTeachersWithoutCourses($organizationBranchId, $semesterId) {
     $qb = $this->getTeachersWithoutCoursesQueryBuilder($organizationBranchId, $semesterId);
-    $qb->select('count(t.id)');
+    $qb->select($qb->expr()->countDistinct('t.id'));
     return $qb->getQuery()->getSingleScalarResult();
   }
 
