@@ -25,15 +25,7 @@ class TeacherType extends AbstractType {
       $builder->add('username');
     }
 
-    $builder
-            ->add('isActive', 'choice', array(
-                'choices' => array('1' => 'Actif', '0' => 'Inactif'),
-                'expanded' => true,
-                'multiple' => false,
-                'required' => true,
-                'cols_number' => 2
-            ))
-            ->add('lastName')
+    $builder->add('lastName')
             ->add('firstName')
             ->add('phoneNumber')
             ->add('cellphoneNumber')
