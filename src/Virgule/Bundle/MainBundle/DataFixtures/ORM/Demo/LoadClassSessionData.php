@@ -87,25 +87,6 @@ In convallis, lacus a dapibus accumsan, sapien mauris ornare risus, sit amet dig
       }
     }
     $manager->flush();
-
-    // comments
-    for ($i = 1; $i <= $nbClassSessions; $i++) {
-      if (rand(0, 1)) {
-        for ($j = 1; $j <= rand(0, 3); $j++) {
-          $comment = new Comment();
-          $y = rand(2012, 2013);
-          $m = rand(01, 12);
-          $d = rand(01, 30);
-          $timestamp = strtotime($d . '-' . $m . '-' . $y);
-          $comment->setDate(new \DateTime("@$timestamp"));
-          $comment->setComment($commentContent);
-          $comment->setTeacher($this->getReference('prof' . rand(1, 4)));
-          $comment->setClassSession($this->getReference('classsession' . $i));
-          $manager->persist($comment);
-        }
-      }
-    }
-    $manager->flush();
   }
 
   public function getOrder() {
