@@ -168,7 +168,7 @@ au
                         <div class="row-fluid">
                             <div class="col-md-4">
                                 <ul class="site-stats">
-                                  <li><a href=""{{ path('teacher_index', { 'status': 'active' }) }}"><div class="cc"><i class="icon-user"></i> <strong>{{ nbActiveTeachers['nb_teachers'] }}</strong><small>Formateurs actifs</small></div></a></li>
+                                  <li><a href="{{ path('teacher_index', { 'status': 'active' }) }}"><div class="cc"><i class="icon-user"></i> <strong>{{ nbActiveTeachers }}</strong><small>Formateurs actifs</small></div></a></li>
                                     <li><div class="cc"><i class="icon-bullhorn"></i> <strong>{{ nbCourses['nb_courses'] }}</strong> <small>Cours</small></div></li>
                                     <li><div class="cc"><i class="icon-book"></i> <strong>{{ nbClassSessions['nb_classsessions'] }}</strong> <small>Comptes rendus</small></div></li>
                                     <li class="divider"></li>   
