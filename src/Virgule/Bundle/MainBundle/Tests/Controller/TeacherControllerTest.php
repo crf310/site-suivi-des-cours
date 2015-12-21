@@ -244,6 +244,48 @@ class TeacherControllerTest extends AbstractControllerTest {
     $this->logout();
   }
 
+  /**
+   * @test
+   */
+  public function changePassword_currentPassordIsCorrect_passwordIsChanged() {
+    $currentPassword = $this->USER_PASSWORD;
+    $newPassword = "newPassword";
+    
+    // Create a new client to browse the application
+    $this->client = static::createClient();
+    $this->crawler = $this->client->request('GET', '/');
+
+    $this->login($this->USER_USERNAME, $this->USER_PASSWORD);
+
+    $this->goToDashboard();
+    $this->assertEquals(1, $this->crawler->filter("html:contains('Accueil')")->count());
+    $this->goToChangePasswordForm();
+    
+    // Change password
+    $this->fillAndSubmitChangePasswordForm($currentPassword, $newPassword);
+    
+    $this->assertTrue($this->crawler->filter("html:contains('Fiche formateur')")->count() == 1);
+    
+    // Logout
+    $this->logout();
+    
+    // Login with new password
+    $this->login($this->USER_USERNAME, $newPassword);
+    $this->goToDashboard();
+    $this->assertEquals(1, $this->crawler->filter("html:contains('Accueil')")->count());
+    
+    // Logout
+    $this->logout();
+    
+    // Reset password
+    $this->login($this->USER_USERNAME, $newPassword);
+    $this->goToChangePasswordForm();
+    $this->fillAndSubmitChangePasswordForm($newPassword, $currentPassword);
+    
+    // Logout
+    $this->logout();
+  }
+          
   private function goToUserCreationForm() {
     // Create a new entry in the database
     $this->crawler = $this->client->request('GET', '/teacher/');
@@ -272,7 +314,7 @@ class TeacherControllerTest extends AbstractControllerTest {
       $this->crawler = $this->client->reload();
     }
   }
-
+  
   private function fillAndSubmitCreationForm($firstName, $lastName, $phoneNumber, $cellphoneNumber, $emailAddress, $username, $followRedirect = true, $buttonLabel = 'Créer le compte') {
     // Fill in the form and submit it
     $form = $this->crawler->selectButton($buttonLabel)->form(array(
