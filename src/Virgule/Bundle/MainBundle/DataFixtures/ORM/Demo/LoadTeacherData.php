@@ -103,7 +103,6 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
     $secretary->setCredentialsExpired(false);
 
     $inactiveUser = new Teacher();
-    $inactiveUser->setIsActive(false);
     $inactiveUser->setUsername("glucazeau");
     $inactiveUser->setPlainPassword("password");
     $inactiveUser->setFirstName("Guillaume");

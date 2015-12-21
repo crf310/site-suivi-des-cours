@@ -30,11 +30,7 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
     $user = new Teacher();
     $user->setUsername("user" . $i);
     $user->setFirstName("User");
-    if ($active) {
-      $user->setLastName("Active " . $i);
-    } else {
-      $user->setLastName("Inactive " . $i);
-    }
+    $user->setLastName("Lastname " . $i);
     $user->setEmail("user" . $i . "@example.com");
     $user->setRegistrationDate(new \DateTime('now'));
     $user->setRole($this->getReference('user-role'));
@@ -43,7 +39,6 @@ class LoadTeacherData extends AbstractFixture implements OrderedFixtureInterface
     $user->setExpired(false);
     $user->setCredentialsExpired(false);
     $user->setPlainPassword('user' . $i);
-    $user->setIsActive($active);
     $user->addOrganizationBranch($this->getReference("organization-1"));
 
     $this->addReference('user-' . $i, $user);

@@ -79,7 +79,7 @@ class StatisticsController extends AbstractVirguleController {
 
     $nbStudentsPerClassLevel = $studentRepository->getNumberOfStudentsPerClassLevel($semesterId);
 
-    $nbActiveTeachers = $this->getTeacherRepository()->getNbTeachersByStatus($this->getSelectedOrganizationBranchId(), true);
+    $nbActiveTeachers = $this->getTeacherManager()->getNumberOfTeachersWithCourses($this->getSelectedOrganizationBranchId(), $this->getSelectedSemesterId());
 
     $nbCourses = $this->getCourseRepository()->getNumberOfCourse($this->getSelectedSemesterId());
 

@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Virgule\Bundle\MainBundle\Manager\BaseManager;
 use \Virgule\Bundle\MainBundle\Entity\Teacher;
+use \ Virgule\Bundle\MainBundle\Repository\TeacherRepository;
 
 class TeacherManager extends BaseManager {
 
@@ -18,15 +19,93 @@ class TeacherManager extends BaseManager {
   }
 
   public function getRepository() {
-    return $this->em->getRepository('VirguleMainBundle:TeacherRepository');
+    return $this->em->getRepository('VirguleMainBundle:Teacher');
   }
 
-  public function getActiveTeachers() {
-    return $this->getRepository()->getTeacherByStatus(true);
+  /**
+   * Returns all teachers teaching during the provided semester 
+   * for the provided organization
+   * 
+   * @param type $organizationBranchId
+   * @param type $semesterId
+   * @return QueryBuilder
+   */
+  public function getTeachersWithCoursesQueryBuilder($organizationBranchId, $semesterId) {
+    $qb = $this->getRepository()
+            ->getTeachers($organizationBranchId)
+            ->innerJoin('t.courses', 'c')
+            ->innerJoin('c.semester', 's', 'WITH', 's.id = :semesterId')
+            ->setParameter('semesterId', $semesterId);
+    return $qb;
   }
 
-  public function getNonActiveTeachers() {
-    return $this->getRepository()->getTeachersByStatus(false);
+  /**
+   * Returns all teachers teaching during the provided semester 
+   * for the provided organization
+   * 
+   * @param type $organizationBranchId
+   * @param type $semesterId
+   * @return Collection<Teacher>
+   */
+  public function getTeachersWithCourses($organizationBranchId, $semesterId) {
+    return $this->getTeachersWithCoursesQueryBuilder($organizationBranchId, $semesterId)->getQuery()->execute();
+  }
+
+  /**
+   * Returns number of teachers teaching during the provided semester 
+   * for the provided organization
+   * 
+   * @param type $organizationBranchId
+   * @param type $semesterId
+   * @return Integer 
+   */
+  public function getNumberOfTeachersWithCourses($organizationBranchId, $semesterId) {
+    $qb = $this->getTeachersWithCoursesQueryBuilder($organizationBranchId, $semesterId);
+    $qb->select($qb->expr()->countDistinct('t.id'));
+    return $qb->getQuery()->getSingleScalarResult();
+  }
+
+  /**
+   * Returns all teachers NOT teaching during the provided semester 
+   * for the provided organization
+   * 
+   * @param type $organizationBranchId
+   * @param type $semesterId
+   * @return QueryBuilder
+   */
+  public function getTeachersWithoutCoursesQueryBuilder($organizationBranchId, $semesterId) {
+    $qb = $this->getRepository()->getTeachers($organizationBranchId);
+    $qb->leftJoin('t.courses', 'c')
+        ->leftJoin('c.semester', 's', 'WITH', 's.id = :semesterId')
+        ->andWhere('c.id IS NULL')
+        ->setParameter('semesterId', $semesterId);
+    return $qb;
+  }
+
+  /**
+   * Returns all teachers NOT teaching during the provided semester 
+   * for the provided organization
+   * 
+   * @param type $organizationBranchId
+   * @param type $semesterId
+   * @return Collection<Teacher>
+   */
+  public function getTeachersWithoutCourses($organizationBranchId, $semesterId) {
+    return $this->getTeachersWithoutCoursesQueryBuilder($organizationBranchId, $semesterId)->getQuery()->execute();
+  }
+
+  /**
+   * Returns number of teachers NOT teaching during the provided semester 
+   * for the provided organization
+   * 
+   * @param type $organizationBranchId
+   * @param type $semesterId
+   * @return Integer
+   */
+  public function getNumberOfTeachersWithoutCourses($organizationBranchId, $semesterId) {
+    $qb = $this->getTeachersWithoutCoursesQueryBuilder($organizationBranchId, $semesterId);
+    $qb->select($qb->expr()->countDistinct('t.id'));
+    return $qb->getQuery()->getSingleScalarResult();
   }
 
   /**

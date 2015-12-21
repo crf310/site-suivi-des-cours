@@ -28,13 +28,6 @@ class Teacher extends BaseUser {
   protected $id;
 
   /**
-   * @var boolean $isActive
-   *
-   * @ORM\Column(name="is_active", type="boolean", nullable=false)
-   */
-  protected $isActive;
-
-  /**
    * @var string $lastName
    *
    * @ORM\Column(name="last_name", type="string", length=50, nullable=false)
@@ -132,32 +125,10 @@ class Teacher extends BaseUser {
 
   public function __construct() {
     parent::__construct();
-    $this->isActive = true;
     $this->setEnabled(true);
     $this->setLocked(false);
     $this->setExpired(false);
     $this->setCredentialsExpired(false);
-  }
-
-  /**
-   * Set isActive
-   *
-   * @param boolean $isActive
-   * @return Teacher
-   */
-  public function setIsActive($isActive) {
-    $this->isActive = $isActive;
-
-    return $this;
-  }
-
-  /**
-   * Get isActive
-   *
-   * @return boolean 
-   */
-  public function getIsActive() {
-    return $this->isActive;
   }
 
   /**

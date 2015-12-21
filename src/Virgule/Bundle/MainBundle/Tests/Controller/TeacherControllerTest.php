@@ -31,17 +31,10 @@ class TeacherControllerTest extends AbstractControllerTest {
     $this->fillAndSubmitCreationForm($firstName, $lastName, $phoneNumber, $cellPhoneNumber, $emailAddress, $userName);
 
     $this->assertTrue($this->crawler->filter("html:contains('Créer un nouveau compte utilisateur')")->count() == 0, "Crawler should not have stayed on user creation form");
-    $this->assertTrue($this->crawler->filter("td:contains('" . $firstName . " " . $lastName . "')")->count() == 1, "User page should display first and last names (" . $firstName . " " . $lastName . ")");
-    $this->assertTrue($this->crawler->filter("td:contains('" . $phoneNumberFormatted . "')")->count() == 1, "User page should display the phone number");
-    $this->assertTrue($this->crawler->filter("td:contains('" . $cellPhoneNumberFormatted . "')")->count() == 1, "User page should display the mobile phone");
-
-    $crawlerTeacher = $this->crawler->filter("td:contains('" . $firstName . " " . $lastName . "')")->siblings();
-    $this->crawler = $this->client->click($crawlerTeacher->selectLink('Détails')->link());
-
     $this->assertTrue($this->crawler->filter("html:contains('Fiche formateur')")->count() == 1);
     $this->assertTrue($this->crawler->filter("html:contains('Liste des formateurs actifs')")->count() == 0, "User list should contain the created user");
 
-    $this->assertEquals(1, $this->crawler->filter("div.widget-title:contains('" . $firstName . " " . $lastName . "')")->count());
+    $this->assertPageContainsTitle($firstName . ' ' . $lastName, 'h5');
     $this->assertEquals(1, $this->crawler->filter("div.controls:contains('" . $phoneNumberFormatted . "')")->count());
     $this->assertEquals(1, $this->crawler->filter("div.controls:contains('" . $cellPhoneNumberFormatted . "')")->count());
     $this->assertEquals(1, $this->crawler->filter("div.controls:contains('" . $emailAddress . "')")->count());
@@ -254,7 +247,7 @@ class TeacherControllerTest extends AbstractControllerTest {
   private function goToUserCreationForm() {
     // Create a new entry in the database
     $this->crawler = $this->client->request('GET', '/teacher/');
-    $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
+    $this->assertTrue(200 === $this->client->getResponse()->getStatusCode(), 'Returned code is ' . $this->client->getResponse()->getStatusCode());
     $this->crawler = $this->client->click($this->crawler->selectLink('Nouvel utilisateur')->link());
   }
 

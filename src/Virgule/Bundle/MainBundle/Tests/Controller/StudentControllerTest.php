@@ -68,7 +68,7 @@ class StudentControllerTest extends AbstractControllerTest {
     $this->assertPageContainsTitle($firstName . ' ' . strtoupper($lastName));
     $this->assertStudentProfileContainsInfo('Masculin');
     $this->assertStudentProfileContainsInfo($registrationDate);
-    $this->assertStudentProfileContainsInfo('User Active 1');
+    $this->assertStudentProfileContainsInfo('User Lastname 1');
     $this->assertStudentProfileContainsInfo('Class level 2');
     $this->assertStudentProfileContainsInfo('Indonésie');
 
