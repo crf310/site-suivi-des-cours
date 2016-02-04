@@ -53,38 +53,6 @@ class ClassSessionController extends AbstractVirguleController {
   }
 
   /**
-   * Lists ClassSession entities into a RSS feed
-   *
-   * @Route("/rss/feed", name="classsession_rss_feed_all")     *
-   * @Route("/rss/feed/level/{id}", name="classsession_rss_feed_classlevel")
-   * @Template("VirguleMainBundle:ClassSession:list.rss.twig")
-   */
-  public function rssAction($id = null) {
-    $em = $this->getDoctrineManager();
-
-    if (null === $id) {
-      $classSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAll($this->getSelectedSemesterId());
-    } else {
-      $classSessions = $em->getRepository('VirguleMainBundle:ClassSession')->loadAllClassSessionByClassLevel($id, $this->getSelectedSemesterId());
-    }
-
-    return array('classSessions' => $classSessions);
-  }
-
-  /**
-   * Lists all ClassSession RSS feeds available
-   *
-   * @Route("/rss", name="classsession_rss_index")
-   * @Template("VirguleMainBundle:ClassSession:index_rss.html.twig")
-   */
-  public function rssIndexAction() {
-    $classLevelRepository = $this->getClassLevelRepository();
-    $classLevels = $classLevelRepository->findAll();
-
-    return array('classLevels' => $classLevels);
-  }
-
-  /**
    * Finds and displays a ClassSession entity.
    *
    * @Route("/{id}/show", name="classsession_show")
