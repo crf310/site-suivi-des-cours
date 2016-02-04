@@ -30,24 +30,4 @@ class HelpController extends AbstractVirguleController {
     );
   }
 
-  /**
-   * Display the form and send the issue to github
-   *
-   * @Route("/reportIssue", name="report_issue")
-   * @Method({"GET", "POST"})
-   * @Template
-   */
-  public function reportIssueAction(Request $request) {
-    $form = $this->createForm(new ReportIssueType());
-
-    $this->getHelpManager()->reportIssue();
-
-    if ($request->getMethod() == 'POST') {
-      
-    }
-    return Array(
-        'form' => $form->createView(),
-    );
-  }
-
 }
