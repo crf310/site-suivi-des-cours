@@ -3,12 +3,14 @@
 namespace Virgule\Bundle\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Virgule\Bundle\MainBundle\Validator\Constraints as VirguleAssert;
 
 /**
  * Semester
  *
  * @ORM\Table(name="semester")
  * @ORM\Entity(repositoryClass="Virgule\Bundle\MainBundle\Repository\SemesterRepository")
+ * @VirguleAssert\SemesterNotOverlapping
  */
 class Semester {
 

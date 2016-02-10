@@ -3,6 +3,7 @@
 namespace Virgule\Bundle\MainBundle\Tests\Repository;
 
 use Virgule\Bundle\MainBundle\Tests\Repository\AbstractRepositoryTest;
+use Virgule\Bundle\MainBundle\Entity\Semester;
 
 class SemesterRepositoryTest extends AbstractRepositoryTest {
 
@@ -111,6 +112,27 @@ class SemesterRepositoryTest extends AbstractRepositoryTest {
     $this->assertEquals(0, count($result), "A semester has been found");
   }
 
+  /**
+   * @test
+   */
+  public function getNumberOfSemesterNotFinishedAtGivenDate_dateParameterIsBeforeEndDateOfASemester_resultIsOne() {
+    $searchedDate = new \DateTime();
+    $searchedDate->modify('-10 day');
+
+    $nbUnfinishedSemester = $this->getRepository()->getNumberOfSemesterNotFinishedAtGivenDate($this->ORG_BRANCH_ID, $searchedDate);
+    $this->assertEquals(1, $nbUnfinishedSemester);
+  }
+
+    /**
+   * @test
+   */
+  public function getNumberOfSemesterNotFinishedAtGivenDate_dateParameterIsAfterEndDateOfAnySemester_resultIsZero() {
+    $searchedDate = new \DateTime();
+    $searchedDate->modify('+10000 day');
+
+    $nbUnfinishedSemester = $this->getRepository()->getNumberOfSemesterNotFinishedAtGivenDate($this->ORG_BRANCH_ID, $searchedDate);
+    $this->assertEquals(0, $nbUnfinishedSemester);
+  }
 }
 
 ?>

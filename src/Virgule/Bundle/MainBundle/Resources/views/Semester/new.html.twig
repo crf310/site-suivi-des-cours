@@ -22,6 +22,7 @@ alert('Handler for .focus() called.');
                     <span class="icon"><i class="icon-calendar"></i></span><h5>Dates du semestre</h5>
                 </div>                        
                 <div class="widget-content">
+                    {{ form_errors(semesterForm) }}
                     {{ form_row(semesterForm.startDate, { 'label': 'Date de début', 'id': 'semester_startDateField' }) }}
                     {{ form_row(semesterForm.endDate, { 'label': 'Date de fin', 'id': 'semester_endDateField'  }) }}
                     {{ form_rest(semesterForm) }}

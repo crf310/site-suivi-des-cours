@@ -63,6 +63,12 @@ class SemesterManager extends BaseManager {
     return $this->getRepository()->getPreviousSemester($currentSemester->getOrganizationBranch()->getId(), $currentSemester->getStartDate());
   }
 
+  public function getNumberOfSemesterNotFinishedAtStartDate(Semester $semester) {
+    return $this->getRepository()->getNumberOfSemesterNotFinishedAtGivenDate(
+            $semester->getOrganizationBranch()->getId(), 
+            $semester->getStartDate()
+            );
+  }
 }
 
 ?>

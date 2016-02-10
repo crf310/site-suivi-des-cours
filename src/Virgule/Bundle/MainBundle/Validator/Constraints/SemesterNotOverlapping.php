@@ -7,12 +7,12 @@ use Symfony\Component\Validator\Constraint;
 /**
  * @Annotation
  */
-class CourseNotOverlapping extends Constraint {
+class SemesterNotOverlapping extends Constraint {
 
-  public $message = 'Ce cours entre en conflit avec %nb_cours% autre(s) le même jour et dans la même salle';
+  public $message = 'Un semestre n\'est pas terminé au %start_date%';
 
   public function validatedBy() {
-    return 'course_not_overlapping';
+    return 'semester_not_overlapping';
   }
 
   public function getTargets() {

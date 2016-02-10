@@ -90,6 +90,10 @@
             <argument type="service" id="virgule.course_manager" />
             <tag name="validator.constraint_validator" alias="course_not_overlapping" />
         </service>
+        <service id="validator.not_overlapping_semester" class="Virgule\Bundle\MainBundle\Validator\SemesterNotOverlappingValidator" scope="request">
+            <argument type="service" id="virgule.semester_manager" />
+            <tag name="validator.constraint_validator" alias="semester_not_overlapping" />
+        </service>
         
         <!-- Handlers -->
         <service id="virgule.handler.login_success_handler" class="Virgule\Bundle\SecurityBundle\Handler\LoginSuccessHandler">
