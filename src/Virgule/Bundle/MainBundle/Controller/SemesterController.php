@@ -104,10 +104,9 @@ class SemesterController extends AbstractVirguleController {
    */
   public function createAction(Request $request) {
     $entity = new Semester();
+    $entity->setOrganizationBranch($this->getSelectedOrganizationBranch());
     $form = $this->createForm(new SemesterType(), $entity);
     $form->bind($request);
-
-    $entity->setOrganizationBranch($this->getSelectedOrganizationBranch());
 
     if ($form->isValid()) {
       $em = $this->getDoctrine()->getManager();
@@ -145,9 +144,12 @@ class SemesterController extends AbstractVirguleController {
       }
     }
 
+    $courses = $this->getCourseManager()->getAllHydratedCourses($this->getSelectedSemesterId());
+
     return array(
-        'entity' => $entity,
-        'form' => $form->createView(),
+        'courses' => $courses,
+        'semesterEntity' => $entity,
+        'semesterForm' => $form->createView(),
     );
   }
 
