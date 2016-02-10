@@ -82,13 +82,7 @@ class SemesterController extends AbstractVirguleController {
     $entity = new Semester();
     $form = $this->createForm(new SemesterType(), $entity);
 
-    $courses = $this->getCourseManager()->getAllHydratedCourses($this->getSelectedSemesterId());
-
-    return array(
-        'courses' => $courses,
-        'semesterEntity' => $entity,
-        'semesterForm' => $form->createView(),
-    );
+    return $this->displaySemesterCreationForm($entity, $form);
   }
 
   /**
@@ -140,6 +134,11 @@ class SemesterController extends AbstractVirguleController {
       }
     }
 
+    return $this->displaySemesterCreationForm($entity, $form);
+  }
+
+  
+  private function displaySemesterCreationForm($entity, $form) {
     $courses = $this->getCourseManager()->getAllHydratedCourses($this->getSelectedSemesterId());
 
     return array(
@@ -148,6 +147,5 @@ class SemesterController extends AbstractVirguleController {
         'semesterForm' => $form->createView(),
     );
   }
-
 
 }
