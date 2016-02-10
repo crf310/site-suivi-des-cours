@@ -53,26 +53,6 @@ class SemesterController extends AbstractVirguleController {
   }
 
   /**
-   * Finds and displays a Semester entity.
-   *
-   * @Route("/{id}/show", name="semester_show")
-   * @Template()
-   */
-  public function showAction($id) {
-    $em = $this->getDoctrine()->getManager();
-
-    $entity = $em->getRepository('VirguleMainBundle:Semester')->find($id);
-
-    if (!$entity) {
-      throw $this->createNotFoundException('Unable to find Semester entity.');
-    }
-    
-    return array(
-        'entity' => $entity,
-    );
-  }
-
-  /**
    * Displays a form to create a new Semester entity.
    *
    * @Route("/new", name="semester_new")
