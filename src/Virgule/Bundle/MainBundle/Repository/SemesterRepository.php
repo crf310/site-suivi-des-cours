@@ -21,13 +21,12 @@ class SemesterRepository extends EntityRepository {
    */
   public function loadCurrent($organizationBranchId) {
     $now = new \DateTime('now');
-    $now = $now->format("Y-m-d");
 
     $q = $this
             ->createQueryBuilder('s')
             ->where('s.organizationBranch = :organizationBranchId')
             ->andWhere(':currentDate >= s.startDate AND :currentDate <= s.endDate')
-            ->setParameter('currentDate', $now)
+            ->setParameter('currentDate', $now->format("Y-m-d"))
             ->setParameter('organizationBranchId', $organizationBranchId)
             ->getQuery()
     ;
@@ -84,6 +83,27 @@ class SemesterRepository extends EntityRepository {
             ->getQuery()
     ;
     return $q->getOneOrNullResult();
+  }
+
+  /**
+   * Returns the number of semester 
+   * with an end date superior or equal to the date param
+   * for the given organization branch
+   * @param Integer $organizationBranchId
+   * @param DateTime $dateToSearchFor
+   * @return Integer number of semester found
+   */
+  public function getNumberOfSemesterNotFinishedAtGivenDate($organizationBranchId, $dateToSearchFor) {
+    $q = $this
+            ->createQueryBuilder('s')
+            ->select('count(s.id)')
+            ->where('s.organizationBranch = :organizationBranchId')
+            ->andWhere('s.endDate >= :date')
+            ->setParameter('organizationBranchId', $organizationBranchId)
+            ->setParameter('date', $dateToSearchFor)
+            ->getQuery()
+    ;
+    return $q->getSingleScalarResult();
   }
 
 }
