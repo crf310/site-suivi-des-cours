@@ -137,13 +137,13 @@ class TeacherController extends AbstractVirguleController {
       $em->persist($entity);
       $em->flush();
 
-      $site_adress = $this->container->getParameter('site_adress');
+      $site_address = $this->container->getParameter('site_address');
 
       $parameters = array('firstname' => $entity->getFirstName(),
           'username' => $entity->getUsername(),
           'temporary_password' => $temporary_password,
           'temporary_credentials_days' => $tempCredentialsDays,
-          'site_adress' => $site_adress);
+          'site_address' => $site_address);
 
       $this->sendMessage($entity->getEmail(), 'CRf 03/10 - AALF : compte créé', 'VirguleMainBundle:Teacher:new.mail.twig', $parameters);
 
@@ -222,11 +222,13 @@ class TeacherController extends AbstractVirguleController {
     $temporary_password = $this->getTeacherManager()->reactivateAccount($teacher);
 
     $tempCredentialsDays = $this->container->getParameter('temporary_credentials_days');
+    $site_address = $this->container->getParameter('site_address');
 
     $parameters = array('firstname' => $teacher->getFirstName(),
         'username' => $teacher->getUsername(),
         'temporary_password' => $temporary_password,
-        'temporary_credentials_days' => $tempCredentialsDays);
+        'temporary_credentials_days' => $tempCredentialsDays,
+        'site_address' => $site_address);
     $this->sendMessage($teacher->getEmail(), 'CRf 03/10 - AALF : compte réactivé', 'VirguleMainBundle:Teacher:temporary_pwd.mail.twig', $parameters);
 
     $this->addFlash('Le profil de <strong>' . $teacher->getFullName() . '</strong> a été débloqué et un mot de passe temporaire lui a été attribué.');
