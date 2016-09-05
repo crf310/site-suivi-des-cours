@@ -91,6 +91,12 @@ class StudentType extends AbstractType {
             ->add('emergencyContactPhoneNumber')
             ->add('emergencyContactConnectionType')
             ->add('profession')
+            ->add('scholarized', 'choice', array(
+                'choices' => array(true => 'Oui', false => 'Non'),
+                'expanded' => true,
+                'multiple' => false,
+                'cols_number' => 2
+            ))
     ;
     if ($this->intention == 'create') {
       $builder->add('suggestedClassLevel', 'collection', array(

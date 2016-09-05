@@ -18,20 +18,11 @@
             {{ form_row(form.phoneNumber, { 'label': 'Téléphone fixe', 'hint' : '10 chiffres sans espace' }) }}
             {{ form_row(form.cellphoneNumber, { 'label': 'Téléphone portable', 'hint' : '10 chiffres sans espace' }) }}
             {{ form_row(form.profession, { 'label': 'Profession' }) }}
-        </div>        
-        <div class="widget-title">
-            <span class="icon">
-                <i class="icon-user"></i>									
-            </span>
-            <h5>Niveau scolaire</h5>
-        </div>
-        <div class="widget-content nopadding">
             {{ form_row(form.spokenLanguages, { 'label': 'Langue(s) parlée(s)', 'hint' : 'Tapez une partie de la langue recherchée pour y accéder rapidement. Vous pouvez sélectionner plusieurs langues.' }) }}
-            {{ form_row(form.arrivalDate, { 'label': "Date d'arrivée en France" }) }}
         </div>
         <div class="widget-title">
             <span class="icon">
-                    <i class="icon-ambulance"></i>									
+              <i class="icon-ambulance"></i>									
             </span>
             <h5>Personne à prévenir en cas d'urgence</h5>
         </div>
@@ -45,9 +36,10 @@
             <span class="icon">
                     <i class="icon-plus"></i>									
             </span>
-            <h5>Inscription Croix-Rouge</h5>
+            <h5>Inscription aux cours</h5>
         </div>
         <div class="widget-content nopadding">
+            {{ form_row(form.scholarized, { 'label': 'Scolarisé(e) plus de 5 ans'  }) }}  
             {{ form_row(form.registrationDate, { 'label': 'Accueilli le', 'id': 'registrationDateField', 'hint':"Cliquez sur le bouton correspondant à une journée d'accueil pour insérer la date" }) }}                
             {{ form_row(form.welcomedByTeacher, { 'label': 'Accueilli par' }) }}  
             {% if form.suggestedClassLevel is defined %}

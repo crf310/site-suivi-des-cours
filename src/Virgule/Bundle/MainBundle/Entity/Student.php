@@ -163,27 +163,6 @@ class Student {
   private $profession;
 
   /**
-   * @var boolean $scholarizedInTheCountry
-   *
-   * @ORM\Column(name="scholarized_in_the_country", type="boolean", nullable=true)
-   */
-  private $scholarizedInTheCountry;
-
-  /**
-   * @var boolean $scholarizedInAForeignCountry
-   *
-   * @ORM\Column(name="scholarized_in_a_foreign_country", type="boolean", nullable=true)
-   */
-  private $scholarizedInAForeignCountry;
-
-  /**
-   * @var boolean $scholarizationLevel
-   *
-   * @ORM\Column(name="scholarization_level", type="boolean", nullable=true)
-   */
-  private $scholarizationLevel;
-
-  /**
    * @var string $emergencyContactLastname
    *
    * @ORM\Column(name="emergency_contact_lastname", type="string", length=45, nullable=true)
@@ -237,16 +216,6 @@ class Student {
    * @ORM\OrderBy({"name" = "ASC"})
    */
   private $spokenLanguages;
-
-  /**
-   * @var Language
-   *
-   * @ORM\ManyToOne(targetEntity="Language")
-   * @ORM\JoinColumns({
-   *   @ORM\JoinColumn(name="fk_scholarization_language_id", referencedColumnName="id")
-   * })
-   */
-  private $fkScholarizationLanguage;
 
   /**
    * @ORM\ManyToMany(targetEntity="Course", mappedBy="students")
@@ -622,69 +591,6 @@ class Student {
   }
 
   /**
-   * Set scholarizedInTheCountry
-   *
-   * @param boolean $scholarizedInTheCountry
-   * @return Student
-   */
-  public function setScholarizedInTheCountry($scholarizedInTheCountry) {
-    $this->scholarizedInTheCountry = $scholarizedInTheCountry;
-
-    return $this;
-  }
-
-  /**
-   * Get scholarizedInTheCountry
-   *
-   * @return boolean
-   */
-  public function getScholarizedInTheCountry() {
-    return $this->scholarizedInTheCountry;
-  }
-
-  /**
-   * Set scholarizedInAForeignCountry
-   *
-   * @param boolean $scholarizedInAForeignCountry
-   * @return Student
-   */
-  public function setScholarizedInAForeignCountry($scholarizedInAForeignCountry) {
-    $this->scholarizedInAForeignCountry = $scholarizedInAForeignCountry;
-
-    return $this;
-  }
-
-  /**
-   * Get scholarizedInAForeignCountry
-   *
-   * @return boolean
-   */
-  public function getScholarizedInAForeignCountry() {
-    return $this->scholarizedInAForeignCountry;
-  }
-
-  /**
-   * Set scholarizationLevel
-   *
-   * @param boolean $scholarizationLevel
-   * @return Student
-   */
-  public function setScholarizationLevel($scholarizationLevel) {
-    $this->scholarizationLevel = $scholarizationLevel;
-
-    return $this;
-  }
-
-  /**
-   * Get scholarizationLevel
-   *
-   * @return boolean
-   */
-  public function getScholarizationLevel() {
-    return $this->scholarizationLevel;
-  }
-
-  /**
    * Set emergencyContactLastname
    *
    * @param string $emergencyContactLastname
@@ -766,27 +672,6 @@ class Student {
    */
   public function getEmergencyContactConnectionType() {
     return $this->emergencyContactConnectionType;
-  }
-
-  /**
-   * Set fkScholarizationLanguage
-   *
-   * @param Virgule\Bundle\MainBundle\Entity\Language $fkScholarizationLanguage
-   * @return Student
-   */
-  public function setFkScholarizationLanguage(\Virgule\Bundle\MainBundle\Entity\Language $fkScholarizationLanguage = null) {
-    $this->fkScholarizationLanguage = $fkScholarizationLanguage;
-
-    return $this;
-  }
-
-  /**
-   * Get fkScholarizationLanguage
-   *
-   * @return Virgule\Bundle\MainBundle\Entity\Language
-   */
-  public function getFkScholarizationLanguage() {
-    return $this->fkScholarizationLanguage;
   }
 
   /**
