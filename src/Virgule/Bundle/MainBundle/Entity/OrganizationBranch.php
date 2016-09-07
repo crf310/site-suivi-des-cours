@@ -12,346 +12,337 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class OrganizationBranch {
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+  /**
+   * @var integer
+   *
+   * @ORM\Column(name="id", type="integer", nullable=false)
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="IDENTITY")
+   */
+  private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=100, nullable=false)
-     */
-    private $name;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="name", type="string", length=100, nullable=false)
+   */
+  private $name;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="address", type="string", length=250, nullable=true)
-     */
-    private $address;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="address", type="string", length=250, nullable=true)
+   */
+  private $address;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="president_name", type="string", length=100, nullable=false)
-     */
-    private $presidentName;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="president_name", type="string", length=100, nullable=false)
+   */
+  private $presidentName;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="phone_number", type="string", length=10, nullable=true)
-     */
-    private $phoneNumber;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="phone_number", type="string", length=10, nullable=true)
+   */
+  private $phoneNumber;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="fax_number", type="string", length=10, nullable=true)
-     */
-    private $faxNumber;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="fax_number", type="string", length=10, nullable=true)
+   */
+  private $faxNumber;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email_address", type="string", length=45, nullable=true)
-     */
-    private $emailAddress;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="email_address", type="string", length=45, nullable=true)
+   */
+  private $emailAddress;
 
-    /**
-     * @ORM\OneToMany(targetEntity="ClassRoom", mappedBy="organizationBranch")
-     */
-    protected $classRooms;
+  /**
+   * @ORM\OneToMany(targetEntity="ClassRoom", mappedBy="organizationBranch")
+   */
+  protected $classRooms;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Course", mappedBy="organizationBranch")
-     */
-    private $courses;
-    
-    /**
-     * @ORM\OneToMany(targetEntity="Semester", mappedBy="organizationBranch")
-     */
-    private $semesters;
-    
-    /**
-     * @ORM\ManyToMany(targetEntity="Teacher", mappedBy="organizationBranches")
-     * @ORM\JoinTable(name="teachers_branches")
-     */
-    private $teachers;
+  /**
+   * @ORM\OneToMany(targetEntity="Course", mappedBy="organizationBranch")
+   */
+  private $courses;
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId() {
-        return $this->id;
-    }
+  /**
+   * @ORM\OneToMany(targetEntity="Semester", mappedBy="organizationBranch")
+   */
+  private $semesters;
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return OrganizationBranch
-     */
-    public function setName($name) {
-        $this->name = $name;
+  /**
+   * @ORM\ManyToMany(targetEntity="Teacher", mappedBy="organizationBranches")
+   * @ORM\JoinTable(name="teachers_branches")
+   */
+  private $teachers;
 
-        return $this;
-    }
+  /**
+   * Get id
+   *
+   * @return integer 
+   */
+  public function getId() {
+    return $this->id;
+  }
 
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName() {
-        return $this->name;
-    }
+  /**
+   * Set name
+   *
+   * @param string $name
+   * @return OrganizationBranch
+   */
+  public function setName($name) {
+    $this->name = $name;
 
-    /**
-     * Set address
-     *
-     * @param string $address
-     * @return OrganizationBranch
-     */
-    public function setAddress($address) {
-        $this->address = $address;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get name
+   *
+   * @return string 
+   */
+  public function getName() {
+    return $this->name;
+  }
 
-    /**
-     * Get address
-     *
-     * @return string 
-     */
-    public function getAddress() {
-        return $this->address;
-    }
+  /**
+   * Set address
+   *
+   * @param string $address
+   * @return OrganizationBranch
+   */
+  public function setAddress($address) {
+    $this->address = $address;
 
-    /**
-     * Set presidentName
-     *
-     * @param string $presidentName
-     * @return OrganizationBranch
-     */
-    public function setPresidentName($presidentName) {
-        $this->presidentName = $presidentName;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get address
+   *
+   * @return string 
+   */
+  public function getAddress() {
+    return $this->address;
+  }
 
-    /**
-     * Get presidentName
-     *
-     * @return string 
-     */
-    public function getPresidentName() {
-        return $this->presidentName;
-    }
+  /**
+   * Set presidentName
+   *
+   * @param string $presidentName
+   * @return OrganizationBranch
+   */
+  public function setPresidentName($presidentName) {
+    $this->presidentName = $presidentName;
 
-    /**
-     * Set phoneNumber
-     *
-     * @param string $phoneNumber
-     * @return OrganizationBranch
-     */
-    public function setPhoneNumber($phoneNumber) {
-        $this->phoneNumber = $phoneNumber;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get presidentName
+   *
+   * @return string 
+   */
+  public function getPresidentName() {
+    return $this->presidentName;
+  }
 
-    /**
-     * Get phoneNumber
-     *
-     * @return string 
-     */
-    public function getPhoneNumber() {
-        return $this->phoneNumber;
-    }
+  /**
+   * Set phoneNumber
+   *
+   * @param string $phoneNumber
+   * @return OrganizationBranch
+   */
+  public function setPhoneNumber($phoneNumber) {
+    $this->phoneNumber = $phoneNumber;
 
-    /**
-     * Set faxNumber
-     *
-     * @param string $faxNumber
-     * @return OrganizationBranch
-     */
-    public function setFaxNumber($faxNumber) {
-        $this->faxNumber = $faxNumber;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get phoneNumber
+   *
+   * @return string 
+   */
+  public function getPhoneNumber() {
+    return $this->phoneNumber;
+  }
 
-    /**
-     * Get faxNumber
-     *
-     * @return string 
-     */
-    public function getFaxNumber() {
-        return $this->faxNumber;
-    }
+  /**
+   * Set faxNumber
+   *
+   * @param string $faxNumber
+   * @return OrganizationBranch
+   */
+  public function setFaxNumber($faxNumber) {
+    $this->faxNumber = $faxNumber;
 
-    /**
-     * Set emailAddress
-     *
-     * @param string $emailAddress
-     * @return OrganizationBranch
-     */
-    public function setEmailAddress($emailAddress) {
-        $this->emailAddress = $emailAddress;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get faxNumber
+   *
+   * @return string 
+   */
+  public function getFaxNumber() {
+    return $this->faxNumber;
+  }
 
-    /**
-     * Get emailAddress
-     *
-     * @return string 
-     */
-    public function getEmailAddress() {
-        return $this->emailAddress;
-    }
+  /**
+   * Set emailAddress
+   *
+   * @param string $emailAddress
+   * @return OrganizationBranch
+   */
+  public function setEmailAddress($emailAddress) {
+    $this->emailAddress = $emailAddress;
 
-    /**
-     * Constructor
-     */
-    public function __construct() {
-        $this->classRooms = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    return $this;
+  }
 
-    /**
-     * Add classRooms
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\ClassRoom $classRooms
-     * @return OrganizationBranch
-     */
-    public function addClassRoom(\Virgule\Bundle\MainBundle\Entity\ClassRoom $classRoom) {
-        $this->classRooms[] = $classRoom;
-        return $this;
-    }
+  /**
+   * Get emailAddress
+   *
+   * @return string 
+   */
+  public function getEmailAddress() {
+    return $this->emailAddress;
+  }
 
-    /**
-     * Remove classRooms
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\ClassRoom $classRooms
-     */
-    public function removeClassRoom(\Virgule\Bundle\MainBundle\Entity\ClassRoom $classRooms) {
-        $this->classRooms->removeElement($classRooms);
-    }
+  /**
+   * Constructor
+   */
+  public function __construct() {
+    $this->classRooms = new \Doctrine\Common\Collections\ArrayCollection();
+  }
 
-    /**
-     * Get classRooms
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getClassRooms() {
-        return $this->classRooms;
-    }
+  /**
+   * Add classRooms
+   *
+   * @param \Virgule\Bundle\MainBundle\Entity\ClassRoom $classRooms
+   * @return OrganizationBranch
+   */
+  public function addClassRoom(\Virgule\Bundle\MainBundle\Entity\ClassRoom $classRoom) {
+    $this->classRooms[] = $classRoom;
+    return $this;
+  }
 
+  /**
+   * Remove classRooms
+   *
+   * @param \Virgule\Bundle\MainBundle\Entity\ClassRoom $classRooms
+   */
+  public function removeClassRoom(\Virgule\Bundle\MainBundle\Entity\ClassRoom $classRooms) {
+    $this->classRooms->removeElement($classRooms);
+  }
 
-    /**
-     * Add courses
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
-     * @return OrganizationBranch
-     */
-    public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
-    {
-        $this->courses[] = $courses;
-    
-        return $this;
-    }
+  /**
+   * Get classRooms
+   *
+   * @return \Doctrine\Common\Collections\Collection 
+   */
+  public function getClassRooms() {
+    return $this->classRooms;
+  }
 
-    /**
-     * Remove courses
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
-     */
-    public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses)
-    {
-        $this->courses->removeElement($courses);
-    }
+  /**
+   * Add courses
+   *
+   * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
+   * @return OrganizationBranch
+   */
+  public function addCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
+    $this->courses[] = $courses;
 
-    /**
-     * Get courses
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCourses()
-    {
-        return $this->courses;
-    }
+    return $this;
+  }
 
-    /**
-     * Add semesters
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\Semester $semesters
-     * @return OrganizationBranch
-     */
-    public function addSemester(\Virgule\Bundle\MainBundle\Entity\Semester $semesters)
-    {
-        $this->semesters[] = $semesters;
-    
-        return $this;
-    }
+  /**
+   * Remove courses
+   *
+   * @param \Virgule\Bundle\MainBundle\Entity\Course $courses
+   */
+  public function removeCourse(\Virgule\Bundle\MainBundle\Entity\Course $courses) {
+    $this->courses->removeElement($courses);
+  }
 
-    /**
-     * Remove semesters
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\Semester $semesters
-     */
-    public function removeSemester(\Virgule\Bundle\MainBundle\Entity\Semester $semesters)
-    {
-        $this->semesters->removeElement($semesters);
-    }
+  /**
+   * Get courses
+   *
+   * @return \Doctrine\Common\Collections\Collection 
+   */
+  public function getCourses() {
+    return $this->courses;
+  }
 
-    /**
-     * Get semesters
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getSemesters()
-    {
-        return $this->semesters;
-    }
+  /**
+   * Add semesters
+   *
+   * @param \Virgule\Bundle\MainBundle\Entity\Semester $semesters
+   * @return OrganizationBranch
+   */
+  public function addSemester(\Virgule\Bundle\MainBundle\Entity\Semester $semesters) {
+    $this->semesters[] = $semesters;
 
-    /**
-     * Add teachers
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\Teacher $teachers
-     * @return OrganizationBranch
-     */
-    public function addTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $teachers)
-    {
-        $this->teachers[] = $teachers;
-    
-        return $this;
-    }
+    return $this;
+  }
 
-    /**
-     * Remove teachers
-     *
-     * @param \Virgule\Bundle\MainBundle\Entity\Teacher $teachers
-     */
-    public function removeTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $teachers)
-    {
-        $this->teachers->removeElement($teachers);
-    }
+  /**
+   * Remove semesters
+   *
+   * @param \Virgule\Bundle\MainBundle\Entity\Semester $semesters
+   */
+  public function removeSemester(\Virgule\Bundle\MainBundle\Entity\Semester $semesters) {
+    $this->semesters->removeElement($semesters);
+  }
 
-    /**
-     * Get teachers
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getTeachers()
-    {
-        return $this->teachers;
-    }
+  /**
+   * Get semesters
+   *
+   * @return \Doctrine\Common\Collections\Collection 
+   */
+  public function getSemesters() {
+    return $this->semesters;
+  }
+
+  /**
+   * Add teachers
+   *
+   * @param \Virgule\Bundle\MainBundle\Entity\Teacher $teachers
+   * @return OrganizationBranch
+   */
+  public function addTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $teachers) {
+    $this->teachers[] = $teachers;
+
+    return $this;
+  }
+
+  /**
+   * Remove teachers
+   *
+   * @param \Virgule\Bundle\MainBundle\Entity\Teacher $teachers
+   */
+  public function removeTeacher(\Virgule\Bundle\MainBundle\Entity\Teacher $teachers) {
+    $this->teachers->removeElement($teachers);
+  }
+
+  /**
+   * Get teachers
+   *
+   * @return \Doctrine\Common\Collections\Collection 
+   */
+  public function getTeachers() {
+    return $this->teachers;
+  }
+
 }

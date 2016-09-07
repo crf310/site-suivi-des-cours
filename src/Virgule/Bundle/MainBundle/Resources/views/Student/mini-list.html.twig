@@ -11,7 +11,7 @@
                 <div class="none-found">
                     Aucun apprenant trouvé
                     <br />
-                    Inscrivez un apprenant à un cours en modifiant sa fiche
+                    Inscrivez un apprenant à un cours via le panneau des gestion des inscriptions de celui-ci
                 </div>
             {% else %}
                 {% if nbColumns is not defined %}
@@ -22,7 +22,7 @@
                 {% if listBreak == 0 %}{% set listBreak = 1 %}{% endif %}
                 {% set span_size = 12 /  nbColumns %}
                 <div class="col-xs-12 col-md-{{ span_size }} col-lg-{{ span_size }}">
-                    <ul>                    
+                    <ul>
                     {% for student in students %}
                         <li class="user_{{ student['gender'] }}">
                             <a href="{{ path('student_show', { 'id': student['student_id'] }) }}">{{ student['firstname']}} {{ student['lastname'] }}</a>
@@ -36,7 +36,7 @@
                     {% endfor %}
                     </ul>
                 </div>
-            {% endif %}                        
+            {% endif %}
       <div class="clear_list"></div>
       {% if displayAllStudentButton is defined and displayAllStudentButton == true %}
         <ul class="recent-posts">

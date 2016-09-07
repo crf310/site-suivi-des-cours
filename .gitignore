@@ -2,9 +2,14 @@
 /app/bootstrap*
 /app/cache/*
 /app/logs/*
+app/SymfonyRequirements.php
 /vendor/
 /app/config/parameters.ini
 /web/uploads/documents/
 /web/uploads/student_pictures/
 /nbproject/private/
 /nbproject
+/build
+app/sqlite.db.cache
+app/phpunit.xml
+coverage/*

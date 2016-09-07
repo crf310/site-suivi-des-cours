@@ -14,13 +14,14 @@ use Doctrine\DBAL\Connection;
  * repository methods below.
  */
 class ClassSessionRepository extends EntityRepository {
-    /* Query builders */
-    private function getDefaultQueryBuilder() {
-        return $this->createQueryBuilder('cs');
-    }
-    
-    private function getBasicQueryBuilder($semesterId = null, $limit = null) {
-         $qb = $this->getDefaultQueryBuilder()
+  /* Query builders */
+
+  private function getDefaultQueryBuilder() {
+    return $this->createQueryBuilder('cs');
+  }
+
+  private function getBasicQueryBuilder($semesterId = null, $limit = null) {
+    $qb = $this->getDefaultQueryBuilder()
             ->addSelect('cs.id as id, cs.reportDate, cs.sessionDate, cs.summary as summary')
             ->addSelect('c2.id as course_id, c2.dayOfWeek as course_dayOfWeek,
                 c2.startTime as course_startTime, c2.endTime as course_endTime')
@@ -34,116 +35,107 @@ class ClassSessionRepository extends EntityRepository {
             ->innerJoin('cs.reportTeacher', 't2')
             ->add('orderBy', 'cs.sessionDate DESC')
             ->add('groupBy', 'cs.id');
-        
-        if (null !== $semesterId) {
-            $qb->where('s.id = :semesterId')
-            ->setParameter('semesterId', $semesterId);
-        }
-        if ($limit != null) {
-            $qb->setMaxResults($limit);
-        }
-         return $qb;
+
+    if (null !== $semesterId) {
+      $qb->where('s.id = :semesterId')
+              ->setParameter('semesterId', $semesterId);
     }
-    
-    private function getNbStudentsQueryBuilder($semesterId, $limit = null)  {
-        $qb = $this->getBasicQueryBuilder($semesterId, $limit) 
-                ->leftJoin('cs.classSessionStudents', 'st')    
-                ->leftJoin('cs.nonEnrolledClassSessionStudents', 'st_no')
-                ->addSelect('count(distinct st.id) + count(distinct st_no.id) as nb_students');
-        return $qb;
+    if ($limit != null) {
+      $qb->setMaxResults($limit);
     }
-    
-    private function getNbCommentsQueryBuilder($semesterId, $limit = null) {
-        $qb = $this->getBasicQueryBuilder($semesterId, $limit)
-                ->leftJoin('cs.comments', 'cm')
-                ->addSelect('count(cm.id) as nb_comments');
-        return $qb;
-    }   
-    
-    
-    
-    public function loadAllClassSessionByTeacher($semesterId, $teacherId, $limit = null) {
-        $qb = $this->getNbCommentsQueryBuilder($semesterId, $limit)
-            ->andwhere('t1.id = :teacherId')             
+    return $qb;
+  }
+
+  private function getNbStudentsQueryBuilder($semesterId, $limit = null) {
+    $qb = $this->getBasicQueryBuilder($semesterId, $limit)
+            ->leftJoin('cs.classSessionStudents', 'st')
+            ->leftJoin('cs.nonEnrolledClassSessionStudents', 'st_no')
+            ->addSelect('count(distinct st.id) + count(distinct st_no.id) as nb_students');
+    return $qb;
+  }
+
+  public function loadAllClassSessionByTeacher($semesterId, $teacherId, $limit = null) {
+    $qb = $this->getBasicQueryBuilder($semesterId, $limit)
+            ->andwhere('t1.id = :teacherId')
             ->setParameter('teacherId', $teacherId)
-        ;        
-        $q = $qb->getQuery();                
-        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $results;   
-    }
-    
-    public function loadAllClassSessionByClassLevel($classLevelId, $semesterId) {
-        $qb = $this->getNbStudentsQueryBuilder($semesterId)
+    ;
+    $q = $qb->getQuery();
+    $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+    return $results;
+  }
+
+  public function loadAllClassSessionByClassLevel($classLevelId, $semesterId) {
+    $qb = $this->getNbStudentsQueryBuilder($semesterId)
             ->andWhere('cl.id = :classLevelId')
             ->setParameter('classLevelId', $classLevelId)
-        ;        
-        $q = $qb->getQuery();                
-        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $results;   
-    }    
-    
-    public function loadAllClassSessionByCourse($courseId, $limit = null) {
-        $qb = $this->getNbCommentsQueryBuilder(null, $limit)
-            ->andWhere('c2.id = :courseId')   
+    ;
+    $q = $qb->getQuery();
+    $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+    return $results;
+  }
+
+  public function loadAllClassSessionByCourse($courseId, $limit = null) {
+    $qb = $this->getNbCommentsQueryBuilder(null, $limit)
+            ->andWhere('c2.id = :courseId')
             ->setParameter('courseId', $courseId)
-        ;
-        $q = $qb->getQuery();                
-        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $results;   
-    }
-    
-    public function loadAllClassSessionByDocument($documentId, $limit = null) {
-        $qb = $this->getNbCommentsQueryBuilder(null, $limit)
+    ;
+    $q = $qb->getQuery();
+    $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+    return $results;
+  }
+
+  public function loadAllClassSessionByDocument($documentId, $limit = null) {
+    $qb = $this->getNbCommentsQueryBuilder(null, $limit)
             ->innerJoin('cs.documents', 'd')
-            ->andWhere('d.id = :documentId')   
+            ->andWhere('d.id = :documentId')
             ->setParameter('documentId', $documentId)
-        ;
-        $q = $qb->getQuery();                
-        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $results;   
-    }  
-    
-    public function loadAll($semesterId, $limit = null) {
-        $qb = $this->getNbStudentsQueryBuilder($semesterId, $limit);
-        $q = $qb->getQuery();
-        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $results;  
-    }
-    
-    public function loadAllForMiniList($semesterId, $limit = null) {
-        $qb = $this->getNbCommentsQueryBuilder($semesterId, $limit);
-        
-        $q = $qb->getQuery();
-        $results = $q->execute(array(), Query::HYDRATE_ARRAY);
-        return $results;  
-    }
-    
-    public function getNumberOfClassSessionsPerSemester($semesterId) {        
-         $qb = $this->getDefaultQueryBuilder()
-                 ->addSelect('count(cs.id) as nb_classsessions')
-                 ->innerJoin('cs.course', 'c')
-                 ->innerJoin('c.semester', 's')
-                ->where('s.id = :semesterId')  
-                ->setParameter('semesterId', $semesterId);
-         
-        $q = $qb->getQuery();
-        $nbClassSessions = $q->getSingleResult();
-        return $nbClassSessions;  
-    }
-    
-    public function getNumberOfClassSessionsPerCourseAndDate($course, $date) {
-        $compareTo = $date->format('Y-m-d');
-         $qb = $this->getDefaultQueryBuilder()
-                 ->select('count(cs.id) as nb_classsessions')
-                 ->innerJoin('cs.course', 'c')
-                 ->where('c.id = :courseId')
-                 ->andWhere('cs.sessionDate = :date')
-                ->setParameter('courseId', $course->getId())
-                ->setParameter('date', $compareTo);
-         
-        $q = $qb->getQuery();
-        $nbClassSessions = $q->getSingleScalarResult();
-        return $nbClassSessions;  
-    }
-    
+    ;
+    $q = $qb->getQuery();
+    $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+    return $results;
+  }
+
+  public function loadAll($semesterId, $limit = null) {
+    $qb = $this->getNbStudentsQueryBuilder($semesterId, $limit);
+    $q = $qb->getQuery();
+    $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+    return $results;
+  }
+
+  public function loadAllForMiniList($semesterId, $limit = null) {
+    $qb = $this->getNbCommentsQueryBuilder($semesterId, $limit);
+
+    $q = $qb->getQuery();
+    $results = $q->execute(array(), Query::HYDRATE_ARRAY);
+    return $results;
+  }
+
+  public function getNumberOfClassSessionsPerSemester($semesterId) {
+    $qb = $this->getDefaultQueryBuilder()
+            ->addSelect('count(cs.id) as nb_classsessions')
+            ->innerJoin('cs.course', 'c')
+            ->innerJoin('c.semester', 's')
+            ->where('s.id = :semesterId')
+            ->setParameter('semesterId', $semesterId);
+
+    $q = $qb->getQuery();
+    $nbClassSessions = $q->getSingleResult();
+    return $nbClassSessions;
+  }
+
+  public function getNumberOfClassSessionsPerCourseAndDate($course, $date) {
+    $compareTo = $date->format('Y-m-d');
+    $qb = $this->getDefaultQueryBuilder()
+            ->select('count(cs.id) as nb_classsessions')
+            ->innerJoin('cs.course', 'c')
+            ->where('c.id = :courseId')
+            ->andWhere('cs.sessionDate = :date')
+            ->setParameter('courseId', $course->getId())
+            ->setParameter('date', $compareTo);
+
+    $q = $qb->getQuery();
+    $nbClassSessions = $q->getSingleScalarResult();
+    return $nbClassSessions;
+  }
+
 }

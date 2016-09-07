@@ -7,8 +7,8 @@
                     $('#delete-class-report').click(function(e){
                         e.preventDefault();
                         bootbox.dialog({
-                            message: "Vous allez supprimer le compte-rendu n°{{ entity.id }} du {{ entity.sessionDate | date('d/m/Y') }}, êtes-vous sûr(e) ?",
-                            title: "Suppression d'un compte-rendu",
+                            message: "Vous allez supprimer le compte rendu n°{{ entity.id }} du {{ entity.sessionDate | date('d/m/Y') }}, êtes-vous sûr(e) ?",
+                            title: "Suppression d'un compte rendu",
                             buttons: {
                                 no: {
                                     label: "Non",
@@ -28,11 +28,11 @@
         </script>
     {% endblock %}
 {% endblock %}
-{% block content_title %}Compte-rendu de cours{% endblock %}
+{% block content_title %}Compte rendu de cours{% endblock %}
 {%block submenu %}
     {% if app.user.id == entity.reportTeacher.id or app.user.id == entity.sessionTeacher.id %}
-        <a class="btn tip-bottom" href="{{ path('classsession_edit', { 'id': entity.id }) }}"> <i class="my-icon-user_edit"></i>Modifier le compte-rendu</a>
-        <a class="btn" href="#" id="delete-class-report"> <i class="my-icon-user_delete"></i>Supprimer le compte-rendu</a>
+        <a class="btn tip-bottom" href="{{ path('classsession_edit', { 'id': entity.id }) }}"> <i class="my-icon-user_edit"></i>Modifier le compte rendu</a>
+        <a class="btn" href="#" id="delete-class-report"> <i class="my-icon-user_delete"></i>Supprimer le compte rendu</a>
     <form id="delete-classsession-form" action="{{ path('classsession_delete', { 'id': entity.id }) }}" method="post">{{ form_widget(delete_form) }}</form>
     {% endif %}   
 {% endblock %}
@@ -63,7 +63,7 @@
                         <div class="controls"><a href="{{ path('teacher_show', { 'id': entity.sessionTeacher.id }) }}">{{ entity.sessionTeacher.firstName }} {{ entity.sessionTeacher.lastName }}</a>&nbsp;</div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">Compte-rendu saisi par</label>
+                        <label class="control-label">Compte rendu saisi par</label>
                         <div class="controls"><a href="{{ path('teacher_show', { 'id': entity.reportTeacher.id }) }}">{{ entity.reportTeacher.firstName }} {{ entity.reportTeacher.lastName }}</a> le {{ entity.reportDate | date('d/m/Y') }}&nbsp;</div>
                     </div>
                     <div class="control-group">
@@ -83,7 +83,7 @@
                                 {% endfor %}
                                 </ul>
                             {% else %}
-                                Aucun document associé à ce compte-rendu
+                                Aucun document associé à ce compte rendu
                             {% endif %}                                        
                         </div>
                     </div>

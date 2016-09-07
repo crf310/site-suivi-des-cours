@@ -10,71 +10,66 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="speaks")
  * @ORM\Entity
  */
-class Speaks
-{
-    /**
-     * @var integer $fkLanguageId
-     *
-     * @ORM\Column(name="fk_language_id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     */
-    private $fkLanguageId;
+class Speaks {
 
-    /**
-     * @var integer $fkStudentId
-     *
-     * @ORM\Column(name="fk_student_id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     */
-    private $fkStudentId;
+  /**
+   * @var integer $fkLanguageId
+   *
+   * @ORM\Column(name="fk_language_id", type="integer", nullable=false)
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="NONE")
+   */
+  private $fkLanguageId;
 
+  /**
+   * @var integer $fkStudentId
+   *
+   * @ORM\Column(name="fk_student_id", type="integer", nullable=false)
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="NONE")
+   */
+  private $fkStudentId;
 
+  /**
+   * Set fkLanguageId
+   *
+   * @param integer $fkLanguageId
+   * @return Speaks
+   */
+  public function setFkLanguageId($fkLanguageId) {
+    $this->fkLanguageId = $fkLanguageId;
 
-    /**
-     * Set fkLanguageId
-     *
-     * @param integer $fkLanguageId
-     * @return Speaks
-     */
-    public function setFkLanguageId($fkLanguageId)
-    {
-        $this->fkLanguageId = $fkLanguageId;
-    
-        return $this;
-    }
+    return $this;
+  }
 
-    /**
-     * Get fkLanguageId
-     *
-     * @return integer 
-     */
-    public function getFkLanguageId()
-    {
-        return $this->fkLanguageId;
-    }
+  /**
+   * Get fkLanguageId
+   *
+   * @return integer 
+   */
+  public function getFkLanguageId() {
+    return $this->fkLanguageId;
+  }
 
-    /**
-     * Set fkStudentId
-     *
-     * @param integer $fkStudentId
-     * @return Speaks
-     */
-    public function setFkStudentId($fkStudentId)
-    {
-        $this->fkStudentId = $fkStudentId;
-    
-        return $this;
-    }
+  /**
+   * Set fkStudentId
+   *
+   * @param integer $fkStudentId
+   * @return Speaks
+   */
+  public function setFkStudentId($fkStudentId) {
+    $this->fkStudentId = $fkStudentId;
 
-    /**
-     * Get fkStudentId
-     *
-     * @return integer 
-     */
-    public function getFkStudentId()
-    {
-        return $this->fkStudentId;
-    }
+    return $this;
+  }
+
+  /**
+   * Get fkStudentId
+   *
+   * @return integer 
+   */
+  public function getFkStudentId() {
+    return $this->fkStudentId;
+  }
+
 }

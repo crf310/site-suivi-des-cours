@@ -11,15 +11,17 @@ use Doctrine\ORM\EntityRepository;
  * repository methods below.
  */
 class TagRepository extends EntityRepository {
-    private function createDefaultQueryBuilder() {
-        return $this->createQueryBuilder('t')->add('orderBy', 't.label ASC');
-    }
-    
-    public function getTagByLabel($tagLabel) {
-        $qb = $this->createDefaultQueryBuilder()
+
+  private function createDefaultQueryBuilder() {
+    return $this->createQueryBuilder('t')->add('orderBy', 't.label ASC');
+  }
+
+  public function getTagByLabel($tagLabel) {
+    $qb = $this->createDefaultQueryBuilder()
             ->where('t.label = :tagLabel')
             ->setParameter('tagLabel', $tagLabel);
-        
-        return $qb->getQuery()->getOneOrNullResult();
-    }
+
+    return $qb->getQuery()->getOneOrNullResult();
+  }
+
 }

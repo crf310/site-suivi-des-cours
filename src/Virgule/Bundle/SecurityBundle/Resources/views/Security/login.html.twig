@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Service AALF - Croix-Rouge Française</title>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />    
-        <link rel="icon" type="image/png" href="{{ asset('img/icons/red-cross.png') }}" />
-        {% stylesheets
+  <head>
+    <title>Service AALF - Croix-Rouge Française</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />    
+    <link rel="icon" type="image/png" href="{{ asset('img/icons/red-cross.png') }}" />
+    {% stylesheets
             'css/bootstrap.min.css'
             'css/font-awesome.css'
             'css/unicorn.login.css'
             'css/select2.css'
             filter='cssrewrite, uglifycss' %}
-            <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
-        {% javascripts
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    {% javascripts
             'js/jquery.min.js'
             'js/jquery-ui.custom.min.js'
             'js/select2.min.js'         
@@ -22,83 +22,83 @@
             'js/jquery.nicescroll.min.js'
             'js/unicorn.js'
             'js/unicorn.form_common.js' %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-        <style type="text/css" title="currentStyle" media="screen">          
-            body {
-                padding-top: 20px;
-                padding-bottom: 40px;
-                background-color: #EEEEEE;
-            }        
-            .container { max-width: 851px; }
-            #main-container.container {  
-                margin-top: 5px;
-                max-width: 851px;
-                background-image: url({{ asset('img/apple.jpg') }});
-                height: 564px;
-                border: 2px solid #e5e5e5;
-                -webkit-border-radius: 5px;
-                -moz-border-radius: 5px;
-                border-radius: 5px;
-                -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                box-shadow: 0 1px 2px rgba(0,0,0,.05);  
-            }
-            #loginbox {
-                height: 260px;   
-                opacity: 0.92;
-                margin-top: 50px;
-            }
-            #loginerror {
-                color: #AA4A47;
-            }
-        </style>
-        
-    </head>
-    <body>
-        <div class="container">
-            <img src="{{ asset('img/croixrouge.png') }}" alt="Croix-Rouge française" />
-        </div>
-        <div class="container" id="main-container">
-            <div id="loginbox">            
-                <form id="loginform" action="{{ path("fos_user_security_check") }}" method="post">
-                    <h2>Service AALF</h2>
-                    <!--<input type="hidden" name="_target_path" value="/welcome" />-->
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />                    
-                    <div class="input-group input-sm">
-                        <select name="organization_branch_id" class="select">
-                            {% for organization_branch in organization_branches %}
-                            <option value="{{ organization_branch.id }}">{{ organization_branch.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="input-group input-sm {% if error %}has-error{% endif %}">
-                        <span class="input-group-addon"><i class="icon-user"></i></span><input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}"  placeholder="Nom d'utilisateur" />
-                    </div>
-                    <div class="input-group input-sm {% if error %}has-error{% endif %}">
-                        <span class="input-group-addon"><i class="icon-lock"></i></span><input class="form-control" type="password" name="_password"  placeholder="Mot de passe" />
-                    </div> 
-                    <div class="form-actions clearfix">
-                        <div class="pull-left">
-                            <!--<a href="#recoverform" class="flip-link to-recover grey">Mot de passe oublié ?</a>-->
-                        </div>
-                        <input type="submit" class="btn btn-block btn-primary btn-default btn-success" value="Connexion" />
-                    </div>
-                    {% if error %}
-                        <div id="loginerror"><strong>{{ error.messageKey|trans(error.messageData, 'security') }}</strong></div>
-                    {% endif %}
-                </form>
-                <form id="recoverform" action="#" class="form-vertical">
-                    <p>Entrez votre adresse email et vous recevrez des instructions pour réinitialiser votre mot de passe</p>
-                    <div class="input-group input-sm">
-                        <span class="input-group-addon"><i class="icon-lock"></i></span><input class="form-control" type="text" name="_email"  placeholder="Adresse email" />
-                    </div>
-                    <div class="form-actions">
-                        <span class="pull-left"><a href="#" class="flip-link to-login" id="to-login">&lt; Retour au formulaire de connexion</a></span>
-                        <span class="pull-right"><input type="submit" class="btn btn-success" value="Réinitialiser" /></span>
-                    </div>
-                </form>       
-            </div>        
-        </div>
-    </body>
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <style type="text/css" title="currentStyle" media="screen">          
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+        background-color: #EEEEEE;
+      }        
+      .container { max-width: 851px; }
+      #main-container.container {  
+        margin-top: 5px;
+        max-width: 851px;
+        background-image: url({{ asset('img/apple.jpg') }});
+        height: 564px;
+        border: 2px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        box-shadow: 0 1px 2px rgba(0,0,0,.05);  
+      }
+      #loginbox {
+        height: 260px;   
+        opacity: 0.92;
+        margin-top: 50px;
+      }
+      #loginerror {
+        color: #AA4A47;
+      }
+    </style>
+
+  </head>
+  <body>
+    <div class="container">
+      <img src="{{ asset('img/croixrouge.png') }}" alt="Croix-Rouge française" />
+    </div>
+    <div class="container" id="main-container">
+      <div id="loginbox">            
+        <form id="loginform" action="{{ path("fos_user_security_check") }}" method="post">
+          <h2>Service AALF</h2>
+          <!--<input type="hidden" name="_target_path" value="/welcome" />-->
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />                    
+          <div class="input-group input-sm">
+            <select name="organization_branch_id" class="select">
+              {% for organization_branch in organization_branches %}
+                <option value="{{ organization_branch.id }}">{{ organization_branch.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="input-group input-sm {% if error %}has-error{% endif %}">
+            <span class="input-group-addon"><i class="icon-user"></i></span><input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}"  placeholder="Nom d'utilisateur" />
+          </div>
+          <div class="input-group input-sm {% if error %}has-error{% endif %}">
+            <span class="input-group-addon"><i class="icon-lock"></i></span><input class="form-control" type="password" name="_password"  placeholder="Mot de passe" />
+          </div> 
+          <div class="form-actions clearfix">
+            <div class="pull-left">
+              <!--<a href="#recoverform" class="flip-link to-recover grey">Mot de passe oublié ?</a>-->
+            </div>
+            <input type="submit" class="btn btn-block btn-primary btn-default btn-success" value="Connexion" />
+          </div>
+          {% if error %}
+            <div id="loginerror"><strong>{{ error.messageKey|trans(error.messageData, 'security') }}</strong></div>
+              {% endif %}
+        </form>
+        <form id="recoverform" action="#" class="form-vertical">
+          <p>Entrez votre adresse email et vous recevrez des instructions pour réinitialiser votre mot de passe</p>
+          <div class="input-group input-sm">
+            <span class="input-group-addon"><i class="icon-lock"></i></span><input class="form-control" type="text" name="_email"  placeholder="Adresse email" />
+          </div>
+          <div class="form-actions">
+            <span class="pull-left"><a href="#" class="flip-link to-login" id="to-login">&lt; Retour au formulaire de connexion</a></span>
+            <span class="pull-right"><input type="submit" class="btn btn-success" value="Réinitialiser" /></span>
+          </div>
+        </form>       
+      </div>        
+    </div>
+  </body>
 </html>

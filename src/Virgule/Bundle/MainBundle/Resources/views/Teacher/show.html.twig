@@ -62,11 +62,6 @@
                                 <div class="control-group">
                                     <label class="control-label">Statut</label>
                                     <div class="controls">
-                                        {% if entity.isActive %}
-                                            <span class="label label-success">Formateur actif</span>
-                                        {% else %}
-                                            <span class="label label-danger">Formateur inactif</span>
-                                        {% endif %}
                                         {% if entity.locked %}
                                             <span class="label label-inverse">Compte verrouillé</span>
                                         {% endif %}
@@ -130,7 +125,7 @@
             <div class="row">
                 <div class="col-md-12">
                     {% set listBreak = teacherClassSessions | length // 3 %}
-                    {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Comptes-rendus de ce formateur', 'classSessions': teacherClassSessions, 'listBreak': listBreak }  %}
+                    {% include 'VirguleMainBundle:ClassSession:mini-list.html.twig' with { 'title': 'Comptes rendus de ce formateur', 'classSessions': teacherClassSessions, 'listBreak': listBreak }  %}
                 </div>
             </div>
         </div>

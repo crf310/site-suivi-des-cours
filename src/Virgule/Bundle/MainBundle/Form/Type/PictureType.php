@@ -7,17 +7,17 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PictureType extends AbstractType {
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
-        
-    }
+  public function setDefaultOptions(OptionsResolverInterface $resolver) {
+    
+  }
 
-    public function getParent() {
-        return 'file';
-    }
+  public function getParent() {
+    return 'file';
+  }
 
-    public function getName() {
-        return 'picture';
-    }
+  public function getName() {
+    return 'picture';
+  }
 
 }
 

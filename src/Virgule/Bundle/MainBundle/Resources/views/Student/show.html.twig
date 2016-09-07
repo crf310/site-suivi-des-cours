@@ -93,10 +93,12 @@
                     </div>
                     {% endif %}
                     <div class="control-group">
-                        <label class="control-label">Date d'arrivée en France</label>
+                        <label class="control-label">Scolarisé(e) plus de 5 ans</label>
                         <div class="controls">
-                        {% if entity.arrivalDate != null %}
-                            {{ entity.arrivalDate|date('d/m/Y') }}
+                        {% if entity.scholarized %}
+                          Oui
+                        {% else %}
+                          Non
                         {% endif %}
                         &nbsp;
                         </div>
@@ -190,7 +192,7 @@
                                 {% for classLevel in classLevels %}   
                                     <ul class="activity-list">
                                         <li>
-                                            <a href="#">
+                                            <a href="#" class="classlevelsuggested-entry">
                                                 <strong>{{ classLevel['teacher_firstName'] }} {{ classLevel['teacher_lastName'] }}</strong> {% if loop.last %}l'a initialisé{% else %}l'a changé{% endif %} à <strong>{% include '::class_level_badge.html.twig'  with { 'classLevelColorCode': classLevel['classLevelColorCode'], 'classLevelLabel': classLevel['classLevelLabel'] } %}</strong>
                                                 <span>le {{ classLevel['dateOfChange'] | date('d/m/Y') }}</span>
                                                 {% if loop.first %}<i class="icon-ok"></i>{% endif %}
@@ -233,7 +235,7 @@
                                                             jamais présent
                                                         {% endif %}
                                                     {% else %}
-                                                            aucun compte-rendu trouvé.
+                                                            aucun compte rendu trouvé.
                                                     {% endif %}
                                                 {% endif %}
                                                 </a>
@@ -253,24 +255,6 @@
         </div>
     </div><!-- span -->
 </div><!-- row -->
-                                                
-            <!--
-            <tr>
-                <th>Scholarizedinthecountry</th>
-                <td>{{ entity.scholarizedInTheCountry }}</td>
-            </tr>
-            <tr>
-                <th>Scholarizedinaforeigncountry</th>
-                <td>{{ entity.scholarizedInAForeignCountry }}</td>
-            </tr>
-            <tr>
-                <th>Scholarizationlevel</th>
-                <td>{{ entity.scholarizationLevel }}</td>
-            </tr>
-
-            </tr>
-            -->
-    
 <div id="confirmDiv" >
    
 </div> 

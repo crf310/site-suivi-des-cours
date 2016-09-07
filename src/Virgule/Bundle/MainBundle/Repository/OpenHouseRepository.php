@@ -11,22 +11,23 @@ use Doctrine\ORM\EntityRepository;
  * repository methods below.
  */
 class OpenHouseRepository extends EntityRepository {
-    
-    public function createDefaultQueryBuilder() {
-        return $this->createQueryBuilder('oh')->add('orderBy', 'oh.date ASC');
-    }
-    
-    public function loadAllForSemesterQueryBuilder($semesterId) {
-        $qb = $this->createDefaultQueryBuilder()
-                ->where('oh.semester = :semesterId')
-                ->setParameter('semesterId', $semesterId);
-        return $qb;
-    }
-    
-    public function loadAllForSemester($semesterId) {
-        $q = $this->loadAllForSemesterQueryBuilder($semesterId)
+
+  public function createDefaultQueryBuilder() {
+    return $this->createQueryBuilder('oh')->add('orderBy', 'oh.date ASC');
+  }
+
+  public function loadAllForSemesterQueryBuilder($semesterId) {
+    $qb = $this->createDefaultQueryBuilder()
+            ->where('oh.semester = :semesterId')
+            ->setParameter('semesterId', $semesterId);
+    return $qb;
+  }
+
+  public function loadAllForSemester($semesterId) {
+    $q = $this->loadAllForSemesterQueryBuilder($semesterId)
             ->getQuery();
-        
-        return $q->execute();
-    }
+
+    return $q->execute();
+  }
+
 }

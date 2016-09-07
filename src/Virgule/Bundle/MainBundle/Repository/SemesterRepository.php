@@ -12,89 +12,98 @@ use \Doctrine\ORM\NoResultException;
  * repository methods below.
  */
 class SemesterRepository extends EntityRepository {
-     
-    /**
-     * Returns the current semester for the chosen org branch
-     * @param type $organizationBranch
-     * @return type
-     * @throws NoResultException
-     */
-    public function loadCurrent($organizationBranchId) {
-        $now = new \DateTime('now');
-        $now = $now->format("Y-m-d");
-        
-        $q = $this
+
+  /**
+   * Returns the current semester for the chosen org branch
+   * @param type $organizationBranch
+   * @return type
+   * @throws NoResultException
+   */
+  public function loadCurrent($organizationBranchId) {
+    $now = new \DateTime('now');
+
+    $q = $this
             ->createQueryBuilder('s')
             ->where('s.organizationBranch = :organizationBranchId')
             ->andWhere(':currentDate >= s.startDate AND :currentDate <= s.endDate')
-            ->setParameter('currentDate', $now)
+            ->setParameter('currentDate', $now->format("Y-m-d"))
             ->setParameter('organizationBranchId', $organizationBranchId)
             ->getQuery()
-        ;
+    ;
 
-        try {
-            // The Query::getSingleResult() method throws an exception
-            // if there is no record matching the criteria.
-            $semester = $q->getSingleResult();
-        } catch (NoResultException $e) {
-            throw new NoResultException(sprintf('Unable to find an current Semester object'), null, 0, $e);
-        }
-        return $semester;
+    try {
+      // The Query::getSingleResult() method throws an exception
+      // if there is no record matching the criteria.
+      $semester = $q->getSingleResult();
+    } catch (NoResultException $e) {
+      throw new NoResultException(sprintf('Unable to find an current Semester object'), null, 0, $e);
     }
-    
-    public function loadAll($organizationBranchId) {
-        $q = $this
+    return $semester;
+  }
+
+  public function loadAll($organizationBranchId) {
+    $q = $this
             ->createQueryBuilder('s')
             ->where('s.organizationBranch = :organizationBranchId')
             ->add('orderBy', 's.startDate DESC')
             ->setParameter('organizationBranchId', $organizationBranchId)
             ->getQuery()
-        ;
+    ;
 
-        $semesters = $q->execute();
-        return $semesters;
-    }
-    
-    public function loadLast($organizationBranchId) {
-        $q = $this
+    $semesters = $q->execute();
+    return $semesters;
+  }
+
+  public function loadLatest($organizationBranchId) {
+    $q = $this
             ->createQueryBuilder('s')
             ->where('s.organizationBranch = :organizationBranchId')
             ->add('orderBy', 's.startDate DESC')
             ->setParameter('organizationBranchId', $organizationBranchId)
             ->setMaxResults(1)
             ->getQuery()
-        ;
-        try {
-            $semester = $q->getSingleResult();
-        } catch (NoResultException $e) {
-            throw new NoResultException(sprintf('No last semester found'), null, 0, $e);
-        }
-        return $semester;
+    ;
+    try {
+      $semester = $q->getSingleResult();
+    } catch (NoResultException $e) {
+      throw new NoResultException(sprintf('No last semester found'), null, 0, $e);
     }
-    
-    public function findSemesterByDateBetween($date) {
-        $q = $this
+    return $semester;
+  }
+
+  public function getPreviousSemester($organizationBranchId, $currentSemesterStartDate) {
+    $q = $this
             ->createQueryBuilder('s')
-            //->where('s.organizationBranch = :organizationBranchId')
-            ->andWhere('s.startDate <= :date')
-            ->andWhere('s.endDate >= :date')
-            ->setParameter('date', $date)
-            ->setMaxResults(1)
-            ->getQuery()
-        ;
-        return $q->getOneOrNullResult();
-    }
-    
-    public function getPreviousSemester($currentSemesterStartDate) {
-        $q = $this
-            ->createQueryBuilder('s')
-            //->where('s.organizationBranch = :organizationBranchId
+            ->where('s.organizationBranch = :organizationBranchId')
             ->andWhere('s.endDate < :date')
+            ->setParameter('organizationBranchId', $organizationBranchId)
             ->setParameter('date', $currentSemesterStartDate)
             ->add('orderBy', 's.startDate DESC')
             ->setMaxResults(1)
             ->getQuery()
-        ;
-        return $q->getOneOrNullResult();
-    }
+    ;
+    return $q->getOneOrNullResult();
+  }
+
+  /**
+   * Returns the number of semester 
+   * with an end date superior or equal to the date param
+   * for the given organization branch
+   * @param Integer $organizationBranchId
+   * @param DateTime $dateToSearchFor
+   * @return Integer number of semester found
+   */
+  public function getNumberOfSemesterNotFinishedAtGivenDate($organizationBranchId, $dateToSearchFor) {
+    $q = $this
+            ->createQueryBuilder('s')
+            ->select('count(s.id)')
+            ->where('s.organizationBranch = :organizationBranchId')
+            ->andWhere('s.endDate >= :date')
+            ->setParameter('organizationBranchId', $organizationBranchId)
+            ->setParameter('date', $dateToSearchFor)
+            ->getQuery()
+    ;
+    return $q->getSingleScalarResult();
+  }
+
 }

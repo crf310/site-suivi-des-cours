@@ -15,37 +15,38 @@ use FOS\UserBundle\Doctrine\UserManager;
  */
 class PasswordChangeListener implements EventSubscriberInterface {
 
-    private $router;
-    private $container;
-    private $userManager;
+  private $router;
+  private $container;
+  private $userManager;
 
-    public function __construct(UrlGeneratorInterface $router, ContainerInterface $container, UserManager $userManager) {
-        $this->router = $router;
-        $this->container = $container;
-        $this->userManager = $userManager;
-    }
+  public function __construct(UrlGeneratorInterface $router, ContainerInterface $container, UserManager $userManager) {
+    $this->router = $router;
+    $this->container = $container;
+    $this->userManager = $userManager;
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    public static function getSubscribedEvents() {
-        return array(
-            FOSUserEvents::CHANGE_PASSWORD_SUCCESS => 'onPasswordChangingSuccess',
-        );
-    }
+  /**
+   * {@inheritDoc}
+   */
+  public static function getSubscribedEvents() {
+    return array(
+        FOSUserEvents::CHANGE_PASSWORD_SUCCESS => 'onPasswordChangingSuccess',
+    );
+  }
 
-    public function onPasswordChangingSuccess(FormEvent $event) {
-        $user = $this->container->get('security.context')->getToken()->getUser();
+  public function onPasswordChangingSuccess(FormEvent $event) {
+    $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $expirationDate = new \DateTime("now");        
-        $permanentCredentialsDays = $this->container->getParameter('permanent_credentials_days');
-        $expirationDate->modify("+" . $permanentCredentialsDays . " day");
-        $user->setCredentialsExpireAt($expirationDate);
-        $this->userManager->updateUser($user);
-        
-        $url = $this->router->generate('teacher_show', array('id' => $user->getId()));
-        $event->setResponse(new RedirectResponse($url));
-    }
+    $expirationDate = new \DateTime("now");
+    $permanentCredentialsDays = $this->container->getParameter('permanent_credentials_days');
+    $expirationDate->modify("+" . $permanentCredentialsDays . " day");
+    $user->setCredentialsExpireAt($expirationDate);
+    $this->userManager->updateUser($user);
+
+    $url = $this->router->generate('teacher_show', array('id' => $user->getId()));
+    $event->setResponse(new RedirectResponse($url));
+  }
 
 }
+
 ?>

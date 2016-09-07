@@ -4,19 +4,6 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
-    <parameters>
-        <parameter key="virgule_main.example.class">Virgule\Bundle\MainBundle\Example</parameter>
-    </parameters>
-
-    <services>
-        <service id="virgule_main.example" class="%virgule_main.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
-        </service>
-    </services>
-    -->
     <!-- Managers -->
     <parameters>
         <parameter key="namespace">Virgule\Bundle\MainBundle</parameter>
@@ -27,8 +14,6 @@
         <parameter key="virgule.student_manager.class">%namespace%\Manager\StudentManager</parameter>
         <parameter key="virgule.document_manager.class">%namespace%\Manager\DocumentManager</parameter>
         <parameter key="virgule.tag_manager.class">%namespace%\Manager\TagManager</parameter>
-        <parameter key="virgule.help_manager.class">%namespace%\Manager\HelpManager</parameter>
-        <parameter key="virgule.classsession_manager.class">%namespace%\Manager\ClassSessionManager</parameter>
     </parameters>
 
     <services>
@@ -56,12 +41,6 @@
         <service id="virgule.tag_manager" class="%virgule.tag_manager.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
-        <service id="virgule.help_manager" class="%virgule.help_manager.class%">
-            <argument type="service" id="service_container" />
-        </service>
-        <service id="virgule.classsession_manager" class="%virgule.classsession_manager.class%">
-            <argument type="service" id="doctrine.orm.entity_manager" />
-        </service>
                
         <!-- Listeners -->
         <service id="virgule_user.password_change" class="%namespace%\Event\PasswordChangeListener">
@@ -72,11 +51,6 @@
         </service>
         
         <!-- Forms -->
-        <!--
-        <service id="form.class_session" class="%namespace%\Form\ClassSessionType" public="false">
-            <tag name="form.type" />
-            <argument type="service" id="doctrine" />
-        </service>-->
         <service id="form.class_level_suggested" class="%namespace%\Form\ClassLevelSuggestedType" public="true">
             <tag name="form.type" />
             <argument type="service" id="doctrine.orm.entity_manager" />
@@ -116,9 +90,9 @@
             <argument type="service" id="virgule.course_manager" />
             <tag name="validator.constraint_validator" alias="course_not_overlapping" />
         </service>
-        <service id="validator.already_existing_classsession" class="Virgule\Bundle\MainBundle\Validator\ClassSessionAlreadyExistingValidator">
-            <argument type="service" id="virgule.classsession_manager" />
-            <tag name="validator.constraint_validator" alias="classsession_already_existing" />
+        <service id="validator.not_overlapping_semester" class="Virgule\Bundle\MainBundle\Validator\SemesterNotOverlappingValidator" scope="request">
+            <argument type="service" id="virgule.semester_manager" />
+            <tag name="validator.constraint_validator" alias="semester_not_overlapping" />
         </service>
         
         <!-- Handlers -->

@@ -7,20 +7,21 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class CourseNotOverlappingValidator extends ConstraintValidator {
 
-    private $courseManager;
+  private $courseManager;
 
-    public function __construct($courseManager) {
-        $this->courseManager = $courseManager;
+  public function __construct($courseManager) {
+    $this->courseManager = $courseManager;
+  }
+
+  public function validate($course, Constraint $constraint) {
+
+    $nbCours = $this->courseManager->getNumberOfOverlappingCourses($course);
+
+    if ($nbCours > 0) {
+      $this->context->addViolation($constraint->message, array('%nb_cours%' => (string) $nbCours));
     }
+  }
 
-    public function validate($course, Constraint $constraint) {
-
-        $nbCours = $this->courseManager->getNumberOfOverlappingCourses($course);
-
-        if ($nbCours > 0) {
-            $this->context->addViolation($constraint->message, array('%nb_cours%' => (string) $nbCours));
-        }
-    }
 }
 
 ?>
