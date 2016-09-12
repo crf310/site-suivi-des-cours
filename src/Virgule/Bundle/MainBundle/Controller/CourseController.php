@@ -267,6 +267,7 @@ class CourseController extends AbstractVirguleController {
       throw $this->createNotFoundException('Unable to find Course entity.');
     }
 
+    $em = $this->getDoctrine()->getManager();
     $editForm = $this->createForm(new CourseType(FormConstants::EDIT_INTENTION, $this->getSelectedOrganizationBranch()->getId(), $em), $entity);
     $deleteForm = $this->createDeleteForm($id);
 
@@ -293,6 +294,7 @@ class CourseController extends AbstractVirguleController {
 
     $deleteForm = $this->createDeleteForm($id);
 
+    $em = $this->getDoctrine()->getManager();
     $editForm = $this->createForm(new CourseType(FormConstants::EDIT_INTENTION, $this->getSelectedOrganizationBranch()->getId(), $em), $entity);
     $editForm->bind($request);
 
