@@ -75,7 +75,7 @@ class ClassSessionRepository extends EntityRepository {
   }
 
   public function loadAllClassSessionByCourse($courseId, $limit = null) {
-    $qb = $this->getNbCommentsQueryBuilder(null, $limit)
+    $qb = $this->getBasicQueryBuilder(null, $limit)
             ->andWhere('c2.id = :courseId')
             ->setParameter('courseId', $courseId)
     ;
@@ -85,7 +85,7 @@ class ClassSessionRepository extends EntityRepository {
   }
 
   public function loadAllClassSessionByDocument($documentId, $limit = null) {
-    $qb = $this->getNbCommentsQueryBuilder(null, $limit)
+    $qb = $this->getBasicQueryBuilder(null, $limit)
             ->innerJoin('cs.documents', 'd')
             ->andWhere('d.id = :documentId')
             ->setParameter('documentId', $documentId)
@@ -103,7 +103,7 @@ class ClassSessionRepository extends EntityRepository {
   }
 
   public function loadAllForMiniList($semesterId, $limit = null) {
-    $qb = $this->getNbCommentsQueryBuilder($semesterId, $limit);
+    $qb = $this->getBasicQueryBuilder($semesterId, $limit);
 
     $q = $qb->getQuery();
     $results = $q->execute(array(), Query::HYDRATE_ARRAY);
